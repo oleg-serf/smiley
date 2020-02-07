@@ -1,0 +1,103 @@
+<template>
+  <section class="forgot-pass container">
+
+    <h2 class="forgot-pass-title">Forgot my password</h2>
+    <p class="forgot-pass-subtitle">Please enter your email address in order to receive instructions on how to reset your account</p>
+
+    <div class="forgot-pass-wrap">
+
+      <label for="forgot-pass-email">Email Address
+        <input type="text" name="forgot-pass-email" id="forgot-pass-email" placeholder="">
+      </label>
+
+      <div class="forgot-pass-btn-wrap">
+        <button class="forgot-pass-btn" type="submit" name="submit" value="forgot-pass">reset my password</button>
+      </div>
+
+    </div>
+
+  </section>
+</template>
+
+<script>
+
+
+  export default {
+    name: "Forgot",
+    data(){
+      return{
+
+      }
+    },
+    mounted() {
+
+    },
+    methods: {
+
+    }
+  }
+</script>
+
+
+<style lang="scss" scoped>
+  // ---------- SMILEY FORGOT PASSWORD PAGE ---------- //
+
+  .forgot-pass{
+    text-align: center;
+    margin-top: 148px;
+    margin-bottom: 350px;
+    .forgot-pass-title{
+      color: $default-text;
+      font: 700 56px/74px 'Montserrat Bold', sans-serif;
+      margin-bottom: 27px;
+    }
+    .forgot-pass-subtitle{
+      color: $default-text;
+      font: 400 22px/36px 'Muli', sans-serif;
+      max-width: 778px;
+      margin: 0 auto 26px;
+    }
+    .forgot-pass-wrap{
+      width: 100%;
+      max-width: 762px;
+      text-align: left;
+      margin: 27px auto 0;
+      label{
+        color: $default-text;
+        font: 700 16px/24px 'Muli', sans-serif;
+        input{
+          display: block;
+          margin: 7px auto 21px;
+          width: 100%;
+          box-sizing: border-box;
+          height: 48px;
+          border: 1px solid #C7C7C7;
+          border-radius: 4px;
+          font: 400 16px/24px 'Inter Regular', sans-serif;
+          color: #656565;
+          padding: 0 48px 0 16px;
+        }
+      }
+      .forgot-pass-btn-wrap{
+        margin-top: 27px;
+      }
+      .forgot-pass-btn{
+        border-radius: 4px;
+        background-color: $default-yellow-btns;
+        height: 48px;
+        width: 100%;
+        border: none;
+        font: 700 16px/24px 'Montserrat Bold', sans-serif;
+        color: #000;
+        text-transform: uppercase;
+        cursor: pointer;
+        &:hover {
+          background-color: #f6f162;
+          box-shadow: 0 2px 28px -13px rgba(0, 0, 0, .4);
+          color: #000;
+          transition: all .2s ease;
+        }
+      }
+    }
+  }
+</style>

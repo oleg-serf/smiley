@@ -1,0 +1,312 @@
+<template>
+  <div>
+    <section class="login container">
+
+      <h2 class="login-title">Login</h2>
+      <p class="login-subtitle">Let’s set up your profile and start matching you with others doing social and environmental good.</p>
+
+      <div class="login-btns-wrap">
+        <v-google-login class="v-google-login">
+          <GoogleLogin :params="params" :onSuccess="onSuccess">
+            <svg width="17.999998" height="18.00001" viewBox="0 0 4.7624997 4.7625026" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(-46.041083,-203.86351)">
+                <g transform="matrix(0.00892606,0,0,0.00874948,46.041529,203.86367)">
+                  <path style="fill:#4285f4"  d="m 533.5,278.4 c 0,-18.5 -1.5,-37.1 -4.7,-55.3 H 272.1 v 104.8 h 147 c -6.1,33.8 -25.7,63.7 -54.4,82.7 v 68 h 87.7 c 51.5,-47.4 81.1,-117.4 81.1,-200.2 z"/>
+                  <path style="fill:#34a853" d="m 272.1,544.3 c 73.4,0 135.3,-24.1 180.4,-65.7 l -87.7,-68 c -24.4,16.6 -55.9,26 -92.6,26 -71,0 -131.2,-47.9 -152.8,-112.3 H 28.9 v 70.1 c 46.2,91.9 140.3,149.9 243.2,149.9 z"/>
+                  <path style="fill:#fbbc04" d="m 119.3,324.3 c -11.4,-33.8 -11.4,-70.4 0,-104.2 V 150 H 28.9 c -38.6,76.9 -38.6,167.5 0,244.4 z"/>
+                  <path style="fill:#ea4335" d="m 272.1,107.7 c 38.8,-0.6 76.3,14 104.4,40.8 v 0 L 454.2,70.8 C 405,24.6 339.7,-0.8 272.1,0 169.2,0 75.1,58 28.9,150 l 90.4,70.1 c 21.5,-64.5 81.8,-112.4 152.8,-112.4 z"/>
+                </g>
+              </g>
+            </svg>Gmail login
+          </GoogleLogin>
+        </v-google-login>
+
+        <v-facebook-login  :button-style="{background: '#fff', color: '#000'}" app-id="505992703501903">
+          <template slot="login">
+            <div>
+          <span>
+            <svg version="1.1" viewBox="0 0 4.7625042 4.7625001" height="18" width="18.000015" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(-46.300006,-202.84821)">
+                <path style="fill:#3a559f;" d="m 46.300006,202.84821 v 4.7625 h 2.536322 v -1.83965 h -0.620015 v -0.751 h 0.620015 v -0.63071 c 0,-0.45869 0.371841,-0.83053 0.830534,-0.83053 h 0.648178 v 0.67531 h -0.463804 c -0.145749,0 -0.26391,0.11817 -0.26391,0.26392 v 0.52202 h 0.716062 l -0.09896,0.751 H 49.58733 v 1.83964 h 1.47518 v -4.7625 z"/>
+              </g>
+            </svg>
+          </span>facebook login
+            </div>
+          </template>
+        </v-facebook-login>
+
+<!--        <button class="socnet-login-btns login-with-linkedin-btn">-->
+<!--          <span>-->
+<!--            <svg version="1.1" viewBox="0 0 18 18" height="18" width="18" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">-->
+<!--              <path style="fill:#3a559f;" d="m 15.782004,1.0847458 c 0.73824,0 1.33664,0.598016 1.33664,1.336632 V 15.748106 c 0,0.73824 -0.598,1.33664 -1.33664,1.33664 H 2.4552761 c -0.7382,0 -1.336632,-0.598 -1.336632,-1.33664 V 2.4213778 c 0,-0.7382 0.598016,-1.336632 1.336632,-1.336632 z m -3.8484,6 c -1.13552,0 -1.91248,0.50192 -2.2583994,1.08504 l -0.056601,0.1036 v -1.08864 h -2.166624 v 7.6666402 h 2.3333035 v -3.71368 c 0,-1.2446402 0.4583204,-2.0363202 1.5600004,-2.0363202 0.75984,0 1.07864,0.67192 1.10488,1.8697602 l 0.0023,0.16656 v 3.71368 h 2.333281 v -4.23432 C 14.785288,8.3307458 14.238348,7.0847458 11.933608,7.0847458 Z m -6.1482959,0 h -2.333328 v 7.6666402 h 2.333328 z m -1.166664,-4 c -0.828336,0 -1.5,0.671664 -1.5,1.5 0,0.828336 0.671664,1.5 1.5,1.5 0.828336,0 1.5,-0.671664 1.5,-1.5 0,-0.828336 -0.671664,-1.5 -1.5,-1.5 z" />-->
+<!--            </svg>-->
+<!--          </span>linkedin login-->
+<!--        </button>-->
+      </div>
+
+      <h3>Or via email</h3>
+
+      <form class="login-wrap" @submit.prevent="onSubmit">
+
+        <label for="login-email">Email Address
+          <input type="email" name="login-email" id="login-email" placeholder="" v-model="email" >
+        </label>
+
+        <label for="login-password">Password
+          <input type="password" name="login-password" id="login-password" placeholder="" v-model="password">
+        </label>
+
+        <div class="login-btn-wrap">
+          <button class="login-btn" type="submit" name="submit" value="login">login</button>
+        </div>
+        <div class="register-and-forgot">
+          <router-link to="register">Register for an account</router-link>
+          <span>|</span>
+          <router-link to="forgot">Forgot your Password</router-link>
+        </div>
+
+      </form>
+
+    </section>
+
+    <div class="hidden"></div>
+
+
+
+
+
+
+
+  </div>
+</template>
+
+<script>
+
+  import axios from '../axios-auth'
+  import GoogleLogin from 'vue-google-login';
+  import VFacebookLogin from 'vue-facebook-login-component'
+
+  export default {
+    name: "Login",
+    components: {
+      GoogleLogin,
+      VFacebookLogin
+    },
+    data(){
+      return{
+        email: '',
+        password: '',
+        params: {
+          client_id: "xxxxxx"
+        },
+        // only needed if you want to render the button with the google ui
+        renderParams: {
+          width: 250,
+          height: 50,
+          longtitle: true
+        }
+      }
+    },
+    mounted() {
+    },
+    methods: {
+      onSubmit () {
+        const formData = {
+          email: this.email,
+          password: this.password,
+        };
+
+        console.log(formData);
+        this.$store.dispatch('login', formData);
+      },
+      onSuccess(googleUser) {
+        console.log(googleUser);
+
+        // This only gets the user information: id, name, imageUrl and email
+        console.log(googleUser.getBasicProfile());
+      }
+    }
+  }
+</script>
+
+
+<style lang="scss" scoped>
+
+  // ---------- SMILEY LOGIN PAGE ---------- //
+
+  .login .socnet-login-btns,
+  .login .v-facebook-login,
+  .login .v-google-login button{
+    border: 1px solid #CED0D2;
+    border-radius: 40px;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 4px 0 rgba(96,100,112,0.1);
+    cursor: pointer;
+    height: 81px;
+    color: $default-text;
+    font: 700 18px/22px 'Montserrat Bold', sans-serif;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding-left: 40px;
+    width: 100%;
+    span{
+      margin-right: 8px;
+      display: flex;
+    }
+    svg{
+      display: inline-block;
+      height: 18px;
+      width: 18px;
+      vertical-align: text-top;
+    }
+    &.login-with-gmail-btn{
+      max-width: 281px;
+      @include xl{
+        margin-top: 0;
+      }
+    }
+    &.login-with-facebook-btn,
+    &.login-with-linkedin-btn{
+      max-width: 325px;
+      span{
+        margin-right: 18px;
+      }
+    }
+  }
+  button.v-facebook-login{
+    max-width: 325px;
+    display: block;
+  }
+  .v-google-login{
+    max-width: 281px;
+    width: 100%;
+    svg{
+      margin-right: 30px;
+    }
+  }
+
+
+  .login{
+    text-align: center;
+    margin-top: 148px;
+    margin-bottom: 350px;
+    .login-title{
+      color: $default-text;
+      font: 700 56px/74px 'Montserrat Bold', sans-serif;
+      margin-bottom: 27px;
+    }
+    .login-subtitle{
+      color: $default-text;
+      font: 400 22px/36px 'Muli', sans-serif;
+      max-width: 778px;
+      margin: 0 auto 26px;
+    }
+    h3{
+      color: $default-text;
+      font: 700 32px/48px 'Montserrat Bold', sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .login-btns-wrap{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 41px;
+      &>*{
+        margin: 0 13px 10px;
+      }
+      @include xl{
+        flex-direction: row;
+      }
+    }
+    .login-wrap{
+      width: 100%;
+      max-width: 762px;
+      text-align: left;
+      margin: 27px auto 0;
+      label{
+        color: $default-text;
+        font: 700 16px/24px 'Muli', sans-serif;
+        input{
+          display: block;
+          margin: 7px auto 21px;
+          width: 100%;
+          box-sizing: border-box;
+          height: 48px;
+          border: 1px solid #C7C7C7;
+          border-radius: 4px;
+          font: 400 16px/24px 'Inter Regular', sans-serif;
+          color: #656565;
+          padding: 0 48px 0 16px;
+        }
+      }
+      .login-btn-wrap{
+        margin-top: 27px;
+      }
+      .login-btn{
+        border-radius: 4px;
+        background-color: $default-yellow-btns;
+        height: 48px;
+        width: 100%;
+        border: none;
+        font: 700 16px/24px 'Montserrat Bold', sans-serif;
+        color: #000;
+        text-transform: uppercase;
+        cursor: pointer;
+        &:hover {
+          background-color: #f6f162;
+          box-shadow: 0 2px 28px -13px rgba(0, 0, 0, .4);
+          color: #000;
+          transition: all .2s ease;
+        }
+      }
+      .register-and-forgot{
+        text-align: center;
+        font: 400 22px/36px 'Muli', sans-serif;
+        margin-top: 25px;
+        a,
+        span{
+          color: #324287;
+        }
+        span{
+          margin-left: 18px;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+
+
+</style>
+
+<style lang="scss">
+  /*.v-google-login{*/
+    /*display: inline-flex;*/
+  /*}*/
+  .login button.v-facebook-login{
+    justify-content: flex-start;
+    img.token{
+      display: none;
+    }
+    span{
+      div{
+        display: flex;
+        align-items: center;
+        span{
+          margin-right: 18px !important;
+        }
+      }
+    }
+    &[disabled]{
+      display: flex;
+      justify-content: flex-start;
+      .loader{
+        margin-right: 12px;
+      }
+    }
+  }
+</style>
