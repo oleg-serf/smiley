@@ -354,9 +354,7 @@
                 </div>
 
               </div>
-
             </router-link>
-
           </div>
         </carousel>
 
@@ -835,6 +833,8 @@
                   this.topEvent = res.data.data[0];
                   res.data.data.shift();
                   this.eventList = res.data.data;
+
+                  console.log(res.data.data)
 
                   this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
                     {

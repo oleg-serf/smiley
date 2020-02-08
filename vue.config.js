@@ -3,11 +3,12 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        prependData : `
+        prependData: `
           @import "@/scss/vars.scss";
           @import "@/scss/media-queries.scss";
           @import "@/scss/fonts.scss";
           @import "@/scss/animation.scss";
+          @import "@/scss/main.scss";
         `
       }
     }
