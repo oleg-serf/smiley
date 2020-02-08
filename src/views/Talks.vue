@@ -143,7 +143,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
           <p>Choose {{ currentCategory }}:</p>
           <filter-checkbox 
             v-for="goal in goals" 
-            :key="goal.name + goal.id"
+            :key="'goals-' + goal.id"
             :item="goal"
             v-model="filter.goals"
             />
@@ -716,6 +716,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
   import carousel from 'vue-owl-carousel2';
   import axios from "../axios-auth";
 
+  import { mapState, mapActions } from 'vuex'
+
   import FilterCheckbox from "../components/events/Filter-Checkbox";
 
   export default {
@@ -751,14 +753,12 @@ imagesPath + `l_`+event.cover_image+` 1160w`
       }
     },
     computed: {
+      ...mapState('events', {
+        goals: state => state.goals,
+        currentCategory: state => state.currentCategory
+      }),
       auth(){
         return this.$store.getters.isAuthenticated;
-      },
-      goals() {
-        return this.$store.getters[`events/getGoals`];
-      },
-      currentCategory() {
-        return this.$store.getters[`events/getCurrentCategory`];
       },
     },
     created(){
@@ -767,7 +767,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     beforeDestroy(){
       window.removeEventListener('resize', this.handleResize)
     },
-    mounted() {
+    mounted() {      
       this.imagesPath = this.images_path.events
         
       axios.get('/events/past')
@@ -808,7 +808,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
           })
           .catch(error => console.log(error));
 
-      this.handleResize();
 
       setTimeout(() => {
         var acc = document.querySelectorAll(".advanced-search-btn");
@@ -923,10 +922,14 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         $(this).toggleClass('button-clicked');
       });
 
-      this.$store.dispatch("events/loadEventsData");
+
+      this.loadEventsData();
+
+      this.handleResize();
 
     },
     methods: {
+      ...mapActions('events', ['loadEventsData']),
       onAttendClickHandler(index, state){
         if(!state){
           this.upcomingEvents[index].attendClicked = true;
@@ -1379,8 +1382,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     }
     .panel {
       background: transparent;
-      max-height: 0;
-      overflow: hidden;
+      max-height: unset;
+      // overflow: hidden;
       transition: 0.2s ease-out;
     }
     .talk-sidebar-btns{

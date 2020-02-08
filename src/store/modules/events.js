@@ -2,19 +2,12 @@ import axios from '@/axios-auth'
 
 // initial state
 const state = {
+  currentCategory: '',
   goals: [],
-  currentCategory: ''
 }
 
 // getters
-const getters = {
-  getGoals(state) {
-    return state.goals
-  },
-  getCurrentCategory(state) {
-    return state.currentCategory
-  },
-}
+const getters = {}
 
 // actions
 const actions = {
@@ -23,9 +16,10 @@ const actions = {
   }) {
     axios.get('/goals')
       .then(res => {
-        console.log(res.data.data[0]);
-        commit('saveGoals', res.data.data[0].goals);
-        commit('saveCurrentCategory', res.data.data[0].name);
+
+        commit('saveInfo', res.data.data[0]);
+
+        return res.data.data[0];
       })
       .catch(error => console.error(error))
   },
@@ -35,12 +29,10 @@ const actions = {
 
 // mutations
 const mutations = {
-  saveGoals(state, data) {
-    state.goals = data
-  },
-  saveCurrentCategory(state, data) {
-    state.currentCategory = data
-  },
+  saveInfo(state, data) {
+    state.goals = data.goals;
+    state.currentCategory = data.name
+  }
 }
 
 export default {
