@@ -105,7 +105,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
 
       <div class="talk-sidebar">
         <p class="log-sign-req" v-if="!auth">To search and filter please <a href="#">log in</a> or <a href="#">sign up</a></p>
-        <div class="smiley-notify" v-if="!auth">
+        <div class="smiley-notify" v-if="auth">
           <div class="smiley-notify-text">Love our Smiley Talks? We’ll notify you when we have one coming up</div>
           <label class="notify-checkbox">
             <input type="checkbox" name="notify-checkbox">
