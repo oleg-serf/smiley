@@ -374,7 +374,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
                   <div class="smiley-img">
                     <!-- TODO: Fix srcset attribute -->
                     <img 
-                      :src="imagesPath +'l_'+event.cover_image" 
+                      :src="imagesPath +'m_'+event.cover_image" 
                       :alt="event.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
@@ -492,7 +492,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
               <div class="smiley-img-wrap">
                 <div class="smiley-img">
                   <img 
-                      :src="imagesPath +'l_'+event.cover_image" 
+                      :src="imagesPath +'m_'+event.cover_image" 
                       :alt="event.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
@@ -642,7 +642,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
               <div class="smiley-img-wrap">
                 <div class="smiley-img">
                   <img 
-                      :src="imagesPath +'l_'+event.cover_image" 
+                      :src="imagesPath +'m_'+event.cover_image" 
                       :alt="event.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
