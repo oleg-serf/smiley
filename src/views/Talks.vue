@@ -140,7 +140,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
           </svg>
         </div>
         <div class="checkboxes-block panel">
-          <p>Chose SDG:</p>
+          <p>Choose SDG:</p>
           <filter-checkbox 
             v-for="goal in goals" 
             :key="goal.name + goal.id"
