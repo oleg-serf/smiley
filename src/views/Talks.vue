@@ -141,134 +141,12 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
         </div>
         <div class="checkboxes-block panel">
           <p>Chose SDG:</p>
-          <label class="sidebar-checkbox">Affordable clean energy
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Clean water and sanitation
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Climate action
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Decent work and economic growth
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Gender equality
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Good Health and Wellbeing
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Industry, Innovation and Infrastructure
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Life below water
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">No poverty
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Partnerships for the goals
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Gender equality
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Good Health and Wellbeing
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Industry, Innovation and Infrastructure
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Life below water
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">No poverty
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
-          <label class="sidebar-checkbox">Partnerships for the goals
-            <input type="checkbox">
-            <span class="sidebar-checkmark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z" fill="#fff"/>
-          </svg>
-        </span>
-          </label>
+          <filter-checkbox 
+            v-for="goal in goals" 
+            :key="goal.name + goal.id"
+            :item="goal"
+            v-model="filter.goals"
+            />
         </div>
         <div class="talk-sidebar-btns">
           <button class="simple-search-btn">Simple search</button>
@@ -838,6 +716,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
   import carousel from 'vue-owl-carousel2';
   import axios from "../axios-auth";
 
+  import FilterCheckbox from "../components/events/Filter-Checkbox";
+
   export default {
     name: "Talks",
     components: { carousel },
@@ -848,6 +728,10 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         eventList: null,
         eventPastList: null,
         imagesPath: null,
+
+        filter: {
+          goals: []
+        },
 
         upcomingEvents: null,
         pastEvents: null
@@ -869,7 +753,10 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     computed: {
       auth(){
         return this.$store.getters.isAuthenticated;
-      }
+      },
+      goals() {
+        return this.$store.getters[`events/getGoals`];
+      },
     },
     created(){
       window.addEventListener('resize', this.handleResize)
@@ -879,6 +766,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     },
     mounted() {
       this.imagesPath = this.images_path.events
+        
+      this.$store.dispatch("events/loadGoals");
 
       axios.get('/events/past')
           .then(res => {
@@ -888,8 +777,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                   this.topEvent = res.data.data[0];
                   res.data.data.shift();
                   this.eventList = res.data.data;
-
-                  console.log(res.data.data)
 
                   this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
                     {
@@ -1099,7 +986,10 @@ imagesPath + `l_`+event.cover_image+` 1160w`
           this.showCarousel = true;
         }
       }
-    }
+    },
+    components: {
+      FilterCheckbox
+    },
   }
 </script>
 
@@ -1480,51 +1370,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         margin: 14px 0 15px;
         @include lg{
           margin-top: 25px;
-        }
-      }
-      .sidebar-checkbox {
-        position: relative;
-        padding-left: 40px;
-        margin-bottom: 21px;
-        cursor: pointer;
-        color: $default-text;
-        font: 400 16px/24px 'Muli', sans-serif;
-        user-select: none;
-        display: block;
-        input {
-          position: absolute;
-          opacity: 0;
-          cursor: pointer;
-          height: 0;
-          width: 0;
-        }
-        .sidebar-checkmark {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 24px;
-          width: 24px;
-          border: 1px solid #c7c7c7;
-          border-radius: 4px;
-          box-sizing: border-box;
-          transition: all .2s ease;
-          svg{
-            opacity: 0;
-            position: absolute;
-            top: 4px;
-            left: 4px;
-          }
-        }
-        &:last-of-type{
-          margin-bottom: 3px;
-        }
-      }
-      .sidebar-checkbox input:checked ~ .sidebar-checkmark {
-        background-color: #de1c22;
-        border: none;
-        transition: all .2s ease;
-        svg{
-          opacity: 1;
         }
       }
     }

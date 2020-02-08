@@ -4,6 +4,8 @@ import axios from '../axios-auth'
 
 import router from '../router'
 
+import events from './modules/events'
+
 
 Vue.use(Vuex);
 
@@ -14,52 +16,63 @@ export default new Vuex.Store({
     userId: null
   },
   mutations: {
-    authUser (state, token){
+    authUser(state, token) {
       state.idToken = token;
     },
-    clearToken (state){
+    clearToken(state) {
       state.idToken = null;
       localStorage.removeItem('token');
     }
   },
   actions: {
-    signup ({commit}, authData){
+    signup({
+      commit
+    }, authData) {
       axios.post('/register', authData)
-          .then(res => {
-            console.log(res);
-            commit('authUser', res.data.token);
-            // const now = new Date();
-            // const expirationDate = now.getTime()
-            localStorage.setItem('token', res.data.token);
-            router.replace('/');
-          })
-          .catch(error => console.log(error))
+        .then(res => {
+          console.log(res);
+          commit('authUser', res.data.token);
+          // const now = new Date();
+          // const expirationDate = now.getTime()
+          localStorage.setItem('token', res.data.token);
+          router.replace('/');
+        })
+        .catch(error => console.log(error))
     },
-    login({commit}, authData){
+    login({
+      commit
+    }, authData) {
       axios.post('/login', authData)
-          .then(res => {
-            console.log(res);
-            commit('authUser', res.data.token);
-            localStorage.setItem('token', res.data.token);
-            router.replace('/');
-          })
-          .catch(error => console.log(error))
+        .then(res => {
+          console.log(res);
+          commit('authUser', res.data.token);
+          localStorage.setItem('token', res.data.token);
+          router.replace('/');
+        })
+        .catch(error => console.log(error))
     },
-    autoLogin({commit}){
+    autoLogin({
+      commit
+    }) {
       const token = localStorage.getItem('token');
-      if(!token){
+      if (!token) {
         return;
       }
 
       commit('authUser', token);
     },
-    logout({commit}){
+    logout({
+      commit
+    }) {
       commit('clearToken');
     }
   },
   getters: {
-    isAuthenticated(state){
+    isAuthenticated(state) {
       return state.idToken !== null;
     }
+  },
+  modules: {
+    events
   }
 })
