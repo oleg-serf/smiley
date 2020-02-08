@@ -112,7 +112,8 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
             <span class="notify-checkmark"></span>
           </label>
         </div>
-        <div class="location-search">
+        <!-- TODO: - remove hide -->
+        <div class="location-search" style="display: none">
           <label for="location">Location
             <input type="text" name="location" id="location" placeholder="exemple: Brighton">
           </label>
@@ -120,7 +121,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
             <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z" fill="#1A1A1A"/>
           </svg>
         </div>
-        <p class="location-distance">within <a href="#">100 miles</a> of <a href="#">London, GB</a></p>
+        <p class="location-distance" style="display: none">within <a href="#">100 miles</a> of <a href="#">London, GB</a></p>
         <div class="search-by-keyword">
           <label for="keyword-search">
             <input type="text" name="keyword-search" id="keyword-search" placeholder="search by keyword">
