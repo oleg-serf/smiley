@@ -739,19 +739,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         pastEvents: null
       }
     },
-    filters: {
-      formatTime: function(time) {
-        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-        if (time.length > 1) {
-          time = time.slice (1);
-          time[5] = +time[0] < 12 ? 'AM' : 'PM';
-          time[0] = +time[0] % 12 || 12;
-          time[3] = '';
-        }
-        return time.join ('');
-      }
-    },
     computed: {
       ...mapState('events', {
         goals: state => state.goals,
@@ -925,8 +912,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
 
       this.loadEventsData();
 
+      // WARNING! - Always trigger resize event after loading data\markup changes
       this.handleResize();
-
     },
     methods: {
       ...mapActions('events', ['loadEventsData']),

@@ -48,6 +48,7 @@ axios.defaults.headers.get['Accepts'] = 'application/json'
 // axios.interceptors.request.eject(reqInterceptor)
 // axios.interceptors.response.eject(resInterceptor)
 
+// TODO: Mixins in separate file
 Vue.mixin({
   data: function () {
     return {
@@ -55,12 +56,28 @@ Vue.mixin({
         let base = 'https://new-smiley.s3.eu-west-2.amazonaws.com/';
         return {
           events: base + 'events/',
-          speakers: base + 'speakers/'
+          speakers: base + 'speakers/',
+          partners: base + 'partners/',
         }
       }
     }
   }
 })
+
+// TODO: Filters in separate file
+Vue.filter('formatTime', function (time) {
+  time = time
+    .toString()
+    .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+  if (time.length > 1) {
+    time = time.slice(1);
+    time[5] = +time[0] < 12 ? "AM" : "PM";
+    time[0] = +time[0] % 12 || 12;
+    time[3] = "";
+  }
+  return time.join("");
+});
 
 new Vue({
   router,
