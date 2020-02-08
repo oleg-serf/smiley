@@ -332,7 +332,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
               <div class="info-wrap">
                 <div class="info-border">
                   <h2>{{event.title}}</h2>
-                  <p>{{event.short_description}}</p>
+                  <p class="info-full-height">{{event.short_description}}</p>
 
                   <div class="date-and-time-wrap">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -422,7 +422,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
               <div class="info-wrap">
                 <div class="info-border">
                   <h2>{{event.title}}</h2>
-                  <p>{{event.short_description}}</p>
+                  <p class="info-full-height">{{event.short_description}}</p>
 
                   <div class="date-and-time-wrap">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -514,7 +514,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
             <div class="info-wrap">
               <div class="info-border">
                 <h2>{{event.title}}</h2>
-                <p>{{event.short_description}}</p>
+                <p class="info-full-height">{{event.short_description}}</p>
 
                 <div class="date-and-time-wrap">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -598,7 +598,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
 <!--            <div class="info-wrap">-->
 <!--              <div class="info-border">-->
 <!--                <h2>{{event.title}}</h2>-->
-<!--                <p>{{event.short_description}}</p>-->
+<!--                <p class="info-full-height">{{event.short_description}}</p>-->
 
 <!--                <div class="date-and-time-wrap">-->
 <!--                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
@@ -690,7 +690,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
             <div class="info-wrap">
               <div class="info-border">
                 <h2>{{event.title}}</h2>
-                <p>{{event.short_description}}</p>
+                <p class="info-full-height">{{event.short_description}}</p>
 
                 <div class="date-and-time-wrap">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1711,6 +1711,9 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         display: flex;
         flex-direction: column;
         height: 100%;
+      }
+      .info-full-height{
+        flex: 1
       }
       h2{
         color: $default-text;
