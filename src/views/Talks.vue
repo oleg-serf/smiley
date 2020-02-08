@@ -770,8 +770,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     mounted() {
       this.imagesPath = this.images_path.events
         
-      this.$store.dispatch("events/loadEventsData");
-
       axios.get('/events/past')
           .then(res => {
             axios.get('/events')
@@ -924,6 +922,9 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         $('#overlay').toggleClass('display-none');
         $(this).toggleClass('button-clicked');
       });
+
+      this.$store.dispatch("events/loadEventsData");
+
     },
     methods: {
       onAttendClickHandler(index, state){
