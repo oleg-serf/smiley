@@ -48,6 +48,20 @@ axios.defaults.headers.get['Accepts'] = 'application/json'
 // axios.interceptors.request.eject(reqInterceptor)
 // axios.interceptors.response.eject(resInterceptor)
 
+Vue.mixin({
+  data: function () {
+    return {
+      get images_path() {
+        let base = 'https://new-smiley.s3.eu-west-2.amazonaws.com/';
+        return {
+          events: base + 'events/',
+          speakers: base + 'speakers/'
+        }
+      }
+    }
+  }
+})
+
 new Vue({
   router,
   store,

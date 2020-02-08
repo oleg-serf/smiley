@@ -846,7 +846,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         topEvent: null,
         eventList: null,
         eventPastList: null,
-        imagesPath: 'https://new-smiley.s3.eu-west-2.amazonaws.com/events/',
+        imagesPath: null,
 
         upcomingEvents: null,
         pastEvents: null
@@ -859,6 +859,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
       window.removeEventListener('resize', this.handleResize)
     },
     mounted() {
+      this.imagesPath = this.images_path.events
+
       axios.get('/events/past')
           .then(res => {
             axios.get('/events')
@@ -867,8 +869,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                   this.topEvent = res.data.data[0];
                   res.data.data.shift();
                   this.eventList = res.data.data;
-
-                  console.log(res.data.data)
 
                   this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
                     {
