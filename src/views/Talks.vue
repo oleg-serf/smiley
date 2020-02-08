@@ -1382,7 +1382,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     }
     .panel {
       background: transparent;
-      max-height: unset;
+      max-height: unset !important;
       // overflow: hidden;
       transition: 0.2s ease-out;
     }
