@@ -74,7 +74,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
                     </svg>
                     <div class="date-and-time-info">
                       <div class="date-info">{{new Date(topEvent.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                      <div class="time-info">{{topEvent.time_start}} - {{topEvent.time_end}}</div>
+                      <div class="time-info">{{topEvent.time_start  | formatTime | formatTime}} - {{topEvent.time_end  | formatTime  | formatTime}}</div>
                     </div>
                   </div>
                   <div class="location-info">
@@ -340,7 +340,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
                     </svg>
                     <div class="date-and-time-info">
                       <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                      <div class="time-info">{{event.time_start}} - {{event.time_end}}</div>
+                      <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
                     </div>
                   </div>
 
@@ -430,7 +430,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                     </svg>
                     <div class="date-and-time-info">
                       <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                      <div class="time-info">{{event.time_start}} - {{event.time_end}}</div>
+                      <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
                     </div>
                   </div>
 
@@ -522,7 +522,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                   </svg>
                   <div class="date-and-time-info">
                     <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                    <div class="time-info">{{event.time_start}} - {{event.time_end}}</div>
+                    <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
                   </div>
                 </div>
 
@@ -606,7 +606,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
 <!--                  </svg>-->
 <!--                  <div class="date-and-time-info">-->
 <!--                    <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>-->
-<!--                    <div class="time-info">{{event.time_start}} - {{event.time_end}}</div>-->
+<!--                    <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>-->
 <!--                  </div>-->
 <!--                </div>-->
 
@@ -698,7 +698,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                   </svg>
                   <div class="date-and-time-info">
                     <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                    <div class="time-info">{{event.time_start}} - {{event.time_end}}</div>
+                    <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
                   </div>
                 </div>
 
@@ -852,6 +852,19 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         pastEvents: null
       }
     },
+    filters: {
+      formatTime: function(time) {
+        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+        if (time.length > 1) {
+          time = time.slice (1);
+          time[5] = +time[0] < 12 ? 'AM' : 'PM';
+          time[0] = +time[0] % 12 || 12;
+          time[3] = '';
+        }
+        return time.join ('');
+      }
+    },
     created(){
       window.addEventListener('resize', this.handleResize)
     },
@@ -869,6 +882,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                   this.topEvent = res.data.data[0];
                   res.data.data.shift();
                   this.eventList = res.data.data;
+
+                  console.log(res.data.data)
 
                   this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
                     {
