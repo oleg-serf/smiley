@@ -140,7 +140,7 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
           </svg>
         </div>
         <div class="checkboxes-block panel">
-          <p>Choose SDG:</p>
+          <p>Choose {{ currentCategory }}:</p>
           <filter-checkbox 
             v-for="goal in goals" 
             :key="goal.name + goal.id"
@@ -757,6 +757,9 @@ imagesPath + `l_`+event.cover_image+` 1160w`
       goals() {
         return this.$store.getters[`events/getGoals`];
       },
+      currentCategory() {
+        return this.$store.getters[`events/getCurrentCategory`];
+      },
     },
     created(){
       window.addEventListener('resize', this.handleResize)
@@ -767,7 +770,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     mounted() {
       this.imagesPath = this.images_path.events
         
-      this.$store.dispatch("events/loadGoals");
+      this.$store.dispatch("events/loadEventsData");
 
       axios.get('/events/past')
           .then(res => {
