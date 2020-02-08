@@ -789,9 +789,9 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                     }
                   ));
 
-                  setTimeout(() => {
-                    this.handleResize();
-                  },0);
+                  // setTimeout(() => {
+                  //   this.handleResize();
+                  // },0);
                 })
                 .catch(error => console.log(error));
             this.eventPastList = res.data.data;
