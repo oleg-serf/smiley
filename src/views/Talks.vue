@@ -40,11 +40,19 @@
           <h2 class="upcoming-info-title">Upcoming smiley talk</h2>
 
           <div class="talk-card-wrap" v-if="topEvent">
-            <router-link :to="'/event/' + topEvent.id"  class="talk-card">
+            <router-link :to="'/event/' + topEvent.id"  class="talk-card talk-card--featured">
               <div class="pic-wrap">
                 <div class="smiley-img-wrap">
                   <div class="smiley-img">
-                    <img src="img/talk/upcoming-talk-big-x2.jpg" alt="Upcoming talk picture">
+                    <img 
+                      :src="imagesPath +'l_'+topEvent.cover_image" 
+                      :alt="topEvent.title"
+                      sizes="(max-width: 1160px) 100vw, 1160px"
+                      :srcset="
+imagesPath + `s_`+topEvent.cover_image+` 150w,` +
+imagesPath + `m_`+topEvent.cover_image+` 360w,` +
+imagesPath + `l_`+topEvent.cover_image+` 1160w`
+                     ">
                   </div>
                 </div>
                 <label class="talk-card-checkbox">
@@ -364,7 +372,16 @@
               <div class="pic-wrap">
                 <div class="smiley-img-wrap">
                   <div class="smiley-img">
-                    <img src="img/talk/card-image-1-x2.jpg" alt="talk image 1">
+                    <!-- TODO: Fix srcset attribute -->
+                    <img 
+                      :src="imagesPath +'l_'+event.cover_image" 
+                      :alt="event.title"
+                      sizes="(max-width: 1160px) 100vw, 1160px"
+                      :srcset="
+imagesPath + `s_`+event.cover_image+` 150w,` +
+imagesPath + `m_`+event.cover_image+` 360w,` +
+imagesPath + `l_`+event.cover_image+` 1160w`
+                     ">
                   </div>
                 </div>
               </div>
@@ -474,7 +491,15 @@
             <div class="pic-wrap">
               <div class="smiley-img-wrap">
                 <div class="smiley-img">
-                  <img src="img/talk/card-image-1-x2.jpg" alt="talk image 1">
+                  <img 
+                      :src="imagesPath +'l_'+event.cover_image" 
+                      :alt="event.title"
+                      sizes="(max-width: 1160px) 100vw, 1160px"
+                      :srcset="
+imagesPath + `s_`+event.cover_image+` 150w,` +
+imagesPath + `m_`+event.cover_image+` 360w,` +
+imagesPath + `l_`+event.cover_image+` 1160w`
+                     ">
                 </div>
               </div>
               <label class="talk-card-checkbox">
@@ -616,7 +641,15 @@
             <div class="pic-wrap">
               <div class="smiley-img-wrap">
                 <div class="smiley-img">
-                  <img src="img/talk/card-image-1-x2.jpg" alt="talk image 1">
+                  <img 
+                      :src="imagesPath +'l_'+event.cover_image" 
+                      :alt="event.title"
+                      sizes="(max-width: 1160px) 100vw, 1160px"
+                      :srcset="
+imagesPath + `s_`+event.cover_image+` 150w,` +
+imagesPath + `m_`+event.cover_image+` 360w,` +
+imagesPath + `l_`+event.cover_image+` 1160w`
+                     ">
                 </div>
               </div>
             </div>
@@ -813,6 +846,7 @@
         topEvent: null,
         eventList: null,
         eventPastList: null,
+        imagesPath: 'https://new-smiley.s3.eu-west-2.amazonaws.com/events/',
 
         upcomingEvents: null,
         pastEvents: null
@@ -1649,8 +1683,21 @@
         width: 100%;
         display: block;
         margin: 0 auto;
+        height: 255px;
+        object-fit: cover;
+        object-position: center;
       }
     }
+
+    &--featured {
+      .pic-wrap {
+        height: 100%;
+        img {
+          height: 100%
+        }
+      }
+    }
+
     .info-wrap{
       border: 1px solid #dcddde;
       border-top: none;
