@@ -41,7 +41,7 @@ const actions = {
         console.log(res);
         console.log(res.status);
         commit('SET_USERDATA', res.data.token);
-        commit('SET_USER_ATTENDING_EVENTS', res.data.data.attending);
+        commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
         router.replace('/');
       })
       .catch(error => {
@@ -64,7 +64,9 @@ const mutations = {
   },
   REMOVE_USERDATA(state) {
     state.token = null;
+    state.attendingEvents = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('attendingEvents');
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
     state.attendingEvents = data;

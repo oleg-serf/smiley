@@ -546,10 +546,9 @@ export default {
           .get("/events")
           .then(res => {
             this.showCarousel = false;
-            this.topEvent = res.data.data[0];
-            res.data.data.shift();
-            this.eventList = res.data.data;
-            console.log(res.data);
+            this.topEvent = res.data.events[0];
+            res.data.events.shift();
+            this.eventList = res.data.events;
 
             // this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
             //   {
@@ -566,7 +565,7 @@ export default {
             // },0);
           })
           .catch(error => console.log(error));
-        this.eventPastList = res.data.data;
+        this.eventPastList = res.data.events;
 
         this.pastEvents = new Array(this.eventPastList.length)
           .fill(null)

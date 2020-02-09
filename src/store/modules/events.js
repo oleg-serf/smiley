@@ -16,10 +16,9 @@ const actions = {
   }) {
     axios.get('/goals')
       .then(res => {
+        commit('saveInfo', res.data.goal_categories[0]);
 
-        commit('saveInfo', res.data.data[0]);
-
-        return res.data.data[0];
+        return res.data.goal_categories[0];
       })
       .catch(error => console.error(error))
   },
@@ -29,7 +28,8 @@ const actions = {
     console.log(item);
     axios.post('/events/' + item.id + '/attend', item)
       .then(res => {
-        let result = res.data.data.attending;
+        console.log(res)
+        let result = res.data.attending;
         commit('user/SET_USER_ATTENDING_EVENTS', result, {
           root: true
         })
