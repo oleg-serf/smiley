@@ -48,21 +48,19 @@ axios.defaults.headers.get['Accepts'] = 'application/json'
 // axios.interceptors.request.eject(reqInterceptor)
 // axios.interceptors.response.eject(resInterceptor)
 
-// TODO: Mixins in separate file
-Vue.mixin({
-  data: function () {
-    return {
-      get images_path() {
-        let base = 'https://new-smiley.s3.eu-west-2.amazonaws.com/';
-        return {
-          events: base + 'events/',
-          speakers: base + 'speakers/',
-          partners: base + 'partners/',
-        }
-      }
-    }
+Vue.prototype.$settings = {
+  images_path: {
+    events: `https://new-smiley.s3.eu-west-2.amazonaws.com/events/`,
+    speakers: `https://new-smiley.s3.eu-west-2.amazonaws.com/speakers/`,
+    partners: `https://new-smiley.s3.eu-west-2.amazonaws.com/partners/`,
+  },
+  social: {
+    facebook: 'https://facebook.com/SmileyMovement/',
+    twitter: 'https://twitter.com/Smiley_Movement',
+    instagram: 'https://www.instagram.com/smileymovement',
+    linkedin: 'https://linkedin.com/company/smiley-movement',
   }
-})
+}
 
 
 // TODO: Filters in separate file

@@ -25,13 +25,13 @@
                 <div class="smiley-img-wrap">
                   <div class="smiley-img">
                     <img 
-                      :src="imagesPath +'l_'+topEvent.cover_image" 
+                      :src="$settings.images_path.events +'l_'+topEvent.cover_image" 
                       :alt="topEvent.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
-imagesPath + `s_`+topEvent.cover_image+` 150w,` +
-imagesPath + `m_`+topEvent.cover_image+` 360w,` +
-imagesPath + `l_`+topEvent.cover_image+` 1160w`
+$settings.images_path.events + `s_`+topEvent.cover_image+` 150w,` +
+$settings.images_path.events + `m_`+topEvent.cover_image+` 360w,` +
+$settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
                      ">
                   </div>
                 </div>
@@ -233,13 +233,13 @@ imagesPath + `l_`+topEvent.cover_image+` 1160w`
                   <div class="smiley-img">
                     <!-- TODO: Fix srcset attribute -->
                     <img 
-                      :src="imagesPath +'m_'+event.cover_image" 
+                      :src="$settings.images_path.events +'m_'+event.cover_image" 
                       :alt="event.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
-imagesPath + `s_`+event.cover_image+` 150w,` +
-imagesPath + `m_`+event.cover_image+` 360w,` +
-imagesPath + `l_`+event.cover_image+` 1160w`
+$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
+$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
+$settings.images_path.events + `l_`+event.cover_image+` 1160w`
                      ">
                   </div>
                 </div>
@@ -351,13 +351,13 @@ imagesPath + `l_`+event.cover_image+` 1160w`
               <div class="smiley-img-wrap">
                 <div class="smiley-img">
                   <img 
-                      :src="imagesPath +'m_'+event.cover_image" 
+                      :src="$settings.images_path.events +'m_'+event.cover_image" 
                       :alt="event.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
-imagesPath + `s_`+event.cover_image+` 150w,` +
-imagesPath + `m_`+event.cover_image+` 360w,` +
-imagesPath + `l_`+event.cover_image+` 1160w`
+$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
+$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
+$settings.images_path.events + `l_`+event.cover_image+` 1160w`
                      ">
                 </div>
               </div>
@@ -501,13 +501,13 @@ imagesPath + `l_`+event.cover_image+` 1160w`
               <div class="smiley-img-wrap">
                 <div class="smiley-img">
                   <img 
-                      :src="imagesPath +'m_'+event.cover_image" 
+                      :src="$settings.images_path.events +'m_'+event.cover_image" 
                       :alt="event.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
-imagesPath + `s_`+event.cover_image+` 150w,` +
-imagesPath + `m_`+event.cover_image+` 360w,` +
-imagesPath + `l_`+event.cover_image+` 1160w`
+$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
+$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
+$settings.images_path.events + `l_`+event.cover_image+` 1160w`
                      ">
                 </div>
               </div>
@@ -681,7 +681,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         topEvent: null,
         eventList: null,
         eventPastList: null,
-        imagesPath: null,
 
         filter: {
           goals: []
@@ -707,8 +706,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
       window.removeEventListener('resize', this.handleResize)
     },
     mounted() {      
-      this.imagesPath = this.images_path.events
-        
       axios.get('/events/past')
           .then(res => {
             axios.get('/events')

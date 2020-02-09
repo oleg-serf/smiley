@@ -2,7 +2,7 @@
   <div class="social-icons">
     <ul>
       <li>
-        <a href="#">
+        <a :href="$settings.social.facebook">
           <svg
             width="24"
             height="24"
@@ -20,7 +20,7 @@
         </a>
       </li>
       <li>
-        <a href="#">
+        <a :href="$settings.social.twitter">
           <svg
             width="24"
             height="24"
@@ -38,7 +38,7 @@
         </a>
       </li>
       <li>
-        <a href="#">
+        <a :href="$settings.social.instagram">
           <svg
             width="24"
             height="24"
@@ -56,7 +56,7 @@
         </a>
       </li>
       <li>
-        <a href="#">
+        <a :href="$settings.social.linkedin">
           <svg
             width="24"
             height="24"
