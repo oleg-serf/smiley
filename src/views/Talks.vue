@@ -698,7 +698,9 @@ export default {
     this.$store.dispatch("events/loadEventsData");
 
     // WARNING! - Always trigger resize event after loading data\markup changes
-    this.handleResize();
+    setTimeout(() => {
+      this.handleResize();
+    }, 500);
   },
   methods: {
     handleResize() {
