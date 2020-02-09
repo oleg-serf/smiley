@@ -29,8 +29,10 @@ const actions = {
     console.log(item);
     axios.post('/events/' + item.id + '/attend', item)
       .then(res => {
-        console.log(res);
-
+        let result = res.data.data.attending;
+        commit('user/SET_USER_ATTENDING_EVENTS', result, {
+          root: true
+        })
       })
       .catch(error => console.error(error))
   },

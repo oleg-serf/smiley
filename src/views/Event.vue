@@ -309,7 +309,7 @@
                 <img
                   v-for="partner in event.partners"
                   :key="partner.name + partner.id"
-                  :src="imagesPath + 's_' +partner.image"
+                  :src="$settings.images_path.partners + 's_' +partner.image"
                   :alt="partner.name"
                   :title="partner.name"
                 />
@@ -383,14 +383,11 @@ export default {
       places: [],
       currentPlace: null,
       id: this.$route.params.id,
-      event: null,
-      imagesPath: null
+      event: null
     };
   },
 
   mounted() {
-    this.imagesPath = this.images_path.partners;
-
     setTimeout(() => {
       var acc = document.getElementsByClassName("accordion");
       var i;

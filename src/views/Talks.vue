@@ -1,65 +1,91 @@
 <template>
   <div>
-    
     <breadcrumbs />
 
     <section class="upcoming-talk-section">
-
       <div class="upcoming-talk-wrap">
         <div class="title-colored-block">
           <div class="smiley-talks-main-title">
-            <img src="img/homepage/smiley-main-title.svg" alt="smiley talks">
+            <img src="img/homepage/smiley-main-title.svg" alt="smiley talks" />
             <p>Talks</p>
           </div>
           <h2 class="upcoming-block-register">Register for a Smiley Talk!</h2>
-          <p class="upcoming-block-descr">Smiley Talks bring expert speakers and members of the public together in a unique, memorable experience.</p>
-
+          <p
+            class="upcoming-block-descr"
+          >Smiley Talks bring expert speakers and members of the public together in a unique, memorable experience.</p>
         </div>
 
         <div class="upcoming-info-block container">
           <h2 class="upcoming-info-title">Upcoming smiley talk</h2>
 
           <div class="talk-card-wrap" v-if="topEvent">
-            <router-link :to="'/event/' + topEvent.id"  class="talk-card talk-card--featured">
+            <router-link :to="'/event/' + topEvent.id" class="talk-card talk-card--featured">
               <div class="pic-wrap">
                 <div class="smiley-img-wrap">
                   <div class="smiley-img">
-                    <img 
-                      :src="$settings.images_path.events +'l_'+topEvent.cover_image" 
+                    <img
+                      :src="$settings.images_path.events +'l_'+topEvent.cover_image"
                       :alt="topEvent.title"
                       sizes="(max-width: 1160px) 100vw, 1160px"
                       :srcset="
 $settings.images_path.events + `s_`+topEvent.cover_image+` 150w,` +
 $settings.images_path.events + `m_`+topEvent.cover_image+` 360w,` +
 $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
-                     ">
+                     "
+                    />
                   </div>
                 </div>
-                <label class="talk-card-checkbox">
+                <!-- <label class="talk-card-checkbox">
                   <input type="checkbox" name="talk-card-checkbox">
                   <span class="talk-card-checkmark">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>
                     </svg>
                   </span>
-                </label>
+                </label>-->
               </div>
               <div class="info-wrap">
                 <div class="info-border">
                   <h2>{{topEvent.title}}</h2>
                   <p>{{topEvent.short_description}}</p>
                   <div class="date-and-time-wrap">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z" fill="#d21217"/>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z"
+                        fill="#d21217"
+                      />
                     </svg>
                     <div class="date-and-time-info">
-                      <div class="date-info">{{new Date(topEvent.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                      <div class="time-info">{{topEvent.time_start  | formatTime | formatTime}} - {{topEvent.time_end  | formatTime  | formatTime}}</div>
+                      <div
+                        class="date-info"
+                      >{{new Date(topEvent.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
+                      <div
+                        class="time-info"
+                      >{{topEvent.time_start | formatTime | formatTime}} - {{topEvent.time_end | formatTime | formatTime}}</div>
                     </div>
                   </div>
                   <div class="location-info">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="#d21217"/>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z"
+                        fill="#d21217"
+                      />
                     </svg>
                     <div>{{topEvent.location}}</div>
                   </div>
@@ -67,66 +93,126 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
                 <div class="attending-info" v-if="topEvent.attendees_random.length !== 0">
                   <span>Attending:</span>
                   <div class="attending-wrap">
-                    <div class="attendees-avatar" :class="{next: index > 0}" v-for="(attendees, index) in topEvent.attendees_random" :key="attendees.id">
-                      <img src="img/event/attendees-avatar-1.jpg" alt="avatar">
+                    <div
+                      class="attendees-avatar"
+                      :class="{next: index > 0}"
+                      v-for="(attendees, index) in topEvent.attendees_random"
+                      :key="attendees.id"
+                    >
+                      <img src="img/event/attendees-avatar-1.jpg" alt="avatar" />
                     </div>
                   </div>
                 </div>
               </div>
             </router-link>
           </div>
-
         </div>
       </div>
-
     </section>
 
     <section class="talk-main-section">
-
       <div class="talk-sidebar">
-        <p class="log-sign-req" v-if="!auth">To search and filter please <a href="#">log in</a> or <a href="#">sign up</a></p>
+        <p class="log-sign-req" v-if="!auth">
+          To search and filter please
+          <a href="#">log in</a> or
+          <a href="#">sign up</a>
+        </p>
         <div class="smiley-notify" v-if="auth">
-          <div class="smiley-notify-text">Love our Smiley Talks? We’ll notify you when we have one coming up</div>
+          <div
+            class="smiley-notify-text"
+          >Love our Smiley Talks? We’ll notify you when we have one coming up</div>
           <label class="notify-checkbox">
-            <input type="checkbox" name="notify-checkbox">
+            <input type="checkbox" name="notify-checkbox" />
             <span class="notify-checkmark"></span>
           </label>
         </div>
         <!-- TODO: - remove hide -->
         <div class="location-search" style="display: none">
-          <label for="location">Location
-            <input type="text" name="location" id="location" placeholder="exemple: Brighton">
+          <label for="location">
+            Location
+            <input
+              type="text"
+              name="location"
+              id="location"
+              placeholder="exemple: Brighton"
+            />
           </label>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z" fill="#1A1A1A"/>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
+              fill="#1A1A1A"
+            />
           </svg>
         </div>
-        <p class="location-distance" style="display: none">within <a href="#">100 miles</a> of <a href="#">London, GB</a></p>
+        <p class="location-distance" style="display: none">
+          within
+          <a href="#">100 miles</a> of
+          <a href="#">London, GB</a>
+        </p>
         <div class="search-by-keyword">
           <label for="keyword-search">
-            <input type="text" name="keyword-search" id="keyword-search" placeholder="search by keyword">
+            <input
+              type="text"
+              name="keyword-search"
+              id="keyword-search"
+              placeholder="search by keyword"
+            />
           </label>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z" fill="#1A1A1A"/>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
+              fill="#1A1A1A"
+            />
           </svg>
-
         </div>
         <div class="select-period">
           <label for="time-period">
-            <input type="text" name="time-period" id="time-period" placeholder="Select a time period">
+            <input
+              type="text"
+              name="time-period"
+              id="time-period"
+              placeholder="Select a time period"
+            />
           </label>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M5 22C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5ZM8 17H4V19C4 19.5523 4.44772 20 5 20H8V17ZM14 17H10V20H14V17ZM20 17H16V20H19C19.5523 20 20 19.5523 20 19V17ZM8 12H4V15H8V12ZM14 12H10V15H14V12ZM20 12H16V15H20V12ZM6 6H5C4.44772 6 4 6.44772 4 7V10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6Z" fill="#1A1A1A"/>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M5 22C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5ZM8 17H4V19C4 19.5523 4.44772 20 5 20H8V17ZM14 17H10V20H14V17ZM20 17H16V20H19C19.5523 20 20 19.5523 20 19V17ZM8 12H4V15H8V12ZM14 12H10V15H14V12ZM20 12H16V15H20V12ZM6 6H5C4.44772 6 4 6.44772 4 7V10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6Z"
+              fill="#1A1A1A"
+            />
           </svg>
         </div>
         <div class="checkboxes-block panel">
           <p>Choose {{ currentCategory }}:</p>
-          <filter-checkbox 
-            v-for="goal in goals" 
+          <filter-checkbox
+            v-for="goal in goals"
             :key="'goals-' + goal.id"
             :item="goal"
             v-model="filter.goals"
-            />
+          />
         </div>
         <div class="talk-sidebar-btns">
           <button class="simple-search-btn">Simple search</button>
@@ -141,86 +227,96 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           <ul>
             <li>
               <a href="#">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z" fill="#1A1A1A"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z"
+                    fill="#1A1A1A"
+                  />
                 </svg>
               </a>London
             </li>
             <li>
               <a href="#">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z" fill="#1A1A1A"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z"
+                    fill="#1A1A1A"
+                  />
                 </svg>
               </a>Clean water and sanitation
             </li>
             <li>
               <a href="#">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z" fill="#1A1A1A"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z"
+                    fill="#1A1A1A"
+                  />
                 </svg>
               </a>Climate action
             </li>
             <li>
               <a href="#">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z" fill="#1A1A1A"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z"
+                    fill="#1A1A1A"
+                  />
                 </svg>
               </a>Decent work and economic growth
             </li>
           </ul>
         </div>
 
-        <carousel class="talk-cards-container" v-if="showCarousel && eventList" :nav="false" :items="3" :margin="19" :autoplayHoverPause="true" :loop="true" :autoplay="true" :autoplayTimeout="5000" :autoWidth="true" :autoplaySpeed="3000" smartSpeed="1000">
+        <carousel
+          class="talk-cards-container"
+          v-if="showCarousel && eventList"
+          :nav="false"
+          :items="3"
+          :margin="19"
+          :autoplayHoverPause="true"
+          :loop="true"
+          :autoplay="true"
+          :autoplayTimeout="5000"
+          :autoWidth="true"
+          :autoplaySpeed="3000"
+          smartSpeed="1000"
+        >
           <div class="talk-card-wrap" v-for="event in eventList" :key="event.id">
             <router-link :to="'/event/' + event.id" class="talk-card">
-              <div class="pic-wrap">
-                <div class="smiley-img-wrap">
-                  <div class="smiley-img">
-                    <img src="img/talk/card-image-1-x2.jpg" alt="talk image 1">
-                  </div>
-                </div>
-                <label class="talk-card-checkbox">
-                  <input type="checkbox" name="talk-card-checkbox">
-                  <span class="talk-card-checkmark">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>
-                    </svg>
-                  </span>
-                </label>
-              </div>
-              <div class="info-wrap">
-                <div class="info-border">
-                  <h2>{{event.title}}</h2>
-                  <p class="info-full-height">{{event.short_description}}</p>
-
-                  <div class="date-and-time-wrap">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z" fill="#d21217"/>
-                    </svg>
-                    <div class="date-and-time-info">
-                      <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                      <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
-                    </div>
-                  </div>
-
-                  <div class="location-info">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="#d21217"/>
-                    </svg>
-                    <div>{{event.location}}</div>
-                  </div>
-                </div>
-
-                <div class="attending-info" v-if="event.attendees_random.length !== 0">
-                  <span>Attending:</span>
-                  <div class="attending-wrap">
-                    <div class="attendees-avatar" :class="{next: index > 0}" v-for="(attendees, index) in event.attendees_random" :key="attendees.id">
-                      <img src="img/event/attendees-avatar-1.jpg" alt="avatar">
-                    </div>
-                  </div>
-                </div>
-
-              </div>
+              <event-card :event="event" />
             </router-link>
           </div>
         </carousel>
@@ -228,90 +324,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         <div class="talk-cards-container owl-carousel" v-if="!showCarousel && eventList">
           <div class="talk-card-wrap" v-for="(event, index) in eventList" :key="event.id">
             <router-link :to="'/event/' + event.id" class="talk-card">
-              <div class="pic-wrap">
-                <div class="smiley-img-wrap">
-                  <div class="smiley-img">
-                    <!-- TODO: Fix srcset attribute -->
-                    <img 
-                      :src="$settings.images_path.events +'m_'+event.cover_image" 
-                      :alt="event.title"
-                      sizes="(max-width: 1160px) 100vw, 1160px"
-                      :srcset="
-$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
-$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
-$settings.images_path.events + `l_`+event.cover_image+` 1160w`
-                     ">
-                  </div>
-                </div>
-              </div>
-<!-- Future events -->
-              <button v-if="!upcomingEvents[index].attendClicked" class="talk-card-checkbox-dt" :class="{'talk-card-checkbox-rotate':upcomingEvents[index].btnsWrapAttendShow}" @click.prevent="showSecondOverlay(index)" @mouseover="showFirstOverlay(index)" @mouseleave="upcomingEvents[index].btnsWrapShow = false"></button>
-
-              <div class="confirmed-box" v-if="upcomingEvents[index].attendConfirmed">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>
-                </svg>
-              </div>
-
-              <div class="overlay" :class="index" id="overlay" v-if="upcomingEvents[index].btnsWrapShow"><span>Click to attend</span></div>
-
-              <div class="btns-wrap" >
-                <div class="attend" id="attending-overlay" v-if="upcomingEvents[index].btnsWrapAttendShow">
-                  <button v-if="!upcomingEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id)">Just Myself</button>
-                  <button v-if="!upcomingEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id)">With organisation</button>
-                </div>
-              </div>
-
-              <div class="attend-loading" v-if="upcomingEvents[index].attendClicked && !upcomingEvents[index].attendComplete && !upcomingEvents[index].attendConfirmed">
-                <svg width="90" height="90" viewBox="0 0 90 90">
-                  <circle class="outer" cx="45" cy="45" r="37" ></circle>
-                  <circle class="inner" cx="45" cy="45" r="37" transform="rotate(-90, 45, 45)"></circle>
-                </svg>
-                <span>Loading ...</span>
-              </div>
-              <div class="attend-complete" v-if="upcomingEvents[index].attendComplete">
-                <div class="confirmed-box">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>
-                  </svg>
-                </div>
-                <span>Confirmed</span>
-              </div>
-
-              <div class="info-wrap">
-                <div class="info-border">
-                  <h2>{{event.title}}</h2>
-                  <p class="info-full-height">{{event.short_description}}</p>
-
-                  <div class="date-and-time-wrap">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z" fill="#d21217"/>
-                    </svg>
-                    <div class="date-and-time-info">
-                      <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                      <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
-                    </div>
-                  </div>
-
-                  <div class="location-info">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="#d21217"/>
-                    </svg>
-                    <div>{{event.location}}</div>
-                  </div>
-                </div>
-
-                <div class="attending-info" v-if="event.attendees_random.length !== 0">
-                  <span>Attending:</span>
-                  <div class="attending-wrap">
-                    <div class="attendees-avatar" :class="{next: index > 0}" v-for="(attendees, index) in event.attendees_random" :key="attendees.id">
-                      <img src="img/event/attendees-avatar-1.jpg" alt="avatar">
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
+              <event-card :event="event" />
             </router-link>
           </div>
         </div>
@@ -320,265 +333,78 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
           <ul>
             <li class="smiley-pagination-back">
               <a href="#">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M16 21C15.744 21 15.488 20.902 15.293 20.707L7.29301 12.707C6.90201 12.316 6.90201 11.684 7.29301 11.293L15.293 3.293C15.684 2.902 16.316 2.902 16.707 3.293C17.098 3.684 17.098 4.316 16.707 4.707L9.41401 12L16.707 19.293C17.098 19.684 17.098 20.316 16.707 20.707C16.512 20.902 16.256 21 16 21Z" fill="#1A1A1A"/>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M16 21C15.744 21 15.488 20.902 15.293 20.707L7.29301 12.707C6.90201 12.316 6.90201 11.684 7.29301 11.293L15.293 3.293C15.684 2.902 16.316 2.902 16.707 3.293C17.098 3.684 17.098 4.316 16.707 4.707L9.41401 12L16.707 19.293C17.098 19.684 17.098 20.316 16.707 20.707C16.512 20.902 16.256 21 16 21Z"
+                    fill="#1A1A1A"
+                  />
                 </svg>
-                <span>Back</span></a>
+                <span>Back</span>
+              </a>
             </li>
-            <li><a href="#">1</a></li>
+            <li>
+              <a href="#">1</a>
+            </li>
             <li class="smiley-pagination-next">
-              <a href="#">Next
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99999 21C8.25599 21 8.51199 20.902 8.70699 20.707L16.707 12.707C17.098 12.316 17.098 11.684 16.707 11.293L8.70699 3.29301C8.31599 2.90201 7.68399 2.90201 7.29299 3.29301C6.90199 3.68401 6.90199 4.31601 7.29299 4.70701L14.586 12L7.29299 19.293C6.90199 19.684 6.90199 20.316 7.29299 20.707C7.48799 20.902 7.74399 21 7.99999 21Z" fill="#1A1A1A"/>
+              <a href="#">
+                Next
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M7.99999 21C8.25599 21 8.51199 20.902 8.70699 20.707L16.707 12.707C17.098 12.316 17.098 11.684 16.707 11.293L8.70699 3.29301C8.31599 2.90201 7.68399 2.90201 7.29299 3.29301C6.90199 3.68401 6.90199 4.31601 7.29299 4.70701L14.586 12L7.29299 19.293C6.90199 19.684 6.90199 20.316 7.29299 20.707C7.48799 20.902 7.74399 21 7.99999 21Z"
+                    fill="#1A1A1A"
+                  />
                 </svg>
               </a>
             </li>
           </ul>
         </div>
-
       </div>
-
     </section>
 
     <section class="past-talks-section">
-
       <h2>Past smiley talks</h2>
 
-      <carousel class="talk-cards-container" v-if="showCarousel && eventList" :nav="false" :items="3" :margin="19" :autoplayHoverPause="true" :loop="true" :autoplay="true" :autoplayTimeout="5000" :autoWidth="true" :autoplaySpeed="3000" smartSpeed="1000">
+      <carousel
+        class="talk-cards-container"
+        v-if="showCarousel && eventList"
+        :nav="false"
+        :items="3"
+        :margin="19"
+        :autoplayHoverPause="true"
+        :loop="true"
+        :autoplay="true"
+        :autoplayTimeout="5000"
+        :autoWidth="true"
+        :autoplaySpeed="3000"
+        smartSpeed="1000"
+      >
         <div class="talk-card-wrap" v-for="event in eventPastList" :key="event.id">
           <router-link :to="'/event/' + event.id" class="talk-card">
-            <div class="pic-wrap">
-              <div class="smiley-img-wrap">
-                <div class="smiley-img">
-                  <img 
-                      :src="$settings.images_path.events +'m_'+event.cover_image" 
-                      :alt="event.title"
-                      sizes="(max-width: 1160px) 100vw, 1160px"
-                      :srcset="
-$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
-$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
-$settings.images_path.events + `l_`+event.cover_image+` 1160w`
-                     ">
-                </div>
-              </div>
-              <label class="talk-card-checkbox">
-                <input type="checkbox" name="talk-card-checkbox">
-                <span class="talk-card-checkmark">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>
-                  </svg>
-                </span>
-              </label>
-            </div>
-            <div class="info-wrap">
-              <div class="info-border">
-                <h2>{{event.title}}</h2>
-                <p class="info-full-height">{{event.short_description}}</p>
-
-                <div class="date-and-time-wrap">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z" fill="#d21217"/>
-                  </svg>
-                  <div class="date-and-time-info">
-                    <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                    <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
-                  </div>
-                </div>
-
-                <div class="location-info">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="#d21217"/>
-                  </svg>
-                  <div>{{event.location}}</div>
-                </div>
-              </div>
-
-              <div class="attending-info" v-if="event.attendees_random.length !== 0">
-                <span>Attending:</span>
-                <div class="attending-wrap">
-                  <div class="attendees-avatar" :class="{next: index > 0}" v-for="attendees in event.attendees_random" :key="attendees.id">
-                    <img src="img/event/attendees-avatar-1.jpg" alt="avatar">
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
+            <event-card :event="event" :past="true" />
           </router-link>
-
         </div>
       </carousel>
-
-     <!-- <div class="talk-cards-container owl-carousel" v-if="!showCarousel && eventList">-->
-<!--        <div class="talk-card-wrap" v-for="(event, index) in eventPastList" :key="event.id">-->
-<!--          <router-link :to="'/event/' + event.id" class="talk-card">-->
-<!--            <div class="pic-wrap">-->
-<!--              <div class="smiley-img-wrap">-->
-<!--                <div class="smiley-img">-->
-<!--                  <img src="img/talk/card-image-1-x2.jpg" alt="talk image 1">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-
-<!--            <button v-if="!pastEvents[index].attendClicked" class="talk-card-checkbox-dt" :class="{'talk-card-checkbox-rotate':btnsWrapAttendShow}" @click.prevent="showSecondOverlay(index, 'past')" @mouseover="showFirstOverlay(index, 'past')" @mouseleave="pastEvents[index].btnsWrapShow = false"></button>-->
-
-
-<!--            <div class="confirmed-box" v-if="pastEvents[index].attendConfirmed">-->
-<!--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>-->
-<!--              </svg>-->
-<!--            </div>-->
-
-<!--            <div class="overlay" id="overlay" v-if="pastEvents[index].btnsWrapShow"><span>Click to attend</span></div>-->
-
-<!--            <div class="btns-wrap" >-->
-<!--              <div class="attend" id="attending-overlay" v-if="pastEvents[index].btnsWrapAttendShow">-->
-<!--                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, 'past')">Just Myself</button>-->
-<!--                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, 'past')">With organisation</button>-->
-<!--              </div>-->
-<!--            </div>-->
-
-<!--            <div class="attend-loading" v-if="pastEvents[index].attendClicked && !pastEvents[index].attendComplete && pastEvents[index].attendConfirmed">-->
-<!--              <svg width="90" height="90" viewBox="0 0 90 90">-->
-<!--                <circle class="outer" cx="45" cy="45" r="37" > </circle>-->
-<!--                <circle class="inner" cx="45" cy="45" r="37" transform="rotate(-90, 45, 45)"> </circle>-->
-<!--              </svg>-->
-<!--              <span>Loading ...</span>-->
-<!--            </div>-->
-<!--            <div class="attend-complete" v-if="pastEvents[index].attendComplete">-->
-<!--              <div class="confirmed-box">-->
-<!--                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>-->
-<!--                </svg>-->
-<!--              </div>-->
-<!--              <span>Confirmed</span>-->
-<!--            </div>-->
-
-<!--            <div class="info-wrap">-->
-<!--              <div class="info-border">-->
-<!--                <h2>{{event.title}}</h2>-->
-<!--                <p class="info-full-height">{{event.short_description}}</p>-->
-
-<!--                <div class="date-and-time-wrap">-->
-<!--                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z" fill="#d21217"/>-->
-<!--                  </svg>-->
-<!--                  <div class="date-and-time-info">-->
-<!--                    <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>-->
-<!--                    <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="location-info">-->
-<!--                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="#d21217"/>-->
-<!--                  </svg>-->
-<!--                  <div>{{event.location}}</div>-->
-<!--                </div>-->
-<!--              </div>-->
-
-<!--              <div class="attending-info" v-if="event.attendees_random.length !== 0">-->
-<!--                <span>Attending:</span>-->
-<!--                <div class="attending-wrap">-->
-<!--                  <div class="attendees-avatar" :class="{next: index > 0}" v-for="attendees in event.attendees_random" :key="attendees.id">-->
-<!--                    <img src="img/event/attendees-avatar-1.jpg" alt="avatar">-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--          </router-link>-->
-
-
-<!--        </div>-->
-<!--      </div> -->
 
       <div class="talk-cards-container owl-carousel" v-if="!showCarousel && eventList">
         <div class="talk-card-wrap" v-for="(event, index) in eventPastList" :key="event.id">
           <router-link :to="'/event/' + event.id" class="talk-card">
-            <div class="pic-wrap">
-              <div class="smiley-img-wrap">
-                <div class="smiley-img">
-                  <img 
-                      :src="$settings.images_path.events +'m_'+event.cover_image" 
-                      :alt="event.title"
-                      sizes="(max-width: 1160px) 100vw, 1160px"
-                      :srcset="
-$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
-$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
-$settings.images_path.events + `l_`+event.cover_image+` 1160w`
-                     ">
-                </div>
-              </div>
-            </div>
-            <button v-if="!pastEvents[index].attendClicked" class="talk-card-checkbox-dt" :class="{'talk-card-checkbox-rotate':pastEvents[index].btnsWrapAttendShow}" @click.prevent="showSecondOverlay(index, 'past')" @mouseover="showFirstOverlay(index, 'past')" @mouseleave="pastEvents[index].btnsWrapShow = false"></button>
-
-            <div class="confirmed-box" v-if="pastEvents[index].attendConfirmed">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>
-              </svg>
-            </div>
-
-            <div class="overlay" :class="index" id="overlay" v-if="pastEvents[index].btnsWrapShow"><span>Click to attend</span></div>
-
-            <div class="btns-wrap" >
-              <div class="attend" id="attending-overlay" v-if="pastEvents[index].btnsWrapAttendShow">
-                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id, 'past')">Just Myself</button>
-                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id, 'past')">With organisation</button>
-              </div>
-            </div>
-
-            <div class="attend-loading" v-if="pastEvents[index].attendClicked && !pastEvents[index].attendComplete && !pastEvents[index].attendConfirmed">
-              <svg width="90" height="90" viewBox="0 0 90 90">
-                <circle class="outer" cx="45" cy="45" r="37" ></circle>
-                <circle class="inner" cx="45" cy="45" r="37" transform="rotate(-90, 45, 45)"></circle>
-              </svg>
-              <span>Loading ...</span>
-            </div>
-            <div class="attend-complete" v-if="pastEvents[index].attendComplete">
-              <div class="confirmed-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z" fill="#fff"/>
-                </svg>
-              </div>
-              <span>Confirmed</span>
-            </div>
-
-            <div class="info-wrap">
-              <div class="info-border">
-                <h2>{{event.title}}</h2>
-                <p class="info-full-height">{{event.short_description}}</p>
-
-                <div class="date-and-time-wrap">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z" fill="#d21217"/>
-                  </svg>
-                  <div class="date-and-time-info">
-                    <div class="date-info">{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
-                    <div class="time-info">{{event.time_start  | formatTime}} - {{event.time_end  | formatTime}}</div>
-                  </div>
-                </div>
-
-                <div class="location-info">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="#d21217"/>
-                  </svg>
-                  <div>{{event.location}}</div>
-                </div>
-              </div>
-
-              <div class="attending-info" v-if="event.attendees_random.length !== 0">
-                <span>Attending:</span>
-                <div class="attending-wrap">
-                  <div class="attendees-avatar" :class="{next: index > 0}" v-for="(attendees, index) in event.attendees_random" :key="attendees.id">
-                    <img src="img/event/attendees-avatar-1.jpg" alt="avatar">
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
+            <event-card :event="event" :past="true" />
           </router-link>
         </div>
       </div>
@@ -587,367 +413,363 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
         <ul>
           <li class="smiley-pagination-back">
             <a href="#">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M16 21C15.744 21 15.488 20.902 15.293 20.707L7.29301 12.707C6.90201 12.316 6.90201 11.684 7.29301 11.293L15.293 3.293C15.684 2.902 16.316 2.902 16.707 3.293C17.098 3.684 17.098 4.316 16.707 4.707L9.41401 12L16.707 19.293C17.098 19.684 17.098 20.316 16.707 20.707C16.512 20.902 16.256 21 16 21Z" fill="#1A1A1A"/>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M16 21C15.744 21 15.488 20.902 15.293 20.707L7.29301 12.707C6.90201 12.316 6.90201 11.684 7.29301 11.293L15.293 3.293C15.684 2.902 16.316 2.902 16.707 3.293C17.098 3.684 17.098 4.316 16.707 4.707L9.41401 12L16.707 19.293C17.098 19.684 17.098 20.316 16.707 20.707C16.512 20.902 16.256 21 16 21Z"
+                  fill="#1A1A1A"
+                />
               </svg>
-              <span>Back</span></a>
+              <span>Back</span>
+            </a>
           </li>
-          <li><a href="#">1</a></li>
+          <li>
+            <a href="#">1</a>
+          </li>
           <li class="smiley-pagination-next">
-            <a href="#">Next
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99999 21C8.25599 21 8.51199 20.902 8.70699 20.707L16.707 12.707C17.098 12.316 17.098 11.684 16.707 11.293L8.70699 3.29301C8.31599 2.90201 7.68399 2.90201 7.29299 3.29301C6.90199 3.68401 6.90199 4.31601 7.29299 4.70701L14.586 12L7.29299 19.293C6.90199 19.684 6.90199 20.316 7.29299 20.707C7.48799 20.902 7.74399 21 7.99999 21Z" fill="#1A1A1A"/>
+            <a href="#">
+              Next
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M7.99999 21C8.25599 21 8.51199 20.902 8.70699 20.707L16.707 12.707C17.098 12.316 17.098 11.684 16.707 11.293L8.70699 3.29301C8.31599 2.90201 7.68399 2.90201 7.29299 3.29301C6.90199 3.68401 6.90199 4.31601 7.29299 4.70701L14.586 12L7.29299 19.293C6.90199 19.684 6.90199 20.316 7.29299 20.707C7.48799 20.902 7.74399 21 7.99999 21Z"
+                  fill="#1A1A1A"
+                />
               </svg>
             </a>
           </li>
         </ul>
       </div>
-
     </section>
 
     <section class="create-hub-section">
-
       <div class="create-hub-wrap">
         <div class="create-hub-video">
-          <img src="img/talk/smiley-hub-image-x2.png" alt="hub main pic">
+          <img src="img/talk/smiley-hub-image-x2.png" alt="hub main pic" />
         </div>
         <div class="create-hub-content">
-
           <div class="create-hub-title-wrap">
             <div class="create-hub-logo">
-              <img src="img/talk/smiley-hub-logo-x2.png" alt="smiley hub">
+              <img src="img/talk/smiley-hub-logo-x2.png" alt="smiley hub" />
             </div>
-            <div class="create-hub-title">
-              Create a smiley hub
-            </div>
+            <div class="create-hub-title">Create a smiley hub</div>
           </div>
           <div class="create-hub-text">
-            <div class="create-hub-descr">
-              Smiley Hubs are events organised by you! Hubs are mission-led collaborations initiated by Smiley Movement members online.
-            </div>
-            <a href="#" class="read-more-link"><span></span>Create a smiley hub</a>
+            <div
+              class="create-hub-descr"
+            >Smiley Hubs are events organised by you! Hubs are mission-led collaborations initiated by Smiley Movement members online.</div>
+            <a href="#" class="read-more-link">
+              <span></span>Create a smiley hub
+            </a>
           </div>
         </div>
       </div>
-
     </section>
 
     <section class="signup-section">
       <div class="signup-section-wrap container">
         <h2>Don’t miss an event - sign up for our latest event news</h2>
-        <form class="smiley-signup-form">
-          <label for="signup-firstname">
-            <input type="text" name="signup-firstname" id="signup-firstname" placeholder="First Name">
-          </label>
 
-          <label for="signup-lastname">
-            <input type="text" name="signup-lastname" id="signup-lastname" placeholder="Last Name">
-          </label>
+        <form-sign-up-events-notification />
 
-          <label for="email">
-            <input type="text" name="email" id="email" placeholder="Your Email">
-          </label>
-          <div class="signup-btn-wrap">
-            <button class="btn-signup" type="submit" name="submit" value="Sign up">Sign up</button>
-          </div>
-
-        </form>
-    
         <social-icons />
-
       </div>
     </section>
   </div>
-
 </template>
 
 <script>
-  import $ from "jquery";
-  import carousel from 'vue-owl-carousel2';
-  import axios from "../axios-auth";
+import $ from "jquery";
+import carousel from "vue-owl-carousel2";
+import axios from "../axios-auth";
 
-  import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from "vuex";
 
-  import Breadcrumbs from "@/components/Breadcrumbs";
-  import SocialIcons from "@/components/footer/SocialIcons";
-  import FilterCheckbox from "@/components/events/Filter-Checkbox";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import SocialIcons from "@/components/footer/SocialIcons";
+import FormSignUpEventsNotification from "@/components/events/Form-EventsNotifications";
+import FilterCheckbox from "@/components/events/Filter-Checkbox";
+import EventCard from "@/components/events/Event-Card";
 
-  export default {
-    name: "Talks",
-    components: { carousel },
-    data(){
-      return{
-        showCarousel: true,
-        topEvent: null,
-        eventList: null,
-        eventPastList: null,
+export default {
+  name: "Talks",
+  components: { carousel },
+  data() {
+    return {
+      showCarousel: true,
+      topEvent: null,
+      eventList: null,
+      eventPastList: null,
 
-        filter: {
-          goals: []
-        },
-
-        upcomingEvents: null,
-        pastEvents: null
-      }
-    },
-    computed: {
-      ...mapState('events', {
-        goals: state => state.goals,
-        currentCategory: state => state.currentCategory
-      }),
-      auth(){
-        return this.$store.getters.isAuthenticated;
+      filter: {
+        goals: []
       },
-    },
-    created(){
-      window.addEventListener('resize', this.handleResize)
-    },
-    beforeDestroy(){
-      window.removeEventListener('resize', this.handleResize)
-    },
-    mounted() {      
-      axios.get('/events/past')
+
+      upcomingEvents: null,
+      pastEvents: null
+    };
+  },
+  computed: {
+    ...mapState("events", {
+      goals: state => state.goals,
+      currentCategory: state => state.currentCategory
+    }),
+    auth() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  mounted() {
+    axios
+      .get("/events/past")
+      .then(res => {
+        axios
+          .get("/events")
           .then(res => {
-            axios.get('/events')
-                .then(res => {
-                  this.showCarousel = false;
-                  this.topEvent = res.data.data[0];
-                  res.data.data.shift();
-                  this.eventList = res.data.data;
+            this.showCarousel = false;
+            this.topEvent = res.data.data[0];
+            res.data.data.shift();
+            this.eventList = res.data.data;
+            console.log(res.data);
 
-                  this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
-                    {
-                      btnsWrapShow: false,
-                      btnsWrapAttendShow: false,
-                      attendClicked: false,
-                      attendComplete: false,
-                      attendConfirmed: false,
-                    }
-                  ));
+            // this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
+            //   {
+            //     btnsWrapShow: false,
+            //     btnsWrapAttendShow: false,
+            //     attendClicked: false,
+            //     attendComplete: false,
+            //     attendConfirmed: false,
+            //   }
+            // ));
 
-                  // setTimeout(() => {
-                  //   this.handleResize();
-                  // },0);
-                })
-                .catch(error => console.log(error));
-            this.eventPastList = res.data.data;
-
-            this.pastEvents = new Array(this.eventPastList.length).fill(null).map(() => (
-                {
-                  btnsWrapShow: false,
-                  btnsWrapAttendShow: false,
-                  attendClicked: false,
-                  attendComplete: false,
-                  attendConfirmed: false,
-                }
-            ));
+            // setTimeout(() => {
+            //   this.handleResize();
+            // },0);
           })
           .catch(error => console.log(error));
+        this.eventPastList = res.data.data;
 
+        this.pastEvents = new Array(this.eventPastList.length)
+          .fill(null)
+          .map(() => ({
+            btnsWrapShow: false,
+            btnsWrapAttendShow: false,
+            attendClicked: false,
+            attendComplete: false,
+            attendConfirmed: false
+          }));
+      })
+      .catch(error => console.log(error));
 
-      setTimeout(() => {
-        var acc = document.querySelectorAll(".advanced-search-btn");
-        var i;
-        var simpleSearch = document.querySelector(".simple-search-btn");
-        var advancedSearch = document.querySelector(".advanced-search-btn");
-        var panel = document.getElementsByClassName("panel");
+    setTimeout(() => {
+      var acc = document.querySelectorAll(".advanced-search-btn");
+      var i;
+      var simpleSearch = document.querySelector(".simple-search-btn");
+      var advancedSearch = document.querySelector(".advanced-search-btn");
+      var panel = document.getElementsByClassName("panel");
 
-        var resetFilters = document.querySelector(".reset-filters-btn");
-        var applyFilters = document.querySelector(".apply-filters-btn");
+      var resetFilters = document.querySelector(".reset-filters-btn");
+      var applyFilters = document.querySelector(".apply-filters-btn");
 
-
-        for (i = 0; i < acc.length; i++) {
-          acc[i].addEventListener("click", function() {
-            this.style.display = "none";
-            simpleSearch.style.display = "block";
-            resetFilters.style.display = "block";
-            if (panel[0].style.maxHeight) {
-              panel[0].style.maxHeight = null;
-            } else {
-              panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-            }
-          });
-        }
-
-        simpleSearch.addEventListener("click", function() {
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
           this.style.display = "none";
-          advancedSearch.style.display = "block";
-          resetFilters.style.display = "none";
+          simpleSearch.style.display = "block";
+          resetFilters.style.display = "block";
           if (panel[0].style.maxHeight) {
             panel[0].style.maxHeight = null;
           } else {
             panel[0].style.maxHeight = panel[0].scrollHeight + "px";
           }
         });
+      }
 
-        let currentWidth = $(window).width();
-        let firstInit = true;
+      simpleSearch.addEventListener("click", function() {
+        this.style.display = "none";
+        advancedSearch.style.display = "block";
+        resetFilters.style.display = "none";
+        if (panel[0].style.maxHeight) {
+          panel[0].style.maxHeight = null;
+        } else {
+          panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+        }
+      });
 
-        $(window).on('resize', function() {
+      let currentWidth = $(window).width();
+      let firstInit = true;
 
-          if(firstInit){
-            if($(window).width()>=1600) {
+      $(window).on("resize", function() {
+        if (firstInit) {
+          if ($(window).width() >= 1600) {
+            resetFilters.style.display = "block";
+            applyFilters.style.display = "block";
+            advancedSearch.style.display = "none";
+            simpleSearch.style.display = "none";
+            panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+          } else {
+            resetFilters.style.display = "none";
+            advancedSearch.style.display = "block";
+            panel[0].style.maxHeight = null;
+          }
+
+          firstInit = false;
+        } else {
+          if ($(window).width() !== currentWidth) {
+            currentWidth = $(window).width();
+
+            if ($(window).width() >= 1600) {
               resetFilters.style.display = "block";
               applyFilters.style.display = "block";
               advancedSearch.style.display = "none";
               simpleSearch.style.display = "none";
               panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-
-            }
-            else{
+            } else {
+              if (simpleSearch.style.display === "block") {
+                return;
+              }
               resetFilters.style.display = "none";
               advancedSearch.style.display = "block";
+              simpleSearch.style.display = "none";
               panel[0].style.maxHeight = null;
             }
-
-            firstInit = false;
           }
-          else{
-
-            if($(window).width() !== currentWidth){
-              currentWidth = $(window).width();
-
-              if($(window).width()>=1600) {
-                resetFilters.style.display = "block";
-                applyFilters.style.display = "block";
-                advancedSearch.style.display = "none";
-                simpleSearch.style.display = "none";
-                panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-
-              }
-              else{
-                if(simpleSearch.style.display === "block"){
-                  return;
-                }
-                resetFilters.style.display = "none";
-                advancedSearch.style.display = "block";
-                simpleSearch.style.display = "none";
-                panel[0].style.maxHeight = null;
-              }
-            }
-          }
-        });
-
-        $(window).resize();
-
-        $.fn.equalHeights = function() {
-          var maxHeight = 0,
-              $this = $(this);
-
-          $this.each( function() {
-            var height = $(this).innerHeight();
-
-            if ( height > maxHeight ) { maxHeight = height; }
-          });
-
-          return $this.css('height', maxHeight);
-        };
-
-        // auto-initialize plugin
-        $('[data-equal]').each(function(){
-          var $this = $(this),
-              target = $this.data('equal');
-          $this.find(target).equalHeights();
-        });
-
-        $('.talk-cards-container .info-wrap').equalHeights();
-      }, 0);
-
-      $('.talk-card-checkbox').click(function(){
-        $('#overlay').toggleClass('display-none');
-        $(this).toggleClass('button-clicked');
+        }
       });
 
+      $(window).resize();
 
-      this.loadEventsData();
+      $.fn.equalHeights = function() {
+        var maxHeight = 0,
+          $this = $(this);
 
-      // WARNING! - Always trigger resize event after loading data\markup changes
-      this.handleResize();
-    },
-    methods: {
-      ...mapActions('events', ['loadEventsData', 'registerUserForEvent']),
-      // TODO: Rewrite this functions for boolen use
-      onAttendClickHandler(index, eventID = null, state){
-        console.log('user is trying to join event');
-        // console.log(state);
-        if(!state){
-          // TODO: whole component - check for non logged users - send them to register
-          this.upcomingEvents[index].attendClicked = true;
-          this.registerUserForEvent({ id: eventID, organisation: false});
-          // setTimeout(() => {
-          //   this.upcomingEvents[index].attendComplete = true;
+        $this.each(function() {
+          var height = $(this).innerHeight();
 
-          //   setTimeout(() => {
-          //     this.upcomingEvents[index].attendConfirmed = true;
-          //     this.upcomingEvents[index].btnsWrapAttendShow = false;
-          //     this.upcomingEvents[index].attendComplete = false;
-          //   },2000);
+          if (height > maxHeight) {
+            maxHeight = height;
+          }
+        });
 
-          // },3000)
-        }
-        else{
-          this.pastEvents[index].attendClicked = true;
+        return $this.css("height", maxHeight);
+      };
+
+      // auto-initialize plugin
+      $("[data-equal]").each(function() {
+        var $this = $(this),
+          target = $this.data("equal");
+        $this.find(target).equalHeights();
+      });
+
+      $(".talk-cards-container .info-wrap").equalHeights();
+    }, 0);
+
+    $(".talk-card-checkbox").click(function() {
+      $("#overlay").toggleClass("display-none");
+      $(this).toggleClass("button-clicked");
+    });
+
+    this.loadEventsData();
+
+    // WARNING! - Always trigger resize event after loading data\markup changes
+    this.handleResize();
+  },
+  methods: {
+    ...mapActions("events", ["loadEventsData", "registerUserForEvent"]),
+    // TODO: Rewrite this functions for boolen use
+    onAttendClickHandler(index, eventID = null, state) {
+      console.log("user is trying to join event");
+      // console.log(state);
+      if (!state) {
+        // TODO: whole component - check for non logged users - send them to register
+        this.upcomingEvents[index].attendClicked = true;
+        this.registerUserForEvent({ id: eventID, organisation: false });
+        // setTimeout(() => {
+        //   this.upcomingEvents[index].attendComplete = true;
+
+        //   setTimeout(() => {
+        //     this.upcomingEvents[index].attendConfirmed = true;
+        //     this.upcomingEvents[index].btnsWrapAttendShow = false;
+        //     this.upcomingEvents[index].attendComplete = false;
+        //   },2000);
+
+        // },3000)
+      } else {
+        this.pastEvents[index].attendClicked = true;
+
+        setTimeout(() => {
+          this.pastEvents[index].attendComplete = true;
 
           setTimeout(() => {
-            this.pastEvents[index].attendComplete = true;
-
-            setTimeout(() => {
-              this.pastEvents[index].attendConfirmed = true;
-              this.pastEvents[index].btnsWrapAttendShow = false;
-              this.pastEvents[index].attendComplete = false;
-            },2000);
-
-          },3000)
+            this.pastEvents[index].attendConfirmed = true;
+            this.pastEvents[index].btnsWrapAttendShow = false;
+            this.pastEvents[index].attendComplete = false;
+          }, 2000);
+        }, 3000);
+      }
+    },
+    showSecondOverlay(index, state) {
+      if (!state) {
+        if (!this.upcomingEvents[index].btnsWrapAttendShow) {
+          this.upcomingEvents[index].btnsWrapAttendShow = true;
+          this.upcomingEvents[index].btnsWrapShow = false;
+        } else {
+          this.upcomingEvents[index].btnsWrapAttendShow = false;
+          this.upcomingEvents[index].btnsWrapShow = true;
         }
-
-      },
-      showSecondOverlay(index, state){
-        if(!state){
-          if (!this.upcomingEvents[index].btnsWrapAttendShow) {
-            this.upcomingEvents[index].btnsWrapAttendShow = true;
-            this.upcomingEvents[index].btnsWrapShow = false;
-          } else {
-            this.upcomingEvents[index].btnsWrapAttendShow = false;
-            this.upcomingEvents[index].btnsWrapShow = true;
-          }
+      } else {
+        this.pastEvents[index].btnsWrapAttendShow = true;
+        this.pastEvents[index].btnsWrapShow = false;
+      }
+    },
+    showFirstOverlay(index, state) {
+      if (!state) {
+        if (!this.upcomingEvents[index].btnsWrapAttendShow) {
+          this.upcomingEvents[index].btnsWrapShow = true;
         }
-        else{
-          this.pastEvents[index].btnsWrapAttendShow = true;
-          this.pastEvents[index].btnsWrapShow = false;
-        }
-
-      },
-      showFirstOverlay(index, state){
-
-        if(!state){
-          if(!this.upcomingEvents[index].btnsWrapAttendShow){
-            this.upcomingEvents[index].btnsWrapShow = true;
-          }
-        }else{
-          if(!this.pastEvents[index].btnsWrapAttendShow){
-            this.pastEvents[index].btnsWrapShow = true;
-          }
-        }
-
-      },
-      handleResize(){
-        if($(window).width()>=1600){
-          this.showCarousel = false;
-        }
-        else{
-          this.showCarousel = true;
+      } else {
+        if (!this.pastEvents[index].btnsWrapAttendShow) {
+          this.pastEvents[index].btnsWrapShow = true;
         }
       }
     },
-    components: {
-      FilterCheckbox,
-      Breadcrumbs,
-      SocialIcons
-    },
+    handleResize() {
+      if ($(window).width() >= 1600) {
+        this.showCarousel = false;
+      } else {
+        this.showCarousel = true;
+      }
+    }
+  },
+  components: {
+    Breadcrumbs,
+    FormSignUpEventsNotification,
+    FilterCheckbox,
+    EventCard,
+    SocialIcons
   }
+};
 </script>
 
 
-<style lang="scss" scoped>
-  @import "@/scss/pages/_talks.scss";
+<style lang="scss">
+@import "@/scss/pages/_talks.scss";
 </style>

@@ -1,34 +1,31 @@
 <template>
   <div id="app">
     <Header />
-    <router-view/>
-
+    <router-view />
   </div>
 </template>
 
 <script>
-  // @ is an alias to /src
-  import Header from '@/components/Header.vue'
-  import Footer from '@/components/Footer.vue'
-  import axios from "./axios-auth";
-  import router from "./router";
+// @ is an alias to /src
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import axios from "./axios-auth";
+import router from "./router";
 
-  export default {
-    name: 'home',
-    components: {
-      Header,
-      Footer
-    },
-    created() {
-      this.$store.dispatch('autoLogin');
-
-    }
+export default {
+  name: "home",
+  components: {
+    Header,
+    Footer
+  },
+  created() {
+    // this.$store.dispatch('autoLogin');
   }
+};
 </script>
 
 <style lang="scss">
 #app {
-
 }
 
 #nav {
@@ -52,23 +49,22 @@
 //  color: #fff;
 //}
 
-a:hover{
+a:hover {
   text-decoration: none;
 }
 
-.invisible{
+.invisible {
   visibility: hidden;
 }
-.visible{
+.visible {
   visibility: visible;
 }
 
-ul{
+ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
 
 body {
   font-size: 16px;
@@ -77,7 +73,8 @@ body {
   line-height: 1.65;
   overflow-x: hidden;
   margin: 0;
-  input, textarea {
+  input,
+  textarea {
     border: #666 1px solid;
     outline: none;
     &:focus:required:invalid {
@@ -102,21 +99,22 @@ body {
   text-align: center;
 }
 
-b, strong {
+b,
+strong {
   font-weight: bold;
 }
 
-.read-more-link{
-  color: #1A1A1A;
+.read-more-link {
+  color: #1a1a1a;
   display: inline-block;
-  font: 16px/24px 'Montserrat Bold', sans-serif;
+  font: 16px/24px "Montserrat Bold", sans-serif;
   text-decoration: none;
   position: relative;
   text-transform: uppercase;
   border-bottom: 2px solid #000;
   padding-bottom: 14px;
   padding-right: 45px;
-  span{
+  span {
     position: absolute;
     top: 10px;
     right: 7px;
@@ -124,7 +122,7 @@ b, strong {
     height: 2px;
     background-color: #000;
     &:before,
-    &:after{
+    &:after {
       position: absolute;
       content: "";
       height: 2px;
@@ -132,35 +130,35 @@ b, strong {
       right: 0;
       background-color: #000;
     }
-    &:before{
+    &:before {
       transform: rotate(50deg);
       top: -4px;
     }
-    &:after{
+    &:after {
       transform: rotate(-50deg);
       top: 4px;
     }
   }
-  &:hover{
-    span{
+  &:hover {
+    span {
       right: 0;
-      transition: .25s ease-in-out;
+      transition: 0.25s ease-in-out;
     }
   }
 }
 
-.smiley-img-wrap{
+.smiley-img-wrap {
   overflow: hidden;
-  .smiley-img{
+  .smiley-img {
     width: 100%;
     height: 100%;
     transition: all 0.8s;
-    img{
+    img {
       display: block;
       object-fit: cover;
       height: 100%;
     }
-    &:hover{
+    &:hover {
       opacity: 1;
       -webkit-animation: flash 1.5s;
       animation: flash 1.5s;
@@ -169,29 +167,28 @@ b, strong {
   }
 }
 
-.breadcrumbs{
+.breadcrumbs {
   margin: 13px auto;
   padding: 0 15px;
   max-width: 1560px;
-  li{
+  li {
     display: inline-block;
   }
-  .breadcrumbs-item{
+  .breadcrumbs-item {
     text-decoration: none;
     color: #1a1a1a;
-    font: 400 16px/21px 'Muli', sans-serif;
+    font: 400 16px/21px "Muli", sans-serif;
   }
-  svg{
+  svg {
     margin-right: 5px;
   }
 
   @media (max-width: 992px) {
     margin: 37px auto;
   }
-
 }
 
-.container{
+.container {
   max-width: 1560px;
   margin: 0 auto;
   padding: 0 15px;
@@ -200,8 +197,4 @@ b, strong {
     padding: 0 20px;
   }
 }
-
-
-
-
 </style>

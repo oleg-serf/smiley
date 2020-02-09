@@ -1,31 +1,58 @@
 <template>
-  <div>
+  <div class="talk-card-holder">
     <div class="pic-wrap">
       <div class="smiley-img-wrap">
         <div class="smiley-img">
           <img
-            :src="imagesPath +'m_'+event.cover_image"
+            :src="$settings.images_path.events +'m_'+event.cover_image"
             :alt="event.title"
             sizes="(max-width: 1160px) 100vw, 1160px"
             :srcset="
-imagesPath + `s_`+event.cover_image+` 150w,` +
-imagesPath + `m_`+event.cover_image+` 360w,` +
-imagesPath + `l_`+event.cover_image+` 1160w`
+$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
+$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
+$settings.images_path.events + `l_`+event.cover_image+` 1160w`
                      "
           />
         </div>
       </div>
     </div>
+
+    <div class="btns-wrap">
+      <div class="attend" id="attending-overlay" :class="{'attend--active' : overlay}">
+        <div v-if="!attendedEvents.includes(event.id)">
+          <button @click.prevent="registerUser(event.id)">Just Myself</button>
+          <button @click.prevent>With organisation</button>
+        </div>
+        <div v-if="attendedEvents.includes(event.id)">
+          <button @click.prevent class="minus">Cancel my Attend</button>
+          <button @click.prevent>Attend to Organisation</button>
+        </div>
+      </div>
+    </div>
+
     <button
-      v-if="!pastEvents[index].attendClicked"
+      v-if="!attendedEvents.includes(event.id) && !past"
       class="talk-card-checkbox-dt"
-      :class="{'talk-card-checkbox-rotate':pastEvents[index].btnsWrapAttendShow}"
-      @click.prevent="showSecondOverlay(index, 'past')"
-      @mouseover="showFirstOverlay(index, 'past')"
-      @mouseleave="pastEvents[index].btnsWrapShow = false"
+      :class="{'talk-card-checkbox-rotate': overlay }"
+      @click.prevent="showButtons"
+      @mouseover="holderShown = true"
+      @mouseleave="holderShown = false"
     ></button>
 
-    <div class="confirmed-box" v-if="pastEvents[index].attendConfirmed">
+    <!-- Show this Upon Hover -->
+    <div class="overlay" :class="{'overlay--active' : holderShown && !overlay}">
+      <span v-if="attendedEvents.includes(event.id)">Click to cancel</span>
+      <span v-else>Click to attend</span>
+    </div>
+
+    <!-- Show if User attended to event -->
+    <div
+      class="confirmed-box"
+      v-if="attendedEvents.includes(event.id)"
+      @click.prevent="showButtons"
+      @mouseover="holderShown = true"
+      @mouseleave="holderShown = false"
+    >
       <svg
         width="24"
         height="24"
@@ -42,57 +69,14 @@ imagesPath + `l_`+event.cover_image+` 1160w`
       </svg>
     </div>
 
-    <div class="overlay" :class="index" id="overlay" v-if="pastEvents[index].btnsWrapShow">
-      <span>Click to attend</span>
-    </div>
-
-    <div class="btns-wrap">
-      <div class="attend" id="attending-overlay" v-if="pastEvents[index].btnsWrapAttendShow">
-        <button
-          v-if="!pastEvents[index].attendClicked"
-          @click.prevent="onAttendClickHandler(index, event.id, 'past')"
-        >Just Myself</button>
-        <button
-          v-if="!pastEvents[index].attendClicked"
-          @click.prevent="onAttendClickHandler(index, event.id, 'past')"
-        >With organisation</button>
-      </div>
-    </div>
-
-    <div
-      class="attend-loading"
-      v-if="pastEvents[index].attendClicked && !pastEvents[index].attendComplete && !pastEvents[index].attendConfirmed"
-    >
-      <svg width="90" height="90" viewBox="0 0 90 90">
-        <circle class="outer" cx="45" cy="45" r="37" />
-        <circle class="inner" cx="45" cy="45" r="37" transform="rotate(-90, 45, 45)" />
-      </svg>
-      <span>Loading ...</span>
-    </div>
-    <div class="attend-complete" v-if="pastEvents[index].attendComplete">
-      <div class="confirmed-box">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z"
-            fill="#fff"
-          />
-        </svg>
-      </div>
-      <span>Confirmed</span>
-    </div>
-
+    <!-- Information box -->
     <div class="info-wrap">
+      <!-- Text description -->
       <div class="info-border">
         <h2>{{event.title}}</h2>
         <p class="info-full-height">{{event.short_description}}</p>
+
+        <div class="spacer"></div>
 
         <div class="date-and-time-wrap">
           <svg
@@ -138,7 +122,11 @@ imagesPath + `l_`+event.cover_image+` 1160w`
         </div>
       </div>
 
-      <div class="attending-info" v-if="event.attendees_random.length !== 0">
+      <!-- Show attendees only if user is attended to event -->
+      <div
+        class="attending-info"
+        v-if="event.attendees_random.length !== 0 && attendedEvents.includes(event.id)"
+      >
         <span>Attending:</span>
         <div class="attending-wrap">
           <div
@@ -154,3 +142,42 @@ imagesPath + `l_`+event.cover_image+` 1160w`
     </div>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions } from "vuex";
+
+export default {
+  name: "EventCard",
+  data() {
+    return {
+      overlay: false,
+      holderShown: false
+    };
+  },
+  methods: {
+    showButtons() {
+      this.overlay = !this.overlay;
+    },
+    registerUser(id) {
+      this.registerUserForEvent({ id: id, organisation: false });
+    },
+    ...mapActions("events", ["registerUserForEvent"])
+  },
+  computed: {
+    ...mapState("user", {
+      attendedEvents: state => state.attendingEvents
+    })
+  },
+  props: {
+    event: Object,
+    past: {
+      type: Boolean,
+      default: false
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+@import "@/scss/components/_event-card.scss";
+</style>
