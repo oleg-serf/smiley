@@ -165,6 +165,9 @@ export default {
     },
     ...mapActions("events", ["registerUserForEvent"])
   },
+  mounted() {
+    // console.log(event);
+  },
   computed: {
     ...mapState("user", {
       attendedEvents: state => state.attendingEvents
@@ -174,7 +177,7 @@ export default {
     }
   },
   props: {
-    event: Object,
+    event,
     past: {
       type: Boolean,
       default: false

@@ -164,6 +164,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
               name="keyword-search"
               id="keyword-search"
               placeholder="search by keyword"
+              v-model="filter.keywords"
             />
           </label>
           <svg
@@ -188,6 +189,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
               name="time-period"
               id="time-period"
               placeholder="Select a time period"
+              v-model="filter.time"
             />
           </label>
           <svg
@@ -314,15 +316,15 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           :autoplaySpeed="3000"
           smartSpeed="1000"
         >
-          <div class="talk-card-wrap" v-for="event in eventList" :key="event.id">
+          <div class="talk-card-wrap" v-for="event in eventList" :key="'c-'+event.id">
             <router-link :to="'/event/' + event.id" class="talk-card">
               <event-card :event="event" />
             </router-link>
           </div>
         </carousel>
 
-        <div class="talk-cards-container owl-carousel" v-if="!showCarousel && eventList">
-          <div class="talk-card-wrap" v-for="(event) in eventList" :key="event.id">
+        <div class="talk-cards-container" v-if="!showCarousel && eventList">
+          <div class="talk-card-wrap" v-for="(event) in eventList" :key="'talks-list-'+event.id">
             <router-link :to="'/event/' + event.id" class="talk-card">
               <event-card :event="event" />
             </router-link>
@@ -382,7 +384,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
 
       <carousel
         class="talk-cards-container"
-        v-if="showCarousel && eventList"
+        v-if="showCarousel && eventPastList"
         :nav="false"
         :items="3"
         :margin="19"
@@ -394,15 +396,19 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         :autoplaySpeed="3000"
         smartSpeed="1000"
       >
-        <div class="talk-card-wrap" v-for="event in eventPastList" :key="'old-events'+event.id">
+        <div
+          class="talk-card-wrap"
+          v-for="event in eventPastList"
+          :key="'old-events-slider-'+event.id"
+        >
           <router-link :to="'/event/' + event.id" class="talk-card">
             <event-card :event="event" :past="true" />
           </router-link>
         </div>
       </carousel>
 
-      <div class="talk-cards-container owl-carousel" v-if="!showCarousel && eventList">
-        <div class="talk-card-wrap" v-for="(event) in eventPastList" :key="'old-events'+event.id">
+      <div class="talk-cards-container" v-if="!showCarousel && eventList">
+        <div class="talk-card-wrap" v-for="(event) in eventPastList" :key="'old-events-'+event.id">
           <router-link :to="'/event/' + event.id" class="talk-card">
             <event-card :event="event" :past="true" />
           </router-link>
@@ -511,22 +517,21 @@ export default {
   data() {
     return {
       showCarousel: true,
-      topEvent: null,
-      eventList: null,
-      eventPastList: null,
 
       filter: {
-        goals: []
-      },
-
-      upcomingEvents: null,
-      pastEvents: null
+        goals: [],
+        keywords: "",
+        time: ""
+      }
     };
   },
   computed: {
     ...mapState("events", {
       goals: state => state.goals,
-      currentCategory: state => state.currentCategory
+      currentCategory: state => state.currentCategory,
+      eventPastList: state => state.pastEvents,
+      topEvent: state => state.events[0],
+      eventList: state => state.events
     }),
     auth() {
       return this.$store.getters["user/isAuthenticated"];
@@ -539,151 +544,153 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
-    console.log(this);
-    axios
-      .get("/events/past")
-      .then(res => {
-        axios
-          .get("/events")
-          .then(res => {
-            this.showCarousel = false;
-            this.topEvent = res.data.events[0];
-            res.data.events.shift();
-            this.eventList = res.data.events;
+    this.$store.dispatch("events/get_events");
+    this.$store.dispatch("events/get_past_events");
+    this.$store.dispatch("events/get_events_data");
 
-            this.$store.commit(
-              "user/SET_USER_ATTENDING_EVENTS",
-              res.data.attending
-            );
+    // axios
+    //   .get("/events/past")
+    //   .then(res => {
+    //     axios
+    //       .get("/events")
+    //       .then(res => {
+    //         this.showCarousel = false;
+    //         this.topEvent = res.data.events[0];
+    //         res.data.events.shift();
+    //         this.eventList = res.data.events;
 
-            setTimeout(() => {
-              this.handleResize();
-            }, 0);
-          })
-          .catch(error => console.log(error));
-        this.eventPastList = res.data.events;
+    //         console.log((this.eventList = res.data));
 
-        this.pastEvents = new Array(this.eventPastList.length)
-          .fill(null)
-          .map(() => ({
-            btnsWrapShow: false,
-            btnsWrapAttendShow: false,
-            attendClicked: false,
-            attendComplete: false,
-            attendConfirmed: false
-          }));
-      })
-      .catch(error => console.log(error));
+    //         this.$store.commit(
+    //           "user/SET_USER_ATTENDING_EVENTS",
+    //           res.data.attending
+    //         );
 
-    setTimeout(() => {
-      var acc = document.querySelectorAll(".advanced-search-btn");
-      var i;
-      var simpleSearch = document.querySelector(".simple-search-btn");
-      var advancedSearch = document.querySelector(".advanced-search-btn");
-      var panel = document.getElementsByClassName("panel");
+    //         setTimeout(() => {
+    //           this.handleResize();
+    //         }, 0);
+    //       })
+    //       .catch(error => console.log(error));
+    //     this.eventPastList = res.data.events;
 
-      var resetFilters = document.querySelector(".reset-filters-btn");
-      var applyFilters = document.querySelector(".apply-filters-btn");
+    //     this.pastEvents = new Array(this.eventPastList.length)
+    //       .fill(null)
+    //       .map(() => ({
+    //         btnsWrapShow: false,
+    //         btnsWrapAttendShow: false,
+    //         attendClicked: false,
+    //         attendComplete: false,
+    //         attendConfirmed: false
+    //       }));
+    //   })
+    //   .catch(error => console.log(error));
 
-      for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
-          this.style.display = "none";
-          simpleSearch.style.display = "block";
-          resetFilters.style.display = "block";
-          if (panel[0].style.maxHeight) {
-            panel[0].style.maxHeight = null;
-          } else {
-            panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-          }
-        });
-      }
+    // setTimeout(() => {
+    //   var acc = document.querySelectorAll(".advanced-search-btn");
+    //   var i;
+    //   var simpleSearch = document.querySelector(".simple-search-btn");
+    //   var advancedSearch = document.querySelector(".advanced-search-btn");
+    //   var panel = document.getElementsByClassName("panel");
 
-      simpleSearch.addEventListener("click", function() {
-        this.style.display = "none";
-        advancedSearch.style.display = "block";
-        resetFilters.style.display = "none";
-        if (panel[0].style.maxHeight) {
-          panel[0].style.maxHeight = null;
-        } else {
-          panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-        }
-      });
+    //   var resetFilters = document.querySelector(".reset-filters-btn");
+    //   var applyFilters = document.querySelector(".apply-filters-btn");
 
-      let currentWidth = $(window).width();
-      let firstInit = true;
+    //   for (i = 0; i < acc.length; i++) {
+    //     acc[i].addEventListener("click", function() {
+    //       this.style.display = "none";
+    //       simpleSearch.style.display = "block";
+    //       resetFilters.style.display = "block";
+    //       if (panel[0].style.maxHeight) {
+    //         panel[0].style.maxHeight = null;
+    //       } else {
+    //         panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+    //       }
+    //     });
+    //   }
 
-      $(window).on("resize", function() {
-        if (firstInit) {
-          if ($(window).width() >= 1600) {
-            resetFilters.style.display = "block";
-            applyFilters.style.display = "block";
-            advancedSearch.style.display = "none";
-            simpleSearch.style.display = "none";
-            panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-          } else {
-            resetFilters.style.display = "none";
-            advancedSearch.style.display = "block";
-            panel[0].style.maxHeight = null;
-          }
+    //   simpleSearch.addEventListener("click", function() {
+    //     this.style.display = "none";
+    //     advancedSearch.style.display = "block";
+    //     resetFilters.style.display = "none";
+    //     if (panel[0].style.maxHeight) {
+    //       panel[0].style.maxHeight = null;
+    //     } else {
+    //       panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+    //     }
+    //   });
 
-          firstInit = false;
-        } else {
-          if ($(window).width() !== currentWidth) {
-            currentWidth = $(window).width();
+    //   let currentWidth = $(window).width();
+    //   let firstInit = true;
 
-            if ($(window).width() >= 1600) {
-              resetFilters.style.display = "block";
-              applyFilters.style.display = "block";
-              advancedSearch.style.display = "none";
-              simpleSearch.style.display = "none";
-              panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-            } else {
-              if (simpleSearch.style.display === "block") {
-                return;
-              }
-              resetFilters.style.display = "none";
-              advancedSearch.style.display = "block";
-              simpleSearch.style.display = "none";
-              panel[0].style.maxHeight = null;
-            }
-          }
-        }
-      });
+    //   $(window).on("resize", function() {
+    //     if (firstInit) {
+    //       if ($(window).width() >= 1600) {
+    //         resetFilters.style.display = "block";
+    //         applyFilters.style.display = "block";
+    //         advancedSearch.style.display = "none";
+    //         simpleSearch.style.display = "none";
+    //         panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+    //       } else {
+    //         resetFilters.style.display = "none";
+    //         advancedSearch.style.display = "block";
+    //         panel[0].style.maxHeight = null;
+    //       }
 
-      $(window).resize();
+    //       firstInit = false;
+    //     } else {
+    //       if ($(window).width() !== currentWidth) {
+    //         currentWidth = $(window).width();
 
-      $.fn.equalHeights = function() {
-        var maxHeight = 0,
-          $this = $(this);
+    //         if ($(window).width() >= 1600) {
+    //           resetFilters.style.display = "block";
+    //           applyFilters.style.display = "block";
+    //           advancedSearch.style.display = "none";
+    //           simpleSearch.style.display = "none";
+    //           panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+    //         } else {
+    //           if (simpleSearch.style.display === "block") {
+    //             return;
+    //           }
+    //           resetFilters.style.display = "none";
+    //           advancedSearch.style.display = "block";
+    //           simpleSearch.style.display = "none";
+    //           panel[0].style.maxHeight = null;
+    //         }
+    //       }
+    //     }
+    //   });
 
-        $this.each(function() {
-          var height = $(this).innerHeight();
+    //   $(window).resize();
 
-          if (height > maxHeight) {
-            maxHeight = height;
-          }
-        });
+    //   $.fn.equalHeights = function() {
+    //     var maxHeight = 0,
+    //       $this = $(this);
 
-        return $this.css("height", maxHeight);
-      };
+    //     $this.each(function() {
+    //       var height = $(this).innerHeight();
 
-      // auto-initialize plugin
-      $("[data-equal]").each(function() {
-        var $this = $(this),
-          target = $this.data("equal");
-        $this.find(target).equalHeights();
-      });
+    //       if (height > maxHeight) {
+    //         maxHeight = height;
+    //       }
+    //     });
 
-      $(".talk-cards-container .info-wrap").equalHeights();
-    }, 0);
+    //     return $this.css("height", maxHeight);
+    //   };
+
+    //   // auto-initialize plugin
+    //   $("[data-equal]").each(function() {
+    //     var $this = $(this),
+    //       target = $this.data("equal");
+    //     $this.find(target).equalHeights();
+    //   });
+
+    //   $(".talk-cards-container .info-wrap").equalHeights();
+    // }, 0);
 
     $(".talk-card-checkbox").click(function() {
       $("#overlay").toggleClass("display-none");
       $(this).toggleClass("button-clicked");
     });
-
-    this.loadEventsData;
-    this.$store.dispatch("events/loadEventsData");
 
     // WARNING! - Always trigger resize event after loading data\markup changes
     setTimeout(() => {
@@ -692,7 +699,7 @@ export default {
   },
   methods: {
     handleResize() {
-      if ($(window).width() >= 1439) {
+      if ($(window).width() >= 1600) {
         this.showCarousel = false;
       } else {
         this.showCarousel = true;
