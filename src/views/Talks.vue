@@ -510,7 +510,7 @@ export default {
   components: { carousel },
   data() {
     return {
-      showCarousel: true,
+      showCarousel: false,
       topEvent: null,
       eventList: null,
       eventPastList: null,
@@ -704,7 +704,7 @@ export default {
   },
   methods: {
     handleResize() {
-      if ($(window).width() >= 1600) {
+      if ($(window).width() <= 1600) {
         this.showCarousel = false;
       } else {
         this.showCarousel = true;
