@@ -548,144 +548,107 @@ export default {
     this.$store.dispatch("events/get_past_events");
     this.$store.dispatch("events/get_events_data");
 
-    // axios
-    //   .get("/events/past")
-    //   .then(res => {
-    //     axios
-    //       .get("/events")
-    //       .then(res => {
-    //         this.showCarousel = false;
-    //         this.topEvent = res.data.events[0];
-    //         res.data.events.shift();
-    //         this.eventList = res.data.events;
+    setTimeout(() => {
+      var acc = document.querySelectorAll(".advanced-search-btn");
+      var i;
+      var simpleSearch = document.querySelector(".simple-search-btn");
+      var advancedSearch = document.querySelector(".advanced-search-btn");
+      var panel = document.getElementsByClassName("panel");
 
-    //         console.log((this.eventList = res.data));
+      var resetFilters = document.querySelector(".reset-filters-btn");
+      var applyFilters = document.querySelector(".apply-filters-btn");
 
-    //         this.$store.commit(
-    //           "user/SET_USER_ATTENDING_EVENTS",
-    //           res.data.attending
-    //         );
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+          this.style.display = "none";
+          simpleSearch.style.display = "block";
+          resetFilters.style.display = "block";
+          if (panel[0].style.maxHeight) {
+            panel[0].style.maxHeight = null;
+          } else {
+            panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+          }
+        });
+      }
 
-    //         setTimeout(() => {
-    //           this.handleResize();
-    //         }, 0);
-    //       })
-    //       .catch(error => console.log(error));
-    //     this.eventPastList = res.data.events;
+      simpleSearch.addEventListener("click", function() {
+        this.style.display = "none";
+        advancedSearch.style.display = "block";
+        resetFilters.style.display = "none";
+        if (panel[0].style.maxHeight) {
+          panel[0].style.maxHeight = null;
+        } else {
+          panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+        }
+      });
 
-    //     this.pastEvents = new Array(this.eventPastList.length)
-    //       .fill(null)
-    //       .map(() => ({
-    //         btnsWrapShow: false,
-    //         btnsWrapAttendShow: false,
-    //         attendClicked: false,
-    //         attendComplete: false,
-    //         attendConfirmed: false
-    //       }));
-    //   })
-    //   .catch(error => console.log(error));
+      let currentWidth = $(window).width();
+      let firstInit = true;
 
-    // setTimeout(() => {
-    //   var acc = document.querySelectorAll(".advanced-search-btn");
-    //   var i;
-    //   var simpleSearch = document.querySelector(".simple-search-btn");
-    //   var advancedSearch = document.querySelector(".advanced-search-btn");
-    //   var panel = document.getElementsByClassName("panel");
+      $(window).on("resize", function() {
+        if (firstInit) {
+          if ($(window).width() >= 1600) {
+            resetFilters.style.display = "block";
+            applyFilters.style.display = "block";
+            advancedSearch.style.display = "none";
+            simpleSearch.style.display = "none";
+            panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+          } else {
+            resetFilters.style.display = "none";
+            advancedSearch.style.display = "block";
+            panel[0].style.maxHeight = null;
+          }
 
-    //   var resetFilters = document.querySelector(".reset-filters-btn");
-    //   var applyFilters = document.querySelector(".apply-filters-btn");
+          firstInit = false;
+        } else {
+          if ($(window).width() !== currentWidth) {
+            currentWidth = $(window).width();
 
-    //   for (i = 0; i < acc.length; i++) {
-    //     acc[i].addEventListener("click", function() {
-    //       this.style.display = "none";
-    //       simpleSearch.style.display = "block";
-    //       resetFilters.style.display = "block";
-    //       if (panel[0].style.maxHeight) {
-    //         panel[0].style.maxHeight = null;
-    //       } else {
-    //         panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-    //       }
-    //     });
-    //   }
+            if ($(window).width() >= 1600) {
+              resetFilters.style.display = "block";
+              applyFilters.style.display = "block";
+              advancedSearch.style.display = "none";
+              simpleSearch.style.display = "none";
+              panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+            } else {
+              if (simpleSearch.style.display === "block") {
+                return;
+              }
+              resetFilters.style.display = "none";
+              advancedSearch.style.display = "block";
+              simpleSearch.style.display = "none";
+              panel[0].style.maxHeight = null;
+            }
+          }
+        }
+      });
 
-    //   simpleSearch.addEventListener("click", function() {
-    //     this.style.display = "none";
-    //     advancedSearch.style.display = "block";
-    //     resetFilters.style.display = "none";
-    //     if (panel[0].style.maxHeight) {
-    //       panel[0].style.maxHeight = null;
-    //     } else {
-    //       panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-    //     }
-    //   });
+      $(window).resize();
 
-    //   let currentWidth = $(window).width();
-    //   let firstInit = true;
+      $.fn.equalHeights = function() {
+        var maxHeight = 0,
+          $this = $(this);
 
-    //   $(window).on("resize", function() {
-    //     if (firstInit) {
-    //       if ($(window).width() >= 1600) {
-    //         resetFilters.style.display = "block";
-    //         applyFilters.style.display = "block";
-    //         advancedSearch.style.display = "none";
-    //         simpleSearch.style.display = "none";
-    //         panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-    //       } else {
-    //         resetFilters.style.display = "none";
-    //         advancedSearch.style.display = "block";
-    //         panel[0].style.maxHeight = null;
-    //       }
+        $this.each(function() {
+          var height = $(this).innerHeight();
 
-    //       firstInit = false;
-    //     } else {
-    //       if ($(window).width() !== currentWidth) {
-    //         currentWidth = $(window).width();
+          if (height > maxHeight) {
+            maxHeight = height;
+          }
+        });
 
-    //         if ($(window).width() >= 1600) {
-    //           resetFilters.style.display = "block";
-    //           applyFilters.style.display = "block";
-    //           advancedSearch.style.display = "none";
-    //           simpleSearch.style.display = "none";
-    //           panel[0].style.maxHeight = panel[0].scrollHeight + "px";
-    //         } else {
-    //           if (simpleSearch.style.display === "block") {
-    //             return;
-    //           }
-    //           resetFilters.style.display = "none";
-    //           advancedSearch.style.display = "block";
-    //           simpleSearch.style.display = "none";
-    //           panel[0].style.maxHeight = null;
-    //         }
-    //       }
-    //     }
-    //   });
+        return $this.css("height", maxHeight);
+      };
 
-    //   $(window).resize();
+      // auto-initialize plugin
+      $("[data-equal]").each(function() {
+        var $this = $(this),
+          target = $this.data("equal");
+        $this.find(target).equalHeights();
+      });
 
-    //   $.fn.equalHeights = function() {
-    //     var maxHeight = 0,
-    //       $this = $(this);
-
-    //     $this.each(function() {
-    //       var height = $(this).innerHeight();
-
-    //       if (height > maxHeight) {
-    //         maxHeight = height;
-    //       }
-    //     });
-
-    //     return $this.css("height", maxHeight);
-    //   };
-
-    //   // auto-initialize plugin
-    //   $("[data-equal]").each(function() {
-    //     var $this = $(this),
-    //       target = $this.data("equal");
-    //     $this.find(target).equalHeights();
-    //   });
-
-    //   $(".talk-cards-container .info-wrap").equalHeights();
-    // }, 0);
+      $(".talk-cards-container .info-wrap").equalHeights();
+    }, 0);
 
     $(".talk-card-checkbox").click(function() {
       $("#overlay").toggleClass("display-none");
