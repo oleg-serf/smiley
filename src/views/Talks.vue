@@ -539,6 +539,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
+    console.log(this);
     axios
       .get("/events/past")
       .then(res => {
@@ -552,7 +553,10 @@ export default {
             res.data.events.shift();
             this.eventList = res.data.events;
 
-            this.SET_USER_ATTENDING_EVENTS(res.data.attending);
+            this.$store.commit(
+              "user/SET_USER_ATTENDING_EVENTS",
+              res.data.attending
+            );
 
             // this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
             //   {
@@ -697,7 +701,6 @@ export default {
     this.handleResize();
   },
   methods: {
-    ...mapMutations(["SET_USER_ATTENDING_EVENTS"]),
     handleResize() {
       if ($(window).width() >= 1600) {
         this.showCarousel = false;
