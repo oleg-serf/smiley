@@ -295,7 +295,6 @@
                 :key="ev.id"
               >
                 <div :class="'content-tab-' + index">
-                  <h2>{{ev.title}}</h2>
                   <p v-html="ev.content"></p>
                 </div>
               </div>

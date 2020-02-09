@@ -264,7 +264,7 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                   </div>
                 </div>
               </div>
-
+<!-- Future events -->
               <button v-if="!upcomingEvents[index].attendClicked" class="talk-card-checkbox-dt" :class="{'talk-card-checkbox-rotate':upcomingEvents[index].btnsWrapAttendShow}" @click.prevent="showSecondOverlay(index)" @mouseover="showFirstOverlay(index)" @mouseleave="upcomingEvents[index].btnsWrapShow = false"></button>
 
               <div class="confirmed-box" v-if="upcomingEvents[index].attendConfirmed">
@@ -277,8 +277,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
 
               <div class="btns-wrap" >
                 <div class="attend" id="attending-overlay" v-if="upcomingEvents[index].btnsWrapAttendShow">
-                  <button v-if="!upcomingEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index)">Just Myself</button>
-                  <button v-if="!upcomingEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index)">With organisation</button>
+                  <button v-if="!upcomingEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id)">Just Myself</button>
+                  <button v-if="!upcomingEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id)">With organisation</button>
                 </div>
               </div>
 
@@ -532,7 +532,6 @@ imagesPath + `l_`+event.cover_image+` 1160w`
                 </div>
               </div>
             </div>
-
             <button v-if="!pastEvents[index].attendClicked" class="talk-card-checkbox-dt" :class="{'talk-card-checkbox-rotate':pastEvents[index].btnsWrapAttendShow}" @click.prevent="showSecondOverlay(index, 'past')" @mouseover="showFirstOverlay(index, 'past')" @mouseleave="pastEvents[index].btnsWrapShow = false"></button>
 
             <div class="confirmed-box" v-if="pastEvents[index].attendConfirmed">
@@ -545,8 +544,8 @@ imagesPath + `l_`+event.cover_image+` 1160w`
 
             <div class="btns-wrap" >
               <div class="attend" id="attending-overlay" v-if="pastEvents[index].btnsWrapAttendShow">
-                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, 'past')">Just Myself</button>
-                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, 'past')">With organisation</button>
+                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id, 'past')">Just Myself</button>
+                <button v-if="!pastEvents[index].attendClicked" @click.prevent="onAttendClickHandler(index, event.id, 'past')">With organisation</button>
               </div>
             </div>
 
@@ -916,21 +915,25 @@ imagesPath + `l_`+event.cover_image+` 1160w`
       this.handleResize();
     },
     methods: {
-      ...mapActions('events', ['loadEventsData']),
-      onAttendClickHandler(index, state){
+      ...mapActions('events', ['loadEventsData', 'registerUserForEvent']),
+      // TODO: Rewrite this functions for boolen use
+      onAttendClickHandler(index, eventID = null, state){
+        console.log('user is trying to join event');
+        // console.log(state);
         if(!state){
+          // TODO: whole component - check for non logged users - send them to register
           this.upcomingEvents[index].attendClicked = true;
+          this.registerUserForEvent({ id: eventID, organisation: false});
+          // setTimeout(() => {
+          //   this.upcomingEvents[index].attendComplete = true;
 
-          setTimeout(() => {
-            this.upcomingEvents[index].attendComplete = true;
+          //   setTimeout(() => {
+          //     this.upcomingEvents[index].attendConfirmed = true;
+          //     this.upcomingEvents[index].btnsWrapAttendShow = false;
+          //     this.upcomingEvents[index].attendComplete = false;
+          //   },2000);
 
-            setTimeout(() => {
-              this.upcomingEvents[index].attendConfirmed = true;
-              this.upcomingEvents[index].btnsWrapAttendShow = false;
-              this.upcomingEvents[index].attendComplete = false;
-            },2000);
-
-          },3000)
+          // },3000)
         }
         else{
           this.pastEvents[index].attendClicked = true;
@@ -950,8 +953,13 @@ imagesPath + `l_`+event.cover_image+` 1160w`
       },
       showSecondOverlay(index, state){
         if(!state){
-          this.upcomingEvents[index].btnsWrapAttendShow = true;
-          this.upcomingEvents[index].btnsWrapShow = false;
+          if (!this.upcomingEvents[index].btnsWrapAttendShow) {
+            this.upcomingEvents[index].btnsWrapAttendShow = true;
+            this.upcomingEvents[index].btnsWrapShow = false;
+          } else {
+            this.upcomingEvents[index].btnsWrapAttendShow = false;
+            this.upcomingEvents[index].btnsWrapShow = true;
+          }
         }
         else{
           this.pastEvents[index].btnsWrapAttendShow = true;

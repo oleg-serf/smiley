@@ -23,6 +23,17 @@ const actions = {
       })
       .catch(error => console.error(error))
   },
+  registerUserForEvent({
+    commit
+  }, item) {
+    console.log(item);
+    axios.post('/events/' + item.id + '/attend', item)
+      .then(res => {
+        console.log(res);
+
+      })
+      .catch(error => console.error(error))
+  },
 }
 
 
