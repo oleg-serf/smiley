@@ -65,12 +65,12 @@ const mutations = {
     state.token = null;
     state.attendingEvents = null;
     localStorage.removeItem('token');
-    localStorage.removeItem('attendingEvents');
+    localStorage.setItem('attendingEvents', []);
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
     console.log('events commit');
     state.attendingEvents = (data !== null) ? data : [];
-    localStorage.setItem('attendingEvents', data);
+    localStorage.setItem('attendingEvents', state.attendingEvents);
   }
 }
 
