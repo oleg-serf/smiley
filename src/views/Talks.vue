@@ -510,7 +510,7 @@ export default {
   components: { carousel },
   data() {
     return {
-      showCarousel: false,
+      showCarousel: true,
       topEvent: null,
       eventList: null,
       eventPastList: null,
@@ -546,8 +546,6 @@ export default {
         axios
           .get("/events")
           .then(res => {
-            console.log("Events LOADED");
-            console.log(res);
             this.showCarousel = false;
             this.topEvent = res.data.events[0];
             res.data.events.shift();
@@ -558,19 +556,9 @@ export default {
               res.data.attending
             );
 
-            // this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
-            //   {
-            //     btnsWrapShow: false,
-            //     btnsWrapAttendShow: false,
-            //     attendClicked: false,
-            //     attendComplete: false,
-            //     attendConfirmed: false,
-            //   }
-            // ));
-
-            // setTimeout(() => {
-            //   this.handleResize();
-            // },0);
+            setTimeout(() => {
+              this.handleResize();
+            }, 0);
           })
           .catch(error => console.log(error));
         this.eventPastList = res.data.events;
@@ -704,7 +692,7 @@ export default {
   },
   methods: {
     handleResize() {
-      if ($(window).width() <= 1600) {
+      if ($(window).width() >= 1439) {
         this.showCarousel = false;
       } else {
         this.showCarousel = true;
@@ -717,6 +705,7 @@ export default {
     FormSignUpEventsNotification,
     FilterCheckbox,
     EventCard,
+    carousel,
     SocialIcons
   }
 };
