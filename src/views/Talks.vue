@@ -322,7 +322,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         </carousel>
 
         <div class="talk-cards-container owl-carousel" v-if="!showCarousel && eventList">
-          <div class="talk-card-wrap" v-for="(event, index) in eventList" :key="event.id">
+          <div class="talk-card-wrap" v-for="(event) in eventList" :key="event.id">
             <router-link :to="'/event/' + event.id" class="talk-card">
               <event-card :event="event" />
             </router-link>
@@ -394,7 +394,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         :autoplaySpeed="3000"
         smartSpeed="1000"
       >
-        <div class="talk-card-wrap" v-for="event in eventPastList" :key="event.id">
+        <div class="talk-card-wrap" v-for="event in eventPastList" :key="'old-events'+event.id">
           <router-link :to="'/event/' + event.id" class="talk-card">
             <event-card :event="event" :past="true" />
           </router-link>
@@ -402,7 +402,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
       </carousel>
 
       <div class="talk-cards-container owl-carousel" v-if="!showCarousel && eventList">
-        <div class="talk-card-wrap" v-for="(event, index) in eventPastList" :key="event.id">
+        <div class="talk-card-wrap" v-for="(event) in eventPastList" :key="'old-events'+event.id">
           <router-link :to="'/event/' + event.id" class="talk-card">
             <event-card :event="event" :past="true" />
           </router-link>
@@ -497,7 +497,7 @@ import $ from "jquery";
 import carousel from "vue-owl-carousel2";
 import axios from "../axios-auth";
 
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import SocialIcons from "@/components/footer/SocialIcons";
@@ -545,10 +545,14 @@ export default {
         axios
           .get("/events")
           .then(res => {
+            console.log("Events LOADED");
+            console.log(res);
             this.showCarousel = false;
             this.topEvent = res.data.events[0];
             res.data.events.shift();
             this.eventList = res.data.events;
+
+            this.SET_USER_ATTENDING_EVENTS(res.data.attending);
 
             // this.upcomingEvents = new Array(this.eventList.length).fill(null).map(() => (
             //   {
@@ -686,70 +690,14 @@ export default {
       $(this).toggleClass("button-clicked");
     });
 
-    this.loadEventsData();
+    this.loadEventsData;
+    this.$store.dispatch("events/loadEventsData");
 
     // WARNING! - Always trigger resize event after loading data\markup changes
     this.handleResize();
   },
   methods: {
-    ...mapActions("events", ["loadEventsData", "registerUserForEvent"]),
-    // TODO: Rewrite this functions for boolen use
-    onAttendClickHandler(index, eventID = null, state) {
-      console.log("user is trying to join event");
-      // console.log(state);
-      if (!state) {
-        // TODO: whole component - check for non logged users - send them to register
-        this.upcomingEvents[index].attendClicked = true;
-        this.registerUserForEvent({ id: eventID, organisation: false });
-        // setTimeout(() => {
-        //   this.upcomingEvents[index].attendComplete = true;
-
-        //   setTimeout(() => {
-        //     this.upcomingEvents[index].attendConfirmed = true;
-        //     this.upcomingEvents[index].btnsWrapAttendShow = false;
-        //     this.upcomingEvents[index].attendComplete = false;
-        //   },2000);
-
-        // },3000)
-      } else {
-        this.pastEvents[index].attendClicked = true;
-
-        setTimeout(() => {
-          this.pastEvents[index].attendComplete = true;
-
-          setTimeout(() => {
-            this.pastEvents[index].attendConfirmed = true;
-            this.pastEvents[index].btnsWrapAttendShow = false;
-            this.pastEvents[index].attendComplete = false;
-          }, 2000);
-        }, 3000);
-      }
-    },
-    showSecondOverlay(index, state) {
-      if (!state) {
-        if (!this.upcomingEvents[index].btnsWrapAttendShow) {
-          this.upcomingEvents[index].btnsWrapAttendShow = true;
-          this.upcomingEvents[index].btnsWrapShow = false;
-        } else {
-          this.upcomingEvents[index].btnsWrapAttendShow = false;
-          this.upcomingEvents[index].btnsWrapShow = true;
-        }
-      } else {
-        this.pastEvents[index].btnsWrapAttendShow = true;
-        this.pastEvents[index].btnsWrapShow = false;
-      }
-    },
-    showFirstOverlay(index, state) {
-      if (!state) {
-        if (!this.upcomingEvents[index].btnsWrapAttendShow) {
-          this.upcomingEvents[index].btnsWrapShow = true;
-        }
-      } else {
-        if (!this.pastEvents[index].btnsWrapAttendShow) {
-          this.pastEvents[index].btnsWrapShow = true;
-        }
-      }
-    },
+    ...mapMutations(["user"], ["SET_USER_ATTENDING_EVENTS"]),
     handleResize() {
       if ($(window).width() >= 1600) {
         this.showCarousel = false;
@@ -758,6 +706,7 @@ export default {
       }
     }
   },
+
   components: {
     Breadcrumbs,
     FormSignUpEventsNotification,

@@ -31,7 +31,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
     </div>
 
     <button
-      v-if="!attendedEvents.filter(item => item.event_id == event.id) && !past"
+      v-if="!attendedEvents.filter(item => item.event_id == event.id) && !past && isAuthenticated"
       class="talk-card-checkbox-dt"
       :class="{'talk-card-checkbox-rotate': overlay }"
       @click.prevent="showButtons"
@@ -41,14 +41,16 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
 
     <!-- Show this Upon Hover -->
     <div class="overlay" :class="{'overlay--active' : holderShown && !overlay}">
-      <span v-if="attendedEvents.filter(item => item.event_id == event.id)">Click to cancel</span>
+      <span
+        v-if="attendedEvents.filter(item => item.event_id == event.id) && isAuthenticated"
+      >Click to cancel</span>
       <span v-else>Click to attend</span>
     </div>
 
     <!-- Show if User attended to event -->
     <div
       class="confirmed-box"
-      v-if="attendedEvents.filter(item => item.event_id == event.id)"
+      v-if="attendedEvents.filter(item => item.event_id == event.id) && isAuthenticated"
       @click.prevent="showButtons"
       @mouseover="holderShown = true"
       @mouseleave="holderShown = false"
@@ -125,7 +127,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       <!-- Show attendees only if user is attended to event -->
       <div
         class="attending-info"
-        v-if="event.attendees_random.length !== 0 && attendedEvents.filter(item => item.event_id == event.id)"
+        v-if="event.attendees_random.length !== 0 && attendedEvents.filter(item => item.event_id == event.id) && isAuthenticated"
       >
         <span>Attending:</span>
         <div class="attending-wrap">
@@ -166,7 +168,10 @@ export default {
   computed: {
     ...mapState("user", {
       attendedEvents: state => state.attendingEvents
-    })
+    }),
+    isAuthenticated() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
   },
   props: {
     event: Object,

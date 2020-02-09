@@ -404,9 +404,9 @@ export default {
     axios
       .get("/events")
       .then(res => {
-        this.topEvent = res.data.data[0];
-        res.data.data.shift();
-        this.eventList = res.data.data;
+        this.topEvent = res.data.events[0];
+        res.data.events.shift();
+        this.eventList = res.data.events;
       })
       .catch(error => console.log(error));
   }
@@ -414,5 +414,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/pages/_homepage.scss';
+@import "@/scss/pages/_homepage.scss";
 </style>

@@ -9,12 +9,9 @@ const state = {
 
 // getters
 const getters = {
-  isAuthenticated(state) {
-    return state.token !== null;
+  isAuthenticated() {
+    return localStorage.getItem('token') !== null;
   },
-  // attendedEvents(state) {
-  //   return state.attendingEvents;
-  // }
 }
 // actions
 const actions = {
@@ -41,6 +38,8 @@ const actions = {
         console.log(res);
         console.log(res.status);
         commit('SET_USERDATA', res.data.token);
+        console.log('User -> Login: Attending Events');
+        console.log(res.data.attending);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
         router.replace('/');
       })
@@ -69,6 +68,8 @@ const mutations = {
     localStorage.removeItem('attendingEvents');
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
+    console.log('events commit');
+    console.log(data);
     state.attendingEvents = data;
     localStorage.setItem('attendingEvents', data);
   }
