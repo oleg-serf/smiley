@@ -414,4 +414,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/scss/pages/_homepage.scss';
 </style>

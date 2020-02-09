@@ -64,6 +64,7 @@ Vue.mixin({
   }
 })
 
+
 // TODO: Filters in separate file
 Vue.filter('formatTime', function (time) {
   time = time

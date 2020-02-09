@@ -1,0 +1,1410 @@
+.upcoming-talk-section {
+  padding-bottom: 20px;
+
+  @include xxl {
+    padding-bottom: 42px;
+  }
+
+  .upcoming-talk-wrap {
+    max-width: 1600px;
+    margin: 0 auto;
+
+    @include xxl {
+      display: flex;
+      justify-content: space-between;
+
+      .title-colored-block {
+        text-align: left;
+        width: 380px;
+        box-sizing: border-box;
+      }
+    }
+
+    .title-colored-block {
+      background-color: #d21217;
+      position: relative;
+      text-align: center;
+      z-index: 0;
+
+      @include xxl {
+        text-align: left;
+        padding: 0 60px 0 20px;
+
+        &:after {
+          content: '';
+          height: 100%;
+          position: absolute;
+          right: 0;
+          top: 0;
+          left: -30vw;
+          background-color: #d21217;
+          z-index: -1;
+        }
+      }
+
+      .smiley-talks-main-title {
+        padding-top: 25px;
+
+        img {
+          width: 100%;
+          max-width: 170px;
+        }
+
+        p {
+          color: #fff;
+          font: 400 14px/17px 'Montserrat Regular', sans-serif;
+          text-transform: uppercase;
+          letter-spacing: 17px;
+          position: absolute;
+          display: inline-block;
+          top: 62px;
+          right: 50.3%;
+          margin: 0;
+          transform: translateX(50%);
+        }
+
+        @include custom-width(1300px) {
+          img {
+            max-width: 255px;
+          }
+
+          p {
+            top: 85px;
+            letter-spacing: 30px;
+          }
+        }
+
+        @include xxl {
+          padding-top: 60px;
+
+          p {
+            right: 244px;
+            top: 121px;
+          }
+        }
+      }
+
+      .upcoming-block-register {
+        color: #fff;
+        font: 700 32px/39px 'Montserrat Bold', sans-serif;
+        margin: 9px 0 0;
+
+        @include md {
+          margin-top: 15px;
+          margin-bottom: 16px;
+        }
+
+        @include xxl {
+          margin-top: 10px;
+          margin-bottom: 17px;
+        }
+      }
+
+      .upcoming-block-descr {
+        color: #fff;
+        font: 400 16px/24px 'Muli', sans-serif;
+        padding-bottom: 52px;
+        margin: 10px 30px 0;
+
+        @include md {
+          margin-top: inherit;
+        }
+
+        @include xxl {
+          margin: 0;
+        }
+      }
+    }
+
+    .upcoming-info-block {
+      margin-top: 17px;
+
+      @include xxl {
+        margin-left: 42px;
+        margin-top: 0;
+        padding: 0;
+      }
+
+      .upcoming-info-title {
+        color: $default-text;
+        font: 700 20px/48px 'Montserrat Bold', sans-serif;
+        text-transform: uppercase;
+        margin: 0 0 4px;
+
+        @include lg {
+          font: 700 32px/48px 'Montserrat Bold', sans-serif;
+          margin-bottom: 8px;
+        }
+
+        @include custom-width(1190px) {
+          text-align: center;
+          transform: translateX(-373px);
+        }
+
+        @include xxl {
+          transform: none;
+          text-align: left;
+          margin-top: -4px;
+        }
+      }
+
+      .talk-card {
+        width: 100%;
+        max-width: none;
+
+        .pic-wrap {
+          height: auto;
+        }
+
+        .talk-card-checkbox {
+          display: none;
+        }
+
+        .info-wrap {
+          border: 1px solid #e7e8e7;
+          border-top: none;
+
+          .info-border {
+            padding: 17px 22px 20px 14px;
+          }
+
+          h2 {
+            color: $default-text;
+            font: 700 32px/38px 'Montserrat Bold', sans-serif;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 1px;
+
+            @include xxl {
+              margin-bottom: 12px;
+            }
+          }
+
+          p {
+            margin-bottom: 17px;
+          }
+        }
+
+        @include lg {
+          flex-direction: row;
+
+          .smiley-img-wrap {
+            height: 34.879vw;
+
+            .smiley-img {
+              img {
+                object-fit: cover;
+              }
+            }
+          }
+
+          .info-wrap {
+            border-top: 1px solid #e7e8e7;
+            border-left: none;
+            max-width: 396px;
+            width: 100%;
+            height: auto;
+            flex-direction: column;
+            justify-content: space-between;
+
+            h2 {
+              padding-top: 0;
+            }
+          }
+        }
+
+        @include custom-width(1100px) {
+          display: flex;
+          justify-content: center;
+        }
+
+        @include xl {
+
+          .smiley-img-wrap {
+            height: 32vw;
+            max-width: 762px;
+          }
+
+          .info-wrap {
+            .info-border {
+              padding: 46px 40px 22px 30px;
+            }
+
+            .attending-info {
+              padding: 16px 10px 21px 30px;
+            }
+          }
+
+        }
+
+        @include xxl {
+          .smiley-img-wrap {
+            height: 475px;
+          }
+
+          .info-wrap {
+            .info-border {
+              p {
+                margin-top: 5px;
+              }
+
+              .date-and-time-wrap {
+                margin-top: 26px;
+                margin-bottom: 0;
+              }
+
+              .date-and-time-info {
+                margin-bottom: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ---------- SMILEY TALK SIDEBAR
+
+.talk-sidebar {
+  width: 100%;
+  background-color: #f7f7f7;
+  padding: 25px 21px 0 25px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  @include md {
+    width: 360px;
+  }
+
+  @include lg {
+    padding-top: 28px;
+  }
+
+  .log-sign-req {
+    color: #000;
+    font: 400 16px/20px 'Muli', sans-serif;
+    margin-bottom: 17px;
+    margin-top: 13px;
+    order: 2;
+
+    @include lg {
+      order: 1;
+      margin-bottom: 35px;
+    }
+
+    a {
+      white-space: nowrap;
+    }
+  }
+
+  .smiley-notify {
+    display: flex;
+    flex-wrap: nowrap;
+    order: 1;
+
+    @include lg {
+      order: 2;
+      margin-bottom: 22px;
+    }
+  }
+
+  .smiley-notify-text {
+    font: 400 16px/20px 'Muli', sans-serif;
+    color: $default-text;
+
+    @include lg {
+      font: 400 16px/24px 'Muli', sans-serif;
+    }
+  }
+
+  .notify-checkbox {
+    position: relative;
+    padding-right: 44px;
+    height: 24px;
+    background-color: #e4e4e4;
+    box-sizing: border-box;
+    border-radius: 5000px;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 20px;
+    user-select: none;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .notify-checkmark {
+      position: absolute;
+      top: 0;
+      left: 1px;
+      height: 24px;
+      width: 44px;
+      transition: all .2s ease;
+      border-radius: 5000px;
+      box-sizing: border-box;
+    }
+  }
+
+  .notify-checkbox input:checked~.notify-checkmark {
+    background-color: #de1c22;
+    border-radius: 5000px;
+    border: none;
+  }
+
+  .notify-checkmark:after {
+    content: "";
+    position: absolute;
+    background-color: #fff;
+    left: 1px;
+    top: 2px;
+    transition: .2s ease;
+  }
+
+  .notify-checkbox input:checked~.notify-checkmark:after {
+    left: 22px;
+    top: 2px;
+    transition: .2s ease;
+  }
+
+  .notify-checkbox .notify-checkmark:after {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  .location-distance {
+    color: #000;
+    font: 400 16px/24px 'Muli', sans-serif;
+    margin-top: 13px;
+    margin-bottom: 23px;
+    order: 4;
+  }
+
+  .location-search {
+    order: 2;
+
+    input {
+      margin-top: 6px;
+    }
+  }
+
+  .search-by-keyword {
+    margin-bottom: 15px;
+    order: 5;
+  }
+
+  .select-period {
+    order: 6;
+  }
+
+  .location-search,
+  .search-by-keyword,
+  .select-period {
+    position: relative;
+
+    label {
+      color: $default-text;
+      font: 700 16px/24px 'Muli', sans-serif;
+    }
+
+    input {
+      background-color: #fff;
+      border: 1px solid #C7C7C7;
+      border-radius: 4px;
+      height: 48px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 45px 0 16px;
+      font: 400 16px/26px 'Montserrat Regular', sans-serif;
+
+      &::placeholder {
+        color: #656565;
+        font: 400 16px/24px 'Muli', sans-serif;
+      }
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      right: 16px;
+      bottom: 12px;
+    }
+  }
+
+  .checkboxes-block {
+    order: 7;
+
+    >p {
+      color: $default-text;
+      font: 700 16px/24px 'Muli', sans-serif;
+      margin: 14px 0 15px;
+
+      @include lg {
+        margin-top: 25px;
+      }
+    }
+  }
+
+  .panel {
+    background: transparent;
+    max-height: unset !important;
+    // overflow: hidden;
+    transition: 0.2s ease-out;
+  }
+
+  .talk-sidebar-btns {
+    margin-top: 17px;
+    order: 8;
+
+    @include xxl {
+      margin-top: 87px;
+    }
+
+    button {
+      border-radius: 4px;
+      font: 700 16px/24px 'Montserrat Bold', sans-serif;
+      text-transform: uppercase;
+      width: 100%;
+      height: 48px;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .apply-filters-btn {
+      background-color: #de1c22;
+      border: none;
+      color: #fff;
+
+      &:hover {
+        background-color: #BD0000;
+        transition: .2s ease-in;
+      }
+    }
+
+    .reset-filters-btn,
+    .simple-search-btn,
+    .advanced-search-btn {
+      color: $default-text;
+      font: 600 16px/24px 'Montserrat SemiBold', sans-serif;
+      border: 1px solid #c7c7c7;
+      background: transparent;
+
+      &:hover {
+        background-color: #fff;
+        color: gray;
+        transition: .2s ease-in;
+      }
+    }
+
+    .simple-search-btn,
+    .reset-filters-btn {
+      display: none;
+    }
+
+    @include lg {
+
+      .simple-search-btn,
+      .advanced-search-btn {
+        display: none;
+      }
+
+      .reset-filters-btn {
+        display: block;
+      }
+    }
+  }
+}
+
+// ---------- SMILEY TALK MAIN SECTION
+
+.talk-main-section {
+  @include md {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-left: 15px;
+    margin-bottom: 43px;
+  }
+
+  @include xxl {
+    max-width: 1560px;
+    padding-right: 14px;
+    margin: 0 auto 43px;
+    justify-content: space-between;
+  }
+
+  .talk-content {
+    padding: 0 0 0 15px;
+
+    @include md {
+      width: calc(100% - 375px);
+      width: -moz-calc(100% - 375px);
+      width: -webkit-calc(100% - 375px);
+    }
+
+    @include xxl {
+      max-width: 1159px;
+      padding-bottom: 50px;
+    }
+
+    .selected-search-tags {
+      margin-top: 13px;
+      width: 100%;
+
+      @include lg {
+        margin-top: 0;
+      }
+
+      li {
+        padding: 8px 12px;
+        border-radius: 5000px;
+        background-color: #E4E4E4;
+        color: $default-text;
+        font: 400 12px/16px 'Inter Regular', sans-serif;
+        letter-spacing: 0.4px;
+        display: inline-block;
+        margin: 0 10px 16px 0;
+        cursor: pointer;
+      }
+
+      a {
+        text-decoration: none;
+        display: inline-block;
+        vertical-align: bottom;
+      }
+
+      svg {
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+    }
+
+    .smiley-pagination {
+      display: none;
+
+      @include xxl {
+        display: block;
+      }
+    }
+  }
+}
+
+.talk-cards-container {
+  @include xxl {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .owl-item {
+    height: 100%;
+  }
+
+  .owl-dots {
+    text-align: center;
+    margin-top: 21px;
+
+    .owl-dot span {
+      width: 14px;
+      height: 14px;
+      margin: 5px 7px;
+      display: block;
+      transition: .2s ease;
+      border-radius: 50%;
+      background-color: #d8d8d8;
+      outline: none;
+    }
+
+    .owl-dot.active span {
+      background-color: #de1c22;
+    }
+  }
+
+  .talk-card-wrap {
+    align-items: stretch;
+    display: inline-block;
+
+    @include xxl {
+      margin-bottom: 39px;
+    }
+  }
+}
+
+// ---------- TALK CARD
+
+.talk-card {
+  max-width: 337px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  position: relative;
+
+  @include md {
+    max-width: 360px;
+  }
+
+  .pic-wrap {
+    height: 255px;
+
+    img {
+      width: 100%;
+      display: block;
+      margin: 0 auto;
+      height: 255px;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  &--featured {
+    .pic-wrap {
+      height: 100%;
+
+      img {
+        height: 100%
+      }
+    }
+  }
+
+  .info-wrap {
+    border: 1px solid #dcddde;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    .info-border {
+      padding: 50px 30px 26px 21px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .info-full-height {
+      flex: 1
+    }
+
+    h2 {
+      color: $default-text;
+      font: 700 20px/26px 'Montserrat Bold', sans-serif;
+      text-transform: uppercase;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    p {
+      color: $default-text;
+      font: 400 16px/20px 'Muli', sans-serif;
+      margin-top: 12px;
+      margin-bottom: 11px;
+    }
+  }
+
+  .date-and-time-wrap {
+    color: $default-text;
+    font: 700 20px/30px 'Montserrat Bold', sans-serif;
+    position: relative;
+    margin-bottom: 12px;
+
+    .date-and-time-info {
+      margin-left: 42px;
+    }
+
+    svg {
+      position: absolute;
+      width: 24px;
+      top: 4px;
+      z-index: -1;
+    }
+  }
+
+  .location-info {
+    color: $default-text;
+    font: 400 16px/20px 'Muli', sans-serif;
+    position: relative;
+
+    div {
+      margin-left: 42px;
+    }
+
+    svg {
+      position: absolute;
+      width: 24px;
+      top: 0;
+      z-index: -1;
+    }
+  }
+
+  .attending-info {
+    padding: 16px 10px 17px 24px;
+    border-top: 1px solid #dcddde;
+
+    span {
+      color: $default-text;
+      font: 700 16px/24px 'Muli', sans-serif;
+      margin-right: 5px;
+    }
+
+    .attending-wrap {
+      display: inline-block;
+      vertical-align: middle;
+      height: 41px;
+    }
+
+    .attendees-avatar {
+      width: 41px;
+      height: 41px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: inline-block;
+      border: 2px solid #FFF;
+      box-sizing: border-box;
+
+      img {
+        width: 100%;
+      }
+
+      &.next {
+        margin-left: -22px;
+      }
+    }
+  }
+
+  .talk-card-checkbox-dt {
+    position: absolute;
+    top: 218px;
+    left: 50%;
+    margin-left: -35px;
+    height: 71px;
+    width: 71px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background-color: #656565;
+    box-sizing: border-box;
+    transition: .2s ease-in;
+    cursor: pointer;
+    z-index: 3;
+    outline: none;
+
+    &:hover+.overlay {
+      display: block;
+    }
+
+    &.button-clicked {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &:after,
+    &:before {
+      content: '';
+      height: 2px;
+      width: 16px;
+      background-color: #fff;
+      position: absolute;
+      opacity: 1;
+      top: 32px;
+      left: 50%;
+      margin-left: -8px;
+      transition: .2s ease-in;
+    }
+
+    &:before {
+      transform: rotate(90deg);
+    }
+
+    &.talk-card-checkbox-rotate {
+      transform: rotate(45deg);
+    }
+  }
+
+  .overlay {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #000000aa;
+    z-index: 2;
+    box-sizing: border-box;
+    text-align: center;
+
+    span {
+      font: 700 20px/26px 'Montserrat Bold', sans-serif;
+      position: absolute;
+      top: 170px;
+      transform: translateX(-50%);
+      color: #fff;
+    }
+  }
+
+  .btns-wrap {
+    .attend {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #000000aa;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+
+      button {
+        height: 48px;
+        width: 100%;
+        max-width: 320px;
+        font: 700 16px/24px 'Montserrat Bold', sans-serif;
+        background-color: #656565;
+        border: 1px solid #979797;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        color: #fff;
+        text-transform: uppercase;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 320px;
+        cursor: pointer;
+        z-index: 3;
+
+        &:after,
+        &:before {
+          content: '';
+          height: 2px;
+          width: 16px;
+          background-color: #fff;
+          position: absolute;
+          opacity: 1;
+          top: 22px;
+          left: 25px;
+          margin-left: -8px;
+          transition: .2s ease-in;
+        }
+
+        &:before {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    .display-none {
+      display: none;
+    }
+  }
+
+  .attend-loading {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    /*animation: spin 1s linear infinite;*/
+    width: 90px;
+    height: 90px;
+    top: 210px;
+    right: 50%;
+    margin-right: -45px;
+
+    span {
+      position: absolute;
+      font: 700 16px/24px 'Montserrat Bold', sans-serif;
+      text-transform: uppercase;
+      color: #fff;
+      white-space: nowrap;
+      bottom: -50px;
+      left: -3px;
+    }
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: loadingRotate 1s linear infinite;
+
+      @keyframes loadingRotate {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        50% {
+          transform: rotate(180deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .outer {
+        stroke: #fff;
+        stroke-width: 15px;
+        fill: transparent;
+
+      }
+
+      .inner {
+        fill: transparent;
+        stroke: #d21217;
+        stroke-width: 15px;
+        stroke-dasharray: 539;
+        transition: stroke-dashoffset 1s;
+        -webkit-animation-play-state: running;
+        stroke-dashoffset: 481;
+      }
+
+    }
+  }
+
+  .attend-complete {
+
+    span {
+      color: #fff;
+      font: 700 20px/24px 'Montserrat Bold', sans-serif;
+      position: absolute;
+      left: 50%;
+      bottom: -45px;
+      transform: translateX(-50%);
+      top: 300px;
+      left: 50%;
+    }
+
+  }
+
+  .confirmed-box {
+    position: absolute;
+    top: 218px;
+    left: 50%;
+    margin-left: -35px;
+    height: 71px;
+    width: 71px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background-color: #d21217;
+    box-sizing: border-box;
+    transition: .2s ease-in;
+    cursor: pointer;
+    z-index: 3;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.talk-cards-container {
+  .talk-card-checkbox {
+    position: absolute;
+    top: 218px;
+    left: 50%;
+    margin-left: -35px;
+    cursor: pointer;
+    user-select: none;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .talk-card-checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 71px;
+      width: 71px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background-color: #656565;
+      box-sizing: border-box;
+      transition: .2s ease-in;
+
+      &:after,
+      &:before {
+        content: '';
+        height: 2px;
+        width: 16px;
+        background-color: #fff;
+        position: absolute;
+        opacity: 1;
+        top: 32px;
+        left: 50%;
+        margin-left: -8px;
+        transition: .2s ease-in;
+      }
+
+      &:before {
+        transform: rotate(90deg);
+      }
+
+      svg {
+        position: absolute;
+        top: 21px;
+        left: 20px;
+        opacity: 0;
+      }
+    }
+  }
+
+  .talk-card-checkbox input:checked~.talk-card-checkmark {
+    background-color: #de1c22;
+    transition: .2s ease-in;
+  }
+
+  .talk-card-checkbox input:checked~.talk-card-checkmark {
+
+    &:after,
+    &:before {
+      opacity: 0;
+      display: none;
+    }
+
+    svg {
+      transition: .2s ease-in;
+      opacity: 1;
+    }
+  }
+}
+
+// ---------- SMILEY PAGINATION
+
+.smiley-pagination {
+  font: 600 16px/24px 'Inter SemiBold', sans-serif;
+  text-align: center;
+
+  ul {
+    display: flex;
+    justify-content: center;
+  }
+
+  li {
+    display: inline-block;
+    width: 48px;
+    margin: 0 16px;
+  }
+
+  a {
+    color: $default-text;
+    text-decoration: none;
+    line-height: 48px;
+    display: block;
+  }
+
+  svg {
+    vertical-align: middle;
+    margin-bottom: 2px;
+  }
+
+  span {}
+
+  .smiley-pagination-back,
+  .smiley-pagination-next {
+    margin: 0;
+    width: 71px;
+  }
+}
+
+// ---------- PAST SMILEY TALKS
+
+.past-talks-section {
+  padding-left: 15px;
+  margin-bottom: 23px;
+
+  >h2 {
+    color: $default-text;
+    font: 700 20px/48px 'Montserrat Bold', sans-serif;
+    text-transform: uppercase;
+    padding-bottom: 9px;
+    margin-bottom: 0;
+    margin-top: 13px;
+
+    @include lg {
+      font: 700 32px/48px 'Montserrat Bold', sans-serif;
+      margin-bottom: 38px;
+      margin-top: 45px;
+      border-bottom: 1px solid #e4e4e4;
+    }
+  }
+
+  @include xxl {
+    padding: 0 20px;
+    max-width: 1560px;
+    margin: 0 auto;
+
+    .talk-card-wrap {
+      margin-bottom: 45px;
+    }
+  }
+
+  .smiley-pagination {
+    display: none;
+
+    @include xxl {
+      display: block;
+    }
+  }
+}
+
+// ---------- CREATE HUB SECTION
+
+.create-hub-section {
+  margin-bottom: 40px;
+
+  @include lg {
+    margin-top: 60px;
+    margin-bottom: 80px;
+  }
+
+  @include xxl {
+    margin-top: 88px;
+    margin-bottom: 130px;
+  }
+
+  .create-hub-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include xl {
+      flex-direction: row;
+      position: relative;
+      align-items: flex-start;
+      justify-content: center;
+      max-width: 1560px;
+      margin: 0 auto;
+    }
+  }
+
+  .create-hub-video {
+    order: 2;
+    height: 66.7vw;
+    max-height: 595px;
+    max-width: 892px;
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    @include xl {
+      order: 1;
+      margin-left: 9%;
+      height: auto;
+
+      img {}
+    }
+  }
+
+  .create-hub-content {
+    padding: 32px 32px 34px;
+    background-color: #ffff00;
+    display: flex;
+    flex-direction: column;
+
+    @include xl {
+      order: 2;
+      max-width: 407px;
+      width: 100%;
+      box-sizing: border-box;
+      align-self: normal;
+      justify-content: center;
+    }
+
+    @include custom-width(1400px) {
+      max-width: 534px;
+    }
+
+    @include xxl {
+      padding: 90px 50px 20px 40px;
+      justify-content: flex-start;
+    }
+  }
+
+  .create-hub-logo {
+    height: 123px;
+    display: inline-block;
+    margin-right: 32px;
+
+    img {
+      height: 100%;
+    }
+
+    @include xl {
+      position: absolute;
+      z-index: 2;
+      margin-left: 0;
+      width: 359px;
+      height: 318px;
+      left: 0;
+      top: 0;
+      transform: translate(0, 43%);
+      margin-top: 3px;
+      background-color: #ffff00;
+      text-align: center;
+
+      img {
+        transform: translateY(38px);
+        height: 244px;
+      }
+    }
+  }
+
+  .create-hub-title-wrap {
+    color: $default-text;
+    font: 700 44px/42px 'Montserrat Bold', sans-serif;
+    text-transform: uppercase;
+    display: flex;
+    padding-right: 20px;
+    align-self: center;
+
+    @include xxl {
+      font: 700 56px/74px 'Montserrat Bold', sans-serif;
+    }
+  }
+
+  .create-hub-title {
+    align-self: center;
+  }
+
+  .create-hub-text {
+    margin-top: 12px;
+  }
+
+  .create-hub-descr {
+    color: $default-text;
+    font: 400 22px/30px 'Muli', sans-serif;
+    margin-bottom: 23px;
+
+    @include xxl {
+      margin-bottom: 58px;
+    }
+  }
+}
+
+.breadcrumbs {
+  margin: 13px auto;
+  padding: 0 15px;
+  max-width: 1560px;
+
+  li {
+    display: inline-block;
+  }
+
+  .breadcrumbs-item {
+    text-decoration: none;
+    color: $default-text;
+    font: 400 16px/21px 'Muli', sans-serif;
+  }
+
+  svg {
+    margin-right: 5px;
+  }
+
+  @include lg {
+    margin: 37px auto;
+  }
+}
+
+// ---------- SIGN UP INDEX SECTION
+
+.signup-section {
+  background-color: #f7f7f7;
+  padding: 40px 0 50px;
+  text-align: center;
+
+  h2 {
+    color: $default-text;
+    font: 700 32px/48px 'Montserrat Bold', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .smiley-signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    label,
+    input {
+      max-width: 331px;
+      width: 100%;
+    }
+
+    @include md {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+
+      label {
+        margin-right: 30px;
+
+        &:last-of-type {
+          margin-right: 0;
+        }
+      }
+    }
+
+    input {
+      border: 1px solid #C7C7C7;
+      box-sizing: border-box;
+      border-radius: 4px;
+      height: 48px;
+      margin-bottom: 20px;
+      text-indent: 16px;
+      font: 400 16px/24px 'Montserrat Regular', sans-serif;
+
+      &:focus {
+        border: 1px solid #eeb400;
+        box-shadow: 0 2px 31px 13px rgba(0, 0, 0, 0.05);
+        transition: 0.2s ease-in;
+      }
+
+      @include xxl {
+        margin-bottom: 0;
+      }
+
+      &::placeholder {
+        color: #656565;
+        font: 400 16px/24px 'Muli', sans-serif;
+      }
+    }
+
+    .signup-btn-wrap {
+      width: 100%;
+
+      @include xl {
+        max-width: 218px;
+        margin: -1px 30px 0;
+      }
+    }
+
+    .btn-signup {
+      border: none;
+      box-sizing: border-box;
+      background-color: $default-orange-btns;
+      border-radius: 4px;
+      color: #fff;
+      height: 48px;
+      max-width: 218px;
+      margin-bottom: -1px;
+      text-transform: uppercase;
+      font: 700 16px/24px 'Montserrat Bold', sans-serif;
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+
+  .social-icons {
+    margin-top: 50px;
+  }
+}

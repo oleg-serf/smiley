@@ -1,0 +1,156 @@
+<template>
+  <div>
+    <div class="pic-wrap">
+      <div class="smiley-img-wrap">
+        <div class="smiley-img">
+          <img
+            :src="imagesPath +'m_'+event.cover_image"
+            :alt="event.title"
+            sizes="(max-width: 1160px) 100vw, 1160px"
+            :srcset="
+imagesPath + `s_`+event.cover_image+` 150w,` +
+imagesPath + `m_`+event.cover_image+` 360w,` +
+imagesPath + `l_`+event.cover_image+` 1160w`
+                     "
+          />
+        </div>
+      </div>
+    </div>
+    <button
+      v-if="!pastEvents[index].attendClicked"
+      class="talk-card-checkbox-dt"
+      :class="{'talk-card-checkbox-rotate':pastEvents[index].btnsWrapAttendShow}"
+      @click.prevent="showSecondOverlay(index, 'past')"
+      @mouseover="showFirstOverlay(index, 'past')"
+      @mouseleave="pastEvents[index].btnsWrapShow = false"
+    ></button>
+
+    <div class="confirmed-box" v-if="pastEvents[index].attendConfirmed">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+
+    <div class="overlay" :class="index" id="overlay" v-if="pastEvents[index].btnsWrapShow">
+      <span>Click to attend</span>
+    </div>
+
+    <div class="btns-wrap">
+      <div class="attend" id="attending-overlay" v-if="pastEvents[index].btnsWrapAttendShow">
+        <button
+          v-if="!pastEvents[index].attendClicked"
+          @click.prevent="onAttendClickHandler(index, event.id, 'past')"
+        >Just Myself</button>
+        <button
+          v-if="!pastEvents[index].attendClicked"
+          @click.prevent="onAttendClickHandler(index, event.id, 'past')"
+        >With organisation</button>
+      </div>
+    </div>
+
+    <div
+      class="attend-loading"
+      v-if="pastEvents[index].attendClicked && !pastEvents[index].attendComplete && !pastEvents[index].attendConfirmed"
+    >
+      <svg width="90" height="90" viewBox="0 0 90 90">
+        <circle class="outer" cx="45" cy="45" r="37" />
+        <circle class="inner" cx="45" cy="45" r="37" transform="rotate(-90, 45, 45)" />
+      </svg>
+      <span>Loading ...</span>
+    </div>
+    <div class="attend-complete" v-if="pastEvents[index].attendComplete">
+      <div class="confirmed-box">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M9.91007 17.4958L3.70711 11.2929C3.31658 10.9024 2.68342 10.9024 2.29289 11.2929C1.90237 11.6834 1.90237 12.3166 2.29289 12.7071L9.29289 19.7071C9.71682 20.131 10.4159 20.0892 10.7863 19.6178L21.7863 5.6178C22.1275 5.18353 22.0521 4.55488 21.6178 4.21366C21.1835 3.87245 20.5549 3.94789 20.2137 4.38216L9.91007 17.4958Z"
+            fill="#fff"
+          />
+        </svg>
+      </div>
+      <span>Confirmed</span>
+    </div>
+
+    <div class="info-wrap">
+      <div class="info-border">
+        <h2>{{event.title}}</h2>
+        <p class="info-full-height">{{event.short_description}}</p>
+
+        <div class="date-and-time-wrap">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2ZM4 12V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4ZM4 10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6H5C4.44772 6 4 6.44772 4 7V10Z"
+              fill="#d21217"
+            />
+          </svg>
+          <div class="date-and-time-info">
+            <div
+              class="date-info"
+            >{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
+            <div
+              class="time-info"
+            >{{event.time_start | formatTime}} - {{event.time_end | formatTime}}</div>
+          </div>
+        </div>
+
+        <div class="location-info">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z"
+              fill="#d21217"
+            />
+          </svg>
+          <div>{{event.location}}</div>
+        </div>
+      </div>
+
+      <div class="attending-info" v-if="event.attendees_random.length !== 0">
+        <span>Attending:</span>
+        <div class="attending-wrap">
+          <div
+            class="attendees-avatar"
+            :class="{next: index > 0}"
+            v-for="(attendees, index) in event.attendees_random"
+            :key="attendees.id"
+          >
+            <img src="img/event/attendees-avatar-1.jpg" alt="avatar" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
