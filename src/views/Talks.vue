@@ -697,7 +697,7 @@ export default {
     this.handleResize();
   },
   methods: {
-    ...mapMutations(["user"], ["SET_USER_ATTENDING_EVENTS"]),
+    ...mapMutations(["SET_USER_ATTENDING_EVENTS"]),
     handleResize() {
       if ($(window).width() >= 1600) {
         this.showCarousel = false;
