@@ -49,6 +49,7 @@
           class="article-item"
           v-for="(event, index) in eventList"
           :key="event.id"
+          v-if="index > 0 && index < 4"
         >
           <div class="smiley-img-wrap">
             <div class="smiley-img">
