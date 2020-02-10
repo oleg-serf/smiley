@@ -24,8 +24,8 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
           <button @click.prevent>With organisation</button>
         </div>
         <div v-if="attendedEvents.filter(item => item.event_id == event.id)">
-          <button @click.prevent class="minus">Cancel my Attend</button>
-          <button @click.prevent>Attend to Organisation</button>
+          <button @click.prevent class="minus">CANCEL ATTENDENCE</button>
+          <button @click.prevent>ATTEND AS AN ORGANISATION</button>
         </div>
       </div>
     </div>

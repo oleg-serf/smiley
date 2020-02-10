@@ -69,7 +69,7 @@
                 <button class="reg-event-btn" @click="registerUser(event.id)">Register for event</button>
               </div>
               <div v-else>
-                <button class="reg-event-btn" @click="cancelRegistration">Cancel event registration</button>
+                <button class="reg-event-btn" @click="cancelRegistration">CANCEL ATTENDENCE</button>
               </div>
               <button class="chat-btn">Join the chat room</button>
             </div>
