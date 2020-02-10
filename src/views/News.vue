@@ -144,7 +144,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 
 import NewsItem from "@/components/news/News-Item";
 
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/Footer";
 import axios from "../axios-auth";
 
 export default {
@@ -174,7 +174,8 @@ export default {
   },
   components: {
     Breadcrumbs,
-    NewsItem
+    NewsItem,
+    Footer
   }
 };
 </script>

@@ -336,7 +336,6 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
       <div class="smiley-pagination" style="display: none;">
         <paginate
           :page-count="pagination.past.pages"
-          :click-handler="loadPast"
           :prev-text="'Prev'"
           :next-text="'Next'"
           :prev-class="'smiley-pagination-back'"
@@ -370,7 +369,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
       </div>
     </section>
 
-    <section class="signup-section">
+    <!-- <section class="signup-section">
       <div class="signup-section-wrap container">
         <h2>Don’t miss an event - sign up for our latest event news</h2>
 
@@ -378,7 +377,8 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
 
         <social-icons />
       </div>
-    </section>
+    </section>-->
+    <Footer />
   </div>
 </template>
 
@@ -394,10 +394,10 @@ import SocialIcons from "@/components/footer/SocialIcons";
 import FormSignUpEventsNotification from "@/components/events/Form-EventsNotifications";
 import FilterCheckbox from "@/components/events/Filter-Checkbox";
 import EventCard from "@/components/events/Event-Card";
+import Footer from "@/components/Footer";
 
 export default {
   name: "Talks",
-  components: { carousel },
   data() {
     return {
       showCarousel: true,
@@ -580,7 +580,8 @@ export default {
     FilterCheckbox,
     EventCard,
     carousel,
-    SocialIcons
+    SocialIcons,
+    Footer
   }
 };
 </script>
