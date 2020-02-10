@@ -109,6 +109,7 @@
       class="news-category-section container"
       v-for="featured_item in categories_featured"
       :key="featured_item.name + featured_item.id"
+      v-if="featured_item.blog_posts_latest.length > 0"
     >
       <div class="news-category-container">
         <h2 class="news-category-title">{{ featured_item.name }}</h2>

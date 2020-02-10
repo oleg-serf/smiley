@@ -9,8 +9,8 @@ const state = {
 
 // getters
 const getters = {
-  isAuthenticated() {
-    return localStorage.getItem('token') !== null;
+  isAuthenticated(state) {
+    return state.token !== null;
   },
 }
 // actions
@@ -22,7 +22,7 @@ const actions = {
     axios.post('/register', credentials)
       .then(res => {
         console.log(res);
-        commit('authUser', res.data.token);
+        commit('SET_USERDATA', res.data.token);
         // const now = new Date();
         // const expirationDate = now.getTime()
         router.replace('/');
