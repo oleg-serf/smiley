@@ -10,67 +10,77 @@ const routes = [
   {
     path: '/talks',
     name: 'talks',
-    component: () => import(/* webpackChunkName: "talks" */ '../views/Talks.vue')
+    component: () => import( /* webpackChunkName: "talks" */ '../views/Talks.vue')
   },
   {
     path: '/news',
     name: 'news',
-    component: () => import(/* webpackChunkName: "news" */ '../views/News.vue')
+    component: () => import( /* webpackChunkName: "news" */ '../views/News.vue')
+  },
+  {
+    path: '/news/:slug',
+    name: 'news-item',
+    component: () => import( /* webpackChunkName: "news-single" */ '../views/News-Single.vue')
+  },
+  {
+    path: '/news/category/:slug',
+    name: 'news-category-item',
+    component: () => import( /* webpackChunkName: "news-category-item" */ '../views/News-Category.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Login.vue')
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Register.vue')
   },
   {
     path: '/forgot',
     name: 'forgot',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Forgot.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Forgot.vue')
   },
   {
     path: '/event/:id',
     name: 'event',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Event.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Event.vue')
   },
   {
     path: '/chat',
     name: 'chat',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Chat.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Chat.vue')
   },
   {
     path: '/terms-and-conditions',
     name: 'terms',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Terms.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Terms.vue')
   },
   {
     path: '/contact',
     name: 'contact',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Contact.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Contact.vue')
   },
   {
     path: '/our-story',
     name: 'story',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Story.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Story.vue')
   },
   {
     path: '/partners',
     name: 'partners',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Partners.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Partners.vue')
   },
   {
     path: '/add-organisation',
     name: 'add-organisation',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Add-organisation.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Add-organisation.vue')
   },
   {
     path: '/customize-organisation',
     name: 'customize-organisation',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Customize-organisation.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/Customize-organisation.vue')
   },
   {
     path: '/',

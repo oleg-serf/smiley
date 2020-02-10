@@ -6,6 +6,10 @@ import store from './store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import "regenerator-runtime";
 
+import Paginate from 'vuejs-paginate'
+
+Vue.component('paginate', Paginate)
+
 Vue.config.productionTip = false;
 Vue.use(VueGoogleMaps, {
   load: {
@@ -53,6 +57,7 @@ Vue.prototype.$settings = {
     events: `https://new-smiley.s3.eu-west-2.amazonaws.com/events/`,
     speakers: `https://new-smiley.s3.eu-west-2.amazonaws.com/speakers/`,
     partners: `https://new-smiley.s3.eu-west-2.amazonaws.com/partners/`,
+    news: `https://new-smiley.s3.eu-west-2.amazonaws.com/news/`,
   },
   social: {
     facebook: 'https://facebook.com/SmileyMovement/',

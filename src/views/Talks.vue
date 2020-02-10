@@ -320,7 +320,6 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           :autoplay="true"
           :autoplayTimeout="5000"
           :autoWidth="true"
-          
         >
           <div class="talk-card-wrap" v-for="event in eventList" :key="'c-'+event.id">
             <router-link :to="'/event/' + event.id" class="talk-card">
@@ -398,8 +397,6 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         :loop="true"
         :autoplay="true"
         :autoWidth="true"
-        
-        
       >
         <div
           class="talk-card-wrap"
@@ -516,7 +513,6 @@ import FormSignUpEventsNotification from "@/components/events/Form-EventsNotific
 import FilterCheckbox from "@/components/events/Filter-Checkbox";
 import EventCard from "@/components/events/Event-Card";
 
-
 export default {
   name: "Talks",
   components: { carousel },
@@ -528,7 +524,7 @@ export default {
         goals: [],
         keywords: "",
         date_start: "",
-        date_end: "",
+        date_end: ""
       }
     };
   },
@@ -676,7 +672,7 @@ export default {
       }
     },
     applyFilters() {
-      this.$store.dispatch('events/send_filter_params', this.filter);
+      this.$store.dispatch("events/send_filter_params", this.filter);
     },
     resetFilters() {
       this.$store.dispatch("events/get_events");
@@ -689,12 +685,12 @@ export default {
     FilterCheckbox,
     EventCard,
     carousel,
-    SocialIcons,
+    SocialIcons
   }
 };
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/scss/pages/_talks.scss";
 </style>

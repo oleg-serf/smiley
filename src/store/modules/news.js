@@ -2,8 +2,10 @@ import axios from '@/axios-auth'
 
 // initial state
 const state = {
+  news_latest: [],
   news: [],
-  featured_goals: [],
+  categories: [],
+  categories_featured: [],
 }
 
 // getters
@@ -11,13 +13,23 @@ const getters = {}
 
 // actions
 const actions = {
-  get_news({
+  get_news_latest({
     commit
   }) {
-    axios.get('news/latest')
+    axios.get('/news/latest')
       .then(res => {
-        commit('SET_NEWS', res.data.latest_news);
-        commit('SET_GOALS', res.data.featured_goals);
+        console.log(res);
+        commit('SET_NEWS_LATEST', res.data.latest_news);
+        commit('SET_CATEGORIES_FEATURED', res.data.featured_goals);
+      })
+      .catch(error => console.error(error))
+  },
+  get_categories({
+    commit
+  }) {
+    axios.get('/goals')
+      .then(res => {
+        commit('SET_CATEGORIES', res.data.goal_categories[0].goals);
       })
       .catch(error => console.error(error))
   },
@@ -27,11 +39,14 @@ const actions = {
 
 // mutations
 const mutations = {
-  SET_NEWS(state, data) {
+  SET_NEWS_LATEST(state, data) {
     state.news = data
   },
-  SET_GOALS(state, data) {
-    state.featured_goals = data
+  SET_CATEGORIES(state, data) {
+    state.categories = data
+  },
+  SET_CATEGORIES_FEATURED(state, data) {
+    state.categories_featured = data
   },
 }
 

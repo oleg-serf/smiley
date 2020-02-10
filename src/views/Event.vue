@@ -55,7 +55,11 @@
       <div class="event-content">
         <div class="event-content-wrap">
           <div class="event-img">
-            <img src="/img/event/event-img.jpg" alt="event-pic" />
+            <img
+              :src="$settings.images_path.events  +'l_'+event.cover_image"
+              :alt="event.title"
+              :title="event.title"
+            />
           </div>
           <div class="event-sidebar">
             <div class="sidebar-btn-wrap">
@@ -450,7 +454,7 @@ export default {
     axios
       .get("/events/" + this.id)
       .then(res => {
-        this.event = res.data.data;
+        this.event = res.data.event;
       })
       .catch(error => console.log(error));
   },

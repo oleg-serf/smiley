@@ -1,54 +1,6 @@
 <template>
   <div>
-    <section class="breadcrumbs">
-      <ul>
-        <li>
-          <a href="#" class="breadcrumbs-item">Homepage</a>
-          <svg
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.52699 9L10.9815 4.54545L6.52699 0.0909092L5.76136 0.856534L8.91335 3.99858H0.75V5.09233H8.91335L5.76136 8.24432L6.52699 9Z"
-              fill="#656565"
-            />
-          </svg>
-        </li>
-        <li>
-          <a href="#" class="breadcrumbs-item">One</a>
-          <svg
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.52699 9L10.9815 4.54545L6.52699 0.0909092L5.76136 0.856534L8.91335 3.99858H0.75V5.09233H8.91335L5.76136 8.24432L6.52699 9Z"
-              fill="#656565"
-            />
-          </svg>
-        </li>
-        <li>
-          <a href="#" class="breadcrumbs-item">Two</a>
-          <svg
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.52699 9L10.9815 4.54545L6.52699 0.0909092L5.76136 0.856534L8.91335 3.99858H0.75V5.09233H8.91335L5.76136 8.24432L6.52699 9Z"
-              fill="#656565"
-            />
-          </svg>
-        </li>
-      </ul>
-    </section>
+    <breadcrumbs />
 
     <section class="latest-news-section">
       <div class="latest-news-wrap">
@@ -63,46 +15,48 @@
           >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
         </div>
 
-        <div class="smiley-news-center">
-          <h2>Latest news</h2>
-          <a href="#" class="article-item" v-if="topNews">
+        <div class="smiley-news-center main-title">
+          <h2>
+            Latest news
+            <router-link :to="'/news/category/all'" class="read-more-link">
+              <span></span>Read more
+            </router-link>
+          </h2>
+          <router-link :to="'/news/' + topNews.slug" class="article-item" v-if="topNews">
             <div class="smiley-img-wrap">
               <div class="smiley-img">
-                <img src="img/homepage/news-big-item-x1.jpg" alt="big-photo" />
+                <img
+                  :src="$settings.images_path.news  +'m_'+topNews.cover_image"
+                  :alt="topNews.title"
+                  :title="topNews.title"
+                />
               </div>
             </div>
             <div class="article-descr">
               <div class="article-date-location">
-                <div class="article-date"></div>
+                <div class="article-date">{{topNews.published_at}}</div>
                 <div class="article-location"></div>
               </div>
               <div class="article-title">{{topNews.slug}}</div>
               <div class="article-subtitle">{{topNews.title}}</div>
             </div>
-          </a>
+          </router-link>
         </div>
 
         <div class="smiley-news-right" v-if="latestNews">
           <div class="wrap-for-category-select">
-            <select class="category-filter" name="category">
+            <select
+              class="category-filter"
+              name="category"
+              v-if="categories.length > 0"
+              @change="goToCategory($event)"
+            >
               <option selected disabled>Choose a category</option>
-              <option value="1">Affordable and clean energy</option>
-              <option value="2">Clean water and sanitation</option>
-              <option value="3">Climate Action</option>
-              <option value="4">Decent work and economic growth</option>
-              <option value="5">Gender Equality</option>
-              <option value="6">Good Health and Wellbeing</option>
-              <option value="7">Industry, Innovation and Infrastructure</option>
-              <option value="8">Life below water</option>
-              <option value="9">Life on Land</option>
-              <option value="10">No Poverty</option>
-              <option value="11">Partnerships for the Goals</option>
-              <option value="12">Peace, Justice and Strong Institutions</option>
-              <option value="13">Quality Education</option>
-              <option value="14">Reduced Inequalities</option>
-              <option value="15">Responsible consumption and production</option>
-              <option value="16">Sustainable Cities and Communities</option>
-              <option value="17">Zero Hunger</option>
+              <option
+                v-for="category in categories"
+                :key="'news-c-'+category.id"
+                :value="category.slug"
+              >{{ category.name }}</option>
             </select>
             <div class="select-arrows">
               <svg
@@ -122,60 +76,56 @@
           </div>
 
           <div class="right-articles-wrap">
-            <a href="#" class="article-item" v-for="(news, index) in  latestNews" :key="index">
+            <router-link
+              :to="'/news/' + news.slug"
+              class="article-item"
+              v-for="(news, index) in  latestNews"
+              :key="index"
+            >
               <div class="smiley-img-wrap">
                 <div class="smiley-img">
-                  <img src="img/homepage/news-small-item-1-x2.jpg" alt="small preview 1" />
+                  <img
+                    :src="$settings.images_path.news  +'m_'+news.cover_image"
+                    :alt="news.title"
+                    :title="news.title"
+                  />
                 </div>
               </div>
               <div class="article-descr">
                 <div class="article-date-location">
-                  <div class="article-date"></div>
+                  <div class="article-date">{{news.published_at}}</div>
                   <div class="article-location"></div>
                 </div>
                 <div class="article-title">{{news.slug}}</div>
                 <div class="article-subtitle">{{news.title}}</div>
               </div>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="news-category-section container">
-      <div class="news-category-container" v-for="(news, index) in featuredGoals" :key="index">
-        <h2 class="news-category-title">{{news.name}}</h2>
+    <section
+      class="news-category-section container"
+      v-for="featured_item in categories_featured"
+      :key="featured_item.name + featured_item.id"
+    >
+      <div class="news-category-container">
+        <h2 class="news-category-title">{{ featured_item.name }}</h2>
 
         <router-link
-          to
+          :to="'/news/' + article.slug"
           class="article-item"
-          v-for="(post, index) in news.blog_posts_latest"
-          :key="index"
+          v-for="article in featured_item.blog_posts_latest"
+          :key="article.id+article.title"
         >
-          <div class="smiley-img-wrap">
-            <div class="smiley-img">
-              <img src="img/news/news-category-1-item-1.jpg" alt="News item 1" />
-            </div>
-            <div class="icon-wrap">
-              <img src="img/homepage/icon-01.png" alt="icon" />
-            </div>
-          </div>
-          <div class="article-descr">
-            <div class="article-date-location">
-              <div
-                class="article-date"
-              >{{new Date(post.created_at).toLocaleDateString('nl', {day:"2-digit",month:"2-digit",year:"numeric"})}}</div>
-              <div class="article-location">London</div>
-            </div>
-            <div class="article-title">{{post.title}}</div>
-            <div class="article-subtitle">{{post.description}}</div>
-          </div>
+          <news-item :article="article" />
         </router-link>
 
         <div class="more-link-wrap">
-          <a href="#" class="read-more-link">
+          <router-link :to="'/news/category/' + featured_item.slug" class="read-more-link">
             <span></span>Read more
-          </a>
+          </router-link>
         </div>
       </div>
     </section>
@@ -187,6 +137,12 @@
 <script>
 import { mapState } from "vuex";
 
+import router from "@/router";
+
+import Breadcrumbs from "@/components/Breadcrumbs";
+
+import NewsItem from "@/components/news/News-Item";
+
 import Footer from "@/components/Footer.vue";
 import axios from "../axios-auth";
 
@@ -196,25 +152,40 @@ export default {
     Footer
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapState("news", {
-      latestNews: state => state.news,
+      latestNews: state => state.news.filter((item, index) => index > 0),
       topNews: state => state.news[0],
-      featuredGoals: state => state.featuredGoals,
+      categories: state => state.categories,
+      categories_featured: state => state.categories_featured
     })
   },
   mounted() {
-    this.$store.dispatch("news/get_news");
+    this.$store.dispatch("news/get_news_latest");
+    this.$store.dispatch("news/get_categories");
   },
-  methods: {}
+  methods: {
+    goToCategory(event) {
+      router.push({ path: `/news/category/${event.target.value}` });
+    }
+  },
+  components: {
+    Breadcrumbs,
+    NewsItem
+  }
 };
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
+.main-title.smiley-news-center h2 {
+  display: flex !important;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
 //---------- ARTICLE ITEM
 
 .article-item {
