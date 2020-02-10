@@ -63,7 +63,14 @@
           </div>
           <div class="event-sidebar">
             <div class="sidebar-btn-wrap">
-              <button class="reg-event-btn">Register for event</button>
+              <div
+                v-if="!attendedEvents.filter(item => item.event_id == event.id) && !past && isAuthenticated"
+              >
+                <button class="reg-event-btn" @click="registerUser(event.id)">Register for event</button>
+              </div>
+              <div v-else>
+                <button class="reg-event-btn" @click="cancelRegistration">Cancel event registration</button>
+              </div>
               <button class="chat-btn">Join the chat room</button>
             </div>
             <div class="sidebar-block">
@@ -374,6 +381,7 @@
 import Footer from "@/components/Footer.vue";
 import $ from "jquery";
 import axios from "../axios-auth";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Event",
@@ -390,7 +398,14 @@ export default {
       event: null
     };
   },
-
+  computed: {
+    ...mapState("user", {
+      attendedEvents: state => state.attendingEvents
+    }),
+    isAuthenticated() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
+  },
   mounted() {
     setTimeout(() => {
       var acc = document.getElementsByClassName("accordion");
@@ -459,6 +474,13 @@ export default {
       .catch(error => console.log(error));
   },
   methods: {
+    cancelRegistration() {
+      this.$swal("Registration canceled", "", "success");
+    },
+    registerUser(id) {
+      this.registerUserForEvent({ id: id, organisation: false });
+    },
+    ...mapActions("events", ["registerUserForEvent"]),
     setPlace(place) {
       this.currentPlace = place;
     },

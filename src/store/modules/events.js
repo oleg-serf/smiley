@@ -5,7 +5,9 @@ const state = {
   currentCategory: '',
   goals: [],
   pastEvents: [],
-  events: []
+  events: [],
+  pastEventsPages: 1,
+  eventsPages: 1,
 }
 
 // getters
@@ -26,14 +28,14 @@ const actions = {
   },
   get_events({
     commit
-  }) {
-    let url = (this.getters['user/isAuthenticated']) ? '/events/auth' : '/events';
+  }, page) {
+    let url = (this.getters['user/isAuthenticated']) ? '/events/auth?page=' + page : '/events?page=' + page;
 
     axios.get(url)
       .then(res => {
-        console.log(res.data);
-        
+
         commit('SET_EVENTS', res.data.events)
+        commit('SET_EVENTS_PAGES', res.data.pages_count)
 
 
         if (this.getters['user/isAuthenticated']) {
@@ -50,13 +52,17 @@ const actions = {
     axios.get('/events/past')
       .then(res => {
         commit('SET_PAST_EVENTS', res.data.events)
+        console.log('past');
+        console.log(res.data);
       })
       .catch(error => console.error(error))
   },
   send_filter_params({
     commit
   }, params) {
-    axios.get('/events/filters', { params: params })
+    axios.get('/events/filters', {
+        params: params
+      })
       .then(res => {
         console.log(res);
         if (res.data.events.length === 0) {
@@ -94,6 +100,9 @@ const mutations = {
   },
   SET_EVENTS(state, data) {
     state.events = data
+  },
+  SET_EVENTS_PAGES(state, data) {
+    state.eventsPages = data
   },
 }
 

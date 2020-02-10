@@ -233,9 +233,10 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
 
       <div class="talk-content">
         <div class="selected-search-tags">
+          <!-- FILTER  -->
           <ul>
-            <li>
-              <a href="#">
+            <li v-for="(id, index) in filter.goals" :key="'top-f-'+index">
+              <a href="#" @click.prevent="removeFilter(id)">
                 <svg
                   width="16"
                   height="16"
@@ -250,61 +251,8 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
                     fill="#1A1A1A"
                   />
                 </svg>
-              </a>London
-            </li>
-            <li>
-              <a href="#">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z"
-                    fill="#1A1A1A"
-                  />
-                </svg>
-              </a>Clean water and sanitation
-            </li>
-            <li>
-              <a href="#">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z"
-                    fill="#1A1A1A"
-                  />
-                </svg>
-              </a>Climate action
-            </li>
-            <li>
-              <a href="#">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M9.41413 8.00001L12.7071 4.70701C13.0981 4.31601 13.0981 3.68401 12.7071 3.29301C12.3161 2.90201 11.6841 2.90201 11.2931 3.29301L8.00013 6.58601L4.70713 3.29301C4.31613 2.90201 3.68413 2.90201 3.29313 3.29301C2.90213 3.68401 2.90213 4.31601 3.29313 4.70701L6.58613 8.00001L3.29313 11.293C2.90213 11.684 2.90213 12.316 3.29313 12.707C3.48813 12.902 3.74413 13 4.00013 13C4.25613 13 4.51213 12.902 4.70713 12.707L8.00013 9.41401L11.2931 12.707C11.4881 12.902 11.7441 13 12.0001 13C12.2561 13 12.5121 12.902 12.7071 12.707C13.0981 12.316 13.0981 11.684 12.7071 11.293L9.41413 8.00001Z"
-                    fill="#1A1A1A"
-                  />
-                </svg>
-              </a>Decent work and economic growth
+              </a>
+              {{ goals.find(item => item.id == id).name }}
             </li>
           </ul>
         </div>
@@ -336,50 +284,17 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           </div>
         </div>
 
+        <!-- Pagination up -->
         <div class="smiley-pagination">
-          <ul>
-            <li class="smiley-pagination-back">
-              <a href="#">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M16 21C15.744 21 15.488 20.902 15.293 20.707L7.29301 12.707C6.90201 12.316 6.90201 11.684 7.29301 11.293L15.293 3.293C15.684 2.902 16.316 2.902 16.707 3.293C17.098 3.684 17.098 4.316 16.707 4.707L9.41401 12L16.707 19.293C17.098 19.684 17.098 20.316 16.707 20.707C16.512 20.902 16.256 21 16 21Z"
-                    fill="#1A1A1A"
-                  />
-                </svg>
-                <span>Back</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">1</a>
-            </li>
-            <li class="smiley-pagination-next">
-              <a href="#">
-                Next
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M7.99999 21C8.25599 21 8.51199 20.902 8.70699 20.707L16.707 12.707C17.098 12.316 17.098 11.684 16.707 11.293L8.70699 3.29301C8.31599 2.90201 7.68399 2.90201 7.29299 3.29301C6.90199 3.68401 6.90199 4.31601 7.29299 4.70701L14.586 12L7.29299 19.293C6.90199 19.684 6.90199 20.316 7.29299 20.707C7.48799 20.902 7.74399 21 7.99999 21Z"
-                    fill="#1A1A1A"
-                  />
-                </svg>
-              </a>
-            </li>
-          </ul>
+          <paginate
+            :page-count="upcommingPages"
+            :click-handler="loadFuture"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :prev-class="'smiley-pagination-back'"
+            :next-class="'smiley-pagination-next'"
+            :container-class="'app-pagination'"
+          ></paginate>
         </div>
       </div>
     </section>
@@ -417,50 +332,17 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         </div>
       </div>
 
-      <div class="smiley-pagination">
-        <ul>
-          <li class="smiley-pagination-back">
-            <a href="#">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M16 21C15.744 21 15.488 20.902 15.293 20.707L7.29301 12.707C6.90201 12.316 6.90201 11.684 7.29301 11.293L15.293 3.293C15.684 2.902 16.316 2.902 16.707 3.293C17.098 3.684 17.098 4.316 16.707 4.707L9.41401 12L16.707 19.293C17.098 19.684 17.098 20.316 16.707 20.707C16.512 20.902 16.256 21 16 21Z"
-                  fill="#1A1A1A"
-                />
-              </svg>
-              <span>Back</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">1</a>
-          </li>
-          <li class="smiley-pagination-next">
-            <a href="#">
-              Next
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.99999 21C8.25599 21 8.51199 20.902 8.70699 20.707L16.707 12.707C17.098 12.316 17.098 11.684 16.707 11.293L8.70699 3.29301C8.31599 2.90201 7.68399 2.90201 7.29299 3.29301C6.90199 3.68401 6.90199 4.31601 7.29299 4.70701L14.586 12L7.29299 19.293C6.90199 19.684 6.90199 20.316 7.29299 20.707C7.48799 20.902 7.74399 21 7.99999 21Z"
-                  fill="#1A1A1A"
-                />
-              </svg>
-            </a>
-          </li>
-        </ul>
+      <!-- Pagination past -->
+      <div class="smiley-pagination" style="display: none;">
+        <paginate
+          :page-count="pagination.past.pages"
+          :click-handler="loadPast"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :prev-class="'smiley-pagination-back'"
+          :next-class="'smiley-pagination-next'"
+          :container-class="'app-pagination'"
+        ></paginate>
       </div>
     </section>
 
@@ -525,6 +407,12 @@ export default {
         keywords: "",
         date_start: "",
         date_end: ""
+      },
+
+      pagination: {
+        past: {
+          pages: 1
+        }
       }
     };
   },
@@ -534,7 +422,8 @@ export default {
       currentCategory: state => state.currentCategory,
       eventPastList: state => state.pastEvents,
       topEvent: state => state.events[0],
-      eventList: state => state.events
+      eventList: state => state.events,
+      upcommingPages: state => state.eventsPages
     }),
     auth() {
       return this.$store.getters["user/isAuthenticated"];
@@ -664,6 +553,12 @@ export default {
     }, 500);
   },
   methods: {
+    loadFuture(page) {
+      this.$store.dispatch("events/get_events", page);
+    },
+    removeFilter(id) {
+      this.filter.goals = this.filter.goals.filter(element => element !== id);
+    },
     handleResize() {
       if ($(window).width() >= 1600) {
         this.showCarousel = false;

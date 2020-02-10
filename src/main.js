@@ -7,8 +7,11 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import "regenerator-runtime";
 
 import Paginate from 'vuejs-paginate'
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.component('paginate', Paginate)
+Vue.use(VueSweetalert2);
 
 Vue.config.productionTip = false;
 Vue.use(VueGoogleMaps, {
