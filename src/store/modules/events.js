@@ -13,7 +13,7 @@ const getters = {}
 
 // actions
 const actions = {
-  load_events_data({
+  get_events_data({
     commit
   }) {
     axios.get('/goals')
@@ -31,7 +31,10 @@ const actions = {
 
     axios.get(url)
       .then(res => {
+        console.log(res.data);
+        
         commit('SET_EVENTS', res.data.events)
+
 
         if (this.getters['user/isAuthenticated']) {
           commit('user/SET_USER_ATTENDING_EVENTS', res.data.attending, {
@@ -47,6 +50,20 @@ const actions = {
     axios.get('/events/past')
       .then(res => {
         commit('SET_PAST_EVENTS', res.data.events)
+      })
+      .catch(error => console.error(error))
+  },
+  send_filter_params({
+    commit
+  }, params) {
+    axios.get('/events/filters', { params: params })
+      .then(res => {
+        console.log(res);
+        if (res.data.events.length === 0) {
+          alert('Sorry, no event\'ts found.');
+        } else {
+          commit('SET_EVENTS', res.data.events);
+        }
       })
       .catch(error => console.error(error))
   },

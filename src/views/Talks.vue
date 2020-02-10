@@ -185,11 +185,18 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         <div class="select-period">
           <label for="time-period">
             <input
-              type="text"
-              name="time-period"
-              id="time-period"
-              placeholder="Select a time period"
-              v-model="filter.time"
+              type="date"
+              name="time-period_start"
+              id="time-period_"
+              placeholder="Date start"
+              v-model="filter.date_start"
+            />
+            <input
+              type="date"
+              name="time-period_end"
+              id="time-period_"
+              placeholder="Date end"
+              v-model="filter.date_end"
             />
           </label>
           <svg
@@ -218,8 +225,8 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         </div>
         <div class="talk-sidebar-btns">
           <button class="simple-search-btn">Simple search</button>
-          <button class="apply-filters-btn">Apply filters</button>
-          <button class="reset-filters-btn">Reset filters</button>
+          <button class="apply-filters-btn" @click="applyFilters">Apply filters</button>
+          <button class="reset-filters-btn" @click="resetFilters">Reset filters</button>
           <button class="advanced-search-btn">Advanced search</button>
         </div>
       </div>
@@ -313,8 +320,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           :autoplay="true"
           :autoplayTimeout="5000"
           :autoWidth="true"
-          :autoplaySpeed="3000"
-          smartSpeed="1000"
+          
         >
           <div class="talk-card-wrap" v-for="event in eventList" :key="'c-'+event.id">
             <router-link :to="'/event/' + event.id" class="talk-card">
@@ -391,10 +397,9 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         :autoplayHoverPause="true"
         :loop="true"
         :autoplay="true"
-        :autoplayTimeout="5000"
         :autoWidth="true"
-        :autoplaySpeed="3000"
-        smartSpeed="1000"
+        
+        
       >
         <div
           class="talk-card-wrap"
@@ -511,6 +516,7 @@ import FormSignUpEventsNotification from "@/components/events/Form-EventsNotific
 import FilterCheckbox from "@/components/events/Filter-Checkbox";
 import EventCard from "@/components/events/Event-Card";
 
+
 export default {
   name: "Talks",
   components: { carousel },
@@ -521,7 +527,8 @@ export default {
       filter: {
         goals: [],
         keywords: "",
-        time: ""
+        date_start: "",
+        date_end: "",
       }
     };
   },
@@ -667,6 +674,12 @@ export default {
       } else {
         this.showCarousel = true;
       }
+    },
+    applyFilters() {
+      this.$store.dispatch('events/send_filter_params', this.filter);
+    },
+    resetFilters() {
+      this.$store.dispatch("events/get_events");
     }
   },
 
@@ -676,7 +689,7 @@ export default {
     FilterCheckbox,
     EventCard,
     carousel,
-    SocialIcons
+    SocialIcons,
   }
 };
 </script>
