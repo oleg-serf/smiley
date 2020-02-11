@@ -1,0 +1,42 @@
+.event-partners {
+  padding: 0 15px;
+
+  @include xl {
+    padding: 0;
+  }
+
+  .event-partners-wrap {
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .event-partners-title {
+    color: $default-text;
+    font: 700 20px/32px "Montserrat Bold", sans-serif;
+    margin-top: 64px;
+    margin-bottom: 7px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .event-partners-cards {
+    display: flex;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+
+    @include xl {
+      padding-right: 200px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-left: 15px;
+      margin-right: 15px;
+      object-fit: contain;
+    }
+  }
+}

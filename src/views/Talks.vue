@@ -66,7 +66,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
                     <div class="date-and-time-info">
                       <div
                         class="date-info"
-                      >{{new Date(topEvent.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
+                      >{{topEvent.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
                       <div
                         class="time-info"
                       >{{topEvent.time_start | formatTime | formatTime}} - {{topEvent.time_end | formatTime | formatTime}}</div>
@@ -112,122 +112,124 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
 
     <section class="talk-main-section">
       <div class="talk-sidebar">
-        <p class="log-sign-req" v-if="!auth">
-          To search and filter please
-          <a href="#">log in</a> or
-          <a href="#">sign up</a>
-        </p>
-        <div class="smiley-notify" v-if="auth">
-          <div
-            class="smiley-notify-text"
-          >Love our Smiley Talks? We’ll notify you when we have one coming up</div>
-          <label class="notify-checkbox">
-            <input type="checkbox" name="notify-checkbox" />
-            <span class="notify-checkmark"></span>
-          </label>
-        </div>
-        <!-- TODO: - remove hide -->
-        <div class="location-search" style="display: none">
-          <label for="location">
-            Location
-            <input
-              type="text"
-              name="location"
-              id="location"
-              placeholder="exemple: Brighton"
+        <div class="holder">
+          <p class="log-sign-req" v-if="!auth">
+            To search and filter please
+            <a href="#">log in</a> or
+            <a href="#">sign up</a>
+          </p>
+          <div class="smiley-notify" v-if="auth">
+            <div
+              class="smiley-notify-text"
+            >Love our Smiley Talks? We’ll notify you when we have one coming up</div>
+            <label class="notify-checkbox">
+              <input type="checkbox" name="notify-checkbox" />
+              <span class="notify-checkmark"></span>
+            </label>
+          </div>
+          <!-- TODO: - remove hide -->
+          <div class="location-search" style="display: none">
+            <label for="location">
+              Location
+              <input
+                type="text"
+                name="location"
+                id="location"
+                placeholder="exemple: Brighton"
+              />
+            </label>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
+                fill="#1A1A1A"
+              />
+            </svg>
+          </div>
+          <p class="location-distance" style="display: none">
+            within
+            <a href="#">100 miles</a> of
+            <a href="#">London, GB</a>
+          </p>
+          <div class="search-by-keyword">
+            <label for="keyword-search">
+              <input
+                type="text"
+                name="keyword-search"
+                id="keyword-search"
+                placeholder="search by keyword"
+                v-model="filter.keywords"
+              />
+            </label>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
+                fill="#1A1A1A"
+              />
+            </svg>
+          </div>
+          <div class="select-period">
+            <label for="time-period">
+              <input
+                type="date"
+                name="time-period_start"
+                id="time-period_"
+                placeholder="Date start"
+                v-model="filter.date_start"
+              />
+              <input
+                type="date"
+                name="time-period_end"
+                id="time-period_"
+                placeholder="Date end"
+                v-model="filter.date_end"
+              />
+            </label>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M5 22C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5ZM8 17H4V19C4 19.5523 4.44772 20 5 20H8V17ZM14 17H10V20H14V17ZM20 17H16V20H19C19.5523 20 20 19.5523 20 19V17ZM8 12H4V15H8V12ZM14 12H10V15H14V12ZM20 12H16V15H20V12ZM6 6H5C4.44772 6 4 6.44772 4 7V10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6Z"
+                fill="#1A1A1A"
+              />
+            </svg>
+          </div>
+          <div class="checkboxes-block">
+            <p>Choose {{ currentCategory }}:</p>
+            <filter-checkbox
+              v-for="goal in goals"
+              :key="'goals-' + goal.id"
+              :item="goal"
+              v-model="filter.goals"
             />
-          </label>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
-              fill="#1A1A1A"
-            />
-          </svg>
-        </div>
-        <p class="location-distance" style="display: none">
-          within
-          <a href="#">100 miles</a> of
-          <a href="#">London, GB</a>
-        </p>
-        <div class="search-by-keyword">
-          <label for="keyword-search">
-            <input
-              type="text"
-              name="keyword-search"
-              id="keyword-search"
-              placeholder="search by keyword"
-              v-model="filter.keywords"
-            />
-          </label>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
-              fill="#1A1A1A"
-            />
-          </svg>
-        </div>
-        <div class="select-period">
-          <label for="time-period">
-            <input
-              type="date"
-              name="time-period_start"
-              id="time-period_"
-              placeholder="Date start"
-              v-model="filter.date_start"
-            />
-            <input
-              type="date"
-              name="time-period_end"
-              id="time-period_"
-              placeholder="Date end"
-              v-model="filter.date_end"
-            />
-          </label>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M5 22C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H6V3C6 2.44772 6.44772 2 7 2C7.55228 2 8 2.44772 8 3V4H16V3C16 2.44772 16.4477 2 17 2C17.5523 2 18 2.44772 18 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5ZM8 17H4V19C4 19.5523 4.44772 20 5 20H8V17ZM14 17H10V20H14V17ZM20 17H16V20H19C19.5523 20 20 19.5523 20 19V17ZM8 12H4V15H8V12ZM14 12H10V15H14V12ZM20 12H16V15H20V12ZM6 6H5C4.44772 6 4 6.44772 4 7V10H20V7C20 6.44772 19.5523 6 19 6H18V7C18 7.55228 17.5523 8 17 8C16.4477 8 16 7.55228 16 7V6H8V7C8 7.55228 7.55228 8 7 8C6.44772 8 6 7.55228 6 7V6Z"
-              fill="#1A1A1A"
-            />
-          </svg>
-        </div>
-        <div class="checkboxes-block panel">
-          <p>Choose {{ currentCategory }}:</p>
-          <filter-checkbox
-            v-for="goal in goals"
-            :key="'goals-' + goal.id"
-            :item="goal"
-            v-model="filter.goals"
-          />
-        </div>
-        <div class="talk-sidebar-btns">
-          <button class="simple-search-btn">Simple search</button>
-          <button class="apply-filters-btn" @click="applyFilters">Apply filters</button>
-          <button class="reset-filters-btn" @click="resetFilters">Reset filters</button>
-          <button class="advanced-search-btn">Advanced search</button>
+          </div>
+          <div class="talk-sidebar-btns">
+            <button class="simple-search-btn">Simple search</button>
+            <button class="apply-filters-btn" @click="applyFilters">Apply filters</button>
+            <button class="reset-filters-btn" @click="resetFilters">Reset filters</button>
+            <button class="advanced-search-btn">Advanced search</button>
+          </div>
         </div>
       </div>
 
@@ -550,7 +552,7 @@ export default {
     // WARNING! - Always trigger resize event after loading data\markup changes
     setTimeout(() => {
       this.handleResize();
-    }, 500);
+    }, 1000);
   },
   methods: {
     loadFuture(page) {
@@ -588,5 +590,11 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "@/scss/pages/_talks.scss";
+@import "@/scss/sections/_talks-upcomming-section";
+@import "@/scss/sections/_talks-sidebar";
+@import "@/scss/sections/_talks-main-section";
+@import "@/scss/sections/_talks-past-talks";
+@import "@/scss/sections/_talks-hub";
+@import "@/scss/sections/_talks-card";
+@import "@/scss/sections/_talks-sign-up";
 </style>

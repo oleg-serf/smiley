@@ -61,6 +61,7 @@ Vue.prototype.$settings = {
     speakers: `https://new-smiley.s3.eu-west-2.amazonaws.com/speakers/`,
     partners: `https://new-smiley.s3.eu-west-2.amazonaws.com/partners/`,
     news: `https://new-smiley.s3.eu-west-2.amazonaws.com/news/`,
+    goals: `https://new-smiley.s3.eu-west-2.amazonaws.com/goals/`,
   },
   social: {
     facebook: 'https://facebook.com/SmileyMovement/',
@@ -75,7 +76,7 @@ Vue.prototype.$settings = {
 Vue.filter('formatTime', function (time) {
   time = time
     .toString()
-    .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+    .match(/\d{4}-\d{2}-\d{2}/) || [time];
 
   if (time.length > 1) {
     time = time.slice(1);
@@ -85,6 +86,17 @@ Vue.filter('formatTime', function (time) {
   }
   return time.join("");
 });
+// Safari doesn't recognize time in 0000-00-00 00:00:00 format toLocalString
+Vue.filter('formatDate', function (date, locale, format) {
+  date = date
+    .toString()
+    .match(/\d{4}-\d{2}-\d{2}/) || [date];
+
+  let result = new Date(date[0]).toLocaleString(locale, format);
+  return result;
+});
+
+
 
 new Vue({
   router,

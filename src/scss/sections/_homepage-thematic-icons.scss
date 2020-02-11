@@ -1,0 +1,33 @@
+// ---------- SMILEY ICON SECTION
+
+.thematic-icons {
+
+
+  .thematic-icons-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .thematic-icons-title {
+    color: #1a1a1a;
+    font: 700 32px/48px "Montserrat Bold", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+
+
+  .icon-wrap {
+    height: 100%;
+    width: 100%;
+    max-width: 188px;
+    max-height: 188px;
+    border: 1px solid #EFEFEF;
+    margin: 19px;
+
+    img {
+      width: 100%;
+    }
+  }
+}

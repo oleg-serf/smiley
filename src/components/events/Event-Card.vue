@@ -98,7 +98,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
           <div class="date-and-time-info">
             <div
               class="date-info"
-            >{{new Date(event.date).toLocaleDateString('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
+            >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
             <div
               class="time-info"
             >{{event.time_start | formatTime}} - {{event.time_end | formatTime}}</div>
@@ -186,6 +186,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/scss/components/_event-card.scss";
 </style>

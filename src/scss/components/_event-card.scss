@@ -125,18 +125,6 @@
   }
 }
 
-.talk-card-holder {
-  .pic-wrap {
-    .smiley-img-wrap {
-      .smiley-img {
-        img {
-          height: 255px
-        }
-      }
-    }
-  }
-}
-
 .talk-card-checkbox-dt {
   position: absolute;
   top: 218px;
@@ -375,4 +363,10 @@
 
 .info-full-height {
   flex: 1;
+}
+
+.smiley-img-wrap {
+  img {
+    height: 255px !important
+  }
 }

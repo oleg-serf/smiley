@@ -27,15 +27,17 @@
         <router-link :to="'/event/' + topEvent.id" class="article-item" v-if="topEvent">
           <div class="smiley-img-wrap">
             <div class="smiley-img">
-              <img src="img/homepage/talks-big-item-x2.jpg" alt="big-photo" />
+              <img
+                :src="$settings.images_path.events + 'm_' + topEvent.cover_image"
+                alt="big-photo"
+              />
             </div>
           </div>
           <div class="article-descr">
             <div class="article-date-location">
               <div
                 class="article-date"
-              >{{new Date(topEvent.date).toLocaleDateString('nl', {day:"2-digit",month:"2-digit",year:"numeric"})}}</div>
-              <div class="article-location">{{topEvent.location}}</div>
+              >{{ topEvent.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
             </div>
             <div class="article-title">{{topEvent.title}}</div>
             <div class="article-subtitle">{{topEvent.short_description}}</div>
@@ -49,18 +51,21 @@
           class="article-item"
           v-for="(event, index) in eventList"
           :key="event.id"
-          v-if="index > 0 && index < 4"
+          v-if="index > 0 && index < 3"
         >
           <div class="smiley-img-wrap">
             <div class="smiley-img">
-              <img :src="'/img/homepage/' + ++index + '.jpg'" alt="small preview 1" />
+              <img
+                :src="$settings.images_path.events + 'm_' + event.cover_image"
+                alt="small preview 1"
+              />
             </div>
           </div>
           <div class="article-descr">
             <div class="article-date-location">
               <div
                 class="article-date"
-              >{{new Date(event.date).toLocaleDateString('nl', {day:"2-digit",month:"2-digit",year:"numeric"})}}</div>
+              >{{ event.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
               <div class="article-location">{{event.location}}</div>
             </div>
             <div class="article-title">{{event.title}}</div>
@@ -293,57 +298,11 @@
     <section class="thematic-icons container">
       <h2 class="thematic-icons-title">Browse by goal</h2>
 
-      <div class="thematic-icons-wrap">
-        <div class="icon-wrap ml0">
-          <img src="img/homepage/icon-01.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-02.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-03.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-04.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-05.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-06.png" alt="icon" />
-        </div>
-        <div class="icon-wrap mr0">
-          <img src="img/homepage/icon-07.png" alt="icon" />
-        </div>
-        <div class="icon-wrap ml0">
-          <img src="img/homepage/icon-08.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-09.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-10.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-11.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-12.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-13.png" alt="icon" />
-        </div>
-        <div class="icon-wrap mr0">
-          <img src="img/homepage/icon-14.png" alt="icon" />
-        </div>
-        <div class="icon-wrap ml0">
-          <img src="img/homepage/icon-15.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-16.png" alt="icon" />
-        </div>
-        <div class="icon-wrap">
-          <img src="img/homepage/icon-17.png" alt="icon" />
+      <div class="thematic-icons-wrap" style="margin-left: -10px; margin-right: -10px">
+        <div class="icon-wrap" v-for="goal in goals" :key="goal.name+goal.id">
+          <router-link :to="'/news/category/' + goal.slug">
+            <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+          </router-link>
         </div>
       </div>
     </section>
@@ -398,8 +357,16 @@ export default {
   data() {
     return {
       topEvent: null,
-      eventList: null
+      eventList: null,
+      goals: null
     };
+  },
+  methods: {
+    eventDate(date) {
+      console.log(date);
+      let formattedDate = new Date(Date.parse(date));
+      console.log(formattedDate.getFullYear());
+    }
   },
   mounted() {
     axios
@@ -410,10 +377,25 @@ export default {
         this.eventList = res.data.events;
       })
       .catch(error => console.log(error));
+
+    // Load golas
+    axios
+      .get("/goals")
+      .then(res => {
+        this.goals = res.data.goal_categories[0].goals;
+      })
+      .catch(error => console.error(error));
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/pages/_homepage.scss";
+@import "@/scss/sections/_homepage-header";
+@import "@/scss/components/_article-item";
+@import "@/scss/sections/_smiley-talks";
+@import "@/scss/sections/_smiley-network";
+@import "@/scss/sections/_smiley-news";
+@import "@/scss/sections/_homepage-network";
+@import "@/scss/sections/_homepage-thematic-icons";
+@import "@/scss/sections/_smiley-video-section";
 </style>

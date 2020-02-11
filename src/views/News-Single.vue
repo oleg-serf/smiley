@@ -210,5 +210,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/scss/pages/_single-post.scss";
+// TODO: scope v-html content
+@import "@/scss/components/_article-item";
+
+@import "@/scss/sections/_news-article";
 </style>

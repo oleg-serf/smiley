@@ -30,57 +30,57 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Register.vue')
+    component: () => import( /* webpackChunkName: "register" */ '../views/Register.vue')
   },
   {
     path: '/forgot',
     name: 'forgot',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Forgot.vue')
+    component: () => import( /* webpackChunkName: "forgot" */ '../views/Forgot.vue')
   },
   {
     path: '/event/:id',
     name: 'event',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Event.vue')
+    component: () => import( /* webpackChunkName: "event" */ '../views/Event.vue')
   },
   {
     path: '/chat',
     name: 'chat',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Chat.vue')
+    component: () => import( /* webpackChunkName: "chat" */ '../views/Chat.vue')
   },
   {
     path: '/terms-and-conditions',
     name: 'terms',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Terms.vue')
+    component: () => import( /* webpackChunkName: "page" */ '../views/Terms.vue')
   },
   {
     path: '/contact',
     name: 'contact',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Contact.vue')
+    component: () => import( /* webpackChunkName: "contat" */ '../views/Contact.vue')
   },
-  {
-    path: '/our-story',
-    name: 'story',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Story.vue')
-  },
+  // {
+  //   path: '/our-story',
+  //   name: 'story',
+  //   component: () => import( /* webpackChunkName: "story" */ '../views/Story.vue')
+  // },
   {
     path: '/partners',
     name: 'partners',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Partners.vue')
+    component: () => import( /* webpackChunkName: "partners" */ '../views/Partners.vue')
   },
   {
     path: '/add-organisation',
     name: 'add-organisation',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Add-organisation.vue')
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/Add-organisation.vue')
   },
   {
     path: '/customize-organisation',
     name: 'customize-organisation',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Customize-organisation.vue')
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/Customize-organisation.vue')
   },
   {
     path: '/',

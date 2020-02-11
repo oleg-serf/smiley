@@ -2,7 +2,7 @@
   <div>
     <breadcrumbs />
 
-    <section class="latest-news-section latest-articles">
+    <section class="latest-news-section latest-news-section--category latest-articles">
       <div class="latest-news-wrap">
         <div class="title-colored-block">
           <div class="smiley-news-main-title">
@@ -16,8 +16,6 @@
 
     <section class="news-category-section latest-articles container">
       <div class="news-category-container">
-        <h2 class="news-category-title">Affordable and clean energy</h2>
-
         <router-link
           :to="'/news/' + post.slug"
           class="article-item"
@@ -42,26 +40,24 @@
             <div class="article-subtitle">{{post.description}}</div>
           </div>
         </router-link>
-
-        <div class="more-link-wrap">
-          <a href="#" class="read-more-link">
-            <span></span>Read more
-          </a>
-        </div>
-      </div>
-
-      <div class="smiley-pagination">
-        <paginate
-          :page-count="pagination.totalPages"
-          :click-handler="goToPage"
-          :prev-text="'Prev'"
-          :next-text="'Next'"
-          :prev-class="'smiley-pagination-back'"
-          :next-class="'smiley-pagination-next'"
-          :container-class="'app-pagination'"
-        ></paginate>
       </div>
     </section>
+
+    <div class="smiley-pagination">
+      <paginate
+        :page-count="pagination.totalPages"
+        :click-handler="goToPage"
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        :prev-class="'smiley-pagination-back'"
+        :next-class="'smiley-pagination-next'"
+        :container-class="'app-pagination'"
+      ></paginate>
+    </div>
+
+    <br />
+    <br />
+    <br />
 
     <Footer />
   </div>
@@ -118,5 +114,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/pages/_news-category.scss";
+@import "@/scss/components/_article-item";
+
+@import "@/scss/sections/_latest-news";
+
+@import "@/scss/sections/_news-category-section";
+
+.latest-news-section--category {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 30px;
+
+  .latest-news-wrap {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .title-colored-block {
+      height: auto;
+      width: 100%;
+      text-align: center;
+
+      .smiley-news-main-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      p {
+        transform: none !important;
+        padding-left: 30px;
+        position: static !important;
+      }
+    }
+  }
+}
 </style>

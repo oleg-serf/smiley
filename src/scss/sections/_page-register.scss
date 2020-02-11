@@ -1,0 +1,215 @@
+// ---------- SMILEY REGISTER PAGE ---------- //
+
+.registration {
+  text-align: center;
+  margin-top: 172px;
+  margin-bottom: 350px;
+
+  .registration-title {
+    color: $default-text;
+    font: 700 56px/74px "Montserrat Bold", sans-serif;
+    margin-bottom: 9px;
+  }
+
+  .registration-subtitle {
+    color: $default-text;
+    font: 400 22px/36px "Muli", sans-serif;
+    max-width: 778px;
+    margin: 0 auto 59px;
+  }
+
+  h3 {
+    color: $default-text;
+    font: 700 32px/48px "Montserrat Bold", sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .join-btns-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 38px;
+    margin-bottom: 65px;
+
+    @include xl {
+      flex-direction: row;
+    }
+
+    button {
+      box-sizing: border-box;
+      border: 1px solid #ced0d2;
+      border-radius: 40px;
+      background-color: #ffffff;
+      box-shadow: 0 3px 4px 0 rgba(96, 100, 112, 0.1);
+      cursor: pointer;
+      height: 81px;
+      color: $default-text;
+      font: 700 18px/22px "Montserrat Bold", sans-serif;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      padding-left: 40px;
+      margin: 10px 13px;
+      width: 100%;
+
+      span {
+        margin-right: 8px;
+        display: flex;
+      }
+
+      svg {
+        display: inline-block;
+        height: 18px;
+        width: 18px;
+        vertical-align: text-top;
+      }
+    }
+
+    .join-with-gmail-btn {
+      max-width: 281px;
+
+      @include xl {
+        margin-top: 0;
+      }
+    }
+
+    .join-with-facebook-btn,
+    .join-with-linkedin-btn {
+      max-width: 325px;
+
+      span {
+        margin-right: 18px;
+      }
+
+      @include xl {
+        margin-top: 0;
+        margin-left: 25px;
+      }
+    }
+  }
+
+  .registration-wrap {
+    width: 100%;
+    max-width: 762px;
+    text-align: left;
+    margin: 30px auto 0;
+
+    label {
+      color: $default-text;
+      font: 700 16px/24px "Muli", sans-serif;
+
+      input {
+        display: block;
+        margin: 7px auto 19px;
+        width: 100%;
+        box-sizing: border-box;
+        height: 48px;
+        border: 1px solid #c7c7c7;
+        border-radius: 4px;
+        font: 400 16px/24px "Inter Regular", sans-serif;
+        color: #656565;
+        padding: 0 48px 0 16px;
+      }
+    }
+
+    .register-btn-wrap {
+      margin-top: 41px;
+    }
+
+    .register-btn {
+      border-radius: 4px;
+      background-color: $default-yellow-btns;
+      height: 48px;
+      width: 100%;
+      border: none;
+      font: 700 16px/24px "Montserrat Bold", sans-serif;
+      color: #000;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &[disabled] {
+        background-color: #e3e3de;
+      }
+    }
+
+    .pledge-that {
+      p {
+        font: 700 16px/24px "Muli", sans-serif;
+        text-transform: uppercase;
+        margin-bottom: 13px;
+      }
+
+      font: 400 16px/24px "Muli",
+      sans-serif;
+      margin-top: 24px;
+
+      ul {
+        margin-left: 31px;
+        margin-bottom: 24px;
+        list-style: inherit;
+      }
+
+      li {
+        line-height: 37px;
+        padding-left: 8px;
+        color: $default-text;
+      }
+    }
+
+    .register-checkbox {
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 22px;
+      cursor: pointer;
+      color: $default-text;
+      font: 400 16px/24px "Muli", sans-serif;
+      user-select: none;
+      display: table;
+
+      input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      .register-checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 24px;
+        width: 24px;
+        border: 1px solid #c7c7c7;
+        border-radius: 4px;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+
+        svg {
+          opacity: 0;
+          position: absolute;
+          top: 4px;
+          left: 4px;
+        }
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .register-checkbox input:checked~.register-checkmark {
+      background-color: $default-yellow-btns;
+      border: none;
+      transition: all 0.2s ease;
+
+      svg {
+        opacity: 1;
+      }
+    }
+  }
+}

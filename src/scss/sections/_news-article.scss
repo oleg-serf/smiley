@@ -1,3 +1,5 @@
+// ---------- SMILEY NEWS ARTICLE PAGE ---------- //
+
 .news-article {
   .article-header {
     display: flex;
@@ -9,14 +11,6 @@
 
     .smiley-img-wrap {
       width: 100%;
-
-      .single-item-image {
-        img {
-          width: 100%;
-          max-height: 600px;
-
-        }
-      }
 
       @include xl {
         max-width: 1028px;
@@ -126,9 +120,7 @@
           margin-top: 13px;
         }
       }
-    }
 
-    .article-content-holder {
       p {
         color: $default-text;
         font: 400 22px/36px 'Muli', sans-serif;
@@ -217,18 +209,6 @@
       .related-articles-wrap {
         display: flex;
         flex-direction: column;
-
-        a {
-          color: unset;
-          text-decoration: none;
-
-          img {
-            width: 100%;
-            max-height: 255px;
-            object-fit: cover;
-            object-position: contain;
-          }
-        }
 
         @include lg {
           flex-direction: row;
