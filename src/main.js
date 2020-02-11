@@ -86,7 +86,7 @@ Vue.filter('formatTime', function (time) {
   }
   return time.join("");
 });
-// Safari doesn't recognize time in 0000-00-00 00:00:00 format toLocalString
+// Safari doesn't recognize time in 0000-00-00 00:00:00 format toLocalStringю
 Vue.filter('formatDate', function (date, locale, format) {
   date = date
     .toString()
