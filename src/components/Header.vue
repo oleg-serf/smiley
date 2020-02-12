@@ -695,6 +695,10 @@ export default {
       height: auto;
       order: 2;
       width: auto;
+
+      display: flex;
+      justify-content: center;
+      flex: 1;
       .menu-item {
         display: inline-block;
         border: none;
