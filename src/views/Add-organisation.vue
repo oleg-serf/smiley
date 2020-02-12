@@ -3,7 +3,7 @@
     <section class="customize-organisation container">
       <form class="add-organisation-info" @submit.prevent="onSubmit">
         <div class="customize-organisation-content">
-          <h2 class="customize-organisation-title">Customize organization</h2>
+          <h2 class="customize-organisation-title">Customize organisation</h2>
 
           <div class="upload-organisation-image-wrap">
             <div class="organisation-image">
@@ -49,7 +49,7 @@
 
           <p
             style="margin-left: auto; margin-right: auto; text-align: center;"
-          >Upload an organization logo</p>
+          >Upload an organisation logo</p>
 
           <label for="organisation-name">
             Organisation Name *
@@ -207,7 +207,7 @@
               type="submit"
               name="submit"
               value="finish-creating"
-            >FINISH CREATING YOUR ORGANIZATION</button>
+            >FINISH CREATING YOUR ORGANISATION</button>
           </div>
         </div>
       </form>
