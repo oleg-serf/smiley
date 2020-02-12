@@ -281,7 +281,8 @@
             </div>
           </section>
 
-          <section class="chatroom-btn-section">
+          <!-- TODO: Rework join chatroom -->
+          <section class="chatroom-btn-section" style="display: none;">
             <div class="chatroom-btn-section-wrap">
               <div class="chatroom-btn-wrap">
                 <h2 class="chatroom-btn-title">WANT TO CONTINUE THE CONVERSATION</h2>
