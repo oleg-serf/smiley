@@ -119,14 +119,6 @@ const routes = [{
       title: 'Add Organisation',
     }
   },
-  {
-    path: '/customize-organisation',
-    name: 'customize-organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/Customize-organisation.vue'),
-    meta: {
-      title: 'Customize Organisation',
-    }
-  },
 
   // Single page routes
   {

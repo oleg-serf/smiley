@@ -5,17 +5,38 @@
       <div class="footer-logo">
         <img src="/img/homepage/footer-logo.png" alt="footer logo" />
       </div>
-      <form class="smiley-signup-form">
+      <form class="smiley-signup-form" @submit.prevent="subscribeMailchimp">
         <label for="signup-firstname">
-          <input type="text" name="signup-firstname" id="signup-firstname" placeholder="First Name" />
+          <input
+            type="text"
+            name="signup-firstname"
+            id="signup-firstname"
+            placeholder="First Name"
+            v-model="form.FNAME"
+            min-length="2"
+            required
+          />
         </label>
 
         <label for="signup-lastname">
-          <input type="text" name="signup-lastname" id="signup-lastname" placeholder="Last Name" />
+          <input
+            type="text"
+            name="signup-lastname"
+            id="signup-lastname"
+            placeholder="Last Name"
+            v-model="form.LNAME"
+          />
         </label>
 
         <label for="email">
-          <input type="text" name="email" id="email" placeholder="Your Email" />
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Your Email"
+            v-model="form.EMAIL"
+            required
+          />
         </label>
         <div class="signup-btn-wrap">
           <button class="btn-signup" type="submit" name="submit" value="Subscribe">Subscribe</button>
@@ -44,6 +65,8 @@
 </template>
 
 <script>
+import axios from "../axios-auth";
+
 import SocialIcons from "@/components/footer/SocialIcons";
 
 export default {
@@ -52,10 +75,33 @@ export default {
     SocialIcons
   },
   data() {
-    return {};
+    return {
+      form: {
+        FNAME: "",
+        LNAME: "",
+        EMAIL: ""
+      }
+    };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    subscribeMailchimp() {
+      console.log("testing subscription form");
+
+      const params = new URLSeachParams();
+      params.append("FNAME", this.form.FNAME);
+      params.append("LNAME", this.form.LNAME);
+      params.append("EMAIL", this.form.EMAIL);
+
+      axios
+        .post(
+          "https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=c8555a50f3",
+          params
+        )
+        .then(res => console.log("Success", res))
+        .catch(res => console.error(res));
+    }
+  }
 };
 </script>
 

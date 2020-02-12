@@ -305,42 +305,25 @@
       <div class="container">
         <h2>Featured Interviews</h2>
         <div class="video-content">
-          <div class="video-content-item">
+          <div class="video-content-item" v-for="video in videos" :key="video.id">
             <div class="video-container">
               <iframe
-                src="https://player.vimeo.com/video/370887819?title=0&amp;byline=0&amp;portrait=0"
+                :src="'https://player.vimeo.com/video/'+video.id+'?title=0&amp;byline=0&amp;portrait=0'"
                 frameborder="0"
                 allow="fullscreen"
                 allowfullscreen
               ></iframe>
             </div>
             <div class="video-descr">
-              <div class="video-content-title">WE’RE NOT ALONE</div>
-              <div class="video-content-subtitle">Georgia Dodsworth, Let’s Talk about Mental Health</div>
-            </div>
-          </div>
-
-          <div class="video-content-item">
-            <div class="video-container">
-              <iframe
-                src="https://player.vimeo.com/video/386174750?title=0&amp;byline=0&amp;portrait=0"
-                frameborder="0"
-                allow="fullscreen"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div class="video-descr">
-              <div
-                class="video-content-title"
-              >RACHEL SNAPE: we don’t have enough of a grassroots conversation about what is the purpose of education?</div>
-              <div class="video-content-subtitle">Georgia Dodsworth at Let's Talk Mental Health</div>
+              <div class="video-content-title">{{video.title}}</div>
+              <div class="video-content-subtitle">{{video.description}}</div>
             </div>
           </div>
         </div>
 
         <div class="comment-block">
-          <p>Having attended a Smiley Movement talk for the first time on Suicide Prevention, with the support of Time to Change, I found it to be so informative, enlightening, and to be very lucky to listen to such a good array of speakers, for which made the difference completely. I hope to attend many more talks from this group, and as a Service User believe it can only help to talk, listen and get support at these events, and cannot recommend them enough to come too.</p>
-          <h3>ROBERT KOCH - COUNCILLOR & MENTOR IN MENTAL HEALTH & WELLBEING CONSULTANT WITHIN THE WORKPLACE</h3>
+          <p>{{quote.content}}</p>
+          <h3>{{quote.title}}</h3>
         </div>
       </div>
     </section>
@@ -372,12 +355,24 @@ export default {
 
       goals: [],
 
-      videos: []
+      videos: [],
+
+      quote: {
+        title: "",
+        content: ""
+      }
     };
   },
   methods: {},
   mounted() {
     // Load page content
+    axios
+      .get("/pages/new/1")
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => console.log(error));
+    console.log("---------");
     axios
       .get("/pages/1")
       .then(res => {
@@ -393,31 +388,68 @@ export default {
 
         this.goals = res.data.goals[0].goals;
 
-        console.log(res.data.page);
-        // Format to normal object
-        let videos = res.data.page.page_sections.forEach(item => {
-          let video = {
-            type: item.sub_type
-          };
+        /*
+          Type 1 section -> simple text
+          Type 2 section -> HTML (like for Events content)
+          Type 3 section -> Video Vimeo ID (
+        */
 
-          item.page_section_elements.forEach(element => {
-            // console.log(element);
-            switch (element.name) {
-              case "video_id":
-                video.id = element.content;
-                break;
-              case "video_id":
-                video.id = element.content;
-                break;
-              default:
-                break;
+        console.log(res.data);
+        let quote = res.data.page.page_sections.filter(
+          section => section.name == "quote_bottom"
+        );
+
+        console.log(quote);
+        quote[0].page_section_elements.forEach(item => {
+          switch (item.name) {
+            case "text":
+              this.quote.content = item.content;
+              break;
+            case "sub_text":
+              this.quote.title = item.content;
+              break;
+
+            default:
+              break;
+          }
+        });
+        console.log(this.quote);
+
+        // Video Sections
+        let video_section = res.data.page.page_sections.filter(section => {
+          let allowed_names = ["left_bottom_video", "right_bottom_video"];
+          if (allowed_names.includes(section.name)) return section;
+        });
+        let video_section_content = res.data.page.page_sections.filter(
+          section => {
+            let allowed_names = [
+              "left_bottom_video_text",
+              "right_bottom_video_text"
+            ];
+            if (allowed_names.includes(section.name)) return section;
+          }
+        );
+
+        let videos = video_section.map((item, index) => {
+          let video = { id: null, title: null, description: null, type: null };
+          video.id = item.page_section_elements.find(
+            elem => elem.name == "video_id"
+          ).content;
+
+          video.type = video_section[index].sub_type;
+
+          video_section_content[index].page_section_elements.forEach(item => {
+            if (item.name == "title") {
+              video.title = item.content;
+            } else if (item.name == "description") {
+              video.description = item.content;
             }
-            // console.log(element);
-            // console.log(video.type);
           });
+
+          return video;
         });
 
-        // console.log(videos);
+        this.videos = videos;
       })
       .catch(error => console.log(error));
   }
