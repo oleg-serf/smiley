@@ -111,7 +111,7 @@
                     </defs>
                   </svg>
                   <ul>
-                    <li>
+                    <li style="display: none;">
                       <a href="#">
                         <svg
                           width="20"
@@ -131,7 +131,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <router-link :to="{name: 'add-organisation'}">
                         <svg
                           width="20"
                           height="20"
@@ -147,9 +147,9 @@
                           />
                         </svg>
                         Create an Organisation
-                      </a>
+                      </router-link>
                     </li>
-                    <li>
+                    <li style="display: none;">
                       <a href="#">
                         <svg
                           width="20"
