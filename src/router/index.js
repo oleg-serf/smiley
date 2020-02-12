@@ -111,12 +111,21 @@ const routes = [{
       title: 'Partners',
     }
   },
+  // Organisation pages
   {
     path: '/add-organisation',
     name: 'add-organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/Add-organisation.vue'),
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Add-Organisation.vue'),
     meta: {
       title: 'Add Organisation',
+    }
+  },
+  {
+    path: '/my-organisation',
+    name: 'my-organisation',
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/My-Organisation.vue'),
+    meta: {
+      title: 'My Organisation', // TODO: In component change page title
     }
   },
 

@@ -218,7 +218,7 @@
 </template>
 
 <script>
-import axios from "../axios-auth";
+import axios from "@/axios-auth";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
