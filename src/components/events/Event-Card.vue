@@ -123,8 +123,11 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       </div>
 
       <!-- Show attendees only if user is attended to event -->
+      <!-- TODO: Rework attendees -->
+
       <div
         class="attending-info"
+        style="display: none"
         v-if="event.attendees_random.length !== 0 && attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
       >
         <span>Attending:</span>

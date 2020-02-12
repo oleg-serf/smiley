@@ -90,7 +90,13 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
                     <div>{{topEvent.location}}</div>
                   </div>
                 </div>
-                <div class="attending-info" v-if="topEvent.attendees_random.length !== 0">
+                <!-- TODO: Rework attendees -->
+
+                <div
+                  class="attending-info"
+                  v-if="topEvent.attendees_random.length !== 0"
+                  style="display: none;"
+                >
                   <span>Attending:</span>
                   <div class="attending-wrap">
                     <div

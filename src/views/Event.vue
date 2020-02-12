@@ -66,7 +66,8 @@
                 </div>
               </div>
             </div>
-            <div class="sidebar-block attendees-block">
+            <!-- TODO: Rework attendees -->
+            <div class="sidebar-block attendees-block" style="display: none;">
               <button class="accordion">Attendees</button>
               <div class="panel">
                 <div class="panel-content-wrap">

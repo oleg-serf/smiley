@@ -46,7 +46,7 @@
 
             <div class="tm-right">
               <div class="login-block" v-if="auth">
-                <a class="search-icon" href="#">
+                <a class="search-icon" href="#" style="display: none">
                   <svg
                     width="24"
                     height="24"
@@ -62,7 +62,7 @@
                     />
                   </svg>
                 </a>
-                <a class="second-icon" href="#">
+                <a class="second-icon" href="#" style="display: none">
                   <svg
                     width="24"
                     height="24"
