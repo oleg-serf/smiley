@@ -385,7 +385,7 @@ export default {
       }
     }
 
-    @include xxl {
+    @include xl {
       .submenu {
         position: absolute;
         background-color: #fff;
