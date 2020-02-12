@@ -15,14 +15,16 @@
           </div>
           <div class="event-sidebar">
             <div class="sidebar-btn-wrap">
-              <div
-                v-if="!attendedEvents.filter(item => item.event_id == event.id) && !past && isAuthenticated"
-              >
-                <button class="reg-event-btn" @click="registerUser(event.id)">Register for event</button>
-              </div>
-              <div v-else>
-                <button class="reg-event-btn" @click="cancelRegistration">CANCEL ATTENDENCE</button>
-              </div>
+              <button
+                class="reg-event-btn"
+                @click="cancelRegistration"
+                v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
+              >CANCEL ATTENDENCE</button>
+              <button
+                class="reg-event-btn"
+                @click="registerUser(event.id)"
+                v-else
+              >Register for event</button>
               <button class="chat-btn">Join the chat room</button>
             </div>
             <div class="sidebar-block">
