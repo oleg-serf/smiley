@@ -261,13 +261,19 @@
         </div>
       </div>
     </section>
+
+    <Footer />
   </div>
 </template>
 
 <script>
+import Footer from "@/components/Footer";
+
 export default {
   name: "Partners",
-  components: {},
+  components: {
+    Footer
+  },
   data() {
     return {};
   },
