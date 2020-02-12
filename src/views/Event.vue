@@ -31,7 +31,7 @@
                 <div class="panel-content-wrap">
                   <div
                     class="event-date-time"
-                  >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}).replace(',','')}}</div>
+                  >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'})}}</div>
                   <div
                     class="event-date-time"
                   >{{event.time_start | formatTime }} - {{event.time_end | formatTime }}</div>
