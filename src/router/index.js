@@ -80,6 +80,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "chat" */ '../views/Chat.vue'),
     meta: {
       title: 'Chat',
+      requiresAuth: true,
     }
   },
   {
@@ -118,6 +119,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Add-Organisation.vue'),
     meta: {
       title: 'Add Organisation',
+      requiresAuth: true,
     }
   },
   // TODO: Make other route for personal organisation & public ones
@@ -127,6 +129,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/My-Organisation.vue'),
     meta: {
       title: 'The Human Five', // TODO: In component change page title
+      requiresAuth: true,
     }
   },
 
@@ -150,8 +153,29 @@ const router = new VueRouter({
 });
 
 router.beforeEach(function (to, from, next) {
+  // TODO: Scroll top after pagination also
   window.scrollTo(0, 0)
-  next();
+  const isLogged = (localStorage.getItem('token')) ? true : false;
+
+  if (to.meta.requiresAuth) {
+
+    if (!isLogged) {
+      next({
+        name: 'login'
+      });
+    } else {
+
+      if (!isLogged) {
+        next({
+          name: 'login'
+        });
+        return
+      }
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router
