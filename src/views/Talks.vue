@@ -128,7 +128,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
             </label>
           </div>
           <!-- TODO: - remove hide -->
-          <div class="location-search" style="display: none">
+          <div class="location-search">
             <label for="location">
               Location
               <input
@@ -153,7 +153,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
               />
             </svg>
           </div>
-          <p class="location-distance" style="display: none">
+          <p class="location-distance">
             within
             <a href="#">100 miles</a> of
             <a href="#">London, GB</a>
@@ -335,7 +335,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
       </div>
 
       <!-- Pagination past -->
-      <div class="smiley-pagination" style="display: none;">
+      <div class="smiley-pagination">
         <paginate
           :page-count="pagination.past.pages"
           :prev-text="'Prev'"
@@ -486,11 +486,11 @@ export default {
             applyFilters.style.display = "block";
             advancedSearch.style.display = "none";
             simpleSearch.style.display = "none";
-            panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+            // panel[0].style.maxHeight = panel[0].scrollHeight + "px";
           } else {
             resetFilters.style.display = "none";
             advancedSearch.style.display = "block";
-            panel[0].style.maxHeight = null;
+            // panel[0].style.maxHeight = null;
           }
 
           firstInit = false;
@@ -503,7 +503,7 @@ export default {
               applyFilters.style.display = "block";
               advancedSearch.style.display = "none";
               simpleSearch.style.display = "none";
-              panel[0].style.maxHeight = panel[0].scrollHeight + "px";
+              // panel[0].style.maxHeight = panel[0].scrollHeight + "px";
             } else {
               if (simpleSearch.style.display === "block") {
                 return;
@@ -511,7 +511,7 @@ export default {
               resetFilters.style.display = "none";
               advancedSearch.style.display = "block";
               simpleSearch.style.display = "none";
-              panel[0].style.maxHeight = null;
+              // panel[0].style.maxHeight = null;
             }
           }
         }
@@ -550,9 +550,9 @@ export default {
     });
 
     // WARNING! - Always trigger resize event after loading data\markup changes
-    setTimeout(() => {
-      this.handleResize();
-    }, 1000);
+    // setTimeout(() => {
+    this.handleResize();
+    // }, 1000);
   },
   methods: {
     loadFuture(page) {

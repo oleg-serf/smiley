@@ -19,19 +19,17 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
 
     <div class="btns-wrap">
       <div class="attend" id="attending-overlay" :class="{'attend--active' : overlay}">
-        <div v-if="!attendedEvents.filter(item => item.event_id == event.id)">
-          <button @click.prevent="registerUser(event.id)">Just Myself</button>
-          <button @click.prevent>With organisation</button>
+        <div v-if="!attendedEvents.filter(item => item.event_id == event.id).length > 0">
+          <button @click.prevent="registerUser(event.id)">Register for event</button>
         </div>
-        <div v-if="attendedEvents.filter(item => item.event_id == event.id)">
-          <button @click.prevent class="minus">CANCEL ATTENDENCE</button>
-          <button @click.prevent>ATTEND AS AN ORGANISATION</button>
+        <div v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0">
+          <button @click.prevent="unregisterUser(event.id)" class="minus">CANCEL ATTENDENCE</button>
         </div>
       </div>
     </div>
 
     <button
-      v-if="!attendedEvents.filter(item => item.event_id == event.id) && !past && isAuthenticated"
+      v-if="attendedEvents.filter(item => item.event_id == event.id).length == 0 && !past && isAuthenticated"
       class="talk-card-checkbox-dt"
       :class="{'talk-card-checkbox-rotate': overlay }"
       @click.prevent="showButtons"
@@ -42,7 +40,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
     <!-- Show this Upon Hover -->
     <div class="overlay" :class="{'overlay--active' : holderShown && !overlay}">
       <span
-        v-if="attendedEvents.filter(item => item.event_id == event.id) && isAuthenticated"
+        v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
       >Click to cancel</span>
       <span v-else>Click to attend</span>
     </div>
@@ -50,7 +48,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
     <!-- Show if User attended to event -->
     <div
       class="confirmed-box"
-      v-if="attendedEvents.filter(item => item.event_id == event.id) && isAuthenticated"
+      v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
       @click.prevent="showButtons"
       @mouseover="holderShown = true"
       @mouseleave="holderShown = false"
@@ -127,7 +125,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       <!-- Show attendees only if user is attended to event -->
       <div
         class="attending-info"
-        v-if="event.attendees_random.length !== 0 && attendedEvents.filter(item => item.event_id == event.id) && isAuthenticated"
+        v-if="event.attendees_random.length !== 0 && attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
       >
         <span>Attending:</span>
         <div class="attending-wrap">
@@ -163,7 +161,10 @@ export default {
     registerUser(id) {
       this.registerUserForEvent({ id: id, organisation: false });
     },
-    ...mapActions("events", ["registerUserForEvent"])
+    unregisterUser(id) {
+      this.unregisterUserForEvent({ id: id, organisation: false });
+    },
+    ...mapActions("events", ["registerUserForEvent", "unregisterUserForEvent"])
   },
   mounted() {
     // console.log(event);

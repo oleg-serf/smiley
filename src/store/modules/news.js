@@ -18,7 +18,6 @@ const actions = {
   }) {
     axios.get('/news/latest')
       .then(res => {
-        console.log(res);
         commit('SET_NEWS_LATEST', res.data.latest_news);
         commit('SET_CATEGORIES_FEATURED', res.data.featured_goals);
       })

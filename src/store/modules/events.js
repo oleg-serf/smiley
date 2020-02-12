@@ -52,8 +52,6 @@ const actions = {
     axios.get('/events/past')
       .then(res => {
         commit('SET_PAST_EVENTS', res.data.events)
-        console.log('past');
-        console.log(res.data);
       })
       .catch(error => console.error(error))
   },
@@ -64,7 +62,6 @@ const actions = {
         params: params
       })
       .then(res => {
-        console.log(res);
         if (res.data.events.length === 0) {
           alert('Sorry, no event\'ts found.');
         } else {
@@ -82,6 +79,32 @@ const actions = {
         commit('user/SET_USER_ATTENDING_EVENTS', result, {
           root: true
         })
+      })
+      .catch(error => console.error(error))
+  },
+  unregisterUserForEvent({
+    commit
+  }, event) {
+    axios.post('/events/' + event.id + '/attend/cancel', event)
+      .then(res => {
+        let result = res.data.attending;
+        console.log(res.data);
+        commit('user/SET_USER_ATTENDING_EVENTS', result, {
+          root: true
+        });
+      })
+      .catch(error => console.error(error))
+  },
+  updateOrganisationRegistration({
+    commit
+  }, event) {
+    axios.post('/events/' + event.id + '/attend/update', event)
+      .then(res => {
+        // let result = res.data.attending;
+        // console.log(res.data);
+        // commit('user/SET_USER_ATTENDING_EVENTS', result, {
+        //   root: true
+        // });
       })
       .catch(error => console.error(error))
   },

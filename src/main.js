@@ -9,6 +9,14 @@ import "regenerator-runtime";
 import Paginate from 'vuejs-paginate'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import vueVimeoPlayer from 'vue-vimeo-player'
+import VueBreadcrumbs from 'vue-breadcrumbs'
+
+Vue.use(VueBreadcrumbs, {
+  registerComponent: false
+})
+
+Vue.use(vueVimeoPlayer)
 
 Vue.component('paginate', Paginate)
 Vue.use(VueSweetalert2);
@@ -88,6 +96,9 @@ Vue.filter('formatTime', function (time) {
 });
 // Safari doesn't recognize time in 0000-00-00 00:00:00 format toLocalStringю
 Vue.filter('formatDate', function (date, locale, format) {
+  if (date === undefined) {
+    return
+  }
   date = date
     .toString()
     .match(/\d{4}-\d{2}-\d{2}/) || [date];

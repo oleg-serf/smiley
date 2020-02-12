@@ -3,12 +3,11 @@
 //––––––––––––––––––––––––––––––––––––––––––––––––––
 
 // A map of breakpoints.
-$breakpoints: (
-        sm: 576px,
-        md: 768px,
-        lg: 992px,
-        xl: 1200px,
-        xxl: 1600px,
+$breakpoints: (sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1600px,
 );
 
 @mixin xs {
@@ -34,6 +33,7 @@ $breakpoints: (
     @content;
   }
 }
+
 @mixin mdMax {
   @media only screen and (max-width: #{map-get($breakpoints, md)}) {
     @content;
@@ -54,6 +54,12 @@ $breakpoints: (
 
 @mixin xxl {
   @media only screen and (min-width: #{map-get($breakpoints,xxl)}) {
+    @content;
+  }
+}
+
+@mixin xxlMax {
+  @media only screen and (max-width: #{map-get($breakpoints,xxl)}) {
     @content;
   }
 }

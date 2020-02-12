@@ -1,54 +1,6 @@
 <template>
   <div>
-    <section class="breadcrumbs">
-      <ul>
-        <li>
-          <a href="#" class="breadcrumbs-item">Homepage</a>
-          <svg
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.52699 9L10.9815 4.54545L6.52699 0.0909092L5.76136 0.856534L8.91335 3.99858H0.75V5.09233H8.91335L5.76136 8.24432L6.52699 9Z"
-              fill="#656565"
-            />
-          </svg>
-        </li>
-        <li>
-          <a href="#" class="breadcrumbs-item">One</a>
-          <svg
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.52699 9L10.9815 4.54545L6.52699 0.0909092L5.76136 0.856534L8.91335 3.99858H0.75V5.09233H8.91335L5.76136 8.24432L6.52699 9Z"
-              fill="#656565"
-            />
-          </svg>
-        </li>
-        <li>
-          <a href="#" class="breadcrumbs-item">Two</a>
-          <svg
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.52699 9L10.9815 4.54545L6.52699 0.0909092L5.76136 0.856534L8.91335 3.99858H0.75V5.09233H8.91335L5.76136 8.24432L6.52699 9Z"
-              fill="#656565"
-            />
-          </svg>
-        </li>
-      </ul>
-    </section>
+    <breadcrumbs ref="breadcrumbs" />
 
     <section class="event-section" v-if="event">
       <h1 class="event-section-title container">{{event.title}}</h1>
@@ -379,6 +331,8 @@
 
 <script>
 import Footer from "@/components/Footer.vue";
+import Breadcrumbs from "@/components/Breadcrumbs";
+
 import $ from "jquery";
 import axios from "../axios-auth";
 import { mapState, mapActions } from "vuex";
@@ -386,6 +340,7 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "Event",
   components: {
+    Breadcrumbs,
     Footer
   },
   data() {
@@ -470,6 +425,10 @@ export default {
       .get("/events/" + this.id)
       .then(res => {
         this.event = res.data.event;
+        document.title = res.data.event.title + " | Smiley Movement";
+        this.$refs.breadcrumbs.breadcrumbs[
+          this.$refs.breadcrumbs.breadcrumbs.length - 1
+        ].meta.title = res.data.event.title;
       })
       .catch(error => console.log(error));
   },

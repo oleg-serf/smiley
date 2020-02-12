@@ -23,10 +23,18 @@
                 <span>Smiley news</span>
               </router-link>
               <!--              <a class="menu-item" href="#"><span>Smiley awards</span></a>-->
-              <a class="menu-item" href="#">
+              <span class="menu-item" href="#">
                 <span>Network</span>
-              </a>
-              <router-link to="/our-story" class="menu-item">
+
+                <ul class="submenu">
+                  <li>
+                    <router-link to="/partners" class="menu-item">
+                      <span>Our Partners</span>
+                    </router-link>
+                  </li>
+                </ul>
+              </span>
+              <router-link to="/who-we-are" class="menu-item">
                 <span>Our story</span>
               </router-link>
               <div class="btn-wrap">
@@ -345,12 +353,62 @@ export default {
     color: $default-text;
     font: 16px/24px "Montserrat SemiBold", sans-serif;
     border-top: 1px solid #dcddde;
-    &:last-of-type {
+    &:last-child {
       border-bottom: 1px solid #dcddde;
     }
     &.active,
     &.router-link-active {
       color: $default-orange-btns;
+    }
+
+    .submenu {
+      .menu-item {
+        border-bottom-color: transparent !important;
+      }
+      li {
+        position: relative;
+
+        &::before {
+          width: 5px;
+          height: 5px;
+          background-color: #000;
+          content: "";
+          position: absolute;
+          left: 0px;
+          top: 50%;
+          transform: translateY(-50%);
+          border-radius: 50%;
+        }
+        a {
+          border: none;
+        }
+      }
+    }
+
+    @include xxl {
+      .submenu {
+        position: absolute;
+        background-color: #fff;
+        width: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s;
+        padding: 5px;
+
+        li {
+          &::before {
+            display: none;
+          }
+        }
+      }
+
+      &:hover .submenu {
+        opacity: 1;
+        pointer-events: all;
+      }
     }
   }
 
@@ -397,7 +455,7 @@ export default {
     background-color: #fff;
     margin-top: 65px;
     z-index: 2;
-    overflow: auto;
+    // overflow: auto;
     width: 100%;
     height: 100vh;
     opacity: 0;

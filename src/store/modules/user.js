@@ -68,9 +68,10 @@ const mutations = {
     localStorage.setItem('attendingEvents', []);
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
-    let result = (typeof data !== "undefined" && (typeof data !== "object" || !data)) ? data : [];
-    state.attendingEvents = result;
-    localStorage.setItem('attendingEvents', result);
+    state.attendingEvents = Array.from(data);
+    localStorage.setItem('attendingEvents', data);
+
+    // console.log(state.attendingEvents);
   }
 }
 

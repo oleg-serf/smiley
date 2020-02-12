@@ -18,6 +18,12 @@ export default {
     Header,
     Footer
   },
+  watch: {
+    $route(to, from) {
+      document.title =
+        to.meta.title + " | Smiley Movement" || "Smiley Movement";
+    }
+  },
   created() {
     // this.$store.dispatch('autoLogin');
   }

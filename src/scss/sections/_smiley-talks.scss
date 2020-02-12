@@ -146,6 +146,20 @@
       width: 100%;
     }
 
+    @include xxlMax {
+      .article-item {
+        width: 50%;
+      }
+    }
+
+    @include mdMax {
+      .article-item {
+        width: 100%;
+      }
+    }
+
+
+
     @include xxl {
       flex-direction: column;
       width: auto;

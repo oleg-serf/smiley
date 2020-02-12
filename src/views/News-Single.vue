@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs />
+    <breadcrumbs ref="breadcrumbs" />
 
     <section class="news-article container">
       <div class="article-header">
@@ -195,10 +195,15 @@ export default {
     axios
       .get("/news/" + this.$route.params.slug)
       .then(res => {
-        console.log(res);
+        // console.log(res);
 
         this.post = res.data.post;
         this.related_posts = res.data.related;
+
+        document.title = res.data.post.title + " | Smiley Movement";
+        this.$refs.breadcrumbs.breadcrumbs[
+          this.$refs.breadcrumbs.breadcrumbs.length - 1
+        ].meta.title = res.data.post.title;
       })
       .catch(error => console.log(error));
   },

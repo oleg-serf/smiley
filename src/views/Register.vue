@@ -212,7 +212,7 @@ export default {
         password_confirmation: this.confirmPassword
       };
 
-      console.log(formData);
+      // console.log(formData);
       this.$store.dispatch("user/signUp", formData);
     }
   }

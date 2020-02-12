@@ -515,7 +515,7 @@
       var messageInputHeight = $('.message-input').height();
       var compBlockHeight = $('.compensation-block').height();
 
-      console.log(messageInputHeight);
+      // console.log(messageInputHeight);
       if (compBlockHeight < messageInputHeight) {
         $(compBlockHeight).css("height", messageInputHeight + 'px');
       }

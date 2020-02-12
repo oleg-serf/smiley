@@ -24,7 +24,7 @@
       </div>
 
       <div class="smiley-talks-center">
-        <router-link :to="'/event/' + topEvent.id" class="article-item" v-if="topEvent">
+        <router-link :to="'/event/' + topEvent.id" class="article-item">
           <div class="smiley-img-wrap">
             <div class="smiley-img">
               <img
@@ -45,13 +45,12 @@
         </router-link>
       </div>
 
-      <div class="smiley-talks-right" v-if="eventList">
+      <div class="smiley-talks-right" v-if="eventList.length > 0">
         <router-link
           :to="'/event/' + event.id"
           class="article-item"
-          v-for="(event, index) in eventList"
+          v-for="(event) in eventList"
           :key="event.id"
-          v-if="index > 0 && index < 3"
         >
           <div class="smiley-img-wrap">
             <div class="smiley-img">
@@ -137,7 +136,7 @@
           <div class="smiley-network-descr-title">Add your organisation</div>
           <div
             class="smiley-network-descr-subtitle"
-          >Connect your organisation with the Smiley Community and find the skills based support you need and raise awareness of your positive impact projects</div>
+          >Connect your organisation with the Smiley community and find the skills-based support you need to raise awareness of your projects</div>
         </div>
         <router-link to="/add-organisation" class="create-org-btn">Create organisation</router-link>
       </div>
@@ -150,16 +149,20 @@
           <P>News</P>
         </div>
         <p>Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
-        <a href class="read-more-link">
+        <router-link :to="'/news/category/all'" class="read-more-link">
           <span></span>Read more
-        </a>
+        </router-link>
       </div>
 
       <div class="smiley-news-center">
-        <a href="#" class="article-item">
+        <router-link :to="'/news/' + featuredNews.slug" class="article-item">
           <div class="smiley-img-wrap">
             <div class="smiley-img">
-              <img src="img/homepage/news-big-item-x1.jpg" alt="big-photo" />
+              <img
+                :src="$settings.images_path.news  +'l_'+featuredNews.cover_image"
+                :alt="featuredNews.title"
+                :title="featuredNews.title"
+              />
             </div>
           </div>
           <div class="article-descr">
@@ -167,19 +170,26 @@
               <div class="article-date"></div>
               <div class="article-location"></div>
             </div>
-            <div
-              class="article-title"
-            >'Lobsters and octopuses are back': the Kenyan women leading a reef revival</div>
-            <div class="article-subtitle">Life below water</div>
+            <div class="article-title">{{ featuredNews.title }}</div>
+            <div class="article-subtitle">{{ featuredNews.description }}</div>
           </div>
-        </a>
+        </router-link>
       </div>
 
-      <div class="smiley-news-right">
-        <a href="#" class="article-item">
+      <div class="smiley-news-right" v-if="newsList.length > 0">
+        <router-link
+          v-for="newsItem in newsList"
+          :to="'/news/' + newsItem.slug"
+          :key="newsItem.id+newsItem.title"
+          class="article-item"
+        >
           <div class="smiley-img-wrap">
             <div class="smiley-img">
-              <img src="img/homepage/news-small-item-1-x2.jpg" alt="small preview 1" />
+              <img
+                :src="$settings.images_path.news  +'m_'+newsItem.cover_image"
+                :alt="newsItem.title"
+                :title="newsItem.title"
+              />
             </div>
           </div>
           <div class="article-descr">
@@ -187,26 +197,10 @@
               <div class="article-date"></div>
               <div class="article-location"></div>
             </div>
-            <div class="article-title">Air ambulance kent surrey sussex</div>
-            <div class="article-subtitle">Partnerships for the goals</div>
+            <div class="article-title">{{ newsItem.title }}</div>
+            <div class="article-subtitle">{{ newsItem.description }}</div>
           </div>
-        </a>
-
-        <a href="#" class="article-item">
-          <div class="smiley-img-wrap">
-            <div class="smiley-img">
-              <img src="img/homepage/news-small-item-2-x2.jpg" alt="small preview 2" />
-            </div>
-          </div>
-          <div class="article-descr">
-            <div class="article-date-location">
-              <div class="article-date"></div>
-              <div class="article-location"></div>
-            </div>
-            <div class="article-title">Australia just committed $90 million to help 'close the gap'</div>
-            <div class="article-subtitle">Partnerships for the goals</div>
-          </div>
-        </a>
+        </router-link>
       </div>
     </section>
 
@@ -313,20 +307,32 @@
         <div class="video-content">
           <div class="video-content-item">
             <div class="video-container">
-              <img src="img/homepage/video-1.jpg" alt="video-1" />
+              <iframe
+                src="https://player.vimeo.com/video/370887819?title=0&amp;byline=0&amp;portrait=0"
+                frameborder="0"
+                allow="fullscreen"
+                allowfullscreen
+              ></iframe>
             </div>
             <div class="video-descr">
-              <div class="video-content-title">We are changing culture</div>
-              <div class="video-content-subtitle">Jo Loughran at Let's Talk Mental Health</div>
+              <div class="video-content-title">WE’RE NOT ALONE</div>
+              <div class="video-content-subtitle">Georgia Dodsworth, Let’s Talk about Mental Health</div>
             </div>
           </div>
 
           <div class="video-content-item">
             <div class="video-container">
-              <img src="img/homepage/video-2.jpg" alt="video-2" />
+              <iframe
+                src="https://player.vimeo.com/video/386174750?title=0&amp;byline=0&amp;portrait=0"
+                frameborder="0"
+                allow="fullscreen"
+                allowfullscreen
+              ></iframe>
             </div>
             <div class="video-descr">
-              <div class="video-content-title">We are not alone</div>
+              <div
+                class="video-content-title"
+              >RACHEL SNAPE: we don’t have enough of a grassroots conversation about what is the purpose of education?</div>
               <div class="video-content-subtitle">Georgia Dodsworth at Let's Talk Mental Health</div>
             </div>
           </div>
@@ -345,46 +351,75 @@
 
 <script>
 // @ is an alias to /src
+import axios from "../axios-auth";
 
 import Footer from "@/components/Footer.vue";
-import axios from "../axios-auth";
+import { vueVimeoPlayer } from "vue-vimeo-player";
 
 export default {
   name: "home",
   components: {
-    Footer
+    Footer,
+    vueVimeoPlayer
   },
   data() {
     return {
-      topEvent: null,
-      eventList: null,
-      goals: null
+      topEvent: {},
+      eventList: [],
+
+      featuredNews: {},
+      newsList: [],
+
+      goals: [],
+
+      videos: []
     };
   },
-  methods: {
-    eventDate(date) {
-      console.log(date);
-      let formattedDate = new Date(Date.parse(date));
-      console.log(formattedDate.getFullYear());
-    }
-  },
+  methods: {},
   mounted() {
+    // Load page content
     axios
-      .get("/events")
+      .get("/pages/1")
       .then(res => {
-        this.topEvent = res.data.events[0];
-        res.data.events.shift();
-        this.eventList = res.data.events;
+        // console.log(res);
+
+        this.topEvent = res.data.future_events[0];
+        res.data.future_events.shift();
+        this.eventList = res.data.future_events;
+
+        this.featuredNews = res.data.latest_news[0];
+        res.data.latest_news.shift();
+        this.newsList = res.data.latest_news;
+
+        this.goals = res.data.goals[0].goals;
+
+        console.log(res.data.page);
+        // Format to normal object
+        let videos = res.data.page.page_sections.forEach(item => {
+          let video = {
+            type: item.sub_type
+          };
+
+          item.page_section_elements.forEach(element => {
+            // console.log(element);
+            switch (element.name) {
+              case "video_id":
+                video.id = element.content;
+                break;
+              case "video_id":
+                video.id = element.content;
+                break;
+              default:
+                break;
+            }
+            // console.log(element);
+            // console.log(video.type);
+          });
+        });
+
+        // console.log(videos);
       })
       .catch(error => console.log(error));
-
-    // Load golas
-    axios
-      .get("/goals")
-      .then(res => {
-        this.goals = res.data.goal_categories[0].goals;
-      })
-      .catch(error => console.error(error));
   }
 };
 </script>

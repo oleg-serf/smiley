@@ -50,3 +50,34 @@
     padding-right: 22px;
   }
 }
+
+.breadcrumbs {
+  margin: 13px auto;
+  padding: 0 15px;
+  max-width: 1560px;
+
+  li {
+    display: inline-block;
+
+    &:last-child {
+      svg {
+        display: none;
+      }
+    }
+  }
+
+  .breadcrumbs-item {
+    text-decoration: none;
+    color: $default-text;
+    font: 400 16px/21px 'Muli', sans-serif;
+  }
+
+  svg {
+    margin-right: 5px;
+    margin-left: 5px
+  }
+
+  @include lg {
+    margin: 37px auto;
+  }
+}

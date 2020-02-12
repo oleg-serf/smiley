@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs />
+    <breadcrumbs ref="breadcrumbs" />
 
     <section class="latest-news-section latest-news-section--category latest-articles">
       <div class="latest-news-wrap">
@@ -9,7 +9,7 @@
             <img src="/img/homepage/smiley-main-title.svg" alt="smiley talks" />
             <P>News</P>
           </div>
-          <h2 class="news-block-title">AFFORDABLE AND CLEAN ENERGY</h2>
+          <h2 class="news-block-title">{{ title }}</h2>
         </div>
       </div>
     </section>
@@ -72,6 +72,7 @@ import Footer from "@/components/Footer";
 export default {
   data() {
     return {
+      title: "",
       posts: [],
       pagination: {
         currentPage: 1,
@@ -85,9 +86,14 @@ export default {
     axios
       .get(url)
       .then(res => {
-        console.log(res);
         this.posts = res.data.posts;
         this.pagination.totalPages = res.data.pages_count;
+        this.title = res.data.goal.name;
+
+        document.title = this.title + " | Smiley Movement";
+        this.$refs.breadcrumbs.breadcrumbs[
+          this.$refs.breadcrumbs.breadcrumbs.length - 1
+        ].meta.title = this.title;
       })
       .catch(error => console.log(error));
   },
