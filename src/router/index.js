@@ -120,12 +120,13 @@ const routes = [{
       title: 'Add Organisation',
     }
   },
+  // TODO: Make other route for personal organisation & public ones
   {
-    path: '/my-organisation',
+    path: '/org/thehumanhive',
     name: 'my-organisation',
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/My-Organisation.vue'),
     meta: {
-      title: 'My Organisation', // TODO: In component change page title
+      title: 'The Human Five', // TODO: In component change page title
     }
   },
 
