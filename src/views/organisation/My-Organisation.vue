@@ -22,7 +22,7 @@
             </div>
             <div class="organization-profile">Arts, Culture, Leisure</div>
             <div class="organization-link">
-              <a href="#">http://moken.co.uk/</a>
+              <a href="#">https://thehumanhive.org/</a>
             </div>
             <div class="social-icons">
               <ul>
@@ -440,9 +440,9 @@
                   </li>
                 </ul>
               </div>
-              <textarea class="page-link" name="page link"  rows="3" placeholder="https://smileymovement.org/o/advantageafrica"></textarea>
+              <textarea class="page-link" name="page link"  rows="3" placeholder="https://smileymovement.org/o/thehumanhive"></textarea>
               <button class="copy-link-btn">Copy link</button>
-              <p>To stay up-to-date with Advantage Africa, follow their page.</p>
+              <p>To stay up-to-date with The THuman Five, follow their page.</p>
               <button class="follow-btn">Follow</button>
               <button class="chat-btn">Chat</button>
             </div>
