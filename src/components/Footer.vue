@@ -5,38 +5,32 @@
       <div class="footer-logo">
         <img src="/img/homepage/footer-logo.png" alt="footer logo" />
       </div>
-      <form class="smiley-signup-form" @submit.prevent="subscribeMailchimp">
+      <form
+        class="smiley-signup-form"
+        action="https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=ee54f0e12c"
+        method="POST"
+        style="overflow: hidden"
+      >
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input type="text" name="b_720898364c202fd6f72071ca6_ee54f0e12c" tabindex="-1" value />
+        </div>
         <label for="signup-firstname">
           <input
             type="text"
-            name="signup-firstname"
+            name="FNAME"
             id="signup-firstname"
             placeholder="First Name"
-            v-model="form.FNAME"
             min-length="2"
             required
           />
         </label>
 
         <label for="signup-lastname">
-          <input
-            type="text"
-            name="signup-lastname"
-            id="signup-lastname"
-            placeholder="Last Name"
-            v-model="form.LNAME"
-          />
+          <input type="text" name="LNAME" id="signup-lastname" placeholder="Last Name" />
         </label>
 
         <label for="email">
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="Your Email"
-            v-model="form.EMAIL"
-            required
-          />
+          <input type="email" name="EMAIL" id="email" placeholder="Your Email" required />
         </label>
         <div class="signup-btn-wrap">
           <button class="btn-signup" type="submit" name="submit" value="Subscribe">Subscribe</button>
@@ -86,20 +80,18 @@ export default {
   mounted() {},
   methods: {
     subscribeMailchimp() {
-      console.log("testing subscription form");
-
-      const params = new URLSeachParams();
-      params.append("FNAME", this.form.FNAME);
-      params.append("LNAME", this.form.LNAME);
-      params.append("EMAIL", this.form.EMAIL);
-
-      axios
-        .post(
-          "https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=c8555a50f3",
-          params
-        )
-        .then(res => console.log("Success", res))
-        .catch(res => console.error(res));
+      // console.log("testing subscription form");
+      // const params = new URLSeachParams();
+      // params.append("FNAME", this.form.FNAME);
+      // params.append("LNAME", this.form.LNAME);
+      // params.append("EMAIL", this.form.EMAIL);
+      // axios
+      //   .post(
+      //     "https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=ee54f0e12c",
+      //     this.form
+      //   )
+      //   .then(res => console.log("Success", res))
+      //   .catch(res => console.error(res));
     }
   }
 };
