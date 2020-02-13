@@ -468,8 +468,9 @@ export default {
     }, 500);
 
     axios
-      .get("/events/" + this.id)
+      .get("/events/" + this.$route.params.slug)
       .then(res => {
+        console.log(res);
         this.event = res.data.event;
         document.title = res.data.event.title + " | Smiley Movement";
         this.$refs.breadcrumbs.breadcrumbs[

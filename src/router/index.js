@@ -76,7 +76,7 @@ const routes = [{
     }
   },
   {
-    path: '/event/:id',
+    path: '/event/:slug',
     name: 'event',
     component: () => import( /* webpackChunkName: "event" */ '../views/Event.vue'),
     meta: {
