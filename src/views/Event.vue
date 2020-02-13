@@ -310,13 +310,18 @@
               <h2 class="event-partners-title">Partners</h2>
 
               <div class="event-partners-cards">
-                <img
+                <div class="event-partners-cards__sides"></div>
+                <div
+                  class="event-partners-cards__holder"
                   v-for="partner in event.partners"
                   :key="partner.name + partner.id"
-                  :src="$settings.images_path.partners + 's_' +partner.image"
-                  :alt="partner.name"
-                  :title="partner.name"
-                />
+                >
+                  <img
+                    :src="$settings.images_path.partners + 's_' +partner.image"
+                    :alt="partner.name"
+                    :title="partner.name"
+                  />
+                </div>
               </div>
             </div>
           </section>
