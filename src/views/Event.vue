@@ -489,17 +489,17 @@ export default {
         text:
           "In order to oarticipate to an event, you will need an account for Smiley Movement",
         showCancelButton: true,
-        confirmButtonText: "Login",
-        cancelButtonText: "Create Account"
+        confirmButtonText: "Create Account",
+        cancelButtonText: "Login"
       };
       this.$swal(swal).then(result => {
         if (result.value) {
-          router.push({ path: "/login" });
+          router.push({ path: "/register" });
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === "cancel"
         ) {
-          router.push({ path: "/register" });
+          router.push({ path: "/login" });
         }
       });
 

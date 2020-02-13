@@ -81,3 +81,62 @@
     margin: 37px auto;
   }
 }
+
+// Sweet alert styles
+.swal2-container {
+  .swal2-popup {
+    border-radius: 0px;
+    width: 42em;
+  }
+
+  .swal2-title {
+    font: 700 56px/74px "Montserrat Bold",
+      sans-serif;
+
+    @include smMax {
+      font-size: 24px;
+    }
+  }
+
+  .swal2-content {
+    font: 400 22px/36px "Muli",
+      sans-serif;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    @include smMax {
+      font-size: 16px;
+      padding-left: 5px;
+      padding-right: 5px;
+      line-height: 1.5;
+    }
+  }
+
+  .swal2-actions {
+    font: 700 16px/24px "Montserrat Bold",
+      sans-serif;
+    display: flex;
+    flex-direction: row;
+
+    button {
+      text-transform: uppercase;
+      border-radius: 3px;
+      color: #393939;
+      width: calc(50% - 25px);
+      border: 1px solid transparent;
+
+      @include smMax {
+        width: 100%;
+      }
+    }
+
+    .swal2-confirm {
+      background-color: #FFEC00
+    }
+
+    .swal2-cancel {
+      background: transparent;
+      border: 1px solid #C7C7C7;
+    }
+  }
+}
