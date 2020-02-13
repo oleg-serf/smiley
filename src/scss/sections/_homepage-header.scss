@@ -1,10 +1,11 @@
 .header-bg {
-  background: url(/img/homepage/header-bg-mob-x2.jpg) no-repeat;
+  // background: url(/img/homepage/header-bg-mob-x2.jpg) no-repeat;
   background-size: cover;
   background-position: top;
   height: 424px;
   width: 100%;
   overflow: hidden;
+  position: relative;
 
   @include sm {
     height: 576px;
@@ -15,7 +16,7 @@
   }
 
   @include lg {
-    background: url(/img/homepage/header-bg-dt-x1.jpg) no-repeat;
+    // background: url(/img/homepage/header-bg-dt-x1.jpg) no-repeat;
     background-position: center;
     background-size: cover;
     height: 779px;

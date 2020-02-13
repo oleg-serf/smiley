@@ -70,6 +70,7 @@ Vue.prototype.$settings = {
     partners: `https://new-smiley.s3.eu-west-2.amazonaws.com/partners/`,
     news: `https://new-smiley.s3.eu-west-2.amazonaws.com/news/`,
     goals: `https://new-smiley.s3.eu-west-2.amazonaws.com/goals/`,
+    pages: `https://new-smiley.s3.eu-west-2.amazonaws.com/pages/`,
   },
   social: {
     facebook: 'https://facebook.com/SmileyMovement/',

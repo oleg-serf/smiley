@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <div class="header-bg">
+      <video :src="homepagevideo" muted id="background_video" loop>
+        <!-- <source  type="video/mp4" /> -->
+      </video>
       <div class="header-content-wrap container">
         <div class="header-content">
           <h1 class="header-content-title">
@@ -360,7 +363,9 @@ export default {
       quote: {
         title: "",
         content: ""
-      }
+      },
+
+      homepagevideo: null
     };
   },
   methods: {},
@@ -394,12 +399,12 @@ export default {
           Type 3 section -> Video Vimeo ID (
         */
 
-        console.log(res.data);
+        // console.log(res.data);
         let quote = res.data.page.page_sections.filter(
           section => section.name == "quote_bottom"
         );
 
-        console.log(quote);
+        // console.log(quote);
         quote[0].page_section_elements.forEach(item => {
           switch (item.name) {
             case "text":
@@ -413,7 +418,25 @@ export default {
               break;
           }
         });
-        console.log(this.quote);
+        // console.log(this.quote);
+
+        let background = res.data.page.page_sections.filter(
+          section => section.name == "header_video"
+        );
+        let homepagevideo = background[0].page_section_elements[0].content;
+
+        if (window.innerWidth < 768) {
+          this.homepagevideo =
+            this.$settings.images_path.pages + "m_" + homepagevideo;
+        } else {
+          this.homepagevideo =
+            this.$settings.images_path.pages + "l_" + homepagevideo;
+        }
+
+        let videoTag = document.getElementById("background_video");
+        setTimeout(() => {
+          videoTag.play();
+        }, 500);
 
         // Video Sections
         let video_section = res.data.page.page_sections.filter(section => {
@@ -465,4 +488,37 @@ export default {
 @import "@/scss/sections/_homepage-network";
 @import "@/scss/sections/_homepage-thematic-icons";
 @import "@/scss/sections/_smiley-video-section";
+
+#background_video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -100;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.header-bg:before {
+  content: "";
+  display: block !important;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background-color: #000;
+  opacity: 0.3;
+  z-index: 2;
+}
+
+.header-content-wrap.container {
+  position: relative;
+  z-index: 5;
+}
 </style>
