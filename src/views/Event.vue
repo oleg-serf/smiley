@@ -15,17 +15,22 @@
           </div>
           <div class="event-sidebar">
             <div class="sidebar-btn-wrap">
-              <button
-                class="reg-event-btn"
-                @click="cancelRegistration"
-                v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
-              >CANCEL ATTENDENCE</button>
-              <button
-                class="reg-event-btn"
-                @click="registerUser(event.id)"
-                v-else
-              >Register for event</button>
-              <button class="chat-btn">Join the chat room</button>
+              <template v-if="isAuthenticated">
+                <button
+                  class="reg-event-btn"
+                  @click="cancelRegistration"
+                  v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
+                >CANCEL ATTENDENCE</button>
+                <button
+                  class="reg-event-btn"
+                  @click="registerUser(event.id)"
+                  v-else
+                >Register for event</button>
+                <button class="chat-btn">Join the chat room</button>
+              </template>
+              <template v-else>
+                <button class="reg-event-btn" @click="joinAsGuest">Register for event</button>
+              </template>
             </div>
             <div class="sidebar-block">
               <button class="accordion">Date and time</button>
@@ -371,6 +376,9 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 
 import $ from "jquery";
 import axios from "../axios-auth";
+
+import router from "@/router";
+
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -474,6 +482,35 @@ export default {
     },
     registerUser(id) {
       this.registerUserForEvent({ id: id, organisation: false });
+    },
+    joinAsGuest() {
+      let swal = {
+        title: "Register or Login",
+        text:
+          "In order to oarticipate to an event, you will need an account for Smiley Movement",
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        cancelButtonText: "Create Account"
+      };
+      this.$swal(swal).then(result => {
+        if (result.value) {
+          router.push({ path: "/login" });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === "cancel"
+        ) {
+          router.push({ path: "/register" });
+        }
+      });
+
+      // .then(result => {
+      //   if (result.value) {
+      //     console.log("confirm");
+      //     router
+      //   } else {
+      //     console.log("register");
+      //   }
+      // });
     },
     ...mapActions("events", ["registerUserForEvent"]),
     setPlace(place) {
