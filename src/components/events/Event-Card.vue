@@ -101,7 +101,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
           <div class="date-and-time-info">
             <div
               class="date-info"
-            >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'})}}</div>
+            >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}}</div>
             <div
               class="time-info"
             >{{event.time_start | formatTime}} - {{event.time_end | formatTime}}</div>

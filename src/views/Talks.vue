@@ -66,10 +66,10 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
                     <div class="date-and-time-info">
                       <div
                         class="date-info"
-                      >{{topEvent.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'})}}</div>
+                      >{{topEvent.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}}</div>
                       <div
                         class="time-info"
-                      >{{topEvent.time_start | formatTime | formatTime}} - {{topEvent.time_end | formatTime | formatTime}}</div>
+                      >{{topEvent.time_start | formatTime}} - {{topEvent.time_end | formatTime}}</div>
                     </div>
                   </div>
                   <div class="location-info">
