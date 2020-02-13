@@ -42,10 +42,11 @@ const routes = [{
       breadcrumbs: ['news'],
     }
   },
+  // Auth routes
   {
     path: '/login',
     name: 'login',
-    component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue'),
+    component: () => import( /* webpackChunkName: "login" */ '../views/auth/Login.vue'),
     meta: {
       title: 'Login',
     }
@@ -53,7 +54,7 @@ const routes = [{
   {
     path: '/register',
     name: 'register',
-    component: () => import( /* webpackChunkName: "register" */ '../views/Register.vue'),
+    component: () => import( /* webpackChunkName: "register" */ '../views/auth/Register.vue'),
     meta: {
       title: 'Register',
     }
@@ -61,9 +62,17 @@ const routes = [{
   {
     path: '/forgot',
     name: 'forgot',
-    component: () => import( /* webpackChunkName: "forgot" */ '../views/Forgot.vue'),
+    component: () => import( /* webpackChunkName: "forgot" */ '../views/auth/Forgot.vue'),
     meta: {
       title: 'Forgot password',
+    }
+  },
+  {
+    path: '/reset',
+    name: 'reset',
+    component: () => import( /* webpackChunkName: "forgot" */ '../views/auth/Reset.vue'),
+    meta: {
+      title: 'Reset password',
     }
   },
   {

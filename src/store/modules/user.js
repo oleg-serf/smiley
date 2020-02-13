@@ -19,7 +19,7 @@ const actions = {
   signUp({
     commit
   }, credentials) {
-    axios.post('/register', credentials)
+    axios.post('/auth/register', credentials)
       .then(res => {
         console.log(res);
         commit('SET_USERDATA', res.data.token);
@@ -33,7 +33,7 @@ const actions = {
   login({
     commit
   }, credentials) {
-    return axios.post('/login', credentials)
+    return axios.post('/auth/login', credentials)
       .then(res => {
         console.log(res);
         console.log(res.status);
@@ -42,6 +42,31 @@ const actions = {
         console.log(res.data.attending);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
         router.replace('/');
+      })
+      .catch(error => {
+        return JSON.parse(error.request.response).message
+      })
+  },
+  forgot({
+    commit
+  }, email) {
+    return axios.post('/auth/reset', {
+        email: email
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(error => {
+        return JSON.parse(error.request.response).message
+      })
+  },
+  reset({
+    commit
+  }, data) {
+    return axios.post('/auth/reset/password', data)
+      .then(res => {
+
+        return res;
       })
       .catch(error => {
         return JSON.parse(error.request.response).message

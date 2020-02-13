@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import axios from "../axios-auth";
+import axios from "@/axios-auth";
 import GoogleLogin from "vue-google-login";
 import VFacebookLogin from "vue-facebook-login-component";
 

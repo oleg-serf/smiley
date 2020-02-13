@@ -5,10 +5,16 @@
       class="forgot-pass-subtitle"
     >Please enter your email address in order to receive instructions on how to reset your account</p>
 
-    <div class="forgot-pass-wrap">
+    <form class="forgot-pass-wrap" @submit.prevent="onSubmit">
       <label for="forgot-pass-email">
         Email Address
-        <input type="text" name="forgot-pass-email" id="forgot-pass-email" placeholder />
+        <input
+          type="text"
+          name="forgot-pass-email"
+          id="forgot-pass-email"
+          v-model="email"
+          placeholder
+        />
       </label>
 
       <div class="forgot-pass-btn-wrap">
@@ -19,18 +25,32 @@
           value="forgot-pass"
         >reset my password</button>
       </div>
-    </div>
+    </form>
   </section>
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "Forgot",
   data() {
-    return {};
+    return {
+      email: null
+    };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    onSubmit() {
+      this.$store.dispatch("user/forgot", this.email).then(res => {
+        let result = {
+          title: res.data.message,
+          icon: res.data.success ? "success" : "error"
+        };
+        this.$swal(result);
+      });
+    }
+  }
 };
 </script>
 
