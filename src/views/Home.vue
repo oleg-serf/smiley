@@ -27,7 +27,7 @@
       </div>
 
       <div class="smiley-talks-center">
-        <router-link :to="'/event/' + topEvent.slug" class="article-item">
+        <router-link :to="'/talks/' + topEvent.slug" class="article-item">
           <div class="smiley-img-wrap">
             <div class="smiley-img">
               <img
@@ -50,7 +50,7 @@
 
       <div class="smiley-talks-right" v-if="eventList.length > 0">
         <router-link
-          :to="'/event/' + event.slug"
+          :to="'/talks/' + event.slug"
           class="article-item"
           v-for="(event) in eventList"
           :key="event.id"

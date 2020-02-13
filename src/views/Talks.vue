@@ -19,7 +19,7 @@
           <h2 class="upcoming-info-title">Upcoming smiley talk</h2>
 
           <div class="talk-card-wrap" v-if="topEvent">
-            <router-link :to="'/event/' + topEvent.slug" class="talk-card talk-card--featured">
+            <router-link :to="'/talks/' + topEvent.slug" class="talk-card talk-card--featured">
               <div class="pic-wrap">
                 <div class="smiley-img-wrap">
                   <div class="smiley-img">
@@ -278,7 +278,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           :autoWidth="true"
         >
           <div class="talk-card-wrap" v-for="event in eventList" :key="'c-'+event.id">
-            <router-link :to="'/event/' + event.slug" class="talk-card">
+            <router-link :to="'/talks/' + event.slug" class="talk-card">
               <event-card :event="event" />
             </router-link>
           </div>
@@ -286,7 +286,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
 
         <div class="talk-cards-container" v-if="!showCarousel && eventList">
           <div class="talk-card-wrap" v-for="(event) in eventList" :key="'talks-list-'+event.id">
-            <router-link :to="'/event/' + event.slug" class="talk-card">
+            <router-link :to="'/talks/' + event.slug" class="talk-card">
               <event-card :event="event" />
             </router-link>
           </div>
@@ -326,7 +326,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           v-for="event in eventPastList"
           :key="'old-events-slider-'+event.id"
         >
-          <router-link :to="'/event/' + event.slug" class="talk-card">
+          <router-link :to="'/talks/' + event.slug" class="talk-card">
             <event-card :event="event" :past="true" />
           </router-link>
         </div>
@@ -334,7 +334,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
 
       <div class="talk-cards-container" v-if="!showCarousel && eventList">
         <div class="talk-card-wrap" v-for="(event) in eventPastList" :key="'old-events-'+event.id">
-          <router-link :to="'/event/' + event.slug" class="talk-card">
+          <router-link :to="'/talks/' + event.slug" class="talk-card">
             <event-card :event="event" :past="true" />
           </router-link>
         </div>
