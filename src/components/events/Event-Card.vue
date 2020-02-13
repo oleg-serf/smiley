@@ -28,14 +28,19 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       </div>
     </div>
 
-    <button
-      v-if="attendedEvents.filter(item => item.event_id == event.id).length == 0 && !past && isAuthenticated"
-      class="talk-card-checkbox-dt"
-      :class="{'talk-card-checkbox-rotate': overlay }"
-      @click.prevent="showButtons"
-      @mouseover="holderShown = true"
-      @mouseleave="holderShown = false"
-    ></button>
+    <template v-if="isAuthenticated">
+      <button
+        v-if="attendedEvents.filter(item => item.event_id == event.id).length == 0 && !past"
+        class="talk-card-checkbox-dt"
+        :class="{'talk-card-checkbox-rotate': overlay }"
+        @click.prevent="showButtons"
+        @mouseover="holderShown = true"
+        @mouseleave="holderShown = false"
+      ></button>
+    </template>
+    <template v-else>
+      <button class="talk-card-checkbox-dt" @click.prevent="signInModal"></button>
+    </template>
 
     <!-- Show this Upon Hover -->
     <div class="overlay" :class="{'overlay--active' : holderShown && !overlay}">
@@ -170,6 +175,26 @@ export default {
   methods: {
     showButtons() {
       this.overlay = !this.overlay;
+    },
+    signInModal() {
+      let swal = {
+        title: "Register or Login",
+        text:
+          "To register for an event you will need to login or create an account",
+        showCancelButton: true,
+        confirmButtonText: "Create Account",
+        cancelButtonText: "Login"
+      };
+      this.$swal(swal).then(result => {
+        if (result.value) {
+          router.push({ path: "/register" });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === "cancel"
+        ) {
+          router.push({ path: "/login" });
+        }
+      });
     },
     registerUser(id) {
       this.registerUserForEvent({ id: id, organisation: false });
