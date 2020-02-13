@@ -125,20 +125,30 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       <!-- Show attendees only if user is attended to event -->
       <!-- TODO: Rework attendees -->
 
-      <div
-        class="attending-info"
-        style="display: none"
-        v-if="event.attendees_random.length !== 0 && attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
-      >
+      <div class="attending-info" v-if="event.attendees_random.length !== 0">
         <span>Attending:</span>
         <div class="attending-wrap">
           <div
             class="attendees-avatar"
-            :class="{next: index > 0}"
-            v-for="(attendees, index) in event.attendees_random"
-            :key="attendees.id"
+            v-for="(attendee, index) in event.attendees_random"
+            :key="attendee.id + '-attendee'"
+            :class="{'next': index > 0}"
           >
-            <img src="img/event/attendees-avatar-1.jpg" alt="avatar" />
+            <template v-if="attendee.avatar !== null">
+              <img
+                :src="$settings.images_path.users + 's_' + attendee.avatar"
+                :alt="attendee.full_name"
+                :title="attendee.full_name"
+              />
+            </template>
+            <template v-else>
+              <div class="attendees-avatar__letter-holder">
+                <span
+                  class="attendees-avatar__letter"
+                  :title="attendee.full_name"
+                >{{attendee.full_name.charAt(0)}}</span>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -192,4 +202,35 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/components/_event-card.scss";
+
+// TODO: Move styles to file
+
+.attendees-avatar {
+  position: relative;
+  z-index: 1;
+}
+
+.attendees-avatar {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+.attendees-avatar__letter-holder {
+  width: 100%;
+  height: 100%;
+  background-color: #7a7a7a;
+  position: relative;
+}
+
+.attendees-avatar__letter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff !important;
+  font-family: "Muli", sans-serif;
+}
 </style>

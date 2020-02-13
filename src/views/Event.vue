@@ -74,52 +74,51 @@
               </div>
             </div>
             <!-- TODO: Rework attendees -->
-            <div class="sidebar-block attendees-block" style="display: none;">
+            <div class="sidebar-block attendees-block" v-if="event.attendees_count !== 0">
               <button class="accordion">Attendees</button>
               <div class="panel">
                 <div class="panel-content-wrap">
-                  <div class="attendees-wrap">
-                    <div class="attendees-avatar">
-                      <img src="/img/event/attendees-avatar-1.jpg" alt="avatar" />
+                  <div
+                    class="attendees-wrap"
+                    :class="{'attendees-wrap--full' : attendeesDisplayStatus}"
+                  >
+                    <div
+                      class="attendees-avatar"
+                      v-for="(attendee, index) in event.attendees"
+                      :key="attendee.id + '-attendee'"
+                      :class="{'next': index > 0, 'hidden-item': index > 10}"
+                    >
+                      <template v-if="attendee.avatar !== null">
+                        <img
+                          :src="$settings.images_path.users + 's_' + attendee.avatar"
+                          :alt="attendee.full_name"
+                          :title="attendee.full_name"
+                        />
+                      </template>
+                      <template v-else>
+                        <div class="attendees-avatar__letter-holder">
+                          <span
+                            class="attendees-avatar__letter"
+                            :title="attendee.full_name"
+                          >{{attendee.full_name.charAt(0)}}</span>
+                        </div>
+                      </template>
                     </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next">
-                      <img src="/img/event/attendees-avatar-2.jpg" alt="avatar" />
-                    </div>
-                    <div class="attendees-avatar next last">
+
+                    <div class="attendees-avatar next last" v-if="event.attendees.length > 10">
                       <a href="#">
-                        <span>+12</span>
+                        <span>+ {{event.attendees.length - 11}}</span>
                       </a>
                     </div>
                   </div>
                   <div class="attendees-btn-wrap">
-                    <button class="show-all-btn">show all</button>
+                    <button
+                      class="show-all-btn"
+                      @click="attendeesDisplayStatus = !attendeesDisplayStatus"
+                    >
+                      <template v-if="!attendeesDisplayStatus">show all</template>
+                      <template v-else>show less</template>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -392,6 +391,7 @@ export default {
   data() {
     return {
       center: { lat: 45.508, lng: -73.587 },
+      attendeesDisplayStatus: false,
       markers: [],
       places: [],
       currentPlace: null,
@@ -470,7 +470,7 @@ export default {
     axios
       .get("/events/" + this.$route.params.slug)
       .then(res => {
-        console.log(res);
+        console.log("event loaded", res);
         this.event = res.data.event;
         document.title = res.data.event.title + " | Smiley Movement";
         this.$refs.breadcrumbs.breadcrumbs[
@@ -505,15 +505,6 @@ export default {
           router.push({ path: "/login" });
         }
       });
-
-      // .then(result => {
-      //   if (result.value) {
-      //     console.log("confirm");
-      //     router
-      //   } else {
-      //     console.log("register");
-      //   }
-      // });
     },
     ...mapActions("events", ["registerUserForEvent"]),
     setPlace(place) {
@@ -551,4 +542,59 @@ export default {
 @import "@/scss/sections/_single-event-chatroom";
 @import "@/scss/sections/_single-event-invite-friends";
 @import "@/scss/sections/_single-event-location";
+
+// TODO - move styles to wile
+.attendees-avatar.next.last {
+  position: relative;
+  z-index: 2;
+}
+
+.hidden-item {
+  display: none !important;
+}
+
+.attendees-avatar {
+  position: relative;
+  z-index: 1;
+}
+
+.attendees-avatar {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.attendees-wrap--full {
+  .attendees-avatar.next.last {
+    display: none;
+  }
+
+  .attendees-avatar.next {
+    margin: auto !important;
+  }
+
+  .hidden-item {
+    display: inline-block !important;
+  }
+}
+
+.attendees-avatar__letter-holder {
+  width: 100%;
+  height: 100%;
+  background-color: #7a7a7a;
+  position: relative;
+}
+
+.attendees-avatar__letter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Muli", sans-serif;
+}
 </style>

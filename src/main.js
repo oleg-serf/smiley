@@ -71,6 +71,7 @@ Vue.prototype.$settings = {
     news: `https://new-smiley.s3.eu-west-2.amazonaws.com/news/`,
     goals: `https://new-smiley.s3.eu-west-2.amazonaws.com/goals/`,
     pages: `https://new-smiley.s3.eu-west-2.amazonaws.com/pages/`,
+    users: `https://new-smiley.s3.eu-west-2.amazonaws.com/users/`,
   },
   social: {
     facebook: 'https://facebook.com/SmileyMovement/',
