@@ -37,8 +37,8 @@
                 <div class="article-date">{{topNews.published_at}}</div>
                 <div class="article-location"></div>
               </div>
-              <div class="article-title">{{topNews.slug}}</div>
-              <div class="article-subtitle">{{topNews.title}}</div>
+              <div class="article-title">{{topNews.title}}</div>
+              <div class="article-subtitle">{{topNews.description}}</div>
             </div>
           </router-link>
         </div>
@@ -96,8 +96,8 @@
                   <div class="article-date">{{news.published_at}}</div>
                   <div class="article-location"></div>
                 </div>
-                <div class="article-title">{{news.slug}}</div>
-                <div class="article-subtitle">{{news.title}}</div>
+                <div class="article-title">{{news.title}}</div>
+                <div class="article-subtitle">{{news.description}}</div>
               </div>
             </router-link>
           </div>

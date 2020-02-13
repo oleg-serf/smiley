@@ -267,6 +267,38 @@
             </div>
           </div>
 
+          <section class="event-videos">
+            <div class="event-videos-wrap">
+              <h2 class="event-videos-title">Videos</h2>
+
+              <div class="event-videos-cards">
+                <img
+                  v-for="partner in event.partners"
+                  :key="partner.name + partner.id"
+                  :src="$settings.images_path.partners + 's_' +partner.image"
+                  :alt="partner.name"
+                  :title="partner.name"
+                />
+              </div>
+            </div>
+          </section>
+
+          <section class="event-audios">
+            <div class="event-audios-wrap">
+              <h2 class="event-audios-title">Audios</h2>
+
+              <div class="event-audios-cards">
+                <img
+                  v-for="partner in event.partners"
+                  :key="partner.name + partner.id"
+                  :src="$settings.images_path.partners + 's_' +partner.image"
+                  :alt="partner.name"
+                  :title="partner.name"
+                />
+              </div>
+            </div>
+          </section>
+
           <section class="event-partners">
             <div class="event-partners-wrap">
               <h2 class="event-partners-title">Partners</h2>
