@@ -86,7 +86,7 @@ Vue.prototype.$settings = {
 Vue.filter('formatTime', function (time) {
   time = time
     .toString()
-    .match(/\d{4}-\d{2}-\d{2}/) || [time];
+    .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
   if (time.length > 1) {
     time = time.slice(1);
@@ -95,6 +95,9 @@ Vue.filter('formatTime', function (time) {
     time[3] = "";
   }
   return time.join("");
+});
+Vue.filter('stripComas', function (time) {
+  return time.replace(",", '');
 });
 // Safari doesn't recognize time in 0000-00-00 00:00:00 format toLocalStringю
 Vue.filter('formatDate', function (date, locale, format) {
