@@ -272,7 +272,8 @@
             </div>
           </div>
 
-          <section class="event-videos">
+          <!-- TODO: Show event video block -->
+          <section class="event-videos" style="display: none;">
             <div class="event-videos-wrap">
               <h2 class="event-videos-title">Videos</h2>
 
@@ -288,7 +289,8 @@
             </div>
           </section>
 
-          <section class="event-audios">
+          <!-- TODO: Show event audio block -->
+          <section class="event-audios" style="display: none;">
             <div class="event-audios-wrap">
               <h2 class="event-audios-title">Audios</h2>
 
