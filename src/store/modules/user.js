@@ -91,6 +91,9 @@ const mutations = {
     state.attendingEvents = null;
     localStorage.removeItem('token');
     localStorage.setItem('attendingEvents', []);
+    router.push({
+      path: 'home'
+    });
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
     state.attendingEvents = Array.from(data);
