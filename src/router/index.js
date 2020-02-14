@@ -26,6 +26,15 @@ const routes = [{
       title: 'News',
     }
   },
+  // User Feed redirection
+  {
+    path: '/user/feed',
+    name: 'feed',
+    component: () => import( /* webpackChunkName: "news" */ '../views/auth/Login.vue'),
+    meta: {
+      title: 'Login',
+    }
+  },
   {
     path: '/news/:slug',
     name: 'news-item',
