@@ -175,7 +175,7 @@ export default {
 
       this.$store
         .dispatch("user/login", formData)
-        .then(content => (this.errorText = content));
+        .then(content => this.errorModal(content));
     },
     onSuccess(googleUser) {
       console.log(googleUser);
@@ -187,7 +187,15 @@ export default {
       $token = res.authResponse.accessToken;
       this.$store
         .dispatch("loginFacebook", $token)
-        .then(content => (this.errorText = content));
+        .then(content => this.errorModal(content));
+    },
+    errorModal(message) {
+      let swal = {
+        title: "Error",
+        text: message,
+        icon: "error"
+      };
+      this.$swal(swal);
     }
   }
 };
