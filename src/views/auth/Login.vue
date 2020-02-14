@@ -66,6 +66,27 @@
               </span>facebook login
             </div>
           </template>
+          <template slot="logout">
+            <div>
+              <span>
+                <svg
+                  version="1.1"
+                  viewBox="0 0 4.7625042 4.7625001"
+                  height="18"
+                  width="18.000015"
+                  xmlns:svg="http://www.w3.org/2000/svg"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g transform="translate(-46.300006,-202.84821)">
+                    <path
+                      style="fill:#3a559f;"
+                      d="m 46.300006,202.84821 v 4.7625 h 2.536322 v -1.83965 h -0.620015 v -0.751 h 0.620015 v -0.63071 c 0,-0.45869 0.371841,-0.83053 0.830534,-0.83053 h 0.648178 v 0.67531 h -0.463804 c -0.145749,0 -0.26391,0.11817 -0.26391,0.26392 v 0.52202 h 0.716062 l -0.09896,0.751 H 49.58733 v 1.83964 h 1.47518 v -4.7625 z"
+                    />
+                  </g>
+                </svg>
+              </span>facebook logout
+            </div>
+          </template>
         </v-facebook-login>
 
         <!--        <button class="socnet-login-btns login-with-linkedin-btn">-->
@@ -163,7 +184,10 @@ export default {
       console.log(googleUser.getBasicProfile());
     },
     onFacebookLogin(res) {
-      console.log("facebook", res);
+      $token = res.authResponse.accessToken;
+      this.$store
+        .dispatch("loginFacebook", $token)
+        .then(content => (this.errorText = content));
     }
   }
 };

@@ -21,7 +21,6 @@ const actions = {
   }, credentials) {
     axios.post('/auth/register', credentials)
       .then(res => {
-        console.log(res);
         commit('SET_USERDATA', res.data.token);
         // const now = new Date();
         // const expirationDate = now.getTime()
@@ -35,11 +34,20 @@ const actions = {
   }, credentials) {
     return axios.post('/auth/login', credentials)
       .then(res => {
-        console.log(res);
-        console.log(res.status);
         commit('SET_USERDATA', res.data.token);
-        console.log('User -> Login: Attending Events');
-        console.log(res.data.attending);
+        commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+        router.replace('/');
+      })
+      .catch(error => {
+        return JSON.parse(error.request.response).message
+      })
+  },
+  loginFacebook({
+    commit
+  }, credentials) {
+    return axios.post('/auth/login/facebook', credentials)
+      .then(res => {
+        commit('SET_USERDATA', res.data.token);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
         router.replace('/');
       })
