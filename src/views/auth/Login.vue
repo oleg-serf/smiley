@@ -43,6 +43,7 @@
         <v-facebook-login
           :button-style="{background: '#fff', color: '#000'}"
           app-id="505992703501903"
+          @login="onFacebookLogin"
         >
           <template slot="login">
             <div>
@@ -160,6 +161,9 @@ export default {
 
       // This only gets the user information: id, name, imageUrl and email
       console.log(googleUser.getBasicProfile());
+    },
+    onFacebookLogin(res) {
+      console.log("facebook", res);
     }
   }
 };
