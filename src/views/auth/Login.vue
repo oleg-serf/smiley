@@ -44,7 +44,7 @@
           :button-style="{background: '#fff', color: '#000'}"
           app-id="505992703501903"
           @login="onFacebookLogin"
-          @connect="onFacebookLogin"
+          @connect="onFacebookConnect"
         >
           <template slot="login">
             <div>
@@ -185,11 +185,25 @@ export default {
       console.log(googleUser.getBasicProfile());
     },
     onFacebookLogin(res) {
-      console.log("facebook", res);
       $token = res.authResponse.accessToken;
+      $expires_in = res.authResponse.expiresIn * 1000;
+      localStorage.setItem("fb_token", $token);
+      localStorage.setItem("fb_token_expire", $expires_in);
+
       this.$store
         .dispatch("loginFacebook", $token)
         .then(content => this.errorModal(content));
+    },
+    onFacebookConnect(res) {
+      if (res) {
+        if ("fb_token" in localStorage && "fb_token_expire" in localStorage) {
+          if (Date.now < localStorage.getItem("fb_token_expire")) {
+            $token = localStorage.getItem("fb_token");
+            this.$store.dispatch("loginFacebook", $token);
+            // .then(content => this.errorModal(content));
+          }
+        }
+      }
     },
     errorModal(message) {
       let swal = {
