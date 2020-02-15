@@ -192,7 +192,7 @@ export default {
     onFacebookSDKinit(payload) {
       console.log("Facebook SDK init event", payload.FB);
       let token = payload.FB.getAuthResponse();
-
+      console.log(token);
       if (token !== undefined) {
         this.$store.dispatch("loginFacebook", token);
       }
