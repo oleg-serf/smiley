@@ -176,7 +176,7 @@ export default {
 
       this.$store
         .dispatch("user/login", formData)
-        .then(content => this.errorModal(content));
+        .then(content => (this.errorText = content));
     },
     onSuccess(googleUser) {
       console.log(googleUser);
