@@ -191,17 +191,14 @@ export default {
       localStorage.setItem("fb_token", token);
       localStorage.setItem("fb_token_expire", expires_in);
     },
-    onFacebookConnect(res) {
-      console.log("Facebook login status", res);
-      if (res) {
-        if ("fb_token" in localStorage && "fb_token_expire" in localStorage) {
-          console.log("We have fb token + expire time");
-          if (Date.now < localStorage.getItem("fb_token_expire")) {
-            console.log("token is valid");
-            let token = localStorage.getItem("fb_token");
-            this.$store.dispatch("loginFacebook", token);
-            // .then(content => this.errorModal(content));
-          }
+    onFacebookConnect() {
+      if ("fb_token" in localStorage && "fb_token_expire" in localStorage) {
+        console.log("We have fb token + expire time");
+        if (Date.now < localStorage.getItem("fb_token_expire")) {
+          console.log("token is valid");
+          let token = localStorage.getItem("fb_token");
+          this.$store.dispatch("loginFacebook", token);
+          // .then(content => this.errorModal(content));
         }
       }
     },
