@@ -194,6 +194,7 @@ export default {
       let token = payload.FB.getAuthResponse();
       console.log(token);
       if (token !== undefined) {
+        console.log("Token accessed");
         this.$store.dispatch("loginFacebook", token);
       }
     },

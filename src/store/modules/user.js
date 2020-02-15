@@ -47,9 +47,10 @@ const actions = {
   }, credentials) {
     return axios.post('/auth/login/facebook', credentials)
       .then(res => {
+        console.log('facebook logged in', credentials);
         commit('SET_USERDATA', res.data.token);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-        router.replace('/');
+        // router.replace('/');
       })
       .catch(error => {
         return JSON.parse(error.request.response).message
