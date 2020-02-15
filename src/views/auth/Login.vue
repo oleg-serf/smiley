@@ -185,6 +185,7 @@ export default {
       console.log(googleUser.getBasicProfile());
     },
     onFacebookLogin(res) {
+      console.log("fb stuff", res);
       $token = res.authResponse.accessToken;
       $expires_in = res.authResponse.expiresIn * 1000;
       localStorage.setItem("fb_token", $token);
