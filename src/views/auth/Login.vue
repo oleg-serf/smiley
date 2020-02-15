@@ -44,7 +44,6 @@
           :button-style="{background: '#fff', color: '#000'}"
           app-id="505992703501903"
           @login="onFacebookLogin"
-          @connect="onFacebookConnect"
           @sdk-init="onFacebookSDKinit"
         >
           <template slot="login">
@@ -188,29 +187,15 @@ export default {
     onFacebookLogin(res) {
       console.log("Faceboook onLogin event", res);
       let token = res.authResponse.accessToken;
-      let expires_in = res.authResponse.data_access_expiration_time;
-      localStorage.setItem("fb_token", token);
-      localStorage.setItem("fb_token_expire", expires_in * 1000);
-    },
-    onFacebookConnect(payload) {
-      console.log("Facebook onConnect event", payload);
-      if ("fb_token" in localStorage && "fb_token_expire" in localStorage) {
-        // console.log("We have fb token + expire time");
-        if (Date.now() < localStorage.getItem("fb_token_expire")) {
-          // console.log("token is valid");
-          let token = localStorage.getItem("fb_token");
-          // this.$store.dispatch("loginFacebook", token).then(content => {
-          // console.log(content);
-          // });
-        }
-      }
+      this.$store.dispatch("loginFacebook", token);
     },
     onFacebookSDKinit(payload) {
       console.log("Facebook SDK init event", payload.FB);
-      console.log(
-        "Facebook SDK init event : Access Token",
-        payload.FB.getAuthResponse()
-      );
+      let token = payload.FB.getAuthResponse();
+
+      if (token !== undefined) {
+        this.$store.dispatch("loginFacebook", token);
+      }
     },
     errorModal(message) {
       let swal = {
