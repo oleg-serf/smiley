@@ -207,6 +207,10 @@ export default {
     },
     onFacebookSDKinit(payload) {
       console.log("Facebook SDK init event", payload);
+      console.log(
+        "Facebook SDK init event : Access Token",
+        payload.getAccessToken()
+      );
     },
     errorModal(message) {
       let swal = {
