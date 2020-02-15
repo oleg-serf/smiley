@@ -189,7 +189,7 @@ export default {
       let token = res.authResponse.accessToken;
       let expires_in = res.authResponse.data_access_expiration_time;
       localStorage.setItem("fb_token", token);
-      localStorage.setItem("fb_token_expire", expires_in);
+      localStorage.setItem("fb_token_expire", expires_in * 1000);
     },
     onFacebookConnect() {
       if ("fb_token" in localStorage && "fb_token_expire" in localStorage) {
