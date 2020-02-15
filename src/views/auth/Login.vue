@@ -187,7 +187,7 @@ export default {
     onFacebookLogin(res) {
       console.log("fb stuff", res);
       let token = res.authResponse.accessToken;
-      let expires_in = res.authResponse.data_access_expiration_time * 1000;
+      let expires_in = res.authResponse.data_access_expiration_time;
       localStorage.setItem("fb_token", token);
       localStorage.setItem("fb_token_expire", expires_in);
     },
