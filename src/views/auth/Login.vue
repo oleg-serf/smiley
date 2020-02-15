@@ -186,10 +186,10 @@ export default {
     },
     onFacebookLogin(res) {
       console.log("fb stuff", res);
-      $token = res.authResponse.accessToken;
-      $expires_in = res.authResponse.expiresIn * 1000;
-      localStorage.setItem("fb_token", $token);
-      localStorage.setItem("fb_token_expire", $expires_in);
+      let token = res.authResponse.accessToken;
+      let expires_in = res.authResponse.expiresIn * 1000;
+      localStorage.setItem("fb_token", token);
+      localStorage.setItem("fb_token_expire", expires_in);
 
       this.$store
         .dispatch("loginFacebook", $token)
@@ -202,8 +202,8 @@ export default {
           console.log("We have fb token + expire time");
           if (Date.now < localStorage.getItem("fb_token_expire")) {
             console.log("token is valid");
-            $token = localStorage.getItem("fb_token");
-            this.$store.dispatch("loginFacebook", $token);
+            let token = localStorage.getItem("fb_token");
+            this.$store.dispatch("loginFacebook", token);
             // .then(content => this.errorModal(content));
           }
         }
