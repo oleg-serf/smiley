@@ -197,8 +197,9 @@ export default {
         if (Date.now() < localStorage.getItem("fb_token_expire")) {
           console.log("token is valid");
           let token = localStorage.getItem("fb_token");
-          this.$store.dispatch("loginFacebook", token);
-          // .then(content => this.errorModal(content));
+          this.$store.dispatch("loginFacebook", token).then(content => {
+            console.log(content);
+          });
         }
       }
     },
