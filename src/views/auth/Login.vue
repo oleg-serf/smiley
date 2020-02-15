@@ -187,7 +187,9 @@ export default {
     onFacebookLogin(res) {
       console.log("Faceboook onLogin event", res);
       let token = res.authResponse.accessToken;
-      this.$store.dispatch("loginFacebook", token);
+      this.$store
+        .dispatch("loginFacebook", token)
+        .then(content => (this.errorText = content));
     },
     onFacebookSDKinit(payload) {
       console.log("Facebook SDK init event", payload.FB);
@@ -195,7 +197,9 @@ export default {
       console.log(token);
       if (token !== undefined) {
         console.log("Token accessed");
-        this.$store.dispatch("loginFacebook", token);
+        this.$store
+          .dispatch("loginFacebook", token)
+          .then(content => (this.errorText = content));
       }
     },
     errorModal(message) {

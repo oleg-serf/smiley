@@ -50,6 +50,7 @@ const actions = {
         console.log('facebook logged in', credentials);
         commit('SET_USERDATA', res.data.token);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+        return "success login";
         // router.replace('/');
       })
       .catch(error => {
