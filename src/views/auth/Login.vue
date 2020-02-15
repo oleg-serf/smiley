@@ -45,6 +45,7 @@
           app-id="505992703501903"
           @login="onFacebookLogin"
           @connect="onFacebookConnect"
+          @sdk-init="onFacebookSDKinit"
         >
           <template slot="login">
             <div>
@@ -185,23 +186,27 @@ export default {
       console.log(googleUser.getBasicProfile());
     },
     onFacebookLogin(res) {
-      console.log("fb stuff", res);
+      console.log("Faceboook onLogin event", res);
       let token = res.authResponse.accessToken;
       let expires_in = res.authResponse.data_access_expiration_time;
       localStorage.setItem("fb_token", token);
       localStorage.setItem("fb_token_expire", expires_in * 1000);
     },
-    onFacebookConnect() {
+    onFacebookConnect(payload) {
+      console.log("Facebook onConnect event", payload);
       if ("fb_token" in localStorage && "fb_token_expire" in localStorage) {
-        console.log("We have fb token + expire time");
+        // console.log("We have fb token + expire time");
         if (Date.now() < localStorage.getItem("fb_token_expire")) {
-          console.log("token is valid");
+          // console.log("token is valid");
           let token = localStorage.getItem("fb_token");
-          this.$store.dispatch("loginFacebook", token).then(content => {
-            console.log(content);
-          });
+          // this.$store.dispatch("loginFacebook", token).then(content => {
+          // console.log(content);
+          // });
         }
       }
+    },
+    onFacebookSDKinit(payload) {
+      console.log("Facebook SDK init event", payload);
     },
     errorModal(message) {
       let swal = {
