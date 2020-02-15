@@ -185,6 +185,7 @@ export default {
       console.log(googleUser.getBasicProfile());
     },
     onFacebookLogin(res) {
+      console.log("facebook", res);
       $token = res.authResponse.accessToken;
       this.$store
         .dispatch("loginFacebook", $token)
