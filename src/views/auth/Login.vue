@@ -168,7 +168,7 @@ export default {
     };
   },
   mounted() {
-    B.getLoginStatus(function(response) {
+    FB.getLoginStatus(function(response) {
       if (response.status === "connected") {
         // The user is logged in and has authenticated your
         // app, and response.authResponse supplies
