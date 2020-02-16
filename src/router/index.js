@@ -9,6 +9,9 @@ const routes = [{
     path: '/',
     name: 'home',
     component: Home,
+    meta: {
+      title: 'Home',
+    }
   },
   {
     path: '/404',
@@ -22,12 +25,13 @@ const routes = [{
     path: '*',
     redirect: '/404'
   },
+  // User Feed redirection
   {
-    path: '/talks',
-    name: 'talks',
-    component: () => import( /* webpackChunkName: "talks" */ '../views/Talks.vue'),
+    path: '/user/feed',
+    name: 'feed',
+    component: () => import( /* webpackChunkName: "user" */ '../views/auth/Login.vue'),
     meta: {
-      title: 'Talks',
+      title: 'Login',
     }
   },
   {
@@ -38,19 +42,10 @@ const routes = [{
       title: 'News',
     }
   },
-  // User Feed redirection
-  {
-    path: '/user/feed',
-    name: 'feed',
-    component: () => import( /* webpackChunkName: "news" */ '../views/auth/Login.vue'),
-    meta: {
-      title: 'Login',
-    }
-  },
   {
     path: '/news/:slug',
     name: 'news-item',
-    component: () => import( /* webpackChunkName: "news-single" */ '../views/News-Single.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/News-Single.vue'),
     meta: {
       breadcrumbs: ['news'],
     }
@@ -58,7 +53,7 @@ const routes = [{
   {
     path: '/news/category/:slug',
     name: 'news-category-item',
-    component: () => import( /* webpackChunkName: "news-category-item" */ '../views/News-Category.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/News-Category.vue'),
     meta: {
       breadcrumbs: ['news'],
     }
@@ -67,7 +62,7 @@ const routes = [{
   {
     path: '/login',
     name: 'login',
-    component: () => import( /* webpackChunkName: "login" */ '../views/auth/Login.vue'),
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Login.vue'),
     meta: {
       title: 'Login',
     }
@@ -75,7 +70,7 @@ const routes = [{
   {
     path: '/register',
     name: 'register',
-    component: () => import( /* webpackChunkName: "register" */ '../views/auth/Register.vue'),
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register.vue'),
     meta: {
       title: 'Register',
     }
@@ -83,7 +78,7 @@ const routes = [{
   {
     path: '/forgot',
     name: 'forgot',
-    component: () => import( /* webpackChunkName: "forgot" */ '../views/auth/Forgot.vue'),
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Forgot.vue'),
     meta: {
       title: 'Forgot password',
     }
@@ -91,15 +86,23 @@ const routes = [{
   {
     path: '/reset',
     name: 'reset',
-    component: () => import( /* webpackChunkName: "forgot" */ '../views/auth/Reset.vue'),
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Reset.vue'),
     meta: {
       title: 'Reset password',
     }
   },
   {
+    path: '/talks',
+    name: 'talks',
+    component: () => import( /* webpackChunkName: "talks" */ '../views/Talks.vue'),
+    meta: {
+      title: 'Talks',
+    }
+  },
+  {
     path: '/talks/:slug',
     name: 'event',
-    component: () => import( /* webpackChunkName: "event" */ '../views/Event.vue'),
+    component: () => import( /* webpackChunkName: "talks" */ '../views/Event.vue'),
     meta: {
       breadcrumbs: ['talks'],
     }
@@ -124,7 +127,7 @@ const routes = [{
   {
     path: '/contact',
     name: 'contact',
-    component: () => import( /* webpackChunkName: "contat" */ '../views/Contact.vue'),
+    component: () => import( /* webpackChunkName: "page" */ '../views/Contact.vue'),
     meta: {
       title: 'Contact',
     }
@@ -132,7 +135,7 @@ const routes = [{
   {
     path: '/our-story',
     name: 'story',
-    component: () => import( /* webpackChunkName: "story" */ '../views/Story.vue'),
+    component: () => import( /* webpackChunkName: "page" */ '../views/Story.vue'),
     meta: {
       title: 'Our story'
     }
@@ -140,7 +143,7 @@ const routes = [{
   {
     path: '/partners',
     name: 'partners',
-    component: () => import( /* webpackChunkName: "partners" */ '../views/Partners.vue'),
+    component: () => import( /* webpackChunkName: "page" */ '../views/Partners.vue'),
     meta: {
       title: 'Partners',
     }
