@@ -367,6 +367,9 @@ export default {
       }
       li {
         position: relative;
+        &:not(:last-child) {
+          margin-bottom: 24px;
+        }
 
         &::before {
           width: 5px;
@@ -419,8 +422,30 @@ export default {
         }
 
         li {
-          &::before {
-            display: none;
+          &::before,
+          &::after {
+            // display: none;
+            background-color: #707070;
+            display: inline-block;
+            position: static;
+            opacity: 0;
+            transition: opacity 0.4s;
+          }
+
+          &::after {
+            width: 5px;
+            height: 5px;
+            background-color: #000;
+            content: "";
+            transform: translateY(-50%);
+            border-radius: 50%;
+          }
+
+          &:hover {
+            &::before,
+            &::after {
+              opacity: 1;
+            }
           }
         }
       }
