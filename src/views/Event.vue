@@ -123,14 +123,19 @@
                 </div>
               </div>
             </div>
+            <!-- TODO: Drop to component -->
             <div class="sidebar-block">
               <button class="accordion">Share with friends</button>
               <div class="panel">
                 <div class="panel-content-wrap">
                   <div class="share-icons">
                     <ul>
-                      <li>
-                        <a href="#">
+                      <li class="facebook">
+                        <a
+                          :href="'https://www.facebook.com/sharer.php?u='+$settings.domain+'talks/'+encodeURI(event.slug)+'&t='+encodeURI(event.title)"
+                          target="_blank"
+                          title="Share on Facebook"
+                        >
                           <svg
                             width="30"
                             height="30"
@@ -153,8 +158,12 @@
                           </svg>
                         </a>
                       </li>
-                      <li>
-                        <a href="#">
+                      <li class="linkedin">
+                        <a
+                          :href="'https://www.linkedin.com/shareArticle?mini=true&amp;url='+$settings.domain+'talks/'+encodeURI(event.slug)"
+                          target="_blank"
+                          title="Share on LinkedIn"
+                        >
                           <svg
                             width="30"
                             height="30"
@@ -189,8 +198,12 @@
                           </svg>
                         </a>
                       </li>
-                      <li>
-                        <a href="#">
+                      <li class="google-plus">
+                        <a
+                          :href="'https://plus.google.com/share?url='+$settings.domain+'talks/'+encodeURI(event.slug)"
+                          target="_blank"
+                          title="Share on Google+"
+                        >
                           <svg
                             width="30"
                             height="30"
@@ -219,8 +232,12 @@
                           </svg>
                         </a>
                       </li>
-                      <li>
-                        <a href="#">
+                      <li class="twitter">
+                        <a
+                          :href="'https://twitter.com/share?text='+encodeURI(event.short_description)+'&url='+$settings.domain+'talks/'+encodeURI(event.slug)"
+                          target="_blank"
+                          title="Share on Twitter"
+                        >
                           <svg
                             width="30"
                             height="30"
@@ -277,7 +294,11 @@
               <h2 class="event-videos-title">Videos</h2>
 
               <div class="event-videos-cards">
-                <div class="video-card" v-for="video in videos" :key="video.id">
+                <div
+                  class="video-card"
+                  v-for="(video, index) in videos"
+                  :key="video.id +'-vd-'+index"
+                >
                   <template v-if="video.type == 'vimeo'">
                     <iframe
                       :src="'https://player.vimeo.com/video/'+video.id+'?title=0&amp;byline=0&amp;portrait=0'"
@@ -305,7 +326,11 @@
               <h2 class="event-audios-title">Audio</h2>
 
               <div class="event-audios-cards">
-                <div class="audio-item" v-for="audio in audios" :key="audio.title">
+                <div
+                  class="audio-item"
+                  v-for="(audio, index) in audios"
+                  :key="audio.title +'-vd-'+index"
+                >
                   <div class="audio-item__title">{{audio.title}}</div>
                   <audio controls :src="audio.url">
                     Your browser does not support the
@@ -413,49 +438,8 @@ export default {
       currentPlace: null,
       id: this.$route.params.id,
       event: null,
-      audios: [
-        {
-          title: "T-Rex roar",
-          url:
-            "https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
-        },
-        {
-          title: "T-Rex roar",
-          url:
-            "https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
-        },
-        {
-          title: "T-Rex roar",
-          url:
-            "https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
-        }
-      ],
-      videos: [
-        {
-          type: "youtube",
-          id: "6v2L2UGZJAM"
-        },
-        {
-          type: "youtube",
-          id: "f7hbWvHKns0"
-        },
-        {
-          type: "vimeo",
-          id: "76979871"
-        },
-        {
-          type: "youtube",
-          id: "6v2L2UGZJAM"
-        },
-        {
-          type: "youtube",
-          id: "f7hbWvHKns0"
-        },
-        {
-          type: "vimeo",
-          id: "76979871"
-        }
-      ]
+      audios: [],
+      videos: []
     };
   },
   computed: {

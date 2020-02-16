@@ -78,7 +78,8 @@ Vue.prototype.$settings = {
     twitter: 'https://twitter.com/Smiley_Movement',
     instagram: 'https://www.instagram.com/smileymovement',
     linkedin: 'https://linkedin.com/company/smiley-movement',
-  }
+  },
+  domain: 'https://smileymovement.org/',
 }
 
 
