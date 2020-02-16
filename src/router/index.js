@@ -11,6 +11,18 @@ const routes = [{
     component: Home,
   },
   {
+    path: '/404',
+    name: '404',
+    component: () => import( /* webpackChunkName: "404" */ '../views/404.vue'),
+    meta: {
+      title: '404 Page not found',
+    }
+  },
+  {
+    path: '*',
+    redirect: '/404'
+  },
+  {
     path: '/talks',
     name: 'talks',
     component: () => import( /* webpackChunkName: "talks" */ '../views/Talks.vue'),
