@@ -14,7 +14,7 @@
             />
           </div>
           <div class="event-sidebar">
-            <div class="sidebar-btn-wrap">
+            <div class="sidebar-btn-wrap" v-if="isEventRegisterable(event.to_past_event)">
               <template v-if="isAuthenticated">
                 <button
                   class="reg-event-btn"
@@ -485,6 +485,14 @@ export default {
       .catch(error => console.log(error));
   },
   methods: {
+    isEventRegisterable(time) {
+      if (time === undefined) {
+        return false;
+      }
+      time = time.toString().match(/\d{4}-\d{2}-\d{2}/) || [time];
+      let result = Date.now() < Date.parse(time) ? true : false;
+      return result;
+    },
     cancelRegistration() {
       this.$swal("Registration canceled", "", "success");
     },
