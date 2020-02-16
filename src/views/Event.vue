@@ -272,36 +272,46 @@
           </div>
 
           <!-- TODO: Show event video block -->
-          <section class="event-videos" style="display: none;">
+          <section class="event-videos" v-if="videos.length > 0">
             <div class="event-videos-wrap">
               <h2 class="event-videos-title">Videos</h2>
 
               <div class="event-videos-cards">
-                <img
-                  v-for="partner in event.partners"
-                  :key="partner.name + partner.id"
-                  :src="$settings.images_path.partners + 's_' +partner.image"
-                  :alt="partner.name"
-                  :title="partner.name"
-                />
+                <div class="video-card" v-for="video in videos" :key="video.id">
+                  <template v-if="video.type == 'vimeo'">
+                    <iframe
+                      :src="'https://player.vimeo.com/video/'+video.id+'?title=0&amp;byline=0&amp;portrait=0'"
+                      frameborder="0"
+                      allow="fullscreen"
+                      allowfullscreen
+                    ></iframe>
+                  </template>
+                  <template v-else>
+                    <iframe
+                      :src="'https://www.youtube.com/embed/'+video.id"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                    ></iframe>
+                  </template>
+                </div>
               </div>
             </div>
           </section>
 
           <!-- TODO: Show event audio block -->
-          <section class="event-audios">
+          <section class="event-audios" v-if="audios.length > 0">
             <div class="event-audios-wrap">
               <h2 class="event-audios-title">Audio</h2>
 
               <div class="event-audios-cards">
-                <audio
-                  controls
-                  src="https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
-                  style="width: 100%"
-                >
-                  Your browser does not support the
-                  <code>audio</code> element.
-                </audio>
+                <div class="audio-item" v-for="audio in audios" :key="audio.title">
+                  <div class="audio-item__title">{{audio.title}}</div>
+                  <audio controls :src="audio.url">
+                    Your browser does not support the
+                    <code>audio</code> element.
+                  </audio>
+                </div>
               </div>
             </div>
           </section>
@@ -402,7 +412,50 @@ export default {
       places: [],
       currentPlace: null,
       id: this.$route.params.id,
-      event: null
+      event: null,
+      audios: [
+        {
+          title: "T-Rex roar",
+          url:
+            "https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
+        },
+        {
+          title: "T-Rex roar",
+          url:
+            "https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
+        },
+        {
+          title: "T-Rex roar",
+          url:
+            "https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
+        }
+      ],
+      videos: [
+        {
+          type: "youtube",
+          id: "6v2L2UGZJAM"
+        },
+        {
+          type: "youtube",
+          id: "f7hbWvHKns0"
+        },
+        {
+          type: "vimeo",
+          id: "76979871"
+        },
+        {
+          type: "youtube",
+          id: "6v2L2UGZJAM"
+        },
+        {
+          type: "youtube",
+          id: "f7hbWvHKns0"
+        },
+        {
+          type: "vimeo",
+          id: "76979871"
+        }
+      ]
     };
   },
   computed: {
@@ -553,6 +606,8 @@ export default {
 @import "@/scss/sections/_single-event";
 @import "@/scss/sections/_single-event-content-section";
 @import "@/scss/sections/_single-event-partners";
+@import "@/scss/sections/_single-event-video";
+@import "@/scss/sections/_single-event-audio";
 @import "@/scss/sections/_single-event-chatroom";
 @import "@/scss/sections/_single-event-invite-friends";
 @import "@/scss/sections/_single-event-location";
