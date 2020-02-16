@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <div class="holder-404">
-      <div class="holder-404__chars">
-        <img src="/img/404-sad-face.jpg" />
-        404
-      </div>
+      <div class="holder-404__chars">404</div>
       <h2 class="holder-404__title">Sorry, looks like this page doesn't exist anymore</h2>
       <!-- <p class="holder-404__content">Not so long text</p> -->
 
