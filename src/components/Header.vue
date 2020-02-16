@@ -305,11 +305,11 @@ export default {
     },
     goToLogin() {
       this.registerDropdownShow = false;
-      this.$router.replace("/login");
+      this.$router.push({ name: "login" });
     },
     goToRegister() {
       this.registerDropdownShow = false;
-      this.$router.replace("/register");
+      this.$router.push({ name: "register" });
     }
   }
 };

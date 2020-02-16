@@ -24,7 +24,9 @@ const actions = {
         commit('SET_USERDATA', res.data.token);
         // const now = new Date();
         // const expirationDate = now.getTime()
-        router.replace('/');
+        router.push({
+          name: 'home'
+        });
       })
       .catch(error => console.log(error))
   },
@@ -36,7 +38,9 @@ const actions = {
       .then(res => {
         commit('SET_USERDATA', res.data.token);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-        router.replace('/');
+        router.push({
+          name: 'home'
+        });
       })
       .catch(error => {
         return JSON.parse(error.request.response).message
@@ -49,11 +53,11 @@ const actions = {
         accessToken: credentials
       })
       .then(res => {
-        console.log('Facebook logged in', credentials);
-        console.log('Server response', res.data);
         commit('SET_USERDATA', res.data.token);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-        // router.replace('/');
+        router.push({
+          name: 'home'
+        });
       })
       .catch(error => {
         return JSON.parse(error.request.response).message
