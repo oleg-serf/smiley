@@ -45,7 +45,9 @@ const actions = {
   loginFacebook({
     commit
   }, credentials) {
-    return axios.post('/auth/login/facebook', credentials)
+    return axios.post('/auth/login/facebook', {
+        accessToken: credentials
+      })
       .then(res => {
         console.log('Facebook logged in', credentials);
         console.log('Server response', res.data);

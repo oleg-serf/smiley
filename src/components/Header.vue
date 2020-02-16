@@ -398,6 +398,26 @@ export default {
         transition: opacity 0.4s;
         padding: 5px;
 
+        padding: 24px 15px;
+        border-radius: 4px;
+        border: 1px solid #c7c7c7;
+        box-shadow: 0 12px 32px -8px rgba(26, 26, 26, 0.24);
+
+        &::before {
+          content: "";
+          display: block;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 0 5px 5px 5px;
+          border-color: transparent transparent rgba(26, 26, 26, 0.24)
+            transparent;
+          position: absolute;
+          top: -6px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
         li {
           &::before {
             display: none;
