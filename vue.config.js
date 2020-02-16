@@ -1,5 +1,8 @@
 module.exports = {
   publicPath: '/',
+  devServer: {
+    https: true
+  },
   css: {
     loaderOptions: {
       sass: {

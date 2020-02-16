@@ -47,10 +47,10 @@ const actions = {
   }, credentials) {
     return axios.post('/auth/login/facebook', credentials)
       .then(res => {
-        console.log('facebook logged in', credentials);
+        console.log('Facebook logged in', credentials);
+        console.log('Server response', res.data);
         commit('SET_USERDATA', res.data.token);
         commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-        return "success login";
         // router.replace('/');
       })
       .catch(error => {
@@ -87,6 +87,7 @@ const actions = {
     commit
   }) {
     commit('REMOVE_USERDATA');
+    // router.replace('/');
   }
 }
 
@@ -108,8 +109,6 @@ const mutations = {
   SET_USER_ATTENDING_EVENTS(state, data) {
     state.attendingEvents = Array.from(data);
     localStorage.setItem('attendingEvents', data);
-
-    // console.log(state.attendingEvents);
   }
 }
 

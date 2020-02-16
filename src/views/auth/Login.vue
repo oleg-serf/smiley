@@ -42,8 +42,9 @@
 
         <v-facebook-login
           :button-style="{background: '#fff', color: '#000'}"
-          app-id="505992703501903"
+          app-id="486208715194516"
           @login="onFacebookLogin"
+          @logout="logout"
           @sdk-init="onFacebookSDKinit"
         >
           <template slot="login">
@@ -184,22 +185,29 @@ export default {
       // This only gets the user information: id, name, imageUrl and email
       console.log(googleUser.getBasicProfile());
     },
+    logout() {
+      this.$store.dispatch("user/logout");
+    },
     onFacebookLogin(res) {
-      console.log("Faceboook onLogin event", res);
-      let token = res.authResponse.accessToken;
-      this.$store
-        .dispatch("loginFacebook", token)
-        .then(content => (this.errorText = content));
+      console.log("onFacebookLogin: Faceboook onLogin event", res);
+      if (res.authResponse !== null) {
+        let token = res.authResponse.accessToken;
+        if (token !== undefined && token !== null) {
+          this.$store.dispatch("user/loginFacebook", token);
+        } else {
+          console.log("onFacebookLogin: get token fail");
+        }
+      } else {
+        console.log("onFacebookLogin: Response error");
+      }
     },
     onFacebookSDKinit(payload) {
-      console.log("Facebook SDK init event", payload.FB);
-      let token = payload.FB.getAuthResponse();
-      console.log(token);
-      if (token !== undefined) {
-        console.log("Token accessed");
-        this.$store
-          .dispatch("loginFacebook", token)
-          .then(content => (this.errorText = content));
+      let response = payload.FB.getAuthResponse();
+      if (response !== undefined && response !== null) {
+        console.log("onFacebookSDKinit: Token accessed", response);
+        this.$store.dispatch("user/loginFacebook", response.accessToken);
+      } else {
+        console.log("onFacebookSDKinit: Token problems");
       }
     },
     errorModal(message) {
