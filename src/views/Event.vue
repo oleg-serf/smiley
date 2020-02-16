@@ -305,7 +305,7 @@
             </div>
           </section>
 
-          <section class="event-partners">
+          <section class="event-partners" v-if="event.partners.length > 0">
             <div class="event-partners-wrap">
               <h2 class="event-partners-title">Partners</h2>
 
