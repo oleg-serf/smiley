@@ -129,11 +129,14 @@ const routes = [{
       title: 'Contact',
     }
   },
-  // {
-  //   path: '/our-story',
-  //   name: 'story',
-  //   component: () => import( /* webpackChunkName: "story" */ '../views/Story.vue')
-  // },
+  {
+    path: '/our-story',
+    name: 'story',
+    component: () => import( /* webpackChunkName: "story" */ '../views/Story.vue'),
+    meta: {
+      title: 'Our story'
+    }
+  },
   {
     path: '/partners',
     name: 'partners',
@@ -164,14 +167,14 @@ const routes = [{
   },
 
   // Single page routes
-  {
-    path: '/who-we-are',
-    name: 'who-we-are',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/Who-we-are.vue'),
-    meta: {
-      title: 'Who we are',
-    }
-  },
+  // {
+  //   path: '/who-we-are',
+  //   name: 'who-we-are',
+  //   component: () => import( /* webpackChunkName: "organisation" */ '../views/Who-we-are.vue'),
+  //   meta: {
+  //     title: 'Who we are',
+  //   }
+  // },
 ];
 
 

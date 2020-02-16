@@ -289,18 +289,19 @@
           </section>
 
           <!-- TODO: Show event audio block -->
-          <section class="event-audios" style="display: none;">
+          <section class="event-audios">
             <div class="event-audios-wrap">
-              <h2 class="event-audios-title">Audios</h2>
+              <h2 class="event-audios-title">Audio</h2>
 
               <div class="event-audios-cards">
-                <img
-                  v-for="partner in event.partners"
-                  :key="partner.name + partner.id"
-                  :src="$settings.images_path.partners + 's_' +partner.image"
-                  :alt="partner.name"
-                  :title="partner.name"
-                />
+                <audio
+                  controls
+                  src="https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3"
+                  style="width: 100%"
+                >
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
               </div>
             </div>
           </section>

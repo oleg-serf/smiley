@@ -34,7 +34,7 @@
                   </li>
                 </ul>
               </span>
-              <router-link to="/who-we-are" class="menu-item">
+              <router-link to="/our-story" class="menu-item">
                 <span>Our story</span>
               </router-link>
               <div class="btn-wrap">
