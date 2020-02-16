@@ -87,7 +87,9 @@ const actions = {
     commit
   }) {
     commit('REMOVE_USERDATA');
-    // router.replace('/');
+    router.push({
+      path: 'home'
+    });
   }
 }
 

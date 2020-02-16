@@ -186,7 +186,7 @@ export default {
       console.log(googleUser.getBasicProfile());
     },
     logout() {
-      this.$store.dispatch("user/logout");
+      // this.$store.dispatch("user/logout");
     },
     onFacebookLogin(res) {
       console.log("onFacebookLogin: Faceboook onLogin event", res);
