@@ -111,7 +111,7 @@
                       </a>
                     </div>
                   </div>
-                  <div class="attendees-btn-wrap">
+                  <div class="attendees-btn-wrap" v-if="event.attendees.length > 10">
                     <button
                       class="show-all-btn"
                       @click="attendeesDisplayStatus = !attendeesDisplayStatus"
