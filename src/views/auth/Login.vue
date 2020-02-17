@@ -7,7 +7,7 @@
       >Let’s set up your profile and start matching you with others doing social and environmental good.</p>
 
       <div class="login-btns-wrap">
-        <v-google-login class="v-google-login">
+        <div class="v-google-login">
           <GoogleLogin :params="params" :onSuccess="onSuccess">
             <svg
               width="17.999998"
@@ -38,7 +38,7 @@
               </g>
             </svg>Gmail login
           </GoogleLogin>
-        </v-google-login>
+        </div>
 
         <v-facebook-login
           :button-style="{background: '#fff', color: '#000'}"
@@ -156,7 +156,8 @@ export default {
       email: "",
       password: "",
       params: {
-        client_id: "xxxxxx"
+        client_id:
+          "537115227293-55um2kpnf71di2kabtijfls730b56r9l.apps.googleusercontent.com"
       },
       errorText: null,
       // only needed if you want to render the button with the google ui
