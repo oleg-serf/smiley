@@ -1,7 +1,7 @@
 module.exports = {
   publicPath: '/',
   devServer: {
-    https: false
+    https: true
   },
   css: {
     loaderOptions: {

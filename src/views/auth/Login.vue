@@ -124,7 +124,6 @@
             v-model="password"
           />
         </label>
-        {{ errorText }}
         <div class="login-btn-wrap">
           <button class="login-btn" type="submit" name="submit" value="login">login</button>
         </div>
@@ -141,6 +140,8 @@
 </template>
 
 <script>
+// TODO: ReTHINK error modal into watcher
+
 import axios from "@/axios-auth";
 import GoogleLogin from "vue-google-login";
 import VFacebookLogin from "vue-facebook-login-component";
@@ -159,7 +160,6 @@ export default {
         client_id:
           "537115227293-55um2kpnf71di2kabtijfls730b56r9l.apps.googleusercontent.com"
       },
-      errorText: null,
       // only needed if you want to render the button with the google ui
       renderParams: {
         width: 250,
@@ -178,25 +178,37 @@ export default {
 
       this.$store
         .dispatch("user/login", formData)
-        .then(content => (this.errorText = content));
+        .then(res => {
+          console.log("Login success");
+        })
+        .catch(error => {
+          this.$swal({ text: error });
+        });
     },
     onSuccess(googleUser) {
-      console.log(googleUser);
-
-      // This only gets the user information: id, name, imageUrl and email
-      console.log(googleUser.getBasicProfile());
-    },
-    logout() {
-      // this.$store.dispatch("user/logout");
+      let token = googleUser.uc.access_token;
+      this.$store
+        .dispatch("user/loginGoogle", token)
+        .then(res => {
+          console.log("Login Google success", res);
+        })
+        .catch(error => {
+          this.$swal({ text: error });
+        });
     },
     onFacebookLogin(res) {
       console.log("onFacebookLogin: Faceboook onLogin event", res);
       if (res.authResponse !== null) {
         let token = res.authResponse.accessToken;
         if (token !== undefined && token !== null) {
-          this.$store.dispatch("user/loginFacebook", token);
-        } else {
-          console.log("onFacebookLogin: get token fail");
+          this.$store
+            .dispatch("user/loginFacebook", token)
+            .then(res => {
+              console.log("Login Facebook success", res);
+            })
+            .catch(error => {
+              this.$swal({ text: error });
+            });
         }
       } else {
         console.log("onFacebookLogin: Response error");
@@ -205,19 +217,19 @@ export default {
     onFacebookSDKinit(payload) {
       let response = payload.FB.getAuthResponse();
       if (response !== undefined && response !== null) {
-        console.log("onFacebookSDKinit: Token accessed", response);
-        this.$store.dispatch("user/loginFacebook", response.accessToken);
-      } else {
-        console.log("onFacebookSDKinit: Token problems");
+        let token = response.accessToken;
+        this.$store
+          .dispatch("user/loginFacebook", token)
+          .then(res => {
+            console.log("Login Facebook success", res);
+          })
+          .catch(error => {
+            this.$swal({ text: error });
+          });
       }
     },
-    errorModal(message) {
-      let swal = {
-        title: "Error",
-        text: message,
-        icon: "error"
-      };
-      this.$swal(swal);
+    logout() {
+      // this.$store.dispatch("user/logout");
     }
   }
 };

@@ -87,7 +87,7 @@
           <label for="organisation-facebook">
             Facebook
             <input
-              type="text"
+              type="url"
               name="organisation-facebook"
               id="organisation-facebook"
               v-model="reg.facebook"
@@ -96,7 +96,7 @@
           <label for="organisation-twitter">
             Twitter
             <input
-              type="text"
+              type="url"
               name="organisation-twitter"
               id="organisation-twitter"
               v-model="reg.twitter"
@@ -105,7 +105,7 @@
           <label for="organisation-instagram">
             Instagram
             <input
-              type="text"
+              type="url"
               name="organisation-instagram"
               id="organisation-instagram"
               v-model="reg.instagram"

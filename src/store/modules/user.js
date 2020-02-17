@@ -13,6 +13,8 @@ const getters = {
     return state.token !== null;
   },
 }
+
+// TODO: Rewrite whats left to promises
 // actions
 const actions = {
   // Register User
@@ -34,34 +36,63 @@ const actions = {
   login({
     commit
   }, credentials) {
-    return axios.post('/auth/login', credentials)
-      .then(res => {
-        commit('SET_USERDATA', res.data.token);
-        commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-        router.push({
-          name: 'home'
-        });
-      })
-      .catch(error => {
-        return JSON.parse(error.request.response).message
-      })
+    return new Promise((resolve, reject) => {
+      axios.post('/auth/login', credentials)
+        .then((res) => {
+          commit('SET_USERDATA', res.data.token);
+          commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          router.push({
+            name: 'home'
+          });
+          resolve(res);
+        })
+        .catch((error) => {
+          let content = JSON.parse(error.request.response);
+          reject(content.message);
+        })
+    })
   },
   loginFacebook({
     commit
   }, credentials) {
-    return axios.post('/auth/login/facebook', {
-        accessToken: credentials
-      })
-      .then(res => {
-        commit('SET_USERDATA', res.data.token);
-        commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-        router.push({
-          name: 'home'
-        });
-      })
-      .catch(error => {
-        return JSON.parse(error.request.response).message
-      })
+    return new Promise((resolve, reject) => {
+      axios.post('/auth/login/facebook', {
+          accessToken: credentials
+        })
+        .then((res) => {
+          commit('SET_USERDATA', res.data.token);
+          commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          router.push({
+            name: 'home'
+          });
+          resolve(res);
+        })
+        .catch((error) => {
+          let content = JSON.parse(error.request.response);
+          reject(content.message);
+        })
+    })
+  },
+  loginGoogle({
+    commit
+  }, credentials) {
+    return new Promise((resolve, reject) => {
+      axios.post('/auth/login/google', {
+          token: credentials
+        })
+        .then((res) => {
+          commit('SET_USERDATA', res.data.token);
+          commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          router.push({
+            name: 'home'
+          });
+          resolve(res);
+        })
+        .catch((error) => {
+          let content = JSON.parse(error.request.response);
+          reject(content.message);
+        })
+    })
   },
   forgot({
     commit
