@@ -288,6 +288,39 @@
             </div>
           </div>
 
+          <!-- TODO: Manage blocks into components? -->
+          <template v-for="block in event.event_sections">
+            <section class="event-videos" v-if="block.type == 'video'" :key="block.title">
+              <div class="event-videos-wrap">
+                <h2 class="event-videos-title" v-if="block.title !== null">{{block.title}}</h2>
+
+                <div class="event-videos-cards">
+                  <div
+                    class="video-card"
+                    v-for="(video, index) in block.json_content"
+                    :key="index +'-vd'"
+                  >
+                    <template v-if="video.sub_type == 'vimeo'">
+                      <iframe
+                        :src="'https://player.vimeo.com/video/'+video.content+'?title=0&amp;byline=0&amp;portrait=0'"
+                        frameborder="0"
+                        allow="fullscreen"
+                        allowfullscreen
+                      ></iframe>
+                    </template>
+                    <template v-else>
+                      <iframe
+                        :src="'https://www.youtube.com/embed/'+video.content"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                    </template>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </template>
           <!-- TODO: Show event video block -->
           <section class="event-videos" v-if="videos.length > 0">
             <div class="event-videos-wrap">
