@@ -6,6 +6,9 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [{
+    /**
+     * Main and service routes
+     */
     path: '/',
     name: 'home',
     component: Home,
@@ -25,7 +28,9 @@ const routes = [{
     path: '*',
     redirect: '/404'
   },
-  // User Feed redirection
+  /**
+   * User pages
+   */
   {
     path: '/user/feed',
     name: 'feed',
@@ -34,6 +39,41 @@ const routes = [{
       title: 'Login',
     }
   },
+  /**
+   * Authorization routes
+   */
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Login.vue'),
+    meta: {
+      title: 'Login',
+    }
+  }, {
+    path: '/register',
+    name: 'register',
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register.vue'),
+    meta: {
+      title: 'Register',
+    }
+  }, {
+    path: '/forgot',
+    name: 'forgot',
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Forgot.vue'),
+    meta: {
+      title: 'Forgot password',
+    }
+  }, {
+    path: '/reset',
+    name: 'reset',
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Reset.vue'),
+    meta: {
+      title: 'Reset password',
+    }
+  },
+  /**
+   * News
+   */
   {
     path: '/news',
     name: 'news',
@@ -58,39 +98,9 @@ const routes = [{
       breadcrumbs: ['news'],
     }
   },
-  // Auth routes
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Login.vue'),
-    meta: {
-      title: 'Login',
-    }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register.vue'),
-    meta: {
-      title: 'Register',
-    }
-  },
-  {
-    path: '/forgot',
-    name: 'forgot',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Forgot.vue'),
-    meta: {
-      title: 'Forgot password',
-    }
-  },
-  {
-    path: '/reset',
-    name: 'reset',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Reset.vue'),
-    meta: {
-      title: 'Reset password',
-    }
-  },
+  /**
+   * Talks
+   */
   {
     path: '/talks',
     name: 'talks',
@@ -107,13 +117,47 @@ const routes = [{
       breadcrumbs: ['talks'],
     }
   },
+  /**
+   * Organisation routes
+   */
   {
-    path: '/chat',
-    name: 'chat',
-    component: () => import( /* webpackChunkName: "chat" */ '../views/Chat.vue'),
+    path: '/add-organisation',
+    name: 'add-organisation',
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Add.vue'),
     meta: {
-      title: 'Chat',
+      title: 'Add Organisation',
       requiresAuth: true,
+    }
+  },
+  {
+    path: '/organisation/:slug',
+    name: 'organisation',
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Single.vue'),
+  },
+  {
+    path: '/organisations',
+    name: 'organisations',
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Archive.vue'),
+    meta: {
+      title: 'Organisations',
+    }
+  },
+  /**
+   * Content pages
+   */
+  {
+    path: '/our-story',
+    name: 'story',
+    component: () => import( /* webpackChunkName: "page" */ '../views/Story.vue'),
+    meta: {
+      title: 'Our story'
+    }
+  }, {
+    path: '/partners',
+    name: 'partners',
+    component: () => import( /* webpackChunkName: "page" */ '../views/Partners.vue'),
+    meta: {
+      title: 'Partners',
     }
   },
   {
@@ -132,52 +176,18 @@ const routes = [{
       title: 'Contact',
     }
   },
+  /**
+   * Miscellenous
+   */
   {
-    path: '/our-story',
-    name: 'story',
-    component: () => import( /* webpackChunkName: "page" */ '../views/Story.vue'),
+    path: '/chat',
+    name: 'chat',
+    component: () => import( /* webpackChunkName: "chat" */ '../views/Chat.vue'),
     meta: {
-      title: 'Our story'
-    }
-  },
-  {
-    path: '/partners',
-    name: 'partners',
-    component: () => import( /* webpackChunkName: "page" */ '../views/Partners.vue'),
-    meta: {
-      title: 'Partners',
-    }
-  },
-  // Organisation pages
-  {
-    path: '/add-organisation',
-    name: 'add-organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Add-Organisation.vue'),
-    meta: {
-      title: 'Add Organisation',
+      title: 'Chat',
       requiresAuth: true,
     }
   },
-  // TODO: Make other route for personal organisation & public ones
-  {
-    path: '/org/thehumanhive',
-    name: 'my-organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/My-Organisation.vue'),
-    meta: {
-      title: 'The Human Five', // TODO: In component change page title
-      requiresAuth: true,
-    }
-  },
-
-  // Single page routes
-  // {
-  //   path: '/who-we-are',
-  //   name: 'who-we-are',
-  //   component: () => import( /* webpackChunkName: "organisation" */ '../views/Who-we-are.vue'),
-  //   meta: {
-  //     title: 'Who we are',
-  //   }
-  // },
 ];
 
 

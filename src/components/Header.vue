@@ -28,8 +28,13 @@
 
                 <ul class="submenu">
                   <li>
-                    <router-link to="/partners" class="menu-item">
+                    <router-link :to="{name: 'partners'}" class="menu-item">
                       <span>Our Partners</span>
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link :to="{name: 'organisation'}" class="menu-item">
+                      <span>Organisations</span>
                     </router-link>
                   </li>
                 </ul>
