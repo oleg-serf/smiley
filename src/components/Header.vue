@@ -32,11 +32,11 @@
                       <span>Our Partners</span>
                     </router-link>
                   </li>
-                  <li>
+                  <!-- <li>
                     <router-link :to="{name: 'organisation'}" class="menu-item">
                       <span>Organisations</span>
                     </router-link>
-                  </li>
+                  </li>-->
                 </ul>
               </span>
               <router-link to="/our-story" class="menu-item">
