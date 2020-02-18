@@ -475,13 +475,18 @@ export default {
       videosStatic: {
         "11": [
           {
-            title: "highlights",
+            title: "interviews",
             type: "video",
             json_content: [
               {
                 title: "",
                 sub_type: "vimeo",
                 content: "389282950"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "392229611"
               },
               {
                 title: "",
