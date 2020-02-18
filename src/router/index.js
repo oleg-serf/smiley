@@ -34,9 +34,9 @@ const routes = [{
   {
     path: '/user/feed',
     name: 'feed',
-    component: () => import( /* webpackChunkName: "user" */ '../views/auth/Login.vue'),
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/Feed.vue'),
     meta: {
-      title: 'Login',
+      title: 'My Feed',
     }
   },
   /**
