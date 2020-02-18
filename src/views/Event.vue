@@ -293,7 +293,6 @@
             <section class="event-videos" v-if="block.type == 'video'" :key="block.title">
               <div class="event-videos-wrap">
                 <h2 class="event-videos-title" v-if="block.title !== null">{{block.title}}</h2>
-
                 <div class="event-videos-cards">
                   <div
                     class="video-card"
@@ -472,7 +471,262 @@ export default {
       id: this.$route.params.id,
       event: null,
       audios: [],
-      videos: []
+      videos: [],
+      videosStatic: {
+        "11": [
+          {
+            title: "highlights",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "389282950"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "389281991"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "389279017"
+              }
+            ]
+          }
+        ],
+        "13": [
+          {
+            title: "highlights",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "368792231"
+              }
+            ]
+          },
+          {
+            title: "INTERVIEWS",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "386174750"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "386174373"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "386174091"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "386173813"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "386173572"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "386173250"
+              }
+            ]
+          }
+        ],
+        "16": [
+          {
+            title: "highlights",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "377261743"
+              }
+            ]
+          },
+          {
+            title: "INTERVIEWS",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "382555072"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "382554594"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "382554372"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378824714"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378824081"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378823330"
+              }
+            ]
+          }
+        ],
+        "18": [
+          {
+            title: "highlights",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "376769359"
+              }
+            ]
+          },
+          {
+            title: "INTERVIEWS",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378804650"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378804419"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378803778"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378803203"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "378802959"
+              }
+            ]
+          }
+        ],
+        "17": [
+          {
+            title: "highlights",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370822277"
+              }
+            ]
+          },
+          {
+            title: "INTERVIEWS",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370893441"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370892747"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370891422"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370890241"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370889727"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370888515"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "370887819"
+              }
+            ]
+          }
+        ],
+        "15": [
+          {
+            title: "highlights",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "366189552"
+              }
+            ]
+          },
+          {
+            title: "INTERVIEWS",
+            type: "video",
+            json_content: [
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "367228601"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "367228644"
+              },
+              {
+                title: "",
+                sub_type: "vimeo",
+                content: "367228701"
+              }
+            ]
+          }
+        ]
+      }
     };
   },
   computed: {
@@ -547,7 +801,14 @@ export default {
       .get("/events/" + this.$route.params.slug)
       .then(res => {
         console.log("event loaded", res);
+
+        if ([11, 13, 16, 18, 17, 15].includes(res.data.event.id)) {
+          res.data.event.event_sections = this.videosStatic[res.data.event.id];
+        }
         this.event = res.data.event;
+
+        // console.log(this.event);
+
         document.title = res.data.event.title + " | Smiley Movement";
         this.$refs.breadcrumbs.breadcrumbs[
           this.$refs.breadcrumbs.breadcrumbs.length - 1
