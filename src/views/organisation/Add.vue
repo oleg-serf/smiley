@@ -3,7 +3,7 @@
     <section class="customize-organisation container">
       <form class="add-organisation-info" @submit.prevent="onSubmit">
         <div class="customize-organisation-content">
-          <h2 class="customize-organisation-title">Customize organisation</h2>
+          <h2 class="customize-organisation-title">Customise organisation</h2>
 
           <div class="upload-organisation-image-wrap">
             <div class="organisation-image">

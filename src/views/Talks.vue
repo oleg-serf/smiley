@@ -369,9 +369,9 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
             <div
               class="create-hub-descr"
             >Smiley Hubs are events organised by you! Hubs are mission-led collaborations initiated by Smiley Movement members online.</div>
-            <a href="#" class="read-more-link">
+            <router-link :to="{name: 'contact'}" class="read-more-link">
               <span></span>Create a smiley hub
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
