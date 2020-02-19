@@ -33,7 +33,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link :to="{name: 'organisation'}" class="menu-item">
+                    <router-link :to="{name: 'organisations'}" class="menu-item">
                       <span>Organisations</span>
                     </router-link>
                   </li>
