@@ -100,14 +100,13 @@
               </select>
             </label>
             <label for="organisation-website">
-              Organisation Website *
+              Organisation Website
               <input
                 type="text"
                 name="organisation-website"
                 id="organisation-website"
                 placeholder="www.yoursite.co.uk"
                 v-model="reg.organisation_website"
-                required
               />
             </label>
           </div>
@@ -175,8 +174,8 @@
           <label>Full description:</label>
           <ckeditor :editor="editor" v-model="reg.description_full" :config="editorConfig"></ckeditor>
           <br />
-          <label>Your project info:</label>
-          <ckeditor :editor="editor" v-model="reg.our_project" :config="editorConfig"></ckeditor>
+          <!-- <label>Your project info:</label> -->
+          <!-- <ckeditor :editor="editor" v-model="reg.our_project" :config="editorConfig"></ckeditor> -->
 
           <div class="checkbox-wrap">
             <label class="register-checkbox">
@@ -241,8 +240,8 @@ export default {
         twitter: "",
         instagram: "",
         description: "",
-        description_full: "",
-        our_project: ""
+        description_full: ""
+        // our_project: ""
       },
       organisationSectors: null,
       editor: ClassicEditor,
