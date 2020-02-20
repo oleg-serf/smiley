@@ -13,6 +13,17 @@
         </router-link>
       </div>
     </section>
+    <div class="smiley-pagination">
+      <paginate
+        :page-count="totalPages"
+        :click-handler="loadPageNumb"
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        :prev-class="'smiley-pagination-back'"
+        :next-class="'smiley-pagination-next'"
+        :container-class="'app-pagination'"
+      ></paginate>
+    </div>
     <br />
     <br />
     <br />
@@ -30,14 +41,34 @@ import NewsItem from "@/components/news/News-Item";
 export default {
   data() {
     return {
-      news: null
+      news: {},
+      pages: 0
     };
+  },
+  computed: {
+    totalPages() {
+      return this.pages || 0;
+    }
+  },
+  methods: {
+    loadPageNumb(pageNumb) {
+      axios
+        .get("/users/feed?page=" + pageNumb)
+        .then(res => {
+          this.news = res.data.posts;
+          this.pages = res.data.pages_count;
+
+          window.scrollTo(0, 0);
+        })
+        .catch(error => console.log(error));
+    }
   },
   mounted() {
     axios
-      .get("/news/latest")
+      .get("/users/feed")
       .then(res => {
-        this.news = res.data.latest_news;
+        this.news = res.data.posts;
+        this.pages = res.data.pages_count;
       })
       .catch(error => console.error(error));
   },

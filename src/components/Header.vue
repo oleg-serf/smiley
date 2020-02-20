@@ -116,8 +116,8 @@
                     </defs>
                   </svg>
                   <ul>
-                    <li style="display: none;">
-                      <a href="#">
+                    <li>
+                      <router-link :to="{name: 'feed'}">
                         <svg
                           width="20"
                           height="20"
@@ -133,7 +133,7 @@
                           />
                         </svg>
                         My News Feed
-                      </a>
+                      </router-link>
                     </li>
                     <li>
                       <router-link :to="{name: 'add-organisation'}">

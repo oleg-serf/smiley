@@ -37,6 +37,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "user" */ '../views/user/Feed.vue'),
     meta: {
       title: 'My Feed',
+      requiresAuth: true,
     }
   },
   /**

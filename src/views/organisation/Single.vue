@@ -396,6 +396,11 @@
                       <app-icon name="twitter" />
                     </a>
                   </li>
+                  <li>
+                    <a :href="'https://twitter.com/share?text='+encodeURI(organisation.description)+'&url='+$settings.domain+'organisation/'+encodeURI(organisation.slug)" target="_blank">
+                      <app-icon name="instagram" />
+                    </a>
+                  </li>
                 </ul>
               </div>
               <textarea class="page-link" name="page link"  rows="3" readonly :value="$settings.domain+'organisation/'+organisation.slug"></textarea>
