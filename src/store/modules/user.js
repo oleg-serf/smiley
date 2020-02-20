@@ -4,6 +4,7 @@ import router from '@/router'
 // initial state
 const state = {
   token: (localStorage.getItem('token')) || null,
+  org_admin: (localStorage.getItem('organisation')) || null,
   attendingEvents: (localStorage.getItem('attendingEvents')) || []
 }
 
@@ -39,7 +40,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post('/auth/login', credentials)
         .then((res) => {
-          commit('SET_USERDATA', res.data.token);
+          commit('SET_USERDATA', res.data);
           commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
           router.push({
             name: 'home'
@@ -133,9 +134,11 @@ const actions = {
 
 // mutations
 const mutations = {
-  SET_USERDATA(state, token) {
-    state.token = token;
-    localStorage.setItem('token', token);
+  SET_USERDATA(state, data) {
+    state.token = data.token;
+    state.org_admin = data.organisation;
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('organisation', data.organisation);
   },
   REMOVE_USERDATA(state) {
     state.token = null;
