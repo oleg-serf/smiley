@@ -10,11 +10,14 @@ import Paginate from 'vuejs-paginate'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import vueVimeoPlayer from 'vue-vimeo-player'
-import VueBreadcrumbs from 'vue-breadcrumbs'
+// import VueBreadcrumbs from 'vue-breadcrumbs';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
-Vue.use(VueBreadcrumbs, {
-  registerComponent: false
-})
+// Vue.use(VueBreadcrumbs, {
+//   registerComponent: false
+// });
+
+Vue.use(CKEditor);
 
 Vue.use(vueVimeoPlayer)
 

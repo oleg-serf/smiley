@@ -24,6 +24,7 @@
       border-radius: 50%;
       overflow: hidden;
       height: 100%;
+      cursor: pointer;
 
       img {
         height: 100%;
@@ -50,6 +51,7 @@
         height: 100%;
         opacity: 0;
         border-radius: 50%;
+        cursor: pointer;
       }
 
       svg {
@@ -70,15 +72,14 @@
   .add-organisation-info {
     width: 100%;
     text-align: left;
-    margin: 27px auto 0;
-    border-top: 1px solid #C7C7C7;
-    padding-top: 26px;
+    margin: auto 0;
 
     label {
       color: $default-text;
       font: 700 16px/24px 'Muli', sans-serif;
 
-      input {
+      input,
+      select {
         display: block;
         margin: 7px auto 25px;
         width: 100%;
@@ -89,8 +90,29 @@
         font: 400 16px/24px 'Muli', sans-serif;
         color: #656565;
         padding: 0 48px 0 16px;
+        background-color: #fff;
       }
     }
+  }
+
+  .input-row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-left: -15px;
+    margin-right: -15px;
+
+    label {
+      width: calc(50% - 30px);
+      margin-left: 15px;
+      margin-right: 15px;
+
+      @include smMax() {
+        width: 100%;
+      }
+    }
+
+
   }
 
   .soc-net-link-wrap {
@@ -306,5 +328,17 @@
       color: #000;
       transition: all .2s ease;
     }
+  }
+}
+
+.section-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .section-title__heading {
+    font: 700 22px/28px "Muli",
+      sans-serif;
+    color: $default-text;
   }
 }
