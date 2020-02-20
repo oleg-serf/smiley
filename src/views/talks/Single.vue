@@ -105,10 +105,10 @@
                       </template>
                     </div>
 
-                    <div class="attendees-avatar next last" v-if="event.attendees.length > 10">
-                      <a href="#">
-                        <span>+ {{event.attendees.length - 11}}</span>
-                      </a>
+                    <div class="attendees-avatar next last" v-if="event.attendees.length > 0">
+                      <div class="attendees-avatar__letter-holder">
+                        <span class="attendees-avatar__letter">{{event.attendees.length}}</span>
+                      </div>
                     </div>
                   </div>
                   <div class="attendees-btn-wrap" v-if="event.attendees.length > 10">

@@ -159,6 +159,11 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
               </div>
             </template>
           </div>
+          <div class="attendees-avatar next last" v-if="event.attendees_random.length !== 0">
+            <div class="attendees-avatar__letter-holder">
+              <span class="attendees-avatar__letter">{{event.attendees_count}}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
