@@ -104,7 +104,7 @@ const routes = [{
   {
     path: '/talks',
     name: 'talks',
-    component: () => import( /* webpackChunkName: "talks" */ '../views/Talks.vue'),
+    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/Archive.vue'),
     meta: {
       title: 'Talks',
     }
@@ -112,7 +112,7 @@ const routes = [{
   {
     path: '/talks/:slug',
     name: 'event',
-    component: () => import( /* webpackChunkName: "talks" */ '../views/Event.vue'),
+    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/Single.vue'),
     meta: {
       breadcrumbs: ['talks'],
     }
@@ -133,6 +133,9 @@ const routes = [{
     path: '/organisation/:slug',
     name: 'organisation',
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Single.vue'),
+    meta: {
+      breadcrumbs: ['organisations'],
+    }
   },
   {
     path: '/organisations',

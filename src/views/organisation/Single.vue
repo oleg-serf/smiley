@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs />
+    <breadcrumbs ref="breadcrumbs"/>
 
 <section class="organization-section">
 
@@ -13,21 +13,22 @@
             <img src="img/organization/organization-logo.jpg" alt="logo">
           </div>
           <div class="organization-info">
-            <h2 class="organization-title">The Human Hive</h2>
+            <h2 class="organization-title">{{organisation.name}}</h2>
             <div class="organization-location">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C16.9706 2 21 5.98572 21 10.9024C21 14.1559 18.2777 17.5958 12.9483 21.3432L12 22L11.4278 21.6051C5.85042 17.7559 3 14.2315 3 10.9024C3 5.98572 7.02944 2 12 2ZM12 3.9783C8.13401 3.9783 5 7.07831 5 10.9024C5 13.3049 7.29672 16.2364 12 19.5818C16.7033 16.2364 19 13.3049 19 10.9024C19 7.07831 15.866 3.9783 12 3.9783ZM12 6C14.2091 6 16 7.79086 16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="#1a1a1a"/>
               </svg>
-              <div>London, GB</div>
+              <div>{{organisation.location}}</div>
             </div>
             <div class="organization-profile">Arts, Culture, Leisure</div>
             <div class="organization-link">
-              <a href="#">https://thehumanhive.org/</a>
+              <a :href="'https://'+organisation.website">https://{{organisation.website}}</a>
             </div>
+            <!-- TODO: Move social icons in component -->
             <div class="social-icons">
               <ul>
-                <li>
-                  <a href="#">
+                <li v-if="organisation.facebook">
+                  <a :href="organisation.facebook">
                     <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="smiley-eorganization-our-news" transform="translate(-275.000000, -632.000000)">
@@ -42,8 +43,8 @@
                     </svg>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
+                <li v-if="organisation.linkedin">
+                  <a :href="organisation.linkedin">
                     <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="smiley-eorganization-our-news" transform="translate(-322.000000, -632.000000)">
@@ -58,8 +59,8 @@
                     </svg>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
+                <li v-if="organisation.google">
+                  <a :href="organisation.google">
                     <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="smiley-eorganization-our-news" transform="translate(-369.000000, -632.000000)">
@@ -75,8 +76,8 @@
                     </svg>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
+                <li v-if="organisation.twitter">
+                  <a :href="organisation.twitter">
                     <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="smiley-eorganization-our-news" transform="translate(-416.000000, -632.000000)">
@@ -91,8 +92,10 @@
                     </svg>
                   </a>
                 </li>
+                <!-- TODO: Add instagram icon -->
               </ul>
             </div>
+            <!-- End social icons -->
           </div>
         </div>
         <div class="sidebar-block">
@@ -374,73 +377,28 @@
               <div class="social-icons">
                 <ul>
                   <li>
-                    <a href="#">
-                      <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g id="smiley-eorganization-our-news" transform="translate(-275.000000, -632.000000)">
-                            <g id="Icon/Social/ColoredFAcebook" transform="translate(275.000000, 632.000000)">
-                              <g id="Facebook">
-                                <circle id="Oval-1" fill="#3B5998" cx="15" cy="15" r="15"></circle>
-                                <path d="M12.9380952,22.3012198 L15.6700952,22.3012198 L15.6700952,14.7971375 L17.7195952,14.7971375 L18.1249286,12.4523829 L15.6700952,12.4523829 L15.6700952,10.753295 C15.6700952,10.2055627 16.0242619,9.63046889 16.5304286,9.63046889 L17.9255952,9.63046889 L17.9255952,7.28571429 L16.2157619,7.28571429 L16.2157619,7.29622514 C13.5404286,7.39332541 12.9907619,8.94275873 12.9430952,10.5702727 L12.9380952,10.5702727 L12.9380952,12.4523829 L11.5714286,12.4523829 L11.5714286,14.7971375 L12.9380952,14.7971375 L12.9380952,22.3012198 Z" id="Fill-4" fill="#FFFFFF"></path>
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
+                    <a :href="'https://www.facebook.com/sharer.php?u='+$settings.domain+'organisation/'+encodeURI(organisation.slug)+'&t='+encodeURI(organisation.name)" target="_blank">
+                      <app-icon name="facebook" />
                     </a>
                   </li>
                   <li>
-                    <a href="#">
-                      <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g id="smiley-eorganization-our-news" transform="translate(-322.000000, -632.000000)">
-                            <g id="Linkedin" transform="translate(322.000000, 632.000000)">
-                              <circle id="Oval-1-Copy-5" fill="#0976B4" cx="15" cy="15" r="15"></circle>
-                              <path d="M9.15654762,11.1286448 C10.1892143,11.1286448 11.026381,10.3651898 11.026381,9.42238288 C11.026381,8.47874178 10.1892143,7.71428571 9.15654762,7.71428571 C8.12288095,7.71428571 7.28571429,8.47874178 7.28571429,9.42238288 C7.28571429,10.3651898 8.12288095,11.1286448 9.15654762,11.1286448" id="Fill-182" fill="#FFFFFF"></path>
-                              <polygon id="Fill-183" fill="#FFFFFF" points="7.71428571 22.10473 11.0692857 22.10473 11.0692857 12.4285714 7.71428571 12.4285714"></polygon>
-                              <path d="M15.7780714,16.7230438 C15.7780714,15.613398 16.3030714,14.5282774 17.5584048,14.5282774 C18.8137381,14.5282774 19.1224048,15.613398 19.1224048,16.6965164 L19.1224048,21.9811402 L22.4624048,21.9811402 L22.4624048,16.48046 C22.4624048,12.658847 20.2034048,12 18.8137381,12 C17.4252381,12 16.6594048,12.4696516 15.7780714,13.6076601 L15.7780714,12.3049816 L12.4285714,12.3049816 L12.4285714,21.9811402 L15.7780714,21.9811402 L15.7780714,16.7230438 Z" id="Fill-184" fill="#FFFFFF"></path>
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
+                    <a :href="'https://www.linkedin.com/shareArticle?mini=true&amp;url='+$settings.domain+'talks/'+encodeURI(organisation.slug)" target="_blank">
+                      <app-icon name="linkedin" />
                     </a>
                   </li>
                   <li>
-                    <a href="#">
-                      <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g id="smiley-eorganization-our-news" transform="translate(-369.000000, -632.000000)">
-                            <g id="Icon/Social/ColoredInstagram" transform="translate(369.000000, 632.000000)">
-                              <g id="Google-Plus">
-                                <circle id="Oval-1-Copy-6" fill="#DD4B39" cx="15" cy="15" r="15"></circle>
-                                <path d="M8.01355253,15.7498927 C8.05747111,13.1741094 10.4731666,10.9182358 13.1008169,11.004169 C14.3597004,10.9469937 15.5432454,11.4840335 16.5075446,12.2383737 C16.0961334,12.6966272 15.669967,13.1383748 15.2144636,13.5513646 C14.055395,12.7658843 12.4066256,12.5416072 11.247557,13.4487553 C9.58906646,14.5730335 9.51372787,17.227603 11.108684,18.4378145 C12.6598952,19.8176801 15.5920245,19.1324268 16.0206212,17.0198319 C15.0488576,17.0055381 14.0748372,17.0198319 13.1032472,16.9888619 C13.1008169,16.420682 13.0983866,15.852502 13.1008169,15.284322 C14.7251099,15.2795574 16.349403,15.2771751 17.9761263,15.2890866 C18.073511,16.6259006 17.8933233,18.0486478 17.0555721,19.1540377 C15.7867939,20.9038415 13.2395163,21.4146759 11.2524175,20.6651004 C9.258028,19.9202894 7.84551623,17.8553406 8.01355253,15.7498927" id="Fill-186" fill="#FFFFFF"></path>
-                                <path d="M20.3399865,13 L21.6622312,13 C21.6644489,13.4422795 21.6666667,13.8866184 21.6711021,14.3288979 C22.1133816,14.3333333 22.5577205,14.3333333 23,14.3377688 L23,15.6600135 C22.5577205,15.6644489 22.1155994,15.6666667 21.6711021,15.6711021 C21.6666667,16.1155994 21.6644489,16.5578789 21.6622312,17 L20.3377688,17 C20.3333333,16.5578789 20.3333333,16.1155994 20.3288979,15.6733199 C19.8866184,15.6688844 19.4421211,15.6644489 19,15.6600135 L19,14.3377688 C19.4421211,14.3333333 19.8844006,14.3311156 20.3288979,14.3288979 C20.3311156,13.8844006 20.3355511,13.4422795 20.3399865,13" id="Fill-187" fill="#FFFFFF"></path>
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
+                    <a :href="'https://plus.google.com/share?url='+$settings.domain+'organisation/'+encodeURI(organisation.slug)" target="_blank">
+                      <app-icon name="google-plus" />
                     </a>
                   </li>
                   <li>
-                    <a href="#">
-                      <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g id="smiley-eorganization-our-news" transform="translate(-416.000000, -632.000000)">
-                            <g id="Icon/Social/ColoredTwitter" transform="translate(416.000000, 632.000000)">
-                              <g id="Twitter">
-                                <circle id="Oval-1" fill="#55ACEE" cx="15" cy="15" r="15"></circle>
-                                <path d="M21.8709143,9.26277143 C21.4475333,9.5339619 20.4754571,9.9280381 19.9960571,9.9280381 L19.9960571,9.92884762 C19.4486571,9.357 18.6779905,9 17.8232952,9 C16.1632857,9 14.8172095,10.3460762 14.8172095,12.0054381 C14.8172095,12.2359905 14.8439238,12.4608762 14.8933048,12.6765333 L14.892819,12.6765333 C12.6410476,12.6174381 10.1783143,11.4888 8.69575238,9.55711429 C7.78422857,11.1348762 8.57302857,12.8896 9.6074381,13.5289619 C9.25335238,13.5556762 8.60152381,13.4881619 8.29471429,13.1888 C8.27415238,14.236 8.77767619,15.6235238 10.6136762,16.1268857 C10.2600762,16.3171238 9.63415238,16.2625619 9.36199048,16.2220857 C9.45751429,17.1060857 10.6954381,18.2617619 12.0491238,18.2617619 C11.5666476,18.8198476 9.75137143,19.8320762 7.71428571,19.5100476 C9.0977619,20.3517905 10.7101714,20.8392857 12.4168095,20.8392857 C17.2666667,20.8392857 21.0330571,16.9087238 20.8303524,12.0598381 C20.8295429,12.0544952 20.8295429,12.0491524 20.8290571,12.0433238 C20.8295429,12.0308571 20.8303524,12.0183905 20.8303524,12.0054381 C20.8303524,11.990381 20.8290571,11.9761333 20.8285714,11.9615619 C21.2700857,11.6596095 21.8624952,11.1254857 22.2857143,10.4224952 C22.0402667,10.5576857 21.3039238,10.8283905 20.6187429,10.895581 C21.0584762,10.6582286 21.709981,9.88092381 21.8709143,9.26277143" id="Fill-1" fill="#FFFFFF"></path>
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                      </svg>
+                    <a :href="'https://twitter.com/share?text='+encodeURI(organisation.description)+'&url='+$settings.domain+'organisation/'+encodeURI(organisation.slug)" target="_blank">
+                      <app-icon name="twitter" />
                     </a>
                   </li>
                 </ul>
               </div>
-              <textarea class="page-link" name="page link"  rows="3" placeholder="https://smileymovement.org/o/thehumanhive"></textarea>
+              <textarea class="page-link" name="page link"  rows="3" readonly :value="$settings.domain+'organisation/'+organisation.slug"></textarea>
               <button class="copy-link-btn">Copy link</button>
               <p>To stay up-to-date with The THuman Five, follow their page.</p>
               <button class="follow-btn">Follow</button>
@@ -683,7 +641,7 @@
 <script>
 import axios from "@/axios-auth";
 
-
+import AppIcon from "@/components/AppIcon"
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
@@ -692,26 +650,28 @@ import carousel from "vue-owl-carousel2";
 
 export default {
   data() {
-    return {};
+    return {
+      organisation: {}
+    };
   },
   components: {
     Breadcrumbs,
     Footer,
-    carousel
+    carousel,
+    AppIcon
   },
   mounted(){
     axios
       .get("/organisations/" + this.$route.params.slug)
       .then(res => {
-        console.log('Organisatio', res);
+        console.log('Organisation', res);
 
-        this.post = res.data.post;
-        this.related_posts = res.data.related;
+        this.organisation = res.data.organisation;
 
-        document.title = res.data.post.title + " | Smiley Movement";
+        document.title = res.data.organisation.name + " | Smiley Movement";
         this.$refs.breadcrumbs.breadcrumbs[
           this.$refs.breadcrumbs.breadcrumbs.length - 1
-        ].meta.title = res.data.post.title;
+        ].meta.title = this.organisation.name;
       })
       .catch(error => console.log(error));
 

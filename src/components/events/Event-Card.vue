@@ -17,20 +17,22 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       </div>
     </div>
 
-    <div class="btns-wrap">
+    <!-- Register & UnRegister buttons  show only if user is registered-->
+    <div class="btns-wrap" v-if="isAuthenticated">
       <div class="attend" id="attending-overlay" :class="{'attend--active' : overlay}">
-        <div v-if="!attendedEvents.filter(item => item.event_id == event.id).length > 0">
+        <div v-if="!attendedEvents.includes(event.id)">
           <button @click.prevent="registerUser(event.id)">Register for event</button>
         </div>
-        <div v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0">
+        <div v-if="attendedEvents.includes(event.id)">
           <button @click.prevent="unregisterUser(event.id)" class="minus">CANCEL ATTENDENCE</button>
         </div>
       </div>
     </div>
 
+    <!-- Show plus button for overlay for Authed users -->
     <template v-if="isAuthenticated">
       <button
-        v-if="attendedEvents.filter(item => item.event_id == event.id).length == 0 && !past"
+        v-if="!attendedEvents.includes(event.id) && !past"
         class="talk-card-checkbox-dt"
         :class="{'talk-card-checkbox-rotate': overlay }"
         @click.prevent="showButtons"
@@ -43,17 +45,19 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
     </template>
 
     <!-- Show this Upon Hover -->
-    <div class="overlay" :class="{'overlay--active' : holderShown && !overlay}">
-      <span
-        v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
-      >Click to cancel</span>
+    <div
+      class="overlay"
+      :class="{'overlay--active' : holderShown && !overlay}"
+      v-if="isAuthenticated"
+    >
+      <span v-if="attendedEvents.includes(event.id)">Click to cancel</span>
       <span v-else>Click to attend</span>
     </div>
 
     <!-- Show if User attended to event -->
     <div
       class="confirmed-box"
-      v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
+      v-if="attendedEvents.includes(event.id) && isAuthenticated"
       @click.prevent="showButtons"
       @mouseover="holderShown = true"
       @mouseleave="holderShown = false"

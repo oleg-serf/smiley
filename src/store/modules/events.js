@@ -29,6 +29,7 @@ const actions = {
   get_events({
     commit
   }, page) {
+    page = page || 1;
     let url = (this.getters['user/isAuthenticated']) ? '/events/auth?page=' + page : '/events?page=' + page;
 
     axios.get(url)

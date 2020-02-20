@@ -47,7 +47,8 @@ const actions = {
           resolve(res);
         })
         .catch((error) => {
-          let content = JSON.parse(error.request.response);
+          let content = JSON.parse(error.request);
+          console.log('Error', error.request);
           reject(content.message);
         })
     })
@@ -125,7 +126,7 @@ const actions = {
   }) {
     commit('REMOVE_USERDATA');
     router.push({
-      path: 'home'
+      name: 'home'
     });
   }
 }
@@ -146,8 +147,9 @@ const mutations = {
     });
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
-    state.attendingEvents = Array.from(data);
-    localStorage.setItem('attendingEvents', data);
+    let attendeesList = data.map(item => item.event_id);
+    state.attendingEvents = attendeesList;
+    localStorage.setItem('attendingEvents', JSON.stringify(attendeesList));
   }
 }
 

@@ -19,7 +19,7 @@
                 <button
                   class="reg-event-btn"
                   @click="cancelRegistration"
-                  v-if="attendedEvents.filter(item => item.event_id == event.id).length > 0 && isAuthenticated"
+                  v-if="attendedEvents.includes(event.id) && isAuthenticated"
                 >CANCEL ATTENDENCE</button>
                 <button
                   class="reg-event-btn"
@@ -449,7 +449,7 @@ import Footer from "@/components/Footer.vue";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 import $ from "jquery";
-import axios from "../axios-auth";
+import axios from "@/axios-auth";
 
 import router from "@/router";
 

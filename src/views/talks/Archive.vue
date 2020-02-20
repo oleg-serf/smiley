@@ -393,7 +393,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
 <script>
 import $ from "jquery";
 import carousel from "vue-owl-carousel2";
-import axios from "../axios-auth";
+import axios from "@/axios-auth";
 
 import { mapState, mapActions, mapMutations } from "vuex";
 
