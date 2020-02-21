@@ -131,6 +131,16 @@ const routes = [{
     }
   },
   {
+    path: '/edit-organisation',
+    name: 'edit-organisation',
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Edit.vue'),
+    meta: {
+      title: 'Edit Organisation',
+      requiresAuth: true,
+      // TODO: Add check if user is admin of organisation?
+    }
+  },
+  {
     path: '/organisation/:slug',
     name: 'organisation',
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Single.vue'),

@@ -136,7 +136,7 @@
                       </router-link>
                     </li>
                     <li v-if="isOrganisationAdmin !== null">
-                      <router-link :to="{name: 'add-organisation'}">
+                      <router-link :to="{name: 'my-organisation'}">
                         <svg
                           width="20"
                           height="20"

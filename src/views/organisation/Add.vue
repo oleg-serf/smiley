@@ -102,7 +102,7 @@
             <label for="organisation-website">
               Organisation Website
               <input
-                type="text"
+                type="url"
                 name="organisation-website"
                 id="organisation-website"
                 placeholder="www.yoursite.co.uk"
@@ -171,7 +171,7 @@
             ></textarea>
           </div>
 
-          <label>Full description:</label>
+          <label>Full description (minimum 32 characters) *:</label>
           <ckeditor :editor="editor" v-model="reg.description_full" :config="editorConfig"></ckeditor>
           <br />
           <!-- <label>Your project info:</label> -->
@@ -266,25 +266,44 @@ export default {
     onSubmit() {
       if (this.reg.organisation_logo == null) {
         this.$swal({
-          title: "Error",
           text: "Please add Organisation logo",
-          type: "error"
+          icon: "info"
         }).then(() => {
           document.getElementById("organisationLogo").click();
         });
+      } else if (this.reg.description_full.length < 32) {
+        this.$swal({
+          text:
+            "Your organisation description should be longer that 32 characters",
+          icon: "info"
+        });
       } else {
+        axios
+          .post("/organisations", this.reg)
+          .then(res => {
+            // TODO: Fix after getting array of errors
+            // console.log("Then response", res);
+            // let message = res.data.message;
+
+            // if (!res.data.success) {
+            //   message += res.data.errors.join("<br>");
+            // }
+
+            // console.log(message);
+
+            this.$swal({
+              text: red.data.message,
+              icon: res.data.success ? "success" : "error"
+            });
+          })
+          .catch(error => {
+            console.error("Error", error.response);
+            this.$swal({
+              text: error.response.data.message,
+              icon: "error"
+            });
+          });
       }
-      axios
-        .post("/organisations", this.reg)
-        .then(res => {
-          console.log(res);
-          this.$swal(
-            "Your organisation was registered",
-            "debug console",
-            "success"
-          );
-        })
-        .catch(error => console.error(error));
     },
     chooseImage() {
       this.$refs.fileInput.click();
