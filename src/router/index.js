@@ -32,6 +32,15 @@ const routes = [{
    * User pages
    */
   {
+    path: '/user/account-settings',
+    name: 'account-settings',
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/Edit.vue'),
+    meta: {
+      title: 'Edit account settings',
+      requiresAuth: true,
+    }
+  },
+  {
     path: '/user/feed',
     name: 'feed',
     component: () => import( /* webpackChunkName: "user" */ '../views/user/Feed.vue'),
