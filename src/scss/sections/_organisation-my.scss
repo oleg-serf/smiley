@@ -9,17 +9,13 @@
     .organization-content-wrap {
 
       .tabs-nav {
-        display: none;
-
-        @include md {
-          display: block;
-        }
+        display: block;
       }
 
       .panel {
         background: transparent;
-        max-height: 0;
-        overflow: hidden;
+        // max-height: 0;
+        // overflow: hidden;
         transition: max-height 0.2s ease-out;
       }
 
@@ -255,6 +251,7 @@
         padding: 10px 16px;
         margin-top: 21px;
         margin-bottom: 7px;
+        resize: none;
       }
 
       .panel-content-wrap {
@@ -331,8 +328,8 @@
 
   .panel {
     background: transparent;
-    max-height: 0;
-    overflow: hidden;
+    // max-height: 0;
+    // overflow: hidden;
     transition: max-height 0.2s ease-out;
 
     .panel-content-wrap {
@@ -428,8 +425,10 @@
     .tabs-items {
       background-color: #fff;
 
+
       .accordion {
         padding: 14px 15px;
+        display: none;
 
         &:after {
           right: 30px;

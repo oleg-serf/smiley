@@ -152,3 +152,29 @@ html {
     }
   }
 }
+
+/**
+  * Organisation - tabs content
+  */
+.organization-tabs .content-tab {
+  font: 400 22px/36px 'Muli',
+    sans-serif;
+  padding-top: 24px;
+
+  h2 {
+    padding-top: 19px;
+    margin-bottom: 13px;
+
+    @include xl {
+      padding-top: 37px;
+      margin-bottom: 22px;
+    }
+  }
+
+  p {
+    color: $default-text;
+    font: 400 22px/36px 'Muli', sans-serif;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+}
