@@ -154,6 +154,28 @@ html {
 }
 
 /**
+  * Default button
+  */
+.btn {
+  border: none;
+  box-sizing: border-box;
+  background-color: #eeb400;
+  border-radius: 4px;
+  color: #fff;
+  max-width: 218px;
+  text-transform: uppercase;
+  font: 700 16px/24px "Montserrat Bold",
+    sans-serif;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration: none;
+  padding: 5px 15px;
+  margin: 24px auto 24px auto;
+  display: block;
+}
+
+/**
   * Organisation - tabs content
   */
 .organization-tabs .content-tab {

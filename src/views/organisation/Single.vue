@@ -14,9 +14,9 @@
                 />
               </div>
               <router-link
-                v-if="organisation.id == userOrgAdmin"
+                v-if="organisation.user_id == userOrgAdmin"
                 :to="{name: 'edit-organisation'}"
-                class="button"
+                class="btn"
               >Edit organisation</router-link>
               <div class="organization-info">
                 <h2 class="organization-title">{{organisation.name}}</h2>
