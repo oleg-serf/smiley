@@ -136,7 +136,7 @@
                       </router-link>
                     </li>
                     <li v-if="isOrganisationAdmin !== null">
-                      <router-link :to="{name: 'my-organisation'}">
+                      <router-link :to="'/organisation/' + organisationSlug">
                         <svg
                           width="20"
                           height="20"
@@ -304,7 +304,8 @@ export default {
       return this.$store.getters["user/isAuthenticated"];
     },
     ...mapState("user", {
-      isOrganisationAdmin: state => state.org_admin
+      isOrganisationAdmin: state => state.organisation.admin,
+      organisationSlug: state => state.organisation.slug
     })
   },
   mounted() {

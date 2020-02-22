@@ -4,7 +4,10 @@ import router from '@/router'
 // initial state
 const state = {
   token: (localStorage.getItem('token')) || null,
-  org_admin: (localStorage.getItem('organisation')) || null,
+  organisation: {
+    admin: (localStorage.getItem('organisation-user')) || null,
+    slug: (localStorage.getItem('organisation-slug')) || null,
+  },
   attendingEvents: (localStorage.getItem('attendingEvents')) || []
 }
 
@@ -135,10 +138,9 @@ const actions = {
 // mutations
 const mutations = {
   SET_USERDATA(state, data) {
+    // TODO: Check data upon login
     state.token = data.token;
-    state.org_admin = data.organisation;
     localStorage.setItem('token', data.token);
-    localStorage.setItem('organisation', data.organisation);
   },
   REMOVE_USERDATA(state) {
     state.token = null;
@@ -153,6 +155,13 @@ const mutations = {
     let attendeesList = data.map(item => item.event_id);
     state.attendingEvents = attendeesList;
     localStorage.setItem('attendingEvents', JSON.stringify(attendeesList));
+  },
+  SET_ORGANISATION_DATA(state, data) {
+    console.log('VUEX: user/SET_ORGANISATION_DATA', data);
+    state.organisation.admin = data.user_id;
+    state.organisation.slug = data.slug;
+    localStorage.setItem('organisation-user', data.user_id);
+    localStorage.setItem('organisation-slug', data.slug);
   }
 }
 

@@ -219,6 +219,7 @@
 
 <script>
 import axios from "@/axios-auth";
+import router from "@/router";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -278,31 +279,34 @@ export default {
           icon: "info"
         });
       } else {
-        axios
-          .post("/organisations", this.reg)
-          .then(res => {
+        axios.post("/organisations", this.reg).then(
+          res => {
             // TODO: Fix after getting array of errors
-            // console.log("Then response", res);
-            // let message = res.data.message;
-
-            // if (!res.data.success) {
-            //   message += res.data.errors.join("<br>");
-            // }
-
-            // console.log(message);
-
             this.$swal({
-              text: red.data.message,
+              text: res.data.message,
               icon: res.data.success ? "success" : "error"
             });
-          })
-          .catch(error => {
+            if (res.data.success) {
+              this.$store.commit(
+                "user/SET_ORGANISATION_DATA",
+                res.data.organisation
+              );
+              setTimeout(() => {
+                router.push({
+                  name: "organisation",
+                  params: { slug: res.data.organisation.slug }
+                });
+              }, 5000);
+            }
+          },
+          error => {
             console.error("Error", error.response);
             this.$swal({
               text: error.response.data.message,
               icon: "error"
             });
-          });
+          }
+        );
       }
     },
     chooseImage() {

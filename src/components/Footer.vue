@@ -39,16 +39,17 @@
       <div class="footer-menu">
         <ul>
           <li>
-            <router-link to="/partners">Partners</router-link>
+            <router-link :to="{name: 'partners'}">Partners</router-link>
           </li>
           <li>
-            <router-link to="/terms-and-conditions">Terms and Conditions</router-link>
+            <router-link :to="{name: 'terms'}">Terms and Conditions</router-link>
           </li>
-          <li>
+          <!-- TODO: Make support Search + FAQ page -->
+          <!-- <li>
             <a href="#">Support</a>
-          </li>
+          </li>-->
           <li>
-            <router-link to="contact">Contact Us</router-link>
+            <router-link :to="{name: 'contact'}">Contact Us</router-link>
           </li>
         </ul>
       </div>

@@ -62,7 +62,7 @@ export default {
         .get("/organisations?page=" + pageNumb)
         .then(res => {
           this.organisations = res.data.organisations;
-          this.pages_count = red.data.pages_count;
+          this.pages_count = res.data.pages_count;
         })
         .catch(error => console.log(error));
     }
@@ -74,7 +74,7 @@ export default {
         console.log("Organisations", res);
 
         this.organisations = res.data.organisations;
-        this.pages_count = red.data.pages_count;
+        this.pages_count = res.data.pages_count;
         // this.post = res.data.post;
         // this.related_posts = res.data.related;
       })

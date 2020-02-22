@@ -374,14 +374,14 @@ export default {
     axios
       .get("/pages/new/1")
       .then(res => {
-        console.log(res);
+        console.log("new format", res);
       })
       .catch(error => console.log(error));
     console.log("---------");
     axios
       .get("/pages/1")
       .then(res => {
-        // console.log(res);
+        console.log("old format", res);
 
         this.topEvent = res.data.future_events[0];
         res.data.future_events.shift();
