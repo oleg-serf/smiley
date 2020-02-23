@@ -8,7 +8,7 @@
           <div class="upload-organisation-image-wrap">
             <div class="organisation-image" @click="uploadOrgLogo">
               <img
-                :src="reg.organisation_logo"
+                :src="newLogo"
                 style="width: 100%; height: 100%; background-color: rgba(0,0,0,.5); display: block;"
               />
             </div>
@@ -172,34 +172,15 @@
           </div>
 
           <label>Full description:</label>
-          <ckeditor :editor="editor" v-model="reg.description_full" :config="editorConfig"></ckeditor>
+          <ckeditor
+            v-if="reg.organisation_tabs[0].content !== undefined"
+            :editor="editor"
+            v-model="reg.organisation_tabs[0].content"
+            :config="editorConfig"
+          ></ckeditor>
           <br />
           <!-- <label>Your project info:</label> -->
           <!-- <ckeditor :editor="editor" v-model="reg.our_project" :config="editorConfig"></ckeditor> -->
-
-          <div class="checkbox-wrap">
-            <label class="register-checkbox">
-              I accept the following
-              <a href="#">Terms and Conditions</a>
-              <input type="checkbox" class="fixed-checkbox" required />
-              <span class="register-checkmark">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z"
-                    fill="#000"
-                  />
-                </svg>
-              </span>
-            </label>
-          </div>
 
           <div class="finish-btn-wrap">
             <button
@@ -207,7 +188,7 @@
               type="submit"
               name="submit"
               value="finish-creating"
-            >FINISH CREATING YOUR ORGANISATION</button>
+            >SAVE ORGANISATION</button>
           </div>
         </div>
       </form>
@@ -219,6 +200,7 @@
 
 <script>
 import axios from "@/axios-auth";
+import router from "@/router";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -240,9 +222,9 @@ export default {
         twitter: "",
         instagram: "",
         description: "",
-        description_full: ""
-        // our_project: ""
+        organisation_tabs: [{ content: "" }]
       },
+      logoHolder: null,
       organisationSectors: null,
       editor: ClassicEditor,
       editorConfig: {
@@ -260,31 +242,48 @@ export default {
   computed: {
     sectors() {
       return this.organisationSectors;
+    },
+    newLogo() {
+      return this.logoHolder || this.reg.organisation_logo;
     }
   },
   methods: {
     onSubmit() {
-      if (this.reg.organisation_logo == null) {
+      if (this.reg.organisation_tabs[0].content.length < 32) {
         this.$swal({
-          title: "Error",
-          text: "Please add Organisation logo",
-          type: "error"
-        }).then(() => {
-          document.getElementById("organisationLogo").click();
+          text:
+            "Your organisation description should be longer that 32 characters",
+          icon: "info"
         });
       } else {
+        axios
+          .patch("organisations/edit/my", this.reg)
+          .then(res => {
+            this.$swal({
+              text: res.data.message,
+              icon: res.data.success ? "success" : "error"
+            });
+            if (res.data.success) {
+              this.$store.commit(
+                "user/SET_ORGANISATION_DATA",
+                res.data.organisation
+              );
+              setTimeout(() => {
+                router.push({
+                  name: "organisation",
+                  params: { slug: res.data.organisation.slug }
+                });
+              }, 5000);
+            }
+          })
+          .catch(error => {
+            console.error("Error", error.response);
+            this.$swal({
+              text: error.response.data.message,
+              icon: "error"
+            });
+          });
       }
-      axios
-        .post("/organisations", this.reg)
-        .then(res => {
-          console.log(res);
-          this.$swal(
-            "Your organisation was updated",
-            "debug console",
-            "success"
-          );
-        })
-        .catch(error => console.error(error));
     },
     chooseImage() {
       this.$refs.fileInput.click();
@@ -313,26 +312,31 @@ export default {
       })
       .catch(error => console.error(error));
 
-    let currentOrganisation = localStorage.getItem("organisation-slug") || null;
+    // Get current user organisation
+    // TODO: Rework;
+    axios.get("organisations/edit/my").then(
+      res => {
+        console.log("Edit org res", res);
 
-    if (currentOrganisation !== null) {
-      axios
-        .get("/organisations/" + currentOrganisation)
-        .then(res => {
-          console.log("Organisation", res);
-          this.reg.organisation_name = res.data.organisation.name;
-          this.reg.organisation_location = res.data.organisation.location;
-          this.reg.organisation_website = res.data.organisation.website;
-          this.reg.organisation_logo = null;
-          // this.reg.organisation_sector = res.data.organisation.;
-          this.reg.facebook = res.data.organisation.facebook;
-          this.reg.linkedin = res.data.organisation.linkedin;
-          this.reg.twitter = res.data.organisation.twitter;
-          this.reg.instagram = res.data.organisation.instagram;
-          this.reg.description = res.data.organisation.description;
-        })
-        .catch(error => console.error("Error", error));
-    }
+        this.reg.organisation_name = res.data.organisation.name;
+        this.reg.organisation_location = res.data.organisation.location;
+        this.reg.organisation_website = res.data.organisation.website;
+        this.reg.organisation_logo = null;
+        // this.reg.organisation_sector = res.data.organisation.;
+        this.reg.facebook = res.data.organisation.facebook;
+        this.reg.linkedin = res.data.organisation.linkedin;
+        this.reg.twitter = res.data.organisation.twitter;
+        this.reg.instagram = res.data.organisation.instagram;
+        this.reg.description = res.data.organisation.description;
+        this.reg.organisation_tabs = res.data.organisation.organisation_tabs;
+        this.logoHolder =
+          "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/m_" +
+          res.data.organisation.logo;
+      },
+      error => {
+        console.log("Error edit my org");
+      }
+    );
   },
   components: {
     Header,
