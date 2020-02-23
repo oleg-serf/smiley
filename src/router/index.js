@@ -49,6 +49,15 @@ const routes = [{
       requiresAuth: true,
     }
   },
+  {
+    path: '/user/profile',
+    name: 'profile',
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/Profile.vue'),
+    meta: {
+      title: 'My Profile',
+      requiresAuth: true,
+    }
+  },
   /**
    * Authorization routes
    */
