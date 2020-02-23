@@ -173,9 +173,9 @@
 
           <label>Full description:</label>
           <ckeditor
-            v-if="reg.organisation_tabs[0].content !== undefined"
+            v-if="reg.description_full !== null"
             :editor="editor"
-            v-model="reg.organisation_tabs[0].content"
+            v-model="reg.description_full"
             :config="editorConfig"
           ></ckeditor>
           <br />
@@ -222,7 +222,8 @@ export default {
         twitter: "",
         instagram: "",
         description: "",
-        organisation_tabs: [{ content: "" }]
+        description_full: ""
+        // organisation_tabs: [{ content: "" }]
       },
       logoHolder: null,
       organisationSectors: null,
@@ -249,7 +250,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.reg.organisation_tabs[0].content.length < 32) {
+      if (this.reg.description_full.length < 32) {
         this.$swal({
           text:
             "Your organisation description should be longer that 32 characters",
@@ -328,7 +329,9 @@ export default {
         this.reg.twitter = res.data.organisation.twitter;
         this.reg.instagram = res.data.organisation.instagram;
         this.reg.description = res.data.organisation.description;
-        this.reg.organisation_tabs = res.data.organisation.organisation_tabs;
+        this.reg.description_full =
+          res.data.organisation.organisation_tabs[0].content;
+        // this.reg.organisation_tabs = res.data.organisation.organisation_tabs;
         this.logoHolder =
           "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/m_" +
           res.data.organisation.logo;
