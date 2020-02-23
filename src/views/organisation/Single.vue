@@ -471,17 +471,22 @@
             </div>
           </div>
 
-          <div class="organization-tabs" id="tabs">
+          <div class="organization-tabs" id="tabs" v-if="tabs !== null && tabs.length > 0">
             <ul class="tabs-nav">
-              <li v-if="tabs.Description !== null || tabs.Description !== undefined">
-                <a href="#tab-1" class="active">Description</a>
+              <li v-for="(tab, index) in tabs" :key="'tabs-nav-'+index">
+                <a :href="'#tab-'+index" :class="{active: index == 0}">{{tab.title}}</a>
               </li>
             </ul>
 
             <div class="tabs-items">
-              <div class="tabs-item item-1" id="tab-1" v-if="tabs.Description !== undefined">
-                <button class="accordion">Description</button>
-                <div class="content-tab panel active">{{tabs.Description}}</div>
+              <div
+                class="tabs-item item-1"
+                :id="'tab-'+index"
+                v-for="(tab, index) in tabs"
+                :key="'tabs-nav-'+index"
+              >
+                <button class="accordion">{{tab.title}}</button>
+                <div class="content-tab panel active">{{tab.content}}</div>
               </div>
             </div>
           </div>
@@ -546,7 +551,7 @@ export default {
         console.log("Organisation", res);
 
         this.organisation = res.data.organisation;
-        this.tabs = res.data.organisation_tabs;
+        this.tabs = res.data.organisation.organisation_tabs;
 
         document.title = res.data.organisation.name + " | Smiley Movement";
         this.$refs.breadcrumbs.breadcrumbs[

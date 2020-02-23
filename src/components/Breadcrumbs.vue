@@ -1,6 +1,6 @@
 <template>
   <section class="breadcrumbs">
-    <ul v-if="breadcrumbs.length">
+    <ul v-if="breadcrumbs.length > 0">
       <li v-for="(crumb) in breadcrumbs" :key="crumb.name + '-crumb'">
         <router-link class="breadcrumbs-item" :to="{ name: crumb.name }">{{ crumb.meta.title }}</router-link>
         <svg
