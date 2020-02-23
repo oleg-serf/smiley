@@ -279,7 +279,7 @@ export default {
         .then(res => {
           console.log(res);
           this.$swal(
-            "Your organisation was registered",
+            "Your organisation was updated",
             "debug console",
             "success"
           );
@@ -306,14 +306,33 @@ export default {
     }
   },
   mounted() {
-    // for debug features
-    // console.log(ClassicEditor.builtinPlugins.map(plugin => plugin.pluginName));
     axios
       .get("organisations/categories/all")
       .then(res => {
         this.organisationSectors = res.data.organisation_categories;
       })
       .catch(error => console.error(error));
+
+    let currentOrganisation = localStorage.getItem("organisation-slug") || null;
+
+    if (currentOrganisation !== null) {
+      axios
+        .get("/organisations/" + currentOrganisation)
+        .then(res => {
+          console.log("Organisation", res);
+          this.reg.organisation_name = res.data.organisation.name;
+          this.reg.organisation_location = res.data.organisation.location;
+          this.reg.organisation_website = res.data.organisation.website;
+          this.reg.organisation_logo = null;
+          // this.reg.organisation_sector = res.data.organisation.;
+          this.reg.facebook = res.data.organisation.facebook;
+          this.reg.linkedin = res.data.organisation.linkedin;
+          this.reg.twitter = res.data.organisation.twitter;
+          this.reg.instagram = res.data.organisation.instagram;
+          this.reg.description = res.data.organisation.description;
+        })
+        .catch(error => console.error("Error", error));
+    }
   },
   components: {
     Header,

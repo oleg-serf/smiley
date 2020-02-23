@@ -473,7 +473,7 @@
 
           <div class="organization-tabs" id="tabs">
             <ul class="tabs-nav">
-              <li v-if="tabs.Description !== undefined">
+              <li v-if="tabs.Description !== null || tabs.Description !== undefined">
                 <a href="#tab-1" class="active">Description</a>
               </li>
             </ul>
@@ -509,7 +509,7 @@ export default {
   data() {
     return {
       organisation: {},
-      tabs: []
+      tabs: null
     };
   },
   components: {
@@ -551,9 +551,9 @@ export default {
         document.title = res.data.organisation.name + " | Smiley Movement";
         this.$refs.breadcrumbs.breadcrumbs[
           this.$refs.breadcrumbs.breadcrumbs.length - 1
-        ].meta.title = this.organisation.name;
+        ].meta.title = res.data.organisation.name;
       })
-      .catch(error => console.log(error));
+      .catch(error => console.error("Error", error));
 
     // Tabs
     let tabsNavigation = document.querySelectorAll(".tabs-nav__item");

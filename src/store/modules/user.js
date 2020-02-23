@@ -16,6 +16,9 @@ const getters = {
   isAuthenticated(state) {
     return state.token !== null;
   },
+  organisationSlug(state) {
+    return state.organisation.slug;
+  }
 }
 
 // TODO: Rewrite whats left to promises
@@ -45,6 +48,7 @@ const actions = {
         .then((res) => {
           commit('SET_USERDATA', res.data);
           commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          commit('SET_ORGANISATION_DATA', res.data.organisation);
           router.push({
             name: 'home'
           });
@@ -67,6 +71,7 @@ const actions = {
         .then((res) => {
           commit('SET_USERDATA', res.data.token);
           commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          commit('SET_ORGANISATION_DATA', res.data.organisation);
           router.push({
             name: 'home'
           });
@@ -88,6 +93,7 @@ const actions = {
         .then((res) => {
           commit('SET_USERDATA', res.data.token);
           commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          commit('SET_ORGANISATION_DATA', res.data.organisation);
           router.push({
             name: 'home'
           });
