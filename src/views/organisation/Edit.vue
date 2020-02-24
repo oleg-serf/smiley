@@ -245,7 +245,7 @@ export default {
       return this.organisationSectors;
     },
     newLogo() {
-      return this.logoHolder || this.reg.organisation_logo;
+      return this.reg.organisation_logo || this.logoHolder;
     }
   },
   methods: {
