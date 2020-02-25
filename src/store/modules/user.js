@@ -46,17 +46,17 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post('/auth/login', credentials)
         .then((res) => {
+          console.log('Promise Success', res);
           commit('SET_USERDATA', res.data);
           commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
           commit('SET_ORGANISATION_DATA', res.data.organisation);
           router.push({
             name: 'home'
           });
-          resolve(res);
-        })
-        .catch((error) => {
-          let content = JSON.parse(error.request);
-          console.log('Error', error.request);
+          resolve('success');
+        }).catch((error) => {
+          let content = JSON.parse(error.request.response);
+          console.log('Promise Fail', content);
           reject(content.message);
         })
     })
@@ -75,7 +75,7 @@ const actions = {
           router.push({
             name: 'home'
           });
-          resolve(res);
+          resolve('success');
         })
         .catch((error) => {
           let content = JSON.parse(error.request.response);
@@ -97,7 +97,7 @@ const actions = {
           router.push({
             name: 'home'
           });
-          resolve(res);
+          resolve('success');
         })
         .catch((error) => {
           let content = JSON.parse(error.request.response);
@@ -163,11 +163,13 @@ const mutations = {
     localStorage.setItem('attendingEvents', JSON.stringify(attendeesList));
   },
   SET_ORGANISATION_DATA(state, data) {
-    console.log('VUEX: user/SET_ORGANISATION_DATA', data);
-    state.organisation.admin = data.user_id;
-    state.organisation.slug = data.slug;
-    localStorage.setItem('organisation-user', data.user_id);
-    localStorage.setItem('organisation-slug', data.slug);
+    console.log('Setting org data', data);
+    if (data !== null) {
+      state.organisation.admin = data.user_id;
+      state.organisation.slug = data.slug;
+      localStorage.setItem('organisation-user', data.user_id);
+      localStorage.setItem('organisation-slug', data.slug);
+    }
   }
 }
 

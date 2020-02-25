@@ -179,7 +179,7 @@ export default {
       this.$store
         .dispatch("user/login", formData)
         .then(res => {
-          console.log("Login success");
+          console.log("Login success", res);
         })
         .catch(error => {
           this.$swal({ text: error });

@@ -31,6 +31,9 @@
                   :title="topNews.title"
                 />
               </div>
+              <div>
+                
+              </div>
             </div>
             <div class="article-descr">
               <div class="article-date-location">
