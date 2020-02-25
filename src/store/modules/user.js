@@ -28,16 +28,29 @@ const actions = {
   signUp({
     commit
   }, credentials) {
-    axios.post('/auth/register', credentials)
-      .then(res => {
-        commit('SET_USERDATA', res.data.token);
-        // const now = new Date();
-        // const expirationDate = now.getTime()
-        router.push({
-          name: 'home'
-        });
-      })
-      .catch(error => console.log(error))
+    return new Promise((resolve, reject) => {
+      axios.post('/auth/register', credentials)
+        .then(res => {
+          commit('SET_USERDATA', res.data);
+          commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          commit('SET_ORGANISATION_DATA', res.data.organisation);
+          router.push({
+            name: 'home'
+          });
+          resolve('success');
+        })
+        .catch(error => {
+          let content = JSON.parse(error.request.response).errors;
+          let errorsList = content;
+          let errors = Object.keys(content);
+          let errorString = '';
+          console.log('Promise Fail', errors);
+          errors.forEach(error => {
+            errorString += errorsList[error][0];
+          });
+          reject(errorString);
+        })
+    });
   },
   // Login
   login({

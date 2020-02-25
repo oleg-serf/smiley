@@ -7,7 +7,7 @@
     <h3>New to smiley movement? Join below</h3>
 
     <div class="join-btns-wrap">
-      <button class="join-with-gmail-btn">
+      <!-- <button class="join-with-gmail-btn">
         <span>
           <svg
             width="17.999998"
@@ -38,8 +38,8 @@
             </g>
           </svg>
         </span>Join with gmail
-      </button>
-      <button class="join-with-facebook-btn">
+      </button>-->
+      <!-- <button class="join-with-facebook-btn">
         <span>
           <svg
             version="1.1"
@@ -57,7 +57,7 @@
             </g>
           </svg>
         </span>Join with facebook
-      </button>
+      </button>-->
       <!--      <button class="join-with-linkedin-btn">-->
       <!--        <span>-->
       <!--          <svg version="1.1" viewBox="0 0 18 18" height="18" width="18" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">-->
@@ -67,7 +67,7 @@
       <!--      </button>-->
     </div>
 
-    <h3>Or via email</h3>
+    <h3>via email</h3>
 
     <form class="registration-wrap" @submit.prevent="onSubmit">
       <label for="reg-firstname">
@@ -98,6 +98,7 @@
           type="email"
           name="reg-email"
           id="reg-email"
+          minlength="8"
           placeholder
           v-model="email"
         />
@@ -109,6 +110,7 @@
           type="password"
           name="reg-password"
           id="reg-password"
+          minlength="8"
           placeholder
           v-model="password"
         />
@@ -213,7 +215,14 @@ export default {
       };
 
       // console.log(formData);
-      this.$store.dispatch("user/signUp", formData);
+      this.$store
+        .dispatch("user/signUp", formData)
+        .then(res => {
+          console.log("Login Google success", res);
+        })
+        .catch(error => {
+          this.$swal({ text: error });
+        });
     }
   }
 };
