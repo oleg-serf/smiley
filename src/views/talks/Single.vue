@@ -18,7 +18,7 @@
               <template v-if="isAuthenticated">
                 <button
                   class="reg-event-btn"
-                  @click="cancelRegistration"
+                  @click="unregisterUser(event.id)"
                   v-if="attendedEvents.includes(event.id) && isAuthenticated"
                 >CANCEL ATTENDENCE</button>
                 <button
@@ -894,11 +894,8 @@ export default {
       let result = Date.now() < Date.parse(time) ? true : false;
       return result;
     },
-    cancelRegistration() {
-      this.$swal("Registration canceled", "", "success");
-    },
-    registerUser(id) {
-      this.registerUserForEvent({ id: id, organisation: false });
+    unregisterUser(id) {
+      this.unregisterUserForEvent({ id: id, organisation: false });
     },
     joinAsGuest() {
       let swal = {
@@ -920,7 +917,7 @@ export default {
         }
       });
     },
-    ...mapActions("events", ["registerUserForEvent"]),
+    ...mapActions("events", ["registerUserForEvent", "unregisterUserForEvent"]),
     setPlace(place) {
       this.currentPlace = place;
     },
