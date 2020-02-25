@@ -98,6 +98,13 @@ export default {
         }
       })
       .catch(error => console.error(error));
+
+    axios
+      .get("/users/settings")
+      .then(response => {
+        console.log("GET user params", response);
+      })
+      .catch(error => console.error(error.request));
   }
 };
 </script>

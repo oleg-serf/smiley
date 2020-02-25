@@ -1,5 +1,4 @@
 // ---------- SMILEY REGISTER PAGE ---------- //
-
 .registration {
   text-align: center;
   margin-top: 172px;
@@ -25,70 +24,20 @@
     margin: 0;
   }
 
-  .join-btns-wrap {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 38px;
-    margin-bottom: 65px;
+  .login-btns-wrap {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 41px !important;
+
+    &>* {
+      margin: 0 13px 10px !important;
+    }
 
     @include xl {
-      flex-direction: row;
-    }
-
-    button {
-      box-sizing: border-box;
-      border: 1px solid #ced0d2;
-      border-radius: 40px;
-      background-color: #ffffff;
-      box-shadow: 0 3px 4px 0 rgba(96, 100, 112, 0.1);
-      cursor: pointer;
-      height: 81px;
-      color: $default-text;
-      font: 700 18px/22px "Montserrat Bold", sans-serif;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      text-align: left;
-      padding-left: 40px;
-      margin: 10px 13px;
-      width: 100%;
-
-      span {
-        margin-right: 8px;
-        display: flex;
-      }
-
-      svg {
-        display: inline-block;
-        height: 18px;
-        width: 18px;
-        vertical-align: text-top;
-      }
-    }
-
-    .join-with-gmail-btn {
-      max-width: 281px;
-
-      @include xl {
-        margin-top: 0;
-      }
-    }
-
-    .join-with-facebook-btn,
-    .join-with-linkedin-btn {
-      max-width: 325px;
-
-      span {
-        margin-right: 18px;
-      }
-
-      @include xl {
-        margin-top: 0;
-        margin-left: 25px;
-      }
+      flex-direction: row !important;
     }
   }
 
@@ -210,6 +159,169 @@
       svg {
         opacity: 1;
       }
+    }
+  }
+}
+
+// ---------- SMILEY LOGIN PAGE ---------- //
+
+.login .socnet-login-btns,
+.login .v-facebook-login,
+.login .v-google-login button {
+  border: 1px solid #ced0d2 !important;
+  border-radius: 40px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 3px 4px 0 rgba(96, 100, 112, 0.1) !important;
+  cursor: pointer !important;
+  height: 81px !important;
+  color: $default-text !important;
+  font: 700 18px/22px "Montserrat Bold", sans-serif !important;
+  text-transform: uppercase !important;
+  display: flex !important;
+  align-items: center !important;
+  text-align: left !important;
+  padding-left: 40px !important;
+  width: 100% !important;
+
+  span {
+    margin-right: 8px !important;
+    display: flex !important;
+  }
+
+  svg {
+    display: inline-block !important;
+    height: 18px !important;
+    width: 18px !important;
+    vertical-align: text-top !important;
+  }
+
+  &.login-with-gmail-btn {
+    max-width: 281px !important;
+
+    @include xl {
+      margin-top: 0 !important;
+    }
+  }
+
+  &.login-with-facebook-btn,
+  &.login-with-linkedin-btn {
+    max-width: 325px !important;
+
+    span {
+      margin-right: 18px !important;
+    }
+  }
+}
+
+button.v-facebook-login {
+  max-width: 325px !important;
+  display: block !important;
+}
+
+.v-google-login {
+  max-width: 281px !important;
+  width: 100% !important;
+
+  svg {
+    margin-right: 30px !important;
+  }
+}
+
+.login {
+  padding-top: 48px;
+
+  .login-wrap {
+    width: 100% !important;
+    max-width: 762px !important;
+    text-align: left !important;
+    margin: 27px auto 0 !important;
+
+    label {
+      color: $default-text !important;
+      font: 700 16px/24px "Muli", sans-serif !important;
+
+      input {
+        display: block !important;
+        margin: 7px auto 21px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        height: 48px !important;
+        border: 1px solid #c7c7c7 !important;
+        border-radius: 4px !important;
+        font: 400 16px/24px "Inter Regular", sans-serif !important;
+        color: #656565 !important;
+        padding: 0 48px 0 16px !important;
+      }
+    }
+
+    .login-btn-wrap {
+      margin-top: 27px !important;
+    }
+
+    .login-btn {
+      border-radius: 4px !important;
+      background-color: $default-yellow-btns !important;
+      height: 48px !important;
+      width: 100% !important;
+      border: none !important;
+      font: 700 16px/24px "Montserrat Bold", sans-serif !important;
+      color: #000 !important;
+      text-transform: uppercase !important;
+      cursor: pointer !important;
+
+      &:hover {
+        background-color: #f6f162 !important;
+        box-shadow: 0 2px 28px -13px rgba(0, 0, 0, 0.4) !important;
+        color: #000 !important;
+        transition: all 0.2s ease !important;
+      }
+    }
+
+    .register-and-forgot {
+      text-align: center !important;
+      font: 400 22px/36px "Muli", sans-serif !important;
+      margin-top: 25px !important;
+
+      a,
+      span {
+        color: #324287 !important;
+      }
+
+      span {
+        margin-left: 18px !important;
+        margin-right: 6px !important;
+      }
+    }
+  }
+}
+
+/*.v-google-login{*/
+/*display: inline-flex !important;*/
+/*}*/
+.login button.v-facebook-login {
+  justify-content: flex-start !important;
+
+  img.token {
+    display: none !important;
+  }
+
+  span {
+    div {
+      display: flex !important;
+      align-items: center !important;
+
+      span {
+        margin-right: 18px !important !important;
+      }
+    }
+  }
+
+  &[disabled] {
+    display: flex !important;
+    justify-content: flex-start !important;
+
+    .loader {
+      margin-right: 12px !important;
     }
   }
 }
