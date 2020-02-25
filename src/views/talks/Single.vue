@@ -897,6 +897,9 @@ export default {
     unregisterUser(id) {
       this.unregisterUserForEvent({ id: id, organisation: false });
     },
+    registerUser(id) {
+      this.registerUserForEvent({ id: id, organisation: false });
+    },
     joinAsGuest() {
       let swal = {
         title: "Register or Login",
