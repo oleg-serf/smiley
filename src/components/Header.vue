@@ -84,37 +84,14 @@
                   </svg>
                 </a>
                 <div class="avatar-icon">
-                  <svg
-                    width="48"
-                    height="48"
-                    viewBox="0 0 48 48"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24Z"
-                      fill="url(#pattern0)"
-                    />
-                    <defs>
-                      <pattern
-                        id="pattern0"
-                        patternContentUnits="objectBoundingBox"
-                        width="1"
-                        height="1"
-                      >
-                        <use xlink:href="#image0" transform="scale(0.0078125)" />
-                      </pattern>
-                      <image
-                        id="image0"
-                        width="128"
-                        height="128"
-                        xlink:href="data:image/png;base64,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"
-                      />
-                    </defs>
-                  </svg>
+                  <div class="user-avatar">
+                    <template v-if="avatar !== 'null'">
+                      <img :src="$settings.images_path.users + 's_' + avatar" />
+                    </template>
+                    <template v-else>
+                      <span>{{ avatarTextual | filterAvatar }}</span>
+                    </template>
+                  </div>
                   <ul>
                     <li>
                       <router-link :to="{name: 'feed'}">
@@ -299,13 +276,26 @@ export default {
       registerDropdownShow: false
     };
   },
+  filters: {
+    filterAvatar: text => {
+      console.log(text.split(" "));
+      let username = text.split(" ").map(item => {
+        return item.charAt(0);
+      });
+
+      username = username.join("");
+      return username;
+    }
+  },
   computed: {
     auth() {
       return this.$store.getters["user/isAuthenticated"];
     },
     ...mapState("user", {
       isOrganisationAdmin: state => state.organisation.admin,
-      organisationSlug: state => state.organisation.slug
+      organisationSlug: state => state.organisation.slug,
+      avatar: state => state.info.avatar,
+      avatarTextual: state => state.info.full_name
     })
   },
   mounted() {
@@ -726,7 +716,7 @@ export default {
         border: 1px solid #c7c7c7;
         border-radius: 4px;
         width: 258px;
-        padding-bottom: 25px;
+        // padding-bottom: 25px;
         @include xl {
           right: -40px;
           top: 55px;
@@ -810,6 +800,26 @@ export default {
         padding: 0 21px;
       }
     }
+  }
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  background-color: #7a7a7a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  color: #fff;
+  text-transform: uppercase;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 }
 </style>
