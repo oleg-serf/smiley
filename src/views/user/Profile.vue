@@ -12,9 +12,9 @@
         {{location}}
       </div>
       <ul class="user__social">
-        <li v-for="social in socials" :key="'user-social-'+social.title">
-          <a :href="social.content">
-            <app-icon :name="social.title" />
+        <li v-for="(social, index) in socials" :key="'user-social-'+index">
+          <a :href="user[social]" v-if="user[social] !== null">
+            <app-icon :name="social" />
           </a>
         </li>
       </ul>
@@ -56,28 +56,7 @@ export default {
       avatar: "url",
       name: "John Doe",
       location: "London, GB",
-      socials: [
-        {
-          title: "facebook",
-          content: "https://www.facebook.com"
-        },
-        {
-          title: "linkedin",
-          content: "https://www.facebook.com"
-        },
-        {
-          title: "google-plus",
-          content: "https://www.facebook.com"
-        },
-        {
-          title: "twitter",
-          content: "https://www.facebook.com"
-        },
-        {
-          title: "instagram",
-          content: "https://www.facebook.com"
-        }
-      ],
+      socials: ["facebook", "linkedin", "google", "instagram", "twitter"],
       goals: []
     };
   },

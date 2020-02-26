@@ -169,11 +169,14 @@ const actions = {
 const mutations = {
   SET_USERDATA(state, data) {
     // TODO: Check data upon login
-    state.token = data.token;
+    if (data.token !== undefined) {
+      state.token = data.token;
+      localStorage.setItem('token', data.token);
+    }
+
     state.info.avatar = data.user.avatar;
     state.info.full_name = data.user.full_name;
 
-    localStorage.setItem('token', data.token);
     localStorage.setItem('avatar', data.user.avatar);
     localStorage.setItem('full_name', data.user.full_name);
   },

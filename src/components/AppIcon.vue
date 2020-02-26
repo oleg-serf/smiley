@@ -25,7 +25,7 @@
           />
         </g>
       </template>
-      <template v-if="props.name == 'google-plus'">
+      <template v-if="props.name == 'google'">
         <g fill="none" fill-rule="evenodd">
           <circle fill="#DD4B39" cx="15" cy="15" r="15" />
           <path

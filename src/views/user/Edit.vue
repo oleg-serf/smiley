@@ -8,7 +8,7 @@
         <div class="upload-user-avatar-wrap" @click="uploadOrgLogo">
           <div class="user-avatar">
             <img
-              :src="user.avatar_image"
+              :src="newAvatar"
               style="width: 100%; height: 100%; background-color: rgba(0,0,0,.5); display: block;"
             />
           </div>
@@ -72,7 +72,7 @@
               type="text"
               name="user-displayed_name"
               id="user-displayed_name"
-              v-model="user.displayed_name"
+              v-model="user.display_name"
             />
           </label>
           <label for="user-date-of-birth">
@@ -97,7 +97,7 @@
               type="password"
               name="user-password"
               id="user-password"
-              v-model="user.oldPassword"
+              v-model="user.old_password"
             />
           </label>
           <label for="user-password-confirm">
@@ -106,7 +106,7 @@
               type="password"
               name="user-password-confirm"
               id="user-password-confirm"
-              v-model="user.newPassword"
+              v-model="user.password"
             />
           </label>
         </div>
@@ -130,7 +130,7 @@
               type="url"
               name="user-social-facebook"
               id="user-social-facebook"
-              v-model="user.social.facebook"
+              v-model="user.facebook"
             />
           </label>
           <label for="user-social-linkedin">
@@ -139,7 +139,7 @@
               type="url"
               name="user-social-linkedin"
               id="user-social-linkedin"
-              v-model="user.social.linkedin"
+              v-model="user.linkedin"
             />
           </label>
           <label for="user-social-google-plust">
@@ -148,7 +148,7 @@
               type="url"
               name="user-social-google-plust"
               id="user-social-google-plust"
-              v-model="user.social.google"
+              v-model="user.google"
             />
           </label>
           <label for="user-social-twitter">
@@ -157,7 +157,7 @@
               type="url"
               name="user-social-twitter"
               id="user-social-twitter"
-              v-model="user.social.twitter"
+              v-model="user.twitter"
             />
           </label>
           <label for="user-social-instagram">
@@ -166,7 +166,7 @@
               type="url"
               name="user-social-instagram"
               id="user-social-instagram"
-              v-model="user.social.instagram"
+              v-model="user.instagram"
             />
           </label>
         </div>
@@ -176,6 +176,16 @@
         </div>
         <ckeditor :editor="editor" :config="editorConfig" v-model="user.bio"></ckeditor>
 
+        <div class="section-title">
+          <h3 class="section-title__heading">UN goals you are interested in:</h3>
+        </div>
+        <div class="input-row">
+          <label v-for="goal in allGoals" :key="goal.id" class="checkbox-label">
+            <input type="checkbox" :value="goal.id" v-model="user.goals" />
+            <span>{{goal.name}}</span>
+          </label>
+        </div>
+
         <div class="finish-btn-wrap">
           <button
             class="finish-btn"
@@ -183,7 +193,7 @@
             name="submit"
             value="finish-creating"
           >Save profile</button>
-          <button class="discard">Discard changes</button>
+          <button type="button" class="discard" @click.prevent="goToProfile">Discard changes</button>
         </div>
       </form>
     </div>
@@ -192,6 +202,7 @@
 
 <script>
 import axios from "@/axios-auth";
+import router from "@/router";
 
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -202,21 +213,30 @@ export default {
       // User fields
       user: {
         full_name: "",
-        avatar_image: "",
-        oldPassword: "",
-        newPassword: "",
+        display_name: "",
+
         bio: "",
+
+        avatar_image: null,
+
+        old_password: null,
+        password: null,
         location: "",
         charity_number: null,
         dob: null,
-        social: {
-          facebook: "",
-          linkedin: "",
-          google: "",
-          twitter: "",
-          instagram: ""
-        }
+
+        // Social links
+        facebook: "",
+        linkedin: "",
+        google: "",
+        twitter: "",
+        instagram: "",
+        goals: []
       },
+      // -
+      avatarHolder: null,
+      // All goals
+      allGoals: [],
       // Editor
       editor: ClassicEditor,
       editorConfig: {
@@ -231,14 +251,28 @@ export default {
       }
     };
   },
+  computed: {
+    newAvatar() {
+      return this.user.avatar_image || this.avatarHolder;
+    }
+  },
   methods: {
     onSubmit() {
       axios
         .post("/users/settings", this.user)
         .then(response => {
-          console.log("success", response);
+          this.$swal({ text: "Profile Updated", icon: "success" }).then(() => {
+            router.push({
+              name: "profile"
+            });
+          });
+          this.$store.commit("user/SET_USERDATA", response.data);
         })
-        .catch(error => console.error("Error", error));
+        .catch(error => {
+          let content = JSON.parse(error.request.response);
+          let finalMessage = content.errors.join("<br>");
+          this.$swal({ text: finalMessage, icon: "error" });
+        });
     },
     formatDateOfBirth() {
       let date = new Date(this.tempDate);
@@ -264,7 +298,40 @@ export default {
         reader.readAsDataURL(files[0]);
         this.$emit("input", files[0]);
       }
+    },
+    goToProfile() {
+      router.push({
+        name: "profile"
+      });
     }
+  },
+  mounted() {
+    axios
+      .get("/users/settings")
+      .then(response => {
+        console.log(response);
+        this.user.full_name = response.data.user.full_name;
+        this.user.display_name = response.data.user.display_name;
+        this.user.dob = response.data.user.dob;
+        this.user.bio = response.data.user.bio;
+        // this.user.location = response.data.user.location;
+        this.user.facebook = response.data.user.facebook;
+        this.user.linkedin = response.data.user.linkedin;
+        this.user.google = response.data.user.google;
+        this.user.instagram = response.data.user.instagram;
+        this.user.twitter = response.data.user.twitter;
+
+        this.avatarHolder =
+          "https://new-smiley.s3.eu-west-2.amazonaws.com/users/s_" +
+          response.data.user.avatar;
+
+        console.log(this.avatarHolder);
+
+        this.user.goals = response.data.goals;
+
+        this.allGoals = response.data.all_goals;
+      })
+      .catch(error => console.error(error.request));
   }
 };
 </script>
@@ -411,6 +478,23 @@ label {
       background-color: #656565;
       color: #fff;
     }
+  }
+}
+
+.checkbox-label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 24px;
+
+  input {
+    margin: 0px 12px 0px 0px !important;
+    width: 24px;
+    height: 24px;
+  }
+
+  span {
+    flex: 1;
   }
 }
 </style>

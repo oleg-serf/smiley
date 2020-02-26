@@ -56,7 +56,7 @@
                     </li>
                     <li v-if="organisation.google">
                       <a target="_blank" :href="organisation.google">
-                        <app-icon name="google-plus" />
+                        <app-icon name="google" />
                       </a>
                     </li>
                     <li v-if="organisation.twitter">
@@ -433,7 +433,7 @@
                           :href="'https://plus.google.com/share?url='+$settings.domain+'organisation/'+encodeURI(organisation.slug)"
                           target="_blank"
                         >
-                          <app-icon name="google-plus" />
+                          <app-icon name="google" />
                         </a>
                       </li>
                       <li>
