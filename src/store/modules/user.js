@@ -35,31 +35,20 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post('/auth/register', credentials)
         .then(res => {
-          if (res.data.success) {
-            console.log('Register success', res);
-            commit('SET_USERDATA', res.data);
-            commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-            commit('SET_ORGANISATION_DATA', res.data.organisation);
-            router.push({
-              name: 'home'
-            });
-            resolve('success');
-          } else {
-            let errors = res.data.errors;
-            console.log('Errors reg fail', errors);
-            reject(errors.email[0]);
-          }
+          console.log('Register success', res);
+          commit('SET_USERDATA', res.data);
+          commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+          commit('SET_ORGANISATION_DATA', res.data.organisation);
+          router.push({
+            name: 'home'
+          });
+          resolve('success');
         })
         .catch(error => {
-          let content = JSON.parse(error.request.response).errors;
-          let errorsList = content;
-          let errors = Object.keys(content);
-          let errorString = '';
-          console.log('Promise Fail', errors);
-          errors.forEach(error => {
-            errorString += errorsList[error][0];
-          });
-          reject(errorString);
+          let content = JSON.parse(error.request.response);
+          let finalMessage = content.errors.join('<br>');
+          console.log('Promise Fail', content);
+          reject(finalMessage);
         })
     });
   },
@@ -137,19 +126,25 @@ const actions = {
   forgot({
     commit
   }, email) {
-    return axios.post('/auth/reset', {
-        email: email
-      })
-      .then(res => {
-        return res;
-      })
-      .catch(error => {
-        return JSON.parse(error.request.response).message
-      })
+    // TODO: Check test;
+    return new Promise((resolve, reject) => {
+      axios.post('/auth/reset', {
+          email: email
+        })
+        .then((res) => {
+          console.log('Forgot request', res);
+          resolve('success');
+        })
+        .catch((error) => {
+          let content = JSON.parse(error.request.response);
+          reject(content.message);
+        })
+    })
   },
   reset({
     commit
   }, data) {
+    // TODO: Check test;
     return axios.post('/auth/reset/password', data)
       .then(res => {
 

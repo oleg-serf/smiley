@@ -42,13 +42,14 @@ export default {
   mounted() {},
   methods: {
     onSubmit() {
-      this.$store.dispatch("user/forgot", this.email).then(res => {
-        let result = {
-          title: res.data.message,
-          icon: res.data.success ? "success" : "error"
-        };
-        this.$swal(result);
-      });
+      this.$store
+        .dispatch("user/forgot", this.email)
+        .then(res => {
+          console.log("Reset password reset", res);
+        })
+        .catch(error => {
+          this.$swal({ text: error });
+        });
     }
   }
 };
