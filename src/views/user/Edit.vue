@@ -58,20 +58,22 @@
         </div>
         <div class="input-row">
           <label for="user-full_name">
-            Full name
+            Full name *
             <input
               type="text"
               name="user-full_name"
               id="user-full_name"
+              required
               v-model="user.full_name"
             />
           </label>
           <label for="user-displayed_name">
-            Displayed name
+            Displayed name *
             <input
               type="text"
               name="user-displayed_name"
               id="user-displayed_name"
+              required
               v-model="user.display_name"
             />
           </label>
@@ -106,6 +108,7 @@
               type="password"
               name="user-password-confirm"
               id="user-password-confirm"
+              minlength="2"
               v-model="user.password"
             />
           </label>
