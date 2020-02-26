@@ -841,4 +841,9 @@ export default {
     object-position: center;
   }
 }
+
+.login-block {
+  display: flex;
+  align-items: center;
+}
 </style>
