@@ -80,8 +80,9 @@ const actions = {
           resolve('success');
         }).catch((error) => {
           let content = JSON.parse(error.request.response);
+          let finalMessage = content.errors.join('<br>');
           console.log('Promise Fail', content);
-          reject(content.message);
+          reject(finalMessage);
         })
     })
   },
@@ -103,7 +104,9 @@ const actions = {
         })
         .catch((error) => {
           let content = JSON.parse(error.request.response);
-          reject(content.message);
+          let finalMessage = content.errors.join('<br>');
+          console.log('Promise Fail', content);
+          reject(finalMessage);
         })
     })
   },
@@ -125,7 +128,9 @@ const actions = {
         })
         .catch((error) => {
           let content = JSON.parse(error.request.response);
-          reject(content.message);
+          let finalMessage = content.errors.join('<br>');
+          console.log('Promise Fail', content);
+          reject(finalMessage);
         })
     })
   },
