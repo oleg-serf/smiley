@@ -3,10 +3,10 @@
   <div class="user-profile container">
     <div class="top-bar">
       <div class="user__avatar">
-        <!-- <img src v-if="avatar" /> -->
-        <span>{{name.charAt(0)}}</span>
+        <img v-if="avatar !== 'null'" :src="$settings.images_path.users + 's_'+ user.avatar" />
+        <span v-else>{{ user.full_name | filterAvatar}}</span>
       </div>
-      <div class="user__name">{{name}}</div>
+      <div class="user__name">{{user.full_name}}</div>
       <div class="user__info">
         <app-icon name="location" />
         {{location}}
@@ -23,14 +23,14 @@
       <div class="columns">
         <div class="column">
           <h2>About me</h2>
-          <p>Ut eu justo eget ligula sodales consequat. Quisque fermentum dictum viverra. In efficitur auctor tortor at cursus. In cursus tincidunt ante. Curabitur vestibulum mi tellus, eget fermentum enim sodales feugiat. Maecenas non nibh sem. Suspendisse nec est odio. Donec in massa vehicula, ornare erat sit amet, vehicula velit.</p>
+          <p v-html="user.bio || 'Oh, we have no information for this block yet :('"></p>
         </div>
         <div class="column">
           <h2>Goals</h2>
           <ul class="goals-list">
-            <li v-for="goal in goals" :key="goal.id">
+            <!-- <li v-for="goal in goals" :key="goal.id">
               <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
-            </li>
+            </li>-->
           </ul>
         </div>
         <div class="column">
@@ -52,6 +52,7 @@ import AppIcon from "@/components/AppIcon";
 export default {
   data() {
     return {
+      user: {},
       avatar: "url",
       name: "John Doe",
       location: "London, GB",
@@ -80,6 +81,16 @@ export default {
       goals: []
     };
   },
+  filters: {
+    filterAvatar: text => {
+      let username = text.split(" ").map(item => {
+        return item.charAt(0);
+      });
+
+      username = username.join("");
+      return username;
+    }
+  },
   components: {
     AppIcon
   },
@@ -102,7 +113,8 @@ export default {
     axios
       .get("/users/settings")
       .then(response => {
-        console.log("GET user params", response);
+        console.log(response.data.user);
+        this.user = response.data.user;
       })
       .catch(error => console.error(error.request));
   }
