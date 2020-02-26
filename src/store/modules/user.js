@@ -35,13 +35,20 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post('/auth/register', credentials)
         .then(res => {
-          commit('SET_USERDATA', res.data);
-          commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
-          commit('SET_ORGANISATION_DATA', res.data.organisation);
-          router.push({
-            name: 'home'
-          });
-          resolve('success');
+          if (res.data.success) {
+            console.log('Register success', res);
+            commit('SET_USERDATA', res.data);
+            commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
+            commit('SET_ORGANISATION_DATA', res.data.organisation);
+            router.push({
+              name: 'home'
+            });
+            resolve('success');
+          } else {
+            let errors = res.data.errors;
+            console.log('Errors reg fail', errors);
+            reject(errors.email[0]);
+          }
         })
         .catch(error => {
           let content = JSON.parse(error.request.response).errors;

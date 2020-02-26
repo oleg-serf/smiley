@@ -44,7 +44,6 @@
         :button-style="{background: '#fff', color: '#000'}"
         app-id="486208715194516"
         @login="onFacebookLogin"
-        @logout="logout"
         @sdk-init="onFacebookSDKinit"
       >
         <template slot="login">
