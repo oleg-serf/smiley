@@ -32,6 +32,15 @@ const routes = [{
    * User pages
    */
   {
+    path: '/users',
+    name: 'users',
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/Archive.vue'),
+    meta: {
+      title: 'Users',
+      requiresAuth: true,
+    }
+  },
+  {
     path: '/user/account-settings',
     name: 'account-settings',
     component: () => import( /* webpackChunkName: "user" */ '../views/user/Edit.vue'),

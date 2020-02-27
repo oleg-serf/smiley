@@ -25,11 +25,15 @@
               <!--              <a class="menu-item" href="#"><span>Smiley awards</span></a>-->
               <span class="menu-item" href="#">
                 <span>Network</span>
-
                 <ul class="submenu">
                   <li>
                     <router-link :to="{name: 'partners'}" class="menu-item">
                       <span>Our Partners</span>
+                    </router-link>
+                  </li>
+                  <li v-if="auth">
+                    <router-link :to="{name: 'users'}" class="menu-item">
+                      <span>Members</span>
                     </router-link>
                   </li>
                   <li>
