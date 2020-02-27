@@ -486,7 +486,7 @@
                 :key="'tabs-nav-'+index"
               >
                 <button class="accordion">{{tab.title}}</button>
-                <div class="content-tab panel active">{{tab.content}}</div>
+                <div class="content-tab panel active" v-html="tab.content"></div>
               </div>
             </div>
           </div>
