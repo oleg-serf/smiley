@@ -33,7 +33,9 @@
           :prev-class="'smiley-pagination-back'"
           :next-class="'smiley-pagination-next'"
           :container-class="'app-pagination'"
-        ></paginate>
+        >
+          <span slot="breakViewContent">...</span>
+        </paginate>
         <br />
         <br />
         <br />

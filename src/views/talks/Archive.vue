@@ -302,7 +302,9 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
             :prev-class="'smiley-pagination-back'"
             :next-class="'smiley-pagination-next'"
             :container-class="'app-pagination'"
-          ></paginate>
+          >
+            <span slot="breakViewContent">...</span>
+          </paginate>
         </div>
       </div>
     </section>
@@ -349,7 +351,9 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           :prev-class="'smiley-pagination-back'"
           :next-class="'smiley-pagination-next'"
           :container-class="'app-pagination'"
-        ></paginate>
+        >
+          <span slot="breakViewContent">...</span>
+        </paginate>
       </div>
     </section>
 
