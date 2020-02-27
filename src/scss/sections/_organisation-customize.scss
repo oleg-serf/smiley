@@ -10,8 +10,18 @@
   .customize-organisation-title {
     color: $default-text;
     font: 700 56px/74px 'Montserrat Bold', sans-serif;
-    margin-bottom: 48px;
+    margin-bottom: 12px;
     margin-top: 71px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .customize-organisation-subtitle {
+    color: $default-text;
+    font: 700 16px/24px 'Montserrat Bold', sans-serif;
+    margin-bottom: 48px;
+    margin-top: 24px;
+    text-align: center;
   }
 
   .upload-organisation-image-wrap {

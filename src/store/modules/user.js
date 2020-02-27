@@ -186,6 +186,9 @@ const mutations = {
     state.attendingEvents = null;
     localStorage.removeItem('token');
     localStorage.setItem('attendingEvents', []);
+    localStorage.removeItem('organisation-user');
+    localStorage.removeItem('organisation-slug');
+    localStorage.removeItem('attendingEvents');
     router.push({
       name: 'home'
     });

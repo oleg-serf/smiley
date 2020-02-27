@@ -3,7 +3,10 @@
     <section class="customize-organisation container">
       <form class="add-organisation-info" @submit.prevent="onSubmit">
         <div class="customize-organisation-content">
-          <h2 class="customize-organisation-title">Customise organisation</h2>
+          <h2 class="customize-organisation-title">join the movement</h2>
+          <div
+            class="customize-organisation-subtitle"
+          >onnect with other change makers in our community and link your organisation to promote your work and find the support you need</div>
 
           <div class="upload-organisation-image-wrap">
             <div class="organisation-image" @click="uploadOrgLogo">
@@ -105,7 +108,7 @@
                 type="url"
                 name="organisation-website"
                 id="organisation-website"
-                placeholder="www.yoursite.co.uk"
+                placeholder="https://www.yoursite.co.uk"
                 v-model="reg.organisation_website"
               />
             </label>
@@ -281,6 +284,7 @@ export default {
       } else {
         axios.post("/organisations", this.reg).then(
           res => {
+            console.log("Organisation send success?", res);
             // TODO: Fix after getting array of errors
             this.$swal({
               text: res.data.message,
