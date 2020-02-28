@@ -4,9 +4,9 @@
     <div class="top-bar">
       <div class="user__avatar">
         <img v-if="avatar !== 'null'" :src="$settings.images_path.users + 'm_'+ user.avatar" />
-        <span v-else>{{ user.full_name | filterAvatar}}</span>
+        <span v-else>{{ user.display_name | filterAvatar}}</span>
       </div>
-      <div class="user__name">{{user.full_name}}</div>
+      <div class="user__name">{{user.display_name}}</div>
       <div class="user__info">
         <app-icon name="location" />
         {{location}}
@@ -55,7 +55,7 @@ export default {
       user: {},
       avatar: "url",
       name: "John Doe",
-      location: "London, GB",
+      location: "",
       socials: ["facebook", "linkedin", "google", "instagram", "twitter"],
       goals: []
     };
@@ -77,11 +77,14 @@ export default {
     axios
       .get("/users/" + this.$route.params.slug)
       .then(response => {
-        console.log(response.data);
+        document.title =
+          response.data.user.display_name + "'s Profile | Smiley Movement";
         this.user = response.data.user;
-        this.goals = response.data.all_goals.filter(item =>
-          response.data.goals.includes(item.id)
-        );
+        if (response.data.all_goals != undefined) {
+          this.goals = response.data.all_goals.filter(item =>
+            response.data.goals.includes(item.id)
+          );
+        }
       })
       .catch(error => console.error(error.request));
   }

@@ -55,7 +55,7 @@ export default {
       user: {},
       avatar: "url",
       name: "John Doe",
-      location: "London, GB",
+      location: "",
       socials: ["facebook", "linkedin", "google", "instagram", "twitter"],
       goals: []
     };
@@ -82,6 +82,7 @@ export default {
         this.goals = response.data.all_goals.filter(item =>
           response.data.goals.includes(item.id)
         );
+        document.title = res.data.user.full_name + " | Smiley Movement";
         console.log(this.goals);
       })
       .catch(error => console.error(error.request));

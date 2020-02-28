@@ -13,7 +13,7 @@
                 class="user-item__image"
                 v-if="user.avatar !== null"
               />
-              <span v-else>{{ user.display_name}}</span>
+              <span v-else>{{ user.display_name | filterAvatar }}</span>
             </router-link>
           </div>
           <h2 class="user-item__title">
@@ -68,11 +68,14 @@ export default {
   },
   filters: {
     filterAvatar: text => {
+      if (text == null) return "";
+
       let username = text.split(" ").map(item => {
         return item.charAt(0);
       });
 
       username = username.join("");
+
       return username;
     }
   },
