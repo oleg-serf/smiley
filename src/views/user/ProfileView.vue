@@ -13,7 +13,7 @@
       </div>
       <ul class="user__social">
         <li v-for="(social, index) in socials" :key="'user-social-'+index">
-          <a :href="user[social]" v-if="user[social] !== null">
+          <a :href="user[social]" v-if="user[social] != null">
             <app-icon :name="social" />
           </a>
         </li>
@@ -75,14 +75,13 @@ export default {
   },
   mounted() {
     axios
-      .get("/users/settings")
+      .get("/users/" + this.$route.params.slug)
       .then(response => {
         console.log(response.data);
         this.user = response.data.user;
         this.goals = response.data.all_goals.filter(item =>
           response.data.goals.includes(item.id)
         );
-        console.log(this.goals);
       })
       .catch(error => console.error(error.request));
   }

@@ -13,7 +13,7 @@
       </div>
       <ul class="user__social">
         <li v-for="(social, index) in socials" :key="'user-social-'+index">
-          <a :href="user[social]" v-if="user[social] !== null">
+          <a :href="user[social]" v-if="user[social] != null">
             <app-icon :name="social" />
           </a>
         </li>

@@ -147,7 +147,6 @@ const actions = {
     // TODO: Check test;
     return axios.post('/auth/reset/password', data)
       .then(res => {
-
         return res;
       })
       .catch(error => {

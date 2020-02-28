@@ -13,11 +13,11 @@
                 class="user-item__image"
                 v-if="user.avatar !== null"
               />
-              <span v-else>{{ user.full_name | filterAvatar}}</span>
+              <span v-else>{{ user.display_name}}</span>
             </router-link>
           </div>
           <h2 class="user-item__title">
-            <router-link :to="'/users/' + user.slug">{{ user.full_name }}</router-link>
+            <router-link :to="'/users/' + user.slug">{{ user.display_name }}</router-link>
           </h2>
           <ul class="user__social">
             <template v-for="(social, index) in socials">
