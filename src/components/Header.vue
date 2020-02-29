@@ -297,6 +297,8 @@ export default {
   },
   filters: {
     filterAvatar: text => {
+      if (text == null) return "";
+
       let username = text.split(" ").map(item => {
         return item.charAt(0);
       });
