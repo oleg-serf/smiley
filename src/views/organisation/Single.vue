@@ -464,7 +464,11 @@
                   ></textarea>
                   <button class="copy-link-btn" @click.prevent="copyLinkToClipboard">Copy link</button>
                   <p>To stay up-to-date with {{organisation.name}}, follow their page.</p>
-                  <!-- <button class="follow-btn">Follow</button> -->
+
+                  <template v-if="auth">
+                    <button class="follow-btn" v-if="!following" @click.prevent="follow">Follow</button>
+                    <button class="follow-btn" v-else @click.prevent="unfollow">UnFollow</button>
+                  </template>
                   <!-- <button class="chat-btn">Chat</button> -->
                 </div>
               </div>
@@ -505,7 +509,7 @@ import AppIcon from "@/components/AppIcon";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 import $ from "jquery";
 import carousel from "vue-owl-carousel2";
@@ -514,7 +518,8 @@ export default {
   data() {
     return {
       organisation: {},
-      tabs: null
+      tabs: null,
+      following: false
     };
   },
   components: {
@@ -526,16 +531,39 @@ export default {
   computed: {
     ...mapState("user", {
       userOrgAdmin: state => state.organisation.admin
-    })
+    }),
+    auth() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
   },
   methods: {
+    follow() {
+      axios
+        .post("/organisations/" + this.$route.params.slug + "/follow")
+        .then(result => {
+          console.log("following", result);
+        })
+        .catch(err => {
+          // TODO: add error
+        });
+    },
+    unfollow() {
+      axios
+        .post("/organisations/" + this.$route.params.slug + "/un-follow")
+        .then(result => {
+          console.log("cancel following", result);
+        })
+        .catch(err => {
+          // TODO: add error
+        });
+    },
     copyLinkToClipboard() {
       let testingCodeToCopy = document.querySelector("#sharePageLink");
       testingCodeToCopy.select();
 
       try {
-        var successful = document.execCommand("copy");
-        var msg = successful ? "successful" : "unsuccessful";
+        let successful = document.execCommand("copy");
+        let msg = successful ? "successful" : "unsuccessful";
         this.$swal({ text: "Link copied to clipboard" });
       } catch (err) {}
 
@@ -552,6 +580,9 @@ export default {
 
         this.organisation = res.data.organisation;
         this.tabs = res.data.organisation.organisation_tabs;
+
+        this.following = res.data.following;
+        console.log(this.following);
 
         document.title = res.data.organisation.name + " | Smiley Movement";
         this.$refs.breadcrumbs.breadcrumbs[
