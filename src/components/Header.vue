@@ -88,7 +88,7 @@
                   </svg>
                 </a>
                 <div class="avatar-icon">
-                  <div class="user-avatar">
+                  <div class="user-avatar" v-if="auth">
                     <template v-if="avatar !== null">
                       <img :src="$settings.images_path.users + 's_' + avatar" />
                     </template>
@@ -297,7 +297,6 @@ export default {
   },
   filters: {
     filterAvatar: text => {
-      console.log(text.split(" "));
       let username = text.split(" ").map(item => {
         return item.charAt(0);
       });
