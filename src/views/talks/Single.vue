@@ -61,7 +61,7 @@
                     <div class="speaker-avatar-wrap">
                       <div class="speaker-avatar">
                         <img
-                          :src="'https://new-smiley.s3.eu-west-2.amazonaws.com/speakers/s_' + speaker.image"
+                          :src="'https://new-smiley.s3.eu-west-2.amazonaws.com/speakers/m_' + speaker.image"
                         />
                       </div>
                     </div>
