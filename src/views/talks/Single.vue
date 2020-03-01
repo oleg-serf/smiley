@@ -88,21 +88,22 @@
                       :key="attendee.id + '-attendee'"
                       :class="{'next': index > 0, 'hidden-item': index > 10}"
                     >
-                      <template v-if="attendee.avatar !== null">
-                        <img
-                          :src="$settings.images_path.users + 's_' + attendee.avatar"
-                          :alt="attendee.full_name"
-                          :title="attendee.full_name"
-                        />
-                      </template>
-                      <template v-else>
-                        <div class="attendees-avatar__letter-holder">
-                          <span
-                            class="attendees-avatar__letter"
+                      <router-link :to="'/users/' + attendee.slug" :title="attendee.full_name">
+                        <template v-if="attendee.avatar !== null">
+                          <img
+                            :src="$settings.images_path.users + 's_' + attendee.avatar"
+                            :alt="attendee.full_name"
                             :title="attendee.full_name"
-                          >{{attendee.full_name.charAt(0)}}</span>
-                        </div>
-                      </template>
+                          />
+                        </template>
+                        <template v-else>
+                          <div class="attendees-avatar__letter-holder">
+                            <span
+                              class="attendees-avatar__letter"
+                            >{{attendee.full_name | filterAvatar}}</span>
+                          </div>
+                        </template>
+                      </router-link>
                     </div>
 
                     <div class="attendees-avatar next last" v-if="event.attendees.length > 0">
@@ -884,6 +885,16 @@ export default {
         ].meta.title = res.data.event.title;
       })
       .catch(error => console.log(error));
+  },
+  filters: {
+    filterAvatar: text => {
+      let username = text.split(" ").map(item => {
+        return item.charAt(0);
+      });
+
+      username = username.join("");
+      return username;
+    }
   },
   methods: {
     isEventRegisterable(time) {
