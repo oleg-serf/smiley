@@ -542,6 +542,13 @@ export default {
         .post("/organisations/" + this.$route.params.slug + "/follow")
         .then(result => {
           console.log("following", result);
+          if (result.data.success) {
+            this.$swal({
+              text: result.data.message,
+              icon: "info"
+            });
+            this.following = true;
+          }
         })
         .catch(err => {
           // TODO: add error
@@ -552,6 +559,13 @@ export default {
         .post("/organisations/" + this.$route.params.slug + "/un-follow")
         .then(result => {
           console.log("cancel following", result);
+          if (result.data.success) {
+            this.$swal({
+              text: result.data.message,
+              icon: "info"
+            });
+            this.following = true;
+          }
         })
         .catch(err => {
           // TODO: add error
