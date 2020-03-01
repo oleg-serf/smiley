@@ -66,19 +66,6 @@ export default {
       socials: ["facebook", "linkedin", "google", "instagram", "twitter"]
     };
   },
-  filters: {
-    filterAvatar: text => {
-      if (text == null) return "";
-
-      let username = text.split(" ").map(item => {
-        return item.charAt(0);
-      });
-
-      username = username.join("");
-
-      return username;
-    }
-  },
   methods: {
     loadPageNumb(pageNumb) {
       axios

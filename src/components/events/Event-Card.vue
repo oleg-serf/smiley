@@ -155,7 +155,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
                 <span
                   class="attendees-avatar__letter"
                   :title="attendee.full_name"
-                >{{attendee.full_name.charAt(0)}}</span>
+                >{{attendee.full_name || attendee.full_name | filterAvatar}}</span>
               </div>
             </template>
           </div>

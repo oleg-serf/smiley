@@ -107,6 +107,16 @@ Vue.filter('stripComas', function (time) {
 Vue.filter('replaceDashes', function (time) {
   return time.replace(/\//g, '-');
 });
+Vue.filter('filterAvatar', function (username) {
+  if (username == null) return "";
+
+  let result = username.split(" ").map(item => {
+    return item.charAt(0);
+  });
+
+  result = result.join("");
+  return result;
+});
 // Safari doesn't recognize time in 0000-00-00 00:00:00 format toLocalString
 Vue.filter('formatDate', function (date, locale, format) {
   if (date === undefined) {

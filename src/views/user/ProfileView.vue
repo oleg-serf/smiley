@@ -60,16 +60,6 @@ export default {
       goals: []
     };
   },
-  filters: {
-    filterAvatar: text => {
-      let username = text.split(" ").map(item => {
-        return item.charAt(0);
-      });
-
-      username = username.join("");
-      return username;
-    }
-  },
   components: {
     AppIcon
   },

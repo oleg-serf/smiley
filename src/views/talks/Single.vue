@@ -886,16 +886,6 @@ export default {
       })
       .catch(error => console.log(error));
   },
-  filters: {
-    filterAvatar: text => {
-      let username = text.split(" ").map(item => {
-        return item.charAt(0);
-      });
-
-      username = username.join("");
-      return username;
-    }
-  },
   methods: {
     isEventRegisterable(time) {
       if (time === undefined) {
