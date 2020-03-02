@@ -354,10 +354,12 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
         >
           <span slot="breakViewContent">...</span>
         </paginate>
+        <br />
+        <br />
       </div>
     </section>
 
-    <section class="create-hub-section">
+    <!-- <section class="create-hub-section">
       <div class="create-hub-wrap">
         <div class="create-hub-video">
           <img src="img/talk/smiley-hub-image-x2.png" alt="hub main pic" />
@@ -379,7 +381,7 @@ $settings.images_path.events + `l_`+topEvent.cover_image+` 1160w`
           </div>
         </div>
       </div>
-    </section>
+    </section>-->
 
     <!-- <section class="signup-section">
       <div class="signup-section-wrap container">
