@@ -136,10 +136,10 @@
 
       <div class="smiley-network-descr">
         <div class="network-descr-wrap">
-          <div class="smiley-network-descr-title">Add your organisation</div>
+          <div class="smiley-network-descr-title">join the movement</div>
           <div
             class="smiley-network-descr-subtitle"
-          >Connect your organisation with the Smiley community and find the skills-based support you need to raise awareness of your projects</div>
+          >Connect with other change makers in our community and link your organisation to promote your work and find the support you need</div>
         </div>
         <router-link to="/add-organisation" class="create-org-btn">Create organisation</router-link>
       </div>

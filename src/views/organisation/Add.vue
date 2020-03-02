@@ -3,11 +3,8 @@
     <section class="customize-organisation container">
       <form class="add-organisation-info" @submit.prevent="onSubmit">
         <div class="customize-organisation-content">
-          <h2 class="customize-organisation-title">join the movement</h2>
-          <div
-            class="customize-organisation-subtitle"
-          >onnect with other change makers in our community and link your organisation to promote your work and find the support you need</div>
-
+          <h2 class="customize-organisation-title">Add organisation</h2>
+          <!--  -->
           <div class="upload-organisation-image-wrap">
             <div class="organisation-image" @click="uploadOrgLogo">
               <img
