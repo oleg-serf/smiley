@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'https://admin.smileymovement.org/api'
+  baseURL: 'https://new-admin.smileymovement.org/api'
 });
 
 
