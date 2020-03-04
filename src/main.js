@@ -50,7 +50,7 @@ Vue.use(VueGoogleMaps, {
   // installComponents: true,
 })
 
-axios.defaults.baseURL = 'https://admin.smileymovement.org/api'
+axios.defaults.baseURL = 'https://new-admin.smileymovement.org/api'
 // axios.defaults.headers.common['Authorization'] = 'fasfdsa'
 axios.defaults.headers.get['Accepts'] = 'application/json'
 
