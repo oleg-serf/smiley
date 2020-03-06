@@ -9,9 +9,11 @@
             <div class="sidebar-block organization-block">
               <div class="organization-logo">
                 <img
+                  v-if="organisation.logo != null"
                   :src="$settings.images_path.organisations + 'm_' + organisation.logo"
                   alt="logo"
                 />
+                <img v-else src="/img/group.svg" />
               </div>
               <router-link
                 v-if="organisation.user_id == userOrgAdmin"
