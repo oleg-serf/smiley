@@ -141,7 +141,7 @@
             class="smiley-network-descr-subtitle"
           >Connect with other change makers in our community and link your organisation to promote your work and find the support you need</div>
         </div>
-        <router-link to="/add-organisation" class="create-org-btn">Create organisation</router-link>
+        <router-link to="/add-organisation" class="create-org-btn">Create Profile</router-link>
       </div>
     </section>
 
