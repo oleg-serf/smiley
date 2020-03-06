@@ -496,6 +496,35 @@
               </div>
             </div>
           </div>
+
+          <section class="news-category-section latest-articles container">
+            <div class="news-category-container">
+              <router-link
+                :to="'/news/' + post.slug"
+                class="article-item"
+                v-for="post in posts"
+                :key="post.id+post.title"
+              >
+                <div class="smiley-img-wrap">
+                  <div class="smiley-img">
+                    <img
+                      :src="$settings.images_path.news  +'m_'+post.cover_image"
+                      :alt="post.title"
+                      :title="post.title"
+                    />
+                  </div>
+                </div>
+                <div class="article-descr">
+                  <div class="article-date-location">
+                    <div class="article-date">{{post.created_at}}</div>
+                    <div class="article-location">{{post.location}}</div>
+                  </div>
+                  <div class="article-title">{{post.title}}</div>
+                  <div class="article-subtitle">{{post.description}}</div>
+                </div>
+              </router-link>
+            </div>
+          </section>
         </div>
       </div>
     </section>
@@ -521,6 +550,7 @@ export default {
     return {
       organisation: {},
       tabs: null,
+      posts: [],
       following: false
     };
   },
@@ -610,6 +640,22 @@ export default {
     // Tabs
     let tabsNavigation = document.querySelectorAll(".tabs-nav__item");
     let tabsContent = document.querySelectorAll(".tabs-content__item");
+
+    axios
+      .get("/news")
+      .then(res => {
+        this.posts = res.data.posts;
+        this.pagination.totalPages = res.data.pages_count;
+        this.title = res.data.goal.name;
+
+        document.title = this.title + " | Smiley Movement";
+        this.$refs.breadcrumbs.breadcrumbs[
+          this.$refs.breadcrumbs.breadcrumbs.length - 1
+        ].meta.title = this.title;
+      })
+      .catch(error => console.log(error));
+
+    this.posts = this.posts.length = 4;
   }
 };
 </script>
