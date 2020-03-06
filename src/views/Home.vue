@@ -15,41 +15,21 @@
       </div>
     </div>
 
-    <section class="smiley-news container">
-      <div class="smiley-news-left">
-        <div class="smiley-news-main-title">
+    <section class="news-grid homepage container">
+      <div class="news-grid__title">
+        <div class="news-grid__title-logo" style="background-color: #eeb400">
           <img src="img/homepage/smiley-main-title.svg" alt="smiley news" />
           <P>News</P>
         </div>
-        <p>Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
-        <router-link :to="'/news/category/all'" class="read-more-link">
-          <span></span>Read more
-        </router-link>
+        <div class="news-grid__title-description">
+          <p>Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
+          <router-link :to="'/news/category/all'" class="read-more-link">
+            <span></span>Read more
+          </router-link>
+        </div>
       </div>
 
-      <div class="smiley-news-center">
-        <router-link :to="'/news/' + featuredNews.slug" class="article-item">
-          <div class="smiley-img-wrap">
-            <div class="smiley-img">
-              <img
-                :src="$settings.images_path.news  +'l_'+featuredNews.cover_image"
-                :alt="featuredNews.title"
-                :title="featuredNews.title"
-              />
-            </div>
-          </div>
-          <div class="article-descr">
-            <div class="article-date-location">
-              <div class="article-date"></div>
-              <div class="article-location"></div>
-            </div>
-            <div class="article-title">{{ featuredNews.title }}</div>
-            <div class="article-subtitle">{{ featuredNews.description }}</div>
-          </div>
-        </router-link>
-      </div>
-
-      <div class="smiley-news-right" v-if="newsList.length > 0">
+      <div class="news-grid__news" v-if="newsList.length > 0">
         <router-link
           v-for="newsItem in newsList"
           :to="'/news/' + newsItem.slug"
@@ -66,10 +46,6 @@
             </div>
           </div>
           <div class="article-descr">
-            <div class="article-date-location">
-              <div class="article-date"></div>
-              <div class="article-location"></div>
-            </div>
             <div class="article-title">{{ newsItem.title }}</div>
             <div class="article-subtitle">{{ newsItem.description }}</div>
           </div>
@@ -145,64 +121,45 @@
       </div>
     </section>
 
-    <section class="smiley-talks container">
-      <div class="smiley-talks-left">
-        <div class="smiley-talks-main-title">
-          <img src="img/homepage/smiley-main-title.svg" alt="smiley talks" />
+    <section class="news-grid homepage container">
+      <div class="news-grid__title">
+        <div class="news-grid__title-logo">
+          <img src="img/homepage/smiley-main-title.svg" alt="smiley news" />
           <P>Talks</P>
         </div>
-        <p>Smiley Talks are free live events crafted to tackle social and environmental issues linked to the UN sustainable development goals 2020.</p>
-        <router-link to="/talks" class="read-more-link">
-          <span></span>Read more
-        </router-link>
+        <div class="news-grid__title-description">
+          <p>Smiley Talks are free live events crafted to tackle social and environmental issues linked to the UN sustainable development goals 2020.</p>
+          <router-link :to="'/news/category/all'" class="read-more-link">
+            <span></span>Read more
+          </router-link>
+        </div>
       </div>
 
-      <div class="smiley-talks-center">
-        <router-link :to="'/talks/' + topEvent.slug" class="article-item">
-          <div class="smiley-img-wrap">
-            <div class="smiley-img">
-              <img
-                :src="$settings.images_path.events + 'm_' + topEvent.cover_image"
-                alt="big-photo"
-              />
-            </div>
-          </div>
-          <div class="article-descr">
-            <div class="article-date-location">
-              <div
-                class="article-date"
-              >{{ topEvent.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
-            </div>
-            <div class="article-title">{{topEvent.title}}</div>
-            <div class="article-subtitle">{{topEvent.short_description}}</div>
-          </div>
-        </router-link>
-      </div>
-
-      <div class="smiley-talks-right" v-if="eventList.length > 0">
+      <div class="news-grid__news" v-if="eventList.length > 0">
         <router-link
-          :to="'/talks/' + event.slug"
+          v-for="event in eventList"
+          :to="'/events/' + event.slug"
+          :key="event.id+event.title"
           class="article-item"
-          v-for="(event) in eventList"
-          :key="event.id"
         >
           <div class="smiley-img-wrap">
             <div class="smiley-img">
               <img
-                :src="$settings.images_path.events + 'm_' + event.cover_image"
-                alt="small preview 1"
+                :src="$settings.images_path.events  +'m_'+event.cover_image"
+                :alt="event.title"
+                :title="event.title"
               />
             </div>
           </div>
           <div class="article-descr">
+            <div class="article-title">{{ event.title }}</div>
             <div class="article-date-location">
               <div
                 class="article-date"
               >{{ event.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
               <div class="article-location">{{event.location}}</div>
             </div>
-            <div class="article-title">{{event.title}}</div>
-            <div class="article-subtitle">{{event.short_description}}</div>
+            <div class="article-subtitle">{{ event.short_description }}</div>
           </div>
         </router-link>
       </div>
@@ -351,10 +308,7 @@ export default {
   },
   data() {
     return {
-      topEvent: {},
       eventList: [],
-
-      featuredNews: {},
       newsList: [],
 
       goals: [],
@@ -382,14 +336,8 @@ export default {
     axios
       .get("/pages/1")
       .then(res => {
-        console.log("old format", res);
-
-        this.topEvent = res.data.future_events[0];
-        res.data.future_events.shift();
         this.eventList = res.data.future_events;
 
-        this.featuredNews = res.data.latest_news[0];
-        res.data.latest_news.shift();
         this.newsList = res.data.latest_news;
 
         this.goals = res.data.goals[0].goals;
@@ -481,11 +429,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/blocks/_homepage-news-item";
+@import "@/scss/blocks/_homepage-news-grid";
+
 @import "@/scss/sections/_homepage-header";
-@import "@/scss/components/_article-item";
-@import "@/scss/sections/_smiley-talks";
+@import "@/scss/components/_article-item"; // remove or not?
+@import "@/scss/sections/_smiley-talks"; // moved to grid`
 @import "@/scss/sections/_smiley-network";
-@import "@/scss/sections/_smiley-news";
+@import "@/scss/sections/_smiley-news"; // moved to grid
 @import "@/scss/sections/_homepage-network";
 @import "@/scss/sections/_homepage-thematic-icons";
 @import "@/scss/sections/_smiley-video-section";

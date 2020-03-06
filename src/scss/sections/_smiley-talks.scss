@@ -104,87 +104,85 @@
     }
   }
 
-  .smiley-talks-center {
+  // Article stuff
+  .article-item {
+    margin-bottom: 5px;
+    text-decoration: none;
 
+    img {
+      height: 100%;
+    }
+  }
+
+  .article-title {
+    color: $default-text;
+    font: 700 20px/32px 'Montserrat Bold', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .article-subtitle {
+    color: #a1a1a1;
+    font: 600 14px/24px 'Montserrat SemiBold', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 11px;
+  }
+
+  .article-date-location {
+    display: block;
 
     .article-date {
-      width: 150px;
+      font-size: 12px;
     }
 
     .article-location {
-      font-size: .8em;
-    }
-
-    &:after {
-      margin-top: 33px;
-      margin-bottom: 20px;
-      content: '';
-      border-bottom: 1px solid #E4E4E4;
-      display: block;
-
-      @include md {
-        border-bottom: none;
-      }
-    }
-
-    @include xxl {
-      max-width: 499px;
-      margin-bottom: 40px;
+      font-size: 12px;
+      margin-left: 0px;
     }
   }
 
   .smiley-talks-right {
-    @include md {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-    }
+    padding-left: 30px;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-    @include xxlMax {
-      .article-item {
-        width: 50%;
-      }
-    }
-
-    @include mdMax {
-      .article-item {
-        width: 100%;
-      }
-    }
-
-
-
-    @include xxl {
-      flex-direction: column;
-      width: auto;
-      max-width: 630px;
+    .article-item {
+      width: calc(50% - 15px);
+      margin-bottom: 30px;
 
       .smiley-img-wrap {
-        max-width: 266px;
-      }
+        height: 190px;
+        box-sizing: border-box;
+        margin-bottom: 30px;
 
-      .article-item {
-        flex-direction: row;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+
+    .article-item:first-child {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      .smiley-img-wrap {
+        height: 190px;
+        width: calc(50% - 15px);
+        box-sizing: border-box;
+        margin-bottom: 0px;
       }
 
       .article-descr {
-        padding-left: 20px;
-        flex: 1;
-
-        .article-date-location {
-          margin-top: 0;
-          justify-content: inherit;
-
-          .article-date {
-            width: 100px
-          }
-
-          .article-location {
-            font-size: .7em;
-            flex: 1;
-          }
-        }
+        width: 50%;
+        box-sizing: border-box;
+        padding-left: 30px;
       }
     }
   }
