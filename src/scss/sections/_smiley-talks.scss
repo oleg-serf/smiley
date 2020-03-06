@@ -105,19 +105,7 @@
   }
 
   .smiley-talks-center {
-    .article-title {
-      color: $default-text;
-      font: 700 32px/43px 'Montserrat Bold', sans-serif;
-      text-transform: uppercase;
-      margin-top: 14px;
-      margin-bottom: 10px;
 
-      @include md {
-        margin-top: 6px;
-        margin-bottom: 0;
-        font: 32px/48px 'Montserrat Bold', sans-serif;
-      }
-    }
 
     .article-date {
       width: 150px;
@@ -125,11 +113,6 @@
 
     .article-location {
       font-size: .8em;
-    }
-
-    .article-subtitle {
-      color: $default-text;
-      font: 400 22px/30px 'Muli', sans-serif;
     }
 
     &:after {
