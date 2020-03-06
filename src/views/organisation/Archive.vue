@@ -11,11 +11,13 @@
           <div class="organisation-item__logo">
             <router-link :to="'/organisation/' + organisation.slug">
               <img
+                v-if="organisation.logo != null"
                 :src="$settings.images_path.organisations + 's_' + organisation.logo"
                 alt
                 title
                 class="organisation-item__image"
               />
+              <img v-else src="/img/group.svg" />
             </router-link>
           </div>
           <h2 class="organisation-item__title">
