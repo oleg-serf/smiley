@@ -53,7 +53,8 @@
                 </div>
               </div>
             </div>
-            <div class="sidebar-block">
+            <!-- Hidden speakers block in sidebar -->
+            <div class="sidebar-block" style="display: none;">
               <button class="accordion">Speakers</button>
               <div class="panel">
                 <div class="panel-content-wrap">
@@ -273,6 +274,9 @@
               <li v-for="(ev, index) in event.event_blocks" :key="ev.id">
                 <a :href="'#tab-' + ++index" :class="{active: index === 0}">{{ev.title}}</a>
               </li>
+              <li>
+                <a href="#tab-speakers">Speakers</a>
+              </li>
             </ul>
 
             <div class="tabs-items">
@@ -284,6 +288,23 @@
               >
                 <div :class="'content-tab-' + index">
                   <p v-html="ev.content"></p>
+                </div>
+              </div>
+              <div class="tabs-item item-speakers" id="tab-speakers">
+                <div class="content-tab-speakers content-tab-speakers--columns">
+                  <div class="speaker-item" v-for="speaker in event.speakers" :key="speaker.id">
+                    <div class="speaker-avatar-wrap">
+                      <div class="speaker-avatar">
+                        <img
+                          :src="'https://new-smiley.s3.eu-west-2.amazonaws.com/speakers/m_' + speaker.image"
+                        />
+                      </div>
+                    </div>
+                    <div class="speaker-name-caption">
+                      <div class="speaker-name">{{speaker.full_name}}</div>
+                      <div class="speaker-caption">{{speaker.role}}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
