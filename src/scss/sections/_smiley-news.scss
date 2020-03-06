@@ -19,16 +19,6 @@
     .smiley-news-center {
       width: 48%;
     }
-
-    &:before {
-      content: '';
-      border-top: 1px solid #E4E4E4;
-      position: absolute;
-      top: 0;
-      display: block;
-      width: 100%;
-      max-width: 1560px;
-    }
   }
 
   @include xxl {

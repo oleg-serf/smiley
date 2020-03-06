@@ -14,64 +14,64 @@
         </div>
       </div>
     </div>
-    <section class="smiley-talks container">
-      <div class="smiley-talks-left">
-        <div class="smiley-talks-main-title">
-          <img src="img/homepage/smiley-main-title.svg" alt="smiley talks" />
-          <P>Talks</P>
+
+    <section class="smiley-news container">
+      <div class="smiley-news-left">
+        <div class="smiley-news-main-title">
+          <img src="img/homepage/smiley-main-title.svg" alt="smiley news" />
+          <P>News</P>
         </div>
-        <p>Smiley Talks are free live events crafted to tackle social and environmental issues linked to the UN sustainable development goals 2020.</p>
-        <router-link to="/talks" class="read-more-link">
+        <p>Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
+        <router-link :to="'/news/category/all'" class="read-more-link">
           <span></span>Read more
         </router-link>
       </div>
 
-      <div class="smiley-talks-center">
-        <router-link :to="'/talks/' + topEvent.slug" class="article-item">
+      <div class="smiley-news-center">
+        <router-link :to="'/news/' + featuredNews.slug" class="article-item">
           <div class="smiley-img-wrap">
             <div class="smiley-img">
               <img
-                :src="$settings.images_path.events + 'm_' + topEvent.cover_image"
-                alt="big-photo"
+                :src="$settings.images_path.news  +'l_'+featuredNews.cover_image"
+                :alt="featuredNews.title"
+                :title="featuredNews.title"
               />
             </div>
           </div>
           <div class="article-descr">
             <div class="article-date-location">
-              <div
-                class="article-date"
-              >{{ topEvent.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
+              <div class="article-date"></div>
+              <div class="article-location"></div>
             </div>
-            <div class="article-title">{{topEvent.title}}</div>
-            <div class="article-subtitle">{{topEvent.short_description}}</div>
+            <div class="article-title">{{ featuredNews.title }}</div>
+            <div class="article-subtitle">{{ featuredNews.description }}</div>
           </div>
         </router-link>
       </div>
 
-      <div class="smiley-talks-right" v-if="eventList.length > 0">
+      <div class="smiley-news-right" v-if="newsList.length > 0">
         <router-link
-          :to="'/talks/' + event.slug"
+          v-for="newsItem in newsList"
+          :to="'/news/' + newsItem.slug"
+          :key="newsItem.id+newsItem.title"
           class="article-item"
-          v-for="(event) in eventList"
-          :key="event.id"
         >
           <div class="smiley-img-wrap">
             <div class="smiley-img">
               <img
-                :src="$settings.images_path.events + 'm_' + event.cover_image"
-                alt="small preview 1"
+                :src="$settings.images_path.news  +'m_'+newsItem.cover_image"
+                :alt="newsItem.title"
+                :title="newsItem.title"
               />
             </div>
           </div>
           <div class="article-descr">
             <div class="article-date-location">
-              <div
-                class="article-date"
-              >{{ event.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
-              <div class="article-location">{{event.location}}</div>
+              <div class="article-date"></div>
+              <div class="article-location"></div>
             </div>
-            <div class="article-title">{{event.title}}</div>
-            <div class="article-subtitle">{{event.short_description}}</div>
+            <div class="article-title">{{ newsItem.title }}</div>
+            <div class="article-subtitle">{{ newsItem.description }}</div>
           </div>
         </router-link>
       </div>
@@ -145,63 +145,64 @@
       </div>
     </section>
 
-    <section class="smiley-news container">
-      <div class="smiley-news-left">
-        <div class="smiley-news-main-title">
-          <img src="img/homepage/smiley-main-title.svg" alt="smiley news" />
-          <P>News</P>
+    <section class="smiley-talks container">
+      <div class="smiley-talks-left">
+        <div class="smiley-talks-main-title">
+          <img src="img/homepage/smiley-main-title.svg" alt="smiley talks" />
+          <P>Talks</P>
         </div>
-        <p>Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
-        <router-link :to="'/news/category/all'" class="read-more-link">
+        <p>Smiley Talks are free live events crafted to tackle social and environmental issues linked to the UN sustainable development goals 2020.</p>
+        <router-link to="/talks" class="read-more-link">
           <span></span>Read more
         </router-link>
       </div>
 
-      <div class="smiley-news-center">
-        <router-link :to="'/news/' + featuredNews.slug" class="article-item">
+      <div class="smiley-talks-center">
+        <router-link :to="'/talks/' + topEvent.slug" class="article-item">
           <div class="smiley-img-wrap">
             <div class="smiley-img">
               <img
-                :src="$settings.images_path.news  +'l_'+featuredNews.cover_image"
-                :alt="featuredNews.title"
-                :title="featuredNews.title"
+                :src="$settings.images_path.events + 'm_' + topEvent.cover_image"
+                alt="big-photo"
               />
             </div>
           </div>
           <div class="article-descr">
             <div class="article-date-location">
-              <div class="article-date"></div>
-              <div class="article-location"></div>
+              <div
+                class="article-date"
+              >{{ topEvent.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
             </div>
-            <div class="article-title">{{ featuredNews.title }}</div>
-            <div class="article-subtitle">{{ featuredNews.description }}</div>
+            <div class="article-title">{{topEvent.title}}</div>
+            <div class="article-subtitle">{{topEvent.short_description}}</div>
           </div>
         </router-link>
       </div>
 
-      <div class="smiley-news-right" v-if="newsList.length > 0">
+      <div class="smiley-talks-right" v-if="eventList.length > 0">
         <router-link
-          v-for="newsItem in newsList"
-          :to="'/news/' + newsItem.slug"
-          :key="newsItem.id+newsItem.title"
+          :to="'/talks/' + event.slug"
           class="article-item"
+          v-for="(event) in eventList"
+          :key="event.id"
         >
           <div class="smiley-img-wrap">
             <div class="smiley-img">
               <img
-                :src="$settings.images_path.news  +'m_'+newsItem.cover_image"
-                :alt="newsItem.title"
-                :title="newsItem.title"
+                :src="$settings.images_path.events + 'm_' + event.cover_image"
+                alt="small preview 1"
               />
             </div>
           </div>
           <div class="article-descr">
             <div class="article-date-location">
-              <div class="article-date"></div>
-              <div class="article-location"></div>
+              <div
+                class="article-date"
+              >{{ event.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
+              <div class="article-location">{{event.location}}</div>
             </div>
-            <div class="article-title">{{ newsItem.title }}</div>
-            <div class="article-subtitle">{{ newsItem.description }}</div>
+            <div class="article-title">{{event.title}}</div>
+            <div class="article-subtitle">{{event.short_description}}</div>
           </div>
         </router-link>
       </div>
