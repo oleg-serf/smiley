@@ -280,7 +280,7 @@
     <div class="profile-fill-alert" v-if="!completed_profile && auth">
       <div
         class="container"
-      ><img src="/img/warning.svg" class="profile-fill-alert__warning"> Your profile is not 100% complete. In order to benefit a better experience, please take the time to finish it here.</div>
+      ><img src="/img/warning.svg" class="profile-fill-alert__warning"><p>Your profile is not 100% complete. In order to benefit a better experience, please take the time to finish it  <span><router-link :to="{name: 'account-settings'}">here</router-link></span>.</p></div>
     </div>
   </header>
 </template>
@@ -859,5 +859,21 @@ export default {
     height: 24px;
     margin-right: 24px;
   }
+
+  p {
+      margin: 0px !important;
+      padding: 0px !important;
+    }
+
+    span {
+      margin-left: 0px;
+      display: inline-block;
+    }
+
+    a {
+      color: #393939;
+      text-decoration: none;
+      border-bottom: 1px solid #393939;
+    }
 }
 </style>
