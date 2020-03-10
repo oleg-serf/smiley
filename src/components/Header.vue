@@ -277,6 +277,11 @@
         </div>
       </div>
     </div>
+    <div class="profile-fill-alert" v-if="!completed_profile && auth">
+      <div
+        class="container"
+      ><img src="/img/warning.svg" class="profile-fill-alert__warning"> Your profile is not 100% complete. In order to benefit a better experience, please take the time to finish it here.</div>
+    </div>
   </header>
 </template>
 
@@ -303,7 +308,8 @@ export default {
       isOrganisationAdmin: state => state.organisation.admin,
       organisationSlug: state => state.organisation.slug,
       avatar: state => state.info.avatar,
-      avatarTextual: state => state.info.full_name
+      avatarTextual: state => state.info.full_name,
+      completed_profile: state => state.completed_profile
     })
   },
   mounted() {
@@ -834,5 +840,24 @@ export default {
 .login-block {
   display: flex;
   align-items: center;
+}
+
+.profile-fill-alert {
+  background-color: #fefab6;
+  padding-top: 10px;
+  padding-bottom: 12px;
+  font: 400 16px/20px "Muli", sans-serif;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+
+  .container {
+    display: flex;
+  }
+
+  .profile-fill-alert__warning {
+    width: 24px;
+    height: 24px;
+    margin-right: 24px;
+  }
 }
 </style>

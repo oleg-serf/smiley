@@ -189,6 +189,77 @@
           </label>
         </div>
 
+        <div class="section-title">
+          <h3 class="section-title__heading">Survey:</h3>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>How did you hear about us?</span>
+            <select v-model="user.survey">
+              <option value="1">Social Media</option>
+              <option value="2">Google (Bing, etc) search</option>
+              <option value="3">I attended a Smiley Movement event</option>
+              <option value="4">From a friend</option>
+              <option value="5">I received an email from Smiley Movement</option>
+              <option value="6">I received a call from Smiley Movement</option>
+              <option value="7">Other (Please specify)</option>
+            </select>
+          </label>
+          <label v-if="user.survey == 7" for="survey_other">
+            <span><br></span>
+            <input
+              type="text"
+              name="survey_other"
+              id="survey_other"
+              v-model="user.survey_other"
+              placeholder="Specify here"
+            />
+          </label>
+        </div>
+
+        <div class="section-title">
+          <h3 class="section-title__heading">
+            Support I
+            <u>Offer</u>
+          </h3>
+        </div>
+        <template v-for="item in allSupports">
+          <div :key="item.id + 'support-offer'">
+            <h4>{{item.title}}</h4>
+            <div class="input-row">
+              <label
+                v-for="option in item.supports"
+                :key="option.id+'support-offer-option'"
+                class="checkbox-label"
+              >
+                <input type="checkbox" :value="option.id" v-model="user.offer" />
+                <span>{{option.title}}</span>
+              </label>
+            </div>
+          </div>
+        </template>
+        <div class="section-title">
+          <h3 class="section-title__heading">
+            Support I
+            <u>Need</u>
+          </h3>
+        </div>
+        <template v-for="item in allSupports">
+          <div :key="item.id + 'support-need'">
+            <h4>{{item.title}}</h4>
+            <div class="input-row">
+              <label
+                v-for="option in item.supports"
+                :key="option.id+'support-need-option'"
+                class="checkbox-label"
+              >
+                <input type="checkbox" :value="option.id" v-model="user.need" />
+                <span>{{option.title}}</span>
+              </label>
+            </div>
+          </div>
+        </template>
+
         <div class="finish-btn-wrap">
           <button
             class="finish-btn"
@@ -234,12 +305,19 @@ export default {
         google: "",
         twitter: "",
         instagram: "",
-        goals: []
+        goals: [],
+        offer: [],
+        need: [],
+        survey: null,
+        survey_other: null,
       },
       // -
       avatarHolder: null,
       // All goals
       allGoals: [],
+      allSupports: [],
+      userSupports: [],
+      userNeeds: [],
       // Editor
       editor: ClassicEditor,
       editorConfig: {
@@ -306,6 +384,18 @@ export default {
       router.push({
         name: "profile"
       });
+    },
+    isSupportChecked(id, type = "offer") {
+      if (type == "offer") {
+        // console.log("offer check, current id: ", id);
+        let isInSupport = this.userSupports.filter(item => item.id === id);
+        console.log("array length", isInSupport.length);
+        return isInSupport.length > 0 ? true : false;
+      } else {
+        console.log("needs check");
+        let isInNeeded = this.userNeeds.filter(item => item.id == id);
+        return isInNeeded.length > 0 ? true : false;
+      }
     }
   },
   mounted() {
@@ -331,6 +421,11 @@ export default {
         console.log(this.avatarHolder);
 
         this.user.goals = response.data.goals;
+
+        this.allSupports = response.data.all_supports;
+
+        this.user.need = response.data.need_support.map(item => item.id);
+        this.user.offer = response.data.offer_support.map(item => item.id);
 
         this.allGoals = response.data.all_goals;
       })

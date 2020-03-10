@@ -8,6 +8,7 @@ const state = {
     avatar: (localStorage.getItem('avatar')) || null,
     full_name: (localStorage.getItem('full_name')) || null,
   },
+  completed_profile: parseInt(localStorage.getItem('completed_profile')) || false,
   organisation: {
     admin: (localStorage.getItem('organisation-user')) || null,
     slug: (localStorage.getItem('organisation-slug')) || null,
@@ -175,9 +176,11 @@ const mutations = {
 
     state.info.avatar = data.user.avatar;
     state.info.full_name = data.user.full_name;
+    state.completed_profile = data.user.completed_profile;
 
     localStorage.setItem('avatar', data.user.avatar);
     localStorage.setItem('full_name', data.user.full_name);
+    localStorage.setItem('completed_profile', data.user.completed_profile);
   },
   REMOVE_USERDATA(state) {
     // TODO: Clear all stuff

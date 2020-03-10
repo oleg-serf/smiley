@@ -477,10 +477,15 @@
             </div>
           </div>
 
-          <div class="organization-tabs" id="tabs" v-if="tabs !== null && tabs.length > 0">
+          <div class="organization-tabs" id="tabs" style="display: none;">
             <ul class="tabs-nav">
-              <li v-for="(tab, index) in tabs" :key="'tabs-nav-'+index">
-                <a :href="'#tab-'+index" :class="{active: index == 0}">{{tab.title}}</a>
+              <template v-if="tabs !== null && tabs.length > 0">
+                <li v-for="(tab, index) in tabs" :key="'tabs-nav-'+index">
+                  <a :href="'#tab-'+index" :class="{active: index == 0}">{{tab.title}}</a>
+                </li>
+              </template>
+              <li>
+                <a href>News</a>
               </li>
             </ul>
 
@@ -497,34 +502,45 @@
             </div>
           </div>
 
-          <section class="news-category-section latest-articles container">
-            <div class="news-category-container">
-              <router-link
-                :to="'/news/' + post.slug"
-                class="article-item"
-                v-for="post in posts"
-                :key="post.id+post.title"
-              >
-                <div class="smiley-img-wrap">
-                  <div class="smiley-img">
-                    <img
-                      :src="$settings.images_path.news  +'m_'+post.cover_image"
-                      :alt="post.title"
-                      :title="post.title"
-                    />
-                  </div>
-                </div>
-                <div class="article-descr">
-                  <div class="article-date-location">
-                    <div class="article-date">{{post.created_at}}</div>
-                    <div class="article-location">{{post.location}}</div>
-                  </div>
-                  <div class="article-title">{{post.title}}</div>
-                  <div class="article-subtitle">{{post.description}}</div>
-                </div>
-              </router-link>
+          <div class="organization-description">
+            <template v-for="(tab, index) in tabs">
+              <div class="section-title" :key="'tabs-nav-'+index">
+                <h3>{{tab.title}}</h3>
+              </div>
+              <section class="container" :key="'tabs-nav-'+index" v-html="tab.content"></section>
+            </template>
+            <div class="section-title">
+              <h3>Latest news</h3>
             </div>
-          </section>
+            <section class="news-grid container">
+              <div class="news-grid__news">
+                <router-link
+                  :to="'/news/' + post.slug"
+                  class="article-item"
+                  v-for="post in posts"
+                  :key="post.id+post.title"
+                >
+                  <div class="smiley-img-wrap">
+                    <div class="smiley-img">
+                      <img
+                        :src="$settings.images_path.news  +'m_'+post.cover_image"
+                        :alt="post.title"
+                        :title="post.title"
+                      />
+                    </div>
+                  </div>
+                  <div class="article-descr">
+                    <div class="article-date-location">
+                      <div class="article-date">{{post.created_at}}</div>
+                      <div class="article-location">{{post.location}}</div>
+                    </div>
+                    <div class="article-title">{{post.title}}</div>
+                    <div class="article-subtitle">{{post.description}}</div>
+                  </div>
+                </router-link>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </section>
@@ -644,25 +660,26 @@ export default {
     axios
       .get("/news")
       .then(res => {
-        this.posts = res.data.posts;
+        let tempArray = res.data.posts.splice(0, 6);
+        this.posts = tempArray;
         this.pagination.totalPages = res.data.pages_count;
         this.title = res.data.goal.name;
-
-        document.title = this.title + " | Smiley Movement";
-        this.$refs.breadcrumbs.breadcrumbs[
-          this.$refs.breadcrumbs.breadcrumbs.length - 1
-        ].meta.title = this.title;
       })
       .catch(error => console.log(error));
-
-    this.posts = this.posts.length = 4;
   }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/scss/components/_article-item";
-@import "@/scss/sections/_latest-news";
-@import "@/scss/sections/_news-category-section";
-@import "@/scss/sections/_organisation-my";
+@import "@/scss/blocks/_organisation-single";
+@import "@/scss/blocks/_homepage-news-grid";
+
+.news-grid {
+  padding-top: 0px;
+}
+
+.container {
+  padding: 0 20px;
+}
 </style>
