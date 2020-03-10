@@ -51,7 +51,6 @@
           </h3>
           <div class="content-section__content">
             <ul class="support-list">
-              <ul class="support-list">
                 <li
                   class="support-list__item"
                   v-for="(item, index) in supportOffer"
@@ -63,7 +62,6 @@
                     <div class="support-list__subcategory">{{item.title}}</div>
                   </div>
                 </li>
-              </ul>
             </ul>
           </div>
         </div>
