@@ -9,11 +9,10 @@
 
           <h2>Fill in the form below and we will get back to you as soon as possible</h2>
 
-          <form method="POST" action="https://smileymovement.org/contact">
-            <input type="hidden" name="_token" value="QTS5oP37eBqS3MMJIhqAbCmrmvlZXEu46OcUYzsw" />
+          <form @submit.prevent="sendMessage">
             <div class="form-group">
               <div class="wrap-for-subject-select">
-                <select name="subject" class="subject-filter" required>
+                <select name="subject" class="subject-filter" required v-model="contact.subject">
                   <option value selected disabled>Select a subject</option>
                   <option>My account</option>
                   <option>Events</option>
@@ -47,6 +46,7 @@
                 class="form-control form-control--light"
                 placeholder="Your email.."
                 required
+                v-model="contact.email"
               />
             </div>
 
@@ -57,7 +57,9 @@
                 class="form-control form-control--light"
                 placeholder="Write us a message.."
                 rows="6"
+                minlength="16"
                 required
+                v-model="contact.message"
               ></textarea>
             </div>
 
@@ -74,6 +76,8 @@
 </template>
 
 <script>
+import axios from "@/axios-auth";
+
 import Footer from "@/components/Footer.vue";
 
 export default {
@@ -82,7 +86,31 @@ export default {
     Footer
   },
   data() {
-    return {};
+    return {
+      contact: {
+        subject: "",
+        email: "",
+        message: ""
+      }
+    };
+  },
+  methods: {
+    sendMessage() {
+      axios
+        .post("/contact", this.contact)
+        .then(res => {
+          this.$swal({
+            text: res.data.message,
+            icon: "info"
+          });
+        })
+        .catch(error => {
+          this.$swal({
+            text: error.response.data.message,
+            icon: "error"
+          });
+        });
+    }
   }
 };
 </script>
