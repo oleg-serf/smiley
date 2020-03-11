@@ -914,7 +914,9 @@ export default {
     sendInvite() {
       let emails = this.inviteEmails.split(",");
       axios
-        .post("/events/" + this.$route.params.slug + "/invite", emails)
+        .post("/events/" + this.$route.params.slug + "/invite", {
+          emails: emails
+        })
         .then(res => {
           console.log("success", res);
         })
