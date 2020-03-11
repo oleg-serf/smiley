@@ -103,6 +103,10 @@ export default {
             text: res.data.message,
             icon: "info"
           });
+
+          this.contact.subject = "";
+          this.contact.email = "";
+          this.contact.message = "";
         })
         .catch(error => {
           this.$swal({

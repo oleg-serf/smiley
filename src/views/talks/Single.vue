@@ -432,13 +432,15 @@
           <section class="invite-friends">
             <div class="invite-friends-section-wrap">
               <h2 class="invite-friends-title">Invite friends</h2>
-              <form class="invite-friends-form-wrap">
+              <form class="invite-friends-form-wrap" @submit.prevent="sendInvite">
                 <label for="invite">
                   <input
-                    type="text"
+                    type="email"
                     name="invite"
                     id="invite"
+                    multiple
                     placeholder="Separate multiple emails with commas"
+                    v-model="inviteEmails"
                   />
                 </label>
                 <button class="invite-btn">Send invite</button>
@@ -817,7 +819,8 @@ export default {
             ]
           }
         ]
-      }
+      },
+      inviteEmails: null
     };
   },
   computed: {
@@ -908,6 +911,15 @@ export default {
       .catch(error => console.log(error));
   },
   methods: {
+    sendInvite() {
+      let emails = this.inviteEmails.split(",");
+      axios
+        .post("/events/" + this.$route.params.slug + "/invite", emails)
+        .then(res => {
+          console.log("success", res);
+        })
+        .catch(error => console.error("error", error.response));
+    },
     isEventRegisterable(time) {
       if (time === undefined) {
         return false;
