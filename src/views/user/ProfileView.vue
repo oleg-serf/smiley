@@ -67,6 +67,7 @@ export default {
     axios
       .get("/users/" + this.$route.params.slug)
       .then(response => {
+        console.log(response);
         document.title =
           response.data.user.display_name + "'s Profile | Smiley Movement";
         this.user = response.data.user;

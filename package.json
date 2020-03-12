@@ -17,6 +17,7 @@
     "vue-breadcrumbs": "^1.2.0",
     "vue-clickaway": "^2.2.2",
     "vue-facebook-login-component": "^1.4.0",
+    "vue-google-autocomplete": "^1.1.0",
     "vue-google-login": "^2.0.3",
     "vue-owl-carousel2": "^2.0.7",
     "vue-router": "^3.1.3",

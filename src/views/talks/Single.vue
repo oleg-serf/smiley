@@ -90,7 +90,7 @@
                       :class="{'next': index > 0, 'hidden-item': index > 10}"
                     >
                       <router-link :to="'/users/' + attendee.slug" :title="attendee.full_name">
-                        <template v-if="attendee.avatar !== null">
+                        <template v-if="attendee.avatar != null">
                           <img
                             :src="$settings.images_path.users + 's_' + attendee.avatar"
                             :alt="attendee.full_name"
