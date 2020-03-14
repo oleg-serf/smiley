@@ -113,6 +113,8 @@
     color: #fff;
     font: 400 22px/30px 'Muli', sans-serif;
     margin-bottom: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
 
     @include xl {
       margin-bottom: 0;

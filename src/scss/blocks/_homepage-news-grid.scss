@@ -50,9 +50,7 @@
       }
 
       @include mdMax {
-        width: calc(100% + 80px);
-        margin-left: -40px !important;
-        margin-right: -40px !important;
+        width: 100%;
       }
 
       p {
@@ -90,6 +88,10 @@
   &.homepage {
     .news-grid__news {
       width: calc(70% - 30px);
+
+      @include mdMax {
+        width: 100%;
+      }
 
       .article-item:first-child {
         display: flex;

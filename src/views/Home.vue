@@ -253,9 +253,9 @@
     <section class="thematic-icons container">
       <h2 class="thematic-icons-title">Browse by goal</h2>
 
-      <div class="thematic-icons-wrap" style="margin-left: -10px; margin-right: -10px">
+      <div class="thematic-icons-wrap">
         <div class="icon-wrap" v-for="goal in goals" :key="goal.name+goal.id">
-          <router-link :to="'/news/category/' + goal.slug">
+          <router-link :to="'/news-events/' + goal.slug">
             <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
           </router-link>
         </div>

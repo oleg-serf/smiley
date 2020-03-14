@@ -55,7 +55,7 @@
 
             <div class="tm-right">
               <div class="login-block" v-if="auth">
-                <a class="search-icon" href="#" style="display: none">
+                <a class="search-icon" href="#" @click.prevent="searchActive = true">
                   <svg
                     width="24"
                     height="24"
@@ -245,11 +245,22 @@
               </div>
 
               <div class="register-block" v-else>
-                <!--                <a class="search-icon" href="#">-->
-                <!--                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-                <!--                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z" fill="#1A1A1A"/>-->
-                <!--                  </svg>-->
-                <!--                </a>-->
+                <a class="search-icon" href="#" @click.prevent="searchActive = true">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
+                      fill="#1A1A1A"
+                    />
+                  </svg>
+                </a>
                 <!--                <a class="second-icon" href="#">-->
                 <!--                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
                 <!--                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.99995 20C4.29569 20 3.82468 19.2979 4.05973 18.6586L4.10552 18.5528L5.26094 16.242C5.69833 15.3672 5.94701 14.4115 5.99238 13.4369L5.99995 13.1115V10C5.99995 7.02694 8.16233 4.55893 11.0001 4.08293L10.9999 3C10.9999 2.44772 11.4477 2 11.9999 2C12.5522 2 12.9999 2.44772 12.9999 3L13.0008 4.08309C15.7593 4.54627 17.8793 6.89172 17.995 9.75347L17.9999 10V13.1115C17.9999 14.0895 18.2049 15.0555 18.6002 15.9474L18.739 16.242L19.8944 18.5528C20.2093 19.1827 19.792 19.918 19.1151 19.9936L18.9999 20H13.9999C13.9999 21.1046 13.1045 22 11.9999 22C10.8954 22 9.99995 21.1046 9.99995 20H4.99995ZM11.9999 6C9.85775 6 8.10887 7.68397 8.00484 9.80036L7.99995 10V13.1115C7.99995 14.3922 7.7266 15.6569 7.19975 16.8213L7.04979 17.1364L6.61798 18H17.3819L16.9501 17.1364C16.3773 15.9908 16.0562 14.7374 16.0067 13.4603L15.9999 13.1115V10C15.9999 7.79086 14.2091 6 11.9999 6Z" fill="#1A1A1A"/>-->
@@ -278,15 +289,53 @@
       </div>
     </div>
     <div class="profile-fill-alert" v-if="!completed_profile && auth">
-      <div
-        class="container"
-      ><img src="/img/warning.svg" class="profile-fill-alert__warning"><p>Your profile is not 100% complete. In order to benefit a better experience, please take the time to finish it  <span><router-link :to="{name: 'account-settings'}">here</router-link></span>.</p></div>
+      <div class="container">
+        <img src="/img/warning.svg" class="profile-fill-alert__warning" />
+        <p>
+          Your profile is not 100% complete. In order to benefit a better experience, please take the time to finish it
+          <span>
+            <router-link :to="{name: 'account-settings'}">here</router-link>
+          </span>.
+        </p>
+      </div>
     </div>
+    <form class="search-form" :class="{active: searchActive}" @submit.prevent="search">
+      <div class="container">
+        <button class="search-form__close" type="button" @click="searchActive = false">X</button>
+        <div class="search-form__container">
+          <input
+            class="search-form__field"
+            placeholder="What are we looking for?"
+            type="search"
+            aria-label="Search through site content"
+            v-model="keyword"
+          />
+          <button class="search-form__submit" type="submit">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
+                fill="#1A1A1A"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </form>
   </header>
 </template>
 
 
 <script>
+import router from "@/router";
+
 import $ from "jquery";
 import { mixin as clickaway } from "vue-clickaway";
 import { mapState } from "vuex";
@@ -297,7 +346,9 @@ export default {
   components: {},
   data() {
     return {
-      registerDropdownShow: false
+      registerDropdownShow: false,
+      searchActive: false,
+      keyword: ""
     };
   },
   computed: {
@@ -330,6 +381,13 @@ export default {
     // });
   },
   methods: {
+    search() {
+      router.push({
+        name: "search",
+        params: { keyword: this.keyword }
+      });
+      this.searchActive = false;
+    },
     away: function() {
       this.registerDropdownShow = false;
     },
@@ -703,7 +761,7 @@ export default {
     }
     .search-icon {
       margin-right: 20px;
-      display: none;
+      // display: none;
     }
     .second-icon {
       margin-right: 12px;
@@ -861,19 +919,106 @@ export default {
   }
 
   p {
-      margin: 0px !important;
-      padding: 0px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+
+  span {
+    margin-left: 0px;
+    display: inline-block;
+  }
+
+  a {
+    color: #393939;
+    text-decoration: none;
+    border-bottom: 1px solid #393939;
+  }
+}
+
+// Searchform
+header {
+  position: relative;
+}
+.search-form {
+  position: absolute;
+  background: #fff;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-form__container {
+    width: 50%;
+    display: flex;
+
+    @include mdMax {
+      width: 100%;
+    }
+  }
+  .search-form__field {
+    flex: 1;
+    padding: 10px 15px;
+    font-family: "Muli", sans-serif;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: none;
+    width: 100%;
+    appearance: none;
+  }
+  .search-form__submit {
+    min-width: 50px;
+    font-family: "Muli", sans-serif;
+    padding: 10px 15px;
+    background-color: #eeb400;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border: none;
+  }
+  .search-form__close {
+    margin-right: 24px;
+    font-size: 0px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    background-color: transparent;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 100%;
+      height: 2px;
+      display: block;
+      background-color: #393939;
+      transform-origin: center;
     }
 
-    span {
-      margin-left: 0px;
-      display: inline-block;
+    &::before {
+      transform: rotate(45deg);
     }
 
-    a {
-      color: #393939;
-      text-decoration: none;
-      border-bottom: 1px solid #393939;
+    &::after {
+      transform: rotate(-45deg) translate(0px, 0px);
     }
+  }
 }
 </style>

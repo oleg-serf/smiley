@@ -108,6 +108,17 @@ const routes = [{
     }
   },
   /**
+   * Search
+   */
+  {
+    path: '/search/:keyword',
+    name: 'search',
+    component: () => import( /* webpackChunkName: "news" */ '../views/Search.vue'),
+    meta: {
+      title: 'Search results',
+    }
+  },
+  /**
    * News
    */
   {
@@ -130,6 +141,17 @@ const routes = [{
     path: '/news/category/:slug',
     name: 'news-category-item',
     component: () => import( /* webpackChunkName: "news" */ '../views/News-Category.vue'),
+    meta: {
+      breadcrumbs: ['news'],
+    }
+  },
+  /**
+   * News & Talks on same page
+   */
+  {
+    path: '/news-events/:slug',
+    name: 'news-category-item',
+    component: () => import( /* webpackChunkName: "news" */ '../views/News-Events-Category.vue'),
     meta: {
       breadcrumbs: ['news'],
     }
