@@ -3,7 +3,7 @@
     <Breadcrumbs />
     <div class="container">
       <section class="users-grid">
-        <div class="user-item" v-for="user in users" :key="user.fykk_name+'-org-archive'">
+        <div class="user-item" v-for="user in users" :key="user.full_name+'-org-archive'">
           <div class="user-item__avatar">
             <router-link :to="'/users/' + user.slug">
               <img
