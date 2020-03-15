@@ -183,15 +183,17 @@
           <!-- <ckeditor :editor="editor" v-model="reg.our_project" :config="editorConfig"></ckeditor> -->
           <div class="add-organisation-video">
             <label for="organisation-video">
-              Add organisation video?
-              <select v-model="reg.need_video">
+              Offer you a free video production to showcase your charity, if you would like us to reach out and organise this with you please click here
+              <select
+                v-model="reg.need_video"
+              >
                 <option v-bind:value="true">Yes</option>
                 <option v-bind:value="false" checked>No</option>
               </select>
             </label>
             <div class="input-row" v-if="reg.need_video">
               <label for="organisation-facebook">
-                Video source
+                Select video source
                 <select v-model="reg.video_type">
                   <option value="youtube">YouTube</option>
                   <option value="vimeo">Vimeo</option>

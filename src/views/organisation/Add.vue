@@ -182,13 +182,13 @@
           </div>
           <div class="add-organisation-video">
             <label for="organisation-video">
-              Add organisation video?
-              <select v-model="reg.need_video">
+              Do you have video presentation of you organisation?
+              <select v-model="video_display">
                 <option v-bind:value="true">Yes</option>
                 <option v-bind:value="false" checked>No</option>
               </select>
             </label>
-            <div class="input-row" v-if="reg.need_video">
+            <div class="input-row" v-if="video_display">
               <label for="organisation-facebook">
                 Video source
                 <select v-model="reg.video_type">
@@ -197,11 +197,42 @@
                 </select>
               </label>
               <label for="organisation-facebook">
-                Video ID
-                <input type="text" v-model="reg.video_id" />
+                Video link
+                <input type="url" v-model="reg.video_link" />
+              </label>
+            </div>
+            <div class="input-row" v-if="!video_display">
+              <label class="register-checkbox" style="width: 100%;">
+                Offer you a free video production to showcase your charity, if you would like us to reach out and organise this with you please click here
+                <input
+                  type="checkbox"
+                  class="fixed-checkbox"
+                  v-model="reg.need_video"
+                />
+                <span class="register-checkmark">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z"
+                      fill="#000"
+                    />
+                  </svg>
+                </span>
               </label>
             </div>
           </div>
+
+          <div class="section-title">
+            <h3 class="section-title__heading">Add photos:</h3>
+          </div>
+          <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
 
           <div class="checkbox-wrap">
             <label class="register-checkbox">
@@ -252,10 +283,20 @@ import Footer from "@/components/Footer";
 
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
+
 export default {
   name: "Customize-organisation",
   data() {
     return {
+      dropzoneOptions: {
+        url: "https://httpbin.org/post",
+        thumbnailWidth: 150,
+        maxFilesize: 8,
+        maxFiles: 10,
+        acceptedFiles: "image/png, image/jpeg, image/tiff"
+      },
       reg: {
         organisation_name: "",
         organisation_location: "",
@@ -270,9 +311,10 @@ export default {
         description_full: "",
         need_video: false,
         video_type: null,
-        video_id: null
+        video_link: null
         // our_project: ""
       },
+      video_display: false,
       organisationSectors: null,
       editor: ClassicEditor,
       editorConfig: {
@@ -370,7 +412,8 @@ export default {
   },
   components: {
     Header,
-    Footer
+    Footer,
+    vueDropzone: vue2Dropzone
   }
 };
 </script>

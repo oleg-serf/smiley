@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs />
+    <breadcrumbs ref="breadcrumbs" />
 
     <section class="organization-section">
       <div class="organization-content">
@@ -425,7 +425,7 @@
                 <a href="#tab-3">Our news</a>
               </li>
               <li>
-                <!-- <a href="#tab-4">Smiley hub</a> -->
+                <a href="#tab-4">Smiley hub</a>
               </li>
             </ul>
 
@@ -433,12 +433,17 @@
               <div class="tabs-item item-1" id="tab-1">
                 <button class="accordion">Description</button>
                 <div class="content-tab-1 panel">
-                  <h2>About the Human Hive</h2>
-                  <p>The Human Hive is a global community of inspiring people and organisations who work together to make a more welcoming and inclusive world. Whoever you are and wherever you’re from there’s a place for you in The Human Hive.</p>
+                  <h2>About the {{organisation.title}}</h2>
+
+                  <div
+                    v-if="organisation.organisation_tabs != null &&organisation.organisation_tabs.length > 0"
+                    v-html="organisation.organisation_tabs[0].content"
+                  ></div>
+
                   <div class="description-video">
                     <img src="/img/organization/video.jpg" alt />
                   </div>
-                  <p>The Human Hive isn’t a place or a program – it’s a way of being in the world that transforms aid into empowerment and enables people to stand on their own two feet again. We don’t simply give things away or do stuff for people we’ll likely never meet, we work WITH people, shoulder to shoulder, experiencing first hand the difference that our actions make.</p>
+
                   <carousel class="organization-slider owl-carousel">
                     <div class="slider-item">
                       <img src="/img/organization/slider-image-1.jpg" alt="image 1" />
@@ -456,7 +461,6 @@
                       <img src="/img/organization/slider-image-1.jpg" alt="image 1" />
                     </div>
                   </carousel>
-                  <p>The Human Hive isn’t a place or a program – it’s a way of being in the world that transforms aid into empowerment and enables people to stand on their own two feet again. We don’t simply give things away or do stuff for people we’ll likely never meet, we work WITH people, shoulder to shoulder, experiencing first hand the difference that our actions make.</p>
                 </div>
               </div>
 
@@ -676,12 +680,12 @@
                 </div>
               </div>
 
-              <!-- <div class="tabs-item item-1" id="tab-4">
+              <div class="tabs-item item-1" id="tab-4">
                 <button class="accordion">Smiley hub</button>
                 <div class="content-tab-4 clearfix panel">
                   <h2>Smiley hub</h2>
                 </div>
-              </div>-->
+              </div>
             </div>
           </div>
         </div>
