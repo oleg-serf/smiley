@@ -197,18 +197,18 @@ const routes = [{
       // TODO: Add check if user is admin of organisation?
     }
   },
-  {
-    path: '/organisation/the-human-hive',
-    name: 'organisations',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/fake_temp.vue'),
-    meta: {
-      title: 'Organisations',
-    }
-  },
+  // {
+  //   path: '/organisation/the-human-hive',
+  //   name: 'organisations',
+  //   component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/fake_temp.vue'),
+  //   meta: {
+  //     title: 'Organisations',
+  //   }
+  // },
   {
     path: '/organisation/:slug',
     name: 'organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Single.vue'),
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/fake_temp.vue'),
     meta: {
       breadcrumbs: ['organisations'],
     }

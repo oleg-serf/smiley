@@ -181,7 +181,29 @@
           <br />
           <!-- <label>Your project info:</label> -->
           <!-- <ckeditor :editor="editor" v-model="reg.our_project" :config="editorConfig"></ckeditor> -->
-
+          <div class="add-organisation-video">
+            <label for="organisation-video">
+              Add organisation video?
+              <select v-model="reg.need_video">
+                <option v-bind:value="true">Yes</option>
+                <option v-bind:value="false" checked>No</option>
+              </select>
+            </label>
+            <div class="input-row" v-if="reg.need_video">
+              <label for="organisation-facebook">
+                Video source
+                <select v-model="reg.video_type">
+                  <option value="youtube">YouTube</option>
+                  <option value="vimeo">Vimeo</option>
+                </select>
+              </label>
+              <label for="organisation-facebook">
+                Video ID
+                <input type="text" v-model="reg.video_id" />
+              </label>
+            </div>
+          </div>
+          <br />
           <div class="finish-btn-wrap">
             <button
               class="finish-btn"
@@ -222,8 +244,11 @@ export default {
         twitter: "",
         instagram: "",
         description: "",
-        description_full: ""
+        description_full: "",
         // organisation_tabs: [{ content: "" }]
+        need_video: false,
+        video_type: null,
+        video_id: null
       },
       logoHolder: null,
       organisationSectors: null,
