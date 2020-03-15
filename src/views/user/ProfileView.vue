@@ -30,7 +30,7 @@
             v-html="user.bio || 'Oh, we have no information for this block yet :( Add banner'"
           ></div>
         </div>
-        <div class="content-section">
+        <div class="content-section" v-if="goals != null && goals.length > 0">
           <h3 class="content-section__title">
             <button>My interests (UN Goals):</button>
           </h3>
