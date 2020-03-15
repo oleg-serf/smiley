@@ -419,13 +419,13 @@
                 <a href="#tab-5">Posts</a>
               </li>
               <li>
-                <a href="#tab-2">Our project</a>
+                <a href="#tab-2">Our projects</a>
               </li>
               <li>
                 <a href="#tab-3">Our news</a>
               </li>
               <li>
-                <a href="#tab-4">Smiley hub</a>
+                <!-- <a href="#tab-4">Smiley hub</a> -->
               </li>
             </ul>
 
@@ -676,12 +676,12 @@
                 </div>
               </div>
 
-              <div class="tabs-item item-1" id="tab-4">
+              <!-- <div class="tabs-item item-1" id="tab-4">
                 <button class="accordion">Smiley hub</button>
                 <div class="content-tab-4 clearfix panel">
                   <h2>Smiley hub</h2>
                 </div>
-              </div>
+              </div>-->
             </div>
           </div>
         </div>
@@ -748,7 +748,11 @@ export default {
         axios
           .post("/organisations/posts", { content: item })
           .then(res => {
-            console.log(res);
+            axios
+              .get("/organisations/" + this.$route.params.slug + "/posts")
+              .then(res => {
+                this.posts = res.data.organisation_posts;
+              });
           })
           .catch(error => {
             console.error(error);
@@ -781,7 +785,14 @@ export default {
               text: result.data.message,
               icon: "info"
             });
-            this.following = true;
+            axios
+              .get("/organisations/" + this.$route.params.slug)
+              .then(res => {
+                this.organisation = res.data.organisation;
+                // this.tabs = res.data.organisation.organisation_tabs;
+                this.following = res.data.following;
+              })
+              .catch(error => console.error("Error", error));
           }
         })
         .catch(err => {
@@ -798,7 +809,14 @@ export default {
               text: result.data.message,
               icon: "info"
             });
-            this.following = true;
+            axios
+              .get("/organisations/" + this.$route.params.slug)
+              .then(res => {
+                this.organisation = res.data.organisation;
+                // this.tabs = res.data.organisation.organisation_tabs;
+                this.following = res.data.following;
+              })
+              .catch(error => console.error("Error", error));
           }
         })
         .catch(err => {
@@ -821,12 +839,11 @@ export default {
         // this.tabs = res.data.organisation.organisation_tabs;
 
         this.following = res.data.following;
-        // console.log(this.following);
 
-        // document.title = res.data.organisation.name + " | Smiley Movement";
-        // this.$refs.breadcrumbs.breadcrumbs[
-        //   this.$refs.breadcrumbs.breadcrumbs.length - 1
-        // ].meta.title = res.data.organisation.name;
+        document.title = res.data.organisation.name + " | Smiley Movement";
+        this.$refs.breadcrumbs.breadcrumbs[
+          this.$refs.breadcrumbs.breadcrumbs.length - 1
+        ].meta.title = res.data.organisation.name;
       })
       .catch(error => console.error("Error", error));
 
