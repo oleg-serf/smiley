@@ -9,13 +9,17 @@
     .organization-content-wrap {
 
       .tabs-nav {
-        display: block;
+        display: none;
+
+        @include md {
+          display: block;
+        }
       }
 
       .panel {
         background: transparent;
-        // max-height: 0;
-        // overflow: hidden;
+        max-height: 0;
+        overflow: hidden;
         transition: max-height 0.2s ease-out;
       }
 
@@ -251,7 +255,6 @@
         padding: 10px 16px;
         margin-top: 21px;
         margin-bottom: 7px;
-        resize: none;
       }
 
       .panel-content-wrap {
@@ -328,8 +331,8 @@
 
   .panel {
     background: transparent;
-    // max-height: 0;
-    // overflow: hidden;
+    max-height: 0;
+    overflow: hidden;
     transition: max-height 0.2s ease-out;
 
     .panel-content-wrap {
@@ -425,10 +428,8 @@
     .tabs-items {
       background-color: #fff;
 
-
       .accordion {
         padding: 14px 15px;
-        display: none;
 
         &:after {
           right: 30px;
@@ -586,35 +587,12 @@
             margin-top: 0;
             padding: 0;
             width: 100%;
-            max-width: 359px;
-
-            @include xlMax {
-              flex-direction: row;
-            }
-
-            @include mdMax {
-              flex-direction: column
-            }
-
-            @include xxlMax {
-              max-width: 100%;
-              align-items: flex-start;
-              justify-content: space-between;
-            }
 
             .smiley-img {
               height: 100%;
             }
 
             .article-item {
-              @include xlMax {
-                width: calc(50% - 5px);
-              }
-
-              @include mdMax {
-                width: 100%;
-              }
-
               .article-subtitle {
                 margin-bottom: 4px;
                 margin-top: 17px;

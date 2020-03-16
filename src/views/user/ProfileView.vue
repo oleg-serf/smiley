@@ -18,6 +18,11 @@
               </a>
             </li>
           </ul>
+          <div class="user-info-connections">50+ connections</div>
+          <div class="user-info-connections">
+            <img src="/img/apprentice.png" /> Smiley apprentice
+          </div>
+          <button class="follow-btn">Follow</button>
         </div>
       </div>
       <div class="content-container">
@@ -30,7 +35,7 @@
             v-html="user.bio || 'Oh, we have no information for this block yet :( Add banner'"
           ></div>
         </div>
-        <div class="content-section" v-if="goals != null && goals.length > 0">
+        <div class="content-section" v-if="goals != null && goals.length > 0 ">
           <h3 class="content-section__title">
             <button>My interests (UN Goals):</button>
           </h3>
@@ -204,5 +209,33 @@ export default {
 
 .news-grid {
   padding-top: 0px;
+}
+
+.user-info-connections {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12;
+
+  img {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.follow-btn {
+  margin-top: 24px;
+  display: block;
+  height: 48px;
+  width: 100%;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font: 600 16px/24px "Montserrat SemiBold", sans-serif;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: $default-orange-btns;
+  color: #fff;
+  border: 0px;
 }
 </style>

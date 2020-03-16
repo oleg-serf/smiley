@@ -158,4 +158,8 @@ export default {
     }
   }
 }
+
+.smiley-img-wrap {
+  height: 255px;
+}
 </style>

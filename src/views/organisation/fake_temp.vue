@@ -20,6 +20,12 @@
                 :to="{name: 'edit-organisation'}"
                 class="btn"
               >Edit organisation</router-link>
+              <button
+                v-if="organisation.user_id == userOrgAdmin"
+                @click.prevent="showPhotoUpload = true"
+                class="btn"
+              >Upload photos</button>
+
               <div class="organization-info">
                 <h2 class="organization-title">{{organisation.name}}</h2>
                 <div class="organization-location">
@@ -433,6 +439,17 @@
               <div class="tabs-item item-1" id="tab-1">
                 <button class="accordion">Description</button>
                 <div class="content-tab-1 panel">
+                  <div v-if="showPhotoUpload">
+                    <div class="section-title">
+                      <h3 class="section-title__heading">Add photos:</h3>
+                    </div>
+                    <vue-dropzone
+                      ref="myVueDropzone"
+                      id="dropzone"
+                      :options="dropzoneOptions"
+                      v-on:vdropzone-file-added="reloadImages"
+                    ></vue-dropzone>
+                  </div>
                   <h2>About the {{organisation.title}}</h2>
 
                   <div
@@ -440,25 +457,45 @@
                     v-html="organisation.organisation_tabs[0].content"
                   ></div>
 
-                  <div class="description-video">
-                    <img src="/img/organization/video.jpg" alt />
+                  <div
+                    class="description-video"
+                    v-if="organisation.video_type != null && organisation.video_link != null"
+                  >
+                    <div class="video-container video-responsive">
+                      <iframe
+                        v-if="organisation.video_type != null && organisation.video_type == 'vimeo'"
+                        :src="organisation.video_link +'?title=0&amp;byline=0&amp;portrait=0'"
+                        frameborder="0"
+                        allow="fullscreen"
+                        allowfullscreen
+                        style="width: 100%"
+                      ></iframe>
+                      <iframe
+                        v-if="organisation.video_type != null && organisation.video_type == 'youtube'"
+                        :src="organisation.video_link +'?title=0&amp;byline=0&amp;portrait=0'"
+                        frameborder="0"
+                        allow="fullscreen"
+                        allowfullscreen
+                        style="width: 100%"
+                      ></iframe>
+                    </div>
                   </div>
 
-                  <carousel class="organization-slider owl-carousel">
-                    <div class="slider-item">
-                      <img src="/img/organization/slider-image-1.jpg" alt="image 1" />
-                    </div>
-                    <div class="slider-item">
-                      <img src="/img/organization/slider-image-1.jpg" alt="image 1" />
-                    </div>
-                    <div class="slider-item">
-                      <img src="/img/organization/slider-image-1.jpg" alt="image 1" />
-                    </div>
-                    <div class="slider-item">
-                      <img src="/img/organization/slider-image-1.jpg" alt="image 1" />
-                    </div>
-                    <div class="slider-item">
-                      <img src="/img/organization/slider-image-1.jpg" alt="image 1" />
+                  <carousel
+                    class="organization-slider owl-carousel"
+                    v-if="gallery != null && gallery.length > 0"
+                    id="owl-carousel"
+                    :items="1"
+                    :margin="20"
+                    :loop="true"
+                    :autoplay="false"
+                    :autoplayTimeout="2000"
+                    :smartSpeed="500"
+                    :slideBy="3"
+                    :responsive="{657:{center: true,autoWidth: true,margin: -25}}"
+                  >
+                    <div class="slider-item" v-for="item in gallery" :key="item.id">
+                      <img :src="$settings.images_path.organisations +'images/m_'+item.image" />
                     </div>
                   </carousel>
                 </div>
@@ -709,14 +746,31 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { mapState, mapGetters } from "vuex";
 
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
+
 export default {
   data() {
     return {
+      dropzoneOptions: {
+        url:
+          "https://new-admin.smileymovement.org/api/organisations/edit/gallery",
+        thumbnailWidth: 150,
+        maxFilesize: 8,
+        maxFiles: 10,
+        acceptedFiles: "image/png, image/jpeg, image/tiff",
+        parallelUploads: 1,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token") || null
+        }
+      },
       organisationPost: "",
       following: false,
       organisation: {},
       posts: [],
+      showPhotoUpload: false,
       editor: ClassicEditor,
+      gallery: [],
       editorConfig: {
         removePlugins: [
           "EasyImage",
@@ -733,7 +787,8 @@ export default {
     Breadcrumbs,
     Footer,
     carousel,
-    AppIcon
+    AppIcon,
+    vueDropzone: vue2Dropzone
   },
   computed: {
     auth() {
@@ -744,6 +799,12 @@ export default {
     })
   },
   methods: {
+    reloadImages() {
+      console.log("reload?");
+      // axios.get("organisations/edit/gallery").then(res => {
+      //   // this.gallery = res.data.images;
+      // });
+    },
     addPost() {
       let item = this.organisationPost;
       if (item.length < 32) {
@@ -829,6 +890,9 @@ export default {
     }
   },
   mounted() {
+    axios.get("organisations/edit/gallery").then(res => {
+      this.gallery = res.data.images;
+    });
     axios
       .get("/organisations/" + this.$route.params.slug + "/posts")
       .then(res => {
@@ -967,7 +1031,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/scss/components/_article-item";
 @import "@/scss/sections/_latest-news";
 @import "@/scss/sections/_news-category-section";
@@ -1026,5 +1090,24 @@ export default {
 }
 .post-content {
   font: 400 22px/36px "Muli", sans-serif;
+}
+
+.owl-carousel {
+  display: block;
+}
+
+.video-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+  width: 100%;
+}
+.video-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 </style> 

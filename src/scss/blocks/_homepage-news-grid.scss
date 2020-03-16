@@ -8,9 +8,10 @@
   padding-top: 56px;
   padding-bottom: 15px;
   position: relative;
+  margin-top: 24px;
 
   @include lgMax {
-    margin-top: 0px;
+    // margin-top: 0px;
     padding-top: 0px;
   }
 

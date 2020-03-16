@@ -229,11 +229,6 @@
             </div>
           </div>
 
-          <div class="section-title">
-            <h3 class="section-title__heading">Add photos:</h3>
-          </div>
-          <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
-
           <div class="checkbox-wrap">
             <label class="register-checkbox">
               I accept the following
@@ -283,20 +278,10 @@ import Footer from "@/components/Footer";
 
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
-
 export default {
   name: "Customize-organisation",
   data() {
     return {
-      dropzoneOptions: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 150,
-        maxFilesize: 8,
-        maxFiles: 10,
-        acceptedFiles: "image/png, image/jpeg, image/tiff"
-      },
       reg: {
         organisation_name: "",
         organisation_location: "",
@@ -412,8 +397,7 @@ export default {
   },
   components: {
     Header,
-    Footer,
-    vueDropzone: vue2Dropzone
+    Footer
   }
 };
 </script>

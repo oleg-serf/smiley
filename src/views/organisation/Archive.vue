@@ -93,10 +93,22 @@ export default {
 
 <style lang="scss">
 .organisations-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
   margin: 0px -16px;
   padding-top: 48px;
+
+  @include xxlMax {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include xlMax {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include smMax {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .organisation-item {
@@ -105,8 +117,6 @@ export default {
   border: 1px solid #c7c7c7;
   border-radius: 4px;
   text-align: center;
-  width: 100%;
-  max-width: calc((100% / 4) - 32px);
   box-sizing: border-box;
   position: relative;
 
