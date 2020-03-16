@@ -19,6 +19,10 @@
             </li>
           </ul>
         </div>
+        <div class="user-info-connections">50+ connections</div>
+        <div class="user-info-connections">
+          <img src="/img/apprentice.png" /> Smiley apprentice
+        </div>
       </div>
       <div class="content-container">
         <div class="content-section">
@@ -51,17 +55,17 @@
           </h3>
           <div class="content-section__content">
             <ul class="support-list">
-                <li
-                  class="support-list__item"
-                  v-for="(item, index) in supportOffer"
-                  :key="'i-need-'+index"
-                >
-                  <img src="/img/give.svg" />
-                  <div class="support-list__category-container">
-                    <div class="support-list__category">{{item.support_category.title}}</div>
-                    <div class="support-list__subcategory">{{item.title}}</div>
-                  </div>
-                </li>
+              <li
+                class="support-list__item"
+                v-for="(item, index) in supportOffer"
+                :key="'i-need-'+index"
+              >
+                <img src="/img/give.svg" />
+                <div class="support-list__category-container">
+                  <div class="support-list__category">{{item.support_category.title}}</div>
+                  <div class="support-list__subcategory">{{item.title}}</div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -204,5 +208,19 @@ export default {
 
 .news-grid {
   padding-top: 0px;
+}
+
+.user-info-connections {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12;
+
+  img {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+  }
 }
 </style>
