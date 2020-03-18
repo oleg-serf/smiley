@@ -458,9 +458,7 @@ export default {
       }
       li {
         position: relative;
-        &:not(:last-child) {
-          margin-bottom: 24px;
-        }
+        margin-bottom: 0px;
 
         &::before {
           width: 5px;
