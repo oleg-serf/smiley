@@ -2,17 +2,37 @@
   <div>
     <breadcrumbs />
 
-    <section class="upcoming-talk-section">
+    <div class="container">
+      <div class="banner-section" style="background-color: #d21217;">
+        <div class="banner-section__top">
+          <img
+            class="banner-section__logo"
+            src="img/homepage/smiley-main-title.svg"
+            alt="smiley talks"
+          />
+          <div class="banner-section__category">
+            <p>Talks</p>
+          </div>
+        </div>
+        <div class="banner-section__bottom">
+          <div class="banner-section__title">
+            <p>Register for a Smiley Talk!</p>
+          </div>
+          <div class="banner-section__description">
+            <p>Smiley Talks bring expert speakers and members of the public together in a unique, memorable experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="upcoming-talk-section" style="display: none;">
       <div class="upcoming-talk-wrap">
         <div class="title-colored-block">
           <div class="smiley-talks-main-title">
             <img src="img/homepage/smiley-main-title.svg" alt="smiley talks" />
             <p>Talks</p>
           </div>
-          <h2 class="upcoming-block-register">Register for a Smiley Talk!</h2>
-          <p
-            class="upcoming-block-descr"
-          >Smiley Talks bring expert speakers and members of the public together in a unique, memorable experience.</p>
+          <h2 class="upcoming-block-register"></h2>
+          <p class="upcoming-block-descr"></p>
         </div>
 
         <div class="upcoming-info-block container">

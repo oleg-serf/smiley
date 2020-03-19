@@ -200,3 +200,70 @@ html {
     margin-bottom: 20px;
   }
 }
+
+// Section banner
+.banner-section {
+  background-color: #eeb400;
+  max-width: 1560px;
+  padding: 35px 25px;
+  box-sizing: border-box;
+  margin: 0 auto 48px auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  p {
+    color: #fff;
+    margin-top: 0px;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  .banner-section__top {
+    width: 40%;
+    box-sizing: border-box;
+    padding-right: 20px;
+
+    @include xxlMax {
+      width: 250px;
+    }
+
+    @include lgMax {
+      width: 100%;
+      padding: 0px;
+      text-align: center;
+    }
+  }
+
+  .banner-section__category {
+    font: 400 14px/17px "Montserrat Bold", sans-serif;
+    letter-spacing: 30px;
+  }
+
+  .banner-section__bottom {
+    width: 60%;
+    box-sizing: border-box;
+    text-align: right;
+    padding-left: 20px;
+
+    @include xxlMax {
+      width: auto;
+      flex: 1;
+    }
+
+    @include lgMax {
+      display: none;
+    }
+  }
+
+  .banner-section__title {
+    font: 700 32px/39px "Montserrat Bold", sans-serif;
+    margin-bottom: 24px;
+  }
+
+  .banner-section__description {
+    font: 400 16px/20px "Muli", sans-serif;
+  }
+}

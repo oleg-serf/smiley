@@ -3,16 +3,92 @@
     <breadcrumbs />
 
     <section class="latest-news-section">
+      <div class="banner-section">
+        <div class="banner-section__top">
+          <img
+            class="banner-section__logo"
+            src="img/homepage/smiley-main-title.svg"
+            alt="smiley talks"
+          />
+          <div class="banner-section__category">
+            <p>News</p>
+          </div>
+        </div>
+        <div class="banner-section__bottom">
+          <div class="banner-section__title">
+            <p>Everyday heroes making the world a happier place</p>
+          </div>
+          <div class="banner-section__description">
+            <p>Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="newspaper-grid">
+          <div class="newspaper-grid__item">
+            <router-link
+              :to="'/news/' + topNews.slug"
+              class="article-item article-item--first"
+              v-if="topNews"
+            >
+              <div class="smiley-img-wrap">
+                <div class="smiley-img">
+                  <img
+                    :src="$settings.images_path.news  +'m_'+topNews.cover_image"
+                    :alt="topNews.title"
+                    :title="topNews.title"
+                  />
+                </div>
+                <div></div>
+              </div>
+              <div class="article-descr">
+                <div class="article-date-location">
+                  <div class="article-date">{{topNews.published_at}}</div>
+                  <div class="article-location"></div>
+                </div>
+                <div class="article-title">{{topNews.title}}</div>
+                <div class="article-subtitle">{{topNews.description}}</div>
+              </div>
+            </router-link>
+          </div>
+          <div class="newspaper-grid__item newspaper-grid__subgrid">
+            <router-link
+              :to="'/news/' + news.slug"
+              class="article-item article-item--second"
+              v-for="(news, index) in  latestNews"
+              :key="index"
+            >
+              <div class="smiley-img-wrap">
+                <div class="smiley-img">
+                  <img
+                    :src="$settings.images_path.news  +'m_'+news.cover_image"
+                    :alt="news.title"
+                    :title="news.title"
+                  />
+                </div>
+              </div>
+              <div class="article-descr">
+                <div class="article-date-location">
+                  <div class="article-date">{{news.published_at}}</div>
+                  <div class="article-location"></div>
+                </div>
+                <div class="article-title">{{news.title}}</div>
+                <div class="article-subtitle">{{news.description}}</div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
+
       <div class="latest-news-wrap">
         <div class="title-colored-block">
           <div class="smiley-news-main-title">
             <img src="img/homepage/smiley-main-title.svg" alt="smiley talks" />
             <P>News</P>
           </div>
-          <h2 class="news-block-title">Everyday heroes making the world a happier place</h2>
-          <p
-            class="news-block-descr"
-          >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
+          <h2 class="news-block-title"></h2>
+          <p class="news-block-descr"></p>
         </div>
 
         <div class="smiley-news-center main-title">
@@ -31,9 +107,7 @@
                   :title="topNews.title"
                 />
               </div>
-              <div>
-                
-              </div>
+              <div></div>
             </div>
             <div class="article-descr">
               <div class="article-date-location">
@@ -197,4 +271,36 @@ export default {
 @import "@/scss/sections/_latest-news";
 
 @import "@/scss/sections/_news-category-section";
+
+.newspaper-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  margin-bottom: 48px;
+}
+
+.newspaper-grid__subgrid {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+}
+
+.article-item--second {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0px;
+  flex-wrap: wrap;
+
+  .smiley-img-wrap {
+    width: calc(50% - 30px);
+    margin-right: 30px;
+  }
+
+  .article-descr {
+    width: 50%;
+    box-sizing: border-box;
+  }
+}
 </style>
