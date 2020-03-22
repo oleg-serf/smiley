@@ -267,7 +267,9 @@ export default {
       this.$store
         .dispatch("user/signUp", formData)
         .then(res => {
-          console.log("Login Google success", res);
+          router.push({
+            name: "register-2"
+          });
         })
         .catch(error => {
           this.$swal({ text: error });

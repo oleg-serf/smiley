@@ -41,7 +41,7 @@ const actions = {
           commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
           commit('SET_ORGANISATION_DATA', res.data.organisation);
           router.push({
-            name: 'home'
+            name: 'register-2'
           });
           resolve('success');
         })
@@ -191,9 +191,9 @@ const mutations = {
     localStorage.removeItem('organisation-user');
     localStorage.removeItem('organisation-slug');
     localStorage.removeItem('attendingEvents');
-    router.push({
-      name: 'home'
-    });
+    // router.push({
+    //   name: 'home'
+    // });
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
     let attendeesList = data.map(item => item.event_id);

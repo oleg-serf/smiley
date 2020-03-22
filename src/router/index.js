@@ -102,6 +102,27 @@ const routes = [{
       title: 'Register',
     }
   }, {
+    path: '/register/step-2',
+    name: 'register-2',
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register-Step-2.vue'),
+    meta: {
+      title: 'Register | Step 2',
+    }
+  }, {
+    path: '/register/step-3',
+    name: 'register-3',
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register-Step-3.vue'),
+    meta: {
+      title: 'Register | Step 3',
+    }
+  }, {
+    path: '/register/step-4',
+    name: 'register-4',
+    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register-Step-4.vue'),
+    meta: {
+      title: 'Register | Step 4',
+    }
+  }, {
     path: '/forgot',
     name: 'forgot',
     component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Forgot.vue'),

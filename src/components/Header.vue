@@ -89,7 +89,7 @@
                 </a>
                 <div class="avatar-icon">
                   <div class="user-avatar" v-if="auth">
-                    <template v-if="avatar !== null">
+                    <template v-if="avatar != 'null'">
                       <img :src="$settings.images_path.users + 's_' + avatar" />
                     </template>
                     <template v-else>
