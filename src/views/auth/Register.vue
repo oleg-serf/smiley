@@ -222,6 +222,7 @@
 
 <script>
 import axios from "@/axios-auth";
+import router from "@/router";
 
 import GoogleLogin from "vue-google-login";
 import VFacebookLogin from "vue-facebook-login-component";
@@ -268,7 +269,7 @@ export default {
         .dispatch("user/signUp", formData)
         .then(res => {
           router.push({
-            name: "register-2"
+            name: "register-3"
           });
         })
         .catch(error => {
