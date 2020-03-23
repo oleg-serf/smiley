@@ -137,7 +137,7 @@ export default {
         });
       } else {
         axios
-          .post("/users/settings", { goals: this.selectedGoals })
+          .post("/users/settings", this.user)
           .then(response => {
             router.push({
               name: "profile"

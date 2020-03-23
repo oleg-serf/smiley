@@ -269,7 +269,7 @@ export default {
         .dispatch("user/signUp", formData)
         .then(res => {
           router.push({
-            name: "register-3"
+            name: "register-2"
           });
         })
         .catch(error => {
