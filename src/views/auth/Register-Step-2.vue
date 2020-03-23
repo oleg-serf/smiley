@@ -1,5 +1,11 @@
 <template>
   <section class="registration-step-2 container">
+    <div class="registration-progress">
+      <div class="registration-progress__item done">Get Started</div>
+      <div class="registration-progress__item active">About You</div>
+      <div class="registration-progress__item">Looking for</div>
+      <div class="registration-progress__item">Join the Smiley Community</div>
+    </div>
     <h2 class="registration-title">Tell us a bit about you</h2>
     <p
       class="registration-subtitle"
@@ -37,6 +43,82 @@
           ></vue-google-autocomplete>
         </label>
       </div>
+      <div class="section-title">
+        <h3 class="section-title__heading">Occupation type:</h3>
+      </div>
+      <div class="input-row">
+        <label class="checkbox-label">
+          <input
+            type="radio"
+            name="occupation_type"
+            @click="user.occupation_sector = null"
+            value="Private"
+            v-model="user.occupation_type"
+          />
+          <span>Private</span>
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="radio"
+            name="occupation_type"
+            @click="user.occupation_sector = null"
+            value="Public"
+            v-model="user.occupation_type"
+          />
+          <span>Public</span>
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="radio"
+            name="occupation_type"
+            @click="user.occupation_sector = null"
+            value="Charity"
+            v-model="user.occupation_type"
+          />
+          <span>Charity</span>
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="radio"
+            name="occupation_type"
+            @click="user.occupation_sector = null"
+            value="Student"
+            v-model="user.occupation_type"
+          />
+          <span>Student</span>
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="radio"
+            name="occupation_type"
+            @click="user.occupation_sector = null"
+            value="Not currently working"
+            v-model="user.occupation_type"
+          />
+          <span>Not currently working</span>
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="radio"
+            name="occupation_type"
+            @click="user.occupation_sector = null"
+            value="Retired"
+            v-model="user.occupation_type"
+          />
+          <span>Retired</span>
+        </label>
+      </div>
+      <label v-if="['Private', 'Public', 'Charity'].includes(user.occupation_type)">
+        <span>Sector</span>
+        <select v-model="user.occupation_sector">
+          <option selected disabled :value="null">Select value</option>
+          <option
+            :value="item.value"
+            v-for="item in occupations[user.occupation_type]"
+            :key="item.value"
+          >{{item.name}}</option>
+        </select>
+      </label>
       <label for="job-title">
         Job title
         <span class="explanation-text">(if applicable)</span>
@@ -75,7 +157,9 @@ export default {
         display_name: "",
         job_title: "",
         country: "",
-        city: ""
+        city: "",
+        occupation_type: null,
+        occupation_sector: null
       },
       countries: [
         { name: "Afghanistan", code: "AF" },
@@ -321,7 +405,41 @@ export default {
         { name: "Yemen", code: "YE" },
         { name: "Zambia", code: "ZM" },
         { name: "Zimbabwe", code: "ZW" }
-      ]
+      ],
+      occupations: {
+        Private: [
+          { value: 1, name: "Manufactoring" },
+          { value: 2, name: "Services Sector" },
+          { value: 3, name: "Construction" },
+          { value: 4, name: "Retail" },
+          { value: 5, name: "Housing & Hospitality" },
+          { value: 6, name: "Food Services" },
+          { value: 7, name: "Financial Services" },
+          { value: 8, name: "Financial Services + Social Impact investor" },
+          { value: 9, name: "Social Impact investor" },
+          { value: 10, name: "Professional Services" },
+          { value: 11, name: "Admin and support" },
+          { value: 12, name: "Arts, Culture, Leisure" }
+        ],
+        Public: [
+          { value: 1, name: "Public Services" },
+          { value: 2, name: "Defence" },
+          { value: 3, name: "Public Order and Safety" },
+          { value: 4, name: "Economic Affairs" },
+          { value: 5, name: "Health" },
+          { value: 6, name: "Recreation, culture and religion" },
+          { value: 7, name: "Education" },
+          { value: 8, name: "Social Protection" },
+          { value: 9, name: "Environmental Protection" },
+          { value: 10, name: "Housing and Community" }
+        ],
+        Charity: [
+          { value: 1, name: "Social Enterprise" },
+          { value: 2, name: "Charity" },
+          { value: 3, name: "Foundation/ endowment fund" },
+          { value: 4, name: "Cooperative" }
+        ]
+      }
     };
   },
   methods: {
@@ -568,6 +686,18 @@ export default {
     margin-left: 15px;
     margin-right: 15px;
 
+    &.checkbox-label {
+      width: calc(100% / 3 - 30px);
+
+      @include mdMax {
+        width: calc(50% - 30px);
+      }
+
+      @include smMax {
+        width: 100%;
+      }
+    }
+
     @include smMax() {
       width: 100%;
     }
@@ -591,6 +721,102 @@ label {
     color: #656565;
     padding: 0 48px 0 16px;
     background-color: #fff;
+  }
+}
+
+.checkbox-label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 24px;
+
+  input {
+    margin: 0px 12px 0px 0px !important;
+    width: 24px;
+    height: 24px;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.section-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .section-title__heading {
+    font: 700 22px/28px "Muli", sans-serif;
+    color: $default-text;
+  }
+}
+
+.registration-progress {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-family: Muli, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+
+  &__item {
+    width: 25%;
+    text-align: center;
+    position: relative;
+
+    &.done {
+      &::after {
+        display: none;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        background-image: url("/img/small-tick-black.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-bottom: 15px;
+      }
+    }
+
+    &.active {
+      &::after {
+        background-color: #fdec01;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        margin-bottom: 15px;
+      }
+
+      font-weight: bold;
+    }
+
+    &::before {
+      width: 28px;
+      height: 28px;
+      content: "";
+      display: block;
+      text-align: center;
+      margin: 9px auto 25px;
+      border-radius: 50%;
+      background-color: #7a7a7a;
+    }
+
+    &::after {
+      width: 100%;
+      height: 3px;
+      content: "";
+      position: absolute;
+      background-color: #7a7a7a;
+      top: 22px;
+      left: -50%;
+      z-index: -1;
+    }
   }
 }
 </style>

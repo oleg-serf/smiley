@@ -1,12 +1,30 @@
 <template>
   <section class="registration-step-4 container">
+    <div class="registration-progress">
+      <div class="registration-progress__item done">Get Started</div>
+      <div class="registration-progress__item done">About You</div>
+      <div class="registration-progress__item done">Looking for</div>
+      <div class="registration-progress__item active">Join the Smiley Community</div>
+    </div>
     <h2
       class="registration-title"
     >Tell us what you care about most in order to customize the best experience for you (you can select more than one interest)</h2>
     <p class="registration-subtitle"></p>
 
     <form class="registration-4" v-if="goals.length > 0" @submit.prevent="submitGoals">
-      <div class="interest-list">
+      <!-- <div class=""> -->
+      <carousel
+        class="interest-list owl-carousel"
+        id="owl-carousel"
+        :items="4"
+        :margin="20"
+        :loop="true"
+        :autoplay="false"
+        :autoplayTimeout="2000"
+        :smartSpeed="500"
+        :slideBy="4"
+        :responsive="{657:{center: true,autoWidth: true,margin: -25}}"
+      >
         <div class="interest-item" v-for="goal in goals" :key="goal.id">
           <label class="interest-checkbox">
             <div class="interest-img-wrap">
@@ -31,8 +49,40 @@
             </span>
           </label>
         </div>
+      </carousel>
+      <!-- </div> -->
+      <div class="input-row">
+        <label>
+          <span>How did you hear about us?</span>
+          <select v-model="user.survey">
+            <option value="1">Social Media</option>
+            <option value="2">Google (Bing, etc) search</option>
+            <option value="3">I attended a Smiley Movement event</option>
+            <option value="4">From a friend</option>
+            <option value="5">I received an email from Smiley Movement</option>
+            <option value="6">I received a call from Smiley Movement</option>
+            <option value="7">Other (Please specify)</option>
+          </select>
+        </label>
+        <label v-if="user.survey == 7" for="survey_other">
+          <span>
+            <br />
+          </span>
+          <input
+            type="text"
+            name="survey_other"
+            id="survey_other"
+            v-model="user.survey_other"
+            placeholder="Specify here"
+          />
+        </label>
       </div>
-
+      <div class="input-row">
+        <label>
+          <span>Add a photo so that friends and colleagues can recognise you</span>
+          <input type="file" />
+        </label>
+      </div>
       <div class="register-btn-wrap">
         <button
           class="complete-btn"
@@ -49,12 +99,24 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 
+import $ from "jquery";
+import carousel from "vue-owl-carousel2";
+
 export default {
   data() {
     return {
       goals: [],
-      selectedGoals: []
+      selectedGoals: [],
+      user: {
+        avatar: null,
+        goals: [],
+        survey: null,
+        survey_other: null
+      }
     };
+  },
+  components: {
+    carousel
   },
   methods: {
     submitGoals() {
@@ -188,6 +250,128 @@ export default {
     .complete-btn {
       background-color: $default-yellow-btns;
       border: none;
+    }
+  }
+}
+
+.registration-progress {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-family: Muli, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+
+  &__item {
+    width: 25%;
+    text-align: center;
+    position: relative;
+
+    &:first-child {
+      &.done {
+        &::after {
+          display: none;
+        }
+      }
+    }
+
+    &.done {
+      &::after {
+        background-color: #fdec01;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        background-image: url("/img/small-tick-black.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-bottom: 15px;
+      }
+      font-weight: normal;
+    }
+
+    &.active {
+      &::after {
+        display: block;
+        background-color: #fdec01;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        margin-bottom: 15px;
+      }
+
+      font-weight: bold;
+    }
+
+    &::before {
+      width: 28px;
+      height: 28px;
+      content: "";
+      display: block;
+      text-align: center;
+      margin: 9px auto 25px;
+      border-radius: 50%;
+      background-color: #7a7a7a;
+    }
+
+    &::after {
+      width: 100%;
+      height: 3px;
+      content: "";
+      position: absolute;
+      background-color: #7a7a7a;
+      top: 22px;
+      left: -50%;
+      z-index: -1;
+    }
+  }
+}
+
+.input-row {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-left: -15px;
+  margin-right: -15px;
+  text-align: left;
+
+  label {
+    width: calc(50% - 30px);
+    margin-left: 15px;
+    margin-right: 15px;
+
+    @include smMax() {
+      width: 100%;
+    }
+  }
+
+  label {
+    color: $default-text;
+    font: 700 16px/24px "Muli", sans-serif;
+
+    input,
+    select {
+      display: block;
+      margin: 7px auto 25px;
+      width: 100%;
+      box-sizing: border-box;
+      height: 48px;
+      border: 1px solid #c7c7c7;
+      border-radius: 4px;
+      font: 400 16px/24px "Muli", sans-serif;
+      color: #656565;
+      padding: 0 48px 0 16px;
+      background-color: #fff;
+
+      &[type="file"] {
+        padding-left: 0px;
+      }
     }
   }
 }

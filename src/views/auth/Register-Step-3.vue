@@ -1,191 +1,264 @@
 <template>
   <section class="registration-step-3 container">
+    <div class="registration-progress">
+      <div class="registration-progress__item done">Get Started</div>
+      <div class="registration-progress__item done active">About You</div>
+      <div class="registration-progress__item active">Looking for</div>
+      <div class="registration-progress__item">Join the Smiley Community</div>
+    </div>
     <h2 class="registration-title">Do you need or want to lend a helping hand?</h2>
 
     <form class="registration-3" @submit.prevent="submitSupport">
-      <div class="section-support-title">What support do you need?</div>
-      <label
-        for="reg-support"
-        v-for="(item, index) in neededItems"
-        :key="'needed-items-'+index"
-        class="flex-select"
-      >
-        <div class="wrap-for-support-select">
-          <select name="reg-support" id="reg-support" v-model="neededItems[index].parent">
-            <option selected disabled>Please select one</option>
-            <option
-              v-for="parentCategory in supportList"
-              :key="parentCategory.id"
-              :value="parentCategory.id"
-            >{{parentCategory.title}}</option>
-          </select>
-          <div class="select-arrows">
-            <svg
-              width="12"
-              height="20"
-              viewBox="0 0 3.1749999 5.2916668"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g transform="translate(0,-291.70832)" id="layer1">
-                <g
-                  transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
-                </g>
-                <g
-                  transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
-                </g>
-              </g>
-            </svg>
-          </div>
+      <div class="support-type-radio-btns">
+        <div class="radio-btns-group">
+          <label :class="{active: supportType == 'offer'}">
+            <div class="inner-block">
+              <div class="image-holder">
+                <img src="/img/offer-support-icons@2x.png" />
+              </div>
+              <span>
+                <strong>offer</strong> support
+              </span>
+              <input
+                v-model="supportType"
+                value="offer"
+                type="radio"
+                name="support-type"
+                placeholder
+              />
+            </div>
+          </label>
+          <label :class="{active: supportType == 'need'}">
+            <div class="inner-block">
+              <div class="image-holder">
+                <img src="/img/need-support-icons@2x.png" />
+              </div>
+              <span>
+                <strong>need</strong> support
+              </span>
+              <input
+                v-model="supportType"
+                value="need"
+                type="radio"
+                name="support-type"
+                placeholder
+              />
+            </div>
+          </label>
+          <label :class="{active: supportType == 'combined'}" id="combined-support">
+            <div class="inner-block">
+              <div class="image-holder">
+                <img src="/img/need-support-icons@2x.png" />
+              </div>
+              <span>
+                <strong>offer</strong> support
+              </span>
+            </div>
+            <div class="inner-block">
+              <div class="image-holder">
+                <img src="/img/need-support-icons@2x.png" />
+              </div>
+              <span>
+                <strong>need</strong> support
+              </span>
+            </div>
+            <input
+              v-model="supportType"
+              value="combined"
+              type="radio"
+              name="support-type"
+              placeholder
+            />
+          </label>
         </div>
-        <div class="wrap-for-support-select">
-          <select name="reg-support" id="reg-support" v-model="neededItems[index].child">
-            <option selected disabled>Please select one</option>
-            <option
-              v-for="parentCategory in categoryItems(neededItems[index].parent)"
-              :key="parentCategory.id"
-              :value="parentCategory.id"
-            >{{parentCategory.title}}</option>
-          </select>
-          <div class="select-arrows">
-            <svg
-              width="12"
-              height="20"
-              viewBox="0 0 3.1749999 5.2916668"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g transform="translate(0,-291.70832)" id="layer1">
-                <g
-                  transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
-                </g>
-                <g
-                  transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
-                </g>
-              </g>
-            </svg>
-          </div>
-        </div>
-      </label>
-      <div class="add-another-one">
-        <a href="#" @click.prevent="addNewSupportItem">Add another one</a>
       </div>
-      <br />
-      <div class="section-support-title">What support do you offer?</div>
-      <label
-        for="reg-support"
-        v-for="(item, index) in offeredItems"
-        :key="'offered-items-'+index"
-        class="flex-select"
-      >
-        <div class="wrap-for-support-select">
-          <select name="reg-support" id="reg-support" v-model="offeredItems[index].parent">
-            <option selected disabled>Please select one</option>
-            <option
-              v-for="parentCategory in supportList"
-              :key="parentCategory.id"
-              :value="parentCategory.id"
-            >{{parentCategory.title}}</option>
-          </select>
-          <div class="select-arrows">
-            <svg
-              width="12"
-              height="20"
-              viewBox="0 0 3.1749999 5.2916668"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g transform="translate(0,-291.70832)" id="layer1">
-                <g
-                  transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
+      <template v-if="supportType == 'combined' || supportType == 'offer'">
+        <div class="section-support-title">What support do you need?</div>
+        <label
+          for="reg-support"
+          v-for="(item, index) in neededItems"
+          :key="'needed-items-'+index"
+          class="flex-select"
+        >
+          <div class="wrap-for-support-select">
+            <select name="reg-support" id="reg-support" v-model="neededItems[index].parent">
+              <option selected disabled>Please select one</option>
+              <option
+                v-for="parentCategory in supportList"
+                :key="parentCategory.id"
+                :value="parentCategory.id"
+              >{{parentCategory.title}}</option>
+            </select>
+            <div class="select-arrows">
+              <svg
+                width="12"
+                height="20"
+                viewBox="0 0 3.1749999 5.2916668"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g transform="translate(0,-291.70832)" id="layer1">
+                  <g
+                    transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
+                  <g
+                    transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
                 </g>
-                <g
-                  transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
-                </g>
-              </g>
-            </svg>
+              </svg>
+            </div>
           </div>
-        </div>
-        <div class="wrap-for-support-select">
-          <select name="reg-support" id="reg-support" v-model="offeredItems[index].child">
-            <option>Please select one</option>
-            <option
-              v-for="parentCategory in categoryItems(offeredItems[index].parent)"
-              :key="parentCategory.id"
-              :value="parentCategory.id"
-            >{{parentCategory.title}}</option>
-          </select>
-          <div class="select-arrows">
-            <svg
-              width="12"
-              height="20"
-              viewBox="0 0 3.1749999 5.2916668"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g transform="translate(0,-291.70832)" id="layer1">
-                <g
-                  transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
+          <div class="wrap-for-support-select">
+            <select name="reg-support" id="reg-support" v-model="neededItems[index].child">
+              <option selected disabled>Please select one</option>
+              <option
+                v-for="parentCategory in categoryItems(neededItems[index].parent)"
+                :key="parentCategory.id"
+                :value="parentCategory.id"
+              >{{parentCategory.title}}</option>
+            </select>
+            <div class="select-arrows">
+              <svg
+                width="12"
+                height="20"
+                viewBox="0 0 3.1749999 5.2916668"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g transform="translate(0,-291.70832)" id="layer1">
+                  <g
+                    transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
+                  <g
+                    transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
                 </g>
-                <g
-                  transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
-                  style="fill:none"
-                >
-                  <path
-                    style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
-                    d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
-                  />
-                </g>
-              </g>
-            </svg>
+              </svg>
+            </div>
           </div>
+        </label>
+        <div class="add-another-one">
+          <a href="#" @click.prevent="addNewSupportItem">Add another one</a>
         </div>
-      </label>
-      <div class="add-another-one">
-        <a href="#" @click.prevent="addNewOfferItem">Add another one</a>
-      </div>
+        <br />
+      </template>
+      <template v-if="supportType == 'combined' || supportType == 'need'">
+        <div class="section-support-title">What support do you offer?</div>
+        <label
+          for="reg-support"
+          v-for="(item, index) in offeredItems"
+          :key="'offered-items-'+index"
+          class="flex-select"
+        >
+          <div class="wrap-for-support-select">
+            <select name="reg-support" id="reg-support" v-model="offeredItems[index].parent">
+              <option selected disabled>Please select one</option>
+              <option
+                v-for="parentCategory in supportList"
+                :key="parentCategory.id"
+                :value="parentCategory.id"
+              >{{parentCategory.title}}</option>
+            </select>
+            <div class="select-arrows">
+              <svg
+                width="12"
+                height="20"
+                viewBox="0 0 3.1749999 5.2916668"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g transform="translate(0,-291.70832)" id="layer1">
+                  <g
+                    transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
+                  <g
+                    transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="wrap-for-support-select">
+            <select name="reg-support" id="reg-support" v-model="offeredItems[index].child">
+              <option>Please select one</option>
+              <option
+                v-for="parentCategory in categoryItems(offeredItems[index].parent)"
+                :key="parentCategory.id"
+                :value="parentCategory.id"
+              >{{parentCategory.title}}</option>
+            </select>
+            <div class="select-arrows">
+              <svg
+                width="12"
+                height="20"
+                viewBox="0 0 3.1749999 5.2916668"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g transform="translate(0,-291.70832)" id="layer1">
+                  <g
+                    transform="matrix(0.17602026,0,0,0.17602026,-0.52336255,294.0049)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
+                  <g
+                    transform="matrix(-0.17657956,0,0,-0.17657956,3.7031194,294.71295)"
+                    style="fill:none"
+                  >
+                    <path
+                      style="clip-rule:evenodd;fill:#1a1a1a;fill-rule:evenodd"
+                      d="m 21.0002,8.00025 c 0,0.256 -0.0979,0.512 -0.2929,0.707 l -8.0001,7.99995 c -0.391,0.391 -1.023,0.391 -1.4139,0 L 3.29325,8.70725 c -0.391,-0.391 -0.391,-1.023 0,-1.414 0.391,-0.391 1.023,-0.391 1.414,0 l 7.29295,7.29295 7.293,-7.29295 c 0.391,-0.391 1.023,-0.391 1.4141,0 0.195,0.195 0.2929,0.451 0.2929,0.707 z"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </label>
+        <div class="add-another-one">
+          <a href="#" @click.prevent="addNewOfferItem">Add another one</a>
+        </div>
+      </template>
       <br />
       <br />
       <div class="register-btn-wrap">
@@ -216,7 +289,8 @@ export default {
         }
       ],
 
-      supportList: []
+      supportList: [],
+      supportType: null
     };
   },
   methods: {
@@ -230,8 +304,12 @@ export default {
         .map(item => item.child);
 
       let supports = {
-        offer: offerItemsList,
-        need: neededItemsList
+        offer: ["combined", "offer"].includes(this.supportType)
+          ? offerItemsList
+          : null,
+        need: ["combined", "need"].includes(this.supportType)
+          ? offerItemsList
+          : null
       };
 
       axios
@@ -306,52 +384,7 @@ export default {
     margin: 52px auto 0;
     display: flex;
     flex-direction: column;
-    .support-type-radio-btns {
-      display: flex;
-      flex-wrap: wrap;
-      margin-bottom: 17px;
-      .radio-btns-group {
-        width: 100%;
-      }
-      label {
-        font: 400 16px/36px "Muli", sans-serif;
-        color: #656565;
-        display: flex;
-        align-items: center;
-        margin: 9px 0 9px;
-        span {
-          order: 2;
-          margin-left: 15px;
-          cursor: pointer;
-        }
-        input {
-          display: none;
-          & + div {
-            width: 24px;
-            height: 24px;
-            border: 1px solid #c7c7c7;
-            border-radius: 50%;
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-            order: 1;
-          }
-          &:checked + div {
-            &:after {
-              content: "";
-              width: 13px;
-              height: 13px;
-              border-radius: 50%;
-              background-color: #000;
-              position: absolute;
-              left: 50%;
-              top: 50%;
-              transform: translate(-50%, -50%);
-            }
-          }
-        }
-      }
-    }
+
     label[for="reg-offer"],
     label[for="reg-support"] {
       font: 700 16px/24px "Muli", sans-serif;
@@ -481,6 +514,175 @@ export default {
 
   .wrap-for-support-select {
     width: calc(50% - 15px) !important;
+  }
+}
+
+.registration-progress {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-family: Muli, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+
+  &__item {
+    width: 25%;
+    text-align: center;
+    position: relative;
+
+    &.done {
+      &::after {
+        display: none;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        background-image: url("/img/small-tick-black.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-bottom: 15px;
+      }
+      font-weight: normal;
+    }
+
+    &.active {
+      &::after {
+        display: block;
+        background-color: #fdec01;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        margin-bottom: 15px;
+      }
+
+      font-weight: bold;
+    }
+
+    &::before {
+      width: 28px;
+      height: 28px;
+      content: "";
+      display: block;
+      text-align: center;
+      margin: 9px auto 25px;
+      border-radius: 50%;
+      background-color: #7a7a7a;
+    }
+
+    &::after {
+      width: 100%;
+      height: 3px;
+      content: "";
+      position: absolute;
+      background-color: #7a7a7a;
+      top: 22px;
+      left: -50%;
+      z-index: -1;
+    }
+  }
+}
+
+.radio-btns-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+
+  .inner-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    img {
+      max-width: 58px;
+      max-height: 47px;
+      margin-bottom: 5px;
+    }
+
+    strong {
+      display: block;
+      text-transform: uppercase;
+      margin-bottom: -5px;
+    }
+  }
+
+  label {
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    padding: 15px 25px;
+    min-width: 170px;
+    font-family: Muli, Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+
+    @include mdMax {
+      width: calc(50% - 30px);
+      margin-bottom: 24px;
+    }
+
+    @include smMax {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-position: 50%;
+      background-repeat: no-repeat;
+      height: 24px;
+      width: 24px;
+      -webkit-transition: all 0.2s linear;
+      transition: all 0.2s linear;
+      background-image: url("/img/oval-7@2x.png");
+      background-size: 24px;
+      z-index: 2;
+    }
+
+    &.active {
+      &::before {
+        background-image: url("/img/checked@2x.png");
+        z-index: 3;
+      }
+    }
+  }
+
+  #combined-support {
+    justify-content: space-evenly;
+    min-width: 240px;
+
+    @include mdMax {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    &::after {
+      content: "";
+      background-image: url("/img/plus-icon-black-2.png");
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      background-size: contain;
+    }
+  }
+
+  input {
+    display: none;
   }
 }
 </style>
