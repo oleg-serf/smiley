@@ -335,7 +335,7 @@ export default {
           ? offerItemsList
           : null,
         need: ["combined", "need"].includes(this.supportType)
-          ? offerItemsList
+          ? neededItemsList
           : null
       };
 

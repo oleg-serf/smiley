@@ -118,7 +118,7 @@ export default {
       goals: [],
       selectedGoals: [],
       user: {
-        avatar: null,
+        avatar_image: null,
         goals: [],
         survey: null,
         survey_other: null
@@ -157,7 +157,7 @@ export default {
       if (files && files[0]) {
         const reader = new FileReader();
         reader.onload = e => {
-          this.user.avatar = e.target.result;
+          this.user.avatar_image = e.target.result;
         };
         reader.readAsDataURL(files[0]);
         this.$emit("input", files[0]);
