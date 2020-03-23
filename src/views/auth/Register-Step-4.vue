@@ -30,7 +30,7 @@
             <div class="interest-img-wrap">
               <img :src="$settings.images_path.goals + 'm_' + goal.image" alt />
             </div>
-            <input type="checkbox" :value="goal.id" v-model="selectedGoals" />
+            <input type="checkbox" :value="goal.id" v-model="user.goals" />
             <span class="interest-checkmark">
               <svg
                 width="16"
@@ -53,8 +53,9 @@
       <!-- </div> -->
       <div class="input-row">
         <label>
-          <span>How did you hear about us?</span>
-          <select v-model="user.survey">
+          <span>How did you hear about us? *</span>
+          <select v-model="user.survey" required>
+            <option selected disabled>Select option</option>
             <option value="1">Social Media</option>
             <option value="2">Google (Bing, etc) search</option>
             <option value="3">I attended a Smiley Movement event</option>
@@ -74,13 +75,22 @@
             id="survey_other"
             v-model="user.survey_other"
             placeholder="Specify here"
+            required
           />
         </label>
       </div>
       <div class="input-row">
         <label>
-          <span>Add a photo so that friends and colleagues can recognise you</span>
-          <input type="file" />
+          <span>Add a photo so that friends and colleagues can recognise you *</span>
+          <input
+            type="file"
+            class="file-input"
+            ref="fileInput"
+            id="organisationLogo"
+            @input="onSelectFile"
+            accept=".png, .jpg, .jpeg"
+            required
+          />
         </label>
       </div>
       <div class="register-btn-wrap">
@@ -120,19 +130,38 @@ export default {
   },
   methods: {
     submitGoals() {
-      axios
-        .post("/users/settings", { goals: this.selectedGoals })
-        .then(response => {
-          router.push({
-            name: "profile"
-          });
-          this.$store.commit("user/SET_USERDATA", response.data);
-        })
-        .catch(error => {
-          let content = JSON.parse(error.request.response);
-          let finalMessage = content.errors.join("<br>");
-          this.$swal({ text: finalMessage, icon: "error" });
+      if (this.user.goals.length == 0) {
+        this.$swal({
+          text: "Please select at lease one goal you are interested in",
+          icon: "info"
         });
+      } else {
+        axios
+          .post("/users/settings", { goals: this.selectedGoals })
+          .then(response => {
+            router.push({
+              name: "profile"
+            });
+            this.$store.commit("user/SET_USERDATA", response.data);
+          })
+          .catch(error => {
+            let content = JSON.parse(error.request.response);
+            let finalMessage = content.errors.join("<br>");
+            this.$swal({ text: finalMessage, icon: "error" });
+          });
+      }
+    },
+    onSelectFile() {
+      const input = this.$refs.fileInput;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.user.avatar = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
     }
   },
   mounted() {
@@ -194,10 +223,11 @@ export default {
           user-select: none;
           input {
             position: absolute;
+            top: 5px;
+            right: -78px;
+            height: 24px;
+            width: 24px;
             opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
           }
           .interest-checkmark {
             position: absolute;

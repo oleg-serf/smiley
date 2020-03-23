@@ -25,6 +25,7 @@
                 type="radio"
                 name="support-type"
                 placeholder
+                required
               />
             </div>
           </label>
@@ -302,6 +303,32 @@ export default {
       const neededItemsList = this.neededItems
         .filter(item => item.child != null)
         .map(item => item.child);
+
+      if ("offer" == this.supportType && offerItemsList.length == 0) {
+        this.$swal({
+          text: "Please select what support do you offer",
+          icon: "info"
+        });
+        return;
+      }
+      if ("need" == this.supportType && neededItemsList.length == 0) {
+        this.$swal({
+          text: "Please select what support do you need",
+          icon: "info"
+        });
+        return;
+      }
+      if (
+        "combined" == this.supportType &&
+        neededItemsList.length == 0 &&
+        offerItemsList.length == 0
+      ) {
+        this.$swal({
+          text: "Please select what support do you need and offer",
+          icon: "info"
+        });
+        return;
+      }
 
       let supports = {
         offer: ["combined", "offer"].includes(this.supportType)
@@ -682,7 +709,14 @@ export default {
   }
 
   input {
-    display: none;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    height: 24px;
+    width: 24px;
+    opacity: 0;
   }
 }
 </style>

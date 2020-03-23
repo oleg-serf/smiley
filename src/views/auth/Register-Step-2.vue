@@ -21,13 +21,14 @@
           id="display-name"
           v-model="user.display_name"
           placeholder
+          required
         />
       </label>
 
       <div class="input-row">
         <label for="user-location">
           <span>Country</span>
-          <select v-model="user.country">
+          <select v-model="user.country" required>
             <option :value="item.code" v-for="item in countries" :key="item.code">{{item.name}}</option>
           </select>
         </label>
@@ -40,6 +41,7 @@
             :country="user.country"
             v-on:placechanged="getToData"
             placeholder="Start typing city name"
+            required
           ></vue-google-autocomplete>
         </label>
       </div>
@@ -54,6 +56,7 @@
             @click="user.occupation_sector = null"
             value="Private"
             v-model="user.occupation_type"
+            required
           />
           <span>Private</span>
         </label>
@@ -110,7 +113,7 @@
       </div>
       <label v-if="['Private', 'Public', 'Charity'].includes(user.occupation_type)">
         <span>Sector</span>
-        <select v-model="user.occupation_sector">
+        <select v-model="user.occupation_sector" required>
           <option selected disabled :value="null">Select value</option>
           <option
             :value="item.value"
