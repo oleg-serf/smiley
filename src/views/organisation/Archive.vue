@@ -1,32 +1,37 @@
 <template>
   <div>
     <Breadcrumbs />
-    <div class="container">
-      <section class="organisations-grid">
-        <div
-          class="organisation-item"
-          v-for="organisation in organisations"
-          :key="organisation.id+'-org-archive'"
-        >
-          <div class="organisation-item__logo">
-            <router-link :to="'/organisation/' + organisation.slug">
-              <img
-                v-if="organisation.logo != null"
-                :src="$settings.images_path.organisations + 's_' + organisation.logo"
-                alt
-                title
-                class="organisation-item__image"
-              />
-              <img v-else src="/img/group.svg" />
-            </router-link>
+    <div class="bg">
+      <div class="container">
+        <section class="organisations-grid">
+          <div
+            class="organisation-item"
+            v-for="organisation in organisations"
+            :key="organisation.id+'-org-archive'"
+          >
+            <div class="organisation-item__logo">
+              <router-link :to="'/organisation/' + organisation.slug">
+                <img
+                  v-if="organisation.logo != null"
+                  :src="$settings.images_path.organisations + 's_' + organisation.logo"
+                  alt
+                  title
+                  class="organisation-item__image"
+                />
+                <img v-else src="/img/group.svg" />
+              </router-link>
+            </div>
+            <h2 class="organisation-item__title">
+              <router-link :to="'/organisation/' + organisation.slug">{{ organisation.name }}</router-link>
+            </h2>
+            <p class="organisation-item__description">{{ organisation.description }}</p>
           </div>
-          <h2 class="organisation-item__title">
-            <router-link :to="'/organisation/' + organisation.slug">{{ organisation.name }}</router-link>
-          </h2>
-          <p class="organisation-item__description">{{ organisation.description }}</p>
-        </div>
-      </section>
+        </section>
+      </div>
+    </div>
+    <div class="container">
       <div class="smiley-pagination" v-if="pages_count > 1">
+        <br />
         <paginate
           :page-count="pages_count"
           :click-handler="loadPageNumb"
@@ -39,10 +44,9 @@
           <span slot="breakViewContent">...</span>
         </paginate>
         <br />
-        <br />
-        <br />
       </div>
     </div>
+
     <Footer />
   </div>
 </template>
@@ -92,6 +96,12 @@ export default {
 </script>
 
 <style lang="scss">
+.bg {
+  background-image: url("/img/register-bg.jpg");
+  background-size: cover;
+  padding-top: 24px;
+}
+
 .organisations-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -119,6 +129,7 @@ export default {
   text-align: center;
   box-sizing: border-box;
   position: relative;
+  background-color: #fff;
 
   &__logo {
     border-radius: 50%;

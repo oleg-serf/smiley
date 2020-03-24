@@ -1,36 +1,42 @@
 <template>
   <div>
     <Breadcrumbs />
-    <div class="container">
-      <section class="users-grid">
-        <div class="user-item" v-for="user in users" :key="user.full_name+'-org-archive'">
-          <div class="user-item__avatar">
-            <router-link :to="'/users/' + user.slug">
-              <img
-                :src="$settings.images_path.users + 's_' + user.avatar"
-                alt
-                title
-                class="user-item__image"
-                v-if="user.avatar !== null"
-              />
-              <span v-else>{{ user.display_name | filterAvatar }}</span>
-            </router-link>
+    <div class="bg">
+      <div class="container">
+        <section class="users-grid">
+          <div class="user-item" v-for="user in users" :key="user.full_name+'-org-archive'">
+            <div class="user-item__avatar">
+              <router-link :to="'/users/' + user.slug">
+                <img
+                  :src="$settings.images_path.users + 's_' + user.avatar"
+                  alt
+                  title
+                  class="user-item__image"
+                  v-if="user.avatar !== null"
+                />
+                <span v-else>{{ user.display_name | filterAvatar }}</span>
+              </router-link>
+            </div>
+            <h2 class="user-item__title">
+              <router-link :to="'/users/' + user.slug">{{ user.display_name }}</router-link>
+            </h2>
+            <ul class="user__social">
+              <template v-for="(social, index) in socials">
+                <li v-if="user[social] != null" :key="'user-social-'+index">
+                  <a :href="user[social]" target="_blank">
+                    <app-icon :name="social" />
+                  </a>
+                </li>
+              </template>
+            </ul>
           </div>
-          <h2 class="user-item__title">
-            <router-link :to="'/users/' + user.slug">{{ user.display_name }}</router-link>
-          </h2>
-          <ul class="user__social">
-            <template v-for="(social, index) in socials">
-              <li v-if="user[social] != null" :key="'user-social-'+index">
-                <a :href="user[social]" target="_blank">
-                  <app-icon :name="social" />
-                </a>
-              </li>
-            </template>
-          </ul>
-        </div>
-      </section>
+        </section>
+      </div>
+    </div>
+    <div class="container">
       <div class="smiley-pagination" v-if="pages_count > 1">
+        <br />
+
         <paginate
           :page-count="pages_count"
           :click-handler="loadPageNumb"
@@ -42,8 +48,6 @@
         >
           <span slot="breakViewContent">...</span>
         </paginate>
-        <br />
-        <br />
         <br />
       </div>
     </div>
@@ -95,7 +99,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.bg {
+  background-image: url("/img/register-bg.jpg");
+  background-size: cover;
+  padding-top: 24px;
+}
 .users-grid {
   display: flex;
   flex-wrap: wrap;
@@ -113,6 +122,7 @@ export default {
   max-width: calc((100% / 4) - 32px);
   box-sizing: border-box;
   position: relative;
+  background-color: #fff;
 
   &__avatar {
     border-radius: 50%;
