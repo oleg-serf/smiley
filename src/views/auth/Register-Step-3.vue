@@ -122,7 +122,7 @@
             </div>
           </div>
           <div class="wrap-for-support-select">
-            <select name="reg-support" id="reg-support" v-model="neededItems[index].child">
+            <select name="reg-support" id="reg-support" required v-model="neededItems[index].child">
               <option selected disabled>Please select one</option>
               <option
                 v-for="parentCategory in categoryItems(neededItems[index].parent)"
@@ -176,7 +176,12 @@
           class="flex-select"
         >
           <div class="wrap-for-support-select">
-            <select name="reg-support" id="reg-support" v-model="offeredItems[index].parent">
+            <select
+              name="reg-support"
+              id="reg-support"
+              required
+              v-model="offeredItems[index].parent"
+            >
               <option selected disabled>Please select one</option>
               <option
                 v-for="parentCategory in supportList"
@@ -304,31 +309,31 @@ export default {
         .filter(item => item.child != null)
         .map(item => item.child);
 
-      if ("offer" == this.supportType && offerItemsList.length == 0) {
-        this.$swal({
-          text: "Please select what support do you offer",
-          icon: "info"
-        });
-        return;
-      }
-      if ("need" == this.supportType && neededItemsList.length == 0) {
-        this.$swal({
-          text: "Please select what support do you need",
-          icon: "info"
-        });
-        return;
-      }
-      if (
-        "combined" == this.supportType &&
-        neededItemsList.length == 0 &&
-        offerItemsList.length == 0
-      ) {
-        this.$swal({
-          text: "Please select what support do you need and offer",
-          icon: "info"
-        });
-        return;
-      }
+      // if ("offer" == this.supportType && offerItemsList.length == 0) {
+      //   this.$swal({
+      //     text: "Please select what support do you offer",
+      //     icon: "info"
+      //   });
+      //   return;
+      // }
+      // if ("need" == this.supportType && neededItemsList.length == 0) {
+      //   this.$swal({
+      //     text: "Please select what support do you need",
+      //     icon: "info"
+      //   });
+      //   return;
+      // }
+      // if (
+      //   "combined" == this.supportType &&
+      //   neededItemsList.length == 0 &&
+      //   offerItemsList.length == 0
+      // ) {
+      //   this.$swal({
+      //     text: "Please select what support do you need and offer",
+      //     icon: "info"
+      //   });
+      //   return;
+      // }
 
       let supports = {
         offer: ["combined", "offer"].includes(this.supportType)

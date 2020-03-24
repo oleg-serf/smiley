@@ -80,7 +80,7 @@
         </label>
       </div>
       <div class="input-row">
-        <label>
+        <label style="width: 100%;">
           <span>Add a photo so that friends and colleagues can recognise you *</span>
           <input
             type="file"
@@ -91,6 +91,12 @@
             accept=".png, .jpg, .jpeg"
             required
           />
+        </label>
+      </div>
+      <div class="input-row">
+        <label style="width: 100%;">
+          <span>Ass a short bio</span>
+          <textarea style="height: 300px;" minlength="32" maxlength="254" v-model="user.bio"></textarea>
         </label>
       </div>
       <div class="register-btn-wrap">
@@ -121,7 +127,8 @@ export default {
         avatar_image: null,
         goals: [],
         survey: null,
-        survey_other: null
+        survey_other: null,
+        bio: ""
       }
     };
   },
@@ -386,6 +393,7 @@ export default {
     font: 700 16px/24px "Muli", sans-serif;
 
     input,
+    textarea,
     select {
       display: block;
       margin: 7px auto 25px;
