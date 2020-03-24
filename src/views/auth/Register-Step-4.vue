@@ -1,114 +1,117 @@
 <template>
-  <section class="registration-step-4 container">
-    <div class="registration-progress">
-      <div class="registration-progress__item done">Get Started</div>
-      <div class="registration-progress__item done">About You</div>
-      <div class="registration-progress__item done">Looking for</div>
-      <div class="registration-progress__item active">Join the Smiley Community</div>
-    </div>
-    <h2
-      class="registration-title"
-    >Tell us what you care about most in order to customize the best experience for you (you can select more than one interest)</h2>
-    <p class="registration-subtitle"></p>
+  <div class="bg">
+    <section class="registration-step-4 container">
+      <div class="registration-progress">
+        <div class="registration-progress__item done">Get Started</div>
+        <div class="registration-progress__item done">About You</div>
+        <div class="registration-progress__item done">Looking for</div>
+        <div class="registration-progress__item active">Join the Smiley Community</div>
+      </div>
+      <h2
+        class="registration-title"
+      >Tell us what you care about most in order to customize the best experience for you (you can select more than one interest)</h2>
+      <p class="registration-subtitle"></p>
 
-    <form class="registration-4" v-if="goals.length > 0" @submit.prevent="submitGoals">
-      <!-- <div class=""> -->
-      <carousel
-        class="interest-list owl-carousel"
-        id="owl-carousel"
-        :items="4"
-        :margin="20"
-        :loop="true"
-        :autoplay="false"
-        :autoplayTimeout="2000"
-        :smartSpeed="500"
-        :slideBy="4"
-        :responsive="{657:{center: true,autoWidth: true,margin: -25}}"
-      >
-        <div class="interest-item" v-for="goal in goals" :key="goal.id">
-          <label class="interest-checkbox">
-            <div class="interest-img-wrap">
-              <img :src="$settings.images_path.goals + 'm_' + goal.image" alt />
-            </div>
-            <input type="checkbox" :value="goal.id" v-model="user.goals" />
-            <span class="interest-checkmark">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z"
-                  fill="#000"
-                />
-              </svg>
+      <form class="registration-4" v-if="goals.length > 0" @submit.prevent="submitGoals">
+        <!-- <div class=""> -->
+        <carousel
+          class="interest-list owl-carousel"
+          id="owl-carousel"
+          :items="4"
+          :margin="20"
+          :loop="true"
+          :autoplay="false"
+          :autoplayTimeout="2000"
+          :smartSpeed="500"
+          :slideBy="4"
+          :nav="false"
+          :responsive="{657:{center: true,autoWidth: true,margin: -25}}"
+        >
+          <div class="interest-item" v-for="goal in goals" :key="goal.id">
+            <label class="interest-checkbox">
+              <div class="interest-img-wrap">
+                <img :src="$settings.images_path.goals + 'm_' + goal.image" alt />
+              </div>
+              <input type="checkbox" :value="goal.id" v-model="user.goals" />
+              <span class="interest-checkmark">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z"
+                    fill="#000"
+                  />
+                </svg>
+              </span>
+            </label>
+          </div>
+        </carousel>
+        <!-- </div> -->
+        <div class="input-row">
+          <label>
+            <span>How did you hear about us? *</span>
+            <select v-model="user.survey" required>
+              <option selected disabled>Select option</option>
+              <option value="1">Social Media</option>
+              <option value="2">Google (Bing, etc) search</option>
+              <option value="3">I attended a Smiley Movement event</option>
+              <option value="4">From a friend</option>
+              <option value="5">I received an email from Smiley Movement</option>
+              <option value="6">I received a call from Smiley Movement</option>
+              <option value="7">Other (Please specify)</option>
+            </select>
+          </label>
+          <label v-if="user.survey == 7" for="survey_other">
+            <span>
+              <br />
             </span>
+            <input
+              type="text"
+              name="survey_other"
+              id="survey_other"
+              v-model="user.survey_other"
+              placeholder="Specify here"
+              required
+            />
           </label>
         </div>
-      </carousel>
-      <!-- </div> -->
-      <div class="input-row">
-        <label>
-          <span>How did you hear about us? *</span>
-          <select v-model="user.survey" required>
-            <option selected disabled>Select option</option>
-            <option value="1">Social Media</option>
-            <option value="2">Google (Bing, etc) search</option>
-            <option value="3">I attended a Smiley Movement event</option>
-            <option value="4">From a friend</option>
-            <option value="5">I received an email from Smiley Movement</option>
-            <option value="6">I received a call from Smiley Movement</option>
-            <option value="7">Other (Please specify)</option>
-          </select>
-        </label>
-        <label v-if="user.survey == 7" for="survey_other">
-          <span>
-            <br />
-          </span>
-          <input
-            type="text"
-            name="survey_other"
-            id="survey_other"
-            v-model="user.survey_other"
-            placeholder="Specify here"
-            required
-          />
-        </label>
-      </div>
-      <div class="input-row">
-        <label style="width: 100%;">
-          <span>Add a photo so that friends and colleagues can recognise you *</span>
-          <input
-            type="file"
-            class="file-input"
-            ref="fileInput"
-            id="organisationLogo"
-            @input="onSelectFile"
-            accept=".png, .jpg, .jpeg"
-            required
-          />
-        </label>
-      </div>
-      <div class="input-row">
-        <label style="width: 100%;">
-          <span>Ass a short bio</span>
-          <textarea style="height: 300px;" minlength="32" maxlength="254" v-model="user.bio"></textarea>
-        </label>
-      </div>
-      <div class="register-btn-wrap">
-        <button
-          class="complete-btn"
-          type="submit"
-          name="submit"
-          value="complete-profile"
-        >Complete Profile</button>
-      </div>
-    </form>
-  </section>
+        <div class="input-row">
+          <label style="width: 100%;">
+            <span>Add a photo so that friends and colleagues can recognise you *</span>
+            <input
+              type="file"
+              class="file-input"
+              ref="fileInput"
+              id="organisationLogo"
+              @input="onSelectFile"
+              accept=".png, .jpg, .jpeg"
+              required
+            />
+          </label>
+        </div>
+        <div class="input-row">
+          <label style="width: 100%;">
+            <span>Ass a short bio</span>
+            <textarea style="height: 300px;" minlength="32" maxlength="254" v-model="user.bio"></textarea>
+          </label>
+        </div>
+        <div class="register-btn-wrap">
+          <button
+            class="complete-btn"
+            type="submit"
+            name="submit"
+            value="complete-profile"
+          >Complete Profile</button>
+        </div>
+      </form>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -183,14 +186,101 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bg {
+  background-image: url("/img/register-bg.jpg");
+  background-size: cover;
+  padding-top: 48px;
+  padding-bottom: 96px;
+  color: #fff;
+}
+.registration-progress {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-family: Muli, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+
+  &__item {
+    width: 25%;
+    text-align: center;
+    position: relative;
+
+    &:first-child {
+      &.done {
+        &::after {
+          display: none;
+        }
+      }
+    }
+
+    &.done {
+      &::after {
+        background-color: #fdec01;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        background-image: url("/img/small-tick-black.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-bottom: 15px;
+      }
+      font-weight: normal;
+    }
+
+    &.active {
+      &::after {
+        display: block;
+        background-color: #fdec01;
+      }
+      &::before {
+        background-color: #fdec01;
+        width: 43px;
+        height: 43px;
+        margin-top: 2px;
+        margin-bottom: 15px;
+      }
+
+      font-weight: bold;
+    }
+
+    &::before {
+      width: 28px;
+      height: 28px;
+      content: "";
+      display: block;
+      text-align: center;
+      margin: 9px auto 25px;
+      border-radius: 50%;
+      background-color: #fff;
+      z-index: 3;
+      position: relative;
+    }
+
+    &::after {
+      width: 100%;
+      height: 3px;
+      content: "";
+      position: absolute;
+      background-color: #fff;
+      top: 22px;
+      left: -50%;
+      z-index: 1;
+    }
+  }
+}
 .registration-step-4 {
   text-align: center;
   margin-top: 127px;
   margin-bottom: 160px;
   .registration-title {
-    color: $default-text;
+    color: #fff;
     font: 700 56px/74px "Montserrat Bold", sans-serif;
     margin-bottom: 24px;
+    margin-top: 54px;
   }
   .registration-subtitle {
     color: $default-text;
@@ -291,84 +381,6 @@ export default {
   }
 }
 
-.registration-progress {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  font-family: Muli, Arial, Helvetica, sans-serif;
-  font-size: 18px;
-  line-height: 1.5;
-
-  &__item {
-    width: 25%;
-    text-align: center;
-    position: relative;
-
-    &:first-child {
-      &.done {
-        &::after {
-          display: none;
-        }
-      }
-    }
-
-    &.done {
-      &::after {
-        background-color: #fdec01;
-      }
-      &::before {
-        background-color: #fdec01;
-        width: 43px;
-        height: 43px;
-        margin-top: 2px;
-        background-image: url("/img/small-tick-black.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        margin-bottom: 15px;
-      }
-      font-weight: normal;
-    }
-
-    &.active {
-      &::after {
-        display: block;
-        background-color: #fdec01;
-      }
-      &::before {
-        background-color: #fdec01;
-        width: 43px;
-        height: 43px;
-        margin-top: 2px;
-        margin-bottom: 15px;
-      }
-
-      font-weight: bold;
-    }
-
-    &::before {
-      width: 28px;
-      height: 28px;
-      content: "";
-      display: block;
-      text-align: center;
-      margin: 9px auto 25px;
-      border-radius: 50%;
-      background-color: #7a7a7a;
-    }
-
-    &::after {
-      width: 100%;
-      height: 3px;
-      content: "";
-      position: absolute;
-      background-color: #7a7a7a;
-      top: 22px;
-      left: -50%;
-      z-index: -1;
-    }
-  }
-}
-
 .input-row {
   margin-top: 24px;
   display: flex;
@@ -389,7 +401,7 @@ export default {
   }
 
   label {
-    color: $default-text;
+    color: #fff;
     font: 700 16px/24px "Muli", sans-serif;
 
     input,
@@ -412,5 +424,9 @@ export default {
       }
     }
   }
+}
+
+.owl-nav {
+  display: none !important;
 }
 </style>

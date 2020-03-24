@@ -1,134 +1,135 @@
 <template>
-  <section class="registration-step-2 container">
-    <div class="registration-progress">
-      <div class="registration-progress__item done">Get Started</div>
-      <div class="registration-progress__item active">About You</div>
-      <div class="registration-progress__item">Looking for</div>
-      <div class="registration-progress__item">Join the Smiley Community</div>
-    </div>
-    <h2 class="registration-title">Tell us a bit about you</h2>
-    <p
-      class="registration-subtitle"
-    >First, we want to get to know you just a little better so you can see latest projects locally and attend events near you.</p>
+  <div class="bg">
+    <section class="registration-step-2 container">
+      <div class="registration-progress">
+        <div class="registration-progress__item done">Get Started</div>
+        <div class="registration-progress__item active">About You</div>
+        <div class="registration-progress__item">Looking for</div>
+        <div class="registration-progress__item">Join the Smiley Community</div>
+      </div>
+      <h2 class="registration-title">Tell us a bit about you</h2>
+      <p
+        class="registration-subtitle"
+      >First, we want to get to know you just a little better so you can see latest projects locally and attend events near you.</p>
 
-    <form class="registration-2" @submit.prevent="submitUserData">
-      <label for="display-name">
-        Display Name*
-        <span class="explanation-text">(This will be publicly shown on your profile)</span>
-        <input
-          type="text"
-          name="display-name"
-          id="display-name"
-          v-model="user.display_name"
-          placeholder
-          required
-        />
-      </label>
+      <form class="registration-2" @submit.prevent="submitUserData">
+        <label for="display-name">
+          Display Name*
+          <span class="explanation-text">(This will be publicly shown on your profile)</span>
+          <input
+            type="text"
+            name="display-name"
+            id="display-name"
+            v-model="user.display_name"
+            placeholder
+            required
+          />
+        </label>
 
-      <div class="input-row">
-        <label for="user-location">
-          <span>Country</span>
-          <select v-model="user.country" required>
-            <option :value="item.code" v-for="item in countries" :key="item.code">{{item.name}}</option>
+        <div class="input-row">
+          <label for="user-location">
+            <span>Country</span>
+            <select v-model="user.country" required>
+              <option :value="item.code" v-for="item in countries" :key="item.code">{{item.name}}</option>
+            </select>
+          </label>
+          <label v-if="user.country != ''">
+            <span>City</span>
+            <vue-google-autocomplete
+              id="map"
+              types="(cities)"
+              class="form-control"
+              :country="user.country"
+              v-on:placechanged="getToData"
+              placeholder="Start typing city name"
+              required
+            ></vue-google-autocomplete>
+          </label>
+        </div>
+        <div class="section-title">
+          <h3 class="section-title__heading">Occupation type:</h3>
+        </div>
+        <div class="input-row">
+          <label class="checkbox-label">
+            <input
+              type="radio"
+              name="occupation_type"
+              @click="user.occupation_sector = null"
+              value="Private"
+              v-model="user.occupation_type"
+              required
+            />
+            <span>Private</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="radio"
+              name="occupation_type"
+              @click="user.occupation_sector = null"
+              value="Public"
+              v-model="user.occupation_type"
+            />
+            <span>Public</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="radio"
+              name="occupation_type"
+              @click="user.occupation_sector = null"
+              value="Charity"
+              v-model="user.occupation_type"
+            />
+            <span>Charity</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="radio"
+              name="occupation_type"
+              @click="user.occupation_sector = null"
+              value="Student"
+              v-model="user.occupation_type"
+            />
+            <span>Student</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="radio"
+              name="occupation_type"
+              @click="user.occupation_sector = null"
+              value="Not currently working"
+              v-model="user.occupation_type"
+            />
+            <span>Not currently working</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="radio"
+              name="occupation_type"
+              @click="user.occupation_sector = null"
+              value="Retired"
+              v-model="user.occupation_type"
+            />
+            <span>Retired</span>
+          </label>
+        </div>
+        <label v-if="['Private', 'Public', 'Charity'].includes(user.occupation_type)">
+          <span>Sector</span>
+          <select v-model="user.occupation_sector" required>
+            <option selected disabled :value="null">Select value</option>
+            <option
+              :value="item.value"
+              v-for="item in occupations[user.occupation_type]"
+              :key="item.value"
+            >{{item.name}}</option>
           </select>
         </label>
-        <label v-if="user.country != ''">
-          <span>City</span>
-          <vue-google-autocomplete
-            id="map"
-            types="(cities)"
-            class="form-control"
-            :country="user.country"
-            v-on:placechanged="getToData"
-            placeholder="Start typing city name"
-            required
-          ></vue-google-autocomplete>
+        <label for="job-title">
+          Job title
+          <span class="explanation-text">(if applicable)</span>
+          <input type="text" name="job-title" id="job-title" v-model="user.job_title" placeholder />
+          <p class="explanation-text">(This will be publicly shown on your profile)</p>
         </label>
-      </div>
-      <div class="section-title">
-        <h3 class="section-title__heading">Occupation type:</h3>
-      </div>
-      <div class="input-row">
-        <label class="checkbox-label">
-          <input
-            type="radio"
-            name="occupation_type"
-            @click="user.occupation_sector = null"
-            value="Private"
-            v-model="user.occupation_type"
-            required
-          />
-          <span>Private</span>
-        </label>
-        <label class="checkbox-label">
-          <input
-            type="radio"
-            name="occupation_type"
-            @click="user.occupation_sector = null"
-            value="Public"
-            v-model="user.occupation_type"
-          />
-          <span>Public</span>
-        </label>
-        <label class="checkbox-label">
-          <input
-            type="radio"
-            name="occupation_type"
-            @click="user.occupation_sector = null"
-            value="Charity"
-            v-model="user.occupation_type"
-          />
-          <span>Charity</span>
-        </label>
-        <label class="checkbox-label">
-          <input
-            type="radio"
-            name="occupation_type"
-            @click="user.occupation_sector = null"
-            value="Student"
-            v-model="user.occupation_type"
-          />
-          <span>Student</span>
-        </label>
-        <label class="checkbox-label">
-          <input
-            type="radio"
-            name="occupation_type"
-            @click="user.occupation_sector = null"
-            value="Not currently working"
-            v-model="user.occupation_type"
-          />
-          <span>Not currently working</span>
-        </label>
-        <label class="checkbox-label">
-          <input
-            type="radio"
-            name="occupation_type"
-            @click="user.occupation_sector = null"
-            value="Retired"
-            v-model="user.occupation_type"
-          />
-          <span>Retired</span>
-        </label>
-      </div>
-      <label v-if="['Private', 'Public', 'Charity'].includes(user.occupation_type)">
-        <span>Sector</span>
-        <select v-model="user.occupation_sector" required>
-          <option selected disabled :value="null">Select value</option>
-          <option
-            :value="item.value"
-            v-for="item in occupations[user.occupation_type]"
-            :key="item.value"
-          >{{item.name}}</option>
-        </select>
-      </label>
-      <label for="job-title">
-        Job title
-        <span class="explanation-text">(if applicable)</span>
-        <input type="text" name="job-title" id="job-title" v-model="user.job_title" placeholder />
-        <p class="explanation-text">(This will be publicly shown on your profile)</p>
-      </label>
-      <!-- <label for="organization-name">
+        <!-- <label for="organization-name">
         Organization
         <input
           type="text"
@@ -136,14 +137,15 @@
           id="organization-name"
           placeholder="Search or add your organization"
         />
-      </label>-->
+        </label>-->
 
-      <div class="register-btn-wrap">
-        <div></div>
-        <button class="next-btn" type="submit" name="submit" value="register">Next</button>
-      </div>
-    </form>
-  </section>
+        <div class="register-btn-wrap">
+          <div></div>
+          <button class="next-btn" type="submit" name="submit" value="register">Next</button>
+        </div>
+      </form>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -477,17 +479,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bg {
+  background-image: url("/img/register-bg.jpg");
+  background-size: cover;
+  padding-top: 48px;
+  padding-bottom: 96px;
+  color: #fff;
+}
+
 .registration-step-2 {
   text-align: center;
   margin-top: 76px;
   margin-bottom: 160px;
   .registration-title {
-    color: $default-text;
+    color: #fff;
     font: 700 56px/74px "Montserrat Bold", sans-serif;
     margin-bottom: 10px;
   }
   .registration-subtitle {
-    color: $default-text;
+    color: #fff;
     font: 400 22px/36px "Muli", sans-serif;
     max-width: 778px;
     margin: 0 auto 42px;
@@ -504,7 +514,7 @@ export default {
       margin-left: 5px;
     }
     & > label {
-      color: $default-text;
+      color: #fff;
       font: 700 16px/24px "Muli", sans-serif;
 
       input {
@@ -557,7 +567,7 @@ export default {
     //      outline: none;
     //    }
     //    option{
-    //      color: $default-text;
+    //      color: #fff;
     //      &[disabled]{
     //        color: #656565;
     //      }
@@ -573,7 +583,7 @@ export default {
     //}
     .occupation-btns-group-title {
       font: 700 16px/24px "Muli", sans-serif;
-      color: $default-text;
+      color: #fff;
       margin-top: 15px;
       margin-bottom: 4px;
     }
@@ -587,7 +597,7 @@ export default {
       }
       label {
         font: 400 16px/36px "Muli", sans-serif;
-        color: #656565;
+        color: #fff;
         display: flex;
         align-items: center;
         margin: 10px 0;
@@ -688,6 +698,11 @@ export default {
     width: calc(50% - 30px);
     margin-left: 15px;
     margin-right: 15px;
+    color: #fff !important;
+
+    span {
+      color: #fff;
+    }
 
     &.checkbox-label {
       width: calc(100% / 3 - 30px);
@@ -708,7 +723,7 @@ export default {
 }
 
 label {
-  color: $default-text;
+  color: #fff !important;
   font: 700 16px/24px "Muli", sans-serif;
 
   input,
@@ -744,6 +759,10 @@ label {
   }
 }
 
+label {
+  color: #fff;
+}
+
 .section-title {
   display: flex;
   flex-direction: row;
@@ -751,7 +770,7 @@ label {
 
   .section-title__heading {
     font: 700 22px/28px "Muli", sans-serif;
-    color: $default-text;
+    color: #fff;
   }
 }
 
@@ -768,9 +787,17 @@ label {
     text-align: center;
     position: relative;
 
+    &:first-child {
+      &.done {
+        &::after {
+          display: none;
+        }
+      }
+    }
+
     &.done {
       &::after {
-        display: none;
+        background-color: #fdec01;
       }
       &::before {
         background-color: #fdec01;
@@ -782,10 +809,12 @@ label {
         background-repeat: no-repeat;
         margin-bottom: 15px;
       }
+      font-weight: normal;
     }
 
     &.active {
       &::after {
+        display: block;
         background-color: #fdec01;
       }
       &::before {
@@ -807,7 +836,9 @@ label {
       text-align: center;
       margin: 9px auto 25px;
       border-radius: 50%;
-      background-color: #7a7a7a;
+      background-color: #fff;
+      z-index: 3;
+      position: relative;
     }
 
     &::after {
@@ -815,10 +846,10 @@ label {
       height: 3px;
       content: "";
       position: absolute;
-      background-color: #7a7a7a;
+      background-color: #fff;
       top: 22px;
       left: -50%;
-      z-index: -1;
+      z-index: 1;
     }
   }
 }
