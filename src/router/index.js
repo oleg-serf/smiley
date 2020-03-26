@@ -149,6 +149,17 @@ const routes = [{
     }
   },
   /**
+   * Goals
+   */
+  {
+    path: '/goals/',
+    name: 'goals',
+    component: () => import( /* webpackChunkName: "goals" */ '../views/goals/index.vue'),
+    meta: {
+      title: 'UN Goals',
+    }
+  },
+  /**
    * News
    */
   {

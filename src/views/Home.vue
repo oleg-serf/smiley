@@ -89,6 +89,9 @@
           </router-link>
         </div>
       </div>
+      <div>
+        <router-link to="/goals" class="btn">Read More</router-link>
+      </div>
     </section>
 
     <section class="smiley-video-section">
