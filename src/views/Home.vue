@@ -7,7 +7,7 @@
       </slot>
     </hero>
 
-    <banner link="/news/category/all">
+    <banner link="/news/category/all" background="/img/homepage/news-background.jpg">
       <template v-slot:name>news</template>
       <template v-slot:title>join the movement</template>
       <template
@@ -45,7 +45,7 @@
       <template v-slot:button>create profile</template>
     </banner>
 
-    <banner link="/talks" color="#d12121">
+    <banner link="/talks" color="#d12121" background="/img/homepage/talks-background.jpg">
       <template v-slot:name>talks</template>
       <template v-slot:title>join the movement</template>
       <template
@@ -276,4 +276,11 @@ export default {
 @import "@/scss/sections/_homepage-network";
 @import "@/scss/sections/_homepage-thematic-icons";
 @import "@/scss/sections/_smiley-video-section";
+
+//
+.article-item {
+  .article-subtitle {
+    text-transform: lowercase;
+  }
+}
 </style>
