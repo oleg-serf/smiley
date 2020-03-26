@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg">
     <section class="login container">
       <h2 class="login-title">Login</h2>
       <p
@@ -41,7 +41,7 @@
         </div>
 
         <v-facebook-login
-          :button-style="{background: '#fff', color: '#000'}"
+          :button-style="{background: '#fff !important', color: '#000'}"
           app-id="486208715194516"
           @login="onFacebookLogin"
           @logout="logout"
@@ -235,6 +235,54 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/scss/sections/_page-login";
+
+.bg {
+  background-image: url("/img/register-bg.jpg");
+  background-size: cover;
+  padding-top: 48px;
+  padding-bottom: 96px;
+  color: #fff !important;
+}
+
+.login {
+  margin-bottom: 0px;
+  margin-top: 0px;
+
+  h3 {
+    color: #fff !important;
+  }
+
+  .login-title {
+    color: #fff !important;
+  }
+  .login-subtitle {
+    color: #fff !important;
+  }
+
+  .login-wrap {
+    .pledge-that {
+      p,
+      li {
+        color: #fff !important;
+      }
+    }
+    label {
+      color: #fff !important;
+    }
+    .register-checkbox {
+      color: #fff !important;
+
+      a {
+        color: #fff !important;
+      }
+    }
+  }
+  .login-wrap {
+    .register-and-forgot a {
+      color: #fff !important;
+    }
+  }
+}
 </style>

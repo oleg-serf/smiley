@@ -892,6 +892,7 @@ export default {
   mounted() {
     axios.get("organisations/edit/gallery").then(res => {
       this.gallery = res.data.images;
+      console.log("gallery", this.gallery);
     });
     axios
       .get("/organisations/" + this.$route.params.slug + "/posts")

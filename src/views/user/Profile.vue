@@ -1,7 +1,7 @@
 <template>
   <!-- TODO: GLOBAL -> use svg sprties -->
   <div>
-    <section class="user-profile container">
+    <section class="user-profile container bg">
       <div class="sidebar sidebar--user">
         <div class="sidebar-block">
           <div class="user-profile__avatar">
@@ -25,106 +25,90 @@
         </div>
       </div>
       <div class="content-container">
-        <div class="content-section">
-          <h3 class="content-section__title">
-            <button>About me:</button>
-          </h3>
-          <div
-            class="content-section__content"
-            v-html="user.bio || 'Oh, we have no information for this block yet :( Add banner'"
-          ></div>
-        </div>
-        <div class="content-section">
-          <h3 class="content-section__title">
-            <button>My interests (UN Goals):</button>
-          </h3>
-          <div class="content-section__content">
+        <div class="profile-grid">
+          <div class="profile-grid__item">
+            <div class="profile-grid__title">About me:</div>
+            <div
+              class="content-section__content"
+              v-html="user.bio || 'Oh, we have no information for this block yet :( Add banner'"
+            ></div>
+          </div>
+          <div class="profile-grid__item">
+            <div class="profile-grid__title">My interests (UN Goals):</div>
             <ul class="goals-list">
               <li v-for="goal in goals" :key="goal.id">
                 <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
               </li>
             </ul>
           </div>
-        </div>
-        <div class="content-section" v-if="supportOffer.length > 0">
-          <h3 class="content-section__title">
-            <button>
-              Support I can
-              <span>offer</span>
-            </button>:
-          </h3>
-          <div class="content-section__content">
-            <ul class="support-list">
-              <li
-                class="support-list__item"
-                v-for="(item, index) in supportOffer"
-                :key="'i-need-'+index"
-              >
+          <div class="profile-grid__item">
+            <div class="profile-grid__title">Support</div>
+            <template v-if="supportNeed.length > 0">
+              <div class="profile-grid__subtitle">
                 <img src="/img/give.svg" />
-                <div class="support-list__category-container">
-                  <div class="support-list__category">{{item.support_category.title}}</div>
-                  <div class="support-list__subcategory">{{item.title}}</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="content-section" v-if="supportNeed.length > 0">
-          <h3 class="content-section__title">
-            <button>
-              Support I
-              <span>need</span>
-            </button>:
-          </h3>
-          <div class="content-section__content">
-            <ul class="support-list">
-              <li
-                class="support-list__item"
-                v-for="(item, index) in supportNeed"
-                :key="'i-need-'+index"
-              >
-                <img src="/img/give.svg" />
-                <div class="support-list__category-container">
-                  <div class="support-list__category">{{item.support_category.title}}</div>
-                  <div class="support-list__subcategory">{{item.title}}</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="content-section">
-          <h3 class="content-section__title">
-            <button>Latest news</button>:
-          </h3>
-          <div class="content-section__content">
-            <section class="news-grid">
-              <div class="news-grid__news">
-                <router-link
-                  :to="'/news/' + post.slug"
-                  class="article-item"
-                  v-for="post in feed"
-                  :key="post.id+post.title"
-                >
-                  <div class="smiley-img-wrap">
-                    <div class="smiley-img">
-                      <img
-                        :src="$settings.images_path.news  +'m_'+post.cover_image"
-                        :alt="post.title"
-                        :title="post.title"
-                      />
-                    </div>
-                  </div>
-                  <div class="article-descr">
-                    <div class="article-date-location">
-                      <div class="article-date">{{post.created_at}}</div>
-                      <div class="article-location">{{post.location}}</div>
-                    </div>
-                    <div class="article-title">{{post.title}}</div>
-                    <div class="article-subtitle">{{post.description}}</div>
-                  </div>
-                </router-link>
+                I can offer:
               </div>
-            </section>
+              <ul class="support-list">
+                <li
+                  class="support-list__item"
+                  v-for="(item, index) in supportNeed"
+                  :key="'i-need-'+index"
+                >
+                  <div class="support-list__category-container">
+                    <div class="support-list__category">{{item.support_category.title}}</div>
+                    <div class="support-list__subcategory">{{item.title}}</div>
+                  </div>
+                </li>
+              </ul>
+            </template>
+            <template v-if="supportOffer.length > 0">
+              <hr />
+              <div class="profile-grid__subtitle">
+                <img src="/img/give.svg" />
+                I need:
+              </div>
+              <ul class="support-list">
+                <li
+                  class="support-list__item"
+                  v-for="(item, index) in supportOffer"
+                  :key="'i-need-'+index"
+                >
+                  <div class="support-list__category-container">
+                    <div class="support-list__category">{{item.support_category.title}}</div>
+                    <div class="support-list__subcategory">{{item.title}}</div>
+                  </div>
+                </li>
+              </ul>
+            </template>
+          </div>
+          <div class="profile-grid__item profile-grid__item--news">
+            <div class="profile-grid__title">Latest News</div>
+            <div class="news-grid">
+              <router-link
+                :to="'/news/' + post.slug"
+                class="article-item"
+                v-for="post in feed"
+                :key="post.id+post.title"
+              >
+                <div class="smiley-img-wrap">
+                  <div class="smiley-img">
+                    <img
+                      :src="$settings.images_path.news  +'m_'+post.cover_image"
+                      :alt="post.title"
+                      :title="post.title"
+                    />
+                  </div>
+                </div>
+                <div class="article-descr">
+                  <div class="article-date-location">
+                    <div class="article-date">{{post.created_at}}</div>
+                    <div class="article-location">{{post.location}}</div>
+                  </div>
+                  <div class="article-title">{{post.title}}</div>
+                  <div class="article-subtitle">{{post.description}}</div>
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -178,7 +162,7 @@ export default {
     axios
       .get("/users/feed")
       .then(res => {
-        this.feed = res.data.posts.splice(0, 4);
+        this.feed = res.data.posts.splice(0, 3);
       })
       .catch(error => console.error(error));
 
@@ -206,6 +190,13 @@ export default {
 @import "@/scss/components/_article-item";
 @import "@/scss/blocks/_homepage-news-grid";
 
+.bg {
+  background-image: url("/img/register-bg.jpg");
+  background-size: cover;
+  padding-top: 48px;
+  padding-bottom: 96px;
+}
+
 .news-grid {
   padding-top: 0px;
 }
@@ -221,6 +212,55 @@ export default {
     margin-right: 12px;
     width: 24px;
     height: 24px;
+  }
+}
+
+.goals-list {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+
+  .profile-grid__item {
+    padding: 15px;
+    background: #fff;
+
+    &.profile-grid__item--news {
+      grid-column: 1 / span 3;
+    }
+  }
+
+  .profile-grid__title {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #ffec00;
+    font-family: "Montserrat Bold", sans-serif;
+    text-transform: uppercase;
+    @include font-size(1rem);
+  }
+
+  .profile-grid__subtitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    img {
+      margin-right: 12px;
+      width: 15px;
+      height: auto;
+    }
+  }
+}
+
+.support-list {
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 15px;
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
   }
 }
 </style>
