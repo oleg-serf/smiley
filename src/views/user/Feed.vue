@@ -273,4 +273,9 @@ export default {
     font: 400 16px/1.35 "Muli", sans-serif;
   }
 }
+
+.smiley-img-wrap {
+  margin-bottom: 24px;
+  height: 255px;
+}
 </style>
