@@ -41,7 +41,7 @@
 
     <banner link="/add-organisation" color="#4696d2" v-if="auth">
       <template v-slot:name>network</template>
-      <template v-slot:title>join the movement</template>
+      <template v-slot:title>CONNECT WITH OTHER CHANGEMAKERS</template>
       <template
         v-slot:content
       >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>
