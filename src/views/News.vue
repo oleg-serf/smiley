@@ -181,33 +181,34 @@
         </div>
       </div>
     </section>
+    <template v-if="featured_item.blog_posts_latest.length > 0">
+      <section
+        class="news-category-section container"
+        v-for="featured_item in categories_featured"
+        :key="featured_item.name + featured_item.id"
+      >
+        <div class="news-category-container">
+          <h2 class="news-category-title">{{ featured_item.name }}</h2>
 
-    <section
-      class="news-category-section container"
-      v-for="featured_item in categories_featured"
-      :key="featured_item.name + featured_item.id"
-      v-if="featured_item.blog_posts_latest.length > 0"
-    >
-      <div class="news-category-container">
-        <h2 class="news-category-title">{{ featured_item.name }}</h2>
-
-        <router-link
-          :to="'/news/' + article.slug"
-          class="article-item"
-          v-for="article in featured_item.blog_posts_latest"
-          :key="article.id+article.title"
-        >
-          <news-item :article="article" />
-        </router-link>
-
-        <div class="more-link-wrap">
-          <router-link :to="'/news/category/' + featured_item.slug" class="read-more-link">
-            <span></span>Read more
+          <router-link
+            :to="'/news/' + article.slug"
+            class="article-item"
+            v-for="article in featured_item.blog_posts_latest"
+            :key="article.id+article.title"
+          >
+            <news-item :article="article" />
           </router-link>
-        </div>
-      </div>
-    </section>
 
+          <div class="more-link-wrap">
+            <router-link :to="'/news/category/' + featured_item.slug" class="read-more-link">
+              <span></span>Read more
+            </router-link>
+          </div>
+        </div>
+      </section>
+    </template>
+  </div>
+</template>
     <Footer />
   </div>
 </template>

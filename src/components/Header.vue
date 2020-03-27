@@ -47,7 +47,7 @@
                 <span>Our story</span>
               </router-link>
               <router-link to="/goals" class="menu-item">
-                <span>UN Goals</span>
+                <span>UN GOALS</span>
               </router-link>
               <div class="btn-wrap">
                 <!--                <button class="login-join-btn">Login | Join</button>-->
