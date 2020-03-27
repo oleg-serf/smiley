@@ -43,24 +43,12 @@
                   </li>
                 </ul>
               </span>
-              <span class="menu-item" href="#">
-                <span>Our Sttory</span>
-                <ul class="submenu">
-                  <li>
-                    <router-link to="/our-story" class="menu-item">
-                      <span>Story</span>
-                    </router-link>
-                  </li>
-                  <li v-if="auth">
-                    <router-link to="/goals" class="menu-item">
-                      <span>UN Goals</span>
-                    </router-link>
-                  </li>
-                </ul>
-              </span>
-              <!-- <router-link to="/our-story" class="menu-item">
+              <router-link to="/our-story" class="menu-item">
                 <span>Our story</span>
-              </router-link>-->
+              </router-link>
+              <router-link to="/goals" class="menu-item">
+                <span>UN Goals</span>
+              </router-link>
               <div class="btn-wrap">
                 <!--                <button class="login-join-btn">Login | Join</button>-->
                 <router-link to="login" v-if="!auth" class="login-join-btn">Login | Join</router-link>
