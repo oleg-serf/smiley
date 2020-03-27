@@ -258,7 +258,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 .main-title.smiley-news-center h2 {
   display: flex !important;
   justify-content: space-between;
