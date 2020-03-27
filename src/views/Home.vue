@@ -31,7 +31,7 @@
         </div>
         <div class="article-descr">
           <router-link :to="'/news/' + newsItem.slug" class="article-title">{{ newsItem.title }}</router-link>
-          <div class="article-subtitle">{{ newsItem.description }}</div>
+          <div class="article-subtitle">{{ newsItem.description.substring(0, 110) }}...</div>
           <div class="article-readmore">
             <router-link :to="'/news/' + newsItem.slug">Read more</router-link>
           </div>
