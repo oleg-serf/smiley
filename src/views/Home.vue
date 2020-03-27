@@ -13,7 +13,7 @@
       <template
         v-slot:content
       >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>
-      <template v-slot:button>read more</template>
+      <template v-slot:button>learn more</template>
     </banner>
 
     <section class="news-grid container" v-if="newsList.length > 0">
@@ -32,11 +32,17 @@
         <div class="article-descr">
           <router-link :to="'/news/' + newsItem.slug" class="article-title">{{ newsItem.title }}</router-link>
           <div class="article-subtitle">{{ newsItem.description }}</div>
+          <div class="article-readmore">
+            <router-link :to="'/news/' + newsItem.slug">Read more</router-link>
+          </div>
         </div>
       </div>
     </section>
+    <div>
+      <router-link to="/goals" class="btn">Read More</router-link>
+    </div>
 
-    <banner link="/add-organisation" color="#4696d2">
+    <banner link="/add-organisation" color="#4696d2" v-if="auth">
       <template v-slot:name>network</template>
       <template v-slot:title>join the movement</template>
       <template
@@ -159,6 +165,11 @@ export default {
 
       homepagevideo: null
     };
+  },
+  computed: {
+    auth() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
   },
   methods: {},
   mounted() {
@@ -285,5 +296,15 @@ export default {
   .article-subtitle {
     text-transform: lowercase;
   }
+}
+
+.article-readmore a {
+  text-decoration: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  color: #393939;
+  font-family: "Montserrat Regular";
 }
 </style>
