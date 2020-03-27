@@ -478,7 +478,7 @@
           </div>
 
           <div class="organization-tabs" id="tabs" style="display: none;">
-            <ul class="tabs-nav">
+            <!-- <ul class="tabs-nav">
               <template v-if="tabs !== null && tabs.length > 0">
                 <li v-for="(tab, index) in tabs" :key="'tabs-nav-'+index">
                   <a :href="'#tab-'+index" :class="{active: index == 0}">{{tab.title}}</a>
@@ -499,10 +499,10 @@
                 <button class="accordion">{{tab.title}}</button>
                 <div class="content-tab panel active" v-html="tab.content"></div>
               </div>
-            </div>
+            </div>-->
           </div>
 
-          <div class="organization-description">
+          <!-- <div class="organization-description">
             <template v-for="(tab, index) in tabs">
               <div class="section-title" :key="'tabs-nav-'+index">
                 <h3>{{tab.title}}</h3>
@@ -540,7 +540,7 @@
                 </router-link>
               </div>
             </section>
-          </div>
+          </div>-->
         </div>
       </div>
     </section>

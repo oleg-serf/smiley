@@ -9,6 +9,8 @@
             <span v-else>{{ user.full_name | filterAvatar}}</span>
           </div>
         </div>
+        <router-link :to="{name: 'account-settings'}" class="follow-btn">Edit Profile</router-link>
+
         <div class="user-profile__additional">
           <div class="user-profile__name">{{user.full_name}}</div>
           <ul class="user-profile__social">
@@ -23,6 +25,7 @@
         <div class="user-info-connections">
           <img src="/img/apprentice.png" /> Smiley apprentice
         </div>
+        <button class="follow-btn">Follow</button>
       </div>
       <div class="content-container">
         <div class="profile-grid">
@@ -82,7 +85,7 @@
             </template>
           </div>
           <div class="profile-grid__item profile-grid__item--news">
-            <div class="profile-grid__title">Latest News</div>
+            <div class="profile-grid__title">Latest news from Smiley Movement</div>
             <div class="news-grid">
               <router-link
                 :to="'/news/' + post.slug"
@@ -162,7 +165,7 @@ export default {
     axios
       .get("/users/feed")
       .then(res => {
-        this.feed = res.data.posts.splice(0, 3);
+        this.feed = res.data.posts.splice(0, 6);
       })
       .catch(error => console.error(error));
 
@@ -231,6 +234,15 @@ export default {
     &.profile-grid__item--news {
       grid-column: 1 / span 3;
     }
+
+    hr {
+      border: none;
+      height: 2px;
+      width: 100%;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      background-color: #ffec00;
+    }
   }
 
   .profile-grid__title {
@@ -262,5 +274,25 @@ export default {
   &:not(:last-child) {
     margin-bottom: 24px;
   }
+}
+
+//
+.follow-btn {
+  margin-top: 24px;
+  display: block;
+  height: 48px;
+  width: 100%;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font: 600 16px/24px "Montserrat SemiBold", sans-serif;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: $default-orange-btns;
+  color: #fff;
+  border: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
 }
 </style>
