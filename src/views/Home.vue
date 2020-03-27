@@ -38,9 +38,6 @@
         </div>
       </div>
     </section>
-    <div>
-      <router-link to="/goals" class="btn">Read More</router-link>
-    </div>
 
     <banner link="/add-organisation" color="#4696d2" v-if="auth">
       <template v-slot:name>network</template>
@@ -302,6 +299,9 @@ export default {
   }
 }
 
+.article-readmore {
+  padding-top: 24px;
+}
 .article-readmore a {
   text-decoration: none;
   font-size: 16px;
@@ -309,6 +309,10 @@ export default {
   color: inherit;
   text-decoration: none;
   color: #393939;
-  font-family: "Montserrat Regular";
+  font-family: "Montserrat Bold";
+
+  &::after {
+    content: "...";
+  }
 }
 </style>
