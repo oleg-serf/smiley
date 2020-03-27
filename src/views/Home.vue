@@ -295,6 +295,10 @@ export default {
 .article-item {
   .article-subtitle {
     text-transform: lowercase;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
 }
 
