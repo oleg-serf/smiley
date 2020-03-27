@@ -39,7 +39,7 @@
       </div>
     </section>
 
-    <banner link="/add-organisation" color="#4696d2" v-if="auth">
+    <banner link="/add-organisation" color="#4696d2" v-if="!auth">
       <template v-slot:name>network</template>
       <template v-slot:title>CONNECT WITH OTHER CHANGEMAKERS</template>
       <template
