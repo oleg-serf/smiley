@@ -9,7 +9,7 @@
 
     <banner link="/news/category/all" background="/img/homepage/news-background.jpg">
       <template v-slot:name>news</template>
-      <template v-slot:title>join the movement</template>
+      <template v-slot:title>POSITIVE JOURNALISM</template>
       <template
         v-slot:content
       >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>
@@ -47,7 +47,7 @@
 
     <banner link="/talks" color="#d12121" background="/img/homepage/talks-background.jpg">
       <template v-slot:name>talks</template>
-      <template v-slot:title>join the movement</template>
+      <template v-slot:title>ACTION INSPIRED EVENTS</template>
       <template
         v-slot:content
       >Smiley Talks are free live events crafted to tackle social and environmental issues linked to the UN sustainable development goals 2020.</template>
