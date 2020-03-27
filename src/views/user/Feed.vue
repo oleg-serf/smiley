@@ -31,8 +31,8 @@
         </div>
         <div class="content-container">
           <div class="profile-grid">
-            <div class="profile-grid__item profile-grid__item--news">
-              <div class="profile-grid__title">My feed</div>
+            <div class="profile-grid__item profile-grid__item">
+              <div class="profile-grid__title">News</div>
               <div class="news-grid">
                 <router-link
                   :to="'/news/' + post.slug"
@@ -58,6 +58,19 @@
                     <div class="article-subtitle">{{post.description}}</div>
                   </div>
                 </router-link>
+              </div>
+            </div>
+            <div class="profile-grid__item profile-grid__item">
+              <div class="profile-grid__title">Organisations</div>
+              <div v-if="posts.length > 0">
+                <div v-for="post in posts" :key="post.id" class="post">
+                  <div class="post-date">{{post.created_at}} | {{post.organisation.name}}</div>
+                  <div class="post-content" v-html="post.content"></div>
+                  <hr />
+                </div>
+              </div>
+              <div v-else>
+                <router-link class="follow-btn" to="/organisations">Check organisations</router-link>
               </div>
             </div>
           </div>
@@ -86,7 +99,8 @@ export default {
       supportOffer: [],
       supportNeed: [],
       feed: [],
-      news: []
+      news: [],
+      posts: []
     };
   },
   methods: {},
@@ -114,23 +128,23 @@ export default {
     axios
       .get("/users/feed")
       .then(res => {
-        this.feed = res.data.posts.splice(0, 3);
+        this.feed = res.data.posts.splice(0, 4);
       })
       .catch(error => console.error(error));
 
-    axios
-      .get("/users/feed")
-      .then(res => {
-        console.log("Feed", res);
-        this.feed = res.data.posts;
-        // this.pages = res.data.pages_count;
-      })
-      .catch(error => console.error(error));
+    // axios
+    //   .get("/users/feed")
+    //   .then(res => {
+    //     console.log("Feed", res);
+    //     this.feed = res.data.posts;
+    //     // this.pages = res.data.pages_count;
+    //   })
+    //   .catch(error => console.error(error));
     axios
       .get("users/organisations-posts")
       .then(res => {
         console.log("Organisation posts", res);
-        // this.tweets = res.data.organisation_posts;
+        this.posts = res.data.organisation_posts;
         // this.tweetPages = res.data.pages_count;
       })
       .catch(error => console.error(error));
@@ -174,7 +188,7 @@ export default {
 
 .profile-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 30px;
 
   .profile-grid__item {
@@ -217,6 +231,10 @@ export default {
   }
 }
 
+.news-grid {
+  grid-template-columns: repeat(1, 1fr);
+}
+
 .support-list {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
@@ -244,5 +262,15 @@ export default {
   justify-content: center;
   align-items: center;
   text-decoration: none;
+}
+
+.post {
+  font-size: 16px;
+  .post-date {
+    font: 700 14px/32px "Montserrat Bold", sans-serif;
+  }
+  .post-content {
+    font: 400 16px/1.35 "Muli", sans-serif;
+  }
 }
 </style>
