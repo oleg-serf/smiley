@@ -68,7 +68,7 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    opacity: .3;
+    opacity: .4;
     z-index: 2;
   }
 
@@ -106,6 +106,7 @@
     text-transform: uppercase;
     color: #fff;
     line-height: 1.35;
+    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
 
     @include margin-bottom(.5rem);
     @include margin-top(.5rem);
@@ -117,6 +118,7 @@
     font-weight: 400;
     color: #fff;
     line-height: 1.35;
+    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
 
     @include margin-bottom(.5rem);
     @include margin-top(.5rem);
