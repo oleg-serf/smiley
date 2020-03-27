@@ -290,6 +290,9 @@ export default {
 
 //
 .article-item {
+  display: flex;
+  flex-direction: column;
+
   .article-subtitle {
     text-transform: lowercase;
 
@@ -297,10 +300,21 @@ export default {
       text-transform: uppercase;
     }
   }
+
+  .article-descr {
+    padding-bottom: 0px !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0px 15px 15px 15px !important;
+  }
 }
 
 .article-readmore {
-  padding-top: 24px;
+  margin-top: auto;
+  text-align: right;
+  padding-top: 6px;
 }
 .article-readmore a {
   text-decoration: none;
@@ -314,5 +328,9 @@ export default {
   &::after {
     content: "...";
   }
+}
+
+.article-item {
+  border: 1px solid #c7c7c7;
 }
 </style>
