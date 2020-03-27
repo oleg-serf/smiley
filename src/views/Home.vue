@@ -32,9 +32,9 @@
         <div class="article-descr">
           <router-link :to="'/news/' + newsItem.slug" class="article-title">{{ newsItem.title }}</router-link>
           <div class="article-subtitle">{{ newsItem.description.substring(0, 110) }}...</div>
-          <div class="article-readmore">
+          <!-- <div class="article-readmore">
             <router-link :to="'/news/' + newsItem.slug">Read more</router-link>
-          </div>
+          </div>-->
         </div>
       </div>
     </section>
@@ -288,10 +288,18 @@ export default {
 @import "@/scss/sections/_homepage-thematic-icons";
 @import "@/scss/sections/_smiley-video-section";
 
+.news-grid {
+  grid-gap: 15px;
+}
+
 //
 .article-item {
   display: flex;
   flex-direction: column;
+
+  .article-title {
+    // min-height: 50px;
+  }
 
   .article-subtitle {
     text-transform: lowercase;
@@ -332,5 +340,6 @@ export default {
 
 .article-item {
   border: 1px solid #c7c7c7;
+  margin: 0px !important;
 }
 </style>
