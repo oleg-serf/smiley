@@ -86,10 +86,10 @@
 
   .banner-block__logo {
     img {
-      width: 240px;
+      width: 100%;
+      max-width: 240px;
     }
   }
-
 
   .banner-block__content {
     position: relative;

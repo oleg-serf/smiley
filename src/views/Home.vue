@@ -7,7 +7,8 @@
       </slot>
     </hero>
 
-    <banner link="/news/category/all" background="/img/homepage/news-background.jpg">
+    <!-- News section -->
+    <banner link="/news/category/all" color="#F36E24" background="/img/homepage/banner-news.jpg">
       <template v-slot:name>news</template>
       <template v-slot:title>POSITIVE JOURNALISM</template>
       <template
@@ -17,29 +18,11 @@
     </banner>
 
     <section class="news-grid container" v-if="newsList.length > 0">
-      <div v-for="newsItem in newsList" :key="newsItem.id+newsItem.title" class="article-item">
-        <div class="smiley-img-wrap">
-          <div class="smiley-img">
-            <router-link :to="'/news/' + newsItem.slug">
-              <img
-                :src="$settings.images_path.news  +'m_'+newsItem.cover_image"
-                :alt="newsItem.title"
-                :title="newsItem.title"
-              />
-            </router-link>
-          </div>
-        </div>
-        <div class="article-descr">
-          <router-link :to="'/news/' + newsItem.slug" class="article-title">{{ newsItem.title }}</router-link>
-          <div class="article-subtitle">{{ newsItem.description.substring(0, 110) }}...</div>
-          <!-- <div class="article-readmore">
-            <router-link :to="'/news/' + newsItem.slug">Read more</router-link>
-          </div>-->
-        </div>
-      </div>
+      <article-item v-for="article in newsList" :key="article.slug" :information="article" />
     </section>
 
-    <banner link="/add-organisation" color="#4696d2" v-if="!auth">
+    <!-- Network banner -->
+    <banner link="/add-organisation" color="#4696D2" :solid="true" v-if="!auth">
       <template v-slot:name>network</template>
       <template v-slot:title>CONNECT WITH OTHER CHANGEMAKERS</template>
       <template
@@ -48,7 +31,19 @@
       <template v-slot:button>create profile</template>
     </banner>
 
-    <banner link="/talks" color="#d12121" background="/img/homepage/talks-background.jpg">
+    <section class="container">
+      <div class="news-grid">
+        <article-item-block
+          v-for="element in sections"
+          :key="element.title"
+          :information="element"
+        />
+      </div>
+    </section>
+
+    <!-- Events | Talks section -->
+
+    <banner link="/talks" color="#D12121" background="/img/homepage/banner-talks.jpg">
       <template v-slot:name>talks</template>
       <template v-slot:title>ACTION INSPIRED EVENTS</template>
       <template
@@ -58,71 +53,42 @@
     </banner>
 
     <section class="news-grid container" v-if="eventList.length > 0">
-      <div v-for="event in eventList" :key="event.id+event.title" class="article-item">
-        <router-link :to="'/events/' + event.slug">
-          <div class="smiley-img-wrap">
-            <div class="smiley-img">
-              <img
-                :src="$settings.images_path.events  +'m_'+event.cover_image"
-                :alt="event.title"
-                :title="event.title"
-              />
-            </div>
-          </div>
-        </router-link>
-        <div class="article-descr">
-          <router-link class="article-title" :to="'/events/' + event.slug">{{ event.title }}</router-link>
-          <div class="article-date-location">
-            <div
-              class="article-date"
-            >{{ event.date | formatDate('nl', {day:"2-digit",month:"2-digit",year:"numeric"}) }}</div>
-            <div class="article-location">{{event.location}}</div>
-          </div>
-          <div class="article-subtitle">{{ event.short_description }}</div>
-        </div>
-      </div>
+      <article-item
+        v-for="event in eventList"
+        :key="event.slug"
+        :information="event"
+        type="events"
+      />
     </section>
 
-    <section class="goals-grid container">
-      <h2 class="goals-grid__title">Browse by goal</h2>
-      <div class="goals-grid__grid">
-        <div class="goals-grid__item" v-for="goal in goals" :key="goal.name+goal.id">
-          <router-link :to="'/news-events/' + goal.slug">
-            <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
-          </router-link>
-        </div>
-      </div>
-      <div>
-        <router-link to="/goals" class="btn">Read More</router-link>
-      </div>
-    </section>
+    <!-- The Global Goals banner -->
 
-    <section class="smiley-video-section">
+    <banner link="/add-organisation" color="#4C9F38" background="/img/homepage/banner-goals.jpg">
+      <template v-slot:title>Stronger together</template>
+      <template v-slot:logo>
+        <img src="/img/homepage/global-goals.png" />
+      </template>
+      <template
+        v-slot:content
+      >We believe that together anything is possible, The principles for our content events, strategic partnerships and values.</template>
+      <template v-slot:button>learn more</template>
+    </banner>
+
+    <section class="section smiley-video-section">
       <div class="container">
         <h2>Featured Interviews</h2>
-        <div class="video-content">
-          <div class="video-content-item" v-for="video in videos" :key="video.id">
-            <div class="video-container">
-              <iframe
-                :src="'https://player.vimeo.com/video/'+video.id+'?title=0&amp;byline=0&amp;portrait=0'"
-                frameborder="0"
-                allow="fullscreen"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div class="video-descr">
-              <div class="video-content-title">{{video.title}}</div>
-              <div class="video-content-subtitle">{{video.description}}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="comment-block">
-          <p>{{quote.content}}</p>
-          <h3>{{quote.title}}</h3>
+        <div class="news-grid">
+          <vimeo-video v-for="video in videos" :key="video.id" :video="video" />
         </div>
       </div>
     </section>
+
+    <div class="section container" style="margin-top: 60px; margin-bottom: 60px;">
+      <div class="comment-block">
+        <p>{{quote.content}}</p>
+        <h3>{{quote.title}}</h3>
+      </div>
+    </div>
 
     <Footer />
   </div>
@@ -131,23 +97,29 @@
 <script>
 // Tools
 import axios from "@/axios-auth";
-// Components
+// Global components
 import Footer from "@/components/Footer.vue";
+// Page components
 import Hero from "@/components/homepage/Hero.vue";
-import Banner from "@/components/Banner.vue";
-// Third party
-import { vueVimeoPlayer } from "vue-vimeo-player";
+import Banner from "@/components/homepage/Banner.vue";
+import ArticleItem from "@/components/news/Article.vue";
+import ArticleItemBlock from "@/components/news/ArticleBlock.vue";
+import VimeoVideo from "@/components/homepage/VimeoVideo.vue";
 
 export default {
   name: "home",
   components: {
     Hero,
+    ArticleItem,
+    ArticleItemBlock,
     Banner,
-    Footer,
-    vueVimeoPlayer
+    VimeoVideo,
+    Footer
   },
   data() {
     return {
+      news: [],
+      events: [],
       eventList: [],
       newsList: [],
 
@@ -160,7 +132,28 @@ export default {
         content: ""
       },
 
-      homepagevideo: null
+      homepagevideo: null,
+
+      sections: [
+        {
+          title: "Organisations",
+          link: "/organisations",
+          description: "Text for example",
+          image: "/img/homepage/homepage-organisations.jpg"
+        },
+        {
+          title: "Projects",
+          link: "/projects",
+          description: "Text for example",
+          image: "/img/homepage/homepage-projects.jpg"
+        },
+        {
+          title: "Chatroom",
+          link: "/chatroom",
+          description: "Text for example",
+          image: "/img/homepage/homepage-chatroom.jpg"
+        }
+      ]
     };
   },
   computed: {
@@ -168,7 +161,21 @@ export default {
       return this.$store.getters["user/isAuthenticated"];
     }
   },
-  methods: {},
+  methods: {
+    compare(a, b, key) {
+      // Use toUpperCase() to ignore character casing
+      const key_a = a[key].toUpperCase();
+      const key_b = b[key].toUpperCase();
+
+      let comparison = 0;
+      if (bandA > bandB) {
+        comparison = 1;
+      } else if (bandA < bandB) {
+        comparison = -1;
+      }
+      return comparison;
+    }
+  },
   mounted() {
     // Load page content
     axios
@@ -274,72 +281,67 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/blocks/_homepage-news-item";
 @import "@/scss/blocks/_homepage-news-grid";
 //
 @import "@/scss/blocks/homepage/_goals-grid";
 //
 @import "@/scss/sections/_homepage-header";
-@import "@/scss/components/_article-item"; // remove or not?
-@import "@/scss/sections/_smiley-talks"; // moved to grid`
-@import "@/scss/sections/_smiley-network";
-@import "@/scss/sections/_smiley-news"; // moved to grid
-@import "@/scss/sections/_homepage-network";
-@import "@/scss/sections/_homepage-thematic-icons";
-@import "@/scss/sections/_smiley-video-section";
 
-.news-grid {
-  grid-gap: 15px;
+// TODO: Move to component
+.comment-block {
+  background-image: url("/img/homepage/quotes.svg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  width: 100%;
+  max-width: 985px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+
+  @include margin-top(5rem);
+  @include margin-bottom(5rem);
+
+  &:before,
+  &:after {
+    content: "";
+    height: 4px;
+    width: 100px;
+    position: absolute;
+    background-color: #ffec00;
+    transform: translateX(-50%);
+  }
+
+  &:before {
+    top: -24px;
+  }
+
+  &:after {
+    bottom: -32px;
+  }
+
+  p {
+    color: $default-text;
+    font: 400 italic 20px/32px "Muli", sans-serif;
+    margin-top: 0;
+    padding-top: 8px;
+  }
+
+  h3 {
+    color: #252525;
+    font: 700 12px/16px "Montserrat Bold", sans-serif;
+    opacity: 0.87;
+  }
 }
 
 //
-.article-item {
-  display: flex;
-  flex-direction: column;
-
-  .article-title {
-    // min-height: 50px;
-  }
-
-  .article-subtitle {
-    text-transform: lowercase;
-
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-
-  .article-descr {
-    padding-bottom: 0px !important;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 0px 15px 15px 15px !important;
-  }
-}
-
-.article-readmore {
-  margin-top: auto;
-  text-align: right;
-  padding-top: 6px;
-}
-.article-readmore a {
-  text-decoration: none;
-  font-size: 16px;
+.smiley-video-section h2 {
+  margin-top: 48px;
+  text-align: center;
   text-transform: uppercase;
-  color: inherit;
-  text-decoration: none;
-  color: #393939;
-  font-family: "Montserrat Bold";
-
-  &::after {
-    content: "...";
-  }
-}
-
-.article-item {
-  border: 1px solid #c7c7c7;
-  margin: 0px !important;
+  font-family: "Monsterrat Bold", sans-serif;
+  font-weight: 700;
+  line-height: 1.35;
+  @include font-size(2rem);
 }
 </style>

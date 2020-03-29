@@ -160,6 +160,17 @@ const routes = [{
     }
   },
   /**
+   * Projects
+   */
+  {
+    path: '/projects/',
+    name: 'projects',
+    component: () => import( /* webpackChunkName: "goals" */ '../views/projects/index.vue'),
+    meta: {
+      title: 'Projects',
+    }
+  },
+  /**
    * News
    */
   {

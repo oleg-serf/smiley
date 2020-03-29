@@ -2,16 +2,22 @@
   <div class="container">
     <div class="banner-block">
       <div class="banner-block__left-column" :style="{backgroundColor: color}">
-        <div class="banner-block__logo">
+        <div class="banner-block__logo" v-if="!isNotEmptySlot('logo')">
           <img src="/img/_smiley-logo.svg" />
+        </div>
+        <div class="banner-block__logo banner-block__logo-slot" v-else>
+          <slot name="logo"></slot>
         </div>
         <div class="banner-block__name" v-if="isNotEmptySlot('name')">
           <slot name="name"></slot>
         </div>
       </div>
       <div class="banner-block__right-column">
-        <div class="banner-block__overlay" :style="{backgroundColor: color}"></div>
-        <img :src="background" class="banner-block__background" v-if="background != null" />
+        <div
+          class="banner-block__overlay"
+          :style="{backgroundColor: color, opacity: (solid) ? 1: .4}"
+        ></div>
+        <img :src="background" class="banner-block__background" v-if="background != null || !solid" />
         <div class="banner-block__content">
           <div class="banner-block__title" v-if="isNotEmptySlot('title')">
             <slot name="title"></slot>
@@ -40,6 +46,10 @@ export default {
     color: {
       type: String,
       default: "#eeb400"
+    },
+    solid: {
+      type: Boolean,
+      default: false
     },
     background: {
       type: String,
