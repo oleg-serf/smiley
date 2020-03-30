@@ -24,10 +24,10 @@
     <!-- Network banner -->
     <banner link="/add-organisation" color="#4696D2" :solid="true" v-if="!auth">
       <template v-slot:name>network</template>
-      <template v-slot:title>CONNECT WITH OTHER CHANGEMAKERS</template>
+      <template v-slot:title>Connect with changemakers</template>
       <template
         v-slot:content
-      >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>
+      >Explore organisations, projects and members in our community - be inspired and take positive action.</template>
       <template v-slot:button>create profile</template>
     </banner>
 
@@ -125,7 +125,24 @@ export default {
 
       goals: [],
 
-      videos: [],
+      videos: [
+        {
+          vimeo_id: "386174750",
+          title: "We are changing culture",
+          description: "Jo Loughran at Let's Talk Mental Health"
+        },
+        {
+          vimeo_id: "370887819",
+          title: "We are not alone",
+          description: "Georgia Dodsworth at Let's Talk Mental Health"
+        },
+        {
+          vimeo_id: "401376963",
+          title: "Builders at What's the Point of Education",
+          description:
+            "Equip young people with what they need to be happy and successful - Evelyn Haywood from Skill "
+        }
+      ],
 
       quote: {
         title: "",
