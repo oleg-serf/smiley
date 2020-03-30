@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <hero :video="homepagevideo" :link="'/talks'">
+    <hero
+      video="https://new-smiley.s3.eu-west-2.amazonaws.com/pages/l_homepage_header.mp4"
+      :link="'/talks'"
+    >
       <slot>
         Helping You
         <br />Help Others
@@ -66,7 +69,7 @@
     <banner link="/add-organisation" color="#4C9F38" background="/img/homepage/banner-goals.jpg">
       <template v-slot:title>Stronger together</template>
       <template v-slot:logo>
-        <img src="/img/homepage/global-goals.png" />
+        <img src="/img/homepage/global-goals.png" style="width: 200px" />
       </template>
       <template
         v-slot:content
@@ -127,6 +130,12 @@ export default {
 
       videos: [
         {
+          vimeo_id: "401376963",
+          title: "Builders at What's the Point of Education",
+          description:
+            "Equip young people with what they need to be happy and successful - Evelyn Haywood from Skill "
+        },
+        {
           vimeo_id: "386174750",
           title: "We are changing culture",
           description: "Jo Loughran at Let's Talk Mental Health"
@@ -135,12 +144,6 @@ export default {
           vimeo_id: "370887819",
           title: "We are not alone",
           description: "Georgia Dodsworth at Let's Talk Mental Health"
-        },
-        {
-          vimeo_id: "401376963",
-          title: "Builders at What's the Point of Education",
-          description:
-            "Equip young people with what they need to be happy and successful - Evelyn Haywood from Skill "
         }
       ],
 
@@ -195,16 +198,17 @@ export default {
   },
   mounted() {
     // Load page content
-    axios
-      .get("/pages/new/1")
-      .then(res => {
-        console.log("new format", res);
-      })
-      .catch(error => console.log(error));
+    // axios
+    //   .get("/pages/new/1")
+    //   .then(res => {
+    //     console.log("new format", res);
+    //   })
+    //   .catch(error => console.log(error));
     console.log("---------");
     axios
       .get("/pages/1")
       .then(res => {
+        console.log(res);
         this.eventList = res.data.future_events;
 
         this.newsList = res.data.latest_news;
@@ -251,10 +255,10 @@ export default {
             this.$settings.images_path.pages + "l_" + homepagevideo;
         }
 
-        let videoTag = document.getElementById("background_video");
-        setTimeout(() => {
-          videoTag.play();
-        }, 500);
+        // let videoTag = document.getElementById("background_video");
+        // setTimeout(() => {
+        //   videoTag.play();
+        // }, 500);
 
         // Video Sections
         let video_section = res.data.page.page_sections.filter(section => {
@@ -290,7 +294,7 @@ export default {
           return video;
         });
 
-        this.videos = videos;
+        // this.videos = videos;
       })
       .catch(error => console.log(error));
   }
