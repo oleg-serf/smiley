@@ -22,7 +22,7 @@
     </section>
 
     <!-- Network banner -->
-    <banner link="/add-organisation" color="#4696D2" :solid="true" v-if="!auth">
+    <banner link="/add-organisation" color="#4696D2" v-if="!auth">
       <template v-slot:name>network</template>
       <template v-slot:title>Connect with changemakers</template>
       <template
