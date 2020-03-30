@@ -70,7 +70,7 @@
     <!-- The Global Goals banner -->
 
     <banner
-      link="/add-organisation"
+      link="/goals"
       color="#4C9F38"
       background="/img/homepage/banner-goals.jpg"
       v-if="Object.keys(banners.goals).length"
@@ -162,14 +162,14 @@ export default {
           link: "/projects",
           description:
             "Explore initiatives about causes you care about and kickstart your own purpose-driven projects",
-          image: "/img/homepage/homepage-projects.jpg"
+          image: "/img/homepage/homepage-chatroom.jpg"
         },
         {
           title: "Chatroom",
           link: "/chatroom",
           description:
             "Take part in community discussions and share ideas with other members",
-          image: "/img/homepage/homepage-chatroom.jpg"
+          image: "/img/homepage/homepage-projects.jpg"
         }
       ],
       quote: {
