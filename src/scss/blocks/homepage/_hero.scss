@@ -10,7 +10,7 @@
   padding: 80px 15px;
 
   @include xl {
-    min-height: 768px;
+    min-height: 600px;
   }
 
   &::before {
@@ -51,18 +51,18 @@
     text-transform: uppercase;
     margin: 0px;
     text-align: center;
-    @include font-size(7rem);
+    @include font-size(5.5rem);
   }
 
   .hero__button {
-    width: 250px;
+    width: 210px;
     border-radius: 40px;
     background-color: #eeb400;
     border: none;
     color: #fff;
     font-size: 1rem;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     line-height: 1.5;
     font-family: "Montserrat Bold", sans-serif;
     text-transform: uppercase;
