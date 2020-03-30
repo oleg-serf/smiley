@@ -70,7 +70,7 @@
           >People vs Oil - Brand new idea to save the planet will go here in this title</h3>
           <div class="project-article__description">Lorem ipsum dolor sit amet, consectet</div>
           <div class="project-article__button">
-            <a href="#">view project</a>
+            <a href="/projects/test">view project</a>
           </div>
         </div>
       </div>

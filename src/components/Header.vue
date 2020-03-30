@@ -41,6 +41,11 @@
                       <span>Organisations</span>
                     </router-link>
                   </li>
+                  <li>
+                    <router-link :to="{name: 'projects'}" class="menu-item">
+                      <span>Projects</span>
+                    </router-link>
+                  </li>
                 </ul>
               </span>
               <router-link to="/our-story" class="menu-item">

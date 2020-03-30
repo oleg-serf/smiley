@@ -81,7 +81,7 @@
         </div>
       </div>
 
-      <div class="latest-news-wrap">
+      <div class="latest-news-wrap" style="display: none;">
         <div class="title-colored-block">
           <div class="smiley-news-main-title">
             <img src="img/homepage/smiley-main-title.svg" alt="smiley talks" />
@@ -189,15 +189,21 @@
       <div class="news-category-container">
         <h2 class="news-category-title">{{ featured_item.name }}</h2>
 
-        <router-link
+        <!-- <router-link
           :to="'/news/' + article.slug"
           class="article-item"
           v-for="article in featured_item.blog_posts_latest"
           :key="article.id+article.title"
         >
           <news-item :article="article" />
-        </router-link>
-
+        </router-link>-->
+        <div class="news-grid">
+          <article-item
+            v-for="(article, index) in featured_item.blog_posts_latest"
+            :key="article.slug+'-'+index"
+            :information="article"
+          />
+        </div>
         <div class="more-link-wrap">
           <router-link :to="'/news/category/' + featured_item.slug" class="read-more-link">
             <span></span>Read more
@@ -219,13 +225,12 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import NewsItem from "@/components/news/News-Item";
 
 import Footer from "@/components/Footer";
-import axios from "../axios-auth";
+import axios from "@/axios-auth";
+
+import ArticleItem from "@/components/news/Article.vue";
 
 export default {
   name: "News",
-  components: {
-    Footer
-  },
   data() {
     return {};
   },
@@ -248,6 +253,7 @@ export default {
   },
   components: {
     Breadcrumbs,
+    ArticleItem,
     NewsItem,
     Footer
   }
@@ -268,6 +274,8 @@ export default {
 @import "@/scss/sections/_latest-news";
 
 @import "@/scss/sections/_news-category-section";
+
+@import "@/scss/blocks/_homepage-news-grid";
 
 .newspaper-grid {
   display: grid;
