@@ -2,7 +2,7 @@
   <div class="video">
     <div class="video__container">
       <iframe
-        :src="'https://player.vimeo.com/video/'+video.vimeo_id+'?title=0&amp;byline=0&amp;portrait=0'"
+        :src="'https://player.vimeo.com/video/'+video.video_id+'?title=0&amp;byline=0&amp;portrait=0'"
         frameborder="0"
         allow="fullscreen"
         allowfullscreen

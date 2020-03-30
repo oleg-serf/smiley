@@ -1,23 +1,22 @@
 <template>
   <div class="home">
-    <hero
-      video="https://new-smiley.s3.eu-west-2.amazonaws.com/pages/l_homepage_header.mp4"
-      :link="'/talks'"
-    >
+    <hero :video="hero.url_source" :link="'/talks'">
       <slot>
-        Helping You
-        <br />Help Others
+        <span v-html="hero.title"></span>
       </slot>
     </hero>
 
     <!-- News section -->
-    <banner link="/news/category/all" color="#F36E24" background="/img/homepage/banner-news.jpg">
+    <banner
+      link="/news/category/all"
+      color="#F36E24"
+      background="/img/homepage/banner-news.jpg"
+      v-if="Object.keys(banners.news).length"
+    >
       <template v-slot:name>news</template>
-      <template v-slot:title>POSITIVE JOURNALISM</template>
-      <template
-        v-slot:content
-      >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>
-      <template v-slot:button>learn more</template>
+      <template v-slot:title v-if="banners.news.title">{{banners.news.title}}</template>
+      <template v-slot:content v-if="banners.news.description">{{banners.news.description}}</template>
+      <template v-slot:button v-if="banners.news.button_text">{{banners.news.button_text}}</template>
     </banner>
 
     <section class="news-grid container" v-if="newsList.length > 0">
@@ -25,13 +24,14 @@
     </section>
 
     <!-- Network banner -->
-    <banner link="/add-organisation" color="#4696D2" v-if="!auth">
-      <template v-slot:name>network</template>
-      <template v-slot:title>Connect with changemakers</template>
+    <banner link="/add-organisation" color="#4696D2" v-if="Object.keys(banners.network).length">
+      <template v-slot:name>Network</template>
+      <template v-slot:title v-if="banners.network.title">{{banners.network.title}}</template>
+      <template v-slot:content v-if="banners.network.description">{{banners.network.description}}</template>
       <template
-        v-slot:content
-      >Explore organisations, projects and members in our community - be inspired and take positive action.</template>
-      <template v-slot:button>create profile</template>
+        v-slot:button
+        v-if="banners.network.button_text && auth"
+      >{{banners.network.button_text}}</template>
     </banner>
 
     <section class="container">
@@ -46,13 +46,16 @@
 
     <!-- Events | Talks section -->
 
-    <banner link="/talks" color="#D12121" background="/img/homepage/banner-talks.jpg">
+    <banner
+      link="/talks"
+      color="#D12121"
+      background="/img/homepage/banner-talks.jpg"
+      v-if="Object.keys(banners.talks).length"
+    >
       <template v-slot:name>talks</template>
-      <template v-slot:title>ACTION INSPIRED EVENTS</template>
-      <template
-        v-slot:content
-      >Smiley Talks are free live events crafted to tackle social and environmental issues linked to the UN sustainable development goals 2020.</template>
-      <template v-slot:button>read more</template>
+      <template v-slot:title v-if="banners.talks.title">{{banners.talks.title}}</template>
+      <template v-slot:content v-if="banners.talks.description">{{banners.talks.description}}</template>
+      <template v-slot:button v-if="banners.talks.button_text">{{banners.talks.button_text}}</template>
     </banner>
 
     <section class="news-grid container" v-if="eventList.length > 0">
@@ -66,15 +69,20 @@
 
     <!-- The Global Goals banner -->
 
-    <banner link="/add-organisation" color="#4C9F38" background="/img/homepage/banner-goals.jpg">
+    <banner
+      link="/add-organisation"
+      color="#4C9F38"
+      background="/img/homepage/banner-goals.jpg"
+      v-if="Object.keys(banners.goals).length"
+    >
       <template v-slot:title>Stronger together</template>
       <template v-slot:logo>
         <img src="/img/homepage/global-goals.png" style="width: 200px" />
       </template>
-      <template
-        v-slot:content
-      >We believe that together anything is possible, The principles for our content events, strategic partnerships and values.</template>
-      <template v-slot:button>learn more</template>
+
+      <template v-slot:title v-if="banners.goals.title">{{banners.goals.title}}</template>
+      <template v-slot:content v-if="banners.goals.description">{{banners.goals.description}}</template>
+      <template v-slot:button v-if="banners.goals.button_text">{{banners.goals.button_text}}</template>
     </banner>
 
     <section class="section smiley-video-section">
@@ -88,8 +96,8 @@
 
     <div class="section container" style="margin-top: 60px; margin-bottom: 60px;">
       <div class="comment-block">
-        <p>{{quote.content}}</p>
-        <h3>{{quote.title}}</h3>
+        <p>{{quote.text}}</p>
+        <h3>{{quote.sub_text}}</h3>
       </div>
     </div>
 
@@ -128,52 +136,46 @@ export default {
 
       goals: [],
 
-      videos: [
-        {
-          vimeo_id: "401376963",
-          title: "Builders at What's the Point of Education",
-          description:
-            "Equip young people with what they need to be happy and successful - Evelyn Haywood from Skill "
-        },
-        {
-          vimeo_id: "386174750",
-          title: "We are changing culture",
-          description: "Jo Loughran at Let's Talk Mental Health"
-        },
-        {
-          vimeo_id: "370887819",
-          title: "We are not alone",
-          description: "Georgia Dodsworth at Let's Talk Mental Health"
-        }
-      ],
-
-      quote: {
-        title: "",
-        content: ""
-      },
-
       homepagevideo: null,
 
+      // New reworked items
+      videos: [],
+      hero: {
+        url_source: null
+      },
+      banners: {
+        news: {},
+        network: {},
+        talks: {},
+        goals: {}
+      },
       sections: [
         {
           title: "Organisations",
           link: "/organisations",
-          description: "Text for example",
+          description:
+            "Connect with groups working towards solving societal issues and find ways to get involved.",
           image: "/img/homepage/homepage-organisations.jpg"
         },
         {
           title: "Projects",
           link: "/projects",
-          description: "Text for example",
+          description:
+            "Explore initiatives about causes you care about and kickstart your own purpose-driven projects",
           image: "/img/homepage/homepage-projects.jpg"
         },
         {
           title: "Chatroom",
           link: "/chatroom",
-          description: "Text for example",
+          description:
+            "Take part in community discussions and share ideas with other members",
           image: "/img/homepage/homepage-chatroom.jpg"
         }
-      ]
+      ],
+      quote: {
+        text: null,
+        sub_text: null
+      }
     };
   },
   computed: {
@@ -181,120 +183,26 @@ export default {
       return this.$store.getters["user/isAuthenticated"];
     }
   },
-  methods: {
-    compare(a, b, key) {
-      // Use toUpperCase() to ignore character casing
-      const key_a = a[key].toUpperCase();
-      const key_b = b[key].toUpperCase();
-
-      let comparison = 0;
-      if (bandA > bandB) {
-        comparison = 1;
-      } else if (bandA < bandB) {
-        comparison = -1;
-      }
-      return comparison;
-    }
-  },
+  methods: {},
   mounted() {
-    // Load page content
-    // axios
-    //   .get("/pages/new/1")
-    //   .then(res => {
-    //     console.log("new format", res);
-    //   })
-    //   .catch(error => console.log(error));
-    console.log("---------");
     axios
       .get("/pages/1")
       .then(res => {
         console.log(res);
         this.eventList = res.data.future_events;
-
         this.newsList = res.data.latest_news;
 
-        this.goals = res.data.goals[0].goals;
+        this.banners.news = res.data.page_sections.smiley_news[0];
+        this.banners.network = res.data.page_sections.smiley_network[0];
+        this.banners.talks = res.data.page_sections.smiley_talks[0];
+        this.banners.goals = res.data.page_sections.un_goals[0];
 
-        /*
-          Type 1 section -> simple text
-          Type 2 section -> HTML (like for Events content)
-          Type 3 section -> Video Vimeo ID (
-        */
+        this.videos = res.data.page_sections.bottom_videos;
+        this.hero = res.data.page_sections.top_video[0];
+        this.hero.url_source =
+          this.$settings.images_path.pages + "l_" + this.hero.url_source;
 
-        // console.log(res.data);
-        let quote = res.data.page.page_sections.filter(
-          section => section.name == "quote_bottom"
-        );
-
-        // console.log(quote);
-        quote[0].page_section_elements.forEach(item => {
-          switch (item.name) {
-            case "text":
-              this.quote.content = item.content;
-              break;
-            case "sub_text":
-              this.quote.title = item.content;
-              break;
-
-            default:
-              break;
-          }
-        });
-        // console.log(this.quote);
-
-        let background = res.data.page.page_sections.filter(
-          section => section.name == "header_video"
-        );
-        let homepagevideo = background[0].page_section_elements[0].content;
-
-        if (window.innerWidth < 768) {
-          this.homepagevideo =
-            this.$settings.images_path.pages + "m_" + homepagevideo;
-        } else {
-          this.homepagevideo =
-            this.$settings.images_path.pages + "l_" + homepagevideo;
-        }
-
-        // let videoTag = document.getElementById("background_video");
-        // setTimeout(() => {
-        //   videoTag.play();
-        // }, 500);
-
-        // Video Sections
-        let video_section = res.data.page.page_sections.filter(section => {
-          let allowed_names = ["left_bottom_video", "right_bottom_video"];
-          if (allowed_names.includes(section.name)) return section;
-        });
-        let video_section_content = res.data.page.page_sections.filter(
-          section => {
-            let allowed_names = [
-              "left_bottom_video_text",
-              "right_bottom_video_text"
-            ];
-            if (allowed_names.includes(section.name)) return section;
-          }
-        );
-
-        let videos = video_section.map((item, index) => {
-          let video = { id: null, title: null, description: null, type: null };
-          video.id = item.page_section_elements.find(
-            elem => elem.name == "video_id"
-          ).content;
-
-          video.type = video_section[index].sub_type;
-
-          video_section_content[index].page_section_elements.forEach(item => {
-            if (item.name == "title") {
-              video.title = item.content;
-            } else if (item.name == "description") {
-              video.description = item.content;
-            }
-          });
-
-          return video;
-        });
-
-        // this.videos = videos;
+        this.quote = res.data.page_sections.bottom_quote[0];
       })
       .catch(error => console.log(error));
   }
