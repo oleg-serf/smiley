@@ -170,6 +170,14 @@ const routes = [{
       title: 'Projects',
     }
   },
+  {
+    path: '/projects/:slug',
+    name: 'project',
+    component: () => import( /* webpackChunkName: "goals" */ '../views/projects/_slug.vue'),
+    meta: {
+      title: 'project',
+    }
+  },
   /**
    * News
    */
