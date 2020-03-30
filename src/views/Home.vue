@@ -24,13 +24,13 @@
     </section>
 
     <!-- Network banner -->
-    <banner link="/add-organisation" color="#4696D2" v-if="Object.keys(banners.network).length">
+    <banner link="/register" color="#4696D2" v-if="Object.keys(banners.network).length">
       <template v-slot:name>Network</template>
       <template v-slot:title v-if="banners.network.title">{{banners.network.title}}</template>
       <template v-slot:content v-if="banners.network.description">{{banners.network.description}}</template>
       <template
         v-slot:button
-        v-if="banners.network.button_text && auth"
+        v-if="banners.network.button_text && !auth"
       >{{banners.network.button_text}}</template>
     </banner>
 
