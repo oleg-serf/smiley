@@ -8,6 +8,7 @@
     </information-hero>
     <div class>
       <div class="container">
+        <div style="height: 75px;"></div>
         <section class="users-grid">
           <div class="user-item" v-for="user in users" :key="user.full_name+'-org-archive'">
             <div class="user-item__avatar">

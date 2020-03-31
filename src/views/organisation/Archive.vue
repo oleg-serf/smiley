@@ -8,6 +8,7 @@
     </information-hero>
     <div class>
       <div class="container">
+        <div style="height: 75px;"></div>
         <section class="organisations-grid">
           <div
             class="organisation-item"
