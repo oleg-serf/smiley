@@ -6,7 +6,7 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quidem aperiam praesentium architecto cumque illum ipsam fugit asperiores magnam est id unde, doloribus quo magni. Nihil suscipit omnis voluptate sint.</p>
       </template>
     </information-hero>
-    <div class="bg">
+    <div class>
       <div class="container">
         <section class="users-grid">
           <div class="user-item" v-for="user in users" :key="user.full_name+'-org-archive'">

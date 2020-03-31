@@ -6,7 +6,7 @@
         <p>See what projects organisations are running and how you can help</p>
       </template>
     </information-hero>
-    <div class="bg">
+    <div class>
       <div class="container">
         <section class="organisations-grid">
           <div

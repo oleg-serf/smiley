@@ -10,10 +10,7 @@
       </template>
     </information-hero>
     <section class="partners">
-      <div
-        class="partners__together"
-        style="background-image: url(https://s3-eu-west-2.amazonaws.com/admin.up-movement/app/uploads/2018/10/together.jpg);"
-      >
+      <div class="partners__together">
         <div class="container">
           <h1>Event Partners</h1>
           <div class="partners opened">
