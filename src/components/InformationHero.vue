@@ -124,6 +124,7 @@ export default {
     padding-bottom: 2rem;
     display: flex;
     margin-top: auto;
+    flex: 1;
 
     @include lgMax {
       flex-direction: column;
