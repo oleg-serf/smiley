@@ -307,12 +307,6 @@
         </p>
       </div>
     </div>
-    <div class="profile-fill-alert">
-      <div class="container">
-        <img src="/img/warning.svg" class="profile-fill-alert__warning" />
-        <p>zoom your browser out to 75%</p>
-      </div>
-    </div>
     <form class="search-form" :class="{active: searchActive}" @submit.prevent="search">
       <div class="container">
         <button class="search-form__close" type="button" @click="searchActive = false">X</button>
