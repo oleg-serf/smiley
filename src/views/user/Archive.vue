@@ -1,6 +1,12 @@
 <template>
   <div>
     <Breadcrumbs />
+    <information-hero>
+      <template v-slot:title>Connect with other members</template>
+      <template v-slot:content>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quidem aperiam praesentium architecto cumque illum ipsam fugit asperiores magnam est id unde, doloribus quo magni. Nihil suscipit omnis voluptate sint.</p>
+      </template>
+    </information-hero>
     <div class="bg">
       <div class="container">
         <section class="users-grid">
@@ -58,9 +64,11 @@
 <script>
 import axios from "@/axios-auth";
 
-import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import InformationHero from "@/components/InformationHero.vue";
+
 import AppIcon from "@/components/AppIcon";
+import Footer from "@/components/Footer";
 
 export default {
   data() {
@@ -92,9 +100,10 @@ export default {
       .catch(error => console.log(error));
   },
   components: {
-    Footer,
+    InformationHero,
     Breadcrumbs,
-    AppIcon
+    AppIcon,
+    Footer
   }
 };
 </script>

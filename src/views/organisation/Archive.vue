@@ -1,6 +1,12 @@
 <template>
   <div>
     <Breadcrumbs />
+    <information-hero>
+      <template v-slot:title>Connect with organisations</template>
+      <template v-slot:content>
+        <p>See what projects organisations are running and how you can help</p>
+      </template>
+    </information-hero>
     <div class="bg">
       <div class="container">
         <section class="organisations-grid">
@@ -54,8 +60,9 @@
 <script>
 import axios from "@/axios-auth";
 
-import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import InformationHero from "@/components/InformationHero.vue";
+import Footer from "@/components/Footer";
 
 export default {
   data() {
@@ -89,8 +96,9 @@ export default {
       .catch(error => console.log(error));
   },
   components: {
-    Footer,
-    Breadcrumbs
+    Breadcrumbs,
+    InformationHero,
+    Footer
   }
 };
 </script>

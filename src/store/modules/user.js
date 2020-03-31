@@ -150,9 +150,6 @@ const actions = {
       .then(res => {
         return res;
       })
-      .catch(error => {
-        return JSON.parse(error.request.response).message
-      })
   },
   // logout 
   logout({

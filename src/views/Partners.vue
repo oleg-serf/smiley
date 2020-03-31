@@ -1,27 +1,15 @@
 <template>
   <div>
+    <information-hero>
+      <template v-slot:title>Our Partners</template>
+      <template v-slot:content>
+        <p>We collaborate with organisations both big and small to help build stronger communities globally.</p>
+      </template>
+      <template v-slot:buttons>
+        <a target="_blank" href="www.smiley.com">We are supported 100% by the Smiley brand</a>
+      </template>
+    </information-hero>
     <section class="partners">
-      <div class="partners__main">
-        <div class="container">
-          <div class="content-w">
-            <div class="main__image">
-              <img
-                src="https://s3-eu-west-2.amazonaws.com/admin.up-movement/app/uploads/2019/03/partners-top.png"
-              />
-            </div>
-
-            <div class="main__content">
-              <h1>Our Partners</h1>
-
-              <div class="main__text">
-                <p>We collaborate with organisations both big and small to help build stronger communities globally.</p>
-              </div>
-
-              <a target="_blank" href="www.smiley.com">We are supported 100% by the Smiley brand</a>
-            </div>
-          </div>
-        </div>
-      </div>
       <div
         class="partners__together"
         style="background-image: url(https://s3-eu-west-2.amazonaws.com/admin.up-movement/app/uploads/2018/10/together.jpg);"
@@ -87,11 +75,13 @@
 <script>
 import axios from "@/axios-auth";
 
+import InformationHero from "@/components/InformationHero.vue";
 import Footer from "@/components/Footer";
 
 export default {
   name: "Partners",
   components: {
+    InformationHero,
     Footer
   },
   data() {
