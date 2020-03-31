@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs />
     <information-hero>
       <template v-slot:title>Connect with organisations</template>
       <template v-slot:content>

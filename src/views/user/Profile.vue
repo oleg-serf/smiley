@@ -13,7 +13,7 @@
               <span v-else>{{ user.full_name | filterAvatar}}</span>
             </div>
           </div>
-          <router-link :to="{name: 'account-settings'}" class="follow-btn">Edit Profile</router-link>
+          <router-link :to="{name: 'account-settings'}" class="follow-btn">1Edit Profile</router-link>
 
           <div class="user-profile__additional">
             <div class="user-profile__name">{{user.full_name}}</div>
