@@ -87,6 +87,8 @@ export default {
 .project-information {
   position: relative;
   color: #fff;
+  min-height: 600px;
+  display: flex;
 
   &::before {
     content: "";
@@ -121,6 +123,7 @@ export default {
     z-index: 2;
     padding-bottom: 2rem;
     display: flex;
+    margin-top: auto;
 
     @include lgMax {
       flex-direction: column;
