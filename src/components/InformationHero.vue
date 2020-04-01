@@ -2,15 +2,11 @@
   <div class="project-information">
     <img :src="background" class="project-information__banner" alt />
 
-    <!-- <div class="project-information__top container">
+    <div class="project-information__top container" v-if="isNotEmptySlot('title')">
       <div class="project-information__user">
-        <img src="/img/homepage/banner-news.jpg" class="project-information__user-avatar" />
-        <div class="project-information__user-content">
-          <div class="project-information__user-hosted">Project hosted by</div>
-          <div class="project-information__user-name">Lillian Rodriquez</div>
-        </div>
+        <slot name="avatar"></slot>
       </div>
-    </div>-->
+    </div>
     <div class="project-information__bottom container">
       <div class="project-information__column-info">
         <h1 class="project-information__title" v-if="isNotEmptySlot('title')">
@@ -24,45 +20,9 @@
           <slot name="buttons"></slot>
         </div>
       </div>
-      <!-- <div class="project-information__column-additional">
-        <div class="project-information__additional-block">
-          <div class="project-information__additional-block-title">Supporters</div>
-          <p>No supporters yet</p>
-        </div>
-        <div class="project-information__additional-block">
-          <div class="project-information__additional-block-title">share project</div>
-          <ul class="project-information__additional-share">
-            <li>
-              <a href="#">
-                <app-icon name="facebook" />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <app-icon name="linkedin" />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <app-icon name="google" />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <app-icon name="twitter" />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <app-icon name="instagram" />
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="project-information__additional-block">
-          <div class="project-information__additional-block-title">UN Goal</div>
-        </div>
-      </div>-->
+      <div class="project-information__column-additional" v-if="isNotEmptySlot('sidebar')">
+        <slot name="sidebar"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -89,6 +49,7 @@ export default {
   color: #fff;
   min-height: 600px;
   display: flex;
+  flex-direction: column;
 
   &::before {
     content: "";
@@ -115,6 +76,8 @@ export default {
     position: relative;
     z-index: 2;
     padding-top: 2rem;
+    flex: 1;
+    width: 100%;
     @include margin-bottom(4rem);
   }
 
@@ -125,6 +88,8 @@ export default {
     display: flex;
     margin-top: auto;
     flex: 1;
+    width: 100%;
+    align-items: flex-end;
 
     @include lgMax {
       flex-direction: column;
@@ -133,6 +98,9 @@ export default {
 
   .project-information__user {
     display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
   }
   .project-information__user-avatar {
     width: 45px;
@@ -141,6 +109,12 @@ export default {
     object-position: center;
     border-radius: 50%;
     margin-right: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-family: "Montserrat SemiBold";
+    background-color: rgba(125, 132, 148, 1);
   }
   .project-information__user-content {
     text-align: center;
@@ -253,5 +227,10 @@ export default {
     grid-template-columns: repeat(5, 1fr);
     max-width: 320px;
   }
+}
+
+.user-info-grid {
+  position: relative;
+  z-index: 3;
 }
 </style>

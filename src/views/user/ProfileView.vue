@@ -1,124 +1,131 @@
 <template>
   <!-- TODO: GLOBAL -> use svg sprties -->
   <div>
-    <div class="bg">
-      <section class="user-profile container">
-        <div class="sidebar sidebar--user">
-          <div class="sidebar-block">
-            <div class="user-profile__avatar">
-              <img
-                v-if="user.avatar != null"
-                :src="$settings.images_path.users + 'm_'+ user.avatar"
-              />
-              <span v-else>{{ user.display_name | filterAvatar}}</span>
-            </div>
+    <div class="profile-layout">
+      <div class="profile-grid container">
+        <div class="profile-grid__item profile-grid__item--avatar">
+          <div class="profile__avatar">
+            <div class="profile__avatar-badge"></div>
+            <img v-if="user.avatar !== null" :src="$settings.images_path.users + 'm_'+ user.avatar" />
+            <span v-else>{{ user.display_name | filterAvatar}}</span>
           </div>
-
-          <div class="user-profile__additional">
-            <div class="user-profile__name">{{user.display_name}}</div>
-            <ul class="user-profile__social">
-              <li v-for="(social, index) in socials" :key="'user-social-'+index">
-                <a :href="user[social]" v-if="user[social] != null">
-                  <app-icon :name="social" />
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="user-info-connections">50+ connections</div>
-          <div class="user-info-connections">
-            <img src="/img/apprentice.png" /> Smiley apprentice
-          </div>
+          <div class="profile__name">{{user.display_name}}</div>
+          <div class="profile__job" v-if="(user.job_title != null)">{{user.job_title}}</div>
+          <div class="profile__location" v-if="(user.location != null)">{{user.location}}</div>
+        </div>
+        <div class="profile-grid__item profile-grid__item--buttons">
           <button class="follow-btn">Follow</button>
         </div>
-        <div class="content-container">
-          <div class="profile-grid">
-            <div class="profile-grid__item">
-              <div class="profile-grid__title">About me:</div>
-              <div
-                class="content-section__content"
-                v-html="user.bio || 'Oh, we have no information for this block yet :( Add banner'"
-              ></div>
-            </div>
-            <div class="profile-grid__item">
-              <div class="profile-grid__title">My interests (UN Goals):</div>
-              <ul class="goals-list">
-                <li v-for="goal in goals" :key="goal.id">
-                  <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+        <div class="profile-grid__item profile-grid__item--about">
+          <div class="profile__about">
+            <div class="profile__about-title">About me:</div>
+            <div
+              class="profile__about-content"
+              v-html="user.bio || 'Oh, we have no information for this block yet :('"
+            ></div>
+          </div>
+        </div>
+        <div class="profile-grid__item profile-grid__item--sidebar">
+          <div class="profile__sidebar">
+            <div class="profile__sidebar-title">Connections:</div>
+            <div class="profile__sidebar-content">50+ connections</div>
+          </div>
+          <div class="profile__sidebar">
+            <div class="profile__sidebar-title">My social media:</div>
+            <div class="profile__sidebar-content">
+              <ul class="profile__social">
+                <li v-for="(social, index) in socials" :key="'user-social-'+index">
+                  <a :href="user[social]" v-if="user[social] != null">
+                    <app-icon :name="social" />
+                  </a>
                 </li>
               </ul>
             </div>
-            <div class="profile-grid__item">
-              <div class="profile-grid__title">Support</div>
-              <template v-if="supportNeed.length > 0">
-                <div class="profile-grid__subtitle">
-                  <img src="/img/give.svg" />
-                  I can offer:
-                </div>
-                <ul class="support-list">
-                  <li
-                    class="support-list__item"
-                    v-for="(item, index) in supportNeed"
-                    :key="'i-need-'+index"
-                  >
-                    <div class="support-list__category-container">
-                      <div class="support-list__category">{{item.support_category.title}}</div>
-                      <div class="support-list__subcategory">{{item.title}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </template>
-              <template v-if="supportOffer.length > 0">
-                <hr />
-                <div class="profile-grid__subtitle">
-                  <img src="/img/give.svg" />
-                  I need:
-                </div>
-                <ul class="support-list">
-                  <li
-                    class="support-list__item"
-                    v-for="(item, index) in supportOffer"
-                    :key="'i-need-'+index"
-                  >
-                    <div class="support-list__category-container">
-                      <div class="support-list__category">{{item.support_category.title}}</div>
-                      <div class="support-list__subcategory">{{item.title}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </template>
-            </div>
-            <div class="profile-grid__item profile-grid__item--news">
-              <div class="profile-grid__title">Latest news from Smiley Movement</div>
-              <div class="news-grid">
-                <router-link
-                  :to="'/news/' + post.slug"
-                  class="article-item"
-                  v-for="post in feed"
-                  :key="post.id+post.title"
-                >
-                  <div class="smiley-img-wrap">
-                    <div class="smiley-img">
-                      <img
-                        :src="$settings.images_path.news  +'m_'+post.cover_image"
-                        :alt="post.title"
-                        :title="post.title"
-                      />
-                    </div>
-                  </div>
-                  <div class="article-descr">
-                    <div class="article-date-location">
-                      <div class="article-date">{{post.created_at}}</div>
-                      <div class="article-location">{{post.location}}</div>
-                    </div>
-                    <div class="article-title">{{post.title}}</div>
-                    <div class="article-subtitle">{{post.description}}</div>
-                  </div>
-                </router-link>
-              </div>
-            </div>
           </div>
         </div>
-      </section>
+        <div
+          class="profile-grid__item profile-grid__item--support"
+          v-if="supportNeed.length > 0 || supportOffer.length > 0"
+        >
+          <div class="profile__section" v-if="supportOffer.length > 0">
+            <div class="profile__section-title">
+              <img src="/img/give.svg" />
+              Support I can offer:
+            </div>
+            <ul class="profile__section-support support-list">
+              <li
+                class="support-list__item"
+                v-for="(item, index) in supportNeed"
+                :key="'i-need-'+index"
+              >
+                <div class="support-list__category-container">
+                  <div class="support-list__category">{{item.support_category.title}}</div>
+                  <div class="support-list__subcategory">{{item.title}}</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="profile__section">
+            <div class="profile__section-title" v-if="supportNeed.length > 0">
+              <img src="/img/need.svg" />
+              Support I Need:
+            </div>
+            <ul class="profile__section-support">
+              <li
+                class="support-list__item"
+                v-for="(item, index) in supportNeed"
+                :key="'i-need-'+index"
+              >
+                <div class="support-list__category-container">
+                  <div class="support-list__category">{{item.support_category.title}}</div>
+                  <div class="support-list__subcategory">{{item.title}}</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="profile-grid__item profile-grid__item--goals" v-if="goals.length > 0">
+          <div class="profile__section">
+            <div class="profile__section-title">My interests (UN Goals):</div>
+            <ul class="profile__section-goals">
+              <li v-for="goal in goals" :key="goal.id">
+                <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block-title container">Events I'm going to:</div>
+    <div class="events-grid container" v-if="events.length > 0">
+      <event-card :event="event" class="talk-card" v-for="event in events" :key="'c-'+event.id" />
+    </div>
+    <div class="block-title container">Latest News:</div>
+    <div class="news-grid container">
+      <router-link
+        :to="'/news/' + post.slug"
+        class="article-item"
+        v-for="post in feed"
+        :key="post.id+post.title"
+      >
+        <div class="smiley-img-wrap">
+          <div class="smiley-img">
+            <img
+              :src="$settings.images_path.news  +'m_'+post.cover_image"
+              :alt="post.title"
+              :title="post.title"
+            />
+          </div>
+        </div>
+        <div class="article-descr">
+          <div class="article-date-location">
+            <div class="article-date">{{post.created_at}}</div>
+            <div class="article-location">{{post.location}}</div>
+          </div>
+          <div class="article-title">{{post.title}}</div>
+          <div class="article-subtitle">{{post.description}}</div>
+        </div>
+      </router-link>
     </div>
     <Footer />
   </div>
@@ -127,26 +134,32 @@
 <script>
 import axios from "@/axios-auth";
 
+import InformationHero from "@/components/InformationHero.vue";
 import AppIcon from "@/components/AppIcon";
+import EventCard from "@/components/events/Event-Card";
+
 import Footer from "@/components/Footer";
 
 export default {
   data() {
     return {
-      user: {},
+      user: {
+        avatar: null
+      },
       avatar: "url",
-      name: "John Doe",
-      location: "",
       socials: ["facebook", "linkedin", "google", "instagram", "twitter"],
       goals: [],
       supportOffer: [],
       supportNeed: [],
-      feed: []
+      feed: [],
+      events: []
     };
   },
   methods: {},
   components: {
+    InformationHero,
     AppIcon,
+    EventCard,
     Footer
   },
   mounted() {
@@ -167,6 +180,14 @@ export default {
       .catch(error => console.error(error.request));
 
     axios
+      .get("/events")
+      .then(response => {
+        this.events = response.data.events;
+        this.events.length = 4;
+      })
+      .catch(error => console.error(error));
+
+    axios
       .get("/users/feed")
       .then(res => {
         this.feed = res.data.posts.splice(0, 3);
@@ -181,86 +202,163 @@ export default {
 @import "@/scss/components/_article-item";
 @import "@/scss/blocks/_homepage-news-grid";
 
-.bg {
-  background-image: url("/img/register-bg.jpg");
+.profile-layout {
+  background-image: url("/img/components/information-hero.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 48px;
-  padding-bottom: 96px;
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-color: #000;
+    opacity: 0.7;
+  }
 }
 
+.profile__avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  font-family: "Montserrat Bold", sans-serif;
+  text-transform: uppercase;
+  @include font-size(2.5rem);
+  letter-spacing: 4px;
+  color: #393939;
+  background-color: #eeb400;
+  text-align: center;
+
+  img {
+    width: 100%;
+    height: 100;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.profile__name {
+  font-family: "Montserrat Bold", sans-serif;
+  text-transform: uppercase;
+  @include font-size(2.5rem);
+  color: #fff;
+  @include margin-left(1.5rem);
+}
+
+.profile__about {
+  .profile__about-title {
+    @include font-size(2.5rem);
+    font-family: "Montserrat SemiBold", sans-serif;
+    color: #fff;
+  }
+
+  .profile__about-content {
+    font-family: "Montserrat Regular";
+    color: #fff;
+    @include font-size(1.5rem);
+  }
+}
+
+.profile__sidebar {
+  &:not(:last-child) {
+    @include margin-bottom(1.5rem);
+  }
+  .profile__sidebar-title {
+    text-transform: uppercase;
+    font-family: "Montserrat Regular";
+    letter-spacing: 4px;
+    color: #fff;
+    @include margin-bottom(0.7rem);
+  }
+  .profile__sidebar-content {
+    font-family: "Montserrat Regular";
+    color: #fff;
+  }
+}
+
+.profile__social {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 0.5rem;
+
+  a {
+    max-width: auto;
+    display: inline-block;
+  }
+}
+
+.profile__section {
+  &:not(:last-child) {
+    @include margin-bottom(1.5rem);
+  }
+  .profile__section-title {
+    @include font-size(2.5rem);
+    @include margin-bottom(1rem);
+    font-family: "Montserrat SemiBold", sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+
+    img {
+      max-width: 36px;
+      max-height: 36px;
+      margin-right: 16px;
+    }
+  }
+
+  .profile__section-goals {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(5, 1fr);
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .profile__section-support {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color: #fff;
+
+    .support-list__category {
+      font-family: "Montserrat SemiBold", sans-serif;
+      @include font-size(1.2rem);
+    }
+    .support-list__subcategory {
+      font-family: "Montserrat Regular", sans-serif;
+      @include font-size(1rem);
+    }
+  }
+}
+
+// ----------
+.block-title {
+  font-family: "Montserrat Bold", sans-serif;
+  @include font-size(2rem);
+  @include margin-top(2rem);
+  @include margin-bottom(2.5rem);
+}
 .news-grid {
   padding-top: 0px;
 }
 
-.user-info-connections {
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12;
-
-  img {
-    margin-right: 12px;
-    width: 24px;
-    height: 24px;
-  }
-}
-
-.goals-list {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.profile-grid {
+.events-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
+  grid-template-columns: repeat(4, 1fr);
 
-  .profile-grid__item {
-    padding: 15px;
-    background: #fff;
-
-    &.profile-grid__item--news {
-      grid-column: 1 / span 3;
-    }
-
-    hr {
-      border: none;
-      height: 2px;
-      width: 100%;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      background-color: #ffec00;
-    }
-  }
-
-  .profile-grid__title {
-    padding-bottom: 12px;
-    margin-bottom: 12px;
-    border-bottom: 2px solid #ffec00;
-    font-family: "Montserrat Bold", sans-serif;
-    text-transform: uppercase;
-    @include font-size(1rem);
-  }
-
-  .profile-grid__subtitle {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-
-    img {
-      margin-right: 12px;
-      width: 15px;
-      height: auto;
-    }
-  }
-}
-
-.support-list {
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 15px;
-
-  &:not(:last-child) {
-    margin-bottom: 24px;
+  .talk-card {
+    width: 100% !important;
   }
 }
 
@@ -276,11 +374,42 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   background-color: $default-orange-btns;
-  color: #fff;
+  color: #393939;
   border: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
+}
+
+.profile-grid {
+  display: grid;
+  grid-gap: 60px;
+  grid-template-columns: repeat(4, 1fr);
+  padding-top: 30px;
+  padding-bottom: 30px;
+  position: relative;
+  z-index: 2;
+
+  .profile-grid__item.profile-grid__item--avatar {
+    grid-column: 1 / span 3;
+    display: flex;
+    align-items: center;
+  }
+  .profile-grid__item.profile-grid__item--buttons {
+    // grid-column: 3 / span 1;
+  }
+  .profile-grid__item.profile-grid__item--about {
+    grid-column: 1 / span 3;
+  }
+  .profile-grid__item.profile-grid__item--goals {
+    grid-column: 3 / span 2;
+  }
+  .profile-grid__item.profile-grid__item--support {
+    grid-column: 1 / span 2;
+  }
+  .profile-grid__item.profile-grid__item--news {
+    grid-column: 1 / span 4;
+  }
 }
 </style>

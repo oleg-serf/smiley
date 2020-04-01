@@ -16,21 +16,18 @@ const reqInterceptor = instance.interceptors.request.use(config => {
   return config
 })
 const resInterceptor = instance.interceptors.response.use(
-  res => {
-    return res;
+  function (res) {
+    // console.log('good');
+    return res
+  },
+  function (error) {
+    // console.log('bad');
+    // Vue.swal({
+    //   text: error.data.message,
+    //   type: 'error'
+    // });
+    return error
   }
-  // function (res) {
-  //   console.log('good');
-  //   return res
-  // },
-  // function (error) {
-  //   console.log('bad');
-  //   Vue.swal({
-  //     text: error.data.message,
-  //     type: 'error'
-  //   });
-  //   return error
-  // }
 );
 
 export default instance;
