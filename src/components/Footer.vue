@@ -1,20 +1,22 @@
 <template>
-  <footer class="smiley-footer">
+  <div class="footer-wrapper">
     <div class="container">
-      <h3>Join</h3>
-      <div class="footer-logo">
-        <img src="/img/homepage/footer-logo.png" alt="footer logo" />
-      </div>
       <form
-        class="smiley-signup-form"
+        class="mailchimp-form"
         action="https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=ee54f0e12c"
         method="POST"
         style="overflow: hidden"
       >
+        <div class="mailchimp-form__header">
+          <h3 class="mailchimp-form__title">Join</h3>
+          <div class="mailchimp-form__logo">
+            <img src="/img/homepage/footer-logo.png" alt="footer logo" />
+          </div>
+        </div>
         <div style="position: absolute; left: -5000px;" aria-hidden="true">
           <input type="text" name="b_720898364c202fd6f72071ca6_ee54f0e12c" tabindex="-1" value />
         </div>
-        <label for="signup-firstname">
+        <label class="mailchimp-form__label" for="signup-firstname">
           <input
             type="text"
             name="FNAME"
@@ -22,203 +24,227 @@
             placeholder="First Name"
             min-length="2"
             required
+            class="mailchimp-form__input"
           />
         </label>
 
-        <label for="signup-lastname">
-          <input type="text" name="LNAME" id="signup-lastname" placeholder="Last Name" />
+        <label class="mailchimp-form__label" for="signup-lastname">
+          <input
+            type="text"
+            name="LNAME"
+            id="signup-lastname"
+            placeholder="Last Name"
+            class="mailchimp-form__input"
+          />
         </label>
 
-        <label for="email">
-          <input type="email" name="EMAIL" id="email" placeholder="Your Email" required />
+        <label class="mailchimp-form__label" for="email">
+          <input
+            type="email"
+            name="EMAIL"
+            id="email"
+            placeholder="Your Email"
+            required
+            class="mailchimp-form__input"
+          />
         </label>
-        <div class="signup-btn-wrap">
-          <button class="btn-signup" type="submit" name="submit" value="Subscribe">Subscribe</button>
+        <div class="mailchimp-form__label">
+          <button
+            class="mailchimp-form__submit"
+            type="submit"
+            name="submit"
+            value="Subscribe"
+          >Subscribe</button>
         </div>
       </form>
-      <div class="footer-menu">
-        <ul>
-          <li>
-            <router-link :to="{name: 'partners'}">Partners</router-link>
-          </li>
-          <li>
-            <router-link :to="{name: 'terms'}">Terms and Conditions</router-link>
-          </li>
-          <!-- TODO: Make support Search + FAQ page -->
-          <!-- <li>
-            <a href="#">Support</a>
-          </li>-->
-          <li>
-            <router-link :to="{name: 'contact'}">Contact Us</router-link>
-          </li>
-        </ul>
-      </div>
-
-      <social-icons />
     </div>
-  </footer>
+    <footer class="main-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-column">
+            <img src="https://smileymovement.org/images/logos/white-yellow.png" class="footer-logo" />
+          </div>
+          <div class="footer-column"></div>
+          <div class="footer-column">
+            <div class="footer-section">
+              <div class="footer-section__title">Support</div>
+              <ul class="footer-section__menu">
+                <li>
+                  <router-link to>Partners</router-link>
+                </li>
+                <li>
+                  <router-link to>Terms and Conditions</router-link>
+                </li>
+                <li>
+                  <router-link to>Support</router-link>
+                </li>
+                <li>
+                  <router-link to>Contact Us</router-link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="footer-column footer-column__alternative-logo">
+            <span>A philanthropic venture from</span>
+            <br />
+            <img
+              src="https://smileymovement.org/images/logos/Smiley-White@2x.png"
+              class="footer-logo-bottom"
+              alt
+            />
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
-import axios from "../axios-auth";
-
-import SocialIcons from "@/components/footer/SocialIcons";
-
-export default {
-  name: "Header",
-  components: {
-    SocialIcons
-  },
-  data() {
-    return {
-      form: {
-        FNAME: "",
-        LNAME: "",
-        EMAIL: ""
-      }
-    };
-  },
-  mounted() {},
-  methods: {
-    subscribeMailchimp() {
-      // console.log("testing subscription form");
-      // const params = new URLSeachParams();
-      // params.append("FNAME", this.form.FNAME);
-      // params.append("LNAME", this.form.LNAME);
-      // params.append("EMAIL", this.form.EMAIL);
-      // axios
-      //   .post(
-      //     "https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=ee54f0e12c",
-      //     this.form
-      //   )
-      //   .then(res => console.log("Success", res))
-      //   .catch(res => console.error(res));
-    }
-  }
-};
+export default {};
 </script>
 
-
 <style lang="scss" scoped>
-.smiley-footer {
-  padding: 57px 0 105px;
-  text-align: center;
-  position: relative;
-  &:before {
-    content: "";
-    height: 1px;
-    width: 100%;
-    display: block;
-    background-color: #979797;
-    position: absolute;
-    top: 0;
-    opacity: 0.28;
+.main-footer {
+  background-color: #3d465a;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.footer-top,
+.footer-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+  color: #fff;
+
+  .footer-column:nth-child(2) {
+    grid-column: 2 / span 2;
   }
-  h3 {
-    color: $default-text;
-    font: 32px/48px "Montserrat Bold", sans-serif;
+}
+
+.footer-bottom {
+  @include margin-top(2rem);
+  @include padding-top(2rem);
+  border-top: 2px solid #50586a;
+}
+
+.footer-logo {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+}
+
+.footer-section {
+  &:not(:last-child) {
+    @include margin-bottom(1.5rem);
+  }
+  .footer-section__title {
     text-transform: uppercase;
-    margin-bottom: -12px;
-    margin-top: 0;
-    margin-right: 42px;
-    @include md {
-      margin-right: 134px;
-    }
+    font-family: "Montserrat Regular";
+    letter-spacing: 4px;
+    color: #fff;
+    @include margin-bottom(0.7rem);
   }
-  .footer-logo {
-    width: 100%;
-    max-width: 384px;
-    margin: 0 auto;
-    img {
-      width: 100%;
-    }
-    @include md {
-      transform: translateX(-50px);
-    }
+  .footer-section__content {
+    font-family: "Montserrat Regular";
+    color: #fff;
   }
-  .smiley-signup-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    label,
-    input {
-      max-width: 331px;
-      width: 100%;
-    }
-    @include md {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-      label {
-        margin-right: 30px;
-        &:last-of-type {
-          margin-right: 0;
-        }
-      }
-    }
-    input {
-      border: 1px solid #c7c7c7;
-      box-sizing: border-box;
-      border-radius: 4px;
-      height: 48px;
-      margin-bottom: 20px;
-      text-indent: 16px;
-      font: 400 16px/24px "Montserrat Regular", sans-serif;
-      &:focus {
-        border: 1px solid #eeb400;
-        box-shadow: 0 2px 31px 13px rgba(0, 0, 0, 0.05);
-        transition: 0.2s ease-in;
-      }
-      @include xxl {
-        margin-bottom: 0;
-      }
-      &::placeholder {
-        color: #656565;
-        font: 400 16px/24px "Muli", sans-serif;
-      }
-    }
-    .signup-btn-wrap {
-      width: 100%;
-      @include xl {
-        max-width: 218px;
-        margin: -1px 30px 0;
-      }
-    }
-    .btn-signup {
-      border: none;
-      box-sizing: border-box;
-      background-color: $default-orange-btns;
-      border-radius: 4px;
+
+  .footer-section__menu {
+    font-family: "Montserrat Regular";
+
+    a {
+      text-decoration: none;
       color: #fff;
-      height: 48px;
-      max-width: 218px;
-      margin-bottom: -1px;
-      text-transform: uppercase;
-      font: 700 16px/24px "Montserrat Bold", sans-serif;
-      width: 100%;
-      cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
 
       &:hover {
-        background-color: #c09205;
+        border-color: #fff;
       }
     }
   }
-  .footer-menu {
-    margin-top: 24px;
-    a {
-      color: $default-text;
-      font: 400 22px/30px "Muli", sans-serif;
-      text-decoration: none;
+}
+
+.footer-logo-bottom {
+  margin-top: 8px;
+  max-width: 110px;
+  width: 100%;
+  height: auto;
+}
+
+.footer-column__form {
+  grid-column: 1 / span 2;
+}
+
+.footer-column__alternative-logo {
+  grid-column: 4 / span 1 !important;
+  span {
+    font-family: "Montserrat Regular", sans-serif;
+  }
+  .footer-logo-bottom {
+    margin-top: 8px;
+    max-width: 110px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.mailchimp-form {
+  display: grid;
+  grid-gap: 15px;
+  max-width: 768px;
+  grid-template-columns: repeat(2, 1fr);
+  margin-left: auto;
+  margin-right: auto;
+  @include margin-top(2.5rem);
+  @include margin-bottom(2.5rem);
+
+  .mailchimp-form__header {
+    grid-column: 1 / span 2;
+    text-align: center;
+  }
+
+  .mailchimp-form__title {
+    font-family: "Montserrat Bold", sans-serif;
+    @include font-size(2rem);
+    margin-bottom: -16px;
+    text-transform: uppercase;
+  }
+
+  .mailchimp-form__logo {
+    max-width: 320px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    @include margin-bottom(2rem);
+
+    img {
+      max-width: 100%;
+      width: 100%;
+      height: auto;
     }
-    @include md {
-      li {
-        display: inline-block;
-        margin: 0 25px;
-      }
-    }
+  }
+
+  .mailchimp-form__label {
+    width: 100%;
+  }
+  .mailchimp-form__input {
+    width: 100%;
+    font-family: "Montserrat Regular";
+    padding: 10px 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  .mailchimp-form__submit {
+    width: 100%;
+    font-family: "Montserrat Bold";
+    padding: 10px 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #f4ed3b;
   }
 }
 </style>

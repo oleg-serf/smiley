@@ -6,8 +6,18 @@ html {
   font-size: 16px;
 }
 
+.smiley-pagination {
+  text-align: center;
+}
+
 .app-pagination {
-  font: 600 16px/24px 'Inter SemiBold', sans-serif;
+  background-color: #f3f3f3;
+  font-family: "Montserrat Regular";
+  padding: 5px;
+  display: inline-block !important;
+  margin-left: auto;
+  margin-right: auto;
+
   text-align: center;
   display: flex;
   justify-content: center;
@@ -17,10 +27,16 @@ html {
   li {
     display: inline-block;
     width: 48px;
-    margin: 0 16px;
 
     @include sm {
       width: auto
+    }
+  }
+
+  .active {
+    a {
+      background-color: #f4ed3b;
+      font-family: "Montserrat Bold", sans-serif;
     }
   }
 
@@ -29,6 +45,9 @@ html {
     text-decoration: none;
     line-height: 48px;
     display: block;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 6px 10px;
   }
 
   svg {
@@ -36,7 +55,6 @@ html {
     margin-bottom: 2px;
   }
 
-  span {}
 
   .smiley-pagination-back,
   .smiley-pagination-next {
@@ -48,18 +66,16 @@ html {
     background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 21C15.744 21 15.488 20.902 15.293 20.707L7.29301 12.707C6.90201 12.316 6.90201 11.684 7.29301 11.293L15.293 3.293C15.684 2.902 16.316 2.902 16.707 3.293C17.098 3.684 17.098 4.316 16.707 4.707L9.41401 12L16.707 19.293C17.098 19.684 17.098 20.316 16.707 20.707C16.512 20.902 16.256 21 16 21Z' fill='%231A1A1A' /%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: left center;
-    padding-left: 22px
+    padding-left: 8px;
+    background-size: 12px;
   }
 
   .smiley-pagination-next {
     background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.99999 21C8.25599 21 8.51199 20.902 8.70699 20.707L16.707 12.707C17.098 12.316 17.098 11.684 16.707 11.293L8.70699 3.29301C8.31599 2.90201 7.68399 2.90201 7.29299 3.29301C6.90199 3.68401 6.90199 4.31601 7.29299 4.70701L14.586 12L7.29299 19.293C6.90199 19.684 6.90199 20.316 7.29299 20.707C7.48799 20.902 7.74399 21 7.99999 21Z' fill='%231A1A1A' /%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right center;
-    padding-right: 22px;
-  }
-
-  .active {
-    border-bottom: 2px solid $default-text;
+    padding-right: 8px;
+    background-size: 12px;
   }
 }
 
