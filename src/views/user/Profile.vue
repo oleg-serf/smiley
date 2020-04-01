@@ -32,6 +32,10 @@
             <div class="profile__sidebar-content">50+ connections</div>
           </div>
           <div class="profile__sidebar">
+            <div class="profile__sidebar-title">Community:</div>
+            <div class="profile__sidebar-content">0</div>
+          </div>
+          <div class="profile__sidebar">
             <div class="profile__sidebar-title">My social media:</div>
             <div class="profile__sidebar-content">
               <ul class="profile__social">
@@ -231,7 +235,7 @@ export default {
   overflow: hidden;
   font-family: "Montserrat Bold", sans-serif;
   text-transform: uppercase;
-  @include font-size(2.5rem);
+  @include font-size(2rem);
   letter-spacing: 4px;
   color: #393939;
   background-color: #eeb400;
@@ -248,14 +252,14 @@ export default {
 .profile__name {
   font-family: "Montserrat Bold", sans-serif;
   text-transform: uppercase;
-  @include font-size(2.5rem);
+  @include font-size(2rem);
   color: #fff;
   @include margin-left(1.5rem);
 }
 
 .profile__about {
   .profile__about-title {
-    @include font-size(2.5rem);
+    @include font-size(2rem);
     font-family: "Montserrat SemiBold", sans-serif;
     color: #fff;
   }
@@ -263,7 +267,7 @@ export default {
   .profile__about-content {
     font-family: "Montserrat Regular";
     color: #fff;
-    @include font-size(1.5rem);
+    @include font-size(1.2rem);
   }
 }
 
@@ -300,7 +304,7 @@ export default {
     @include margin-bottom(1.5rem);
   }
   .profile__section-title {
-    @include font-size(2.5rem);
+    @include font-size(2rem);
     @include margin-bottom(1rem);
     font-family: "Montserrat SemiBold", sans-serif;
     color: #fff;

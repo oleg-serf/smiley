@@ -4,19 +4,21 @@
       <banner color="#4C9F38" background="/img/homepage/banner-goals.jpg">
         <template v-slot:title>Stronger together</template>
         <template v-slot:logo>
-          <img src="/img/homepage/global-goals.png" style="width: 200px" />
+          <img src="/img/un-goals-transperant.png" style="width: 200px" />
         </template>
 
         <template v-slot:title>Together anything is possible</template>
-        <template v-slot:content>
-          <p>The sustainable development goals are the blueprint for peace and prosperity for people and the planet, now and into the future.</p>
-          <p>Everything we do is guided by these goals, from the events we host to the content we produce, we want to contribute to each of these objectives. All 17 of these goals are interconnected, just like our community and network, so no matter what you care about you’ll be able to get involved in the bigger picture.</p>
-        </template>
+        <template
+          v-slot:content
+        >The sustainable development goals are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, the content we produce, to the way organisations and projects are grouped and shared with you.</template>
       </banner>
+    </div>
+    <div class="post-title container">
+      <p>The UN Goals are our North Star guiding us towards reaching our mission to make the world a happier, more equal and sustainable place. Click through each Goal below for the latest Smiley News, Events and Charitable Projects related to that goal.</p>
+      <p>All 17 of these goals are interconnected, just like our community and network, so no matter what cause you care about your involvement will be supporting the bigger picture</p>
     </div>
 
     <section class="goals-grid container" v-for="category in categories" :key="category.id">
-      <h2 class="goals-grid__title">{{category.name}}</h2>
       <div class="goals-grid__grid">
         <div class="goals-grid__item">
           <img src="/img/un-goals.png" alt="icon" />
@@ -68,14 +70,23 @@ export default {
 
 .post-title {
   font-family: "Montserrat Regular";
-  @include font-size(1.2rem);
+  text-align: center;
+  @include font-size(1.4rem);
   @include margin-top(2rem);
   @include margin-bottom(2rem);
+  margin: 0 auto;
+  max-width: 1024px;
 }
 
 .goals-grid {
   .goals-grid__item {
     border: 1px solid #c7c7c7;
+    line-height: 1;
+
+    a {
+      font-size: 0px;
+      display: block;
+    }
 
     img {
       width: 100%;
