@@ -3,26 +3,13 @@
     <breadcrumbs />
 
     <div class="container">
-      <div class="banner-section" style="background-color: #d21217;">
-        <div class="banner-section__top">
-          <img
-            class="banner-section__logo"
-            src="img/homepage/smiley-main-title.svg"
-            alt="smiley talks"
-          />
-          <div class="banner-section__category">
-            <p>Talks</p>
-          </div>
-        </div>
-        <div class="banner-section__bottom">
-          <div class="banner-section__title">
-            <p>Register for a Smiley Talk!</p>
-          </div>
-          <div class="banner-section__description">
-            <p>Smiley Talks bring expert speakers and members of the public together in a unique, memorable experience.</p>
-          </div>
-        </div>
-      </div>
+      <banner color="#D12121" background="/img/homepage/banner-talks.jpg">
+        <template v-slot:name>talks</template>
+        <template v-slot:title>Register for a Smiley Talk!</template>
+        <template
+          v-slot:content
+        >Smiley Talks bring expert speakers and members of the public together in a unique, memorable experience.</template>
+      </banner>
     </div>
     <section class="upcoming-talk-section" style="display: none;">
       <div class="upcoming-talk-wrap">
@@ -424,6 +411,8 @@ import axios from "@/axios-auth";
 import { mapState, mapActions, mapMutations } from "vuex";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Banner from "@/components/homepage/Banner.vue";
+
 import SocialIcons from "@/components/footer/SocialIcons";
 import FormSignUpEventsNotification from "@/components/events/Form-EventsNotifications";
 import FilterCheckbox from "@/components/events/Filter-Checkbox";
@@ -610,6 +599,7 @@ export default {
 
   components: {
     Breadcrumbs,
+    Banner,
     FormSignUpEventsNotification,
     FilterCheckbox,
     EventCard,

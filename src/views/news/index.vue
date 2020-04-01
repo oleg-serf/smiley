@@ -3,25 +3,14 @@
     <breadcrumbs />
 
     <section class="latest-news-section">
-      <div class="banner-section">
-        <div class="banner-section__top">
-          <img
-            class="banner-section__logo"
-            src="img/homepage/smiley-main-title.svg"
-            alt="smiley talks"
-          />
-          <div class="banner-section__category">
-            <p>News</p>
-          </div>
-        </div>
-        <div class="banner-section__bottom">
-          <div class="banner-section__title">
-            <p>Everyday heroes making the world a happier place</p>
-          </div>
-          <div class="banner-section__description">
-            <p>Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</p>
-          </div>
-        </div>
+      <div class="container">
+        <banner color="#F36E24" background="/img/homepage/banner-news.jpg">
+          <template v-slot:name>news</template>
+          <template v-slot:title>Everyday heroes making the world a happier place</template>
+          <template
+            v-slot:content
+          >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>
+        </banner>
       </div>
 
       <div class="container">
@@ -221,6 +210,7 @@ import { mapState } from "vuex";
 import router from "@/router";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Banner from "@/components/homepage/Banner.vue";
 
 import NewsItem from "@/components/news/News-Item";
 
@@ -253,6 +243,7 @@ export default {
   },
   components: {
     Breadcrumbs,
+    Banner,
     ArticleItem,
     NewsItem,
     Footer

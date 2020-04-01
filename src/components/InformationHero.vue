@@ -2,12 +2,12 @@
   <div class="project-information">
     <img :src="background" class="project-information__banner" alt />
 
-    <div class="project-information__top container" v-if="isNotEmptySlot('title')">
+    <div class="project-information__top" v-if="isNotEmptySlot('title')">
       <div class="project-information__user">
         <slot name="avatar"></slot>
       </div>
     </div>
-    <div class="project-information__bottom container">
+    <div class="project-information__bottom">
       <div class="project-information__column-info">
         <h1 class="project-information__title" v-if="isNotEmptySlot('title')">
           <slot name="title"></slot>
@@ -23,6 +23,9 @@
       <div class="project-information__column-additional" v-if="isNotEmptySlot('sidebar')">
         <slot name="sidebar"></slot>
       </div>
+    </div>
+    <div class="project-information__additional" v-if="isNotEmptySlot('additional')">
+      <slot name="additional"></slot>
     </div>
   </div>
 </template>
@@ -50,12 +53,15 @@ export default {
   min-height: 600px;
   display: flex;
   flex-direction: column;
+  padding-left: 15px;
+  padding-right: 15px;
 
   &::before {
     content: "";
     position: absolute;
     display: block;
     width: 100%;
+    left: 0px;
     height: 100%;
     background-color: #000;
     opacity: 0.5;
@@ -73,6 +79,10 @@ export default {
   }
 
   .project-information__top {
+    max-width: 1780px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     position: relative;
     z-index: 2;
     padding-top: 2rem;
@@ -82,6 +92,10 @@ export default {
   }
 
   .project-information__bottom {
+    max-width: 1780px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     position: relative;
     z-index: 2;
     padding-bottom: 2rem;
@@ -226,6 +240,14 @@ export default {
     grid-gap: 10px;
     grid-template-columns: repeat(5, 1fr);
     max-width: 320px;
+  }
+
+  .project-information__additional {
+    margin: 0 auto;
+    max-width: 1780px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
   }
 }
 

@@ -2,44 +2,21 @@
   <div>
     <breadcrumbs ref="breadcrumbs" />
 
-    <section class="latest-news-section latest-news-section--category latest-articles">
-      <div class="latest-news-wrap">
-        <div class="title-colored-block">
-          <div class="smiley-news-main-title">
-            <img src="/img/homepage/smiley-main-title.svg" alt="smiley talks" />
-            <P>News</P>
-          </div>
-          <h2 class="news-block-title">{{ title }}</h2>
-        </div>
-      </div>
-    </section>
+    <div class="container">
+      <banner color="#4C9F38" background="/img/homepage/banner-goals.jpg">
+        <template v-slot:title>Stronger together</template>
+        <template v-slot:logo>
+          <img src="/img/homepage/global-goals.png" style="width: 200px" />
+        </template>
+
+        <template v-slot:title>{{goal.name}}</template>
+        <template v-slot:content>{{goal.description}}</template>
+      </banner>
+    </div>
 
     <section class="news-category-section latest-articles container">
-      <div class="news-category-container">
-        <router-link
-          :to="'/news/' + post.slug"
-          class="article-item"
-          v-for="post in posts"
-          :key="post.id+post.title"
-        >
-          <div class="smiley-img-wrap">
-            <div class="smiley-img">
-              <img
-                :src="$settings.images_path.news  +'m_'+post.cover_image"
-                :alt="post.title"
-                :title="post.title"
-              />
-            </div>
-          </div>
-          <div class="article-descr">
-            <div class="article-date-location">
-              <div class="article-date">{{post.created_at}}</div>
-              <div class="article-location">{{post.location}}</div>
-            </div>
-            <div class="article-title">{{post.title}}</div>
-            <div class="article-subtitle">{{post.description}}</div>
-          </div>
-        </router-link>
+      <div class="news-grid">
+        <article-item v-for="article in posts" :key="article.slug" :information="article" />
       </div>
     </section>
 
@@ -59,18 +36,13 @@
 
     <br />
     <br />
-    <br />
 
     <hr />
-    <section v-if="events.length > 0">
-      <router-link
-        :to="'/talks/' + event.slug"
-        class="talk-card"
-        v-for="event in events"
-        :key="event.id"
-      >
-        <event-card :event="event" />
-      </router-link>
+    <br />
+    <br />
+
+    <section class="container news-grid" v-if="events.length > 0">
+      <event-card :event="event" lass="talk-card" v-for="event in events" :key="event.id" />
     </section>
     <hr />
     <Footer />
@@ -81,6 +53,9 @@
 import axios from "@/axios-auth";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Banner from "@/components/homepage/Banner.vue";
+import ArticleItem from "@/components/news/Article.vue";
+
 import EventCard from "@/components/events/Event-Card";
 
 import Footer from "@/components/Footer";
@@ -88,6 +63,8 @@ import Footer from "@/components/Footer";
 export default {
   data() {
     return {
+      goal: {},
+
       title: "",
       posts: [],
       pagination: {
@@ -99,7 +76,7 @@ export default {
   },
   mounted() {
     let slug = this.$route.params.slug;
-    let url = slug == "all" ? "/news" : "/news/category/" + slug;
+
     axios
       .get("/goals/" + slug)
       .then(res => {
@@ -107,8 +84,11 @@ export default {
 
         this.events = res.data.events;
 
-        console.log("Events for goals", res);
+        console.log("Goal page", res);
+
         console.log("loaded", this.events);
+
+        this.goal = res.data.goal;
       })
       .catch(error => console.log(error));
   },
@@ -129,6 +109,8 @@ export default {
   },
   components: {
     Breadcrumbs,
+    Banner,
+    ArticleItem,
     Footer,
     EventCard
   }
@@ -136,12 +118,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/components/_article-item";
-
-@import "@/scss/sections/_latest-news";
-
-@import "@/scss/sections/_news-category-section";
-
+@import "@/scss/blocks/_homepage-news-grid";
 @import "@/scss/sections/_talks-card";
 
 .latest-news-section--category {

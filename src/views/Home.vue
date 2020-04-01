@@ -7,32 +7,36 @@
     </hero>
 
     <!-- News section -->
-    <banner
-      link="/news/category/all"
-      color="#F36E24"
-      background="/img/homepage/banner-news.jpg"
-      v-if="Object.keys(banners.news).length"
-    >
-      <template v-slot:name>news</template>
-      <template v-slot:title v-if="banners.news.title">{{banners.news.title}}</template>
-      <template v-slot:content v-if="banners.news.description">{{banners.news.description}}</template>
-      <template v-slot:button v-if="banners.news.button_text">{{banners.news.button_text}}</template>
-    </banner>
+    <div class="container">
+      <banner
+        link="/news/category/all"
+        color="#F36E24"
+        background="/img/homepage/banner-news.jpg"
+        v-if="Object.keys(banners.news).length"
+      >
+        <template v-slot:name>news</template>
+        <template v-slot:title v-if="banners.news.title">{{banners.news.title}}</template>
+        <template v-slot:content v-if="banners.news.description">{{banners.news.description}}</template>
+        <template v-slot:button v-if="banners.news.button_text">{{banners.news.button_text}}</template>
+      </banner>
+    </div>
 
     <section class="news-grid container" v-if="newsList.length > 0">
       <article-item v-for="article in newsList" :key="article.slug" :information="article" />
     </section>
 
     <!-- Network banner -->
-    <banner link="/register" color="#4696D2" v-if="Object.keys(banners.network).length">
-      <template v-slot:name>Network</template>
-      <template v-slot:title v-if="banners.network.title">{{banners.network.title}}</template>
-      <template v-slot:content v-if="banners.network.description">{{banners.network.description}}</template>
-      <template
-        v-slot:button
-        v-if="banners.network.button_text && !auth"
-      >{{banners.network.button_text}}</template>
-    </banner>
+    <div class="container">
+      <banner link="/register" color="#4696D2" v-if="Object.keys(banners.network).length">
+        <template v-slot:name>Network</template>
+        <template v-slot:title v-if="banners.network.title">{{banners.network.title}}</template>
+        <template v-slot:content v-if="banners.network.description">{{banners.network.description}}</template>
+        <template
+          v-slot:button
+          v-if="banners.network.button_text && !auth"
+        >{{banners.network.button_text}}</template>
+      </banner>
+    </div>
 
     <section class="container">
       <div class="news-grid">
@@ -45,18 +49,19 @@
     </section>
 
     <!-- Events | Talks section -->
-
-    <banner
-      link="/talks"
-      color="#D12121"
-      background="/img/homepage/banner-talks.jpg"
-      v-if="Object.keys(banners.talks).length"
-    >
-      <template v-slot:name>talks</template>
-      <template v-slot:title v-if="banners.talks.title">{{banners.talks.title}}</template>
-      <template v-slot:content v-if="banners.talks.description">{{banners.talks.description}}</template>
-      <template v-slot:button v-if="banners.talks.button_text">{{banners.talks.button_text}}</template>
-    </banner>
+    <div class="container">
+      <banner
+        link="/talks"
+        color="#D12121"
+        background="/img/homepage/banner-talks.jpg"
+        v-if="Object.keys(banners.talks).length"
+      >
+        <template v-slot:name>talks</template>
+        <template v-slot:title v-if="banners.talks.title">{{banners.talks.title}}</template>
+        <template v-slot:content v-if="banners.talks.description">{{banners.talks.description}}</template>
+        <template v-slot:button v-if="banners.talks.button_text">{{banners.talks.button_text}}</template>
+      </banner>
+    </div>
 
     <section class="news-grid container" v-if="eventList.length > 0">
       <article-item
@@ -68,22 +73,23 @@
     </section>
 
     <!-- The Global Goals banner -->
+    <div class="container">
+      <banner
+        link="/goals"
+        color="#4C9F38"
+        background="/img/homepage/banner-goals.jpg"
+        v-if="Object.keys(banners.goals).length"
+      >
+        <template v-slot:title>Stronger together</template>
+        <template v-slot:logo>
+          <img src="/img/homepage/global-goals.png" style="width: 200px" />
+        </template>
 
-    <banner
-      link="/goals"
-      color="#4C9F38"
-      background="/img/homepage/banner-goals.jpg"
-      v-if="Object.keys(banners.goals).length"
-    >
-      <template v-slot:title>Stronger together</template>
-      <template v-slot:logo>
-        <img src="/img/homepage/global-goals.png" style="width: 200px" />
-      </template>
-
-      <template v-slot:title v-if="banners.goals.title">{{banners.goals.title}}</template>
-      <template v-slot:content v-if="banners.goals.description">{{banners.goals.description}}</template>
-      <template v-slot:button v-if="banners.goals.button_text">{{banners.goals.button_text}}</template>
-    </banner>
+        <template v-slot:title v-if="banners.goals.title">{{banners.goals.title}}</template>
+        <template v-slot:content v-if="banners.goals.description">{{banners.goals.description}}</template>
+        <template v-slot:button v-if="banners.goals.button_text">{{banners.goals.button_text}}</template>
+      </banner>
+    </div>
 
     <section class="section smiley-video-section">
       <div class="container">

@@ -184,7 +184,7 @@ const routes = [{
   {
     path: '/news',
     name: 'news',
-    component: () => import( /* webpackChunkName: "news" */ '../views/News.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/news/index.vue'),
     meta: {
       title: 'News',
     }
@@ -209,9 +209,9 @@ const routes = [{
    * News & Talks on same page
    */
   {
-    path: '/news-events/:slug',
+    path: '/goals/:slug',
     name: 'news-category-item',
-    component: () => import( /* webpackChunkName: "news" */ '../views/News-Events-Category.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/goals/_slug.vue'),
     meta: {
       breadcrumbs: ['news'],
     }
@@ -222,7 +222,7 @@ const routes = [{
   {
     path: '/talks',
     name: 'talks',
-    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/Archive.vue'),
+    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/index.vue'),
     meta: {
       title: 'Talks',
     }
