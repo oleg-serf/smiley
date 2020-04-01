@@ -82,7 +82,7 @@
       >
         <template v-slot:title>Stronger together</template>
         <template v-slot:logo>
-          <img src="/img/homepage/global-goals.png" style="width: 200px" />
+          <img src="/img/homepage/un-goals-white.png" style="width: 200px" />
         </template>
 
         <template v-slot:title v-if="banners.goals.title">{{banners.goals.title}}</template>

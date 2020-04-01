@@ -31,6 +31,11 @@
             <div class="profile__sidebar-content">50+ connections</div>
           </div>
           <div class="profile__sidebar">
+            <div class="profile__sidebar-title">Community:</div>
+            <div class="profile__sidebar-content">0</div>
+          </div>
+          <div class="profile__sidebar">
+            <!-- TODO - hide block if none media is filled && add v-if -->
             <div class="profile__sidebar-title">My social media:</div>
             <div class="profile__sidebar-content">
               <ul class="profile__social">
@@ -102,30 +107,7 @@
     </div>
     <div class="block-title container">Latest News:</div>
     <div class="news-grid container">
-      <router-link
-        :to="'/news/' + post.slug"
-        class="article-item"
-        v-for="post in feed"
-        :key="post.id+post.title"
-      >
-        <div class="smiley-img-wrap">
-          <div class="smiley-img">
-            <img
-              :src="$settings.images_path.news  +'m_'+post.cover_image"
-              :alt="post.title"
-              :title="post.title"
-            />
-          </div>
-        </div>
-        <div class="article-descr">
-          <div class="article-date-location">
-            <div class="article-date">{{post.created_at}}</div>
-            <div class="article-location">{{post.location}}</div>
-          </div>
-          <div class="article-title">{{post.title}}</div>
-          <div class="article-subtitle">{{post.description}}</div>
-        </div>
-      </router-link>
+      <article-item v-for="article in feed" :key="article.slug" :information="article" />
     </div>
     <Footer />
   </div>
@@ -136,6 +118,7 @@ import axios from "@/axios-auth";
 
 import InformationHero from "@/components/InformationHero.vue";
 import AppIcon from "@/components/AppIcon";
+import ArticleItem from "@/components/news/Article.vue";
 import EventCard from "@/components/events/Event-Card";
 
 import Footer from "@/components/Footer";
@@ -146,7 +129,6 @@ export default {
       user: {
         avatar: null
       },
-      avatar: "url",
       socials: ["facebook", "linkedin", "google", "instagram", "twitter"],
       goals: [],
       supportOffer: [],
@@ -159,6 +141,7 @@ export default {
   components: {
     InformationHero,
     AppIcon,
+    ArticleItem,
     EventCard,
     Footer
   },
@@ -231,7 +214,7 @@ export default {
   overflow: hidden;
   font-family: "Montserrat Bold", sans-serif;
   text-transform: uppercase;
-  @include font-size(2.5rem);
+  @include font-size(2rem);
   letter-spacing: 4px;
   color: #393939;
   background-color: #eeb400;
@@ -248,14 +231,14 @@ export default {
 .profile__name {
   font-family: "Montserrat Bold", sans-serif;
   text-transform: uppercase;
-  @include font-size(2.5rem);
+  @include font-size(2rem);
   color: #fff;
   @include margin-left(1.5rem);
 }
 
 .profile__about {
   .profile__about-title {
-    @include font-size(2.5rem);
+    @include font-size(2rem);
     font-family: "Montserrat SemiBold", sans-serif;
     color: #fff;
   }
@@ -263,7 +246,7 @@ export default {
   .profile__about-content {
     font-family: "Montserrat Regular";
     color: #fff;
-    @include font-size(1.5rem);
+    @include font-size(1.2rem);
   }
 }
 
@@ -300,7 +283,7 @@ export default {
     @include margin-bottom(1.5rem);
   }
   .profile__section-title {
-    @include font-size(2.5rem);
+    @include font-size(2rem);
     @include margin-bottom(1rem);
     font-family: "Montserrat SemiBold", sans-serif;
     color: #fff;

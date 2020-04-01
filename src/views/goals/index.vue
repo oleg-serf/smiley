@@ -4,7 +4,7 @@
       <banner color="#4C9F38" background="/img/homepage/banner-goals.jpg">
         <template v-slot:title>Stronger together</template>
         <template v-slot:logo>
-          <img src="/img/un-goals-transperant.png" style="width: 200px" />
+          <img src="/img/un-goals-white.png" style="width: 200px" />
         </template>
 
         <template v-slot:title>Together anything is possible</template>
