@@ -12,9 +12,7 @@ export default {
   name: "PieceOfArt",
   methods: {
     getImageUrl(src, size) {
-      /*
-       */
-      console.log("src, size");
+      // TODO - add sizes & generate src set
       let result =
         this.$settings.images_path[this.type] + this.size + "_" + this.src;
       return result;

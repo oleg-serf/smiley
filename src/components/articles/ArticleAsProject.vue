@@ -65,7 +65,9 @@ export default {
 
       const result = Math.floor(days);
 
-      return result + " days ago";
+      const append = result == 1 ? "day" : "days";
+
+      return `${result} ${append} ago`;
     }
   },
   props: {

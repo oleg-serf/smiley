@@ -22,7 +22,16 @@
     </div>
 
     <section class="news-grid container" v-if="newsList.length > 0">
-      <article-item v-for="article in newsList" :key="article.slug" :information="article" />
+      <article-project
+        v-for="article in newsList"
+        :key="article.slug"
+        :title="article.title"
+        :description="article.description"
+        :goal="article.goals[0].name"
+        :date="article.published_at"
+        :background="article.cover_image"
+        :link="'/news/' + article.slug"
+      />
     </section>
 
     <!-- Network banner -->
@@ -123,10 +132,13 @@ import ArticleItem from "@/components/news/Article.vue";
 import ArticleItemBlock from "@/components/news/ArticleBlock.vue";
 import VimeoVideo from "@/components/homepage/VimeoVideo.vue";
 
+import ArticleProject from "@/components/articles/ArticleAsProject.vue";
+
 export default {
   name: "home",
   components: {
     Hero,
+    ArticleProject,
     ArticleItem,
     ArticleItemBlock,
     Banner,
