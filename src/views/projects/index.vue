@@ -1,14 +1,16 @@
 <template>
   <div>
     <!-- Network banner -->
-    <banner link="/add-organisation" color="#d0d246">
-      <template v-slot:name>Projects</template>
-      <template v-slot:title>Create a Project</template>
-      <template
-        v-slot:content
-      >Do you have an idea which could impact your local community and beyond? Create a Project to get support from the Smiley Movement Network.</template>
-      <template v-slot:button>Create a Project</template>
-    </banner>
+    <div class="container">
+      <banner link="/add-organisation" color="#d0d246">
+        <template v-slot:name>Projects</template>
+        <template v-slot:title>Create a Project</template>
+        <template
+          v-slot:content
+        >Do you have an idea which could impact your local community and beyond? Create a Project to get support from the Smiley Movement Network.</template>
+        <template v-slot:button>Create a Project</template>
+      </banner>
+    </div>
 
     <!-- Title section -->
     <section class="section projects-section container">
@@ -59,19 +61,39 @@
         </div>
         <div class="project-article__content">
           <div class="project-article__category">
-            <div class="project-article__category-name">Human Rights</div>
-            <div class="project-article__category-circle">
-              <span>+15</span>
+            <div class="project-article__header">
+              <div class="project-article__category-name">Human Rights</div>
+              <div class="project-article__category-circle">
+                <span>+15</span>
+              </div>
             </div>
+            <div class="project-article__timestamp">5 days ago</div>
           </div>
           <div class="project-article__spacer"></div>
-          <h3
-            class="project-article__title"
-          >People vs Oil - Brand new idea to save the planet will go here in this title</h3>
-          <div class="project-article__description">Lorem ipsum dolor sit amet, consectet</div>
-          <div class="project-article__button">
-            <a href="/projects/test">view project</a>
+          <div class="project-article__inner">
+            <h3
+              class="project-article__title"
+            >People vs Oil - Brand new idea to save the planet will go here in this title</h3>
+            <div class="project-article__description">Lorem ipsum dolor sit amet, consectet</div>
+            <div class="project-article__button">
+              <a href="/projects/test">view project</a>
+            </div>
           </div>
+        </div>
+        <div class="project-article__actions">
+          <button>
+            <span>0</span>
+            <img src="/img/up-like-arrow-white.png" />
+            Like
+          </button>
+          <button>
+            <img src="/img/comment-icon-white.png" />
+            Comment
+          </button>
+          <button>
+            <img src="/img/share-icon-white.png" />
+            Share
+          </button>
         </div>
       </div>
     </section>
@@ -123,8 +145,10 @@ export default {
   position: relative;
   padding: 30px;
   min-height: 300px;
+  transition: padding-bottom 0.4s;
   color: #fff;
   display: flex;
+  flex-direction: column;
 
   &::before {
     content: "";
@@ -145,6 +169,13 @@ export default {
         transform: scale(1.1);
       }
     }
+    .project-article__inner {
+      transform: translateY(-60px);
+    }
+    .project-article__actions {
+      opacity: 1;
+      pointer-events: all;
+    }
   }
 
   .project-article__image {
@@ -163,16 +194,28 @@ export default {
     }
   }
 
+  .project-article__inner {
+    transition: transform 0.4s;
+  }
+
   .project-article__content {
     position: relative;
     z-index: 2;
     display: flex;
+    flex: 1;
     flex-direction: column;
+    transition: transform 0.4s;
+  }
+
+  .project-article__header {
+    display: flex;
+    align-items: center;
   }
 
   .project-article__category {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .project-article__category-name {
@@ -205,6 +248,12 @@ export default {
     }
   }
 
+  .project-article__timestamp {
+    color: #fff;
+    font-family: "Montserrat Regular", sans-serif;
+    opacity: 0.7;
+  }
+
   .project-article__spacer {
     flex: 1;
     min-height: 50px;
@@ -214,7 +263,7 @@ export default {
     @include font-size(1.1rem);
     line-height: 1.45;
     color: #fff;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat SemiBold", sans-serif;
   }
 
   .project-article__description {
@@ -229,13 +278,66 @@ export default {
     padding: 6px 14px;
     text-transform: uppercase;
     display: inline-block;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat SemiBold", sans-serif;
     transition: background-color 0.4s;
 
     @include font-size(0.8rem);
 
     &:hover {
       background-color: rgba(125, 132, 148, 0.8);
+    }
+  }
+
+  .project-article__actions {
+    position: absolute;
+    margin: 0px 30px 30px 30px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 3;
+    color: #fff;
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    width: calc(100% - 60px);
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s;
+
+    button {
+      width: 100%;
+      padding: 10px 15px;
+      font-size: 12px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      color: #fff;
+      font-family: "Montserrat Regular", sans-serif;
+      cursor: pointer;
+      transition: background-color 0.4s, color 0.4s;
+      border: none;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid rgba(255, 255, 255, 0.7);
+      }
+
+      span {
+        margin-right: 12px;
+      }
+
+      img {
+        height: auto;
+        width: 11px;
+        margin-left: 10px;
+        margin-right: 10px;
+        position: relative;
+        background-size: cover;
+      }
     }
   }
 }
