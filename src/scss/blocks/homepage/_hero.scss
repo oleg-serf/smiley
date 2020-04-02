@@ -54,6 +54,16 @@
     @include font-size(5.5rem);
   }
 
+  .hero__subtitle {
+    color: #fff;
+    font-family: "Monsterrat semi", sans-serif;
+    line-height: 1.35;
+    text-transform: uppercase;
+    margin: 0px;
+    text-align: center;
+    @include font-size(1.5rem);
+  }
+
   .hero__button {
     width: 210px;
     border-radius: 40px;

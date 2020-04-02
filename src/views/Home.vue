@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <hero :video="hero.url_source" :link="'/talks'">
+    <hero :video="hero.url_source" :link="'/our-story'">
       <slot>
         <span v-html="hero.title"></span>
       </slot>
@@ -9,7 +9,7 @@
     <!-- News section -->
     <div class="container">
       <banner
-        link="/news/category/all"
+        link="/news/"
         color="#F36E24"
         background="/img/homepage/banner-news.jpg"
         v-if="Object.keys(banners.news).length"

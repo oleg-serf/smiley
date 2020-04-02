@@ -373,17 +373,7 @@
         </div>
       </div>
     </div>
-    <div class="profile-fill-alert" v-if="!completed_profile && auth">
-      <div class="container">
-        <img src="/img/warning.svg" class="profile-fill-alert__warning" />
-        <p>
-          Your profile is not 100% complete. In order to benefit a better experience, please take the time to finish it
-          <span>
-            <router-link :to="{name: 'account-settings'}">here</router-link>
-          </span>.
-        </p>
-      </div>
-    </div>
+
     <form class="search-form" :class="{active: searchActive}" @submit.prevent="search">
       <div class="container">
         <button class="search-form__close" type="button" @click="searchActive = false">X</button>
