@@ -110,49 +110,6 @@ strong {
   font-weight: bold;
 }
 
-.read-more-link {
-  color: #1a1a1a;
-  display: inline-block;
-  font: 16px/24px "Montserrat Bold", sans-serif;
-  text-decoration: none;
-  position: relative;
-  text-transform: uppercase;
-  border-bottom: 2px solid #000;
-  padding-bottom: 14px;
-  padding-right: 45px;
-  span {
-    position: absolute;
-    top: 10px;
-    right: 7px;
-    width: 20px;
-    height: 2px;
-    background-color: #000;
-    &:before,
-    &:after {
-      position: absolute;
-      content: "";
-      height: 2px;
-      width: 8px;
-      right: 0;
-      background-color: #000;
-    }
-    &:before {
-      transform: rotate(50deg);
-      top: -4px;
-    }
-    &:after {
-      transform: rotate(-50deg);
-      top: 4px;
-    }
-  }
-  &:hover {
-    span {
-      right: 0;
-      transition: 0.25s ease-in-out;
-    }
-  }
-}
-
 .smiley-img-wrap {
   overflow: hidden;
   .smiley-img {
