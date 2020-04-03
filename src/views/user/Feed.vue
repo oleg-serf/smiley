@@ -705,6 +705,7 @@ export default {
     top: 0px;
     overflow: hidden;
     height: 100%;
+    width: 100%;
 
     img {
       width: 100%;

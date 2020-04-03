@@ -73,11 +73,15 @@
     </div>
 
     <section class="news-grid container" v-if="eventList.length > 0">
-      <article-item
+      <event-card
         v-for="event in eventList"
-        :key="event.slug"
-        :information="event"
-        type="events"
+        :key="'event-'+event.id"
+        :title="event.title"
+        :description="event.short_description"
+        :background="event.cover_image"
+        :start="event.time_start"
+        :end="event.time_end"
+        :location="event.location"
       />
     </section>
 
@@ -129,6 +133,8 @@ import Footer from "@/components/Footer.vue";
 import Hero from "@/components/homepage/Hero.vue";
 import Banner from "@/components/homepage/Banner.vue";
 import ArticleItem from "@/components/news/Article.vue";
+import EventCard from "@/components/articles/EventCard.vue";
+
 import ArticleItemBlock from "@/components/news/ArticleBlock.vue";
 import VimeoVideo from "@/components/homepage/VimeoVideo.vue";
 
@@ -140,6 +146,7 @@ export default {
     Hero,
     ArticleProject,
     ArticleItem,
+    EventCard,
     ArticleItemBlock,
     Banner,
     VimeoVideo,
