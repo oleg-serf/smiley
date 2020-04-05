@@ -34,7 +34,7 @@ const routes = [{
   {
     path: '/users',
     name: 'users',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/Archive.vue'),
+    component: () => import( /* webpackChunkName: "user" */ '../views/users/index.vue'),
     meta: {
       title: 'Users',
       requiresAuth: true,
@@ -43,7 +43,7 @@ const routes = [{
   {
     path: '/users/:slug',
     name: 'users',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/ProfileView.vue'),
+    component: () => import( /* webpackChunkName: "user" */ '../views/users/_slug.vue'),
     meta: {
       requiresAuth: true,
     }
@@ -69,7 +69,7 @@ const routes = [{
   {
     path: '/user/profile',
     name: 'profile',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/Profile.vue'),
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/index.vue'),
     meta: {
       title: 'My Profile',
       requiresAuth: true,
