@@ -97,7 +97,36 @@
           </ul>
         </div>
       </div>
+      <div class="grid-item grid-item--full-width">
+        <div class="item-holder">
+          <div class="title">My Activity</div>
+          <div class="activities">
+            <ul class="activities__navigation">
+              <li class="active">
+                <button>
+                  Events
+                  <span>0</span>
+                </button>
+              </li>
+              <li>
+                <button>
+                  Projects
+                  <span>0</span>
+                </button>
+              </li>
+              <li>
+                <button>
+                  Following
+                  <span>0</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <Footer />
   </div>
 </template>
 
@@ -106,10 +135,13 @@ import axios from "@/axios-auth";
 
 import AppIcon from "@/components/AppIcon";
 
+import Footer from "@/components/Footer";
+
 export default {
   name: "UserProfile",
   components: {
-    AppIcon
+    AppIcon,
+    Footer
   },
   data() {
     return {
@@ -143,10 +175,10 @@ export default {
             value: response.data.user.facebook
           });
         }
-        if (response.data.user.instagramm != null) {
+        if (response.data.user.instagram != null) {
           this.socials.push({
-            name: "instagramm",
-            value: response.data.user.instagramm
+            name: "instagram",
+            value: response.data.user.instagram
           });
         }
         if (response.data.user.twitter != null) {
@@ -314,6 +346,13 @@ export default {
     &:nth-child(odd) {
       align-items: flex-end;
     }
+    &.grid-item--full-width {
+      grid-column: 1 / span 2;
+      align-items: center;
+      .item-holder {
+        max-width: 1560px;
+      }
+    }
 
     .item-holder {
       max-width: 780px;
@@ -406,6 +445,54 @@ export default {
     @include font-size(1rem);
     font-family: "Montserrat Regular", sans-serif;
     color: #000;
+  }
+}
+
+.activities {
+  .activities__navigation {
+    display: flex;
+
+    li {
+      &:not(:last-child) {
+        margin-right: 18px;
+      }
+
+      &.active {
+        button {
+          border-bottom: 2px solid;
+        }
+        span {
+          background-color: #f4ed3b;
+        }
+      }
+    }
+
+    button {
+      color: #000;
+      padding: 25px 30px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      border: none;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+      white-space: nowrap;
+      justify-content: center;
+      font-family: "Monsterrat Bold", sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    span {
+      margin-left: 16px;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(0, 0, 0, 0.1);
+      line-height: 1;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 </style>

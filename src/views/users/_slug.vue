@@ -1,114 +1,133 @@
 <template>
-  <!-- TODO: GLOBAL -> use svg sprties -->
   <div>
-    <div class="profile-layout">
-      <div class="profile-grid container">
-        <div class="profile-grid__item profile-grid__item--avatar">
-          <div class="profile__avatar">
-            <div class="profile__avatar-badge"></div>
-            <img v-if="user.avatar !== null" :src="$settings.images_path.users + 'm_'+ user.avatar" />
+    <div class="profile-holder">
+      <div class="profile container">
+        <div class="profile-column profile-column__left">
+          <div class="profile-avatar">
+            <img v-if="user.avatar != null" :src="$settings.images_path.users + 'm_'+ user.avatar" />
             <span v-else>{{ user.display_name | filterAvatar}}</span>
           </div>
-          <div class="profile__name">{{user.display_name}}</div>
-          <div class="profile__job" v-if="(user.job_title != null)">{{user.job_title}}</div>
-          <div class="profile__location" v-if="(user.location != null)">{{user.location}}</div>
-        </div>
-        <div class="profile-grid__item profile-grid__item--buttons">
-          <button class="follow-btn">Follow</button>
-        </div>
-        <div class="profile-grid__item profile-grid__item--about">
-          <div class="profile__about">
-            <div class="profile__about-title">About me:</div>
-            <div
-              class="profile__about-content"
-              v-html="user.bio || 'Oh, we have no information for this block yet :('"
-            ></div>
-          </div>
-        </div>
-        <div class="profile-grid__item profile-grid__item--sidebar">
-          <div class="profile__sidebar">
-            <div class="profile__sidebar-title">Connections:</div>
-            <div class="profile__sidebar-content">50+ connections</div>
-          </div>
-          <div class="profile__sidebar">
-            <div class="profile__sidebar-title">Community:</div>
-            <div class="profile__sidebar-content">0</div>
-          </div>
-          <div class="profile__sidebar">
-            <!-- TODO - hide block if none media is filled && add v-if -->
-            <div class="profile__sidebar-title">My social media:</div>
-            <div class="profile__sidebar-content">
-              <ul class="profile__social">
-                <li v-for="(social, index) in socials" :key="'user-social-'+index">
-                  <a :href="user[social]" v-if="user[social] != null">
-                    <app-icon :name="social" />
-                  </a>
-                </li>
-              </ul>
+          <div class="profile-info">
+            <div class="profile-name">{{user.display_name}}</div>
+            <div class="profile-job" v-if="(user.job_title != null)">{{user.job_title}}</div>
+            <div class="profile-data">
+              <div class="profile-data__column">
+                Matches
+                <br />50+
+              </div>
+              <div class="profile-data__column">
+                Community
+                <br />0
+              </div>
             </div>
           </div>
         </div>
-        <div
-          class="profile-grid__item profile-grid__item--support"
-          v-if="supportNeed.length > 0 || supportOffer.length > 0"
-        >
-          <div class="profile__section" v-if="supportOffer.length > 0">
-            <div class="profile__section-title">
-              <img src="/img/give.svg" />
-              Support I can offer:
+        <div class="profile-column profile-column__right">
+          <div class="profile-section">
+            <div class="profile-section__detail">
+              <template v-if="socials.length > 0">
+                <ul class="profile-social">
+                  <li>Networks:</li>
+                  <li v-for="social in socials" :key="'social-'+social.name">
+                    <a target="_blank" :href="social.value">
+                      <app-icon :name="social.name" />
+                    </a>
+                  </li>
+                </ul>
+              </template>
+              <template v-else>No networks connected</template>
             </div>
-            <ul class="profile__section-support support-list">
-              <li
-                class="support-list__item"
-                v-for="(item, index) in supportNeed"
-                :key="'i-need-'+index"
-              >
-                <div class="support-list__category-container">
-                  <div class="support-list__category">{{item.support_category.title}}</div>
-                  <div class="support-list__subcategory">{{item.title}}</div>
-                </div>
+          </div>
+          <div class="profile-section">
+            <div class="profile-section__detail">Location:</div>
+            <div class="profile-section__detail">{{user.city}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-additional">
+      <div class="grid-item">
+        <div class="item-holder">
+          <div class="title">About {{user.display_name}}</div>
+          <div class="about" v-html="user.bio"></div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="item-holder">
+          <div class="title" style="padding-bottom: 0px;">
+            Interests
+            <span>(UN goals)</span>:
+          </div>
+        </div>
+        <div class="item-holder">
+          <ul class="goals">
+            <li v-for="goal in goals" :key="goal.id">
+              <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="item-holder">
+          <div class="title">
+            <img src="https://smileymovement.org/images/icons/support-offer-icon.png" />
+            Support {{user.display_name}} can offer
+          </div>
+          <ul class="support">
+            <li class="support__item" v-for="(item, index) in support.offer" :key="'i-need-'+index">
+              <div class="support__category-container">
+                <div class="support__category">{{item.support_category.title}}</div>
+                <div class="support__subcategory">{{item.title}}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="item-holder">
+          <div class="title">
+            <img src="https://smileymovement.org/images/icons/support-need-icon.png" />
+            Support {{user.display_name}} need
+          </div>
+          <ul class="support">
+            <li class="support__item" v-for="(item, index) in support.need" :key="'i-need-'+index">
+              <div class="support__category-container">
+                <div class="support__category">{{item.support_category.title}}</div>
+                <div class="support__subcategory">{{item.title}}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-item grid-item--full-width">
+        <div class="item-holder">
+          <div class="title">{{user.display_name}}'s Activity</div>
+          <div class="activities">
+            <ul class="activities__navigation">
+              <li class="active">
+                <button>
+                  Events
+                  <span>0</span>
+                </button>
               </li>
-            </ul>
-          </div>
-          <div class="profile__section">
-            <div class="profile__section-title" v-if="supportNeed.length > 0">
-              <img src="/img/need.svg" />
-              Support I Need:
-            </div>
-            <ul class="profile__section-support">
-              <li
-                class="support-list__item"
-                v-for="(item, index) in supportNeed"
-                :key="'i-need-'+index"
-              >
-                <div class="support-list__category-container">
-                  <div class="support-list__category">{{item.support_category.title}}</div>
-                  <div class="support-list__subcategory">{{item.title}}</div>
-                </div>
+              <li>
+                <button>
+                  Projects
+                  <span>0</span>
+                </button>
               </li>
-            </ul>
-          </div>
-        </div>
-        <div class="profile-grid__item profile-grid__item--goals" v-if="goals.length > 0">
-          <div class="profile__section">
-            <div class="profile__section-title">My interests (UN Goals):</div>
-            <ul class="profile__section-goals">
-              <li v-for="goal in goals" :key="goal.id">
-                <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+              <li>
+                <button>
+                  Following
+                  <span>0</span>
+                </button>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <div class="block-title container">Events I'm going to:</div>
-    <div class="events-grid container" v-if="events.length > 0">
-      <event-card :event="event" class="talk-card" v-for="event in events" :key="'c-'+event.id" />
-    </div>
-    <div class="block-title container">Latest News:</div>
-    <div class="news-grid container">
-      <article-item v-for="article in feed" :key="article.slug" :information="article" />
-    </div>
+
     <Footer />
   </div>
 </template>
@@ -116,64 +135,81 @@
 <script>
 import axios from "@/axios-auth";
 
-import InformationHero from "@/components/InformationHero.vue";
 import AppIcon from "@/components/AppIcon";
-import ArticleItem from "@/components/news/Article.vue";
-import EventCard from "@/components/events/Event-Card";
 
 import Footer from "@/components/Footer";
 
 export default {
+  name: "UserProfile",
+  components: {
+    AppIcon,
+    Footer
+  },
   data() {
     return {
-      user: {
-        avatar: null
-      },
-      socials: ["facebook", "linkedin", "google", "instagram", "twitter"],
+      user: {},
+      socials: [],
       goals: [],
-      supportOffer: [],
-      supportNeed: [],
-      feed: [],
-      events: []
+      support: {
+        offer: [],
+        need: []
+      }
     };
-  },
-  methods: {},
-  components: {
-    InformationHero,
-    AppIcon,
-    ArticleItem,
-    EventCard,
-    Footer
   },
   mounted() {
     axios
       .get("/users/" + this.$route.params.slug)
       .then(response => {
-        console.log("user", response.data);
+        console.log("user-data", response.data);
+
         this.user = response.data.user;
 
-        this.supportOffer = response.data.user.supports_offer;
-        this.supportNeed = response.data.user.supports_need;
-        this.goals = response.data.all_goals.filter(item =>
+        this.support.offer = response.data.user.supports_offer;
+        this.support.need = response.data.user.supports_need;
+
+        this.goals = response.data.user.goals.filter(item =>
           response.data.goals.includes(item.id)
         );
-        document.title = res.data.user.display_name + " | Smiley Movement";
-        console.log(this.goals);
-      })
-      .catch(error => console.error(error.request));
 
-    axios
-      .get("/events")
-      .then(response => {
-        this.events = response.data.events;
-        this.events.length = 4;
-      })
-      .catch(error => console.error(error));
+        if (response.data.user.facebook != null) {
+          this.socials.push({
+            name: "facebook",
+            value: response.data.user.facebook
+          });
+        }
+        if (response.data.user.instagram != null) {
+          this.socials.push({
+            name: "instagram",
+            value: response.data.user.instagram
+          });
+        }
+        if (response.data.user.twitter != null) {
+          this.socials.push({
+            name: "twitter",
+            value: response.data.user.twitter
+          });
+        }
+        if (response.data.user.linkedin != null) {
+          this.socials.push({
+            name: "linkedin",
+            value: response.data.user.linkedin
+          });
+        }
+        if (response.data.user.google != null) {
+          this.socials.push({
+            name: "google",
+            value: response.data.user.google
+          });
+        }
 
-    axios
-      .get("/users/feed")
-      .then(res => {
-        this.feed = res.data.posts.splice(0, 3);
+        // this.user = response.data.user;
+
+        // this.supportOffer = response.data.offer_support;
+        // this.supportNeed = response.data.need_support;
+        // this.goals = response.data.all_goals.filter(item =>
+        //   response.data.goals.includes(item.id)
+        // );
+        // document.title = response.data.user.full_name + " | Smiley Movement";
       })
       .catch(error => console.error(error));
   }
@@ -181,218 +217,284 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/sections/_user-profile";
-@import "@/scss/components/_article-item";
-@import "@/scss/blocks/_homepage-news-grid";
+.profile-holder {
+  // border-top: 1px solid hsla(0, 0%, 100%, 0.25);
+  // margin-top: 50px;
 
-.profile-layout {
-  background-image: url("/img/components/information-hero.jpg");
+  background-image: url(https://smileymovement.org/images/bg/user-profile-bg.jpg);
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
-
-  &::before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    background-color: #000;
-    opacity: 0.7;
-  }
 }
 
-.profile__avatar {
+.profile {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  overflow: hidden;
-  font-family: "Montserrat Bold", sans-serif;
-  text-transform: uppercase;
-  @include font-size(2rem);
-  letter-spacing: 4px;
-  color: #393939;
-  background-color: #eeb400;
-  text-align: center;
+  flex-wrap: wrap;
 
-  img {
-    width: 100%;
-    height: 100;
-    object-fit: cover;
-    object-position: center;
-  }
-}
-
-.profile__name {
-  font-family: "Montserrat Bold", sans-serif;
-  text-transform: uppercase;
-  @include font-size(2rem);
-  color: #fff;
-  @include margin-left(1.5rem);
-}
-
-.profile__about {
-  .profile__about-title {
-    @include font-size(2rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    color: #fff;
+  .profile-column {
+    flex-basis: 50%;
+    width: auto;
+    min-height: 350px;
+    box-sizing: border-box;
   }
 
-  .profile__about-content {
-    font-family: "Montserrat Regular";
-    color: #fff;
-    @include font-size(1.2rem);
+  .profile-column__left {
+    border-right: 1px solid hsla(0, 0%, 100%, 0.5);
+    display: flex;
   }
-}
 
-.profile__sidebar {
-  &:not(:last-child) {
-    @include margin-bottom(1.5rem);
+  .profile-section {
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.5);
+    padding: 35px 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .profile-section__detail {
+      width: 50%;
+      @include font-size(1.1rem);
+      color: #fff;
+      font-family: "Montserrat Regular", sans-serif;
+    }
   }
-  .profile__sidebar-title {
+
+  .profile-avatar {
+    margin-top: 35px;
+    margin-right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    font-family: "Montserrat Bold", sans-serif;
     text-transform: uppercase;
-    font-family: "Montserrat Regular";
-    letter-spacing: 4px;
-    color: #fff;
-    @include margin-bottom(0.7rem);
-  }
-  .profile__sidebar-content {
-    font-family: "Montserrat Regular";
-    color: #fff;
-  }
-}
-
-.profile__social {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 0.5rem;
-
-  a {
-    max-width: auto;
-    display: inline-block;
-  }
-}
-
-.profile__section {
-  &:not(:last-child) {
-    @include margin-bottom(1.5rem);
-  }
-  .profile__section-title {
     @include font-size(2rem);
+    letter-spacing: 4px;
+    color: #393939;
+    background-color: #eeb400;
+    text-align: center;
+
+    img {
+      width: 100%;
+      height: 100;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  .profile-info {
+    margin-top: 35px;
+    font-family: "Montserrat Bold", sans-serif;
+    color: #fff;
+    @include font-size(1.3);
+  }
+
+  .profile-name {
+    @include font-size(1.5rem);
     @include margin-bottom(1rem);
     font-family: "Montserrat SemiBold", sans-serif;
-    color: #fff;
+  }
+  .profile-job {
+    @include margin-bottom(1rem);
+    font-family: "Montserrat SemiBold", sans-serif;
+  }
+
+  .profile-data {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    @include font-size(1.3rem);
+    font-family: "Montserrat SemiBold", sans-serif;
 
-    img {
-      max-width: 36px;
-      max-height: 36px;
-      margin-right: 16px;
+    .profile-data__column {
+      width: 50%;
+      box-sizing: border-box;
+      padding-left: 50px;
+
+      &:first-child {
+        border-right: 2px solid #fff;
+        padding-right: 50px;
+        padding-left: 0px;
+      }
     }
   }
 
-  .profile__section-goals {
-    display: grid;
-    grid-gap: 30px;
-    grid-template-columns: repeat(5, 1fr);
+  .profile-social {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -5px;
+    margin-top: -5px;
 
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-  }
-
-  .profile__section-support {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    color: #fff;
-
-    .support-list__category {
-      font-family: "Montserrat SemiBold", sans-serif;
-      @include font-size(1.2rem);
-    }
-    .support-list__subcategory {
-      font-family: "Montserrat Regular", sans-serif;
-      @include font-size(1rem);
+    li {
+      margin: 5px;
     }
   }
 }
 
-// ----------
-.block-title {
-  font-family: "Montserrat Bold", sans-serif;
-  @include font-size(2rem);
-  @include margin-top(2rem);
-  @include margin-bottom(2.5rem);
-}
-.news-grid {
-  padding-top: 0px;
-}
-
-.events-grid {
+.profile-additional {
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+
+  .grid-item {
+    box-sizing: border-box;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+
+    &:nth-child(odd) {
+      align-items: flex-end;
+    }
+    &.grid-item--full-width {
+      grid-column: 1 / span 2;
+      align-items: center;
+      .item-holder {
+        max-width: 1560px;
+      }
+    }
+
+    .item-holder {
+      max-width: 780px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 25px 30px;
+      border-bottom: 1px solid #393939;
+
+      &:last-child {
+        border: none;
+      }
+
+      .title {
+        @include font-size(1.2rem);
+        font-weight: bold;
+        font-family: "Monsterrat Bold", sans-serif;
+        color: #393939;
+        @include padding-bottom(1rem);
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+
+        img {
+          max-width: 34px;
+          max-height: 34px;
+          height: auto;
+          margin-right: 24px;
+        }
+
+        span {
+          font-family: "Monsterrat Regular", sans-serif;
+          @include font-size(1rem);
+
+          padding-left: 8px;
+          padding-right: 8;
+        }
+      }
+
+      .goals {
+        margin: -25px -30px -26px -31px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+
+        li {
+          margin: -1px;
+          border: 1px solid #393939;
+          font-size: 0px;
+          line-height: 1;
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+.support {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 30px;
-  grid-template-columns: repeat(4, 1fr);
 
-  .talk-card {
-    width: 100% !important;
+  .support__item {
+    padding-left: 48px;
+    position: relative;
+
+    &::before {
+      content: "";
+      width: 24px;
+      height: 24px;
+      display: block;
+      position: absolute;
+      left: 0px;
+      top: 5px;
+      background-image: url("https://smileymovement.org/images/icons/checked@2x.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+
+  .support__category {
+    @include font-size(1rem);
+    font-family: "Montserrat SemiBold", sans-serif;
+    color: #000;
+  }
+  .support__subcategory {
+    @include font-size(1rem);
+    font-family: "Montserrat Regular", sans-serif;
+    color: #000;
   }
 }
 
-//
-.follow-btn {
-  margin-top: 24px;
-  display: block;
-  height: 48px;
-  width: 100%;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  font: 600 16px/24px "Montserrat SemiBold", sans-serif;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: $default-orange-btns;
-  color: #393939;
-  border: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-}
-
-.profile-grid {
-  display: grid;
-  grid-gap: 60px;
-  grid-template-columns: repeat(4, 1fr);
-  padding-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-  z-index: 2;
-
-  .profile-grid__item.profile-grid__item--avatar {
-    grid-column: 1 / span 3;
+.activities {
+  .activities__navigation {
     display: flex;
-    align-items: center;
-  }
-  .profile-grid__item.profile-grid__item--buttons {
-    // grid-column: 3 / span 1;
-  }
-  .profile-grid__item.profile-grid__item--about {
-    grid-column: 1 / span 3;
-  }
-  .profile-grid__item.profile-grid__item--goals {
-    grid-column: 3 / span 2;
-  }
-  .profile-grid__item.profile-grid__item--support {
-    grid-column: 1 / span 2;
-  }
-  .profile-grid__item.profile-grid__item--news {
-    grid-column: 1 / span 4;
+
+    li {
+      &:not(:last-child) {
+        margin-right: 18px;
+      }
+
+      &.active {
+        button {
+          border-bottom: 2px solid;
+        }
+        span {
+          background-color: #f4ed3b;
+        }
+      }
+    }
+
+    button {
+      color: #000;
+      padding: 25px 30px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      border: none;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+      white-space: nowrap;
+      justify-content: center;
+      font-family: "Monsterrat Bold", sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    span {
+      margin-left: 16px;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(0, 0, 0, 0.1);
+      line-height: 1;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 </style>

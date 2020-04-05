@@ -268,7 +268,7 @@ const routes = [{
   {
     path: '/organisation/:slug',
     name: 'organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/fake_temp.vue'),
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/_slug.vue'),
     meta: {
       breadcrumbs: ['organisations'],
     }
