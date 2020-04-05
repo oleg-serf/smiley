@@ -2,20 +2,21 @@
   <div>
     <div class="container">
       <banner color="#4C9F38" background="/img/homepage/banner-goals.jpg">
-        <template v-slot:title>Stronger together</template>
         <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 200px" />
         </template>
 
-        <template v-slot:title>Together anything is possible</template>
+        <template v-slot:title>Stronger together</template>
         <template
           v-slot:content
-        >The sustainable development goals are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, the content we produce, to the way organisations and projects are grouped and shared with you.</template>
+        >The UN Goals are our North Star guiding us to reach our mission to make the world a happier, more equal and sustainable place.</template>
       </banner>
     </div>
+
     <div class="post-title container">
-      <p>The UN Goals are our North Star guiding us towards reaching our mission to make the world a happier, more equal and sustainable place. Click through each Goal below for the latest Smiley News, Events and Charitable Projects related to that goal.</p>
-      <p>All 17 of these goals are interconnected, just like our community and network, so no matter what cause you care about your involvement will be supporting the bigger picture</p>
+      <div class="post-title__title">Educating to Inform Action</div>
+      <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.</p>
+      <p>Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
     </div>
 
     <section class="goals-grid container" v-for="category in categories" :key="category.id">
@@ -30,6 +31,13 @@
         </div>
       </div>
     </section>
+
+    <div class="post-title container">
+      <p>
+        <a href="https://sustainabledevelopment.un.org/?menu=1300">Click here</a> to learn more about the United Nations Sustainable Development Goals
+      </p>
+    </div>
+
     <Footer />
   </div>
 </template>
@@ -71,11 +79,17 @@ export default {
 .post-title {
   font-family: "Montserrat Regular";
   text-align: center;
-  @include font-size(1.4rem);
+  line-height: 1.35;
+  @include font-size(1.1rem);
   @include margin-top(2rem);
   @include margin-bottom(2rem);
   margin: 0 auto;
-  max-width: 1024px;
+
+  .post-title__title {
+    @include font-size(2rem);
+    font-family: "Monsterrat SemiBold", sans-serif;
+    margin-bottom: 0px;
+  }
 }
 
 .goals-grid {

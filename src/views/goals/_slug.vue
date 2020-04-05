@@ -4,19 +4,26 @@
 
     <div class="container">
       <banner color="#4C9F38" background="/img/homepage/banner-goals.jpg">
-        <template v-slot:title>Stronger together</template>
         <template v-slot:logo>
-          <img src="/img/homepage/global-goals.png" style="width: 200px" />
+          <img src="/img/un-goals-white.png" style="width: 200px" />
         </template>
 
-        <template v-slot:title>{{goal.name}}</template>
-        <template v-slot:content>{{goal.description}}</template>
+        <template v-slot:title>Smiley News linked to Goal {{goal.name}}</template>
       </banner>
     </div>
 
     <section class="news-category-section latest-articles container">
       <div class="news-grid">
-        <article-item v-for="article in posts" :key="article.slug" :information="article" />
+        <article-project
+          v-for="article in posts"
+          :key="article.slug"
+          :title="article.title"
+          :description="article.description"
+          :goal="goal.name"
+          :date="article.published_at"
+          :background="article.cover_image"
+          :link="'/news/' + article.slug"
+        />
       </div>
     </section>
 
@@ -42,7 +49,16 @@
     <br />
 
     <section class="container news-grid" v-if="events.length > 0">
-      <event-card :event="event" lass="talk-card" v-for="event in events" :key="event.id" />
+      <event-card
+        v-for="event in events"
+        :key="'event-'+event.id"
+        :title="event.title"
+        :description="event.short_description"
+        :background="event.cover_image"
+        :start="event.time_start"
+        :end="event.time_end"
+        :location="event.location"
+      />
     </section>
     <hr />
     <Footer />
@@ -54,9 +70,10 @@ import axios from "@/axios-auth";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Banner from "@/components/homepage/Banner.vue";
-import ArticleItem from "@/components/news/Article.vue";
 
-import EventCard from "@/components/events/Event-Card";
+import ArticleProject from "@/components/articles/ArticleAsProject.vue";
+
+import EventCard from "@/components/articles/EventCard.vue";
 
 import Footer from "@/components/Footer";
 
@@ -110,7 +127,7 @@ export default {
   components: {
     Breadcrumbs,
     Banner,
-    ArticleItem,
+    ArticleProject,
     Footer,
     EventCard
   }

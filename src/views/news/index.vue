@@ -6,7 +6,11 @@
       <div class="container">
         <banner color="#F36E24" background="/img/homepage/banner-news.jpg">
           <template v-slot:name>news</template>
-          <template v-slot:title>Everyday heroes making the world a happier place</template>
+          <!-- <template v-slot:title>Everyday heroes making the world a happier place</template>
+          <template
+            v-slot:content
+          >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>-->
+          <template v-slot:title>POSITIVE JOURNALISM</template>
           <template
             v-slot:content
           >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>

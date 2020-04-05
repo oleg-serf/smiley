@@ -59,6 +59,7 @@ export default {
     },
     dateAgo(date) {
       const currentStamp = Date.now();
+      const realDate = new Date(date);
       const postStamp = new Date(date).getTime();
       const dateDiff = currentStamp - postStamp;
       const days = dateDiff / (1000 * 3600 * 24);
@@ -67,7 +68,21 @@ export default {
 
       const append = result == 1 ? "day" : "days";
 
-      return `${result} ${append} ago`;
+      let time = "";
+
+      if (result < 1) {
+        time = result == 1 ? "day" : "days";
+        time += " ago";
+      } else {
+        time =
+          realDate.getDate() +
+          "-" +
+          realDate.getMonth() +
+          "-" +
+          realDate.getFullYear();
+      }
+
+      return time;
     }
   },
   props: {
