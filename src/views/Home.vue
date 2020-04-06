@@ -99,7 +99,9 @@
         </template>
 
         <template v-slot:title v-if="banners.goals.title">{{banners.goals.title}}</template>
-        <template v-slot:content v-if="banners.goals.description">{{banners.goals.description}}</template>
+        <template
+          v-slot:content
+        >The UN Goals are our North Star guiding us to reach our mission to make the world a happier, more equal and sustainable place</template>
         <template v-slot:button v-if="banners.goals.button_text">{{banners.goals.button_text}}</template>
       </banner>
     </div>

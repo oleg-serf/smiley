@@ -9,7 +9,7 @@
         <template v-slot:title>Stronger together</template>
         <template
           v-slot:content
-        >The UN Goals are our North Star guiding us to reach our mission to make the world a happier, more equal and sustainable place.</template>
+        >The UN Goals are our North Star guiding us to reach our mission to make the world a happier, more equal and sustainable place</template>
       </banner>
     </div>
 
