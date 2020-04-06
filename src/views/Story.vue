@@ -70,19 +70,17 @@
             <!--<div class="years__line js-years-line" style="left: 0px; width: 0px;"></div>-->
             <!--</div>-->
             <div class="timeline__body">
-              <div class="timeline__year js-tl-year-content active plus" data-year="December 2019">
+              <div class="timeline__year js-tl-year-content active plus" data-year="June 2019">
                 <div class="year__image">
-                  <img
-                    src="https://s3-eu-west-2.amazonaws.com/admin.up-movement/app/uploads/2019/03/logo_smiley_awards-white-transparent1.png"
-                  />
+                  <img src="/img/homepage/logo.png" />
                 </div>
                 <div class="year__delimiter">
-                  <span>December 2019</span>
+                  <span>June 2019</span>
                 </div>
                 <div class="year__text">
-                  <h2>First Smiley Awards distributed</h2>
+                  <h2>Launched our first Smiley Talk</h2>
 
-                  <p>Grants awarded from the Smiley Fund, with the aim of rewarding extraordinary projects demonstrating innovation, scalability and positive impact.</p>
+                  <p>Hosted our first Smiley Talk in Brighton during Refugee Week and since then organised 8 other Talks, welcomed 600 guests, grew our online community to 1,000 members, have 6,000 Twitter followers and have collaborated with 65 leading charity partners in our first year.</p>
                 </div>
               </div>
               <div class="timeline__year js-tl-year-content" data-year="March 2019">
