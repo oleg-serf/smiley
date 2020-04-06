@@ -12,7 +12,7 @@
             <span>+15</span>
           </div>-->
         </div>
-        <div class="project-article__timestamp">{{date | dateAgo}}</div>
+        <div class="project-article__timestamp">{{dateAgo(date)}}</div>
       </div>
       <div class="project-article__spacer"></div>
       <div class="project-article__inner">
@@ -56,11 +56,13 @@ export default {
       return description.length > 120
         ? description.substring(0, 120) + "..."
         : description;
-    },
+    }
+  },
+  methods: {
     dateAgo(date) {
       const currentStamp = Date.now();
-      const realDate = new Date(date);
-      const postStamp = new Date(date).getTime();
+      const realDate = this.$dayjs(date)["$d"];
+      const postStamp = this.$dayjs(date).unix() * 1000;
       const dateDiff = currentStamp - postStamp;
       const days = dateDiff / (1000 * 3600 * 24);
 

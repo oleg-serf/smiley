@@ -54,7 +54,8 @@
       <div class="container">
         <div class="footer-top">
           <div class="footer-column">
-            <img src="https://smileymovement.org/images/logos/white-yellow.png" class="footer-logo" />
+            <img src="/img/homepage/logo.png" class="footer-logo" />
+            <div class="footer-logo-subtitle">A philanthropic venture from</div>
           </div>
           <div class="footer-column"></div>
           <div class="footer-column">
@@ -77,17 +78,6 @@
             </div>
           </div>
         </div>
-        <div class="footer-bottom">
-          <div class="footer-column footer-column__alternative-logo">
-            <span>A philanthropic venture from</span>
-            <br />
-            <img
-              src="https://smileymovement.org/images/logos/Smiley-White@2x.png"
-              class="footer-logo-bottom"
-              alt
-            />
-          </div>
-        </div>
       </div>
     </footer>
   </div>
@@ -104,8 +94,7 @@ export default {};
   padding-bottom: 30px;
 }
 
-.footer-top,
-.footer-bottom {
+.footer-top {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 30px;
@@ -116,10 +105,9 @@ export default {};
   }
 }
 
-.footer-bottom {
-  @include margin-top(2rem);
-  @include padding-top(2rem);
-  border-top: 2px solid #50586a;
+.footer-logo-subtitle {
+  font-family: "Montserrat Regular", sans-serif;
+  padding-top: 24px;
 }
 
 .footer-logo {
@@ -160,28 +148,8 @@ export default {};
   }
 }
 
-.footer-logo-bottom {
-  margin-top: 8px;
-  max-width: 110px;
-  width: 100%;
-  height: auto;
-}
-
 .footer-column__form {
   grid-column: 1 / span 2;
-}
-
-.footer-column__alternative-logo {
-  grid-column: 4 / span 1 !important;
-  span {
-    font-family: "Montserrat Regular", sans-serif;
-  }
-  .footer-logo-bottom {
-    margin-top: 8px;
-    max-width: 110px;
-    width: 100%;
-    height: auto;
-  }
 }
 
 .smiley-signup-form {

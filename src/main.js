@@ -12,6 +12,9 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import vueVimeoPlayer from 'vue-vimeo-player'
 // import VueBreadcrumbs from 'vue-breadcrumbs';
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import Dayjs from 'vue-dayjs';
+
+Vue.use(Dayjs);
 
 // Vue.use(VueBreadcrumbs, {
 //   registerComponent: false
