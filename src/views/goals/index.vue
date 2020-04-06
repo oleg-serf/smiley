@@ -15,8 +15,7 @@
 
     <div class="post-title container">
       <div class="post-title__title">Educating to Inform Action</div>
-      <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.</p>
-      <p>Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
+      <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
     </div>
 
     <section class="goals-grid container" v-for="category in categories" :key="category.id">
