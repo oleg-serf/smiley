@@ -8,26 +8,31 @@
           <img src="/img/un-goals-white.png" style="width: 200px" />
         </template>
 
-        <template v-slot:title>Smiley News linked to Goal {{goal.name}}</template>
+        <template v-slot:title>News, Events and Projects linked to Goal {{goal.name}}</template>
       </banner>
     </div>
 
-    <section class="news-category-section latest-articles container">
-      <div class="news-grid">
-        <article-project
-          v-for="article in posts"
-          :key="article.slug"
-          :title="article.title"
-          :description="article.description"
-          :goal="goal.name"
-          :date="article.published_at"
-          :background="article.cover_image"
-          :link="'/news/' + article.slug"
-        />
+    <section class="content-block container">
+      <div class="section-title">
+        <h2 class="section-title__title">News:</h2>
+      </div>
+      <div class="news-category-section latest-articles">
+        <div class="news-grid">
+          <article-project
+            v-for="article in posts"
+            :key="article.slug"
+            :title="article.title"
+            :description="article.description"
+            :goal="goal.name"
+            :date="article.published_at"
+            :background="article.cover_image"
+            :link="'/news/' + article.slug"
+          />
+        </div>
       </div>
     </section>
 
-    <div class="smiley-pagination">
+    <!-- <div class="smiley-pagination">
       <paginate
         :page-count="pagination.totalPages"
         :click-handler="goToPage"
@@ -39,28 +44,30 @@
       >
         <span slot="breakViewContent">...</span>
       </paginate>
-    </div>
-
-    <br />
-    <br />
-
-    <hr />
-    <br />
-    <br />
-
-    <section class="container news-grid" v-if="events.length > 0">
-      <event-card
-        v-for="event in events"
-        :key="'event-'+event.id"
-        :title="event.title"
-        :description="event.short_description"
-        :background="event.cover_image"
-        :start="event.time_start"
-        :end="event.time_end"
-        :location="event.location"
-      />
+    </div>-->
+    <section class="content-block container">
+      <div class="section-title">
+        <h2 class="section-title__title">Talks:</h2>
+      </div>
+      <div class="news-grid" v-if="events.length > 0">
+        <event-card
+          v-for="event in events"
+          :key="'event-'+event.id"
+          :title="event.title"
+          :description="event.short_description"
+          :background="event.cover_image"
+          :start="event.time_start"
+          :end="event.time_end"
+          :location="event.location"
+        />
+      </div>
     </section>
-    <hr />
+
+    <section class="content-block container">
+      <div class="section-title">
+        <h2 class="section-title__title">Projects:</h2>
+      </div>
+    </section>
     <Footer />
   </div>
 </template>
@@ -137,6 +144,40 @@ export default {
 <style lang="scss" scoped>
 @import "@/scss/blocks/_homepage-news-grid";
 @import "@/scss/sections/_talks-card";
+
+.content-block {
+  padding-bottom: 10px;
+  position: relative;
+
+  &:not(:last-of-type) {
+    &::after {
+      width: calc(100% - 15px);
+      left: 15px;
+      bottom: 0px;
+      height: 1px;
+      display: block;
+      content: "";
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+.section-title {
+  margin-top: 20px;
+  margin-bottom: 30px;
+
+  .section-title__title {
+    @include font-size(2rem);
+    font-family: "Monsterrat SemiBold", sans-serif;
+    margin-bottom: 0px;
+  }
+  .section-title__subtitle {
+    margin-top: 0px;
+    font-family: "Monsterrat Regular", sans-serif;
+    @include font-size(1.2rem);
+  }
+}
 
 .latest-news-section--category {
   width: 100%;
