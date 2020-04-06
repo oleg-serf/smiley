@@ -192,7 +192,7 @@ const routes = [{
   {
     path: '/news/:slug',
     name: 'news-item',
-    component: () => import( /* webpackChunkName: "news" */ '../views/News-Single.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
     meta: {
       breadcrumbs: ['news'],
     }

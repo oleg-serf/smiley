@@ -33,6 +33,18 @@
         <div class="article-text">
           <div v-html="post.content" class="article-content-holder"></div>
           <div class="like-and-share-wrap">
+            <a href="#" class="link-with-icon">
+              <i class="fa fa-money" aria-hidden="true"></i>
+              Donate
+            </a>
+            <a href="#" class="link-with-icon">
+              <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+              Volunteer
+            </a>
+            <a href="#" class="link-with-icon">
+              <i class="fa fa-bell-o" aria-hidden="true"></i>
+              Get In Touch
+            </a>
             <a href="#" class="like-article">
               Like article (3)
               <svg
@@ -219,4 +231,16 @@ export default {
 @import "@/scss/components/_article-item";
 
 @import "@/scss/sections/_news-article";
+
+.link-with-icon {
+  display: flex;
+  line-height: 1;
+  align-items: center;
+  padding-left: 0px !important;
+
+  i {
+    margin-right: 24px;
+    font-size: 20px;
+  }
+}
 </style>
