@@ -16,7 +16,9 @@
       </div>
       <div class="project-article__spacer"></div>
       <div class="project-article__inner">
-        <h3 class="project-article__title">{{title}}</h3>
+        <h3 class="project-article__title">
+          <a :href="link">{{title}}</a>
+        </h3>
         <div class="project-article__description">
           {{ description | trimDescription }}
           <a :href="link">Continue Reading</a>
@@ -235,13 +237,27 @@ export default {
   .project-article__title {
     @include font-size(1.1rem);
     line-height: 1.45;
-    color: #fff;
     font-family: "Montserrat SemiBold", sans-serif;
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
+
+      &:hover {
+        border-color: #fff;
+      }
+    }
   }
 
   .project-article__description {
     font-family: "Inter Regular";
     margin-bottom: 24px;
+    text-transform: lowercase;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
 
     a {
       color: #f4ed3b;
