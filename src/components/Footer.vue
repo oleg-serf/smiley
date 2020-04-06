@@ -2,21 +2,18 @@
   <div class="footer-wrapper">
     <div class="container">
       <form
-        class="mailchimp-form"
+        class="smiley-signup-form"
         action="https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=ee54f0e12c"
         method="POST"
         style="overflow: hidden"
       >
-        <div class="mailchimp-form__header">
-          <h3 class="mailchimp-form__title">Join</h3>
-          <div class="mailchimp-form__logo">
-            <img src="/img/homepage/footer-logo.png" alt="footer logo" />
-          </div>
+        <div class="signup-logo">
+          <img src="/img/homepage/footer-logo.png" alt="footer logo" />
         </div>
         <div style="position: absolute; left: -5000px;" aria-hidden="true">
           <input type="text" name="b_720898364c202fd6f72071ca6_ee54f0e12c" tabindex="-1" value />
         </div>
-        <label class="mailchimp-form__label" for="signup-firstname">
+        <label for="signup-firstname">
           <input
             type="text"
             name="FNAME"
@@ -24,21 +21,21 @@
             placeholder="First Name"
             min-length="2"
             required
-            class="mailchimp-form__input"
           />
         </label>
 
-        <label class="mailchimp-form__label" for="signup-lastname">
+        <label for="signup-lastname">
           <input
             type="text"
             name="LNAME"
             id="signup-lastname"
             placeholder="Last Name"
-            class="mailchimp-form__input"
+            min-length="2"
+            required
           />
         </label>
 
-        <label class="mailchimp-form__label" for="email">
+        <label for="email">
           <input
             type="email"
             name="EMAIL"
@@ -48,13 +45,8 @@
             class="mailchimp-form__input"
           />
         </label>
-        <div class="mailchimp-form__label">
-          <button
-            class="mailchimp-form__submit"
-            type="submit"
-            name="submit"
-            value="Subscribe"
-          >Subscribe</button>
+        <div class="signup-btn-wrap">
+          <button class="btn-signup" type="submit" name="submit" value="Subscribe">Subscribe</button>
         </div>
       </form>
     </div>
@@ -192,59 +184,81 @@ export default {};
   }
 }
 
-.mailchimp-form {
-  display: grid;
-  grid-gap: 15px;
-  max-width: 768px;
-  grid-template-columns: repeat(2, 1fr);
-  margin-left: auto;
-  margin-right: auto;
-  @include margin-top(2.5rem);
-  @include margin-bottom(2.5rem);
+.smiley-signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 30px;
 
-  .mailchimp-form__header {
-    grid-column: 1 / span 2;
+  .signup-logo {
+    width: 100%;
     text-align: center;
+    margin-bottom: 30px;
   }
-
-  .mailchimp-form__title {
-    font-family: "Montserrat Bold", sans-serif;
-    @include font-size(2rem);
-    margin-bottom: -16px;
-    text-transform: uppercase;
+  label,
+  input {
+    max-width: 331px;
+    width: 100%;
   }
-
-  .mailchimp-form__logo {
-    max-width: 320px;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    @include margin-bottom(2rem);
-
-    img {
-      max-width: 100%;
-      width: 100%;
-      height: auto;
+  @include md {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    label {
+      margin-right: 30px;
+      &:last-of-type {
+        margin-right: 0;
+      }
     }
   }
+  input {
+    border: 1px solid #c7c7c7;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 48px;
+    margin-bottom: 20px;
+    text-indent: 16px;
+    font: 400 16px/24px "Montserrat Regular", sans-serif;
+    &:focus {
+      border: 1px solid #eeb400;
+      box-shadow: 0 2px 31px 13px rgba(0, 0, 0, 0.05);
+      transition: 0.2s ease-in;
+    }
+    @include xxl {
+      margin-bottom: 0;
+    }
+    &::placeholder {
+      color: #656565;
+      font: 400 16px/24px "Muli", sans-serif;
+    }
+  }
+  .signup-btn-wrap {
+    width: 100%;
+    @include xl {
+      max-width: 218px;
+      margin: -1px 30px 0;
+    }
+  }
+  .btn-signup {
+    border: none;
+    box-sizing: border-box;
+    background-color: $default-orange-btns;
+    border-radius: 4px;
+    color: #fff;
+    height: 48px;
+    max-width: 218px;
+    margin-bottom: -1px;
+    text-transform: uppercase;
+    font: 700 16px/24px "Montserrat Bold", sans-serif;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 
-  .mailchimp-form__label {
-    width: 100%;
-  }
-  .mailchimp-form__input {
-    width: 100%;
-    font-family: "Montserrat Regular";
-    padding: 10px 10px;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-  .mailchimp-form__submit {
-    width: 100%;
-    font-family: "Montserrat Bold";
-    padding: 10px 10px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    background-color: #f4ed3b;
+    &:hover {
+      background-color: #c09205;
+    }
   }
 }
 </style>
