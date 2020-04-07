@@ -24,7 +24,7 @@
               </router-link>
               <!--              <a class="menu-item" href="#"><span>Smiley awards</span></a>-->
               <span class="menu-item" href="#">
-                <span>Network</span>
+                <a href="/network">Network</a>
                 <ul class="submenu">
                   <li>
                     <router-link :to="{name: 'partners'}" class="menu-item">
@@ -521,6 +521,11 @@ export default {
     color: $default-text;
     font: 16px/24px "Montserrat SemiBold", sans-serif;
     border-top: 1px solid #dcddde;
+
+    & > a {
+      text-decoration: none;
+      color: $default-text;
+    }
     &:last-child {
       border-bottom: 1px solid #dcddde;
     }
