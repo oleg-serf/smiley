@@ -31,15 +31,15 @@
     <div class="project-article__actions">
       <button>
         <span>0</span>
-        <img src="/img/up-like-arrow-white.png" />
+        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
         Like
       </button>
       <button>
-        <img src="/img/comment-icon-white.png" />
+        <i class="fa fa-commenting-o" aria-hidden="true"></i>
         Comment
       </button>
       <button>
-        <img src="/img/share-icon-white.png" />
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
         Share
       </button>
     </div>
@@ -327,6 +327,10 @@ export default {
       }
 
       span {
+        margin-right: 12px;
+      }
+
+      i {
         margin-right: 12px;
       }
 
