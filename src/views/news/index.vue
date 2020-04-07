@@ -26,7 +26,17 @@
         </select>
       </div>
     </div>
-    <section class="news-grid container" v-if="latest.length > 0">
+    <section class="news-grid news-grid--featured container" v-if="latest.length > 0">
+      <article-project
+        v-for="article in latest"
+        :key="article.slug"
+        :title="article.title"
+        :description="article.description"
+        :goal="article.goals[0].name"
+        :date="article.published_at"
+        :background="article.cover_image"
+        :link="'/news/' + article.slug"
+      />
       <article-project
         v-for="article in latest"
         :key="article.slug"
@@ -121,6 +131,7 @@ export default {
 .news-category-section {
   margin-bottom: 0px;
 }
+
 /* News Section Title with Read More button */
 .news-category {
   width: 100%;
@@ -193,6 +204,17 @@ export default {
     height: 50px;
     background-color: #fff;
     font-family: "Montserrat Bold", sans-serif;
+  }
+}
+
+.news-grid--featured {
+  grid-gap: 5px;
+  .project-article:first-child {
+    grid-row: 1 / span 2 !important;
+  }
+  .project-article:last-child {
+    display: none;
+    // TODO: Remove this upon api fix;
   }
 }
 </style>
