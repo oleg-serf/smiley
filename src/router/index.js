@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 
 Vue.use(VueRouter)
@@ -11,7 +10,7 @@ const routes = [{
      */
     path: '/',
     name: 'home',
-    component: Home,
+    component: () => import( /* webpackChunkName: "web" */ '../views/index.vue'),
     meta: {
       title: 'Home',
     }
@@ -19,7 +18,7 @@ const routes = [{
   {
     path: '/404',
     name: '404',
-    component: () => import( /* webpackChunkName: "404" */ '../views/404.vue'),
+    component: () => import( /* webpackChunkName: "web" */ '../views/404.vue'),
     meta: {
       title: '404 Page not found',
     }
@@ -146,6 +145,17 @@ const routes = [{
     component: () => import( /* webpackChunkName: "news" */ '../views/Search.vue'),
     meta: {
       title: 'Search results',
+    }
+  },
+  /**
+   * Network
+   */
+  {
+    path: '/network',
+    name: 'network',
+    component: () => import( /* webpackChunkName: "news" */ '../views/Network.vue'),
+    meta: {
+      title: 'Network',
     }
   },
   /**
