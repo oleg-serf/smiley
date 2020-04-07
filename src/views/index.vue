@@ -22,16 +22,7 @@
     </div>
 
     <section class="news-grid container" v-if="newsList.length > 0">
-      <article-project
-        v-for="article in newsList"
-        :key="article.slug"
-        :title="article.title"
-        :description="article.description"
-        :goal="article.goals[0].name"
-        :date="article.published_at"
-        :background="article.cover_image"
-        :link="'/news/' + article.slug"
-      />
+      <article-project v-for="article in newsList" :key="article.slug" :article="article" />
     </section>
 
     <!-- Network banner -->

@@ -2,26 +2,32 @@
   <!-- TODO: Refactor !!! -->
   <div class="project-article">
     <div class="project-article__image">
-      <media-image :src="background" :alt="title" :title="title" size="m" type="news" />
+      <media-image
+        :src="article.cover_image"
+        :alt="article.title"
+        :title="article.title"
+        size="m"
+        type="news"
+      />
     </div>
     <div class="project-article__content">
       <div class="project-article__category">
         <div class="project-article__header">
-          <div class="project-article__category-name">{{goal}}</div>
+          <div class="project-article__category-name">{{article.goals[0].name}}</div>
           <!-- <div class="project-article__category-circle">
             <span>+15</span>
           </div>-->
         </div>
-        <div class="project-article__timestamp">{{dateAgo(date)}}</div>
+        <div class="project-article__timestamp">{{dateAgo(article.published_at)}}</div>
       </div>
       <div class="project-article__spacer"></div>
       <div class="project-article__inner">
         <h3 class="project-article__title">
-          <a :href="link">{{title}}</a>
+          <router-link :to="{name: 'news-item', params: {slug: article.slug}}">{{article.title}}</router-link>
         </h3>
         <div class="project-article__description">
-          {{ description | trimDescription }}
-          <a :href="link">Continue Reading</a>
+          {{ article.description | trimDescription }}
+          <router-link :to="{name: 'news-item', params: {slug: article.slug}}">Continue Reading</router-link>
         </div>
         <!-- <div class="project-article__button">
           <a :href="buttonLink">view project</a>
@@ -90,23 +96,8 @@ export default {
     }
   },
   props: {
-    background: {
-      type: String
-    },
-    date: {
-      type: String
-    },
-    title: {
-      type: String
-    },
-    description: {
-      type: String
-    },
-    link: {
-      type: String
-    },
-    goal: {
-      type: String
+    article: {
+      type: Object
     }
   }
 };
@@ -252,7 +243,7 @@ export default {
 
   .project-article__description {
     font-family: "Inter Regular";
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
     text-transform: lowercase;
 
     &:first-letter {

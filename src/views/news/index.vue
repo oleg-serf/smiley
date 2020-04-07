@@ -63,12 +63,7 @@
         <article-project
           v-for="article in item.blog_posts_latest"
           :key="article.slug"
-          :title="article.title"
-          :description="article.description"
-          :goal="item.name"
-          :date="article.published_at"
-          :background="article.cover_image"
-          :link="'/news/' + article.slug"
+          :article="article"
         />
       </div>
       <div class="more-link-wrap"></div>
