@@ -2,13 +2,11 @@
   <div>
     <!-- Network banner -->
     <div class="container">
-      <banner link="/add-organisation" color="#d0d246">
-        <template v-slot:name>Projects</template>
-        <template v-slot:title>Create a Project</template>
+      <banner color="#4696D2">
+        <template v-slot:name>Network</template>
         <template
           v-slot:content
-        >Do you have an idea which could impact your local community and beyond? Create a Project to get support from the Smiley Movement Network.</template>
-        <template v-slot:button>Create a Project</template>
+        >Explore active fundraising campaigns and charitable initiatives making a difference in the world and find out how you can get involved. If you have a new idea for a social impact project, create your own Project following the Theory of Change method and start collaborating with other members.</template>
       </banner>
     </div>
 
