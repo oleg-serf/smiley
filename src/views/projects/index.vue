@@ -53,7 +53,7 @@
     <!-- Projects Grid -->
     <section class="projects-grid container section">
       <!-- TODO: Make component from Project -->
-      <div class="project-article" v-for="index in 9" :key="index">
+      <div class="project-article" v-for="project in projects" :key="'project-'+project.id">
         <div class="project-article__image">
           <img src="/img/homepage/banner-news.jpg" alt />
         </div>
@@ -69,12 +69,10 @@
           </div>
           <div class="project-article__spacer"></div>
           <div class="project-article__inner">
-            <h3
-              class="project-article__title"
-            >People vs Oil - Brand new idea to save the planet will go here in this title</h3>
+            <h3 class="project-article__title">{{project.name}}</h3>
             <div class="project-article__description">Lorem ipsum dolor sit amet, consectet</div>
             <div class="project-article__button">
-              <a href="/projects/test">view project</a>
+              <router-link :to="{name: 'project', params: {slug: project.slug}}">view project</router-link>
             </div>
           </div>
         </div>
@@ -111,6 +109,8 @@
 </template>
 
 <script>
+import axios from "@/axios-auth";
+
 import Banner from "@/components/homepage/Banner.vue";
 import Footer from "@/components/Footer.vue";
 
@@ -118,6 +118,18 @@ export default {
   components: {
     Banner,
     Footer
+  },
+  data() {
+    return {
+      projects: []
+    };
+  },
+  mounted() {
+    axios.get("/projects").then(res => {
+      console.log("Projects loaded", res);
+
+      this.projects = res.data.projects;
+    });
   }
 };
 </script>
