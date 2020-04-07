@@ -14,7 +14,7 @@
   .goals-grid__grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-gap: 10px;
+    grid-gap: 5px;
 
     @include xxlMax {
       grid-template-columns: repeat(8, 1fr);

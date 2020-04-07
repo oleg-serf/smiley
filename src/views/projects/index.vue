@@ -125,7 +125,7 @@ export default {
 <style lang="scss" scoped>
 .projects-grid {
   display: grid;
-  grid-gap: 30px;
+  grid-gap: 5px;
   grid-template-columns: repeat(3, 1fr);
 
   @include lgMax {

@@ -109,7 +109,7 @@
     <section class="section smiley-video-section">
       <div class="container">
         <h2>Featured Interviews</h2>
-        <div class="news-grid">
+        <div class="news-grid news-grid--video">
           <vimeo-video v-for="video in videos" :key="video.id" :video="video" />
         </div>
       </div>
@@ -304,5 +304,9 @@ export default {
   font-weight: 700;
   line-height: 1.35;
   @include font-size(2rem);
+}
+
+.news-grid--video {
+  grid-gap: 30px;
 }
 </style>

@@ -102,25 +102,67 @@
           <div class="title">My Activity</div>
           <div class="activities">
             <ul class="activities__navigation">
-              <li class="active">
-                <button>
+              <li :class="{active: activity == 'events'}">
+                <button @click.prevent="activity = 'events'">
                   Events
                   <span>0</span>
                 </button>
               </li>
-              <li>
-                <button>
+              <li :class="{active: activity == 'projects'}">
+                <button @click.prevent="activity = 'projects'">
                   Projects
                   <span>0</span>
                 </button>
               </li>
-              <li>
-                <button>
+              <li :class="{active: activity == 'following'}">
+                <button @click.prevent="activity = 'following'">
                   Following
                   <span>0</span>
                 </button>
               </li>
             </ul>
+            <div class="activities__tabs">
+              <div class="activities__tab" v-show="activity == 'events'">
+                <template v-if="feed.events.length > 0"></template>
+                <template v-else>
+                  <div class="no-posts">
+                    <div class="no-posts__title">No events added yet.</div>
+                    <p
+                      class="no-posts__text"
+                    >You can attened events by clicking on the "Register" button of an event of your choice.</p>
+                    <router-link :to="{name: 'talks'}" class="button button--primary">Go to events</router-link>
+                  </div>
+                </template>
+              </div>
+              <div class="activities__tab" v-show="activity == 'projects'">
+                <template v-if="feed.events.length > 0"></template>
+                <template v-else>
+                  <div class="no-posts">
+                    <div class="no-posts__title">No Projects Yet.</div>
+                    <p class="no-posts__text">Add projects to your profile by creating your own.</p>
+                    <router-link
+                      :to="{name: 'projects'}"
+                      class="button button--primary"
+                    >CREATE A PROJECT</router-link>
+                  </div>
+                </template>
+              </div>
+              <div class="activities__tab" v-show="activity == 'following'">
+                <template v-if="feed.events.length > 0"></template>
+                <template v-else>
+                  <div class="no-posts">
+                    <div class="no-posts__title">You are not following anyone yet.</div>
+                    <p
+                      class="no-posts__text"
+                    >You can follow the organizations by going to their profiles and clicking on "Follow".</p>
+                    <router-link
+                      :to="{name: 'organisations'}"
+                      class="button button--primary"
+                    >GO TO ORGANISATIONS</router-link>
+                  </div>
+                </template>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -151,7 +193,13 @@ export default {
       support: {
         offer: [],
         need: []
-      }
+      },
+      feed: {
+        events: [],
+        goals: [],
+        posts: []
+      },
+      activity: "events"
     };
   },
   mounted() {
@@ -493,6 +541,55 @@ export default {
       justify-content: center;
       align-items: center;
     }
+  }
+}
+
+.button {
+  font-family: "Monsterrat SemiBold", sans-serif;
+  margin-top: 24px;
+  width: 100%;
+  min-width: 100px;
+  max-width: 240px;
+  color: #fff;
+  background-color: #7d8494;
+  display: block;
+  padding: 0 12px;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  appearance: none;
+  border: none;
+  outline: none;
+  height: 46px;
+  line-height: 46px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+
+  &.button--primary {
+    background-color: #f4ed3b;
+    color: #000;
+  }
+}
+
+.activities__tab {
+  padding-top: 24px;
+}
+
+.no-posts {
+  .no-posts__title {
+    @include font-size(1.2rem);
+    font-family: "Montserrat SemiBold", sans-serif;
+    color: #000;
+  }
+  .no-posts__text {
+    @include font-size(1rem);
+    font-family: "Montserrat Regular", sans-serif;
+    color: #000;
+    margin-top: 0px;
   }
 }
 </style>
