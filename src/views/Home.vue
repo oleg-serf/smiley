@@ -172,7 +172,12 @@ export default {
       },
       banners: {
         news: {},
-        network: {},
+        network: {
+          button_text: "Learn More",
+          description:
+            "Explore our partners, members, organisations and projects - get inspired and take positive action",
+          title: "CONNECT WITH CHANGEMAKERS"
+        },
         talks: {},
         goals: {}
       },
@@ -220,7 +225,7 @@ export default {
         this.newsList = res.data.latest_news;
 
         this.banners.news = res.data.page_sections.smiley_news[0];
-        this.banners.network = res.data.page_sections.smiley_network[0];
+        // this.banners.network = res.data.page_sections.smiley_network[0];
         this.banners.talks = res.data.page_sections.smiley_talks[0];
         this.banners.goals = res.data.page_sections.un_goals[0];
 
