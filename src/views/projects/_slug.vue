@@ -14,17 +14,19 @@
       </div>
       <div class="project-information__bottom container">
         <div class="project-information__column-info">
-          <h1 class="project-information__title">Save the Dolphins from waste in the oceans</h1>
-          <div class="project-information__description">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dictum, dolor ut rutrum tempus, arcu nunc maximus orci, in tempor neque odio quis diam. Duis feugiat eleifend dui at pellentesque.</p>
-          </div>
-          <div class="project-information__location">Kent, England</div>
+          <h1 class="project-information__title">{{project.name}}</h1>
+          <div class="project-information__description" v-html="project.description"></div>
+          <div class="project-information__location">{{project.city}}, {{project.country}}</div>
           <div class="project-information__buttons">
             <a href="#" class="primary">offer support</a>
             <a href="#">make a donation</a>
           </div>
         </div>
         <div class="project-information__column-additional">
+          <div class="project-information__additional-block">
+            <div class="project-information__additional-block-title">Affected</div>
+            <p>{{project.affected}}</p>
+          </div>
           <div class="project-information__additional-block">
             <div class="project-information__additional-block-title">Supporters</div>
             <p>No supporters yet</p>
@@ -61,6 +63,7 @@
           </div>
           <div class="project-information__additional-block">
             <div class="project-information__additional-block-title">UN Goal</div>
+            <p>{{projectGoals()}}</p>
           </div>
         </div>
       </div>
@@ -80,20 +83,20 @@
     <section class="project-heading section container">
       <h2 class="project-heading__title">How we're creating POSITIVE change</h2>
       <div class="project-heading__content">
-        <p>7 Steps for change</p>
+        <p>{{project.steps.length}} {{project.steps.length > 1 ? 'Steps' : 'Step'}} for change</p>
       </div>
     </section>
     <section class="project-stepts-grid section container">
-      <div class="project-step" v-for="index in 7" :key="index">
+      <div class="project-step" v-for="(step, index) in project.steps" :key="'step-'+index">
         <div class="project-step__top">
           <div class="project-step__counter">
             <div class="project-step__counter-number">
-              <span>{{index}}</span>
+              <span>{{index + 1}}</span>
             </div>
           </div>
           <div class="project-step__content">
-            <div class="project-step__number">step {{index}}</div>
-            <div class="project-step__title">Connect with like minded people to help flesh-out idea</div>
+            <div class="project-step__number">step {{index + 1}}</div>
+            <div class="project-step__title">{{step.description}}</div>
           </div>
         </div>
         <div class="project-step__bottom">
@@ -106,12 +109,33 @@
 </template>
 
 <script>
+import axios from "@/axios-auth";
+
 import AppIcon from "@/components/AppIcon";
 import Footer from "@/components/Footer.vue";
 export default {
   components: {
     AppIcon,
     Footer
+  },
+  data() {
+    return {
+      project: {}
+    };
+  },
+  methods: {
+    projectGoals() {
+      const goals = this.project.goals.map(item => item.name);
+
+      return goals.join(", ");
+    }
+  },
+  mounted() {
+    axios.get("/projects/" + this.$route.params.slug).then(res => {
+      console.log("Project loaded", res);
+
+      this.project = res.data.project;
+    });
   }
 };
 </script>
