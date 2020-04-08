@@ -5,8 +5,11 @@
       <banner color="#4696D2">
         <template v-slot:name>Network</template>
         <template
+          v-slot:title
+        >Charitable projects that help solve societal or environmental problems</template>
+        <template
           v-slot:content
-        >Explore active fundraising campaigns and charitable initiatives making a difference in the world and find out how you can get involved. If you have a new idea for a social impact project, create your own Project following the Theory of Change method and start collaborating with other members.</template>
+        >Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</template>
       </banner>
     </div>
 
