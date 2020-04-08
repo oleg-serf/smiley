@@ -95,15 +95,16 @@
     </section>
 
     <!-- Network banner -->
-    <banner link="/add-organisation" color="#d0d246">
-      <template v-slot:name>Projects</template>
-      <template v-slot:title>Create a Project</template>
-      <template
-        v-slot:content
-      >Do you have an idea which could impact your local community and beyond? Create a Project to get support from the Smiley Movement Network.</template>
-      <template v-slot:button>Create a Project</template>
-    </banner>
-
+    <div class="container">
+      <banner link="/add-organisation" color="#d0d246">
+        <template v-slot:name>Projects</template>
+        <template v-slot:title>Create a Project</template>
+        <template
+          v-slot:content
+        >Do you have an idea which could impact your local community and beyond? Create a Project to get support from the Smiley Movement Network.</template>
+        <template v-slot:button>Create a Project</template>
+      </banner>
+    </div>
     <Footer />
   </div>
 </template>
