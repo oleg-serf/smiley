@@ -16,7 +16,7 @@
       </h1>
       <div
         class="hero__subtitle"
-      >Our mission is to create a happier, more equal and sustainable world</div>
+      >Explore our partners, members, organisations and projects - get inspired and take positive action</div>
       <router-link :to="link" class="hero__button" v-if="link != null">Learn more</router-link>
     </div>
   </div>

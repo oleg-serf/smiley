@@ -84,7 +84,9 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
   border: 1px solid #c7c7c7;
+  background-color: #a0a0a0;
   box-sizing: border-box;
+  color: #fff;
 
   .post-title__title {
     @include font-size(2rem);

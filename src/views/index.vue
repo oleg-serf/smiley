@@ -15,9 +15,9 @@
         v-if="Object.keys(banners.news).length"
       >
         <template v-slot:name>news</template>
-        <template v-slot:title v-if="banners.news.title">{{banners.news.title}}</template>
-        <template v-slot:content v-if="banners.news.description">{{banners.news.description}}</template>
-        <template v-slot:button v-if="banners.news.button_text">{{banners.news.button_text}}</template>
+        <template v-slot:title>{{banners.news.title}}</template>
+        <template v-slot:content>{{banners.news.description}}</template>
+        <template v-slot:button>{{banners.news.button_text}}</template>
       </banner>
     </div>
 
@@ -27,14 +27,11 @@
 
     <!-- Network banner -->
     <div class="container">
-      <banner link="/register" color="#4696D2" v-if="Object.keys(banners.network).length">
+      <banner link="/network" color="#4696D2" v-if="Object.keys(banners.network).length">
         <template v-slot:name>Network</template>
         <template v-slot:title v-if="banners.network.title">{{banners.network.title}}</template>
         <template v-slot:content v-if="banners.network.description">{{banners.network.description}}</template>
-        <template
-          v-slot:button
-          v-if="banners.network.button_text && !auth"
-        >{{banners.network.button_text}}</template>
+        <template v-slot:button>{{banners.network.button_text}}</template>
       </banner>
     </div>
 
@@ -289,8 +286,8 @@ export default {
 }
 
 .banner-block {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .news-grid--video {
