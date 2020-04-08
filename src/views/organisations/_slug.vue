@@ -63,7 +63,12 @@
                 <template v-else>No location selected</template>
               </div>
             </div>
-            <button class="button button--primary">+ follow</button>
+            <button
+              class="button button--primary"
+              v-if="!following"
+              @click.prevent="follow"
+            >+ follow</button>
+            <button class="button button--primary" v-else @click.prevent="unfollow">- unfollow</button>
           </div>
         </div>
         <div class="grid-item">
@@ -271,6 +276,56 @@ export default {
         ]
       }
     };
+  },
+  methods: {
+    follow() {
+      axios
+        .post("/organisations/" + this.$route.params.slug + "/follow")
+        .then(result => {
+          console.log("following", result);
+          if (result.data.success) {
+            this.$swal({
+              text: result.data.message,
+              icon: "info"
+            });
+            axios
+              .get("/organisations/" + this.$route.params.slug)
+              .then(res => {
+                this.organisation = res.data.organisation;
+                // this.tabs = res.data.organisation.organisation_tabs;
+                this.following = res.data.following;
+              })
+              .catch(error => console.error("Error", error));
+          }
+        })
+        .catch(err => {
+          // TODO: add error
+        });
+    },
+    unfollow() {
+      axios
+        .post("/organisations/" + this.$route.params.slug + "/un-follow")
+        .then(result => {
+          console.log("cancel following", result);
+          if (result.data.success) {
+            this.$swal({
+              text: result.data.message,
+              icon: "info"
+            });
+            axios
+              .get("/organisations/" + this.$route.params.slug)
+              .then(res => {
+                this.organisation = res.data.organisation;
+                // this.tabs = res.data.organisation.organisation_tabs;
+                this.following = res.data.following;
+              })
+              .catch(error => console.error("Error", error));
+          }
+        })
+        .catch(err => {
+          // TODO: add error
+        });
+    }
   },
   mounted() {
     axios
