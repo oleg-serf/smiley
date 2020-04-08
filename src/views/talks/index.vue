@@ -18,7 +18,11 @@
               <input type="search" class="app-input" placeholder="example: Brighton" />
             </label>
           </div>
-          <div class="filter-search">some text?</div>
+          <div class="filter-search filter-search--location">
+            within
+            <span>100 miles</span> of
+            <span>London, GB</span>
+          </div>
           <div class="filter-search">
             <button>upcomming</button>
             <button>past</button>
@@ -176,6 +180,18 @@ export default {
   }
   .filter-reset {
     grid-column: 9;
+  }
+
+  .filter-search--location {
+    grid-column: 2 / span 3;
+    font-family: "Monsterrat Regular", sans-serif;
+
+    span {
+      font-weight: bold;
+      text-decoration: underline;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
   }
 }
 
