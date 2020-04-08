@@ -15,7 +15,9 @@
         <div class="project-article__header">
           <div
             class="project-article__category-name"
+            v-if="manualGoal == null"
           >{{ (article.goals != null) ? article.goals[0].name : article.goal.name }}</div>
+          <div class="project-article__category-name" v-else>{{ manualGoal }}</div>
           <!-- <div class="project-article__category-circle">
             <span>+15</span>
           </div>-->
@@ -100,6 +102,9 @@ export default {
   props: {
     article: {
       type: Object
+    },
+    manualGoal: {
+      default: null
     }
   }
 };

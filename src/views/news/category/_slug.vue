@@ -16,12 +16,8 @@
       <article-project
         v-for="article in posts"
         :key="article.slug"
-        :title="article.title"
-        :description="article.description"
-        :goal="goal.name"
-        :date="article.published_at"
-        :background="article.cover_image"
-        :link="'/news/' + article.slug"
+        :article="article"
+        :manualGoal="goal.name"
       />
     </section>
 
@@ -58,6 +54,7 @@ export default {
     axios
       .get(url)
       .then(res => {
+        console.log("Goal (news)", res);
         this.goal = res.data.goal;
         this.posts = res.data.posts;
         this.pages = res.data.pages_count;
@@ -65,9 +62,9 @@ export default {
         this.title = res.data.goal.name;
 
         document.title = this.title + " | Smiley Movement";
-        this.$refs.breadcrumbs.breadcrumbs[
-          this.$refs.breadcrumbs.breadcrumbs.length - 1
-        ].meta.title = this.title;
+        // this.$refs.breadcrumbs.breadcrumbs[
+        //   this.$refs.breadcrumbs.breadcrumbs.length - 1
+        // ].meta.title = this.title;
       })
       .catch(error => console.log(error));
   },
