@@ -4,9 +4,7 @@
     <div class="container">
       <banner color="#4696D2">
         <template v-slot:name>Network</template>
-        <template
-          v-slot:title
-        >Charitable projects that help solve societal or environmental problems</template>
+        <template v-slot:title>Projects that change the world</template>
         <template
           v-slot:content
         >Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</template>
@@ -100,18 +98,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Network banner -->
-    <div class="container">
-      <banner link="/add-organisation" color="#d0d246">
-        <template v-slot:name>Projects</template>
-        <template v-slot:title>Create a Project</template>
-        <template
-          v-slot:content
-        >Do you have an idea which could impact your local community and beyond? Create a Project to get support from the Smiley Movement Network.</template>
-        <template v-slot:button>Create a Project</template>
-      </banner>
-    </div>
     <Footer />
   </div>
 </template>
