@@ -14,7 +14,7 @@
     </div>
 
     <div class="post-title container">
-      <div class="post-title__title">Educating to Inform Action</div>
+      <div class="post-title__title">17 GOALS TO TRANSFORM OUR WORLD</div>
       <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
     </div>
 
@@ -80,18 +80,26 @@ export default {
   text-align: center;
   line-height: 1.35;
   @include font-size(1.1rem);
-  @include margin-top(2rem);
-  @include margin-bottom(2rem);
-  margin: 0 auto;
+  padding-top: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #c7c7c7;
+  box-sizing: border-box;
 
   .post-title__title {
     @include font-size(2rem);
     font-family: "Monsterrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
+
+  p {
+    line-height: 1.45;
+  }
 }
 
 .goals-grid {
+  margin-top: 5px;
+  margin-bottom: 5px;
   .goals-grid__item {
     border: 1px solid #c7c7c7;
     line-height: 1;
