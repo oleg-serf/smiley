@@ -54,8 +54,8 @@
       <div class="container">
         <div class="footer-top">
           <div class="footer-column">
-            <img src="/img/homepage/logo.png" class="footer-logo" />
             <div class="footer-logo-subtitle">A philanthropic venture from Smiley</div>
+            <img src="/img/smiley-movement-white.png" class="footer-logo" />
           </div>
           <div class="footer-column"></div>
           <div class="footer-column">
@@ -78,6 +78,17 @@
             </div>
           </div>
         </div>
+        <div class="footer-bottom" style="display: none;">
+          <div class="footer-column footer-column__alternative-logo">
+            <span>A philanthropic venture from</span>
+            <br />
+            <img
+              src="https://smileymovement.org/images/logos/Smiley-White@2x.png"
+              class="footer-logo-bottom"
+              alt
+            />
+          </div>
+        </div>
       </div>
     </footer>
   </div>
@@ -94,7 +105,8 @@ export default {};
   padding-bottom: 30px;
 }
 
-.footer-top {
+.footer-top,
+.footer-bottom {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 30px;
@@ -105,9 +117,19 @@ export default {};
   }
 }
 
+.footer-bottom {
+  @include margin-top(2rem);
+  @include padding-top(2rem);
+  border-top: 2px solid #50586a;
+
+  img {
+    max-width: 100px;
+  }
+}
+
 .footer-logo-subtitle {
   font-family: "Montserrat Regular", sans-serif;
-  padding-top: 24px;
+  padding-bottom: 12px;
 }
 
 .footer-logo {
