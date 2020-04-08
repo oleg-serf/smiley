@@ -13,7 +13,9 @@
     <div class="project-article__content">
       <div class="project-article__category">
         <div class="project-article__header">
-          <div class="project-article__category-name">{{article.goals[0].name}}</div>
+          <div
+            class="project-article__category-name"
+          >{{ (article.goals != null) ? article.goals[0].name : article.goal.name }}</div>
           <!-- <div class="project-article__category-circle">
             <span>+15</span>
           </div>-->

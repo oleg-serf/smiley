@@ -51,7 +51,7 @@
     <section
       class="news-category-section container"
       v-for="item in news"
-      :key="item.slug + item.id"
+      :key="'news-item-'+item.slug"
     >
       <div class="news-category">
         <h2 class="news-category__title">{{ item.name }}</h2>
@@ -61,7 +61,7 @@
       </div>
       <div class="news-grid">
         <article-project
-          v-for="article in item.blog_posts_latest"
+          v-for="article in item.latest_news"
           :key="article.slug"
           :article="article"
         />
