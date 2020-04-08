@@ -104,25 +104,54 @@
           <div class="title">Activity</div>
           <div class="activities">
             <ul class="activities__navigation">
-              <li class="active">
-                <button>
+              <li :class="{active: activity == 'projects'}">
+                <button @click.prevent="activity = 'projects'">
                   Our projects
                   <span>0</span>
                 </button>
               </li>
-              <li>
-                <button>
+              <li :class="{active: activity == 'news'}">
+                <button @click.prevent="activity = 'news'">
                   Our news
                   <span>0</span>
                 </button>
               </li>
-              <li>
-                <button>
+              <li :class="{active: activity == 'hubs'}">
+                <button @click.prevent="activity = 'hubs'">
                   smiley hubs
                   <span>0</span>
                 </button>
               </li>
             </ul>
+            <div class="activities__tabs">
+              <div class="activities__tab" v-show="activity == 'projects'">
+                <template v-if="feed.projects.length > 0"></template>
+                <template v-else>
+                  <div class="no-posts">
+                    <div class="no-posts__title">No Projects yet</div>
+                    <p class="no-posts__text">{{organisation.name}} hasn't posted any projects yet.</p>
+                  </div>
+                </template>
+              </div>
+              <div class="activities__tab" v-show="activity == 'news'">
+                <template v-if="feed.news.length > 0"></template>
+                <template v-else>
+                  <div class="no-posts">
+                    <div class="no-posts__title">No News yet</div>
+                    <p class="no-posts__text">Add News by sharing articles to The Smiley Movement</p>
+                  </div>
+                </template>
+              </div>
+              <div class="activities__tab" v-show="activity == 'hubs'">
+                <template v-if="feed.hub.length > 0"></template>
+                <template v-else>
+                  <div class="no-posts">
+                    <div class="no-posts__title">No Hubs yer</div>
+                    <p class="no-posts__text">Here should be some error text i think</p>
+                  </div>
+                </template>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -186,6 +215,12 @@ export default {
   data() {
     return {
       organisation: {},
+      activity: "events",
+      feed: {
+        projects: [],
+        news: [],
+        hub: []
+      },
       socials: [],
       support: {
         offer: [
@@ -601,6 +636,24 @@ export default {
 
   .organisations-social {
     color: #393939;
+  }
+}
+
+.activities__tab {
+  padding-top: 24px;
+}
+
+.no-posts {
+  .no-posts__title {
+    @include font-size(1.2rem);
+    font-family: "Montserrat SemiBold", sans-serif;
+    color: #000;
+  }
+  .no-posts__text {
+    @include font-size(1rem);
+    font-family: "Montserrat Regular", sans-serif;
+    color: #000;
+    margin-top: 0px;
   }
 }
 
