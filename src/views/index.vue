@@ -64,16 +64,7 @@
     </div>
 
     <section class="news-grid container" v-if="eventList.length > 0">
-      <event-card
-        v-for="event in eventList"
-        :key="'event-'+event.id"
-        :title="event.title"
-        :description="event.short_description"
-        :background="event.cover_image"
-        :start="event.time_start"
-        :end="event.time_end"
-        :location="event.location"
-      />
+      <event-card v-for="event in eventList" :key="'event-'+event.id" :event="event" />
     </section>
 
     <!-- The Global Goals banner -->
@@ -295,6 +286,11 @@ export default {
   font-weight: 700;
   line-height: 1.35;
   @include font-size(2rem);
+}
+
+.banner-block {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .news-grid--video {

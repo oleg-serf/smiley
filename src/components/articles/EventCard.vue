@@ -1,14 +1,20 @@
 <template>
   <div class="project-article">
     <div class="project-article__image">
-      <media-image :src="background" :alt="title" :title="title" size="m" type="events" />
+      <media-image
+        :src="event.cover_image"
+        :alt="event.title"
+        :title="event.title"
+        size="m"
+        type="events"
+      />
     </div>
     <div class="project-article__content">
       <div class="project-article__category">
         <div class="project-article__header">
           <div class="project-article__category-badge">
-            <div>May</div>
-            <div>25</div>
+            <div>{{ format(event.date, 'MMM')}}</div>
+            <div>{{ format(event.date, 'D') }}</div>
           </div>
           <div class="project-article__category-name">Human Rights</div>
           <!-- <div class="project-article__category-circle">
@@ -18,12 +24,14 @@
       </div>
       <div class="project-article__spacer"></div>
       <div class="project-article__inner">
-        <div class="project-article__hours">{{ start | formatTime }} - {{ end | formatTime}}</div>
-        <h3 class="project-article__title">{{title}}</h3>
+        <div
+          class="project-article__hours"
+        >{{ event.time_start | formatTime }} - {{ event.time_end | formatTime}}</div>
+        <h3 class="project-article__title">{{event.title}}</h3>
         <!-- <div class="project-article__description">{{ description | trimDescription }}</div> -->
-        <div class="project-article__location">{{ location }}</div>
+        <div class="project-article__location">{{ event.location }}</div>
         <div class="project-article__button">
-          <a href="/projects/test">view project</a>
+          <router-link :to="{name: 'event', params: {slug: event.slug}}">talk details</router-link>
           <a href="/projects/test" class="register">register</a>
         </div>
       </div>
@@ -61,33 +69,16 @@ export default {
         : description;
     }
   },
+  methods: {
+    format(date, format) {
+      const result = this.$dayjs(date).format(format);
+      // console.log(`Date ${date}, format ${format}, result ${result}`);
+      return result;
+    }
+  },
   props: {
-    background: {
-      type: String
-    },
-    date: {
-      type: String
-    },
-    title: {
-      type: String
-    },
-    description: {
-      type: String
-    },
-    link: {
-      type: String
-    },
-    goal: {
-      type: String
-    },
-    start: {
-      type: String
-    },
-    end: {
-      type: String
-    },
-    location: {
-      type: String
+    event: {
+      type: Object
     }
   }
 };

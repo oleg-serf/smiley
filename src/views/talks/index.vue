@@ -40,16 +40,7 @@
       <h1 class="talks-title__title">Upcoming Smiley Talks:</h1>
     </div>
     <div class="talks-grid container" v-if="events.length > 0">
-      <event-card
-        v-for="event in events"
-        :key="'event-'+event.id"
-        :title="event.title"
-        :description="event.short_description"
-        :background="event.cover_image"
-        :start="event.time_start"
-        :end="event.time_end"
-        :location="event.location"
-      />
+      <event-card v-for="event in events" :key="'event-'+event.id" :event="event" />
     </div>
     <div class="talks-title container">
       <h1 class="talks-title__title">Past Smiley Talks</h1>
@@ -58,16 +49,7 @@
       >Take a look at our past events highlights and access the full live videos of the talks</p>
     </div>
     <div class="talks-grid container" v-if="past.length > 0">
-      <event-card
-        v-for="event in past"
-        :key="'event-'+event.id"
-        :title="event.title"
-        :description="event.short_description"
-        :background="event.cover_image"
-        :start="event.time_start"
-        :end="event.time_end"
-        :location="event.location"
-      />
+      <event-card v-for="event in past" :key="'event-'+event.id" :event="event" />
     </div>
     <Footer />
   </div>
