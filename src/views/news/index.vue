@@ -122,7 +122,7 @@ export default {
   .news-category__title {
     color: #393939;
     font-family: "Montserrat Bold", sans-serif;
-    @include font-size(2rem);
+    @include font-size(1rem);
     text-transform: uppercase;
     line-height: 1;
     margin: 0px;
