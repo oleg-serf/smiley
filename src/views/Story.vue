@@ -70,9 +70,20 @@
             <!--<div class="years__line js-years-line" style="left: 0px; width: 0px;"></div>-->
             <!--</div>-->
             <div class="timeline__body">
-              <div class="timeline__year js-tl-year-content active plus" data-year="June 2019">
+              <div class="timeline__year js-tl-year-content active plus" data-year="December 2019">
+                <div class="year__image"></div>
+                <div class="year__delimiter">
+                  <span>Dec 2019</span>
+                </div>
+                <div class="year__text">
+                  <h2>Reached our first Milestone</h2>
+
+                  <p>Organised 6 Smiley Talks, in 3 UK Cities, 800 participants, joined forced with 65 new charity partners, grew our online network to 1,000 members and gained our first 6,000+ Twitter Followers</p>
+                </div>
+              </div>
+              <div class="timeline__year js-tl-year-content" data-year="June 2019">
                 <div class="year__image">
-                  <img src="/img/homepage/logo.png" />
+                  <img src="/img/smiley-movement-white.png" />
                 </div>
                 <div class="year__delimiter">
                   <span>June 2019</span>
@@ -178,4 +189,21 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/sections/_page-our-story";
+.our-story
+  .our-story__timeline
+  .timeline__body
+  .timeline__year.active.plus
+  .year__text
+  p {
+  @include font-size(1.3rem);
+}
+
+.our-story
+  .our-story__timeline
+  .timeline__body
+  .timeline__year.active.plus
+  .year__text
+  h2 {
+  @include font-size(1.7rem);
+}
 </style>
