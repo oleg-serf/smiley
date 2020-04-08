@@ -55,7 +55,7 @@
         <div class="footer-top">
           <div class="footer-column">
             <img src="/img/homepage/logo.png" class="footer-logo" />
-            <div class="footer-logo-subtitle">A philanthropic venture from</div>
+            <div class="footer-logo-subtitle">A philanthropic venture from Smiley</div>
           </div>
           <div class="footer-column"></div>
           <div class="footer-column">
@@ -157,7 +157,7 @@ export default {};
   flex-direction: column;
   align-items: center;
   margin-top: 60px;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 
   .signup-logo {
     width: 100%;
