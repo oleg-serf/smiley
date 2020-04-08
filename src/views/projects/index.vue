@@ -10,6 +10,13 @@
       </banner>
     </div>
 
+    <div class="post-title container">
+      <div
+        class="post-title__title"
+      >Charitable projects that help solve societal or environmental problems</div>
+      <p>Helping you help others by raising awareness of your community projects, fundraising campaigns, voluntary groups, community events, grassroots and start-up collaborations, big or small, local of global. Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</p>
+    </div>
+
     <!-- Title section -->
     <section class="section projects-section container">
       <h2 class="projects-section__title">
@@ -379,6 +386,22 @@ export default {
     font-family: "Montserrat Regular";
     opacity: 0.5;
     @include font-size(1rem);
+  }
+}
+
+.post-title {
+  font-family: "Montserrat Regular";
+  text-align: center;
+  line-height: 1.35;
+  @include font-size(1.1rem);
+  @include margin-top(2rem);
+  @include margin-bottom(2rem);
+  margin: 0 auto;
+
+  .post-title__title {
+    @include font-size(2rem);
+    font-family: "Monsterrat SemiBold", sans-serif;
+    margin-bottom: 0px;
   }
 }
 </style>
