@@ -24,7 +24,7 @@
             <span>London, GB</span>
           </div>
           <div class="filter-search">
-            <button>upcomming</button>
+            <button>UPCOMING</button>
             <button>past</button>
           </div>
           <div class="filter-submit">
