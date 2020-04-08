@@ -12,6 +12,16 @@
       </div>
     </section>
 
+    <div class="container">
+      <div class="news-category">
+        <div></div>
+        <select class="news-category__dropdown" @change.prevent="goToCategory">
+          <option disabled selected>Select goal</option>
+          <option v-for="item in goals" :key="item.slug + item.id" :value="item.slug">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+
     <section class="news-grid container" v-if="posts.length > 0">
       <article-project
         v-for="article in posts"
@@ -45,8 +55,17 @@ export default {
     return {
       goal: {},
       posts: [],
-      pages: 0
+      pages: 0,
+      goals: []
     };
+  },
+  methods: {
+    goToCategory(event) {
+      router.push({
+        name: "news-category-item",
+        params: { slug: event.target.value }
+      });
+    }
   },
   mounted() {
     let slug = this.$route.params.slug;
@@ -67,8 +86,11 @@ export default {
         // ].meta.title = this.title;
       })
       .catch(error => console.log(error));
+
+    axios.get("/goals").then(res => {
+      this.goals = res.data.goal_categories[0].goals;
+    });
   },
-  methods: {},
   components: {
     Breadcrumbs,
     Banner,
@@ -89,6 +111,7 @@ export default {
 }
 /* News Section Title with Read More button */
 .news-category {
+  margin-top: 30px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -100,7 +123,7 @@ export default {
   .news-category__title {
     color: #393939;
     font-family: "Montserrat Bold", sans-serif;
-    @include font-size(2rem);
+    @include font-size(1rem);
     text-transform: uppercase;
     line-height: 1;
     margin: 0px;

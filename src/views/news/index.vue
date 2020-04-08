@@ -86,7 +86,10 @@ export default {
   },
   methods: {
     goToCategory(event) {
-      router.push({ path: `/news/category/${event.target.value}` });
+      router.push({
+        name: "news-category-item",
+        params: { slug: event.target.value }
+      });
     }
   },
   components: {

@@ -289,8 +289,8 @@ export default {
 }
 
 .banner-block {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .news-grid--video {
