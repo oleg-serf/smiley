@@ -27,26 +27,7 @@
       </div>
     </div>
     <section class="news-grid news-grid--featured container" v-if="latest.length > 0">
-      <article-project
-        v-for="article in latest"
-        :key="article.slug"
-        :title="article.title"
-        :description="article.description"
-        :goal="article.goals[0].name"
-        :date="article.published_at"
-        :background="article.cover_image"
-        :link="'/news/' + article.slug"
-      />
-      <article-project
-        v-for="article in latest"
-        :key="article.slug"
-        :title="article.title"
-        :description="article.description"
-        :goal="article.goals[0].name"
-        :date="article.published_at"
-        :background="article.cover_image"
-        :link="'/news/' + article.slug"
-      />
+      <article-project v-for="article in latest" :key="article.slug" :article="article" />
     </section>
     <section
       class="news-category-section container"
@@ -129,6 +110,7 @@ export default {
 
 /* News Section Title with Read More button */
 .news-category {
+  margin-top: 30px;
   width: 100%;
   display: flex;
   justify-content: space-between;
