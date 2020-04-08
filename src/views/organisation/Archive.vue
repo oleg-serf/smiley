@@ -5,6 +5,9 @@
       <template v-slot:content>
         <p>See what projects organisations are running and how you can help</p>
       </template>
+      <template v-slot:buttons>
+        <a target="_blank" href="www.smiley.com">We are supported 100% by the Smiley brand</a>
+      </template>
     </information-hero>
     <div class>
       <div class="container">

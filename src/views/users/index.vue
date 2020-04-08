@@ -5,6 +5,9 @@
       <template v-slot:content>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quidem aperiam praesentium architecto cumque illum ipsam fugit asperiores magnam est id unde, doloribus quo magni. Nihil suscipit omnis voluptate sint.</p>
       </template>
+      <template v-slot:buttons>
+        <a target="_blank" href="www.smiley.com">We are supported 100% by the Smiley brand</a>
+      </template>
     </information-hero>
     <div class>
       <div class="container">
