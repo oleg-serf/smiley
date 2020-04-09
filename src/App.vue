@@ -133,7 +133,7 @@ strong {
 .breadcrumbs {
   margin: 13px auto;
   padding: 0 15px;
-  max-width: 1560px;
+  max-width: 1530px;
   li {
     display: inline-block;
   }
@@ -152,12 +152,12 @@ strong {
 }
 
 .container {
-  max-width: 1560px;
+  max-width: 1530px;
   margin: 0 auto;
-  padding: 0 15px;
+  // padding: 0 15px;
 
   @media (max-width: 1600px) {
-    padding: 0 20px;
+    // padding: 0 20px;
   }
 }
 </style>

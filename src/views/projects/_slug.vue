@@ -114,6 +114,7 @@ import axios from "@/axios-auth";
 import AppIcon from "@/components/AppIcon";
 import Footer from "@/components/Footer.vue";
 export default {
+  name: "Project",
   components: {
     AppIcon,
     Footer

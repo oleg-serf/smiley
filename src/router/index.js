@@ -188,6 +188,15 @@ const routes = [{
       title: 'project',
     }
   },
+  {
+    path: '/create/project',
+    name: 'create-project',
+    component: () => import( /* webpackChunkName: "goals" */ '../views/create/project.vue'),
+    meta: {
+      title: 'Create project',
+      requiresAuth: true,
+    }
+  },
   /**
    * News
    */

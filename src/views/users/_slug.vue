@@ -352,7 +352,7 @@ export default {
       grid-column: 1 / span 2;
       align-items: center;
       .item-holder {
-        max-width: 1560px;
+        max-width: 1530px;
       }
     }
 
