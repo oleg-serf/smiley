@@ -40,7 +40,7 @@
       <h1 class="talks-title__title">Upcoming Smiley Talks:</h1>
     </div>
     <div class="talks-grid container" v-if="events.length > 0">
-      <event-card v-for="event in events" :key="'event-'+event.id" :event="event" />
+      <event-card v-for="event in events" :key="'event-'+event.slug" :event="event" />
     </div>
     <div class="talks-title container">
       <h1 class="talks-title__title">Past Smiley Talks</h1>
@@ -49,7 +49,7 @@
       >Take a look at our past events highlights and access the full live videos of the talks</p>
     </div>
     <div class="talks-grid container" v-if="past.length > 0">
-      <event-card v-for="event in past" :key="'event-'+event.id" :event="event" />
+      <event-card v-for="event in past" :key="'event-'+event.slug" :event="event" :active="false" />
     </div>
     <Footer />
   </div>
@@ -59,7 +59,7 @@
 import axios from "@/axios-auth";
 
 import Banner from "@/components/homepage/Banner.vue";
-import EventCard from "@/components/articles/EventCard.vue";
+import EventCard from "@/components/cards/EventCard.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {

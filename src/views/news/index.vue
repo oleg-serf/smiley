@@ -27,7 +27,7 @@
       </div>
     </div>
     <section class="news-grid news-grid--featured container" v-if="latest.length > 0">
-      <article-project v-for="article in latest" :key="article.slug" :article="article" />
+      <news-card v-for="article in latest" :key="article.slug" :article="article" />
     </section>
     <section
       class="news-category-section container"
@@ -41,11 +41,7 @@
         </router-link>
       </div>
       <div class="news-grid">
-        <article-project
-          v-for="article in item.latest_news"
-          :key="article.slug"
-          :article="article"
-        />
+        <news-card v-for="article in item.latest_news" :key="article.slug" :article="article" />
       </div>
       <div class="more-link-wrap"></div>
     </section>
@@ -60,7 +56,7 @@ import router from "@/router";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Banner from "@/components/homepage/Banner.vue";
-import ArticleProject from "@/components/articles/ArticleAsProject.vue";
+import NewsCard from "@/components/cards/NewsCard.vue";
 
 import Footer from "@/components/Footer";
 import axios from "@/axios-auth";

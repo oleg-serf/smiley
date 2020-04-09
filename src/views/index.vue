@@ -22,7 +22,7 @@
     </div>
 
     <section class="news-grid container" v-if="newsList.length > 0">
-      <article-project v-for="article in newsList" :key="article.slug" :article="article" />
+      <news-card v-for="article in newsList" :key="article.slug" :article="article" />
     </section>
 
     <!-- Network banner -->
@@ -61,7 +61,7 @@
     </div>
 
     <section class="news-grid container" v-if="eventList.length > 0">
-      <event-card v-for="event in eventList" :key="'event-'+event.id" :event="event" />
+      <event-card v-for="event in eventList" :key="'event-'+event.slug" :event="event" />
     </section>
 
     <!-- The Global Goals banner -->
@@ -113,20 +113,17 @@ import Footer from "@/components/Footer.vue";
 // Page components
 import Hero from "@/components/homepage/Hero.vue";
 import Banner from "@/components/homepage/Banner.vue";
-import ArticleItem from "@/components/news/Article.vue";
-import EventCard from "@/components/articles/EventCard.vue";
+import NewsCard from "@/components/cards/NewsCard.vue";
+import EventCard from "@/components/cards/EventCard.vue";
 
 import ArticleItemBlock from "@/components/news/ArticleBlock.vue";
 import VimeoVideo from "@/components/homepage/VimeoVideo.vue";
-
-import ArticleProject from "@/components/articles/ArticleAsProject.vue";
 
 export default {
   name: "home",
   components: {
     Hero,
-    ArticleProject,
-    ArticleItem,
+    NewsCard,
     EventCard,
     ArticleItemBlock,
     Banner,

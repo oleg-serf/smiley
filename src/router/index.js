@@ -337,6 +337,12 @@ const routes = [{
       requiresAuth: true,
     }
   },
+  {
+    path: '/form-kit',
+    name: 'uikit',
+    component: () => import( /* webpackChunkName: "chat" */ '../views/FormKit.vue'),
+    meta: {}
+  },
 ];
 
 

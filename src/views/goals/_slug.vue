@@ -18,7 +18,7 @@
       </div>
       <div class="news-category-section latest-articles">
         <div class="news-grid">
-          <article-project
+          <news-card
             v-for="article in posts"
             :key="article.slug"
             :title="article.title"
@@ -78,9 +78,9 @@ import axios from "@/axios-auth";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Banner from "@/components/homepage/Banner.vue";
 
-import ArticleProject from "@/components/articles/ArticleAsProject.vue";
+import NewsCard from "@/components/cards/NewsCard.vue";
 
-import EventCard from "@/components/articles/EventCard.vue";
+import EventCard from "@/components/cards/EventCard.vue";
 
 import Footer from "@/components/Footer";
 

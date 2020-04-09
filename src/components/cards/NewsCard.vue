@@ -1,39 +1,41 @@
 <template>
+  <!-- TODO: Refactor !!! -->
   <div class="project-article">
     <div class="project-article__image">
       <media-image
-        :src="event.cover_image"
-        :alt="event.title"
-        :title="event.title"
+        :src="article.cover_image"
+        :alt="article.title"
+        :title="article.title"
         size="m"
-        type="events"
+        type="news"
       />
     </div>
     <div class="project-article__content">
       <div class="project-article__category">
         <div class="project-article__header">
-          <div class="project-article__category-badge">
-            <div>{{ format(event.date, 'MMM')}}</div>
-            <div>{{ format(event.date, 'D') }}</div>
-          </div>
-          <div class="project-article__category-name">Human Rights</div>
+          <div
+            class="project-article__category-name"
+            v-if="manualGoal == null"
+          >{{ (article.goals != null) ? article.goals[0].name : article.goal.name }}</div>
+          <div class="project-article__category-name" v-else>{{ manualGoal }}</div>
           <!-- <div class="project-article__category-circle">
             <span>+15</span>
           </div>-->
         </div>
+        <div class="project-article__timestamp">{{dateAgo(article.published_at)}}</div>
       </div>
       <div class="project-article__spacer"></div>
       <div class="project-article__inner">
-        <div
-          class="project-article__hours"
-        >{{ event.time_start | formatTime }} - {{ event.time_end | formatTime}}</div>
-        <h3 class="project-article__title">{{event.title}}</h3>
-        <!-- <div class="project-article__description">{{ description | trimDescription }}</div> -->
-        <div class="project-article__location">{{ event.location }}</div>
-        <div class="project-article__button">
-          <router-link :to="{name: 'event', params: {slug: event.slug}}">talk details</router-link>
-          <a href="/projects/test" class="register">register</a>
+        <h3 class="project-article__title">
+          <router-link :to="{name: 'news-item', params: {slug: article.slug}}">{{article.title}}</router-link>
+        </h3>
+        <div class="project-article__description">
+          {{ article.description | trimDescription }}
+          <router-link :to="{name: 'news-item', params: {slug: article.slug}}">Continue Reading</router-link>
         </div>
+        <!-- <div class="project-article__button">
+          <a :href="buttonLink">view project</a>
+        </div>-->
       </div>
     </div>
     <div class="project-article__actions">
@@ -56,9 +58,8 @@
 
 <script>
 import MediaImage from "@/components/Image.vue";
-
 export default {
-  name: "EventCard",
+  name: "NewsCard",
   components: {
     MediaImage
   },
@@ -70,22 +71,47 @@ export default {
     }
   },
   methods: {
-    format(date, format) {
-      const result = this.$dayjs(date).format(format);
-      // console.log(`Date ${date}, format ${format}, result ${result}`);
-      return result;
+    dateAgo(date) {
+      const currentStamp = Date.now();
+      const realDate = this.$dayjs(date)["$d"];
+      const postStamp = this.$dayjs(date).unix() * 1000;
+      const dateDiff = currentStamp - postStamp;
+      const days = dateDiff / (1000 * 3600 * 24);
+
+      const result = Math.floor(days);
+
+      const append = result == 1 ? "day" : "days";
+
+      let time = "";
+
+      if (result < 1) {
+        time = result == 1 ? "day" : "days";
+        time += " ago";
+      } else {
+        time =
+          realDate.getDate() +
+          "-" +
+          realDate.getMonth() +
+          "-" +
+          realDate.getFullYear();
+      }
+
+      return time;
     }
   },
   props: {
-    event: {
+    article: {
       type: Object
+    },
+    manualGoal: {
+      default: null
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-// TODO: Move styles to separate file
+// TODO: Move to file
 .project-article {
   background-color: #000;
   position: relative;
@@ -162,29 +188,7 @@ export default {
   .project-article__category {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-  }
-
-  .project-article__category-badge {
-    position: absolute;
-    background-image: url("/img/date-badge-bg.png");
-    height: 70px;
-    width: 60px;
-    background-repeat: no-repeat;
-    background-position: center 1px;
-    top: -31px;
-    left: 3px;
-    z-index: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    div {
-      font-family: "Montserrat SemiBold", sans-serif;
-      color: #393939;
-      text-align: center;
-    }
+    justify-content: space-between;
   }
 
   .project-article__category-name {
@@ -228,50 +232,41 @@ export default {
     min-height: 50px;
   }
 
-  .project-article__hours {
-    @include font-size(1.1rem);
-    line-height: 1.45;
-    color: #fff;
-    font-family: "Montserrat Bold", sans-serif;
-  }
-
   .project-article__title {
     @include font-size(1.1rem);
     line-height: 1.45;
-    color: #fff;
     font-family: "Montserrat SemiBold", sans-serif;
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
+
+      &:hover {
+        border-color: #fff;
+      }
+    }
   }
 
   .project-article__description {
     font-family: "Inter Regular";
-    margin-bottom: 24px;
-  }
+    // margin-bottom: 24px;
+    text-transform: lowercase;
 
-  .project-article__location {
-    @include font-size(1rem);
-    font-family: "Inter Regular";
-    margin-bottom: 24px;
-    padding-left: 24px;
-    position: relative;
-
-    &::before {
-      content: "";
-      display: block;
-      width: 18px;
-      height: 18px;
-      background-image: url("/img/icons/location-icon-white.png");
-      background-position: top left;
-      background-size: 14px;
-      background-repeat: no-repeat;
-      position: absolute;
-      left: 0px;
-      top: 5px;
+    &:first-letter {
+      text-transform: uppercase;
     }
-  }
 
-  .project-article__button {
-    display: flex;
-    justify-content: space-between;
+    a {
+      color: #f4ed3b;
+      text-decoration: none;
+      border-bottom: 1px solid #f4ed3b;
+      transition: border-color 0.4s;
+
+      &:hover {
+        border-color: transparent;
+      }
+    }
   }
 
   .project-article__button a {
@@ -283,18 +278,12 @@ export default {
     display: inline-block;
     font-family: "Montserrat SemiBold", sans-serif;
     transition: background-color 0.4s;
-    min-width: 130px;
-    text-align: center;
 
     @include font-size(0.8rem);
 
     &:hover {
       background-color: rgba(125, 132, 148, 0.8);
     }
-  }
-  .project-article__button a.register {
-    background-color: #f4ed3b;
-    color: #393939;
   }
 
   .project-article__actions {

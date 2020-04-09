@@ -23,7 +23,7 @@
     </div>
 
     <section class="news-grid container" v-if="posts.length > 0">
-      <article-project
+      <news-card
         v-for="article in posts"
         :key="article.slug"
         :article="article"
@@ -44,7 +44,7 @@ import router from "@/router";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Banner from "@/components/homepage/Banner.vue";
-import ArticleProject from "@/components/articles/ArticleAsProject.vue";
+import NewsCard from "@/components/cards/NewsCard.vue";
 
 import Footer from "@/components/Footer";
 import axios from "@/axios-auth";

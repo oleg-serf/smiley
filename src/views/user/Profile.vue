@@ -120,7 +120,7 @@ import axios from "@/axios-auth";
 import InformationHero from "@/components/InformationHero.vue";
 import AppIcon from "@/components/AppIcon";
 import ArticleItem from "@/components/news/Article.vue";
-import EventCard from "@/components/events/Event-Card";
+import EventCard from "@/components/cards/Event-Card";
 
 import Footer from "@/components/Footer";
 
