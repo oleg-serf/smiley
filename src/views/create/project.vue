@@ -256,7 +256,7 @@ export default {
   },
   methods: {
     onSelectFile() {
-      // TODO: Refactor;
+      // TODO: Refactor ;
       let photo = null;
       const input = this.$refs.fileInput;
       const files = input.files;
