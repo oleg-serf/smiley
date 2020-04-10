@@ -1,6 +1,11 @@
 <template>
   <div>
-    <form class="grid container">
+    <div class="hero"></div>
+    <div class="container post-title">
+      <div class="post-title__title">Start a project</div>
+      <p>Turn ideas into action and start a project form.</p>
+    </div>
+    <form class="grid container" @submit.prevent="createProject">
       <div class="grid-column">
         <div class="form-group">
           <label for="projectName">Name your Project *</label>
@@ -15,24 +20,41 @@
         </div>
         <div class="form-group">
           <label for="projectDescription">Tell us about your project in a few words *</label>
-          <textarea
-            class="form-control"
-            id="projectDescription"
-            placeholder="What is your end goal? (e.g improved wheelchair access in local community)"
-            v-model="project.description"
-            required
-          ></textarea>
+          <div class="description-chars-count">
+            <textarea
+              class="form-control"
+              id="projectDescription"
+              placeholder="What is your end goal? (e.g improved wheelchair access in local community)"
+              v-model="project.description"
+              required
+              maxlength="400"
+            ></textarea>
+            <div class="description-chars-count__count">{{descriptionChars}}</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="projectLocation">Project Location *</label>
-          <input
-            type="text"
-            class="form-control"
-            id="projectLocation"
-            placeholder="Search for a city"
-            v-model="project.location"
+          <gmap-autocomplete
             required
-          />
+            class="form-control"
+            @place_changed="getAddressData"
+            placeholder="Start typing"
+          ></gmap-autocomplete>
+        </div>
+        <div class="form-group">
+          <label>Choose interests *</label>
+          <div class="goal-grid">
+            <label class="form-checkbox-label" v-for="goal in goals" :key="'goal-'+goal.id">
+              <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+              <input
+                type="checkbox"
+                :value="goal.id"
+                name="goals_checkbox[]"
+                v-model="project.goals"
+              />
+              <div class="checkbox"></div>
+            </label>
+          </div>
         </div>
         <div class="form-group">
           <label>
@@ -42,18 +64,18 @@
           <div
             class="select-support"
             v-for="(item, index) in project.support"
-            :key="'support-skill-' + item.skill + '-' + index"
+            :key="'support-skill-' + item.id + '-' + index"
           >
-            <select class="form-control" v-model="project.support[index].skill">
+            <select class="form-control" v-model="project.support[index].category">
               <option
-                v-for="parentCategory in supportItems"
+                v-for="parentCategory in supports"
                 :key="parentCategory.id"
                 :value="parentCategory.id"
               >{{parentCategory.title}}</option>
             </select>
-            <select class="form-control" v-model="project.support[index].value">
+            <select class="form-control" required v-model="project.support[index].value">
               <option
-                v-for="childCategory in categoryItems(project.support[index].skill)"
+                v-for="childCategory in categoryItems(project.support[index].category)"
                 :key="childCategory.id"
                 :value="childCategory.id"
               >{{childCategory.title}}</option>
@@ -109,58 +131,42 @@
       <div class="grid-column">
         <div class="form-group">
           <label for="projectAffected">Who is most affected? *</label>
-          <input
-            type="text"
-            class="form-control"
-            id="projectAffected"
-            placeholder="Who is most affected? (Separate with comma)?"
-            v-model="project.affected"
-            required
-          />
+          <div
+            class="input-controls"
+            v-for="(item, index) in project.affected"
+            :key="'affected-'+index"
+          >
+            <input
+              type="text"
+              class="form-control"
+              id="projectAffected"
+              placeholder="Who is most affected?"
+              v-model="project.affected[index]"
+              required
+            />
+            <div class="input-controls__controls">
+              <button @click.prevent="removeAffectedItem(index)" v-if="index >= 1">
+                <i class="fa fa-remove"></i>
+              </button>
+              <button @click.prevent="addAffectedItem" v-if="index + 1 == project.affected.length">
+                <i class="fa fa-plus-circle"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Project Stage *</label>
           <div class="form-group--grid">
-            <label class="form-control--inline">
+            <label class="form-control--inline" v-for="stage in stages" :key="'stage-'+stage.id">
               <input
                 type="radio"
                 name="projectStage"
-                value="Proof of concept/Idea"
+                :value="stage.id"
                 v-model="project.stage"
                 required
               />
               <div class="radio"></div>
-              <span>Proof of concept / Idea</span>
-            </label>
-            <label class="form-control--inline">
-              <input
-                type="radio"
-                name="projectStage"
-                value="Start Up / Business planning"
-                v-model="project.stage"
-              />
-              <div class="radio"></div>
-              <span>Start Up / Business planning</span>
-            </label>
-            <label class="form-control--inline">
-              <input
-                type="radio"
-                name="projectStage"
-                value="Scaling up operations"
-                v-model="project.stage"
-              />
-              <div class="radio"></div>
-              <span>Scaling up operations</span>
-            </label>
-            <label class="form-control--inline">
-              <input
-                type="radio"
-                name="projectStage"
-                value="Scaling out inter/nationally"
-                v-model="project.stage"
-              />
-              <div class="radio"></div>
-              <span>Scaling out inter / nationally</span>
+              <span>{{stage.title}}</span>
             </label>
           </div>
         </div>
@@ -177,7 +183,7 @@
             <input
               type="text"
               class="form-control steps__input"
-              v-model="project.steps.items[index]"
+              v-model="project.steps.items[index - 1]"
               required
               :placeholder="helpers[0]"
             />
@@ -201,7 +207,12 @@
       </div>
       <div class="grid-column grid-column--full-width">
         <hr />
+        <br />
+        <br />
         <button type="submit">Create project</button>
+        <br />
+        <br />
+        <br />
       </div>
     </form>
   </div>
@@ -210,26 +221,35 @@
 <script>
 import axios from "@/axios-auth";
 
+import VueGoogleAutocomplete from "vue-google-autocomplete";
+import { gmapApi } from "vue2-google-maps";
+
 export default {
   name: "CreateProject",
+  components: {
+    VueGoogleAutocomplete
+  },
   data() {
     return {
       project: {
         title: null,
-        description: null,
-        location: null,
+        description: "",
+        city: null,
+        country: null,
+        latitude: null,
+        longitude: null,
         goals: [],
         support: [
           {
-            skill: 1,
+            category: 1,
             value: 12
           },
           {
-            skill: 1,
+            category: 1,
             value: 12
           },
           {
-            skill: 1,
+            category: 1,
             value: 12
           }
         ],
@@ -238,7 +258,7 @@ export default {
           link: null,
           description: null
         },
-        affected: null,
+        affected: [null],
         stage: null,
         steps: {
           count: 1,
@@ -251,12 +271,20 @@ export default {
         "i.e. Start fundraising, petition etc",
         "i.e. Reach fundraising target"
       ],
-      supportItems: []
+      stages: [],
+      goals: [],
+      supports: []
     };
+  },
+  computed: {
+    google: gmapApi,
+    descriptionChars: function() {
+      const charsLeft = 400 - this.project.description.length;
+      return charsLeft;
+    }
   },
   methods: {
     onSelectFile() {
-      // TODO: Refactor ;
       let photo = null;
       const input = this.$refs.fileInput;
       const files = input.files;
@@ -274,33 +302,69 @@ export default {
         input.value = "";
       }
     },
+    addAffectedItem() {
+      this.project.affected.push(null);
+    },
     addSupportItem() {
       this.project.support.push({
         skill: 1,
-        value: 9
+        value: 12
       });
     },
     removeSupportItem(index) {
       this.project.support.splice(index, 1);
     },
+    removeAffectedItem(index) {
+      this.project.affected.splice(index, 1);
+    },
     categoryItems(id) {
-      const element = this.supportItems.find(cat => cat.id == id);
+      const element = this.supports.find(cat => cat.id == id);
 
       return element?.supports ? element.supports : null;
+    },
+    getAddressData: function(data) {
+      data.address_components.forEach(prop => {
+        if (prop.types.includes("locality")) {
+          this.project.city = prop.long_name;
+        }
+        if (prop.types.includes("country")) {
+          this.project.country = prop.long_name;
+        }
+      });
+      this.project.latitude = data.geometry.location.lat();
+      this.project.longitude = data.geometry.location.lng();
+    },
+    createProject() {
+      if (0 != this.project.goals.length) {
+        axios
+          .post("/projects", this.project)
+          .then(res => console.log("Project saved", res))
+          .catch(error => console.warn("Project isues", error));
+      } else {
+        this.$swal({
+          icon: "info",
+          text: "Please check at least one interest"
+        });
+      }
     }
   },
   watch: {
     "project.donation.active": function() {
       this.project.donation.link = null;
       this.project.donation.description = null;
+    },
+    "project.steps.count": function() {
+      this.project.steps.items.length = this.project.steps.count;
     }
   },
   mounted() {
     axios
-      .get("/users/settings")
+      .get("/projects/create")
       .then(res => {
-        console.log("Loaded support", res);
-        this.supportItems = res.data.all_supports;
+        console.log("Project creation settings", res);
+        this.supports = res.data.support_categories;
+        this.goals = res.data.goals;
+        this.stages = res.data.stages;
       })
       .catch(err => console.error("Loading support fail"));
   }
@@ -308,6 +372,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.hero {
+  width: 100%;
+  height: 255px;
+  background-image: url("/img/project-creation-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  @include margin-bottom(2rem);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -327,6 +400,26 @@ export default {
   margin-bottom: 16px;
 
   .select-support__controls {
+    display: flex;
+    line-height: 1;
+    align-items: center;
+    @include font-size(1.5rem);
+
+    button {
+      background: none;
+      border: none;
+      margin: 0px 5px;
+    }
+  }
+}
+
+.input-controls {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 17px;
+  margin-bottom: 16px;
+
+  .input-controls__controls {
     display: flex;
     line-height: 1;
     align-items: center;
@@ -377,7 +470,7 @@ export default {
 
     small {
       margin-left: 12px;
-      opacity: 0.5;
+      opalng: 0.5;
     }
   }
 
@@ -491,10 +584,81 @@ export default {
   }
 }
 
+.description-chars-count {
+  position: relative;
+
+  .description-chars-count__count {
+    position: absolute;
+    bottom: 1px;
+    right: 5px;
+    padding: 5px;
+    font-size: 12px;
+    background-color: #fff;
+    pointer-events: none;
+  }
+}
+
+.goal-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+
+  .form-checkbox-label {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0px;
+
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      border: 1px solid #393939;
+      cursor: pointer;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+
+      &::before {
+        content: "\f00c";
+        display: inline-block;
+        font-family: FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0px;
+        transition: font-size 0.4s, background-color 0.4s;
+      }
+    }
+
+    input[type="checkbox"] {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      opacity: 0;
+
+      &:checked + .checkbox {
+        background-color: #f4ed3b;
+        &::before {
+          @include font-size(1rem);
+        }
+      }
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    line-height: 1;
+  }
+}
+
 button {
   &[type="submit"] {
     // TODO - refactor button
-    background-color: #f9f69c;
+    background-color: #f4ed3b;
     width: 100%;
     min-width: 100px;
     color: #393939;
@@ -516,6 +680,27 @@ button {
     max-width: 220px;
     display: block;
     margin: auto;
+    font-family: "Montserrat SemiBold", sans-serif;
+  }
+}
+
+.post-title {
+  font-family: "Montserrat Regular";
+  text-align: center;
+  line-height: 1.35;
+  @include font-size(1.1rem);
+  padding-top: 5px;
+  margin-top: 5px;
+  @include margin-bottom(2rem);
+
+  .post-title__title {
+    @include font-size(2rem);
+    font-family: "Monsterrat SemiBold", sans-serif;
+    margin-bottom: 0px;
+  }
+
+  p {
+    line-height: 1.45;
   }
 }
 </style>

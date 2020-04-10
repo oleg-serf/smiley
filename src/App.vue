@@ -152,9 +152,11 @@ strong {
 }
 
 .container {
-  max-width: 1530px;
+  max-width: 1560px;
   margin: 0 auto;
   // padding: 0 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 
   @media (max-width: 1600px) {
     // padding: 0 20px;
