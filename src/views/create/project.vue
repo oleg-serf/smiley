@@ -215,6 +215,7 @@
         <br />
       </div>
     </form>
+    <Footer />
   </div>
 </template>
 
@@ -224,10 +225,13 @@ import axios from "@/axios-auth";
 import VueGoogleAutocomplete from "vue-google-autocomplete";
 import { gmapApi } from "vue2-google-maps";
 
+import Footer from "@/components/Footer";
+
 export default {
   name: "CreateProject",
   components: {
-    VueGoogleAutocomplete
+    VueGoogleAutocomplete,
+    Footer
   },
   data() {
     return {
