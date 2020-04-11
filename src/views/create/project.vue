@@ -14,8 +14,8 @@
             class="form-control"
             id="projectName"
             placeholder="What's the problem you're trying to solve?"
-            v-model="project.title"
             required
+            v-model="project.title"
           />
         </div>
         <div class="form-group">
@@ -221,6 +221,7 @@
 
 <script>
 import axios from "@/axios-auth";
+import router from "@/router";
 
 import VueGoogleAutocomplete from "vue-google-autocomplete";
 import { gmapApi } from "vue2-google-maps";
@@ -342,8 +343,19 @@ export default {
       if (0 != this.project.goals.length) {
         axios
           .post("/projects", this.project)
-          .then(res => console.log("Project saved", res))
-          .catch(error => console.warn("Project isues", error));
+          .then(res => {
+            console.log("Project saved", res);
+            router.push({
+              name: "project",
+              params: { slug: res.project_slug }
+            });
+          })
+          .catch(err => console.error(err));
+      } else if (null == this.project.city || null == this.project.country) {
+        this.$swal({
+          icon: "info",
+          text: "Please enter your project location properly"
+        });
       } else {
         this.$swal({
           icon: "info",
@@ -362,15 +374,12 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get("/projects/create")
-      .then(res => {
-        console.log("Project creation settings", res);
-        this.supports = res.data.support_categories;
-        this.goals = res.data.goals;
-        this.stages = res.data.stages;
-      })
-      .catch(err => console.error("Loading support fail"));
+    axios.get("/projects/create").then(res => {
+      console.log("Project creation settings", res);
+      this.supports = res.data.support_categories;
+      this.goals = res.data.goals;
+      this.stages = res.data.stages;
+    });
   }
 };
 </script>

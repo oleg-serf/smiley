@@ -21,11 +21,26 @@ const resInterceptor = instance.interceptors.response.use(
     return res
   },
   function (error) {
-    // console.log('bad');
-    // Vue.swal({
-    //   text: error.data.message,
-    //   type: 'error'
-    // });
+    const errorObject = error.response;
+    console.log('Axios INCERCEPTOR error', errorObject);
+    if (errorObject.status !== 404) {
+      let swal_props = {
+        icon: 'error',
+        html: null
+      };
+
+      if (errorObject.status == 406) {
+        swal_props.html = errorObject.data.message + '<hr>' + errorObject.data.errors.join('<br>');
+      } else {
+        swal_props.html = 'Error: ' + errorObject.status + ' - ' + errorObject.statusText;
+      }
+      Vue.swal(swal_props);
+    } else {
+      Vue.swal({
+        html: 'use router to redirect to 404 page'
+      });
+
+    }
     return error
   }
 );
