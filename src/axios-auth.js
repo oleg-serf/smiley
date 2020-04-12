@@ -16,10 +16,7 @@ const reqInterceptor = instance.interceptors.request.use(config => {
   return config
 })
 const resInterceptor = instance.interceptors.response.use(
-  function (res) {
-    // console.log('good');
-    return res
-  },
+  response => response,
   function (error) {
     const errorObject = error.response;
     console.log('Axios INCERCEPTOR error', errorObject);

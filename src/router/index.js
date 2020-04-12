@@ -197,6 +197,15 @@ const routes = [{
       requiresAuth: true,
     }
   },
+  {
+    path: '/edit/project/:slug',
+    name: 'edit-project',
+    component: () => import( /* webpackChunkName: "goals" */ '../views/edit/project.vue'),
+    meta: {
+      title: 'Edit project',
+      requiresAuth: true,
+    }
+  },
   /**
    * News
    */

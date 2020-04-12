@@ -16,16 +16,31 @@
         <div class="project-information__column-info">
           <h1 class="project-information__title">{{project.name}}</h1>
           <div class="project-information__description" v-html="project.description"></div>
-          <div class="project-information__location">{{project.city}}, {{project.country}}</div>
+          <div class="project-information__location">
+            <i class="fa fa-map-marker"></i>
+            {{project.city}}, {{project.country}}
+          </div>
           <div class="project-information__buttons">
+            <router-link
+              :to="{name: 'edit-project', params: {slug: project.slug}}"
+              v-if="project.is_owner"
+            >
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              edit project
+            </router-link>
             <a href="#" class="primary">offer support</a>
-            <a href="#">make a donation</a>
+            <a :href="project.donation_link" v-if="project.allow_donations">make a donation</a>
           </div>
         </div>
         <div class="project-information__column-additional">
           <div class="project-information__additional-block">
             <div class="project-information__additional-block-title">Affected</div>
-            <p>{{project.affected}}</p>
+            <ul>
+              <li
+                v-for="(affected, index) in project.affected"
+                :key="'affected-'+index"
+              >• {{affected.text}}</li>
+            </ul>
           </div>
           <div class="project-information__additional-block">
             <div class="project-information__additional-block-title">Supporters</div>
@@ -63,27 +78,74 @@
           </div>
           <div class="project-information__additional-block">
             <div class="project-information__additional-block-title">UN Goal</div>
-            <p>{{projectGoals()}}</p>
+            <p>{{project.goals ? projectGoals(project.goals) : null}}</p>
           </div>
         </div>
       </div>
     </div>
-    <hr />
-    <section class="project-heading section container">
+
+    <section class="project-heading section container" v-if="project.allow_donations">
       <h2 class="project-heading__title">Make a donation</h2>
       <p class="project-heading__subtitle">Why we need this?</p>
       <div class="project-heading__content">
-        <p>If you find any joy and value in what we do, please consider becoming a Sustaining Patron with a recurring monthly donation of your choosing, between a cup of tea and a good lunch. Your support really matters.</p>
+        <p v-html="project.donation_text"></p>
       </div>
       <div class="project-heading__button">
-        <a href="#">Make a donation</a>
+        <a :href="project.donation_link">Make a donation</a>
       </div>
     </section>
-    <hr />
+
+    <section
+      class="project-heading section container section--support"
+      v-if="project.supports &&project.supports.length > 0"
+    >
+      <!-- <h2 class="project-heading__title">Make a donation</h2> -->
+      <!-- <p class="project-heading__subtitle">Why we need this?</p> -->
+      <div class="project-heading__content supports-grid">
+        <div
+          v-for="(item, index) in project.supports"
+          :key="'grid-'+item.category+'-'+index"
+          class="grid-item"
+        >
+          <div class="support-title">{{item.category}}</div>
+          <div class="support-category">{{item.sub_category}}</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-heading section container project--information-blocks">
+      <div class="project-heading__content">
+        <div class="information-item">
+          <img
+            :src="$settings.images_path.projects +'m_'+project.mission_image"
+            v-if="project.mission_image != null"
+          />
+          <h3>Our Mission</h3>
+          <p>{{project.mission}}</p>
+        </div>
+        <div class="information-item">
+          <img
+            :src="$settings.images_path.projects +'m_'+project.audience_image"
+            v-if="project.audience_image != null"
+          />
+          <h3>Our audience</h3>
+          <p>{{project.audience}}</p>
+        </div>
+        <div class="information-item">
+          <img
+            :src="$settings.images_path.projects +'m_'+project.vision_image"
+            v-if="project.vision_image != null"
+          />
+          <h3>Our vision</h3>
+          <p>{{project.vision}}</p>
+        </div>
+      </div>
+    </section>
+
     <section class="project-heading section container">
       <h2 class="project-heading__title">How we're creating POSITIVE change</h2>
       <div class="project-heading__content">
-        <p>{{project.steps.length}} {{project.steps.length > 1 ? 'Steps' : 'Step'}} for change</p>
+        <p>{{project.steps ? project.steps.length : ''}} {{project.steps && project.steps.length > 1 ? 'Steps' : 'Step'}} for change</p>
       </div>
     </section>
     <section class="project-stepts-grid section container">
@@ -100,7 +162,7 @@
           </div>
         </div>
         <div class="project-step__bottom">
-          <img src="/img/homepage/banner-news.jpg" alt />
+          <img :src="$settings.images_path.projects +'m_'+step.image" v-if="step.image != null" />
         </div>
       </div>
     </section>
@@ -126,8 +188,7 @@ export default {
   },
   methods: {
     projectGoals() {
-      const goals = this.project.goals.map(item => item.name);
-
+      let goals = this.project.goals.map(item => item.name);
       return goals.join(", ");
     }
   },
@@ -290,7 +351,7 @@ export default {
     }
   }
 
-  .project-information__additional-block p {
+  .project-information__additional-block {
     font-family: "Montserrat Regular";
   }
 
@@ -447,6 +508,95 @@ export default {
       height: 100%;
       object-fit: cover;
       object-position: contain;
+    }
+  }
+}
+
+.section--support {
+  margin: 0px auto;
+}
+
+.supports-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 100% !important;
+  grid-gap: 1px;
+
+  .grid-item {
+    border: 1px solid #e0e2e7;
+    margin: -1px;
+    padding: 60px 40px;
+
+    &:nth-child(4n + 1) {
+      border-left: 0px;
+    }
+    &:nth-child(4n + 4) {
+      border-right: 0px;
+    }
+  }
+
+  .support-title {
+    font-family: "Monsterrat SemiBold", sans-serif;
+    @include font-size(1.5rem);
+  }
+  .support-category {
+    font-family: "Monsterrat Regular", sans-serif;
+    @include font-size(1rem);
+  }
+}
+
+.project--information-blocks {
+  .project-heading__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+
+    .information-item {
+      padding: 60px 40px;
+      position: relative;
+
+      &::before {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        content: "";
+        opacity: 0.4;
+        background-color: #000;
+        z-index: 2;
+      }
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        object-fit: cover;
+        object-position: contain;
+      }
+
+      h3 {
+        position: relative;
+        color: #fff;
+        z-index: 3;
+      }
+      p {
+        position: relative;
+        color: #fff;
+        z-index: 3;
+      }
+
+      &:nth-child(1) {
+        background-color: #ececec;
+      }
+      &:nth-child(2) {
+        background-color: #dcdcdc;
+      }
+      &:nth-child(3) {
+        background-color: #cfcece;
+      }
     }
   }
 }

@@ -124,6 +124,7 @@
             id="donationDescription"
             placeholder="Why do you need funding?"
             v-model="project.donation.description"
+            maxlength="500"
             required
           ></textarea>
         </div>
@@ -347,7 +348,7 @@ export default {
             console.log("Project saved", res);
             router.push({
               name: "project",
-              params: { slug: res.project_slug }
+              params: { slug: res.data.project_slug }
             });
           })
           .catch(err => console.error(err));

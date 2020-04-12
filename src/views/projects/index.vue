@@ -18,6 +18,58 @@
     <!-- Title section -->
     <section class="section projects-section container">
       <h2 class="projects-section__title">
+        Created by you
+        <span class="projects-section__count">{{myProjects.length}} Projects</span>
+      </h2>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-grid container section">
+      <!-- TODO: Make component from Project -->
+      <div class="project-article" v-for="project in myProjects" :key="'project-my-'+project.slug">
+        <div class="project-article__image">
+          <img src="/img/homepage/banner-news.jpg" alt />
+        </div>
+        <div class="project-article__content">
+          <div class="project-article__category">
+            <div class="project-article__header">
+              <div class="project-article__category-name">{{ project.goals[0].name}}</div>
+              <div class="project-article__category-circle">
+                <span>+{{project.goals.length - 1}}</span>
+              </div>
+            </div>
+            <div class="project-article__timestamp">5 days ago</div>
+          </div>
+          <div class="project-article__spacer"></div>
+          <div class="project-article__inner">
+            <h3 class="project-article__title">{{project.name}}</h3>
+            <div class="project-article__description" v-html="trimDescription(project.description)"></div>
+            <div class="project-article__button">
+              <router-link :to="{name: 'project', params: {slug: project.slug}}">view project</router-link>
+            </div>
+          </div>
+        </div>
+        <div class="project-article__actions">
+          <button>
+            <span>0</span>
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            Like
+          </button>
+          <button>
+            <i class="fa fa-commenting-o" aria-hidden="true"></i>
+            Comment
+          </button>
+          <button>
+            <i class="fa fa-share-alt" aria-hidden="true"></i>
+            Share
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Title section -->
+    <section class="section projects-section container">
+      <h2 class="projects-section__title">
         Explore Projects
         <span class="projects-section__count">1 552 Projects</span>
       </h2>
@@ -58,16 +110,16 @@
     <!-- Projects Grid -->
     <section class="projects-grid container section">
       <!-- TODO: Make component from Project -->
-      <div class="project-article" v-for="project in projects" :key="'project-'+project.id">
+      <div class="project-article" v-for="project in projects" :key="'project-'+project.slug">
         <div class="project-article__image">
           <img src="/img/homepage/banner-news.jpg" alt />
         </div>
         <div class="project-article__content">
           <div class="project-article__category">
             <div class="project-article__header">
-              <div class="project-article__category-name">Human Rights</div>
+              <div class="project-article__category-name">{{ project.goals[0].name}}</div>
               <div class="project-article__category-circle">
-                <span>+15</span>
+                <span>+{{project.goals.length - 1}}</span>
               </div>
             </div>
             <div class="project-article__timestamp">5 days ago</div>
@@ -75,7 +127,7 @@
           <div class="project-article__spacer"></div>
           <div class="project-article__inner">
             <h3 class="project-article__title">{{project.name}}</h3>
-            <div class="project-article__description">Lorem ipsum dolor sit amet, consectet</div>
+            <div class="project-article__description" v-html="trimDescription(project.description)"></div>
             <div class="project-article__button">
               <router-link :to="{name: 'project', params: {slug: project.slug}}">view project</router-link>
             </div>
@@ -115,8 +167,16 @@ export default {
   },
   data() {
     return {
-      projects: []
+      projects: [],
+      myProjects: []
     };
+  },
+  methods: {
+    trimDescription(description) {
+      return description.length > 80
+        ? description.substring(0, 80) + "..."
+        : description;
+    }
   },
   mounted() {
     axios.get("/projects").then(res => {
@@ -124,6 +184,10 @@ export default {
 
       this.projects = res.data.projects;
     });
+
+    axios
+      .get("/projects/my")
+      .then(res => (this.myProjects = res.data.projects));
   }
 };
 </script>
@@ -148,7 +212,7 @@ export default {
   background-color: #000;
   position: relative;
   padding: 30px;
-  min-height: 300px;
+  min-height: 350px;
   transition: padding-bottom 0.4s;
   color: #fff;
   display: flex;
@@ -250,6 +314,7 @@ export default {
       transform: translate(-50%, -49%);
       @include font-size(0.8rem);
       font-family: "Inter Regular";
+      white-space: nowrap;
     }
   }
 
@@ -257,6 +322,7 @@ export default {
     color: #fff;
     font-family: "Montserrat Regular", sans-serif;
     opacity: 0.7;
+    display: none;
   }
 
   .project-article__spacer {
