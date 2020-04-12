@@ -1,14 +1,22 @@
 <template>
   <div>
     <div class="project-information">
-      <img src="/img/homepage/banner-news.jpg" class="project-information__banner" alt />
+      <img
+        :src="$settings.images_path.projects +'l_'+project.cover_image"
+        class="project-information__banner"
+        alt
+      />
 
       <div class="project-information__top container">
         <div class="project-information__user">
-          <img src="/img/homepage/banner-news.jpg" class="project-information__user-avatar" />
+          <img
+            :src="$settings.images_path.users +'m_'+project.owner.avatar"
+            v-if="project.owner.avatar != null"
+            class="project-information__user-avatar"
+          />
           <div class="project-information__user-content">
             <div class="project-information__user-hosted">Project hosted by</div>
-            <div class="project-information__user-name">Lillian Rodriquez</div>
+            <div class="project-information__user-name">{{project.owner.name}}</div>
           </div>
         </div>
       </div>

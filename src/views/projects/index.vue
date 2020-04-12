@@ -29,7 +29,7 @@
       <!-- TODO: Make component from Project -->
       <div class="project-article" v-for="project in myProjects" :key="'project-my-'+project.slug">
         <div class="project-article__image">
-          <img src="/img/homepage/banner-news.jpg" alt />
+          <img :src="$settings.images_path.projects +'m_'+project.cover_image" alt />
         </div>
         <div class="project-article__content">
           <div class="project-article__category">
@@ -113,7 +113,11 @@
       <!-- TODO: Make component from Project -->
       <div class="project-article" v-for="project in projects" :key="'project-'+project.slug">
         <div class="project-article__image">
-          <img src="/img/homepage/banner-news.jpg" alt />
+          <img
+            :src="$settings.images_path.projects +'m_'+project.cover_image"
+            v-if="project.cover_image != null"
+            alt
+          />
         </div>
         <div class="project-article__content">
           <div class="project-article__category">
