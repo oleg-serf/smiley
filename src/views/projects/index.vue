@@ -2,9 +2,10 @@
   <div>
     <!-- Network banner -->
     <div class="container">
-      <banner color="#4696D2">
+      <banner color="#4696D2" link="/create/project">
         <template v-slot:name>Network</template>
         <template v-slot:title>Projects that change the world</template>
+        <template v-slot:button>Create</template>
         <template
           v-slot:content
         >Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</template>
