@@ -370,7 +370,7 @@ export default {
       .title {
         @include font-size(1.2rem);
         font-weight: bold;
-        font-family: "Monsterrat Bold", sans-serif;
+        font-family: "Montserrat Bold", sans-serif;
         color: #393939;
         @include padding-bottom(1rem);
         text-transform: uppercase;
@@ -385,7 +385,7 @@ export default {
         }
 
         span {
-          font-family: "Monsterrat Regular", sans-serif;
+          font-family: "Montserrat Regular", sans-serif;
           @include font-size(1rem);
 
           padding-left: 8px;
@@ -479,7 +479,7 @@ export default {
       border-bottom: 2px solid rgba(0, 0, 0, 0.1);
       white-space: nowrap;
       justify-content: center;
-      font-family: "Monsterrat Bold", sans-serif;
+      font-family: "Montserrat Bold", sans-serif;
       font-weight: bold;
       cursor: pointer;
     }

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header />
+    <header-main />
     <router-view :key="$route.fullPath" />
   </div>
 </template>
@@ -8,6 +9,7 @@
 <script>
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
+import HeaderMain from "@/components/HeaderMain.vue";
 import Footer from "@/components/Footer.vue";
 import axios from "./axios-auth";
 import router from "./router";
@@ -16,6 +18,7 @@ export default {
   name: "home",
   components: {
     Header,
+    HeaderMain,
     Footer
   },
   watch: {

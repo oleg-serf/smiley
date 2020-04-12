@@ -276,7 +276,7 @@ export default {
   margin-top: 48px;
   text-align: center;
   text-transform: uppercase;
-  font-family: "Monsterrat Bold", sans-serif;
+  font-family: "Montserrat Bold", sans-serif;
   font-weight: 700;
   line-height: 1.35;
   @include font-size(2rem);

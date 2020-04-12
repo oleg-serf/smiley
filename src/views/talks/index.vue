@@ -108,7 +108,7 @@ export default {
   padding-bottom: 30px;
 
   button {
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
     background-color: #fff;
     border: 1px solid #e5e5e5;
     padding: 18px 10px;
@@ -126,7 +126,7 @@ export default {
 
     &.primary {
       background-color: #f4ed3b;
-      font-family: "Monsterrat SemiBold", sans-serif;
+      font-family: "Montserrat SemiBold", sans-serif;
     }
   }
 }
@@ -137,12 +137,12 @@ export default {
 
   .talks-title__title {
     @include font-size(2rem);
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
   .talks-title__subtitle {
     margin-top: 0px;
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
     @include font-size(1.2rem);
   }
 }
@@ -166,7 +166,7 @@ export default {
 
   .filter-search--location {
     grid-column: 2 / span 3;
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
 
     span {
       font-weight: bold;
@@ -191,7 +191,7 @@ export default {
   }
 
   input {
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
     background-color: #fff;
     border: 1px solid #e5e5e5;
     padding: 15px 20px 15px 40px;

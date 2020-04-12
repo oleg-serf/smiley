@@ -570,7 +570,7 @@ export default {
   .feed-nav {
     display: flex;
     @include font-size(2rem);
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 
     li {
@@ -627,17 +627,17 @@ export default {
   .organisation-post__name {
     text-decoration: none;
     @include font-size(1.2rem);
-    font-family: "Monsterrat Bold", sans-serif;
+    font-family: "Montserrat Bold", sans-serif;
     color: #393939;
     border-bottom: 1px solid transparent;
     transition: border-color 0.4s;
   }
   .organisation-post__date {
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     @include font-size(1.2rem);
   }
   .organisation-post__content {
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
     @include font-size(1.2rem);
   }
 }
@@ -646,7 +646,7 @@ export default {
   max-width: 1024px;
 
   .following-message__content {
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
     @include font-size(1.2rem);
   }
 

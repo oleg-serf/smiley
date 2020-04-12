@@ -586,7 +586,7 @@ export default {
       }
 
       span {
-        font-family: "Monsterrat Regular", sans-serif;
+        font-family: "Montserrat Regular", sans-serif;
         margin-left: 24px;
         cursor: pointer;
       }
@@ -709,7 +709,7 @@ button {
 
   .post-title__title {
     @include font-size(2rem);
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
 

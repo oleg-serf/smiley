@@ -169,12 +169,12 @@ export default {
 
   .section-title__title {
     @include font-size(2rem);
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
   .section-title__subtitle {
     margin-top: 0px;
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
     @include font-size(1.2rem);
   }
 }

@@ -461,7 +461,7 @@ export default {
 
   .post-title__title {
     @include font-size(2rem);
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
 
@@ -485,7 +485,7 @@ export default {
 
   .post-title__title {
     @include font-size(2rem);
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
 

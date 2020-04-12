@@ -22,7 +22,7 @@
   }
 
   .input-element__title {
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     @include font-size(1rem);
   }
 
@@ -52,7 +52,7 @@
   &__input {
     width: 100%;
     padding: 10px 20px;
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     color: #393939;
   }
 

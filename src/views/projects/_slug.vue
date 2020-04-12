@@ -544,11 +544,11 @@ export default {
   }
 
   .support-title {
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     @include font-size(1.5rem);
   }
   .support-category {
-    font-family: "Monsterrat Regular", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
     @include font-size(1rem);
   }
 }

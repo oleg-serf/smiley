@@ -415,7 +415,7 @@ export default {
     .title {
       @include font-size(1.2rem);
       font-weight: bold;
-      font-family: "Monsterrat Bold", sans-serif;
+      font-family: "Montserrat Bold", sans-serif;
       color: #fff;
       text-transform: uppercase;
       display: flex;
@@ -424,7 +424,7 @@ export default {
 
     .content {
       @include font-size(1rem);
-      font-family: "Monsterrat Regular", sans-serif;
+      font-family: "Montserrat Regular", sans-serif;
       color: #fff;
       text-transform: uppercase;
       display: flex;
@@ -485,7 +485,7 @@ export default {
 }
 
 .button {
-  font-family: "Monsterrat SemiBold", sans-serif;
+  font-family: "Montserrat SemiBold", sans-serif;
   margin-top: 24px;
   width: 100%;
   min-width: 100px;
@@ -620,7 +620,7 @@ export default {
     .title {
       @include font-size(1.2rem);
       font-weight: bold;
-      font-family: "Monsterrat Bold", sans-serif;
+      font-family: "Montserrat Bold", sans-serif;
       color: #393939;
       @include padding-bottom(1rem);
       text-transform: uppercase;
@@ -635,7 +635,7 @@ export default {
       }
 
       span {
-        font-family: "Monsterrat Regular", sans-serif;
+        font-family: "Montserrat Regular", sans-serif;
         @include font-size(1rem);
 
         padding-left: 8px;
@@ -674,7 +674,7 @@ export default {
       border-bottom: 2px solid rgba(0, 0, 0, 0.1);
       white-space: nowrap;
       justify-content: center;
-      font-family: "Monsterrat Bold", sans-serif;
+      font-family: "Montserrat Bold", sans-serif;
       font-weight: bold;
       cursor: pointer;
     }
@@ -781,7 +781,7 @@ export default {
 
   .post-title__title {
     @include font-size(2rem);
-    font-family: "Monsterrat SemiBold", sans-serif;
+    font-family: "Montserrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
 
