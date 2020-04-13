@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="textual-banner">
+      <div class="container">
+        <div class="textual-banner__title">Dashboard</div>
+        <p>Your personalised portal to share information about yourself and hear about the latest news, events, organisations, projects and new members that share your interests.</p>
+      </div>
+    </div>
     <div class="feed-header">
       <div class="feed-grid container">
         <div class="feed-grid__item feed-grid__item--profile">
@@ -181,17 +187,52 @@
         </div>-->
       </div>
     </div>
+    <div class="feed-updates">
+      <div class="updates-navigation">
+        <div class="container">
+          <div
+            class="updates-navigation__item"
+            :class="{active: updatesTab == 'news'}"
+            @click="updatesTab = 'news'"
+          >
+            Smiley
+            <small>®</small> News
+          </div>
+          <div
+            class="updates-navigation__item"
+            :class="{active: updatesTab == 'updates'}"
+            @click="updatesTab = 'updates'"
+          >Updates</div>
+        </div>
+      </div>
+      <div class="updates-tabs container">
+        <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'news'">
+          <news-card v-for="article in latest" :key="'latest-'+article.slug" :article="article" />
+        </div>
+        <div class="updates-tabs__tab" v-show="updatesTab == 'updates'">no updates for now</div>
+      </div>
+    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import axios from "@/axios-auth";
 
+import NewsCard from "@/components/cards/NewsCard.vue";
+import Footer from "@/components/Footer";
+
 export default {
   name: "UserFeed",
+  components: {
+    NewsCard,
+    Footer
+  },
   data() {
     return {
+      latest: [],
       tab: "community",
+      updatesTab: "news",
       description:
         "A route-planning app that finds the safest route from A to B thanks to users' ratings of how safe they felt on each road. Users can rate roads for how safe they felt and at what time. Out of five for how safe they felt, box for written explanation, and notes for council – if they felt unsafe, why? Like google maps, the app will find a route for you but you can choose for it to be based on how safe people felt on it. People have to sign up through a facebook, insta or twitter account which is checked to be a real account.",
       eventsList: [
@@ -258,7 +299,14 @@ export default {
       ]
     };
   },
-  mounted() {}
+  mounted() {
+    axios
+      .get("/news/latest")
+      .then(res => {
+        this.latest = res.data.latest_news;
+      })
+      .catch(error => console.error(error));
+  }
 };
 </script>
 
@@ -706,6 +754,57 @@ export default {
       i {
         transform: rotate(90deg);
       }
+    }
+  }
+}
+
+// Main tabs
+.feed-updates {
+  .updates-navigation {
+    background-color: #dee4ed;
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .updates-navigation__item {
+    display: block;
+    text-align: center;
+    font-family: "Montserrat Regular", sans-serif;
+    @include font-size(1.5rem);
+    @include padding-top(1.5rem);
+    @include padding-bottom(1.5rem);
+    transition: background-color 0.2s;
+    cursor: pointer;
+    position: relative;
+
+    &.active {
+      font-family: "Montserrat Bold", sans-serif;
+      background-color: #f4ed3b;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -7px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 15px 15px 0 15px;
+        border-color: #f4ee3b transparent transparent transparent;
+      }
+    }
+  }
+  .updates-tabs {
+    padding-top: 24px;
+  }
+  .updates-tabs__tab {
+    &--news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 5px;
     }
   }
 }

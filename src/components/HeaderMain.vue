@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="search-block" :class="{active: searchActive}">
-      <form class="search-form container" :class="{active: searchActive}" @submit.prevent="search">
+      <form class="search-form container" :class="{active: searchActive}" @submit.prevent="find">
         <button class="search-form__close" type="button" @click="searchActive = false">
           <i class="fa fa-close"></i>
         </button>
@@ -163,6 +163,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "MainHeader",
   data() {
@@ -193,6 +195,13 @@ export default {
     }
   },
   methods: {
+    find() {
+      router.push({
+        name: "search",
+        params: { keyword: this.search }
+      });
+      this.searchActive = false;
+    },
     logout() {
       this.$store.dispatch("user/logout");
     }

@@ -16,7 +16,7 @@
           <div
             class="organisation-item"
             v-for="organisation in organisations"
-            :key="organisation.id+'-org-archive'"
+            :key="organisation.slug+'-org-archive'"
           >
             <div class="organisation-item__logo">
               <router-link :to="'/organisation/' + organisation.slug">
