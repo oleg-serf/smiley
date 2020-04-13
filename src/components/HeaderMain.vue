@@ -133,7 +133,7 @@
         </div>
         <div class="user-profile" v-else>
           <div class="user-profile__circle">
-            <span class="user-profile__cirecle-loggedout">
+            <span class="user-profile__circle-loggedout">
               <i class="fa fa-user-circle-o"></i>
             </span>
           </div>
@@ -145,7 +145,7 @@
               </router-link>
             </li>
             <li class="user-menu__item user-menu__item--textual">
-              <span>- OR -</span>
+              <span>New to Smiley Movement?</span>
             </li>
             <li class="user-menu__item">
               <router-link
@@ -198,6 +198,8 @@ export default {
 <style lang="scss" scoped>
 header {
   position: relative;
+  z-index: 10;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
 }
 
 .search-block {
@@ -272,6 +274,8 @@ header {
     &--logo {
       display: flex;
       align-items: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
       img {
         max-width: 240px;
         width: 100%;
@@ -298,6 +302,7 @@ header {
 
   nav {
     width: 100%;
+    height: 100%;
   }
 }
 
@@ -306,9 +311,13 @@ header {
   display: flex;
   justify-content: center;
   margin: 0px;
+  height: 100%;
 
   .main-menu__item {
     position: relative;
+    display: flex;
+    align-items: center;
+
     &:hover {
       .main-menu__link {
         border-bottom: 2px solid #393939;
@@ -334,6 +343,9 @@ header {
     display: block;
     border-bottom: 2px solid transparent;
     transition: border-color 0.2s;
+    height: 100%;
+    display: flex;
+    align-items: center;
 
     &.router-link-active {
       border-bottom: 2px solid #393939;
@@ -436,7 +448,7 @@ header {
   line-height: 1;
   width: 24px;
   height: 24px;
-  background-color: none;
+  background-color: transparent;
   border: none;
   cursor: pointer;
   // transition: transform 0.2s;
@@ -459,16 +471,18 @@ header {
   }
 
   i {
-    mix-blend-mode: difference;
-
     position: relative;
     z-index: 2;
-    color: #fff;
+    color: #393939;
   }
 
   &:hover {
     &::before {
       top: 0px;
+    }
+
+    i {
+      color: #fff;
     }
   }
 }
@@ -499,6 +513,10 @@ header {
       object-position: center;
       border-radius: 50%;
       border: 1px solid #d8d8d8;
+    }
+
+    &-loggedout {
+      @include font-size(2rem);
     }
   }
 
@@ -548,8 +566,8 @@ header {
   &--textual {
     // text-align: center;
     padding: 15px 25px;
-
     font-family: "Montserrat SemiBold", sans-serif;
+    @include font-size(0.9rem);
   }
 }
 

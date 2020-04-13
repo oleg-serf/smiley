@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header />
+    <!-- <Header /> -->
     <header-main />
     <router-view :key="$route.fullPath" />
   </div>
