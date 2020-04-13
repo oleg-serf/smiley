@@ -21,6 +21,15 @@ const getters = {
   isAuthenticated(state) {
     return state.token !== null;
   },
+  avatar(state) {
+    return state.info.avatar || null;
+  },
+  full_name(state) {
+    return state.info.full_name || null;
+  },
+  organisation(state) {
+    return state.organisation
+  },
   organisationSlug(state) {
     return state.organisation.slug;
   }

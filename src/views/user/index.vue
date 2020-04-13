@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile-bg">
     <div class="post-title container">
       <div class="post-title__title">Dashboard</div>
       <p>
@@ -270,6 +270,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.profile-bg {
+  background-color: #f4f6f9;
+}
+
 .profile-holder {
   // border-top: 1px solid hsla(0, 0%, 100%, 0.25);
   // margin-top: 50px;

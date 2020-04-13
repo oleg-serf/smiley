@@ -1,5 +1,23 @@
 <template>
   <header>
+    <div class="search-block" :class="{active: searchActive}">
+      <form class="search-form container" :class="{active: searchActive}" @submit.prevent="search">
+        <button class="search-form__close" type="button" @click="searchActive = false">
+          <i class="fa fa-close"></i>
+        </button>
+        <input
+          class="search-form__field"
+          placeholder="What are we looking for?"
+          type="search"
+          aria-label="Search through site content"
+          v-model="search"
+          required
+        />
+        <button class="search-form__submit" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
+    </div>
     <div class="container grid">
       <div class="grid-item grid-item--logo">
         <router-link class="tm-logo" to="/">
@@ -25,16 +43,16 @@
 
               <div class="sub-menu">
                 <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'story'}">our partners</router-link>
+                  <router-link class="sub-menu__link" :to="{name: 'partners'}">our partners</router-link>
                 </li>
                 <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'story'}">members</router-link>
+                  <router-link class="sub-menu__link" :to="{name: 'users'}">members</router-link>
                 </li>
                 <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'story'}">organisations</router-link>
+                  <router-link class="sub-menu__link" :to="{name: 'organisations'}">organisations</router-link>
                 </li>
                 <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'story'}">projects</router-link>
+                  <router-link class="sub-menu__link" :to="{name: 'projects'}">projects</router-link>
                 </li>
               </div>
             </li>
@@ -57,39 +75,84 @@
         </ul>
       </div>
       <div class="grid-item grid-item--user">
-        <button @click.prevent="searchActivator" class="button-search">
+        <button @click.prevent="searchActive = true" class="button-search">
           <i class="fa fa-search"></i>
         </button>
-        <router-link to="/" class="button-notification">
-          <i class="fa fa-bell-o"></i>
+        <router-link to="/" class="button-notification" v-if="loggedIn">
+          <div class="button-notification__icon">
+            <i class="fa fa-bell-o"></i>
+          </div>
         </router-link>
-        <div class="user-profile">
-          <div class="user-profile__circle"></div>
+        <div class="user-profile" v-if="loggedIn">
+          <div class="user-profile__circle">
+            <template v-if="userAvatar != null">
+              <img :src="$settings.images_path.users + 's_' + userAvatar" />
+            </template>
+            <template v-else>
+              <span>{{userName}}</span>
+            </template>
+          </div>
           <i class="fa fa-angle-down"></i>
           <ul class="user-menu">
             <li class="user-menu__item">
-              <router-link to="/" class="user-menu__link">
+              <router-link :to="{name: 'profile'}" class="user-menu__link">
                 <i class="fa fa-user"></i> My Profile
               </router-link>
             </li>
             <li class="user-menu__item">
-              <router-link to="/" class="user-menu__link">
+              <router-link :to="{name: 'account-settings'}" class="user-menu__link">
                 <i class="fa fa-cogs"></i> Account Settings
               </router-link>
             </li>
             <li class="user-menu__item">
-              <router-link to="/" class="user-menu__link">
+              <router-link :to="{name: 'feed'}" class="user-menu__link">
                 <i class="fa fa-cloud"></i> My News Feed
               </router-link>
             </li>
             <li class="user-menu__item">
-              <router-link to="/" class="user-menu__link">
-                <i class="fa fa-users"></i> My Organisation
-              </router-link>
+              <template v-if="organisation.admin != null">
+                <router-link
+                  :to="{name: 'organisation', params: {slug: organisation.slug}}"
+                  class="user-menu__link"
+                >
+                  <i class="fa fa-users"></i> My Organisation
+                </router-link>
+              </template>
+              <template v-else>
+                <router-link :to="{name: 'create-organisation'}" class="user-menu__link">
+                  <i class="fa fa-user-plus"></i> Create Organisation
+                </router-link>
+              </template>
             </li>
             <li class="user-menu__item">
-              <router-link to="/" class="user-menu__link">
+              <router-link :to="{name: 'profile'}" class="user-menu__link">
                 <i class="fa fa-power-off"></i> Sign Out
+              </router-link>
+            </li>
+          </ul>
+        </div>
+        <div class="user-profile" v-else>
+          <div class="user-profile__circle">
+            <span class="user-profile__cirecle-loggedout">
+              <i class="fa fa-user-circle-o"></i>
+            </span>
+          </div>
+          <i class="fa fa-angle-down"></i>
+          <ul class="user-menu">
+            <li class="user-menu__item">
+              <router-link :to="{name: 'login'}" class="user-menu__link">
+                <i class="fa fa-sign-in"></i> Login
+              </router-link>
+            </li>
+            <li class="user-menu__item user-menu__item--textual">
+              <span>- OR -</span>
+            </li>
+            <li class="user-menu__item">
+              <router-link
+                :to="{name: 'register'}"
+                class="user-menu__link user-menu__link--register"
+              >
+                <i class="fa fa-user-plus"></i> Register
               </router-link>
             </li>
           </ul>
@@ -104,6 +167,8 @@ export default {
   name: "MainHeader",
   data() {
     return {
+      search: null,
+      searchActive: false,
       socials: [
         { name: "facebook", link: process.env.VUE_APP_SOCIAL_FACEBOOK },
         { name: "linkedin", link: process.env.VUE_APP_SOCIAL_LINKEDIN },
@@ -111,11 +176,93 @@ export default {
         { name: "instagram", link: process.env.VUE_APP_SOCIAL_INSTAGRAM }
       ]
     };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters["user/isAuthenticated"];
+    },
+    userAvatar() {
+      return this.$store.getters["user/avatar"];
+    },
+    userName() {
+      return this.$store.getters["user/full_name"];
+    },
+    organisation() {
+      console.log(this.$store.getters["user/organisation"]);
+      return this.$store.getters["user/organisation"];
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+header {
+  position: relative;
+}
+
+.search-block {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #393939;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.2s, opacity 0.2s;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+
+  &.active {
+    opacity: 1;
+    width: 100%;
+    pointer-events: all;
+  }
+
+  .search-form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 48px auto 48px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    transition-delay: 0.2s;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  .search-form__close {
+    border: none;
+    background-color: #393939;
+    color: #fff;
+    cursor: pointer;
+  }
+  .search-form__field {
+    padding: 5px 20px;
+    border: 1px solid #393939;
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+
+    &::valid,
+    &::invalid {
+      border: 1px solid #393939;
+      border-top-color: #fff;
+      border-bottom-color: #fff;
+    }
+  }
+  .search-form__submit {
+    border: none;
+    color: #393939;
+    background: #ffec02;
+    cursor: pointer;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 4fr 1fr 1fr;
@@ -186,7 +333,7 @@ export default {
     padding: 24px 10px 22px 10px;
     display: block;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.4s;
+    transition: border-color 0.2s;
 
     &.router-link-active {
       border-bottom: 2px solid #393939;
@@ -194,7 +341,7 @@ export default {
 
     i {
       margin-left: 12px;
-      transition: transform 0.4s;
+      transition: transform 0.2s;
     }
   }
 
@@ -210,7 +357,7 @@ export default {
     // border: 2px solid #393939;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.4s;
+    transition: opacity 0.2s;
     box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.3);
 
     &::before {
@@ -229,7 +376,7 @@ export default {
   }
 
   .sub-menu__item {
-    transition: transform 0.4s;
+    transition: transform 0.2s;
 
     &:hover {
       transform: translateX(10px);
@@ -257,7 +404,7 @@ export default {
     line-height: 1;
     width: 24px;
     height: 24px;
-    transition: background-color 0.4s;
+    transition: background-color 0.2s;
 
     &:not(:last-child) {
       margin-right: 8px;
@@ -274,7 +421,7 @@ export default {
 
   .header-socials__link {
     color: #393939;
-    transition: color 0.4s;
+    transition: color 0.2s;
     display: block;
     width: 100%;
     height: 100%;
@@ -287,16 +434,42 @@ export default {
 
 .button-search {
   line-height: 1;
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   background-color: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.4s;
+  // transition: transform 0.2s;
   margin-right: 12px;
+  position: relative;
+  overflow: hidden;
+  padding: 0px 2px 2px 3px;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #393939;
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: 1;
+    transition: top 0.2s;
+  }
+
+  i {
+    mix-blend-mode: difference;
+
+    position: relative;
+    z-index: 2;
+    color: #fff;
+  }
 
   &:hover {
-    transform: scale(1.1);
+    &::before {
+      top: 0px;
+    }
   }
 }
 
@@ -317,10 +490,20 @@ export default {
     background-color: rgba(0, 0, 0, 0.3);
     margin-left: 24px;
     margin-right: 12px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      border: 1px solid #d8d8d8;
+    }
   }
 
   .fa.fa-angle-down {
-    transition: transform 0.4s;
+    transition: transform 0.2s;
   }
 
   &:hover {
@@ -344,7 +527,7 @@ export default {
   min-width: 250px;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.2s;
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.3);
 
   &::before {
@@ -361,6 +544,15 @@ export default {
   }
 }
 
+.user-menu__item {
+  &--textual {
+    // text-align: center;
+    padding: 15px 25px;
+
+    font-family: "Montserrat SemiBold", sans-serif;
+  }
+}
+
 .user-menu__link {
   font-family: "Montserrat Regular", sans-serif;
   text-decoration: none;
@@ -370,7 +562,11 @@ export default {
   font-size: 1rem;
   line-height: 1;
   text-decoration: none !important;
-  transition: background-color 0.4s;
+  transition: background-color 0.2s;
+
+  &--register {
+    background-color: #ffec00 !important;
+  }
 
   i {
     margin-right: 12px;
@@ -382,8 +578,15 @@ export default {
 }
 
 .button-notification {
-  animation: ring 4s 0.7s ease-in-out infinite;
-  transform-origin: 50% 4px;
+  color: #af241c;
+  transition: color 0.2s;
+  display: flex;
+  position: relative;
+
+  .button-notification__icon {
+    transform-origin: 50% 4px;
+    animation: ring 2s 0.7s ease-in-out infinite;
+  }
 }
 
 @keyframes ring {

@@ -12,7 +12,7 @@
       </banner>
       <banner :link="(auth) ? '/organisations' : '/register'" color="#4696D2">
         <template v-slot:name>Network</template>
-        <template v-slot:title>Organisations</template>
+        <template v-slot:subname>Organisations</template>
         <template
           v-slot:content
         >Connect with Organisations that share your interests: Explore charities and organisations with active campaigns and projects and find out how you can get involved</template>
@@ -21,7 +21,7 @@
       </banner>
       <banner :link="(auth) ? '/users' : '/register'" color="#4696D2">
         <template v-slot:name>Network</template>
-        <template v-slot:title>Members</template>
+        <template v-slot:subname>Members</template>
         <template
           v-slot:content
         >Connect with likeminded Members in our community: Our valued network of changemakers consisting of activists, charity workers, CSR leaders, volunteers, academics, students, council workers and everyday heroes in the community</template>
@@ -30,7 +30,7 @@
       </banner>
       <banner :link="(auth) ? '/partners' : '/register'" color="#4696D2">
         <template v-slot:name>Network</template>
-        <template v-slot:title>Partners</template>
+        <template v-slot:subname>Partners</template>
         <template
           v-slot:content
         >Our valued list of partners that make it possible to co-host inspiring events and help build stronger communities</template>

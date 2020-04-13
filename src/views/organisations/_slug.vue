@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-bg">
     <div class="post-title container">
       <p>An ‘Organisation page’ is your online gateway to attracting investment and support for your non-profit; and a place for organisations to connect with social projects that match your CSR vision.</p>
     </div>
@@ -385,6 +385,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.main-bg {
+  background-color: #f4f6f9;
+}
+
 .organisation-bg {
   background-image: url(https://smileymovement.org/images/pages/organisation/subheader_bg.jpg);
   background-position: center;

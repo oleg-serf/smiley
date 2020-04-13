@@ -55,7 +55,7 @@
         <div class="footer-top">
           <div class="footer-column">
             <div class="footer-logo-subtitle">A philanthropic venture sponsored by</div>
-            <img src="/img/smiley-movement-white.png" class="footer-logo" />
+            <img src="/img/footer/smiley-logo-white.svg" class="footer-logo" />
           </div>
           <div class="footer-column"></div>
           <div class="footer-column">

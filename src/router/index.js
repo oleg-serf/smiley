@@ -267,11 +267,11 @@ const routes = [{
    * Organisation routes
    */
   {
-    path: '/add-organisation',
-    name: 'add-organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Add.vue'),
+    path: '/create/organisation',
+    name: 'create-organisation',
+    component: () => import( /* webpackChunkName: "goals" */ '../views/create/organisation.vue'),
     meta: {
-      title: 'Add Organisation',
+      title: 'Create Organisation',
       requiresAuth: true,
     }
   },

@@ -10,6 +10,7 @@
               :src="$settings.images_path.news  +'l_'+post.cover_image"
               :alt="post.title"
               :title="post.title"
+              v-if="post.cover_image != null"
             />
           </div>
         </div>
@@ -82,6 +83,14 @@
           </div>
         </div>
         <div class="related-articles" style>
+          <select class="news-category__dropdown" @change.prevent="goToCategory">
+            <option disabled selected>Select goal</option>
+            <option
+              v-for="item in goals"
+              :key="item.slug + item.id"
+              :value="item.slug"
+            >{{item.name}}</option>
+          </select>
           <h2>related articles</h2>
           <div class="related-articles-wrap">
             <router-link
@@ -190,6 +199,8 @@
 
 <script>
 import axios from "@/axios-auth";
+import router from "@/router";
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 
@@ -200,8 +211,17 @@ export default {
         title: "",
         content: ""
       },
-      related_posts: []
+      related_posts: [],
+      goals: []
     };
+  },
+  methods: {
+    goToCategory(event) {
+      router.push({
+        name: "news-category-item",
+        params: { slug: event.target.value }
+      });
+    }
   },
   mounted() {
     axios
@@ -218,6 +238,14 @@ export default {
         ].meta.title = res.data.post.title;
       })
       .catch(error => console.log(error));
+
+    axios
+      .get("/goals")
+      .then(result => {
+        console.log("Goals loaded", result);
+        this.goals = result.data.goal_categories[0].goals;
+      })
+      .catch(error => console.error("Error", error));
   },
   components: {
     Breadcrumbs,
@@ -242,5 +270,20 @@ export default {
     margin-right: 24px;
     font-size: 20px;
   }
+}
+
+.article-header .smiley-img.single-item-image {
+  max-height: 255px !important;
+  width: 100%;
+}
+
+.news-category__dropdown {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 50px;
+  background-color: #fff;
+  font-family: "Montserrat Bold", sans-serif;
+  margin-bottom: 24px;
+  width: 100%;
 }
 </style>

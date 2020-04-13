@@ -10,6 +10,9 @@
       <div class="banner-block__name" v-if="isNotEmptySlot('name')">
         <slot name="name"></slot>
       </div>
+      <div class="banner-block__subname" v-if="isNotEmptySlot('subname')">
+        <slot name="subname"></slot>
+      </div>
     </div>
     <div class="banner-block__right-column">
       <div
