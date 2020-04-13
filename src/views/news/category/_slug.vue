@@ -4,9 +4,9 @@
 
     <section class="latest-news-section">
       <div class="container">
-        <banner color="#F36E24" background="/img/homepage/banner-news.jpg">
+        <banner :color="goal.colour" background="/img/homepage/banner-news.jpg">
           <template v-slot:name>news</template>
-          <template v-slot:title>{{goal.name}}</template>
+          <template v-slot:title>{{goal.prefix}} {{goal.name}}</template>
           <template v-slot:content v-if="goal.description != null">{{goal.description}}</template>
         </banner>
       </div>

@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div class="post-title container">
-      <p>We connect people, projects & resources to help good causes go further, faster.</p>
+    <div class="textual-banner">
+      <div class="container">
+        <p>We connect people, projects & resources to help good causes go further, faster.</p>
+      </div>
     </div>
     <div class="container">
       <banner color="#4696D2">
@@ -62,27 +64,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.post-title {
-  font-family: "Montserrat Regular";
-  text-align: center;
-  line-height: 1.35;
-  @include font-size(1.1rem);
-  padding-top: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #c7c7c7;
-  background-color: #a0a0a0;
-  box-sizing: border-box;
-  color: #fff;
-
-  .post-title__title {
-    @include font-size(2rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    margin-bottom: 0px;
-  }
-
-  p {
-    line-height: 1.45;
-  }
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="members-bg">
-    <information-hero>
+    <information-hero background="/img/backgrounds/members.jpg">
       <template v-slot:title>Connect with other members</template>
       <template v-slot:content>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quidem aperiam praesentium architecto cumque illum ipsam fugit asperiores magnam est id unde, doloribus quo magni. Nihil suscipit omnis voluptate sint.</p>

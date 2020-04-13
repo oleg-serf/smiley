@@ -13,9 +13,11 @@
       </banner>
     </div>
 
-    <div class="post-title container">
-      <div class="post-title__title">17 GOALS TO TRANSFORM OUR WORLD</div>
-      <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
+    <div class="textual-banner">
+      <div class="container">
+        <div class="textual-banner__title">17 GOALS TO TRANSFORM OUR WORLD</div>
+        <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
+      </div>
     </div>
 
     <section class="goals-grid container" v-for="category in categories" :key="category.id">
@@ -31,10 +33,12 @@
       </div>
     </section>
 
-    <div class="post-title container">
-      <p>
-        <a href="https://sustainabledevelopment.un.org/?menu=1300">Click here</a> to learn more about the United Nations Sustainable Development Goals
-      </p>
+    <div class="textual-banner">
+      <div class="container">
+        <p>
+          <a href="https://sustainabledevelopment.un.org/?menu=1300">Click here</a> to learn more about the United Nations Sustainable Development Goals
+        </p>
+      </div>
     </div>
 
     <Footer />

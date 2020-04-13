@@ -1,6 +1,6 @@
 <template>
   <div>
-    <information-hero>
+    <information-hero background="/img/backgrounds/partners.jpg">
       <template v-slot:title>Our Partners</template>
       <template v-slot:content>
         <p>Working together to help build and support build resilient communities</p>

@@ -12,8 +12,10 @@
       </banner>
     </div>
 
-    <div class="post-title container">
-      <p>Helping you help others by raising awareness of your community projects, fundraising campaigns, voluntary groups, community events, grassroots and start-up collaborations, big or small, local of global. Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</p>
+    <div class="textual-banner">
+      <div class="container">
+        <p>Helping you help others by raising awareness of your community projects, fundraising campaigns, voluntary groups, community events, grassroots and start-up collaborations, big or small, local of global. Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</p>
+      </div>
     </div>
 
     <!-- Title section -->
@@ -443,54 +445,6 @@ export default {
     font-family: "Montserrat Regular";
     opacity: 0.5;
     @include font-size(1rem);
-  }
-}
-
-.post-title {
-  font-family: "Montserrat Regular";
-  text-align: center;
-  line-height: 1.35;
-  @include font-size(1.1rem);
-  padding-top: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #c7c7c7;
-  background-color: #a0a0a0;
-  box-sizing: border-box;
-  color: #fff;
-
-  .post-title__title {
-    @include font-size(2rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    margin-bottom: 0px;
-  }
-
-  p {
-    line-height: 1.45;
-  }
-}
-
-.post-title-new {
-  font-family: "Montserrat Regular";
-  text-align: center;
-  line-height: 1.35;
-  @include font-size(1.1rem);
-  padding-top: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #c7c7c7;
-  background-color: #a0a0a0;
-  box-sizing: border-box;
-  color: #fff;
-
-  .post-title__title {
-    @include font-size(2rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    margin-bottom: 0px;
-  }
-
-  p {
-    line-height: 1.45;
   }
 }
 </style>

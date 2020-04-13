@@ -116,7 +116,7 @@ export default {
   background-color: #000;
   position: relative;
   padding: 30px;
-  min-height: 300px;
+  min-height: 350px;
   transition: padding-bottom 0.4s;
   color: #fff;
   display: flex;

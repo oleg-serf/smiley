@@ -1,11 +1,13 @@
 <template>
   <div class="profile-bg">
-    <div class="post-title container">
-      <div class="post-title__title">Dashboard</div>
-      <p>
-        Your personalised portal to share information about yourself and hear about the latest news, events, organisations, projects and new members that share your interests.
-        Text Box (suggested text) -Tell us about yourself, what you're passionate about, causes you support and topics you're interested in learning more about so we can match you to likeminded people.
-      </p>
+    <div class="textual-banner">
+      <div class="container">
+        <h3 class="textual-banner__title">Dashboard</h3>
+        <p>
+          Your personalised portal to share information about yourself and hear about the latest news, events, organisations, projects and new members that share your interests.
+          Text Box (suggested text) -Tell us about yourself, what you're passionate about, causes you support and topics you're interested in learning more about so we can match you to likeminded people.
+        </p>
+      </div>
     </div>
     <div class="profile-holder">
       <div class="profile container">
@@ -601,30 +603,6 @@ export default {
     font-family: "Montserrat Regular", sans-serif;
     color: #000;
     margin-top: 0px;
-  }
-}
-
-.post-title {
-  font-family: "Montserrat Regular";
-  text-align: center;
-  line-height: 1.35;
-  @include font-size(1.1rem);
-  padding-top: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #c7c7c7;
-  background-color: #a0a0a0;
-  box-sizing: border-box;
-  color: #fff;
-
-  .post-title__title {
-    @include font-size(2rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    margin-bottom: 0px;
-  }
-
-  p {
-    line-height: 1.45;
   }
 }
 </style>

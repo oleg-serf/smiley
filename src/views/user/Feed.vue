@@ -174,11 +174,11 @@
             <i class="fa fa-calendar-check-o"></i> Events
           </router-link>
         </div>
-        <div class="feed-section__item">
+        <!-- <div class="feed-section__item">
           <router-link to="/" class="feed-section__link feed-section__link--hub">
             <i class="fa fa-plus"></i> Create a smiley hub
           </router-link>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
@@ -664,7 +664,7 @@ export default {
 
   .feed-sections-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
   }
 }

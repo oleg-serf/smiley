@@ -1,7 +1,9 @@
 <template>
   <div class="main-bg">
-    <div class="post-title container">
-      <p>An ‘Organisation page’ is your online gateway to attracting investment and support for your non-profit; and a place for organisations to connect with social projects that match your CSR vision.</p>
+    <div class="textual-banner">
+      <div class="container">
+        <p>An ‘Organisation page’ is your online gateway to attracting investment and support for your non-profit; and a place for organisations to connect with social projects that match your CSR vision.</p>
+      </div>
     </div>
     <div class="organisation-bg">
       <div class="organisation-grid container">

@@ -1,1 +1,27 @@
 @import "ui/index";
+
+.textual-banner {
+  // background: linear-gradient(to bottom, #8a8b8f, #7c7d81);
+  background: linear-gradient(to bottom, #d7d8da, #c6c7c9);
+  @include padding-top(1.2rem);
+  @include padding-bottom(1.2rem);
+  text-align: center;
+  color: #393939;
+
+  &__title {
+    font-family: "Montserrat Bold", sans-serif;
+    @include font-size(1.5rem);
+    @include margin-bottom(1.2rem);
+  }
+
+  p {
+    @include font-size(1rem);
+    margin-bottom: 0px;
+    font-family: "Montserrat SemiBold";
+    line-height: 1.45;
+
+    &:not(:last-child) {
+      @include margin-bottom(1.3rem);
+    }
+  }
+}

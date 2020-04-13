@@ -35,7 +35,7 @@
       :key="'news-item-'+item.slug"
     >
       <div class="news-category">
-        <h2 class="news-category__title">{{ item.name }}</h2>
+        <h2 class="news-category__title">{{item.prefix}} {{ item.name }}</h2>
         <router-link :to="'/news/category/' + item.slug" class="news-category__link">
           <span></span>Read more
         </router-link>

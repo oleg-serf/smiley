@@ -3,12 +3,14 @@
     <breadcrumbs ref="breadcrumbs" />
 
     <div class="container">
-      <banner color="#4C9F38" background="/img/homepage/banner-goals.jpg">
+      <banner :color="goal.colour" background="/img/homepage/banner-goals.jpg">
         <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 200px" />
         </template>
 
-        <template v-slot:title>News, Events and Projects linked to Goal {{goal.name}}</template>
+        <template
+          v-slot:title
+        >News, Events and Projects linked to Goal {{goal.prefix}} {{goal.name}}</template>
       </banner>
     </div>
 
@@ -18,16 +20,7 @@
       </div>
       <div class="news-category-section latest-articles">
         <div class="news-grid">
-          <news-card
-            v-for="article in posts"
-            :key="article.slug"
-            :title="article.title"
-            :description="article.description"
-            :goal="goal.name"
-            :date="article.published_at"
-            :background="article.cover_image"
-            :link="'/news/' + article.slug"
-          />
+          <news-card v-for="article in posts" :key="article.slug" :article="article" />
         </div>
       </div>
     </section>
@@ -50,16 +43,7 @@
         <h2 class="section-title__title">Talks:</h2>
       </div>
       <div class="news-grid" v-if="events.length > 0">
-        <event-card
-          v-for="event in events"
-          :key="'event-'+event.id"
-          :title="event.title"
-          :description="event.short_description"
-          :background="event.cover_image"
-          :start="event.time_start"
-          :end="event.time_end"
-          :location="event.location"
-        />
+        <event-card v-for="event in events" :key="'event-'+event.id" :event="event" />
       </div>
     </section>
 
@@ -134,7 +118,7 @@ export default {
   components: {
     Breadcrumbs,
     Banner,
-    ArticleProject,
+    NewsCard,
     Footer,
     EventCard
   }
