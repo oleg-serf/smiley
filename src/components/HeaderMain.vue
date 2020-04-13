@@ -125,9 +125,9 @@
               </template>
             </li>
             <li class="user-menu__item">
-              <router-link :to="{name: 'profile'}" class="user-menu__link">
+              <a class="user-menu__link" href="#" @click.prevent="logout">
                 <i class="fa fa-power-off"></i> Sign Out
-              </router-link>
+              </a>
             </li>
           </ul>
         </div>
@@ -190,6 +190,11 @@ export default {
     organisation() {
       console.log(this.$store.getters["user/organisation"]);
       return this.$store.getters["user/organisation"];
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("user/logout");
     }
   }
 };
@@ -318,6 +323,11 @@ header {
     display: flex;
     align-items: center;
 
+    & > span {
+      height: 100%;
+      display: block;
+    }
+
     &:hover {
       .main-menu__link {
         border-bottom: 2px solid #393939;
@@ -381,7 +391,7 @@ header {
       display: block;
       content: "";
       position: absolute;
-      top: -7px;
+      top: -5px;
       left: 50%;
       transform: translateX(-50%);
     }

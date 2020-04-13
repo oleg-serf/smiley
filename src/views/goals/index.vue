@@ -25,7 +25,7 @@
         </div>
         <div class="goals-grid__item" v-for="goal in category.goals" :key="goal.name+goal.id">
           <router-link :to="'/goals/' + goal.slug">
-            <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+            <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
           </router-link>
         </div>
       </div>
