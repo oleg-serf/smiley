@@ -1,12 +1,9 @@
 <template>
-  <div>
+  <div class="members-bg">
     <information-hero>
       <template v-slot:title>Connect with other members</template>
       <template v-slot:content>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quidem aperiam praesentium architecto cumque illum ipsam fugit asperiores magnam est id unde, doloribus quo magni. Nihil suscipit omnis voluptate sint.</p>
-      </template>
-      <template v-slot:buttons>
-        <a target="_blank" href="www.smiley.com">We are supported 100% by the Smiley brand</a>
       </template>
     </information-hero>
     <div class>
@@ -21,15 +18,16 @@
                   alt
                   title
                   class="user-item__image"
-                  v-if="user.avatar !== null"
+                  ccv-if="user.avatar !== null"
+                  v-if="user.avatar != null"
                 />
-                <span v-else>{{ user.display_name | filterAvatar }}</span>
+                <span v-else>{{ user.initials }}</span>
               </router-link>
             </div>
             <h2 class="user-item__title">
-              <router-link :to="'/users/' + user.slug">{{ user.display_name }}</router-link>
+              <router-link :to="'/users/' + user.slug">{{ user.name }}</router-link>
             </h2>
-            <ul class="user__social">
+            <!-- <ul class="user__social">
               <template v-for="(social, index) in socials">
                 <li v-if="user[social] != null" :key="'user-social-'+index">
                   <a :href="user[social]" target="_blank">
@@ -37,7 +35,7 @@
                   </a>
                 </li>
               </template>
-            </ul>
+            </ul>-->
           </div>
         </section>
       </div>
@@ -112,83 +110,135 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bg {
-  background-image: url("/img/register-bg.jpg");
-  background-size: cover;
-  padding-top: 24px;
+.members-bg {
+  background-color: #f4f6f9;
 }
+
 .users-grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0px -16px;
-  padding-top: 48px;
+  // display: flex;
+  // flex-wrap: wrap;
+  // margin: 0px -16px;
+  // padding-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 15px;
 }
 
 .user-item {
-  margin: 16px 16px 96px 16px;
-  padding: 64px 20px 10px 20px;
-  border: 1px solid #c7c7c7;
-  border-radius: 4px;
-  text-align: center;
-  width: 100%;
-  max-width: calc((100% / 4) - 32px);
-  box-sizing: border-box;
-  position: relative;
+  border: 1px solid #d8d8d8;
+  padding: 20px 5px;
   background-color: #fff;
-
-  &__avatar {
-    border-radius: 50%;
-    background: #c7c7c7;
-    width: 128px;
-    height: 128px;
-    // margin: -70px auto 0px auto;
-    position: absolute;
-    left: 50%;
-    top: 0px;
-    overflow: hidden;
-    transform: translate(-50%, -50%);
-    display: flex;
-    line-height: 1;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    font-size: 24px;
-    background-color: #c7c7c7;
-    color: #fff;
-    font-weight: bold;
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      font-family: "Montserrat Bold", sans-serif;
-    }
-  }
-
-  &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.4s;
-  }
+  transition: transform 0.15s, box-shadow 0.15s;
 
   &:hover {
-    .user-item__image {
-      transform: scale(1.1);
+    transform: scale(1.01);
+    box-shadow: 0 15px 29px -23px rgba(0, 0, 0, 0.3);
+  }
+
+  .user-item__avatar {
+    a {
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+      overflow: hidden;
+      line-height: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px auto 14px auto;
+      background-color: #e5e9f0;
+      text-decoration: none;
+      color: #393939;
+      font-family: "Montserrat Bold", sans-serif;
+      @include font-size(1.6rem);
+      letter-spacing: 2px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
     }
   }
 
-  &__title {
-    font: 700 22px/28px "Montserrat Bold", sans-serif;
+  .user-item__title {
+    @include font-size(1.1rem);
+    font-family: "Montserrat SemiBold", sans-serif;
+    text-align: center;
 
     a {
-      color: unset;
       text-decoration: none;
+      color: #393939;
     }
   }
-
-  &__description {
-    font: 400 16px/24px "Muli", sans-serif;
-  }
 }
+
+// .user-item {
+//   margin: 16px 16px 96px 16px;
+//   padding: 64px 20px 10px 20px;
+//   border: 1px solid #c7c7c7;
+//   border-radius: 4px;
+//   text-align: center;
+//   width: 100%;
+//   max-width: calc((100% / 4) - 32px);
+//   box-sizing: border-box;
+//   position: relative;
+//   background-color: #fff;
+
+//   &__avatar {
+//     border-radius: 50%;
+//     background: #c7c7c7;
+//     width: 128px;
+//     height: 128px;
+//     // margin: -70px auto 0px auto;
+//     position: absolute;
+//     left: 50%;
+//     top: 0px;
+//     overflow: hidden;
+//     transform: translate(-50%, -50%);
+//     display: flex;
+//     line-height: 1;
+//     justify-content: center;
+//     align-items: center;
+//     text-transform: uppercase;
+//     font-size: 24px;
+//     background-color: #c7c7c7;
+//     color: #fff;
+//     font-weight: bold;
+
+//     a {
+//       color: inherit;
+//       text-decoration: none;
+//       font-family: "Montserrat Bold", sans-serif;
+//     }
+//   }
+
+//   &__image {
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     object-position: center;
+//     transition: transform 0.4s;
+//   }
+
+//   &:hover {
+//     .user-item__image {
+//       transform: scale(1.1);
+//     }
+//   }
+
+//   &__title {
+//     font: 700 22px/28px "Montserrat Bold", sans-serif;
+
+//     a {
+//       color: unset;
+//       text-decoration: none;
+//     }
+//   }
+
+//   &__description {
+//     font: 400 16px/24px "Muli", sans-serif;
+//   }
+// }
 </style>

@@ -3,10 +3,7 @@
     <information-hero>
       <template v-slot:title>Our Partners</template>
       <template v-slot:content>
-        <p>We collaborate with organisations both big and small to help build stronger communities globally.</p>
-      </template>
-      <template v-slot:buttons>
-        <a target="_blank" href="www.smiley.com">We are supported 100% by the Smiley brand</a>
+        <p>Working together to help build and support build resilient communities</p>
       </template>
     </information-hero>
     <section class="partners">
@@ -25,7 +22,7 @@
               <div class="partner__logo">
                 <img :src="$settings.images_path.partners + 'm_' + partner.image" />
               </div>
-              <div class="partner__name">{{partner.name}}</div>
+              <!-- <div class="partner__name">{{partner.name}}</div> -->
             </a>
           </div>
         </div>

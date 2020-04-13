@@ -94,7 +94,7 @@ export default {
   components: {
     Breadcrumbs,
     Banner,
-    ArticleProject,
+    NewsCard,
     Footer
   }
 };

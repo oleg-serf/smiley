@@ -188,9 +188,5 @@ export default {
   .project-article:first-child {
     grid-row: 1 / span 2 !important;
   }
-  .project-article:last-child {
-    display: none;
-    // TODO: Remove this upon api fix;
-  }
 }
 </style>

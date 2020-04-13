@@ -304,7 +304,7 @@ const routes = [{
   {
     path: '/organisations',
     name: 'organisations',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Archive.vue'),
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/index.vue'),
     meta: {
       title: 'Organisations',
     }

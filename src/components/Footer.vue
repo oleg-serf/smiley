@@ -54,7 +54,7 @@
       <div class="container">
         <div class="footer-top">
           <div class="footer-column">
-            <div class="footer-logo-subtitle">A philanthropic venture from Smiley</div>
+            <div class="footer-logo-subtitle">A philanthropic venture sponsored by</div>
             <img src="/img/smiley-movement-white.png" class="footer-logo" />
           </div>
           <div class="footer-column"></div>
