@@ -45,7 +45,7 @@
           <label>Choose interests *</label>
           <div class="goal-grid">
             <label class="form-checkbox-label" v-for="goal in goals" :key="'goal-'+goal.id">
-              <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+              <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
               <input
                 type="checkbox"
                 :value="goal.id"

@@ -62,7 +62,7 @@
         <div class="item-holder">
           <ul class="goals">
             <li v-for="goal in goals" :key="goal.id">
-              <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+              <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
             </li>
           </ul>
         </div>

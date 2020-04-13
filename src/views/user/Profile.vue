@@ -95,7 +95,7 @@
             <div class="profile__section-title">My interests (UN Goals):</div>
             <ul class="profile__section-goals">
               <li v-for="goal in goals" :key="goal.id">
-                <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+                <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
               </li>
             </ul>
           </div>

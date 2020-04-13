@@ -30,7 +30,7 @@
           <div class="interest-item" v-for="goal in goals" :key="goal.id">
             <label class="interest-checkbox">
               <div class="interest-img-wrap">
-                <img :src="$settings.images_path.goals + 'm_' + goal.image" alt />
+                <img :src="$settings.images_path.goals + 's_' + goal.image" alt />
               </div>
               <input type="checkbox" :value="goal.id" v-model="user.goals" />
               <span class="interest-checkmark">

@@ -2,7 +2,46 @@
   <div>
     <div class="feed-header">
       <div class="feed-grid container">
-        <div class="feed-grid__item feed-grid__item--user">1</div>
+        <div class="feed-grid__item feed-grid__item--profile">
+          <div class="profile">
+            <div class="profile-item">
+              <img :src="eventsList[0].avatar" class="profile__avatar" />
+            </div>
+            <div class="profile-item">
+              <div class="profile__name">John Doe</div>
+              <div class="profile__job">Atque fugit adipisc at Wynn Leach Co</div>
+            </div>
+            <div class="profile-item profile-item--full-width">
+              <div class="profile__location">
+                <i class="fa fa-map-marker"></i> London, UK
+              </div>
+            </div>
+            <div class="profile-item profile-item--matches">
+              <div class="profile-title">Matches</div>
+              <div class="profile__numbers">50+</div>
+            </div>
+            <div class="profile-item">
+              <div class="profile-title">Community</div>
+              <div class="profile__numbers">0</div>
+            </div>
+            <div class="profile-item profile-item--full-width">
+              <div class="profile-progress">
+                <div class="profile-title">Profile completion</div>
+                <div class="progress-bar">
+                  <div class="progress-bar__bar">
+                    <div class="progress-bar__progress" style="width: 60%"></div>
+                  </div>
+                  <div class="progress-bar__percents">60%</div>
+                </div>
+              </div>
+            </div>
+            <div class="profile-item profile-item--full-width">
+              <div>
+                <router-link :to="{name: 'profile'}" class="profile__view">view profile</router-link>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="feed-grid__item feed-grid__item--community">
           <div class="community">
             <ul class="community-navigation">
@@ -112,6 +151,36 @@
         </div>
       </div>
     </div>
+    <div class="feed-sections">
+      <div class="feed-sections-grid container">
+        <div class="feed-section__item">
+          <router-link :to="{name: 'projects'}" class="feed-section__link">
+            <i class="fa fa-neuter"></i> Projects
+          </router-link>
+        </div>
+        <div class="feed-section__item">
+          <router-link :to="{name: 'users'}" class="feed-section__link">
+            <i class="fa fa-users"></i> Members
+          </router-link>
+        </div>
+        <div class="feed-section__item">
+          <router-link to="/" class="feed-section__link">
+            <i class="fa fa-qq"></i> Ecosystem
+            <br />(comming soon)
+          </router-link>
+        </div>
+        <div class="feed-section__item">
+          <router-link :to="{name: 'talks'}" class="feed-section__link">
+            <i class="fa fa-calendar-check-o"></i> Events
+          </router-link>
+        </div>
+        <div class="feed-section__item">
+          <router-link to="/" class="feed-section__link feed-section__link--hub">
+            <i class="fa fa-plus"></i> Create a smiley hub
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -198,6 +267,7 @@ export default {
   background-image: url("/img/backgrounds/feed-hero.jpg");
   background-size: cover;
   background-position: center;
+  min-height: 450px;
 }
 .feed-grid {
   display: grid;
@@ -234,8 +304,110 @@ export default {
   }
 }
 
+.profile {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-top: 20px;
+  padding-right: 20px;
+  grid-gap: 20px;
+
+  .profile-item {
+    &--matches {
+      border-right: 1px solid #fff;
+    }
+    &--full-width {
+      grid-column: 1 / span 2;
+    }
+  }
+
+  .profile-title {
+    color: #fff;
+    font-family: "Montserrat Bold", sans-serif;
+    text-transform: uppercase;
+    @include font-size(1.1rem);
+  }
+
+  .profile__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+  }
+
+  .profile__name {
+    font-family: "Montserrat SemiBold", sans-serif;
+
+    @include font-size(1.1rem);
+    color: #fff;
+  }
+  .profile__job {
+    @include font-size(0.9rem);
+    color: #fff;
+  }
+
+  .profile__location {
+    color: #fff;
+    @include font-size(0.9rem);
+
+    i {
+      margin-right: 12px;
+    }
+  }
+
+  .profile__numbers {
+    color: #f4ed3b;
+    font-family: "Montserrat SemiBold", sans-serif;
+    @include font-size(1.2rem);
+  }
+
+  .progress-bar {
+    display: flex;
+    align-items: center;
+
+    .progress-bar__bar {
+      width: 100%;
+      height: 8px;
+      background-color: rgba(216, 216, 216, 0.7);
+      position: relative;
+    }
+    .progress-bar__progress {
+      display: block;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      background-color: #f4ed3b;
+      height: 100%;
+    }
+    .progress-bar__percents {
+      @include font-size(1rem);
+      margin-left: 20px;
+      color: #fff;
+    }
+  }
+
+  .profile__view {
+    width: 100%;
+    color: #fff;
+    border: 1px solid #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-family: "Montserrat SemiBold", sans-serif;
+    width: 100%;
+    display: block;
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+    &:hover {
+      background-color: #f4ed3b;
+      border-color: #f4ed3b;
+      color: #393939;
+    }
+  }
+}
+
+//
 .users-list {
-  height: 375px;
+  height: 360px;
   overflow-y: scroll;
 
   .users-list__item {
@@ -339,7 +511,7 @@ export default {
   }
 
   .projects-block__items {
-    height: 375px;
+    height: 360px;
     overflow-y: scroll;
   }
 
@@ -433,7 +605,7 @@ export default {
   }
 
   .events-block__items {
-    height: 375px;
+    height: 360px;
     overflow-y: scroll;
   }
 
@@ -480,6 +652,60 @@ export default {
     &:hover {
       background-color: #ffec00;
       color: #393939;
+    }
+  }
+}
+
+// Website sections
+
+.feed-sections {
+  background-color: #f4f6f9;
+  padding: 30px 0;
+
+  .feed-sections-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+  }
+}
+
+.feed-section__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feed-section__link {
+  @include font-size(1rem);
+  color: #393939;
+  text-decoration: none !important;
+  font-family: "Montserrat Bold", sans-serif;
+
+  i {
+    @include font-size(0.8rem);
+    margin-right: 8px;
+  }
+
+  &--hub {
+    width: 100%;
+    color: #393939 !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-family: "Montserrat SemiBold", sans-serif;
+    width: 100%;
+    display: block;
+    text-align: center;
+    background-color: #f4ed3b;
+
+    i {
+      transition: transform 0.2s;
+      transform-origin: center center;
+    }
+
+    &:hover {
+      i {
+        transform: rotate(90deg);
+      }
     }
   }
 }

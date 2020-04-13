@@ -219,7 +219,7 @@
           <div class="page-section__title">Choose interests</div>
           <div class="page-section__content">
             <label class="interest" v-for="goal in goals" :key="'goal-'+goal.id">
-              <img :src="$settings.images_path.goals + 'm_' + goal.image" alt="icon" />
+              <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
               <input
                 type="checkbox"
                 :value="goal.id"
