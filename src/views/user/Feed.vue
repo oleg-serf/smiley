@@ -74,7 +74,9 @@
                     <img :src="event.picture.medium" class="user-list__user-avatar" />
                     <div class="user-list__user-info">
                       <div class="user-list__user-title">{{ event.name.first }} {{event.name.last}}</div>
-                      <div class="user-list__user-description">London, UK</div>
+                      <div
+                        class="user-list__user-description"
+                      >{{ event.location.city}}, {{event.location.country}}</div>
                       <button class="user-list__user-connect__connect">
                         <i class="fa fa-user-plus"></i> Connect
                       </button>
@@ -308,7 +310,7 @@ export default {
       })
       .catch(error => console.error(error));
     axiosBase
-      .get("https://randomuser.me/api/?results=20")
+      .get("https://randomuser.me/api/?results=20&nat=gb")
       .then(res => {
         console.log(res);
         this.fakeUsers = res.data.results;
