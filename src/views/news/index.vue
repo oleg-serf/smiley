@@ -19,7 +19,15 @@
     </section>
     <div class="container">
       <div class="news-category">
-        <h2 class="news-category__title">Latest news</h2>
+        <form
+          class="news-category__search-form"
+          @submit.prevent="$swal({text: 'News search test'})"
+        >
+          <input type="text" minlength="3" required />
+          <button type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
         <select class="news-category__dropdown" @change.prevent="goToCategory">
           <option disabled selected>Select goal</option>
           <option v-for="item in news" :key="item.slug + item.id" :value="item.slug">{{item.name}}</option>
@@ -177,9 +185,9 @@ export default {
   .news-category__dropdown {
     padding-top: 10px;
     padding-bottom: 10px;
-    height: 50px;
+    height: 46px;
     background-color: #fff;
-    font-family: "Montserrat Bold", sans-serif;
+    font-family: "Montserrat Regular", sans-serif;
   }
 }
 
@@ -187,6 +195,30 @@ export default {
   grid-gap: 5px;
   .project-article:first-child {
     grid-row: 1 / span 2 !important;
+  }
+}
+
+.news-category__search-form {
+  max-width: 382px;
+  width: 100%;
+  display: flex;
+
+  input {
+    border: 1px solid #e0e6eb !important;
+    flex: 1;
+    font-size: 1rem;
+    height: 46px;
+    border-radius: 0px !important;
+    padding: 5px 25px;
+  }
+
+  button[type="submit"] {
+    border: 1px solid #e0e6eb !important;
+    margin-left: -1px;
+    color: #393939;
+    background-color: #fff;
+    padding: 5px 25px;
+    cursor: pointer;
   }
 }
 </style>

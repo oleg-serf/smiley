@@ -280,9 +280,9 @@ export default {
 .news-category__dropdown {
   padding-top: 10px;
   padding-bottom: 10px;
-  height: 50px;
+  height: 46px;
   background-color: #fff;
-  font-family: "Montserrat Bold", sans-serif;
+  font-family: "Montserrat Regular", sans-serif;
   margin-bottom: 24px;
   width: 100%;
 }
