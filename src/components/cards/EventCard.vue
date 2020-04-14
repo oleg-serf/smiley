@@ -35,7 +35,18 @@
         <div class="project-article__location">{{ event.location }}</div>
         <div class="project-article__button">
           <router-link :to="{name: 'event', params: {slug: event.slug}}">talk details</router-link>
-          <button class="register" v-if="active">register</button>
+          <template v-if="isAuthenticated">
+            <button class="register" v-if="active" @click.prevent="attend">register</button>
+            <button
+              class="register"
+              v-if="active"
+              @click.prevent="unattend"
+              style="display: none;"
+            >Unattend</button>
+          </template>
+          <template v-else>
+            <button class="register" v-if="active" @click.prevent="attendNotAuthed">register</button>
+          </template>
         </div>
       </div>
     </div>
@@ -58,6 +69,9 @@
 </template>
 
 <script>
+import axios from "@/axios-auth";
+import router from "@/router";
+
 import MediaImage from "@/components/Image.vue";
 
 export default {
@@ -77,16 +91,49 @@ export default {
       const result = this.$dayjs(date).format(format);
       return result;
     },
-    eventRegister() {
+    attend() {
       axios
-        .post("/events/" + this.event.slug + "/attend", item)
+        .post("/events/" + this.event.slug + "/attend")
         .then(res => {
+          console.log("Registering for event", res);
           let result = res.data.attending;
-          commit("user/SET_USER_ATTENDING_EVENTS", result, {
-            root: true
-          });
+          // commit("user/SET_USER_ATTENDING_EVENTS", result, {
+          //   root: true
+          // });
         })
         .catch(error => console.error(error));
+    },
+    unattend() {
+      axios
+        .post("/events/" + this.event.slug + "/attend/cancel")
+        .then(res => {
+          console.log("Cancellation for event", res);
+          // let result = res.data.attending;
+          // commit("user/SET_USER_ATTENDING_EVENTS", result, {
+          //   root: true
+          // });
+        })
+        .catch(error => console.error(error));
+    },
+    attendNotAuthed() {
+      let swal = {
+        title: "Register or Login",
+        text:
+          "To register for an event you will need to login or create an account",
+        showCancelButton: true,
+        confirmButtonText: "Create Account",
+        cancelButtonText: "Login"
+      };
+      this.$swal(swal).then(result => {
+        if (result.value) {
+          router.push({ name: "register" });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === "cancel"
+        ) {
+          router.push({ name: "login" });
+        }
+      });
     }
   },
   props: {
@@ -313,8 +360,10 @@ export default {
     }
   }
   .project-article__button .register {
-    background-color: #f4ed3b;
+    background-color: #f4ed3b !important;
+    border-width: 0px;
     color: #393939;
+    cursor: pointer;
   }
 
   .project-article__actions {

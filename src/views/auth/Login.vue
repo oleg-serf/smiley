@@ -124,10 +124,10 @@
             v-model="password"
           />
         </label>
-        <div class="login-btn-wrap">
+        <div class="login-btn-wrap full-width">
           <button class="login-btn" type="submit" name="submit" value="login">login</button>
         </div>
-        <div class="register-and-forgot">
+        <div class="register-and-forgot full-width">
           <router-link to="register">Register for an account</router-link>
           <span>|</span>
           <router-link to="forgot">Forgot your Password</router-link>
@@ -262,6 +262,14 @@ export default {
   }
 
   .login-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+
+    .full-width {
+      grid-column: 1 / span 2;
+    }
+
     .pledge-that {
       p,
       li {

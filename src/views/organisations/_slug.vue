@@ -10,11 +10,21 @@
       <div class="organisation-grid container">
         <div class="grid-item grid-item--main">
           <div class="organisation-avatar">
-            <img
-              v-if="organisation.logo != null"
-              :src="$settings.images_path.organisations + 'm_'+ organisation.logo"
-            />
-            <span v-else>{{ organisation.name | filterAvatar}}</span>
+            <div class="organisation-avatar__logo">
+              <img
+                v-if="organisation.logo != null"
+                :src="$settings.images_path.organisations + 'm_'+ organisation.logo"
+              />
+              <span v-else>{{ organisation.name | filterAvatar}}</span>
+            </div>
+            <router-link
+              :to="{name: 'edit-organisation'}"
+              class="button button--primary button--edit"
+              v-if="is_owner"
+              @click.prevent="follow"
+            >
+              <i class="fa fa-pencil"></i> Edit
+            </router-link>
           </div>
           <div class="organisation-info">
             <div class="organisation-name">{{organisation.name}}</div>
@@ -226,7 +236,7 @@ export default {
   data() {
     return {
       organisation: {},
-      activity: "events",
+      activity: "projects",
       feed: {
         projects: [],
         news: [],
@@ -343,6 +353,7 @@ export default {
         );
 
         this.organisation = response.data.organisation;
+        this.is_owner = response.data.is_owner;
 
         if (response.data.organisation.facebook != null) {
           this.socials.push({
@@ -408,7 +419,7 @@ export default {
   .grid-item {
     padding: 25px;
     box-sizing: border-box;
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    // border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-right: 1px solid rgba(255, 255, 255, 0.5);
 
     &.grid-item--main {
@@ -501,7 +512,7 @@ export default {
   background-color: #7d8494;
   display: block;
   padding: 0 12px;
-  text-decoration: none;
+  text-decoration: none !important;
   font-size: 14px;
   cursor: pointer;
   appearance: none;
@@ -520,9 +531,19 @@ export default {
     background-color: #f4ed3b;
     color: #000;
   }
+
+  &.button--edit {
+    max-width: 130px;
+    min-width: auto;
+    width: 100%;
+  }
 }
 
 .organisation-avatar {
+  margin-bottom: 24px;
+}
+
+.organisation-avatar__logo {
   margin-top: 35px;
   margin-right: 35px;
   display: flex;

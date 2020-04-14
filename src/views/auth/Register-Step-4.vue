@@ -27,28 +27,11 @@
           :nav="false"
           :responsive="{657:{center: true,autoWidth: true,margin: -25}}"
         >
-          <div class="interest-item" v-for="goal in goals" :key="goal.id">
-            <label class="interest-checkbox">
-              <div class="interest-img-wrap">
-                <img :src="$settings.images_path.goals + 's_' + goal.image" alt />
-              </div>
-              <input type="checkbox" :value="goal.id" v-model="user.goals" />
-              <span class="interest-checkmark">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M5.91006 10.4959L3.7071 8.29291C3.31658 7.90239 2.68342 7.90239 2.29289 8.29291C1.90237 8.68343 1.90237 9.3166 2.29289 9.70712L5.29288 12.7071C5.7168 13.131 6.4159 13.0892 6.7863 12.6178L13.7863 4.61786C14.1275 4.18359 14.0521 3.55494 13.6178 3.21372C13.1835 2.87251 12.5549 2.94795 12.2136 3.38222L5.91006 10.4959Z"
-                    fill="#000"
-                  />
-                </svg>
-              </span>
+          <div class="interest-item" v-for="goal in goals" :key="'goal-'+goal.id">
+            <label class="interest">
+              <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
+              <input type="checkbox" :value="goal.id" name="goals_checkbox[]" v-model="user.goals" />
+              <div class="checkbox"></div>
             </label>
           </div>
         </carousel>
@@ -312,48 +295,61 @@ export default {
             width: 100%;
           }
         }
-        .interest-checkbox {
+        .interest {
           position: relative;
           cursor: pointer;
-          color: $default-text;
-          font: 400 16px/24px "Muli", sans-serif;
-          user-select: none;
+
+          img {
+            max-width: 100%;
+            height: auto;
+            line-height: 1;
+          }
           input {
             position: absolute;
-            top: 5px;
-            right: -78px;
-            height: 24px;
-            width: 24px;
+            left: 0px;
+            top: 0px;
             opacity: 0;
-          }
-          .interest-checkmark {
-            position: absolute;
-            top: 5px;
-            right: -78px;
-            height: 24px;
             width: 24px;
-            border: 1px solid #c7c7c7;
-            border-radius: 4px;
-            box-sizing: border-box;
-            transition: all 0.2s ease;
-            background: #fff;
-            svg {
-              opacity: 0;
-              position: absolute;
-              top: 4px;
-              left: 4px;
+            height: 24px;
+
+            &:checked + .radio {
+              &::before {
+                width: 65%;
+                height: 65%;
+              }
+            }
+            &:checked + .checkbox {
+              background-color: #f4ed3b;
+              &::before {
+                @include font-size(1rem);
+              }
             }
           }
-          &:last-of-type {
-            margin-bottom: 0;
-          }
-        }
-        .interest-checkbox input:checked ~ .interest-checkmark {
-          background-color: $default-yellow-btns;
-          border: none;
-          transition: all 0.2s ease;
-          svg {
-            opacity: 1;
+          .checkbox {
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            border: 1px solid #393939;
+            cursor: pointer;
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+
+            &::before {
+              color: #393939;
+              content: "\f00c";
+              display: inline-block;
+              font-family: FontAwesome;
+              font-size: inherit;
+              text-rendering: auto;
+              -webkit-font-smoothing: antialiased;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              font-size: 0px;
+              transition: font-size 0.4s, background-color 0.4s;
+            }
           }
         }
       }

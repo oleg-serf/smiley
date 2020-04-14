@@ -32,10 +32,24 @@
             </h2>
             <div class="organisation-item__categories">Arts, Culture, Leisure</div>
             <div class="organisation-item__spanner"></div>
-            <div class="organisation-item__status">Connected</div>
-            <button class="organisation-item__follow-btn" @click.prevent="followOrg">
+            <div
+              class="organisation-item__status"
+            >{{ organisation.is_following ? 'Connected' : 'Not Connected'}}</div>
+            <button
+              class="organisation-item__follow-btn"
+              @click.prevent="follow(organisation)"
+              v-if="!organisation.is_following"
+            >
               <i class="fa fa-plus"></i>
               Follow
+            </button>
+            <button
+              class="organisation-item__follow-btn"
+              @click.prevent="unfollow(organisation)"
+              v-else
+            >
+              <i class="fa fa-minus"></i>
+              UnFollow
             </button>
             <router-link
               class="organisation-item__visit"
@@ -91,6 +105,37 @@ export default {
           this.pages_count = res.data.pages_count;
         })
         .catch(error => console.log(error));
+    },
+    // Move these methods to component in future
+    follow(orgObject) {
+      axios
+        .post("/organisations/" + orgObject.slug + "/follow")
+        .then(result => {
+          console.log("following", result);
+          this.$swal({
+            text: result.data.message,
+            icon: "info"
+          });
+          orgObject.is_following = true;
+        })
+        .catch(err => {
+          // TODO: add error
+        });
+    },
+    unfollow(orgObject) {
+      axios
+        .post("/organisations/" + orgObject.slug + "/un-follow")
+        .then(result => {
+          console.log("cancel following", result);
+          this.$swal({
+            text: result.data.message,
+            icon: "info"
+          });
+          orgObject.is_following = false;
+        })
+        .catch(err => {
+          // TODO: add error
+        });
     }
   },
   mounted() {

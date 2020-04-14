@@ -125,17 +125,19 @@
           />
         </label>
 
-        <label for="reg-email">
-          Email Address
-          <input
-            type="email"
-            name="reg-email"
-            id="reg-email"
-            minlength="8"
-            placeholder
-            v-model="email"
-          />
-        </label>
+        <div class="full-width">
+          <label for="reg-email">
+            Email Address
+            <input
+              type="email"
+              name="reg-email"
+              id="reg-email"
+              minlength="8"
+              placeholder
+              v-model="email"
+            />
+          </label>
+        </div>
 
         <label for="reg-password">
           Create Password
@@ -159,7 +161,7 @@
             v-model="confirmPassword"
           />
         </label>
-        <div class="pledge-that">
+        <div class="pledge-that full-width">
           <p>I pledge that:</p>
           <ul>
             <li>I understand the Smiley Movement is about collaboration to create real impact and positive change the world.</li>
@@ -167,7 +169,7 @@
             <li>I will aim to help other people and organisations reach their goals.</li>
           </ul>
         </div>
-        <label class="register-checkbox">
+        <label class="register-checkbox full-width">
           I am 16 years or older
           <input type="checkbox" v-model="isAdult" />
           <span class="register-checkmark">
@@ -208,7 +210,7 @@
             </svg>
           </span>
         </label>
-        <div class="register-btn-wrap">
+        <div class="register-btn-wrap full-width">
           <button
             class="register-btn"
             type="submit"
@@ -353,6 +355,14 @@ export default {
   }
 
   .registration-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+
+    .full-width {
+      grid-column: 1 / span 2 !important;
+    }
+
     .pledge-that {
       p,
       li {
@@ -361,6 +371,7 @@ export default {
     }
     label {
       color: #fff;
+      width: 100%;
     }
     .register-checkbox {
       color: #fff;
