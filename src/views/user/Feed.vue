@@ -74,7 +74,10 @@
                     <img :src="event.picture.medium" class="user-list__user-avatar" />
                     <div class="user-list__user-info">
                       <div class="user-list__user-title">{{ event.name.first }} {{event.name.last}}</div>
-                      <div class="user-list__user-description">{{ event.location.city }}</div>
+                      <div class="user-list__user-description">London, UK</div>
+                      <button class="user-list__user-connect__connect">
+                        <i class="fa fa-user-plus"></i> Connect
+                      </button>
                     </div>
                   </div>
                   <div class="users-list__item users-list__item--show-more">
@@ -514,6 +517,34 @@ export default {
   }
   .user-list__user-description {
     @include font-size(0.75rem);
+  }
+  .user-list__user-connect__connect {
+    display: inline-block;
+    max-width: 130px;
+    margin-top: 6px;
+    color: #fff;
+    border: 1px solid #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: "Montserrat SemiBold", sans-serif;
+    display: block;
+    padding: 2px 15px;
+    text-transform: uppercase;
+    height: auto;
+    transition: background-color 0.2s, color 0.2s;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    i {
+      margin-right: 12px;
+    }
+
+    &:hover {
+      background-color: #ffec00;
+      color: #393939;
+    }
   }
 }
 
