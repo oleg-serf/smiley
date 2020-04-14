@@ -12,7 +12,7 @@
       </banner>
     </div>
 
-    <div class="textual-banner">
+    <div class="textual-banner textual-banner--contained">
       <div class="container">
         <p>Helping you help others by raising awareness of your community projects, fundraising campaigns, voluntary groups, community events, grassroots and start-up collaborations, big or small, local of global. Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</p>
       </div>

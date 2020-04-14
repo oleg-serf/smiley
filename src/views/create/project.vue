@@ -56,40 +56,7 @@
             </label>
           </div>
         </div>
-        <div class="form-group">
-          <label>
-            What support / resources do you need ? *
-            <small>Select from the list belowe (minimum of 3)</small>
-          </label>
-          <div
-            class="select-support"
-            v-for="(item, index) in project.support"
-            :key="'support-skill-' + item.id + '-' + index"
-          >
-            <select class="form-control" v-model="project.support[index].category">
-              <option
-                v-for="parentCategory in supports"
-                :key="parentCategory.id"
-                :value="parentCategory.id"
-              >{{parentCategory.title}}</option>
-            </select>
-            <select class="form-control" required v-model="project.support[index].value">
-              <option
-                v-for="childCategory in categoryItems(project.support[index].category)"
-                :key="childCategory.id"
-                :value="childCategory.id"
-              >{{childCategory.title}}</option>
-            </select>
-            <div class="select-support__controls">
-              <button @click.prevent="removeSupportItem(index)" v-if="index >= 3">
-                <i class="fa fa-remove"></i>
-              </button>
-              <button v-if="index + 1 == project.support.length" @click.prevent="addSupportItem">
-                <i class="fa fa-plus-circle"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+
         <div class="form-group">
           <label class="form-control--inline" for="projectDonation">
             <input
@@ -204,6 +171,40 @@
             accept=".jpg, .jpeg, .png"
             required
           />
+        </div>
+        <div class="form-group">
+          <label>
+            What support / resources do you need ? *
+            <small>Select from the list belowe (minimum of 3)</small>
+          </label>
+          <div
+            class="select-support"
+            v-for="(item, index) in project.support"
+            :key="'support-skill-' + item.id + '-' + index"
+          >
+            <select class="form-control" v-model="project.support[index].category">
+              <option
+                v-for="parentCategory in supports"
+                :key="parentCategory.id"
+                :value="parentCategory.id"
+              >{{parentCategory.title}}</option>
+            </select>
+            <select class="form-control" required v-model="project.support[index].value">
+              <option
+                v-for="childCategory in categoryItems(project.support[index].category)"
+                :key="childCategory.id"
+                :value="childCategory.id"
+              >{{childCategory.title}}</option>
+            </select>
+            <div class="select-support__controls">
+              <button @click.prevent="removeSupportItem(index)" v-if="index >= 3">
+                <i class="fa fa-remove"></i>
+              </button>
+              <button v-if="index + 1 == project.support.length" @click.prevent="addSupportItem">
+                <i class="fa fa-plus-circle"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="grid-column grid-column--full-width">
@@ -614,7 +615,7 @@ export default {
 
 .goal-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 
   .form-checkbox-label {
     position: relative;

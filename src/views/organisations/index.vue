@@ -6,6 +6,57 @@
         <p>Explore our directory of organisations doing good and how to get involved</p>
       </template>
     </information-hero>
+    <form @submit.prevent="searchOrganisation" class="organisations-filer">
+      <div class="filter-grid container">
+        <div class="filter-grid__item filter-grid__item--full-width">
+          <div class="filter-grid__title">DIRECTORY OF ORGANISATIONS</div>
+        </div>
+        <div class="filter-grid__item">
+          <label class="search">
+            <i class="fa fa-search"></i>
+            <input
+              type="text"
+              class="filter"
+              required
+              minlength="3"
+              v-model="search.keyword"
+              placeholder="Search by name"
+            />
+          </label>
+        </div>
+        <div class="filter-grid__item">
+          <label class="dropdown">
+            <select v-model="search.industry">
+              <option selected disabled :value="null">Organisation Industry</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+        </div>
+        <div class="filter-grid__item">
+          <label class="dropdown">
+            <select v-model="search.interest">
+              <option selected disabled :value="null">Select Interest</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+        </div>
+        <div class="filter-grid__item">
+          <label class="dropdown">
+            <select v-model="search.goal">
+              <option selected disabled :value="null">Select Goal</option>
+              <option v-for="goal in goals" :key="'goal-'+goal.id" :value="goal.id">{{goal.name}}</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+        </div>
+        <div class="filter-grid__item filter-grid__item--full-width">
+          <button type="submit">
+            <i class="fa fa-search"></i>
+            search
+          </button>
+        </div>
+      </div>
+    </form>
     <div class>
       <div class="container">
         <div style="height: 75px;"></div>
@@ -93,7 +144,14 @@ export default {
   data() {
     return {
       organisations: [],
-      pages_count: 0
+      pages_count: 0,
+      goals: [],
+      search: {
+        keyword: null,
+        industry: null,
+        interest: null,
+        goal: null
+      }
     };
   },
   methods: {
@@ -136,6 +194,9 @@ export default {
         .catch(err => {
           // TODO: add error
         });
+    },
+    searchOrganisation() {
+      this.$swal({ text: "Testing search" });
     }
   },
   mounted() {
@@ -150,6 +211,13 @@ export default {
         // this.related_posts = res.data.related;
       })
       .catch(error => console.log(error));
+
+    axios
+      .get("/goals")
+      .then(res => {
+        this.goals = res.data.goal_categories[0].goals;
+      })
+      .catch(err => console.error("Load goals error", err));
   },
   components: {
     Breadcrumbs,
@@ -301,5 +369,113 @@ export default {
       border-color: transparent;
     }
   }
+}
+
+.filter-grid {
+  margin-top: -48px;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  max-width: 1080px;
+  // margin: 0 auto -40px;
+  background: #fff;
+  padding: 30px 30px 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+
+  .filter-grid__item {
+    &--full-width {
+      grid-column: 1 / span 4;
+    }
+  }
+
+  .filter-grid__title {
+    font-family: "Montserrat Bold", sans-serif;
+    text-align: center;
+    @include font-size(1.5rem);
+  }
+
+  label {
+    width: 100%;
+    position: relative;
+
+    &.search {
+      i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &.dropdown {
+      &:active {
+        i {
+          transform: translateY(-50%) rotate(180deg);
+        }
+      }
+      i {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform-origin: center center;
+        transform: translateY(-50%) rotate(0deg);
+        transition: transform 0.2s;
+      }
+    }
+  }
+
+  input,
+  select {
+    width: 100%;
+    background-color: #fff;
+    font-size: 1rem;
+    height: 46px;
+    border-radius: 0px !important;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+    padding: 5px 25px;
+    border: 1px solid #e0e6eb !important;
+  }
+
+  select {
+    &::after {
+      content: "erververv";
+    }
+  }
+
+  input {
+    color: #3d465a;
+    padding-left: 35px;
+  }
+
+  button[type="submit"] {
+    letter-spacing: 2px;
+    border: 1px solid #f4ed3b !important;
+    color: #393939;
+    background-color: #f4ed3b;
+    width: 100%;
+    padding: 5px 25px;
+    text-transform: uppercase;
+    font-family: "Montserrat SemiBold", sans-serif;
+    height: 46px;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+
+    i {
+      font-size: 14px;
+      margin-right: 14px;
+    }
+
+    &:hover {
+      box-shadow: 0 2px 28px -13px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+.project-information {
+  padding-bottom: 48px;
 }
 </style>
