@@ -63,7 +63,36 @@
               >Suggested matches</li>
             </ul>
             <div class="community-tabs">
-              <div class="community-tabs__tab" v-show="tab == 'community'">No connections yet</div>
+              <div class="community-tabs__tab" v-show="tab == 'community'">
+                <div class="users-list">
+                  <div
+                    class="users-list__item"
+                    v-for="(event, index) in fakeUsersFollowing"
+                    :key="'user-'+index"
+                  >
+                    <img :src="event.picture.medium" class="user-list__user-avatar" />
+                    <div class="user-list__user-info">
+                      <div class="user-list__user-title">{{ event.name.first }} {{event.name.last}}</div>
+                      <div
+                        class="user-list__user-description"
+                      >{{ event.location.city}}, {{event.location.country}}</div>
+                      <div class="user-list__user-connect__actions-holder">
+                        <button class="user-list__user-connect__actions">
+                          <i class="fa fa-user"></i> View
+                        </button>
+                        <button class="user-list__user-connect__actions">
+                          <i class="fa fa-envelope"></i> Message
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="users-list__item users-list__item--show-more">
+                    <div>
+                      <a href="#">Show more</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="community-tabs__tab" v-show="tab == 'matches'">
                 <div class="users-list">
                   <div
@@ -232,6 +261,7 @@ export default {
   },
   data() {
     return {
+      fakeUsersFollowing: [],
       fakeUsers: [],
       latest: [],
       tab: "community",
@@ -314,6 +344,13 @@ export default {
       .then(res => {
         console.log(res);
         this.fakeUsers = res.data.results;
+      })
+      .catch(error => console.error(error));
+    axiosBase
+      .get("https://randomuser.me/api/?results=20&nat=gb")
+      .then(res => {
+        console.log(res);
+        this.fakeUsersFollowing = res.data.results;
       })
       .catch(error => console.error(error));
   }
@@ -537,6 +574,43 @@ export default {
     background-color: transparent;
     display: flex;
     align-items: center;
+    cursor: pointer;
+
+    i {
+      margin-right: 12px;
+    }
+
+    &:hover {
+      background-color: #ffec00;
+      color: #393939;
+    }
+  }
+
+  .user-list__user-connect__actions-holder {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+
+  .user-list__user-connect__actions {
+    display: inline-block;
+    max-width: 130px;
+    text-align: center;
+    margin-top: 6px;
+    color: #fff;
+    border: 1px solid #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: "Montserrat SemiBold", sans-serif;
+    display: block;
+    padding: 2px 15px;
+    text-transform: uppercase;
+    height: auto;
+    transition: background-color 0.2s, color 0.2s;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 
     i {
