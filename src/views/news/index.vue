@@ -23,7 +23,7 @@
           class="news-category__search-form"
           @submit.prevent="$swal({text: 'News search test'})"
         >
-          <input type="text" minlength="3" required />
+          <input type="text" minlength="3" required placeholder="Search News" />
           <button type="submit">
             <i class="fa fa-search"></i>
           </button>
