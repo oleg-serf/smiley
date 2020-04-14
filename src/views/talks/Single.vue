@@ -410,7 +410,7 @@
                   :key="partner.name + partner.id"
                 >
                   <img
-                    :src="$settings.images_path.partners + 's_' +partner.image"
+                    :src="$settings.images_path.partners + 'm_' +partner.image"
                     :alt="partner.name"
                     :title="partner.name"
                   />
