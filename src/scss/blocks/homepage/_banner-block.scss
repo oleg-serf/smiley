@@ -5,6 +5,16 @@
   margin-bottom: 5px;
   min-height: 200px;
 
+  &--reversed {
+    .banner-block__left-column {
+      order: 2;
+    }
+
+    .banner-block__right-column {
+      order: 1;
+    }
+  }
+
   @include lgMax {
     flex-wrap: wrap;
   }

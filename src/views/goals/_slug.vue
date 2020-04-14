@@ -15,8 +15,12 @@
     </div>
 
     <section class="content-block container">
-      <div class="section-title">
-        <h2 class="section-title__title">News:</h2>
+      <div class="news-category">
+        <h2 class="news-category__title">Latest news</h2>
+        <select class="news-category__dropdown" @change.prevent="goToCategory">
+          <option disabled selected>Select goal</option>
+          <option v-for="item in goals" :key="item.slug + item.id" :value="item.slug">{{item.name}}</option>
+        </select>
       </div>
       <div class="news-category-section latest-articles">
         <div class="news-grid">
@@ -58,6 +62,7 @@
 
 <script>
 import axios from "@/axios-auth";
+import router from "@/router";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Banner from "@/components/homepage/Banner.vue";
@@ -72,6 +77,8 @@ export default {
   data() {
     return {
       goal: {},
+
+      goals: [],
 
       title: "",
       posts: [],
@@ -99,6 +106,10 @@ export default {
         this.goal = res.data.goal;
       })
       .catch(error => console.log(error));
+
+    axios.get("/goals").then(res => {
+      this.goals = res.data.goal_categories[0].goals;
+    });
   },
   methods: {
     goToPage(pageNumb) {
@@ -113,6 +124,12 @@ export default {
           this.pagination.totalPages = res.data.pages_count;
         })
         .catch(error => console.log(error));
+    },
+    goToCategory(event) {
+      router.push({
+        name: "news-category-item",
+        params: { slug: event.target.value }
+      });
     }
   },
   components: {
@@ -196,5 +213,81 @@ export default {
 
 .smiley-img-wrap {
   height: 255px;
+}
+
+/* News Section Title with Read More button */
+.news-category {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+
+  .news-category__title {
+    color: #393939;
+    font-family: "Montserrat Bold", sans-serif;
+    @include font-size(1rem);
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0px;
+  }
+
+  .news-category__link {
+    color: #1a1a1a;
+    font-family: "Montserrat Bold", sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    text-decoration: none;
+    position: relative;
+    text-transform: uppercase;
+    padding-right: 45px;
+    height: 100%;
+
+    &:hover {
+      span {
+        right: 0;
+      }
+    }
+
+    span {
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      right: 7px;
+      width: 20px;
+      height: 2px;
+      background-color: #000;
+      transition: 0.25s ease-in-out;
+
+      &:before,
+      &:after {
+        position: absolute;
+        content: "";
+        height: 2px;
+        width: 8px;
+        right: 0;
+        background-color: #000;
+      }
+      &:before {
+        transform: rotate(50deg);
+        top: -4px;
+      }
+      &:after {
+        transform: rotate(-50deg);
+        top: 4px;
+      }
+    }
+  }
+
+  .news-category__dropdown {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 50px;
+    background-color: #fff;
+    font-family: "Montserrat Bold", sans-serif;
+  }
 }
 </style>

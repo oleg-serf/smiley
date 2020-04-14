@@ -21,7 +21,8 @@
     <div class="container grid">
       <div class="grid-item grid-item--logo">
         <router-link class="tm-logo" to="/">
-          <img src="/img/homepage/logo.png" alt="Smiley Movement" />
+          <!-- <img src="/img/homepage/logo.png" alt="Smiley Movement" /> -->
+          <img src="https://smileymovement.org/images/logos/white-yellow.png" alt="Smiley Movement" />
         </router-link>
       </div>
       <div class="grid-item grid-item--menu">
@@ -213,6 +214,7 @@ export default {
 header {
   position: relative;
   z-index: 10;
+  background-color: #3d465a;
   box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
 }
 
@@ -339,7 +341,7 @@ header {
 
     &:hover {
       .main-menu__link {
-        border-bottom: 2px solid #393939;
+        border-bottom: 2px solid #fff;
 
         i {
           transform: rotate(180deg);
@@ -357,7 +359,7 @@ header {
     font-family: "Montserrat SemiBold", sans-serif;
     text-transform: uppercase;
     text-decoration: none;
-    color: #393939;
+    color: #fff;
     padding: 24px 10px 22px 10px;
     display: block;
     border-bottom: 2px solid transparent;
@@ -367,7 +369,7 @@ header {
     align-items: center;
 
     &.router-link-active {
-      border-bottom: 2px solid #393939;
+      border-bottom: 2px solid #fff;
     }
 
     i {
@@ -396,7 +398,7 @@ header {
       height: 0;
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
-      border-bottom: 5px solid black;
+      border-bottom: 5px solid #fff;
       display: block;
       content: "";
       position: absolute;
@@ -431,7 +433,7 @@ header {
   margin: 0px;
 
   .header-socials__item {
-    border: 1px solid #393939;
+    border: 1px solid #fff;
     line-height: 1;
     width: 24px;
     height: 24px;
@@ -442,16 +444,16 @@ header {
     }
 
     &:hover {
-      background-color: #393939;
+      background-color: #fff;
 
       .header-socials__link {
-        color: #fff;
+        color: #393939;
       }
     }
   }
 
   .header-socials__link {
-    color: #393939;
+    color: #fff;
     transition: color 0.2s;
     display: block;
     width: 100%;
@@ -481,7 +483,7 @@ header {
     width: 100%;
     height: 100%;
     display: block;
-    background-color: #393939;
+    background-color: #fff;
     position: absolute;
     left: 0px;
     top: 100%;
@@ -492,7 +494,7 @@ header {
   i {
     position: relative;
     z-index: 2;
-    color: #393939;
+    color: #fff;
   }
 
   &:hover {
@@ -501,7 +503,7 @@ header {
     }
 
     i {
-      color: #fff;
+      color: #393939;
     }
   }
 }
@@ -511,6 +513,10 @@ header {
   display: flex;
   align-items: center;
   padding-bottom: 2px;
+
+  & > i {
+    color: #fff;
+  }
 
   .user-profile__circle {
     width: 48px;
@@ -572,7 +578,7 @@ header {
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid black;
+    border-bottom: 5px solid #fff;
     display: block;
     content: "";
     position: absolute;
@@ -615,7 +621,7 @@ header {
 }
 
 .button-notification {
-  color: #af241c;
+  color: #fff;
   transition: color 0.2s;
   display: flex;
   position: relative;

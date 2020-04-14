@@ -63,16 +63,16 @@
               <div class="footer-section__title">Support</div>
               <ul class="footer-section__menu">
                 <li>
-                  <router-link to>Partners</router-link>
+                  <router-link :to="{name: 'partners'}">Partners</router-link>
                 </li>
                 <li>
-                  <router-link to>Terms and Conditions</router-link>
+                  <router-link :to="{name: 'terms'}">Terms and Conditions</router-link>
                 </li>
+                <!-- <li>
+                  <router-link :to="{name: 'support'}">Support</router-link>
+                </li>-->
                 <li>
-                  <router-link to>Support</router-link>
-                </li>
-                <li>
-                  <router-link to>Contact Us</router-link>
+                  <router-link :to="{name: 'contact'}">Contact Us</router-link>
                 </li>
               </ul>
             </div>

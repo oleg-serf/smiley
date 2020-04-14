@@ -14,6 +14,7 @@
       </banner>
       <banner :link="(auth) ? '/organisations' : '/register'" color="#4696D2">
         <template v-slot:name>Network</template>
+
         <template v-slot:subname>Organisations</template>
         <template
           v-slot:content

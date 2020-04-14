@@ -68,17 +68,13 @@
                 <div class="users-list">
                   <div
                     class="users-list__item"
-                    v-for="(event, index) in eventsList"
+                    v-for="(event, index) in fakeUsers"
                     :key="'user-'+index"
                   >
-                    <img :src="event.avatar" class="user-list__user-avatar" />
+                    <img :src="event.picture.medium" class="user-list__user-avatar" />
                     <div class="user-list__user-info">
-                      <div
-                        class="user-list__user-title"
-                      >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}</div>
-                      <div
-                        class="user-list__user-description"
-                      >{{ description.length > 25 ? description.substring(0, 25) + '...' : description }}</div>
+                      <div class="user-list__user-title">{{ event.name.first }} {{event.name.last}}</div>
+                      <div class="user-list__user-description">{{ event.location.city }}</div>
                     </div>
                   </div>
                   <div class="users-list__item users-list__item--show-more">
@@ -218,6 +214,7 @@
 
 <script>
 import axios from "@/axios-auth";
+import axiosBase from "axios";
 
 import NewsCard from "@/components/cards/NewsCard.vue";
 import Footer from "@/components/Footer";
@@ -230,6 +227,7 @@ export default {
   },
   data() {
     return {
+      fakeUsers: [],
       latest: [],
       tab: "community",
       updatesTab: "news",
@@ -304,6 +302,13 @@ export default {
       .get("/news/latest")
       .then(res => {
         this.latest = res.data.latest_news;
+      })
+      .catch(error => console.error(error));
+    axiosBase
+      .get("https://randomuser.me/api/?results=20")
+      .then(res => {
+        console.log(res);
+        this.fakeUsers = res.data.results;
       })
       .catch(error => console.error(error));
   }

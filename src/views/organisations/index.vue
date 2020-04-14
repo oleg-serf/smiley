@@ -3,7 +3,7 @@
     <information-hero background="/img/backgrounds/organisation.jpg">
       <template v-slot:title>Connect with organisations</template>
       <template v-slot:content>
-        <p>See what projects organisations are running and how you can help</p>
+        <p>Explore our directory of organisations doing good and how to get involved</p>
       </template>
     </information-hero>
     <div class>

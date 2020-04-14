@@ -1,7 +1,7 @@
 <template>
-  <div class="banner-block">
+  <div class="banner-block" :class="{'banner-block--reversed': reversed}">
     <div class="banner-block__left-column" :style="{backgroundColor: color}">
-      <div class="banner-block__logo" v-if="!isNotEmptySlot('logo')">
+      <div class="banner-block__logo" v-if="!isNotEmptySlot('logo') && logo">
         <img src="/img/_smiley-logo.svg" />
       </div>
       <div class="banner-block__logo banner-block__logo-slot" v-else>
@@ -55,6 +55,14 @@ export default {
     background: {
       type: String,
       default: "/img/homepage/network-dt-bg.png"
+    },
+    logo: {
+      type: Boolean,
+      default: true
+    },
+    reversed: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
