@@ -5,6 +5,11 @@
       <template v-slot:content>
         <p>Explore our directory of organisations doing good and how to get involved</p>
       </template>
+      <template v-slot:buttons>
+        <router-link :to="{name: 'add-organisation'}" class="primary">
+          <i class="fa fa-users"></i>&nbsp; &nbsp; &nbsp;Create organisation
+        </router-link>
+      </template>
     </information-hero>
     <form @submit.prevent="searchOrganisation" class="organisations-filer">
       <div class="filter-grid container">

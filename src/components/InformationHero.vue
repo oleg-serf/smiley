@@ -2,11 +2,11 @@
   <div class="project-information">
     <img :src="background" class="project-information__banner" alt />
 
-    <div class="project-information__top" v-if="isNotEmptySlot('title')">
+    <!-- <div class="project-information__top" v-if="isNotEmptySlot('title')">
       <div class="project-information__user">
         <slot name="avatar"></slot>
       </div>
-    </div>
+    </div>-->
     <div class="project-information__bottom">
       <div class="project-information__column-info">
         <h1 class="project-information__title" v-if="isNotEmptySlot('title')">
@@ -50,7 +50,7 @@ export default {
 .project-information {
   position: relative;
   color: #fff;
-  min-height: 600px;
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   padding-left: 15px;
