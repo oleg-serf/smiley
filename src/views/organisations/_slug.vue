@@ -405,7 +405,7 @@ export default {
 
 .organisation-bg {
   background-image: url(https://smileymovement.org/images/pages/organisation/subheader_bg.jpg);
-  background-position: center;
+  background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -610,14 +610,14 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1px;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
   width: 100%;
 
   .grid-item {
     box-sizing: border-box;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
 
@@ -639,7 +639,7 @@ export default {
     width: 100%;
     box-sizing: border-box;
     padding: 25px 30px;
-    border-bottom: 1px solid #393939;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
     &:last-child {
       border: none;

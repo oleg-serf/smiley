@@ -49,7 +49,14 @@
       <div class="grid-item">
         <div class="item-holder">
           <div class="title">About {{user.display_name}}</div>
-          <div class="about" v-html="user.bio"></div>
+          <template v-if="user.bio != null">
+            <div class="about" v-html="user.bio"></div>
+          </template>
+          <template v-else>
+            <div
+              class="about"
+            >Tell us about yourself, what you're passionate about, causes you support and topics you're interested in learning more about so we can match you to likeminded people</div>
+          </template>
         </div>
       </div>
       <div class="grid-item">

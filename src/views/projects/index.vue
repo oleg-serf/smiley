@@ -4,6 +4,7 @@
     <div class="container">
       <banner color="#4696D2" link="/create/project">
         <template v-slot:name>Network</template>
+        <template v-slot:subname>projects</template>
         <template v-slot:title>Projects that change the world</template>
         <template v-slot:button>Create</template>
         <template
