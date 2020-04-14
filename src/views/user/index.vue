@@ -11,6 +11,33 @@
     </div>
     <div class="profile-holder">
       <div class="profile container">
+        <div class="profile-column profile-column__full-width">
+          <div class="profile-actions">
+            <div class="profile-menu-trigger" @click="userMenuActivator = !userMenuActivator">
+              <i class="fa fa-bars"></i>
+            </div>
+            <div class="profile-helper">Profile</div>
+            <transition name="fade">
+              <ul class="profile-menu" v-show="userMenuActivator">
+                <li>
+                  <router-link :to="{name: 'feed'}">Newsfeed</router-link>
+                </li>
+                <li>
+                  <router-link :to="{name: 'talks'}">Events</router-link>
+                </li>
+                <li>
+                  <router-link :to="'/'">Ecosystems (coming soon)</router-link>
+                </li>
+                <li>
+                  <router-link :to="{name: 'projects'}">Projects</router-link>
+                </li>
+              </ul>
+            </transition>
+          </div>
+          <router-link :to="{name: 'account-settings'}" class="edit-profile-link">
+            <i class="fa fa-pencil"></i>edit profile
+          </router-link>
+        </div>
         <div class="profile-column profile-column__left">
           <div class="profile-avatar">
             <img v-if="user.avatar != null" :src="$settings.images_path.users + 'm_'+ user.avatar" />
@@ -196,6 +223,7 @@ export default {
   },
   data() {
     return {
+      userMenuActivator: false,
       user: {},
       socials: [],
       goals: [],
@@ -281,7 +309,7 @@ export default {
   // margin-top: 50px;
 
   background-image: url(https://smileymovement.org/images/bg/user-profile-bg.jpg);
-  background-position: center;
+  background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -297,16 +325,31 @@ export default {
     box-sizing: border-box;
   }
 
-  .profile-column__left {
-    border-right: 1px solid hsla(0, 0%, 100%, 0.5);
+  .profile-column__full-width {
+    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    width: 100%;
+    flex-basis: 100%;
+    min-height: auto;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 20px;
+    margin: -1px;
+  }
+
+  .profile-column__left {
+    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    padding-left: 20px;
+    display: flex;
+    margin: -1px;
   }
 
   .profile-section {
-    border-bottom: 1px solid hsla(0, 0%, 100%, 0.5);
+    border: 1px solid hsla(0, 0%, 100%, 0.5);
     padding: 35px 50px;
     display: flex;
     flex-wrap: wrap;
+    margin: -1px;
 
     .profile-section__detail {
       width: 50%;
@@ -394,13 +437,13 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1px;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 
   .grid-item {
     box-sizing: border-box;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
 
@@ -459,7 +502,7 @@ export default {
 
         li {
           margin: -1px;
-          border: 1px solid #393939;
+          border: 1px solid rgba(0, 0, 0, 0.3);
           font-size: 0px;
           line-height: 1;
 
@@ -604,5 +647,93 @@ export default {
     color: #000;
     margin-top: 0px;
   }
+}
+
+.edit-profile-link {
+  text-decoration: none !important;
+  border: none !important;
+  color: #393939;
+  background-color: #f4ed3b;
+  cursor: pointer;
+  max-width: 250px;
+  width: 100%;
+  text-align: center;
+  padding: 10px 12px;
+  display: block;
+  text-transform: uppercase;
+  font-family: "Montserrat Bold", sans-serif;
+
+  i {
+    margin-right: 12px;
+  }
+}
+
+.profile-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .profile-menu-trigger {
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #393939;
+    width: 50px;
+    height: 50px;
+    @include font-size(1.5rem);
+  }
+  .profile-helper {
+    margin-left: 24px;
+    font-family: "Montserrat Bold", sans-serif;
+    color: #fff;
+    letter-spacing: 2.2px;
+    @include font-size(1.5rem);
+    text-transform: uppercase;
+  }
+  .profile-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    background-color: #fff;
+    width: 225px;
+    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.3);
+
+    &::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 10px 10px 10px;
+      border-color: transparent transparent #ffffff transparent;
+      display: block;
+      position: absolute;
+      top: -10px;
+      left: 14px;
+    }
+
+    a {
+      display: block;
+      padding: 10px 15px;
+      color: #7d8494;
+      text-decoration: none;
+      @include font-size(0.9rem);
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
