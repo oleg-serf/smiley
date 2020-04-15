@@ -22,7 +22,7 @@
       <div class="grid-item grid-item--logo">
         <router-link class="tm-logo" to="/">
           <!-- <img src="/img/homepage/logo.png" alt="Smiley Movement" /> -->
-          <img src="https://smileymovement.org/images/logos/white-yellow.png" alt="Smiley Movement" />
+          <img src="/img/smiley-logo-white-header.png" alt="Smiley Movement" />
         </router-link>
       </div>
       <div class="grid-item grid-item--menu">
