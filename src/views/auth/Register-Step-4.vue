@@ -80,7 +80,7 @@
         </div>
         <div class="input-row">
           <label style="width: 100%;">
-            <span>Ass a short bio</span>
+            <span>Add a short bio</span>
             <textarea style="height: 300px;" minlength="32" maxlength="254" v-model="user.bio"></textarea>
           </label>
         </div>
