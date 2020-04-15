@@ -86,6 +86,11 @@ export default {
         : description;
     }
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
+  },
   methods: {
     format(date, format) {
       const result = this.$dayjs(date).format(format);

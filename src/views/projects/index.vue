@@ -15,12 +15,12 @@
 
     <div class="textual-banner textual-banner--contained">
       <div class="container">
-        <p>Helping you help others by raising awareness of your community projects, fundraising campaigns, voluntary groups, community events, grassroots and start-up collaborations, big or small, local of global. Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</p>
+        <p>Helping you help others by raising awareness of your community projects, fundraising campaigns, voluntary groups, community events, grassroots and start-up collaborations, big or small, local of global.</p>
       </div>
     </div>
 
     <!-- Title section -->
-    <section class="section projects-section container">
+    <section class="section projects-section container" v-if="myProjects.length >0">
       <h2 class="projects-section__title">
         Created by you
         <span class="projects-section__count">{{myProjects.length}} Projects</span>
@@ -28,7 +28,7 @@
     </section>
 
     <!-- Projects Grid -->
-    <section class="projects-grid container section">
+    <section class="projects-grid container section" v-if="myProjects.length >0">
       <!-- TODO: Make component from Project -->
       <div class="project-article" v-for="project in myProjects" :key="'project-my-'+project.slug">
         <div class="project-article__image">
@@ -179,6 +179,11 @@ export default {
       myProjects: []
     };
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
+  },
   methods: {
     trimDescription(description) {
       return description.length > 80
@@ -193,9 +198,11 @@ export default {
       this.projects = res.data.projects;
     });
 
-    axios
-      .get("/projects/my")
-      .then(res => (this.myProjects = res.data.projects));
+    if (this.isAuthenticated) {
+      axios
+        .get("/projects/my")
+        .then(res => (this.myProjects = res.data.projects));
+    }
   }
 };
 </script>
