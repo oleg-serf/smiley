@@ -3,7 +3,7 @@
     <breadcrumbs ref="breadcrumbs" />
 
     <div class="container">
-      <banner :color="goal.colour" background="/img/homepage/banner-goals.jpg">
+      <banner :color="goal.colour" background="/img/goals-banner.jpg">
         <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 200px" />
         </template>
