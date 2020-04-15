@@ -156,8 +156,8 @@
               </li>
               <li :class="{active: activity == 'following'}">
                 <button @click.prevent="activity = 'following'">
-                  Following
-                  <span>0</span>
+                  Smiley Hubs
+                  <!-- <span>0</span> -->
                 </button>
               </li>
             </ul>
@@ -178,7 +178,7 @@
                 <template v-if="feed.events.length > 0"></template>
                 <template v-else>
                   <div class="no-posts">
-                    <div class="no-posts__title">No Projects Yet.</div>
+                    <div class="no-posts__title">No Projects yet.</div>
                     <p class="no-posts__text">Add projects to your profile by creating your own.</p>
                     <router-link
                       :to="{name: 'projects'}"
