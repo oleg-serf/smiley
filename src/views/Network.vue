@@ -12,7 +12,44 @@
           v-slot:content
         >Explore active fundraising campaigns and charitable initiatives making a difference in the world and find out how you can get involved. If you have a new idea for a social impact project, create your own Project following the Theory of Change method and start collaborating with other members.</template>
       </banner>
-      <banner :link="(auth) ? '/organisations' : '/register'" color="#4696D2">
+
+      <img src="/img/network-image.png" alt="Workplace" usemap="#image-map" style="max-width:100%;" />
+      <map name="image-map">
+        <area
+          target
+          alt="organisations"
+          title="organisations"
+          href="/organisations"
+          coords="358, 461, 35, 295"
+          shape="rect"
+        />
+        <area
+          target
+          alt="members"
+          title="members"
+          href="/users"
+          coords="444, 439, 762, 603"
+          shape="rect"
+        />
+        <area
+          target
+          alt="partners"
+          title="partners"
+          href="/partners"
+          coords="834, 439, 1159, 605"
+          shape="rect"
+        />
+        <area
+          target
+          alt="projects"
+          title="projects"
+          href="/projects"
+          coords="1241, 307, 1560, 476"
+          shape="rect"
+        />
+      </map>
+
+      <!-- <banner :link="(auth) ? '/organisations' : '/register'" color="#4696D2">
         <template v-slot:name>Network</template>
 
         <template v-slot:subname>Organisations</template>
@@ -40,7 +77,7 @@
         <template v-slot:button v-if="auth">Learn more</template>
         <template v-slot:button v-if="auth">Learn more</template>
         <template v-slot:button v-else>Join</template>
-      </banner>
+      </banner>-->
     </div>
 
     <Footer />

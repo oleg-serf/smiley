@@ -22,9 +22,9 @@
                 <li>
                   <router-link :to="{name: 'talks'}">Events</router-link>
                 </li>
-                <li>
+                <!-- <li>
                   <router-link :to="'/'">Ecosystems (coming soon)</router-link>
-                </li>
+                </li>-->
                 <li>
                   <router-link :to="{name: 'projects'}">Projects</router-link>
                 </li>
@@ -330,7 +330,9 @@ export default {
   }
 
   .profile-column__full-width {
-    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: none;
+    border-top: none;
     width: 100%;
     flex-basis: 100%;
     min-height: auto;
@@ -338,22 +340,23 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 24px 20px;
-    margin: -1px;
   }
 
   .profile-column__left {
-    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding-left: 20px;
     display: flex;
-    margin: -1px;
+  }
+  .profile-column__right {
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   .profile-section {
-    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     padding: 35px 50px;
     display: flex;
     flex-wrap: wrap;
-    margin: -1px;
+    // margin: -1px;
 
     .profile-section__detail {
       width: 50%;
@@ -458,16 +461,18 @@ export default {
       grid-column: 1 / span 2;
       align-items: center;
       .item-holder {
-        max-width: 1560px;
+        max-width: 1530px;
       }
     }
 
     .item-holder {
-      max-width: 780px;
+      max-width: 764px;
       width: 100%;
       box-sizing: border-box;
       padding: 25px 30px;
       border-bottom: 1px solid #393939;
+      height: 100%;
+      background-color: #eeeeee;
 
       &:last-child {
         border: none;
@@ -506,7 +511,6 @@ export default {
 
         li {
           margin: -1px;
-          border: 1px solid rgba(0, 0, 0, 0.3);
           font-size: 0px;
           line-height: 1;
 

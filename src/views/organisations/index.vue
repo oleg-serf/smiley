@@ -1,6 +1,6 @@
 <template>
   <div class="organisations-bg">
-    <information-hero background="/img/backgrounds/organisation.jpg">
+    <information-hero background="/img/backgrounds/organisation.jpg" position="top">
       <template v-slot:title>Connect with organisations</template>
       <template v-slot:content>
         <p>Explore our directory of organisations doing good and how to get involved</p>

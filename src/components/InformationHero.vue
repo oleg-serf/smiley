@@ -1,6 +1,10 @@
 <template>
   <div class="project-information">
-    <img :src="background" class="project-information__banner" alt />
+    <img
+      :src="background"
+      class="project-information__banner"
+      :style="{'object-position': position}"
+    />
 
     <!-- <div class="project-information__top" v-if="isNotEmptySlot('title')">
       <div class="project-information__user">
@@ -41,6 +45,10 @@ export default {
     background: {
       type: String,
       default: "/img/components/information-hero.jpg"
+    },
+    position: {
+      type: String,
+      default: "center"
     }
   }
 };
@@ -141,7 +149,6 @@ export default {
   }
 
   .project-information__column-info {
-    width: 60%;
     padding-right: 30px;
     box-sizing: border-box;
 

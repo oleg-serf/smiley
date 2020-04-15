@@ -635,11 +635,13 @@ export default {
   }
 
   .item-holder {
-    max-width: 780px;
+    max-width: 764px;
     width: 100%;
     box-sizing: border-box;
     padding: 25px 30px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 100%;
+    background-color: #eeeeee;
 
     &:last-child {
       border: none;

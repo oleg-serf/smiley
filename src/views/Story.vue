@@ -71,9 +71,7 @@
             <!--</div>-->
             <div class="timeline__body">
               <div class="timeline__year js-tl-year-content active plus" data-year="December 2019">
-                <div class="year__image">
-                  <img src="/img/our-story/smiley-talks.jpg" />
-                </div>
+                <div class="year__image"></div>
                 <div class="year__delimiter">
                   <span>Dec 2019</span>
                 </div>
@@ -85,7 +83,7 @@
               </div>
               <div class="timeline__year js-tl-year-content" data-year="June 2019">
                 <div class="year__image">
-                  <img src="/img/smiley-movement-white.png" />
+                  <img src="/img/our-story/smiley-talks.jpg" />
                 </div>
                 <div class="year__delimiter">
                   <span>June 2019</span>
@@ -98,9 +96,10 @@
               </div>
               <div class="timeline__year js-tl-year-content" data-year="March 2019">
                 <div class="year__image">
-                  <img
+                  <!-- <img
                     src="https://s3-eu-west-2.amazonaws.com/admin.up-movement/app/uploads/2019/03/lights.png"
-                  />
+                  />-->
+                  <img src="/img/smiley-movement-white.png" />
                 </div>
                 <div class="year__delimiter">
                   <span>March 2019</span>

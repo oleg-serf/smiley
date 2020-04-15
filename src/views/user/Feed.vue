@@ -199,12 +199,12 @@
             <i class="fa fa-users"></i> Members
           </router-link>
         </div>
-        <div class="feed-section__item">
+        <!-- <div class="feed-section__item">
           <router-link to="/" class="feed-section__link">
             <i class="fa fa-qq"></i> Ecosystem
             <br />(comming soon)
           </router-link>
-        </div>
+        </div>-->
         <div class="feed-section__item">
           <router-link :to="{name: 'talks'}" class="feed-section__link">
             <i class="fa fa-calendar-check-o"></i> Events
@@ -824,7 +824,7 @@ export default {
 
   .feed-sections-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
   }
 }
