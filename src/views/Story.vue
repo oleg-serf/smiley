@@ -71,7 +71,9 @@
             <!--</div>-->
             <div class="timeline__body">
               <div class="timeline__year js-tl-year-content active plus" data-year="December 2019">
-                <div class="year__image"></div>
+                <div class="year__image">
+                  <img src="/img/our-story/guy.svg" />
+                </div>
                 <div class="year__delimiter">
                   <span>Dec 2019</span>
                 </div>
