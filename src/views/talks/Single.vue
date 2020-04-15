@@ -782,6 +782,52 @@ export default {
             ]
           }
         ],
+        "14": [
+          {
+            title: "INTERVIEWS",
+            type: "video",
+            json_content: [
+              {
+                title:
+                  "Smiley Talks: What’s the point of Education? - Highlights",
+                sub_type: "vimeo",
+                content: "396914673"
+              },
+
+              {
+                title: "Rachel Snape, National Leader of Education",
+                sub_type: "vimeo",
+                content: "397243288"
+              },
+              {
+                title: "Sebastien Chapleau, The Big Education Conversation",
+                sub_type: "vimeo",
+                content: "397497515"
+              },
+              {
+                title: "Evelyn Haywood, Skills Builder",
+                sub_type: "vimeo",
+                content: "397514851"
+              },
+              {
+                title: "Loic Menzies, The Centre of Education and Schools",
+                sub_type: "vimeo",
+                content: "397527627"
+              },
+              {
+                title:
+                  "Dan Frost, Learning Technology Lead, Cambridge Assessment English",
+                sub_type: "vimeo",
+                content: "398064121"
+              },
+              {
+                title: "John Wroe, Street Child United",
+                sub_type: "vimeo",
+                content: "398306707"
+              }
+            ]
+          }
+        ],
         "15": [
           {
             title: "highlights",
@@ -896,7 +942,7 @@ export default {
       .then(res => {
         console.log("event loaded", res);
 
-        if ([11, 13, 16, 18, 17, 15].includes(res.data.event.id)) {
+        if ([11, 13, 16, 18, 17, 14, 15].includes(res.data.event.id)) {
           res.data.event.event_sections = this.videosStatic[res.data.event.id];
         }
         this.event = res.data.event;
