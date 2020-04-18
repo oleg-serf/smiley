@@ -80,7 +80,7 @@ body {
   min-width: 320px;
   position: relative;
   line-height: 1.65;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   margin: 0;
   input,
   textarea {
@@ -92,6 +92,13 @@ body {
     &:required:valid {
       border-color: green;
     }
+  }
+
+  &.mobile-menu--opened {
+    position: fixed !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100vh !important;
   }
 }
 

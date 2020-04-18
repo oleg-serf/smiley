@@ -1,72 +1,192 @@
 <template>
-  <header>
-    <div class="search-block" :class="{active: searchActive}">
-      <form class="search-form container" :class="{active: searchActive}" @submit.prevent="find">
-        <button class="search-form__close" type="button" @click="searchActive = false">
-          <i class="fa fa-close"></i>
-        </button>
-        <input
-          class="search-form__field"
-          placeholder="What are we looking for?"
-          type="search"
-          aria-label="Search through site content"
-          v-model="search"
-          required
-        />
-        <button class="search-form__submit" type="submit">
-          <i class="fa fa-search"></i>
-        </button>
-      </form>
-    </div>
-    <div class="container grid">
-      <div class="grid-item grid-item--logo">
-        <router-link class="tm-logo" to="/">
-          <!-- <img src="/img/homepage/logo.png" alt="Smiley Movement" /> -->
-          <img src="/img/smiley-logo-white-header.png" alt="Smiley Movement" />
-        </router-link>
-      </div>
-      <div class="grid-item grid-item--menu">
-        <nav>
-          <ul class="main-menu">
-            <li class="main-menu__item">
-              <router-link class="main-menu__link" :to="{name: 'talks'}">smiley talks</router-link>
-            </li>
-            <li class="main-menu__item">
-              <router-link class="main-menu__link" :to="{name: 'news'}">smiley news</router-link>
-            </li>
-            <li class="main-menu__item main-menu__item-has-children">
-              <span>
-                <router-link class="main-menu__link" :to="{name: 'network'}">
-                  network
-                  <i class="fa fa-angle-down"></i>
-                </router-link>
-              </span>
-
-              <div class="sub-menu">
-                <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'partners'}">our partners</router-link>
-                </li>
-                <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'users'}">members</router-link>
-                </li>
-                <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'organisations'}">organisations</router-link>
-                </li>
-                <li class="sub-menu__item">
-                  <router-link class="sub-menu__link" :to="{name: 'projects'}">projects</router-link>
-                </li>
-              </div>
-            </li>
-            <li class="main-menu__item">
-              <router-link class="main-menu__link" :to="{name: 'story'}">our story</router-link>
-            </li>
-            <li class="main-menu__item">
-              <router-link class="main-menu__link" :to="{name: 'goals'}">un goals</router-link>
+  <div>
+    <header>
+      <!-- <div class="search-block" :class="{active: searchActive}">
+        <form class="search-form container" :class="{active: searchActive}" @submit.prevent="find">
+          <button class="search-form__close" type="button" @click="searchActive = false">
+            <i class="fa fa-close"></i>
+          </button>
+          <input
+            class="search-form__field"
+            placeholder="What are we looking for?"
+            type="search"
+            aria-label="Search through site content"
+            v-model="search"
+            required
+          />
+          <button class="search-form__submit" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+      </div>-->
+      <div class="container grid">
+        <div class="grid-item grid-item--menu-toggle">
+          <button @click.prevent="mobileMenu">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+        <div class="grid-item grid-item--logo">
+          <router-link class="tm-logo" to="/">
+            <img src="/img/smiley-logo-white-header.png" alt="Smiley Movement" />
+          </router-link>
+        </div>
+        <div class="grid-item grid-item--menu">
+          <nav>
+            <ul class="main-menu">
+              <li class="main-menu__item" v-for="item in menu" :key="'menu-item-'+item.name">
+                <template v-if="item.items == null">
+                  <router-link class="main-menu__link" :to="{name: item.link}">{{item.name}}</router-link>
+                </template>
+                <template v-else>
+                  <span>
+                    <router-link
+                      class="main-menu__link main-menu__item-has-children"
+                      :to="{name: item.link}"
+                    >
+                      {{item.name}}
+                      <i class="fa fa-angle-down"></i>
+                    </router-link>
+                  </span>
+                  <ul class="sub-menu">
+                    <li
+                      class="sub-menu__item"
+                      v-for="subitem in item.items"
+                      :key="'menu-subitem-'+subitem.name"
+                    >
+                      <router-link
+                        class="sub-menu__link"
+                        :to="{name: subitem.link}"
+                      >{{subitem.name}}</router-link>
+                    </li>
+                  </ul>
+                </template>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="grid-item grid-item--social">
+          <ul class="header-socials">
+            <li class="header-socials__item" v-for="social in socials" :key="'social-'+social.name">
+              <a :href="social.link" target="_blank" class="header-socials__link">
+                <i class="fa" :class="'fa-'+social.name"></i>
+              </a>
             </li>
           </ul>
-        </nav>
+        </div>
+        <div class="grid-item grid-item--user">
+          <button @click.prevent="searchActive = true" class="button-search">
+            <i class="fa fa-search"></i>
+          </button>
+          <router-link to="/" class="button-notification" v-if="loggedIn">
+            <div class="button-notification__icon">
+              <i class="fa fa-bell-o"></i>
+            </div>
+          </router-link>
+          <div class="user-profile" v-if="loggedIn">
+            <div
+              class="user-profile__circle"
+              :class="{active: userMenu}"
+              @click="userMenu = !userMenu"
+            >
+              <template v-if="userAvatar != null">
+                <img :src="$settings.images_path.users + 's_' + userAvatar" />
+              </template>
+              <template v-else>
+                <span>{{userName}}</span>
+              </template>
+            </div>
+            <i class="fa fa-angle-down"></i>
+            <ul class="user-menu">
+              <li class="user-menu__item">
+                <router-link :to="{name: 'profile'}" class="user-menu__link">
+                  <i class="fa fa-user"></i> My Profile
+                </router-link>
+              </li>
+              <li class="user-menu__item">
+                <router-link :to="{name: 'account-settings'}" class="user-menu__link">
+                  <i class="fa fa-cogs"></i> Account Settings
+                </router-link>
+              </li>
+              <li class="user-menu__item">
+                <router-link :to="{name: 'feed'}" class="user-menu__link">
+                  <i class="fa fa-cloud"></i> My News Feed
+                </router-link>
+              </li>
+              <li class="user-menu__item">
+                <template v-if="organisation.admin != null">
+                  <router-link
+                    :to="{name: 'organisation', params: {slug: organisation.slug}}"
+                    class="user-menu__link"
+                  >
+                    <i class="fa fa-users"></i> My Organisation
+                  </router-link>
+                </template>
+                <template v-else>
+                  <router-link :to="{name: 'create-organisation'}" class="user-menu__link">
+                    <i class="fa fa-user-plus"></i> Create Organisation
+                  </router-link>
+                </template>
+              </li>
+              <li class="user-menu__item">
+                <a class="user-menu__link" href="#" @click.prevent="logout">
+                  <i class="fa fa-power-off"></i> Sign Out
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="user-profile" v-else>
+            <div
+              class="user-profile__circle"
+              :class="{active: userMenu}"
+              @click="userMenu = !userMenu"
+            >
+              <span class="user-profile__circle-loggedout">
+                <i class="fa fa-user-circle-o"></i>
+              </span>
+            </div>
+            <i class="fa fa-angle-down"></i>
+            <ul class="user-menu">
+              <li class="user-menu__item">
+                <router-link :to="{name: 'login'}" class="user-menu__link">
+                  <i class="fa fa-sign-in"></i> Login
+                </router-link>
+              </li>
+              <li class="user-menu__item user-menu__item--textual">
+                <span>New to Smiley Movement?</span>
+              </li>
+              <li class="user-menu__item">
+                <router-link
+                  :to="{name: 'register'}"
+                  class="user-menu__link user-menu__link--register"
+                >
+                  <i class="fa fa-user-plus"></i> Register
+                </router-link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="grid-item grid-item--social">
+    </header>
+    <div class="mobile-menu-holder">
+      <button class="close-menu" @click.prevent="mobileMenu">
+        <i class="fa fa-angle-left"></i>
+        <span>Back to website</span>
+      </button>
+      <div class="mobile-menu-inner">
+        <ul class="mobile-menu">
+          <li class="mobile-menu__item" v-for="item in menu" :key="'menu-item-'+item.name">
+            <router-link class="mobile-menu__link" :to="{name: item.link}">{{item.name}}</router-link>
+            <ul class="sub-menu" v-if="item.items != null">
+              <li
+                class="sub-menu__item"
+                v-for="subitem in item.items"
+                :key="'menu-subitem-'+subitem.name"
+              >
+                <router-link class="sub-menu__link" :to="{name: subitem.link}">{{subitem.name}}</router-link>
+              </li>
+            </ul>
+          </li>
+        </ul>
         <ul class="header-socials">
           <li class="header-socials__item" v-for="social in socials" :key="'social-'+social.name">
             <a :href="social.link" target="_blank" class="header-socials__link">
@@ -75,92 +195,8 @@
           </li>
         </ul>
       </div>
-      <div class="grid-item grid-item--user">
-        <button @click.prevent="searchActive = true" class="button-search">
-          <i class="fa fa-search"></i>
-        </button>
-        <router-link to="/" class="button-notification" v-if="loggedIn">
-          <div class="button-notification__icon">
-            <i class="fa fa-bell-o"></i>
-          </div>
-        </router-link>
-        <div class="user-profile" v-if="loggedIn">
-          <div class="user-profile__circle">
-            <template v-if="userAvatar != null">
-              <img :src="$settings.images_path.users + 's_' + userAvatar" />
-            </template>
-            <template v-else>
-              <span>{{userName}}</span>
-            </template>
-          </div>
-          <i class="fa fa-angle-down"></i>
-          <ul class="user-menu">
-            <li class="user-menu__item">
-              <router-link :to="{name: 'profile'}" class="user-menu__link">
-                <i class="fa fa-user"></i> My Profile
-              </router-link>
-            </li>
-            <li class="user-menu__item">
-              <router-link :to="{name: 'account-settings'}" class="user-menu__link">
-                <i class="fa fa-cogs"></i> Account Settings
-              </router-link>
-            </li>
-            <li class="user-menu__item">
-              <router-link :to="{name: 'feed'}" class="user-menu__link">
-                <i class="fa fa-cloud"></i> My News Feed
-              </router-link>
-            </li>
-            <li class="user-menu__item">
-              <template v-if="organisation.admin != null">
-                <router-link
-                  :to="{name: 'organisation', params: {slug: organisation.slug}}"
-                  class="user-menu__link"
-                >
-                  <i class="fa fa-users"></i> My Organisation
-                </router-link>
-              </template>
-              <template v-else>
-                <router-link :to="{name: 'create-organisation'}" class="user-menu__link">
-                  <i class="fa fa-user-plus"></i> Create Organisation
-                </router-link>
-              </template>
-            </li>
-            <li class="user-menu__item">
-              <a class="user-menu__link" href="#" @click.prevent="logout">
-                <i class="fa fa-power-off"></i> Sign Out
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="user-profile" v-else>
-          <div class="user-profile__circle">
-            <span class="user-profile__circle-loggedout">
-              <i class="fa fa-user-circle-o"></i>
-            </span>
-          </div>
-          <i class="fa fa-angle-down"></i>
-          <ul class="user-menu">
-            <li class="user-menu__item">
-              <router-link :to="{name: 'login'}" class="user-menu__link">
-                <i class="fa fa-sign-in"></i> Login
-              </router-link>
-            </li>
-            <li class="user-menu__item user-menu__item--textual">
-              <span>New to Smiley Movement?</span>
-            </li>
-            <li class="user-menu__item">
-              <router-link
-                :to="{name: 'register'}"
-                class="user-menu__link user-menu__link--register"
-              >
-                <i class="fa fa-user-plus"></i> Register
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
-  </header>
+  </div>
 </template>
 
 <script>
@@ -170,6 +206,34 @@ export default {
   name: "MainHeader",
   data() {
     return {
+      menu: [
+        {
+          name: "smiley talks",
+          link: "talks"
+        },
+        {
+          name: "smiley news",
+          link: "news"
+        },
+        {
+          name: "network",
+          link: "network",
+          items: [
+            { name: "organisations", link: "organisations" },
+            { name: "members", link: "users" },
+            { name: "projects", link: "projects" },
+            { name: "partners", link: "partners" }
+          ]
+        },
+        {
+          name: "our story",
+          link: "story"
+        },
+        {
+          name: "un goals",
+          link: "goals"
+        }
+      ],
       search: null,
       searchActive: false,
       socials: [
@@ -177,7 +241,9 @@ export default {
         { name: "linkedin", link: process.env.VUE_APP_SOCIAL_LINKEDIN },
         { name: "twitter", link: process.env.VUE_APP_SOCIAL_TWITTER },
         { name: "instagram", link: process.env.VUE_APP_SOCIAL_INSTAGRAM }
-      ]
+      ],
+      userMenu: false
+      // mobileMenu: false
     };
   },
   computed: {
@@ -205,6 +271,9 @@ export default {
     },
     logout() {
       this.$store.dispatch("user/logout");
+    },
+    mobileMenu() {
+      document.body.classList.toggle("mobile-menu--opened");
     }
   }
 };
@@ -220,12 +289,12 @@ header {
 
 .search-block {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0%;
+  // transform: translateX(-50%);
   top: 0px;
-  width: 100%;
+  width: 0;
   height: 100%;
-  background-color: #393939;
+  background-color: #3d465a;
   z-index: 5;
   display: flex;
   align-items: center;
@@ -252,6 +321,10 @@ header {
     &.active {
       opacity: 1;
     }
+
+    @include smMax {
+      grid-template-columns: 30px auto 30px;
+    }
   }
 
   .search-form__close {
@@ -265,6 +338,10 @@ header {
     border: 1px solid #393939;
     border-top-color: #fff;
     border-bottom-color: #fff;
+
+    @include smMax {
+      padding: 5px 10px;
+    }
 
     &::valid,
     &::invalid {
@@ -286,6 +363,17 @@ header {
   grid-template-columns: 1fr 4fr 1fr 1fr;
   position: relative;
 
+  @include xlMax {
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+
+  @include lgMax {
+    grid-template-columns: 40px 2fr 1fr 1fr;
+  }
+  @include mdMax {
+    grid-template-columns: 40px 2fr 1fr;
+  }
+
   .grid-item {
     &--logo {
       display: flex;
@@ -297,11 +385,23 @@ header {
         width: 100%;
         height: auto;
       }
+      @include lgMax {
+        padding-left: 20px;
+      }
+      @include smMax {
+        padding-right: 10px;
+        img {
+          max-width: 100%;
+        }
+      }
     }
     &--social {
       display: flex;
       align-items: center;
       justify-content: center;
+      @include mdMax {
+        display: none;
+      }
     }
     &--search {
       display: flex;
@@ -313,6 +413,33 @@ header {
       display: flex;
       align-items: center;
       justify-content: flex-end;
+    }
+
+    &--menu-toggle {
+      display: none;
+
+      @include lgMax {
+        display: block;
+      }
+
+      button {
+        height: 100%;
+        @include font-size(2rem);
+        background-color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+    }
+
+    &--menu {
+      @include xlMax {
+        grid-column: 1 / span 3;
+        order: 5;
+      }
+
+      @include lgMax {
+        display: none;
+      }
     }
   }
 
@@ -431,6 +558,8 @@ header {
 .header-socials {
   display: flex;
   margin: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
 
   .header-socials__item {
     border: 1px solid #fff;
@@ -543,20 +672,33 @@ header {
     &-loggedout {
       @include font-size(2rem);
     }
+
+    @include mdMax {
+      &.active + .fa.fa-angle-down {
+        transform: rotate(180deg);
+      }
+
+      &.active ~ .user-menu {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
   }
 
   .fa.fa-angle-down {
     transition: transform 0.2s;
   }
 
-  &:hover {
-    .fa.fa-angle-down {
-      transform: rotate(180deg);
-    }
+  @include md {
+    &:hover {
+      .fa.fa-angle-down {
+        transform: rotate(180deg);
+      }
 
-    .user-menu {
-      opacity: 1;
-      pointer-events: all;
+      .user-menu {
+        opacity: 1;
+        pointer-events: all;
+      }
     }
   }
 }
@@ -705,6 +847,116 @@ header {
   }
   100% {
     transform: rotate(0);
+  }
+}
+
+body.mobile-menu--opened {
+  .mobile-menu-holder {
+    opacity: 1;
+    pointer-events: all;
+    left: 0px;
+  }
+}
+
+.mobile-menu-holder {
+  position: fixed;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 10;
+  background-color: #3d465a;
+  top: 0px;
+  // left: 0px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, left 0.2s;
+  display: flex;
+  flex-direction: column;
+
+  .close-menu {
+    color: #393939;
+    border: none !important;
+    margin-bottom: 36px;
+    text-transform: uppercase;
+    @include font-size(1rem);
+    width: 100%;
+    background-color: #fff;
+    width: 100%;
+    padding: 20px 20px;
+    i {
+      margin-right: 24px;
+    }
+  }
+
+  .mobile-menu-inner {
+    overflow: scroll;
+    height: 100%;
+    flex: 1;
+    width: 100%;
+    padding: 0px 20px 20px 20px;
+  }
+
+  .mobile-menu {
+    .mobile-menu__item {
+      margin-bottom: 12px;
+    }
+    .mobile-menu__link {
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none !important;
+    }
+
+    .sub-menu {
+      padding-top: 12px;
+      margin-bottom: 12px;
+      position: relative;
+
+      // &::before {
+      //   content: "";
+      //   height: calc(100% - 12px);
+      //   width: 0.%;
+      //   background-color: #fff;
+      //   position: absolute;
+      //   left: 0px;
+      //   top: 0px;
+      // }
+    }
+
+    .sub-menu__item {
+      padding-left: 24px;
+      margin-bottom: 12px;
+      position: relative;
+
+      &::before {
+        content: "";
+        left: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 1px;
+        background-color: #fff;
+        display: block;
+        position: absolute;
+      }
+    }
+
+    .sub-menu__link {
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none !important;
+    }
+  }
+
+  .header-socials {
+    padding-left: 0px;
+    padding-right: 0px;
+
+    .header-socials__item {
+      margin-right: 16px;
+      width: 36px;
+      height: 36px;
+    }
   }
 }
 </style>

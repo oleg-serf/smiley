@@ -374,6 +374,7 @@ const router = new VueRouter({
 router.beforeEach(function (to, from, next) {
   // TODO: Scroll top after pagination also
   window.scrollTo(0, 0)
+  document.body.classList.remove("mobile-menu--opened");
   const isLogged = (localStorage.getItem('token')) ? true : false;
 
   if (to.meta.requiresAuth) {

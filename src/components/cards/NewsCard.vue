@@ -1,7 +1,7 @@
 <template>
   <!-- TODO: Refactor !!! -->
-  <div class="project-article">
-    <div class="project-article__image">
+  <div class="news-article">
+    <div class="news-article__image">
       <media-image
         :src="article.cover_image"
         :alt="article.title"
@@ -10,47 +10,47 @@
         type="news"
       />
     </div>
-    <div class="project-article__content">
-      <div class="project-article__category">
-        <div class="project-article__header">
+    <div class="news-article__content">
+      <div class="news-article__category">
+        <div class="news-article__header">
           <div
-            class="project-article__category-name"
+            class="news-article__category-name"
             v-if="manualGoal == null"
           >{{ (article.goals != null) ? article.goals[0].name : article.goal.name }}</div>
-          <div class="project-article__category-name" v-else>{{ manualGoal }}</div>
-          <!-- <div class="project-article__category-circle">
+          <div class="news-article__category-name" v-else>{{ manualGoal }}</div>
+          <!-- <div class="news-article__category-circle">
             <span>+15</span>
           </div>-->
         </div>
-        <div class="project-article__timestamp">{{dateAgo(article.published_at)}}</div>
+        <div class="news-article__timestamp">{{dateAgo(article.published_at)}}</div>
       </div>
-      <div class="project-article__spacer"></div>
-      <div class="project-article__inner">
-        <h3 class="project-article__title">
+      <div class="news-article__spacer"></div>
+      <div class="news-article__inner">
+        <h3 class="news-article__title">
           <router-link :to="{name: 'news-item', params: {slug: article.slug}}">{{article.title}}</router-link>
         </h3>
-        <div class="project-article__description">
+        <div class="news-article__description">
           {{ article.description | trimDescription }}
           <router-link :to="{name: 'news-item', params: {slug: article.slug}}">Continue Reading</router-link>
         </div>
-        <!-- <div class="project-article__button">
+        <!-- <div class="news-article__button">
           <a :href="buttonLink">view project</a>
         </div>-->
       </div>
     </div>
-    <div class="project-article__actions">
+    <div class="news-article__actions">
       <button>
-        <span>0</span>
+        <span class="likes-count">0</span>
         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-        Like
+        <span class="news-article__actions-text">Like</span>
       </button>
       <button>
         <i class="fa fa-commenting-o" aria-hidden="true"></i>
-        Comment
+        <span class="news-article__actions-text">Comment</span>
       </button>
       <button>
         <i class="fa fa-share-alt" aria-hidden="true"></i>
-        Share
+        <span class="news-article__actions-text">Share</span>
       </button>
     </div>
   </div>
@@ -112,7 +112,7 @@ export default {
 
 <style lang="scss" scoped>
 // TODO: Move to file
-.project-article {
+.news-article {
   background-color: #000;
   position: relative;
   padding: 30px;
@@ -136,21 +136,21 @@ export default {
   }
 
   &:hover {
-    .project-article__image {
+    .news-article__image {
       img {
         transform: scale(1.1);
       }
     }
-    .project-article__inner {
+    .news-article__inner {
       transform: translateY(-60px);
     }
-    .project-article__actions {
+    .news-article__actions {
       opacity: 1;
       pointer-events: all;
     }
   }
 
-  .project-article__image {
+  .news-article__image {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -167,11 +167,11 @@ export default {
     }
   }
 
-  .project-article__inner {
+  .news-article__inner {
     transition: transform 0.4s;
   }
 
-  .project-article__content {
+  .news-article__content {
     position: relative;
     z-index: 2;
     display: flex;
@@ -180,18 +180,18 @@ export default {
     transition: transform 0.4s;
   }
 
-  .project-article__header {
+  .news-article__header {
     display: flex;
     align-items: center;
   }
 
-  .project-article__category {
+  .news-article__category {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  .project-article__category-name {
+  .news-article__category-name {
     background-color: rgba(125, 132, 148, 0.6);
     color: #fff;
     padding: 6px 14px;
@@ -203,7 +203,7 @@ export default {
     @include font-size(0.6rem);
   }
 
-  .project-article__category-circle {
+  .news-article__category-circle {
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.5);
     font-size: 0px;
@@ -221,18 +221,18 @@ export default {
     }
   }
 
-  .project-article__timestamp {
+  .news-article__timestamp {
     color: #fff;
     font-family: "Montserrat Regular", sans-serif;
     opacity: 0.7;
   }
 
-  .project-article__spacer {
+  .news-article__spacer {
     flex: 1;
     min-height: 50px;
   }
 
-  .project-article__title {
+  .news-article__title {
     @include font-size(1.1rem);
     line-height: 1.45;
     font-family: "Montserrat SemiBold", sans-serif;
@@ -248,7 +248,7 @@ export default {
     }
   }
 
-  .project-article__description {
+  .news-article__description {
     font-family: "Inter Regular";
     // margin-bottom: 24px;
     text-transform: lowercase;
@@ -269,7 +269,7 @@ export default {
     }
   }
 
-  .project-article__button a {
+  .news-article__button a {
     text-decoration: none;
     background-color: rgba(125, 132, 148, 1);
     color: #fff;
@@ -286,7 +286,7 @@ export default {
     }
   }
 
-  .project-article__actions {
+  .news-article__actions {
     position: absolute;
     margin: 0px 30px 30px 30px;
     bottom: 0px;
@@ -324,21 +324,18 @@ export default {
         border-right: 1px solid rgba(255, 255, 255, 0.7);
       }
 
-      span {
+      .likes-count {
         margin-right: 12px;
       }
 
-      i {
-        margin-right: 12px;
+      .news-article__actions-text {
+        margin-left: 12px;
       }
 
-      img {
-        height: auto;
-        width: 11px;
-        margin-left: 10px;
-        margin-right: 10px;
-        position: relative;
-        background-size: cover;
+      @include mdMax {
+        .news-article__actions-text {
+          display: none;
+        }
       }
     }
   }

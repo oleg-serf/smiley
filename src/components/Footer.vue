@@ -182,9 +182,11 @@ export default {};
   margin-bottom: 60px;
 
   .signup-logo {
-    width: 100%;
     text-align: center;
     margin-bottom: 30px;
+    img {
+      max-width: 100%;
+    }
   }
   label,
   input {

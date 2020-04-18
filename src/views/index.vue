@@ -290,4 +290,12 @@ export default {
 .news-grid--video {
   grid-gap: 30px;
 }
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  .news-grid {
+    & > div:last-child {
+      grid-column: 1 / span 2;
+    }
+  }
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="project-article">
-    <div class="project-article__image">
+  <div class="event-item">
+    <div class="event-item__image">
       <media-image
         :src="event.cover_image"
         :alt="event.title"
@@ -9,31 +9,33 @@
         type="events"
       />
     </div>
-    <div class="project-article__content">
-      <div class="project-article__category">
-        <div class="project-article__header">
-          <div class="project-article__category-badge">
+    <div class="event-item__content">
+      <div class="event-item__category">
+        <div class="event-item__header">
+          <div class="event-item__category-badge">
             <div>{{ format(event.date, 'MMM')}}</div>
             <div>{{ format(event.date, 'D') }}</div>
           </div>
           <div
-            class="project-article__category-name"
+            class="event-item__category-name"
             v-if="event.goals.length > 0"
           >{{event.goals[0].name}}</div>
-          <!-- <div class="project-article__category-circle">
+          <!-- <div class="event-item__category-circle">
             <span>+15</span>
           </div>-->
         </div>
       </div>
-      <div class="project-article__spacer"></div>
-      <div class="project-article__inner">
+      <div class="event-item__spacer"></div>
+      <div class="event-item__inner">
         <div
-          class="project-article__hours"
+          class="event-item__hours"
         >{{ event.time_start | formatTime }} - {{ event.time_end | formatTime}}</div>
-        <h3 class="project-article__title">{{event.title}}</h3>
-        <!-- <div class="project-article__description">{{ description | trimDescription }}</div> -->
-        <div class="project-article__location">{{ event.location }}</div>
-        <div class="project-article__button">
+        <h3 class="event-item__title">
+          <router-link :to="{name: 'event', params: {slug: event.slug}}">{{event.title}}</router-link>
+        </h3>
+        <!-- <div class="event-item__description">{{ description | trimDescription }}</div> -->
+        <div class="event-item__location">{{ event.location }}</div>
+        <div class="event-item__button">
           <router-link :to="{name: 'event', params: {slug: event.slug}}">talk details</router-link>
           <template v-if="isAuthenticated">
             <button class="register" v-if="active" @click.prevent="attend">register</button>
@@ -49,21 +51,6 @@
           </template>
         </div>
       </div>
-    </div>
-    <div class="project-article__actions">
-      <button>
-        <span>0</span>
-        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-        Like
-      </button>
-      <button>
-        <i class="fa fa-commenting-o" aria-hidden="true"></i>
-        Comment
-      </button>
-      <button>
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-        Share
-      </button>
     </div>
   </div>
 </template>
@@ -155,7 +142,7 @@ export default {
 
 <style lang="scss" scoped>
 // TODO: Move styles to separate file
-.project-article {
+.event-item {
   background-color: #000;
   position: relative;
   padding: 30px;
@@ -164,6 +151,10 @@ export default {
   color: #fff;
   display: flex;
   flex-direction: column;
+
+  @include mdMax {
+    min-height: 400px;
+  }
 
   &::before {
     content: "";
@@ -179,21 +170,14 @@ export default {
   }
 
   &:hover {
-    .project-article__image {
+    .event-item__image {
       img {
         transform: scale(1.1);
       }
     }
-    .project-article__inner {
-      transform: translateY(-60px);
-    }
-    .project-article__actions {
-      opacity: 1;
-      pointer-events: all;
-    }
   }
 
-  .project-article__image {
+  .event-item__image {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -210,11 +194,11 @@ export default {
     }
   }
 
-  .project-article__inner {
+  .event-item__inner {
     transition: transform 0.4s;
   }
 
-  .project-article__content {
+  .event-item__content {
     position: relative;
     z-index: 2;
     display: flex;
@@ -223,18 +207,18 @@ export default {
     transition: transform 0.4s;
   }
 
-  .project-article__header {
+  .event-item__header {
     display: flex;
     align-items: center;
   }
 
-  .project-article__category {
+  .event-item__category {
     display: flex;
     align-items: center;
     justify-content: flex-end;
   }
 
-  .project-article__category-badge {
+  .event-item__category-badge {
     position: absolute;
     background-image: url("/img/date-badge-bg.png");
     height: 70px;
@@ -256,7 +240,7 @@ export default {
     }
   }
 
-  .project-article__category-name {
+  .event-item__category-name {
     background-color: rgba(125, 132, 148, 0.6);
     color: #fff;
     padding: 6px 14px;
@@ -268,7 +252,7 @@ export default {
     @include font-size(0.6rem);
   }
 
-  .project-article__category-circle {
+  .event-item__category-circle {
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.5);
     font-size: 0px;
@@ -286,37 +270,48 @@ export default {
     }
   }
 
-  .project-article__timestamp {
+  .event-item__timestamp {
     color: #fff;
     font-family: "Montserrat Regular", sans-serif;
     opacity: 0.7;
   }
 
-  .project-article__spacer {
+  .event-item__spacer {
     flex: 1;
     min-height: 50px;
   }
 
-  .project-article__hours {
+  .event-item__hours {
     @include font-size(1.1rem);
     line-height: 1.45;
     color: #fff;
     font-family: "Montserrat Bold", sans-serif;
   }
 
-  .project-article__title {
+  .event-item__title {
     @include font-size(1.1rem);
     line-height: 1.45;
     color: #fff;
     font-family: "Montserrat SemiBold", sans-serif;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
+
+      &:hover {
+        border-color: #fff;
+      }
+    }
   }
 
-  .project-article__description {
+  .event-item__description {
     font-family: "Inter Regular";
     margin-bottom: 24px;
   }
 
-  .project-article__location {
+  .event-item__location {
     @include font-size(1rem);
     font-family: "Inter Regular";
     margin-bottom: 24px;
@@ -338,12 +333,12 @@ export default {
     }
   }
 
-  .project-article__button {
+  .event-item__button {
     display: flex;
     justify-content: space-between;
   }
 
-  .project-article__button {
+  .event-item__button {
     a,
     button {
       text-decoration: none;
@@ -354,7 +349,7 @@ export default {
       display: inline-block;
       font-family: "Montserrat SemiBold", sans-serif;
       transition: background-color 0.4s;
-      min-width: 130px;
+      min-width: 108;
       text-align: center;
 
       @include font-size(0.8rem);
@@ -364,68 +359,11 @@ export default {
       }
     }
   }
-  .project-article__button .register {
+  .event-item__button .register {
     background-color: #f4ed3b !important;
     border-width: 0px;
     color: #393939;
     cursor: pointer;
-  }
-
-  .project-article__actions {
-    position: absolute;
-    margin: 0px 30px 30px 30px;
-    bottom: 0px;
-    left: 0px;
-    z-index: 3;
-    color: #fff;
-    display: flex;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    width: calc(100% - 60px);
-    box-sizing: border-box;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s;
-
-    button {
-      width: 100%;
-      padding: 10px 15px;
-      font-size: 12px;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: transparent;
-      color: #fff;
-      font-family: "Montserrat Regular", sans-serif;
-      cursor: pointer;
-      transition: background-color 0.4s, color 0.4s;
-      border: none;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-
-      &:not(:last-child) {
-        border-right: 1px solid rgba(255, 255, 255, 0.7);
-      }
-
-      span {
-        margin-right: 12px;
-      }
-
-      i {
-        margin-right: 12px;
-      }
-
-      img {
-        height: auto;
-        width: 11px;
-        margin-left: 10px;
-        margin-right: 10px;
-        position: relative;
-        background-size: cover;
-      }
-    }
   }
 }
 </style>
