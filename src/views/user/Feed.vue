@@ -2,7 +2,7 @@
   <div>
     <div class="textual-banner">
       <div class="container">
-        <div class="textual-banner__title">Dashboard</div>
+        <div class="textual-banner__title">Newsfeed</div>
         <p>Your personalised portal to share information about yourself and hear about the latest news, events, organisations, projects and new members that share your interests.</p>
       </div>
     </div>

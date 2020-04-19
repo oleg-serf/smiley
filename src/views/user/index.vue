@@ -156,7 +156,7 @@
               </li>
               <li :class="{active: activity == 'following'}">
                 <button @click.prevent="activity = 'following'">
-                  Smiley Hubs
+                  Chat
                   <!-- <span>0</span> -->
                 </button>
               </li>

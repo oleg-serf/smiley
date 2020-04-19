@@ -151,8 +151,8 @@ export default {
         network: {
           button_text: "Learn More",
           description:
-            "Explore our partners, members, organisations and projects - get inspired and take positive action",
-          title: "CONNECT WITH CHANGEMAKERS"
+            "Connect with changemakers and get inspired to take positive action",
+          title: "MATCHMAKER FOR GOOD"
         },
         talks: {},
         goals: {}

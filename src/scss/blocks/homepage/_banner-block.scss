@@ -79,7 +79,6 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    opacity: .4;
     z-index: 2;
 
     &::after {
@@ -91,7 +90,7 @@
       left: 0px;
       top: 0px;
       background-color: #393939;
-      opacity: .4;
+      opacity: .6;
     }
   }
 

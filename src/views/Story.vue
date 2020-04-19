@@ -80,7 +80,7 @@
                 <div class="year__text">
                   <h2>Reached our first Milestone</h2>
 
-                  <p>Organised 6 Smiley Talks, in 3 UK Cities, 800 participants, joined forced with 65 new charity partners, grew our online network to 1,000 members and gained our first 6,000+ Twitter Followers</p>
+                  <p>Closed our first year having organised 6 Smiley Talks, we lcomed 800 guests, collaborated with 65 charity partners, national press coverage and facilitated sizeable corporate donations to charities around the world.</p>
                 </div>
               </div>
               <div class="timeline__year js-tl-year-content" data-year="June 2019">
@@ -93,7 +93,7 @@
                 <div class="year__text">
                   <h2>Launched our first Smiley Talk</h2>
 
-                  <p>Hosted our first Smiley Talk in Brighton during Refugee Week and since then organised 8 other Talks, welcomed 600 guests, grew our online community to 1,000 members, have 6,000 Twitter followers and have collaborated with 65 leading charity partners in our first year.</p>
+                  <p>Hosted our first Smiley Talk in Brighton during Refugee Week</p>
                 </div>
               </div>
               <div class="timeline__year js-tl-year-content" data-year="March 2019">
@@ -107,9 +107,9 @@
                   <span>March 2019</span>
                 </div>
                 <div class="year__text">
-                  <h2>Creation of Smiley Movement (CIC), the Matchmaker for Good</h2>
+                  <h2>Creation of Smiley Movement (CIC)</h2>
 
-                  <p>A non-profit social network dedicated to change-makers that aims to inspire grassroots activism and mobilise positive impact projects that strive to create a happier, more sustainable world. The platform features&nbsp;Smiley News - an adaptation of Franklin Loufrani's&nbsp;original news concept adapted to today's world where people are in ever more need of inspiring stories'.</p>
+                  <p>The ‘matchmaker for good’ social network sponsored by Smiley, that connects charitable projects with supporters, mobilises good ideas and drives positive action.</p>
                 </div>
               </div>
               <div class="timeline__year js-tl-year-content" data-year="2005">

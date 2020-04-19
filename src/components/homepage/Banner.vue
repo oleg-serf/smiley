@@ -17,7 +17,7 @@
     <div class="banner-block__right-column">
       <div
         class="banner-block__overlay"
-        :style="{backgroundColor: color, opacity: (solid) ? 1: .4}"
+        :style="{backgroundColor: color, opacity: (solid) ? 1 : .5}"
       ></div>
       <img :src="background" class="banner-block__background" v-if="background != null || !solid" />
       <div class="banner-block__content">

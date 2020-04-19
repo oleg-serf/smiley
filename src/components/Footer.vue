@@ -184,6 +184,7 @@ export default {};
   .signup-logo {
     text-align: center;
     margin-bottom: 30px;
+    width: 100%;
     img {
       max-width: 100%;
     }

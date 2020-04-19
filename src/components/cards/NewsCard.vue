@@ -315,6 +315,9 @@ export default {
       cursor: pointer;
       transition: background-color 0.4s, color 0.4s;
       border: none;
+      cursor: pointer;
+      -webkit-appearance: none !important;
+      -webkit-border-radius: 0 !important;
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.1);

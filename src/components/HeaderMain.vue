@@ -390,8 +390,9 @@ header {
       }
       @include smMax {
         padding-right: 10px;
+        padding-left: 20px;
         img {
-          max-width: 100%;
+          max-width: 80%;
         }
       }
     }
@@ -424,10 +425,16 @@ header {
 
       button {
         height: 100%;
+        width: 100%;
+        text-align: center;
+        padding: 0px !important;
+        margin: 0px !important;
         @include font-size(2rem);
         background-color: #fff;
         border: none;
         cursor: pointer;
+        -webkit-appearance: none !important;
+        -webkit-border-radius: 0 !important;
       }
     }
 
