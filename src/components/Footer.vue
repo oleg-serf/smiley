@@ -229,6 +229,7 @@ export default {};
   }
   .signup-btn-wrap {
     width: 100%;
+    text-align: center;
     @include xl {
       max-width: 218px;
       margin: -1px 30px 0;

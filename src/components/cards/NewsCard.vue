@@ -84,9 +84,8 @@ export default {
 
       let time = "";
 
-      if (result < 1) {
-        time = result == 1 ? "day" : "days";
-        time += " ago";
+      if (result < 28) {
+        time = result + " " + append + " ago";
       } else {
         time =
           realDate.getDate() +

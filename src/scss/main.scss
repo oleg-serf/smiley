@@ -1,5 +1,20 @@
 @import "~rfs/scss";
 
+:root {
+  --swiper-pagination-color: #f4ed3b;
+}
+
+.swiper-pagination-bullet {
+  border: 1px solid rgba(57, 57, 57, .3);
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets {
+  position: static;
+  margin-top: 10px;
+}
+
 html,
 body {
   height: 100%;
@@ -126,25 +141,21 @@ html {
   }
 
   .swal2-title {
-    font: 700 56px/74px "Montserrat Bold",
-      sans-serif;
-
-    @include smMax {
-      font-size: 24px;
-    }
+    font-family: "Montserrat SemiBold", sans-serif;
+    @include font-size(1.5rem);
   }
 
   .swal2-content {
-    font: 400 22px/36px "Muli",
+    font-family: "Montserrat Regular",
       sans-serif;
+    @include font-size(1.1rem);
+    line-height: 1.45;
     padding-left: 25px;
     padding-right: 25px;
 
     @include smMax {
-      font-size: 16px;
       padding-left: 5px;
       padding-right: 5px;
-      line-height: 1.5;
     }
   }
 

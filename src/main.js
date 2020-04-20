@@ -13,6 +13,12 @@ import vueVimeoPlayer from 'vue-vimeo-player'
 // import VueBreadcrumbs from 'vue-breadcrumbs';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import Dayjs from 'vue-dayjs';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+// import style
+import 'swiper/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper, /* { default options with global component } */ )
 
 Vue.use(Dayjs);
 

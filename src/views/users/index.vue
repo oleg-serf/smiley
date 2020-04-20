@@ -6,37 +6,30 @@
         <p>Our inspiring network of changemakers from activists, charity leaders, CSR Managers, volunteers, academics, students, philanthropists, social workers to everyday heroes in the community.</p>
       </template>
     </information-hero>
+
     <div class>
       <div class="container">
         <div style="height: 75px;"></div>
-        <section class="users-grid">
-          <div class="user-item" v-for="user in users" :key="user.full_name+'-org-archive'">
-            <div class="user-item__avatar">
-              <router-link :to="'/users/' + user.slug">
-                <img
-                  :src="$settings.images_path.users + 's_' + user.avatar"
-                  alt
-                  title
-                  class="user-item__image"
-                  ccv-if="user.avatar !== null"
-                  v-if="user.avatar != null"
-                />
-                <span v-else>{{ user.initials }}</span>
-              </router-link>
-            </div>
-            <h2 class="user-item__title">
-              <router-link :to="'/users/' + user.slug">{{ user.name }}</router-link>
-            </h2>
-            <!-- <ul class="user__social">
-              <template v-for="(social, index) in socials">
-                <li v-if="user[social] != null" :key="'user-social-'+index">
-                  <a :href="user[social]" target="_blank">
-                    <app-icon :name="social" />
-                  </a>
-                </li>
-              </template>
-            </ul>-->
-          </div>
+        <swiper
+          ref="mySwiper"
+          :options="swiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide v-for="(user, index) in users" :key="user.name+index+'-member-slider'">
+            <user-card :user="user" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <section class="users-grid" v-else>
+          <user-card
+            v-for="(user, index) in users"
+            :key="user.name+index+'-member-archive'"
+            :user="user"
+          />
         </section>
       </div>
     </div>
@@ -66,9 +59,9 @@
 import axios from "@/axios-auth";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
+import UserCard from "@/components/cards/UserCard";
 import InformationHero from "@/components/InformationHero.vue";
 
-import AppIcon from "@/components/AppIcon";
 import Footer from "@/components/Footer";
 
 export default {
@@ -76,8 +69,35 @@ export default {
     return {
       users: [],
       pages_count: 0,
-      socials: ["facebook", "linkedin", "google", "instagram", "twitter"]
+      socials: ["facebook", "linkedin", "google", "instagram", "twitter"],
+      is_mobile: false,
+      swiperOptions: {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        slidesPerView: 4,
+        spaceBetween: 15,
+        mousewheel: true,
+        breakpoints: {
+          320: {
+            slidesPerView: 1.15,
+            centeredSlides: true
+          },
+          480: {
+            slidesPerView: 2.15
+          },
+          640: {
+            slidesPerView: 3.15
+          }
+        }
+      }
     };
+  },
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.$swiper;
+    }
   },
   methods: {
     loadPageNumb(pageNumb) {
@@ -88,6 +108,9 @@ export default {
           this.pages_count = res.data.pages_count;
         })
         .catch(error => console.log(error));
+    },
+    handleResize() {
+      this.is_mobile = window.innerWidth >= 768 ? false : true;
     }
   },
   mounted() {
@@ -103,8 +126,15 @@ export default {
   components: {
     InformationHero,
     Breadcrumbs,
-    AppIcon,
+    UserCard,
     Footer
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   }
 };
 </script>
@@ -122,123 +152,21 @@ export default {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 15px;
-}
 
-.user-item {
-  border: 1px solid #d8d8d8;
-  padding: 20px 5px;
-  background-color: #fff;
-  transition: transform 0.15s, box-shadow 0.15s;
-
-  &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 15px 29px -23px rgba(0, 0, 0, 0.3);
+  @include xlMax {
+    grid-template-columns: repeat(5, 1fr);
   }
 
-  .user-item__avatar {
-    a {
-      border-radius: 50%;
-      width: 110px;
-      height: 110px;
-      overflow: hidden;
-      line-height: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 5px auto 14px auto;
-      background-color: #e5e9f0;
-      text-decoration: none;
-      color: #393939;
-      font-family: "Montserrat Bold", sans-serif;
-      @include font-size(1.6rem);
-      letter-spacing: 2px;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-      }
-    }
+  @include lgMax {
+    grid-template-columns: repeat(4, 1fr);
   }
 
-  .user-item__title {
-    @include font-size(1.1rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    text-align: center;
-
-    a {
-      text-decoration: none;
-      color: #393939;
-    }
+  @include mdMax {
+    display: none;
   }
 }
 
-// .user-item {
-//   margin: 16px 16px 96px 16px;
-//   padding: 64px 20px 10px 20px;
-//   border: 1px solid #c7c7c7;
-//   border-radius: 4px;
-//   text-align: center;
-//   width: 100%;
-//   max-width: calc((100% / 4) - 32px);
-//   box-sizing: border-box;
-//   position: relative;
-//   background-color: #fff;
-
-//   &__avatar {
-//     border-radius: 50%;
-//     background: #c7c7c7;
-//     width: 128px;
-//     height: 128px;
-//     // margin: -70px auto 0px auto;
-//     position: absolute;
-//     left: 50%;
-//     top: 0px;
-//     overflow: hidden;
-//     transform: translate(-50%, -50%);
-//     display: flex;
-//     line-height: 1;
-//     justify-content: center;
-//     align-items: center;
-//     text-transform: uppercase;
-//     font-size: 24px;
-//     background-color: #c7c7c7;
-//     color: #fff;
-//     font-weight: bold;
-
-//     a {
-//       color: inherit;
-//       text-decoration: none;
-//       font-family: "Montserrat Bold", sans-serif;
-//     }
-//   }
-
-//   &__image {
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//     object-position: center;
-//     transition: transform 0.4s;
-//   }
-
-//   &:hover {
-//     .user-item__image {
-//       transform: scale(1.1);
-//     }
-//   }
-
-//   &__title {
-//     font: 700 22px/28px "Montserrat Bold", sans-serif;
-
-//     a {
-//       color: unset;
-//       text-decoration: none;
-//     }
-//   }
-
-//   &__description {
-//     font: 400 16px/24px "Muli", sans-serif;
-//   }
-// }
+.swiper-slide {
+  height: auto;
+}
 </style>

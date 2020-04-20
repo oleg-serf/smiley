@@ -290,6 +290,14 @@ export default {
     border: 1px solid #e0e6eb !important;
 
     font-family: "Montserrat Regular", sans-serif;
+
+    @include lgMax {
+      width: 100%;
+    }
+  }
+
+  @include lgMax {
+    flex-direction: column;
   }
 }
 </style>

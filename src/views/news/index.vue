@@ -115,6 +115,16 @@ export default {
   margin-bottom: 0px;
 }
 
+.news-grid {
+  @include lgMax {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mdMax {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 /* News Section Title with Read More button */
 .news-category {
   margin-top: 30px;
@@ -190,13 +200,30 @@ export default {
     border: 1px solid #e0e6eb !important;
 
     font-family: "Montserrat Regular", sans-serif;
+
+    @include lgMax {
+      width: 100%;
+    }
+  }
+
+  @include lgMax {
+    flex-direction: column;
   }
 }
 
 .news-grid--featured {
   grid-gap: 5px;
-  .project-article:first-child {
-    grid-row: 1 / span 2 !important;
+  .news-article:first-child {
+    grid-row: 1 / span 2;
+
+    @include xlMax {
+      grid-column: 1 / span 2;
+      grid-row: auto;
+    }
+
+    @include mdMax {
+      grid-column: 1;
+    }
   }
 }
 
@@ -221,6 +248,17 @@ export default {
     background-color: #fff;
     padding: 5px 25px;
     cursor: pointer;
+  }
+
+  @include lgMax {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+@include xlMax {
+  .news-grid::v-deep .news-article__actions-text {
+    display: none;
   }
 }
 </style>
