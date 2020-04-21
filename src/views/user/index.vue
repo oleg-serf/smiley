@@ -1,6 +1,6 @@
 <template>
   <div class="profile-bg">
-    <div class="textual-banner">
+    <div class="textual-banner textual-banner--contained">
       <div class="container">
         <h3 class="textual-banner__title">Dashboard</h3>
         <p>Your personalised portal to share information about yourself and hear about the latest news, events, organisations, projects and new members that share your interests.</p>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="textual-banner">
+    <div class="textual-banner textual-banner--contained">
       <div class="container">
         <p>We connect people, projects & resources to help good causes go further, faster.</p>
       </div>

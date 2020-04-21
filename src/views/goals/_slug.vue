@@ -16,7 +16,7 @@
 
     <section class="content-block container">
       <div class="news-category">
-        <h2 class="news-category__title">Latest news</h2>
+        <h2 class="news-category__title">Latest News</h2>
         <select class="news-category__dropdown" @change.prevent="goToCategory">
           <option disabled selected>Select goal</option>
           <option v-for="item in goals" :key="item.slug + item.id" :value="item.slug">{{item.name}}</option>
@@ -227,10 +227,9 @@ export default {
   padding-bottom: 16px;
 
   .news-category__title {
+    @include font-size(2rem);
+    font-family: "Montserrat SemiBold", sans-serif;
     color: #393939;
-    font-family: "Montserrat Bold", sans-serif;
-    @include font-size(1rem);
-    text-transform: uppercase;
     line-height: 1;
     margin: 0px;
   }

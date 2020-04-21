@@ -15,6 +15,9 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 import Dayjs from 'vue-dayjs';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
+// import VCalendar from 'v-calendar';
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+
 // import style
 import 'swiper/css/swiper.css'
 
@@ -32,6 +35,8 @@ Vue.use(vueVimeoPlayer)
 
 Vue.component('paginate', Paginate)
 Vue.use(VueSweetalert2);
+
+Vue.component('date-picker', DatePicker)
 
 Vue.config.productionTip = false;
 Vue.use(VueGoogleMaps, {

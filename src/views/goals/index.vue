@@ -13,7 +13,7 @@
       </banner>
     </div>
 
-    <div class="textual-banner">
+    <div class="textual-banner textual-banner--contained">
       <div class="container">
         <div class="textual-banner__title">17 GOALS TO TRANSFORM OUR WORLD</div>
         <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
@@ -33,7 +33,7 @@
       </div>
     </section>
 
-    <div class="textual-banner">
+    <div class="textual-banner textual-banner--contained">
       <div class="container">
         <p>
           <a href="https://sustainabledevelopment.un.org/?menu=1300">Click here</a> to learn more about the United Nations Sustainable Development Goals
@@ -106,6 +106,24 @@ export default {
 .goals-grid {
   margin-top: 5px;
   margin-bottom: 5px;
+
+  .goals-grid__grid {
+    grid-template-columns: repeat(9, 1fr);
+
+    @include xxlMax {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    @include lgMax {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    @include mdMax {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include mdMax {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
   .goals-grid__item {
     border: 1px solid #c7c7c7;
     line-height: 1;

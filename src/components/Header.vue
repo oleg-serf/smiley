@@ -1,1122 +1,1018 @@
 <template>
-  <header>
-    <div class="nav nav-shadow">
-      <div class="top-line">
-        <div class="top-line-wrap">
-          <div class="top-menu">
-            <div class="menu-icon">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="tm-left">
-              <router-link class="tm-logo" to="/">
-                <img src="/img/homepage/logo.png" alt="logo" />
-              </router-link>
-            </div>
-            <div class="menu-links">
-              <router-link to="/talks" class="menu-item">
-                <span>Smiley talks</span>
-              </router-link>
-              <router-link to="/news" class="menu-item">
-                <span>Smiley news</span>
-              </router-link>
-              <!--              <a class="menu-item" href="#"><span>Smiley awards</span></a>-->
-              <span class="menu-item" href="#">
-                <a href="/network">Network</a>
-                <ul class="submenu">
-                  <li>
-                    <router-link :to="{name: 'partners'}" class="menu-item">
-                      <span>Our Partners</span>
-                    </router-link>
-                  </li>
-                  <li v-if="auth">
-                    <router-link :to="{name: 'users'}" class="menu-item">
-                      <span>Members</span>
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link :to="{name: 'organisations'}" class="menu-item">
-                      <span>Organisations</span>
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link :to="{name: 'projects'}" class="menu-item">
-                      <span>Projects</span>
-                    </router-link>
-                  </li>
-                </ul>
-              </span>
-              <router-link to="/our-story" class="menu-item">
-                <span>Our story</span>
-              </router-link>
-              <router-link to="/goals" class="menu-item">
-                <span>UN GOALS</span>
-              </router-link>
-              <div class="btn-wrap">
-                <!--                <button class="login-join-btn">Login | Join</button>-->
-                <router-link to="login" v-if="!auth" class="login-join-btn">Login | Join</router-link>
-                <div v-else @click="onLogout" class="login-join-btn">Sign out</div>
-              </div>
-            </div>
+  <div>
+    <header>
+      <div class="search-block" :class="{active: searchActive}">
+        <form
+          action="#"
+          method="get"
+          class="search-form container"
+          :class="{active: searchActive}"
+          @submit.prevent="find"
+        >
+          <button class="search-form__close" type="button" @click="searchActive = false">
+            <i class="fa fa-close"></i>
+          </button>
+          <div class="search-form__field-holder">
+            <input
+              type="search"
+              id="search"
+              class="search-form__field"
+              placeholder="What are we looking for?"
+              aria-label="Search through site content"
+              v-model="search"
+              required
+            />
+          </div>
+          <button class="search-form__submit" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+        <!-- <form>
+          <fieldset>
+            <button class="search-form__close" type="button" @click="searchActive = false">
+              <i class="fa fa-close"></i>
+            </button>
+          </fieldset>
 
-            <div class="header-social">
-              <ul>
-                <li>
-                  <a :href="$settings.social.facebook">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M15.1742 5.32031H17V2.14062C16.6856 2.09766 15.6023 2 14.3409 2C11.7083 2 9.9053 3.65625 9.9053 6.69922V9.5H7V13.0547H9.9053V22H13.4659V13.0547H16.2538L16.697 9.5H13.4659V7.05078C13.4659 6.02344 13.7424 5.32031 15.1742 5.32031Z"
-                        fill="#1A1A1A"
-                      />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a :href="$settings.social.twitter">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M19.9442 7.98749C19.9569 8.16248 19.9569 8.33751 19.9569 8.5125C19.9569 13.85 15.8326 20 8.29444 20C5.97209 20 3.81473 19.3375 2 18.1875C2.32996 18.225 2.64719 18.2375 2.98985 18.2375C4.90607 18.2375 6.67006 17.6 8.0787 16.5125C6.27666 16.475 4.76649 15.3125 4.24618 13.7125C4.5 13.75 4.7538 13.775 5.02032 13.775C5.38833 13.775 5.75638 13.725 6.099 13.6375C4.22083 13.2625 2.81215 11.6375 2.81215 9.67499V9.62501C3.35782 9.92501 3.99239 10.1125 4.66493 10.1375C3.56087 9.41247 2.83754 8.17498 2.83754 6.77497C2.83754 6.02499 3.04055 5.33749 3.3959 4.73748C5.41369 7.18748 8.4467 8.78745 11.8477 8.96248C11.7843 8.66248 11.7462 8.35001 11.7462 8.03751C11.7462 5.81248 13.5736 4 15.8452 4C17.0254 4 18.0914 4.4875 18.8401 5.275C19.7665 5.10001 20.6548 4.76249 21.4416 4.3C21.137 5.23752 20.4898 6.02502 19.6396 6.52499C20.4645 6.43753 21.264 6.21248 22 5.90001C21.4417 6.69998 20.7437 7.41245 19.9442 7.98749Z"
-                        fill="#1A1A1A"
-                      />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a :href="$settings.social.instagram">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M10.8251 2H13.1739C14.8492 2.00379 15.2338 2.01855 16.1227 2.0591C17.1871 2.10765 17.9141 2.27672 18.5502 2.52396C19.2079 2.77949 19.7656 3.12144 20.3216 3.6774C20.8775 4.2334 21.2195 4.79111 21.475 5.44873C21.7222 6.08484 21.8913 6.81182 21.9399 7.87626C21.9869 8.90737 21.9992 9.25998 22 11.7357V12.2633C21.9992 14.739 21.9869 15.0916 21.9399 16.1227C21.8913 17.1871 21.7222 17.9141 21.475 18.5502C21.2195 19.2079 20.8775 19.7656 20.3216 20.3216C19.7656 20.8775 19.2079 21.2195 18.5502 21.475C17.9141 21.7222 17.1871 21.8913 16.1227 21.9399C15.0916 21.9869 14.739 21.9992 12.2633 22H11.7357C9.25998 21.9992 8.90737 21.9869 7.87626 21.9399C6.81182 21.8913 6.08484 21.7222 5.44873 21.475C4.79111 21.2195 4.2334 20.8775 3.6774 20.3216C3.12144 19.7656 2.77949 19.2079 2.52396 18.5502C2.27672 17.9141 2.10765 17.1871 2.0591 16.1227C2.01855 15.2338 2.00379 14.8492 2 13.1739V10.8251C2.00379 9.1498 2.01855 8.76515 2.0591 7.87626C2.10765 6.81182 2.27672 6.08484 2.52396 5.44873C2.77949 4.79111 3.12144 4.2334 3.6774 3.6774C4.2334 3.12144 4.79111 2.77949 5.44873 2.52396C6.08484 2.27672 6.81182 2.10765 7.87626 2.0591C8.76515 2.01855 9.1498 2.00379 10.8251 2H13.1739H10.8251ZM12.733 3.80115H11.2659C9.25858 3.80324 8.90746 3.81583 7.9584 3.85914C6.98335 3.9036 6.45383 4.06651 6.10144 4.20347C5.63464 4.38489 5.3015 4.60159 4.95157 4.95157C4.60159 5.3015 4.38489 5.63464 4.20347 6.10144C4.06651 6.45383 3.9036 6.98335 3.85914 7.9584C3.81583 8.90746 3.80324 9.25858 3.80115 11.2659V12.733C3.80324 14.7404 3.81583 15.0915 3.85914 16.0406C3.9036 17.0156 4.06651 17.5451 4.20347 17.8975C4.38489 18.3643 4.60163 18.6975 4.95157 19.0474C5.3015 19.3974 5.63464 19.6141 6.10144 19.7955C6.45383 19.9324 6.98335 20.0954 7.9584 20.1398C9.0128 20.1879 9.32902 20.1981 11.9995 20.1981C14.6699 20.1981 14.9862 20.1879 16.0406 20.1398C17.0156 20.0954 17.5451 19.9324 17.8975 19.7955C18.3643 19.6141 18.6975 19.3974 19.0474 19.0474C19.3974 18.6975 19.6141 18.3643 19.7955 17.8975C19.9324 17.5451 20.0954 17.0156 20.1398 16.0406C20.1879 14.986 20.1981 14.6697 20.1981 11.9995C20.1981 9.32922 20.1879 9.01292 20.1398 7.9584C20.0954 6.98335 19.9324 6.45383 19.7955 6.10144C19.6141 5.63464 19.3974 5.3015 19.0474 4.95157C18.6975 4.60159 18.3643 4.38489 17.8975 4.20347C17.5451 4.06651 17.0156 3.9036 16.0406 3.85914C15.0915 3.81583 14.7404 3.80324 12.733 3.80115ZM11.9995 6.9992C14.7611 6.9992 16.9998 9.23788 16.9998 11.9995C16.9998 14.7611 14.7611 16.9998 11.9995 16.9998C9.23788 16.9998 6.9992 14.7611 6.9992 11.9995C6.9992 9.23788 9.23788 6.9992 11.9995 6.9992ZM11.9995 8.75368C10.2069 8.75368 8.75368 10.2069 8.75368 11.9995C8.75368 13.7921 10.2069 15.2453 11.9995 15.2453C13.7921 15.2453 15.2453 13.7921 15.2453 11.9995C15.2453 10.2069 13.7921 8.75368 11.9995 8.75368ZM17.4164 5.33244C18.1068 5.33244 18.6665 5.89213 18.6665 6.58253C18.6665 7.27293 18.1068 7.83258 17.4164 7.83258C16.7261 7.83258 16.1664 7.27293 16.1664 6.58253C16.1664 5.89213 16.7261 5.33244 17.4164 5.33244Z"
-                        fill="#1A1A1A"
-                      />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a :href="$settings.social.linkedin">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M20.3292 2C21.252 2 22 2.74752 22 3.67079V20.3292C22 21.252 21.2525 22 20.3292 22H3.67079C2.74804 22 2 21.2525 2 20.3292V3.67079C2 2.74804 2.74752 2 3.67079 2H20.3292ZM15.5187 9.5C14.0993 9.5 13.1281 10.1274 12.6957 10.8563L12.625 10.9858V9.625H9.91667V19.2083H12.8333V14.5662C12.8333 13.0104 13.4062 12.0208 14.7833 12.0208C15.7331 12.0208 16.1316 12.8607 16.1644 14.358L16.1667 14.5662V19.2083H19.0833V13.9154C19.0833 11.0575 18.3996 9.5 15.5187 9.5ZM7.83333 9.5H4.91667V19.0833H7.83333V9.5ZM6.375 4.5C5.33958 4.5 4.5 5.33958 4.5 6.375C4.5 7.41042 5.33958 8.25 6.375 8.25C7.41042 8.25 8.25 7.41042 8.25 6.375C8.25 5.33958 7.41042 4.5 6.375 4.5Z"
-                        fill="#1A1A1A"
-                      />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <fieldset>
+            <input
+              class="search-form__field"
+              placeholder="What are we looking for?"
+              type="search"
+              id="search"
+              aria-label="Search through site content"
+              v-model="search"
+              required
+            />
+          </fieldset>
 
-            <div class="tm-right">
-              <div class="login-block" v-if="auth">
-                <a class="search-icon" href="#" @click.prevent="searchActive = true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
-                      fill="#1A1A1A"
-                    />
-                  </svg>
-                </a>
-                <a class="second-icon" href="#" style="display: none">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M4.99995 20C4.29569 20 3.82468 19.2979 4.05973 18.6586L4.10552 18.5528L5.26094 16.242C5.69833 15.3672 5.94701 14.4115 5.99238 13.4369L5.99995 13.1115V10C5.99995 7.02694 8.16233 4.55893 11.0001 4.08293L10.9999 3C10.9999 2.44772 11.4477 2 11.9999 2C12.5522 2 12.9999 2.44772 12.9999 3L13.0008 4.08309C15.7593 4.54627 17.8793 6.89172 17.995 9.75347L17.9999 10V13.1115C17.9999 14.0895 18.2049 15.0555 18.6002 15.9474L18.739 16.242L19.8944 18.5528C20.2093 19.1827 19.792 19.918 19.1151 19.9936L18.9999 20H13.9999C13.9999 21.1046 13.1045 22 11.9999 22C10.8954 22 9.99995 21.1046 9.99995 20H4.99995ZM11.9999 6C9.85775 6 8.10887 7.68397 8.00484 9.80036L7.99995 10V13.1115C7.99995 14.3922 7.7266 15.6569 7.19975 16.8213L7.04979 17.1364L6.61798 18H17.3819L16.9501 17.1364C16.3773 15.9908 16.0562 14.7374 16.0067 13.4603L15.9999 13.1115V10C15.9999 7.79086 14.2091 6 11.9999 6Z"
-                      fill="#1A1A1A"
-                    />
-                  </svg>
-                </a>
-                <div class="avatar-icon">
-                  <div class="user-avatar" v-if="auth">
-                    <template v-if="avatar != 'null'">
-                      <img :src="$settings.images_path.users + 's_' + avatar" />
-                    </template>
-                    <template v-else>
-                      <span>{{ avatarTextual | filterAvatar }}</span>
-                    </template>
-                  </div>
-                  <ul>
-                    <li>
-                      <router-link :to="{name: 'profile'}">
-                        <svg
-                          width="20"
-                          height="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 512 512"
-                        >
-                          <path
-                            d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"
-                          />
-                        </svg>
-                        My Profile
-                      </router-link>
-                    </li>
-                    <li>
-                      <router-link :to="{name: 'account-settings'}">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M9.22673 2L10.792 2.00092C10.8513 2.00374 10.9206 2.01157 10.996 2.02798L11.1691 2.07097C11.5713 2.18771 11.7606 2.3983 12.1292 3.25077L12.2871 3.62729L12.451 4.03345L12.8342 3.86293C13.5976 3.5299 13.9434 3.42718 14.2162 3.42718C14.4976 3.42718 14.7823 3.52607 15.0015 3.69975L15.1053 3.79271L16.162 4.84498L16.3131 5.00911C16.5965 5.34082 16.6592 5.6034 16.4605 6.23104L16.3501 6.54822L16.2017 6.92673L15.9559 7.51329L16.5451 7.73561C17.4648 8.09429 17.7359 8.28039 17.8846 8.65252L17.9112 8.72456L17.9589 8.88382C17.983 8.97411 17.9932 9.03819 17.9974 9.10962L18 9.22647V10.7103C18 10.8339 17.9957 10.9055 17.9638 11.0333C17.8364 11.5449 17.6948 11.7264 16.7372 12.1393L16.5479 12.2196L15.9705 12.4545L16.1501 12.8493C16.699 14.0756 16.7553 14.4343 16.4201 14.8678L16.3669 14.9335L16.2432 15.0712L15.1562 16.1575C14.9192 16.3971 14.5856 16.5274 14.2606 16.5274C14.0898 16.5274 13.8749 16.4815 13.5706 16.3792L13.4107 16.3234L13.0414 16.1822L12.4851 15.9527L12.3291 16.3681C11.9164 17.4488 11.7331 17.738 11.3315 17.8915L11.2583 17.9173L11.1043 17.9615C11.0169 17.9841 10.955 17.9937 10.8862 17.9975L10.7735 18L9.20804 17.9991C9.14892 17.9963 9.0799 17.9885 9.00474 17.9722C8.54231 17.872 8.34049 17.7504 8.01586 17.071L7.94428 16.9167L7.78648 16.5521L7.548 15.9666L7.16457 16.1371C6.40086 16.47 6.05525 16.5726 5.78293 16.5726C5.50495 16.5726 5.22404 16.4758 4.99889 16.3004L4.89124 16.2062L3.80292 15.1181C3.39492 14.6856 3.29446 14.454 3.58402 13.6276L3.64716 13.4541L3.79474 13.0796L4.04309 12.488L3.63394 12.3344C2.56805 11.9272 2.27115 11.7406 2.11385 11.3438L2.08741 11.2715L2.04015 11.1117C2.01662 11.0224 2.00662 10.959 2.00257 10.8884L2 10.7728V9.28807C2 9.16346 2.00443 9.09116 2.03688 8.96228C2.14872 8.51808 2.27014 8.32367 2.93112 8.00948L3.09347 7.93468L3.45277 7.7802L4.02991 7.54625L3.85081 7.15004C3.24863 5.79456 3.24293 5.47232 3.72774 4.95938L3.79688 4.88814L4.84611 3.84129C5.08115 3.60495 5.41329 3.47332 5.73894 3.47332C5.93873 3.47332 6.19675 3.53525 6.59065 3.67775L6.768 3.7438L7.12861 3.88661L7.51564 4.04737L7.74446 3.4443C8.11371 2.50387 8.30627 2.2324 8.69908 2.09454L8.77516 2.07013L8.93507 2.02947C9.01225 2.01219 9.06675 2.00485 9.12744 2.00188L10.792 2.00092L9.22673 2ZM10.2654 4H9.68478L9.59598 4.21539L9.49017 4.4849L9.19618 5.26965C9.11261 5.49033 8.95422 5.67311 8.75061 5.78744L8.64518 5.83875L8.00809 6.10386C7.80128 6.18992 7.57287 6.20358 7.35928 6.14497L7.23321 6.10113L6.57075 5.82099L6.24104 5.68718L5.94281 5.57228L5.5309 5.98326L5.73485 6.45907L6.0825 7.22097C6.17926 7.43127 6.19949 7.66722 6.14237 7.88868L6.09881 8.01951L5.8383 8.65256C5.74962 8.86805 5.58902 9.04463 5.38569 9.15353L5.28061 9.2022L4.48631 9.52093L4.215 9.63473L4 9.7291V10.3211L4.1007 10.3632L4.48192 10.5142L5.25883 10.8036C5.48612 10.8856 5.67472 11.0465 5.79169 11.2548L5.84406 11.3628L6.1046 11.994C6.19063 12.2024 6.20322 12.4324 6.14273 12.647L6.09767 12.7735L5.76187 13.5636L5.56652 14.054L5.97824 14.4652L6.23658 14.358L6.73453 14.1392L7.20477 13.9233C7.42382 13.8187 7.6721 13.7978 7.90343 13.8621L8.01747 13.9013L8.6583 14.1659C8.8767 14.256 9.05489 14.42 9.16311 14.6273L9.21125 14.7344L9.5246 15.5138L9.7339 16H10.3168L10.405 15.7852L10.5103 15.5164L10.8036 14.732C10.8871 14.5094 11.0467 14.325 11.2521 14.2103L11.3585 14.1588L11.9966 13.8955C12.201 13.8112 12.4263 13.7974 12.6375 13.8541L12.7623 13.8967L13.2451 14.1021L13.7597 14.3135L14.0574 14.4284L14.47 14.0166L14.4286 13.9165L14.1971 13.3887L13.917 12.7794C13.8199 12.5687 13.7996 12.3323 13.857 12.1104L13.9007 11.9793L14.1608 11.349C14.249 11.1352 14.4081 10.9597 14.6095 10.8508L14.7136 10.802L15.5124 10.4801L16 10.2705V9.67935L15.8992 9.63741L15.5173 9.48681L14.7378 9.19724C14.511 9.11473 14.323 8.95356 14.2066 8.74517L14.1546 8.63719L13.8945 8.00344C13.8092 7.79556 13.7968 7.56631 13.8571 7.35247L13.902 7.22631L14.2372 6.43685L14.4323 5.94503L14.0203 5.53474L13.8981 5.58478L13.4412 5.78197L12.7801 6.08244C12.5701 6.17864 12.3348 6.19865 12.1138 6.14168L11.9833 6.09825L11.3429 5.835C11.1273 5.7464 10.9507 5.58585 10.8417 5.38255L10.793 5.27747L10.5393 4.64409L10.3603 4.21528L10.2654 4ZM10.0003 8C11.1028 8 12 8.89682 12 9.99942C12 11.102 11.1029 12 10.0003 12C8.89731 12 8 11.1022 8 9.99942C8 8.89663 8.89734 8 10.0003 8Z"
-                            fill="#1A1A1A"
-                          />
-                        </svg>
-                        Account Settings
-                      </router-link>
-                    </li>
-                    <li>
-                      <router-link :to="{name: 'feed'}">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M6 16C3.79086 16 2 14.0812 2 11.7143C2 9.78982 3.19155 8.13306 4.86361 7.60405C5.74104 5.4454 7.7417 4 10 4C12.8522 4 15.2063 6.28456 15.5554 9.23893C16.9581 9.60266 18 10.9567 18 12.5714C18 14.3901 16.6749 15.8894 14.9641 15.9953L14.8 16H6ZM6 14L14.8406 13.9991C15.4685 13.9603 16 13.3602 16 12.5714C16 11.876 15.58 11.3115 15.0534 11.1749C14.2553 10.968 13.6659 10.2924 13.5692 9.47359C13.3328 7.47287 11.7844 6 10 6C8.59574 6 7.30266 6.91486 6.7164 8.35716C6.51471 8.85335 6.12357 9.24551 5.63372 9.44985L5.32061 9.56428C4.55329 9.88244 4 10.7274 4 11.7143C4 13.0063 4.92744 14 6 14Z"
-                            fill="#1A1A1A"
-                          />
-                        </svg>
-                        My News Feed
-                      </router-link>
-                    </li>
-                    <li v-if="isOrganisationAdmin !== null">
-                      <router-link :to="'/organisation/' + organisationSlug">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M7.5 10C8.8739 10 10.1301 10.5129 11.0941 11.361C11.6809 11.1285 12.3248 11 13 11C15.7614 11 18 13.149 18 15.8C18 16.4627 17.4404 17 16.75 17H3.375C2.61561 17 2 16.3732 2 15.6C2 12.5072 4.46243 10 7.5 10ZM7 3C8.65685 3 10 4.34315 10 6C10 7.65685 8.65685 9 7 9C5.34315 9 4 7.65685 4 6C4 4.34315 5.34315 3 7 3ZM14 5C15.1046 5 16 5.89543 16 7C16 8.10457 15.1046 9 14 9C12.8954 9 12 8.10457 12 7C12 5.89543 12.8954 5 14 5Z"
-                            fill="#1A1A1A"
-                          />
-                        </svg>
-                        My Organisation
-                      </router-link>
-                    </li>
-                    <li v-else>
-                      <router-link :to="{name: 'add-organisation'}">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M7.5 10C8.8739 10 10.1301 10.5129 11.0941 11.361C11.6809 11.1285 12.3248 11 13 11C15.7614 11 18 13.149 18 15.8C18 16.4627 17.4404 17 16.75 17H3.375C2.61561 17 2 16.3732 2 15.6C2 12.5072 4.46243 10 7.5 10ZM7 3C8.65685 3 10 4.34315 10 6C10 7.65685 8.65685 9 7 9C5.34315 9 4 7.65685 4 6C4 4.34315 5.34315 3 7 3ZM14 5C15.1046 5 16 5.89543 16 7C16 8.10457 15.1046 9 14 9C12.8954 9 12 8.10457 12 7C12 5.89543 12.8954 5 14 5Z"
-                            fill="#1A1A1A"
-                          />
-                        </svg>
-                        Create an Organisation
-                      </router-link>
-                    </li>
-                    <li>
-                      <router-link to="login" v-if="!auth">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.14354 5.8762C3.42858 5.40316 4.04313 5.25076 4.51617 5.5358C4.98922 5.82085 5.14162 6.4354 4.85657 6.90844C4.29883 7.83403 4 8.89388 4 10C4 13.3137 6.68629 16 10 16C13.3137 16 16 13.3137 16 10C16 8.89457 15.7015 7.83536 15.1445 6.91016C14.8596 6.43703 15.0122 5.82253 15.4853 5.53764C15.9585 5.25276 16.573 5.40536 16.8578 5.8785C17.6012 7.113 18 8.52846 18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 8.52754 2.39934 7.11123 3.14354 5.8762ZM10 2C10.5523 2 11 2.44772 11 3V7C11 7.55228 10.5523 8 10 8C9.44772 8 9 7.55228 9 7V3C9 2.44772 9.44772 2 10 2Z"
-                            fill="#1A1A1A"
-                          />
-                        </svg>
-                        Login
-                      </router-link>
-                      <div v-else @click="onLogout">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.14354 5.8762C3.42858 5.40316 4.04313 5.25076 4.51617 5.5358C4.98922 5.82085 5.14162 6.4354 4.85657 6.90844C4.29883 7.83403 4 8.89388 4 10C4 13.3137 6.68629 16 10 16C13.3137 16 16 13.3137 16 10C16 8.89457 15.7015 7.83536 15.1445 6.91016C14.8596 6.43703 15.0122 5.82253 15.4853 5.53764C15.9585 5.25276 16.573 5.40536 16.8578 5.8785C17.6012 7.113 18 8.52846 18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 8.52754 2.39934 7.11123 3.14354 5.8762ZM10 2C10.5523 2 11 2.44772 11 3V7C11 7.55228 10.5523 8 10 8C9.44772 8 9 7.55228 9 7V3C9 2.44772 9.44772 2 10 2Z"
-                            fill="#1A1A1A"
-                          />
-                        </svg>
-                        Sign Out
-                      </div>
+          <fieldset>
+            <button class="search-form__submit" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </fieldset>
+        </form>-->
+      </div>
+      <div class="container grid">
+        <div class="grid-item grid-item--menu-toggle">
+          <button @click.prevent="mobileMenu">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+        <div class="grid-item grid-item--logo">
+          <router-link class="tm-logo" to="/">
+            <img src="/img/smiley-logo-white-header.png" alt="Smiley Movement" />
+          </router-link>
+        </div>
+        <div class="grid-item grid-item--menu">
+          <nav>
+            <ul class="main-menu">
+              <li class="main-menu__item" v-for="item in menu" :key="'menu-item-'+item.name">
+                <template v-if="item.items == null">
+                  <router-link class="main-menu__link" :to="{name: item.link}">{{item.name}}</router-link>
+                </template>
+                <template v-else>
+                  <span>
+                    <router-link
+                      class="main-menu__link main-menu__item-has-children"
+                      :to="{name: item.link}"
+                    >
+                      {{item.name}}
+                      <i class="fa fa-angle-down"></i>
+                    </router-link>
+                  </span>
+                  <ul class="sub-menu">
+                    <li
+                      class="sub-menu__item"
+                      v-for="subitem in item.items"
+                      :key="'menu-subitem-'+subitem.name"
+                    >
+                      <router-link
+                        class="sub-menu__link"
+                        :to="{name: subitem.link}"
+                      >{{subitem.name}}</router-link>
                     </li>
                   </ul>
-                </div>
-                <a class="arrow-icon" href="#">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M21.0002 8.00025C21.0002 8.25625 20.9023 8.51225 20.7073 8.70725L12.7072 16.7072C12.3162 17.0982 11.6842 17.0982 11.2933 16.7072L3.29325 8.70725C2.90225 8.31625 2.90225 7.68425 3.29325 7.29325C3.68425 6.90225 4.31625 6.90225 4.70725 7.29325L12.0002 14.5862L19.2932 7.29325C19.6842 6.90225 20.3162 6.90225 20.7073 7.29325C20.9023 7.48825 21.0002 7.74425 21.0002 8.00025Z"
-                      fill="#1A1A1A"
-                    />
-                  </svg>
-                </a>
-              </div>
-
-              <div class="register-block" v-else>
-                <a class="search-icon" href="#" @click.prevent="searchActive = true">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
-                      fill="#1A1A1A"
-                    />
-                  </svg>
-                </a>
-                <!--                <a class="second-icon" href="#">-->
-                <!--                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-                <!--                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.99995 20C4.29569 20 3.82468 19.2979 4.05973 18.6586L4.10552 18.5528L5.26094 16.242C5.69833 15.3672 5.94701 14.4115 5.99238 13.4369L5.99995 13.1115V10C5.99995 7.02694 8.16233 4.55893 11.0001 4.08293L10.9999 3C10.9999 2.44772 11.4477 2 11.9999 2C12.5522 2 12.9999 2.44772 12.9999 3L13.0008 4.08309C15.7593 4.54627 17.8793 6.89172 17.995 9.75347L17.9999 10V13.1115C17.9999 14.0895 18.2049 15.0555 18.6002 15.9474L18.739 16.242L19.8944 18.5528C20.2093 19.1827 19.792 19.918 19.1151 19.9936L18.9999 20H13.9999C13.9999 21.1046 13.1045 22 11.9999 22C10.8954 22 9.99995 21.1046 9.99995 20H4.99995ZM11.9999 6C9.85775 6 8.10887 7.68397 8.00484 9.80036L7.99995 10V13.1115C7.99995 14.3922 7.7266 15.6569 7.19975 16.8213L7.04979 17.1364L6.61798 18H17.3819L16.9501 17.1364C16.3773 15.9908 16.0562 14.7374 16.0067 13.4603L15.9999 13.1115V10C15.9999 7.79086 14.2091 6 11.9999 6Z" fill="#1A1A1A"/>-->
-                <!--                  </svg>-->
-                <!--                </a>-->
-                <div class="login-register-btns-wrap">
-                  <a
-                    class="login-register-btn"
-                    @click="registerDropdownShow = !registerDropdownShow"
-                  >Login / Register</a>
-                  <div
-                    class="login-and-new-account-btns"
-                    v-on-clickaway="away"
-                    v-if="registerDropdownShow"
-                    id="dropdown-content"
-                  >
-                    <button class="login-btn" @click="goToLogin">Login</button>
-                    <p>New Smiley Movement?</p>
-                    <button class="register-btn" @click="goToRegister">Create an account</button>
-                  </div>
-                </div>
-              </div>
+                </template>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="grid-item grid-item--social">
+          <ul class="header-socials">
+            <li class="header-socials__item" v-for="social in socials" :key="'social-'+social.name">
+              <a :href="social.link" target="_blank" class="header-socials__link">
+                <i class="fa" :class="'fa-'+social.name"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="grid-item grid-item--user">
+          <button @click.prevent="searchActive = true" class="button-search">
+            <i class="fa fa-search"></i>
+          </button>
+          <router-link to="/" class="button-notification" v-if="loggedIn">
+            <div class="button-notification__icon">
+              <i class="fa fa-bell-o"></i>
             </div>
+          </router-link>
+          <div class="user-profile" v-if="loggedIn">
+            <div
+              class="user-profile__circle"
+              :class="{active: userMenu}"
+              @click="userMenu = !userMenu"
+            >
+              <template v-if="userAvatar != null">
+                <img :src="$settings.images_path.users + 's_' + userAvatar" />
+              </template>
+              <template v-else>
+                <span>{{userName}}</span>
+              </template>
+            </div>
+            <i class="fa fa-angle-down"></i>
+            <ul class="user-menu">
+              <li class="user-menu__item">
+                <router-link :to="{name: 'profile'}" class="user-menu__link">
+                  <i class="fa fa-user"></i> My Profile
+                </router-link>
+              </li>
+              <li class="user-menu__item">
+                <router-link :to="{name: 'account-settings'}" class="user-menu__link">
+                  <i class="fa fa-cogs"></i> Account Settings
+                </router-link>
+              </li>
+              <li class="user-menu__item">
+                <router-link :to="{name: 'feed'}" class="user-menu__link">
+                  <i class="fa fa-cloud"></i> My News Feed
+                </router-link>
+              </li>
+              <li class="user-menu__item">
+                <template v-if="organisation.admin != null">
+                  <router-link
+                    :to="{name: 'organisation', params: {slug: organisation.slug}}"
+                    class="user-menu__link"
+                  >
+                    <i class="fa fa-users"></i> My Organisation
+                  </router-link>
+                </template>
+                <template v-else>
+                  <router-link :to="{name: 'create-organisation'}" class="user-menu__link">
+                    <i class="fa fa-user-plus"></i> Create Organisation
+                  </router-link>
+                </template>
+              </li>
+              <li class="user-menu__item">
+                <a class="user-menu__link" href="#" @click.prevent="logout">
+                  <i class="fa fa-power-off"></i> Sign Out
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="user-profile" v-else>
+            <div
+              class="user-profile__circle"
+              :class="{active: userMenu}"
+              @click="userMenu = !userMenu"
+            >
+              <span class="user-profile__circle-loggedout">
+                <i class="fa fa-user-circle-o"></i>
+              </span>
+            </div>
+            <i class="fa fa-angle-down"></i>
+            <ul class="user-menu">
+              <li class="user-menu__item">
+                <router-link :to="{name: 'login'}" class="user-menu__link">
+                  <i class="fa fa-sign-in"></i> Login
+                </router-link>
+              </li>
+              <li class="user-menu__item user-menu__item--textual">
+                <span>New to Smiley Movement?</span>
+              </li>
+              <li class="user-menu__item">
+                <router-link
+                  :to="{name: 'register'}"
+                  class="user-menu__link user-menu__link--register"
+                >
+                  <i class="fa fa-user-plus"></i> Register
+                </router-link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
-
-    <form class="search-form" :class="{active: searchActive}" @submit.prevent="search">
-      <div class="container">
-        <button class="search-form__close" type="button" @click="searchActive = false">X</button>
-        <div class="search-form__container">
-          <input
-            class="search-form__field"
-            placeholder="What are we looking for?"
-            type="search"
-            aria-label="Search through site content"
-            v-model="keyword"
-          />
-          <button class="search-form__submit" type="submit">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M11 2C15.9706 2 20 6.02944 20 11C20 13.1248 19.2637 15.0776 18.0323 16.6172L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3466 22.0676 20.7794 22.0953 20.3871 21.7903L20.2929 21.7071L16.6172 18.0323C15.0776 19.2637 13.1248 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z"
-                fill="#1A1A1A"
-              />
-            </svg>
-          </button>
-        </div>
+    </header>
+    <div class="mobile-menu-holder">
+      <button class="close-menu" @click.prevent="mobileMenu">
+        <i class="fa fa-angle-left"></i>
+        <span>Back to website</span>
+      </button>
+      <div class="mobile-menu-inner">
+        <ul class="mobile-menu">
+          <li class="mobile-menu__item" v-for="item in menu" :key="'menu-item-'+item.name">
+            <router-link class="mobile-menu__link" :to="{name: item.link}">{{item.name}}</router-link>
+            <ul class="sub-menu" v-if="item.items != null">
+              <li
+                class="sub-menu__item"
+                v-for="subitem in item.items"
+                :key="'menu-subitem-'+subitem.name"
+              >
+                <router-link class="sub-menu__link" :to="{name: subitem.link}">{{subitem.name}}</router-link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="header-socials">
+          <li class="header-socials__item" v-for="social in socials" :key="'social-'+social.name">
+            <a :href="social.link" target="_blank" class="header-socials__link">
+              <i class="fa" :class="'fa-'+social.name"></i>
+            </a>
+          </li>
+        </ul>
       </div>
-    </form>
-  </header>
+    </div>
+  </div>
 </template>
-
 
 <script>
 import router from "@/router";
 
-import SocialIcons from "@/components/footer/SocialIcons";
-
-import $ from "jquery";
-import { mixin as clickaway } from "vue-clickaway";
-import { mapState } from "vuex";
-
 export default {
-  name: "Header",
-  mixins: [clickaway],
-  components: {},
+  name: "MainHeader",
   data() {
     return {
-      registerDropdownShow: false,
+      menu: [
+        {
+          name: "smiley talks",
+          link: "talks"
+        },
+        {
+          name: "smiley news",
+          link: "news"
+        },
+        {
+          name: "network",
+          link: "network",
+          items: [
+            { name: "organisations", link: "organisations" },
+            { name: "members", link: "users" },
+            { name: "projects", link: "projects" },
+            { name: "partners", link: "partners" }
+          ]
+        },
+        {
+          name: "our story",
+          link: "story"
+        },
+        {
+          name: "un goals",
+          link: "goals"
+        }
+      ],
+      search: null,
       searchActive: false,
-      keyword: ""
+      socials: [
+        { name: "facebook", link: process.env.VUE_APP_SOCIAL_FACEBOOK },
+        { name: "linkedin", link: process.env.VUE_APP_SOCIAL_LINKEDIN },
+        { name: "twitter", link: process.env.VUE_APP_SOCIAL_TWITTER },
+        { name: "instagram", link: process.env.VUE_APP_SOCIAL_INSTAGRAM }
+      ],
+      userMenu: false
+      // mobileMenu: false
     };
   },
   computed: {
-    auth() {
+    loggedIn() {
       return this.$store.getters["user/isAuthenticated"];
     },
-    ...mapState("user", {
-      isOrganisationAdmin: state => state.organisation.admin,
-      organisationSlug: state => state.organisation.slug,
-      avatar: state => state.info.avatar,
-      avatarTextual: state => state.info.full_name,
-      completed_profile: state => state.completed_profile
-    })
-  },
-  mounted() {
-    $(".menu-icon").on("click", function() {
-      $(this)
-        .closest(".top-menu")
-        .toggleClass("menu-state-open");
-    });
-
-    $(".menu-item").on("click", function() {
-      $(this)
-        .closest(".top-menu")
-        .removeClass("menu-state-open");
-    });
-
-    // $('.login-register-btn').on('click', function() {
-    //   $(this).next().toggleClass('show');
-    // });
+    userAvatar() {
+      return this.$store.getters["user/avatar"];
+    },
+    userName() {
+      return this.$store.getters["user/full_name"];
+    },
+    organisation() {
+      console.log(this.$store.getters["user/organisation"]);
+      return this.$store.getters["user/organisation"];
+    }
   },
   methods: {
-    search() {
+    find() {
       router.push({
         name: "search",
-        params: { keyword: this.keyword }
+        params: { keyword: this.search }
       });
       this.searchActive = false;
     },
-    away: function() {
-      this.registerDropdownShow = false;
-    },
-    onLogout() {
+    logout() {
       this.$store.dispatch("user/logout");
     },
-    goToLogin() {
-      this.registerDropdownShow = false;
-      this.$router.push({ name: "login" });
-    },
-    goToRegister() {
-      this.registerDropdownShow = false;
-      this.$router.push({ name: "register" });
+    mobileMenu() {
+      document.body.classList.toggle("mobile-menu--opened");
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.nav.nav-shadow {
+header {
+  position: relative;
+  z-index: 10;
+  background-color: #3d465a;
   box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
 }
 
-.top-line-wrap {
-  height: 65px;
-  z-index: 9999;
-  position: relative;
-  max-width: 1780px;
-  padding: 0 15px;
-  margin: 0 auto;
+.search-block {
+  position: absolute;
+  left: 0%;
+  // transform: translateX(-50%);
+  top: 0px;
+  width: 0;
+  height: 100%;
+  background-color: #3d465a;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.2s, opacity 0.2s;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
 
-  .tm-logo {
-    display: inline-block;
+  &.active {
+    opacity: 1;
+    width: 100%;
+    pointer-events: all;
   }
-  .tm-left {
-    display: inherit;
-    width: 154px;
-    order: 2;
-    img {
-      width: 100%;
+
+  .search-form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 48px auto 48px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    transition-delay: 0.2s;
+
+    &.active {
+      opacity: 1;
+    }
+
+    @include smMax {
+      grid-template-columns: 30px auto 30px;
+    }
+  }
+
+  .search-form__field-holder {
+    width: auto;
+    background-color: #fff;
+    border-right: 1px solid #393939;
+  }
+
+  .search-form__field {
+    padding: 5px 20px;
+    border-radius: 0px !important;
+    -webkit-appearance: searchfield;
+    appearance: searchfield;
+    -webkit-border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    background-image: linear-gradient(transparent, transparent) !important;
+    @include smMax {
+      padding: 5px 10px;
+    }
+
+    &:valid,
+    &:invalid {
+      border: 1px solid #fff !important;
+    }
+  }
+
+  .search-form__close {
+    border: none;
+    background-color: #393939;
+    color: #fff;
+    cursor: pointer;
+    -webkit-appearance: none !important;
+    border-radius: 0px;
+    padding: 0px;
+  }
+
+  .search-form__submit {
+    border: none;
+    color: #393939;
+    background: #ffec02;
+    cursor: pointer;
+    -webkit-appearance: none !important;
+    border-radius: 0px;
+    padding: 0px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 1fr;
+  position: relative;
+
+  @include xlMax {
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+
+  @include lgMax {
+    grid-template-columns: 40px 2fr 1fr 1fr;
+  }
+  @include mdMax {
+    grid-template-columns: 40px 2fr 1fr;
+  }
+
+  .grid-item {
+    &--logo {
+      display: flex;
+      align-items: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      img {
+        max-width: 240px;
+        width: 100%;
+        height: auto;
+      }
+      @include lgMax {
+        padding-left: 20px;
+      }
+      @include smMax {
+        padding-right: 10px;
+        padding-left: 20px;
+        img {
+          max-width: 80%;
+        }
+      }
+    }
+    &--social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include mdMax {
+        display: none;
+      }
+    }
+    &--search {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--user {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    &--menu-toggle {
+      display: none;
+
+      @include lgMax {
+        display: block;
+      }
+
+      button {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        padding: 0px !important;
+        margin: 0px !important;
+        @include font-size(2rem);
+        background-color: #fff;
+        border: none;
+        cursor: pointer;
+        -webkit-appearance: none !important;
+        -webkit-border-radius: 0 !important;
+      }
+    }
+
+    &--menu {
+      @include xlMax {
+        grid-column: 1 / span 3;
+        order: 5;
+      }
+
+      @include lgMax {
+        display: none;
+      }
+    }
+  }
+
+  nav {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Main menu
+.main-menu {
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+  height: 100%;
+
+  .main-menu__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    & > span {
+      height: 100%;
       display: block;
     }
-    @include xl {
-      width: 268px;
-    }
-  }
 
-  .menu-item {
-    padding: 0 30px;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    position: relative;
-    color: $default-text;
-    font: 16px/24px "Montserrat SemiBold", sans-serif;
-    border-top: 1px solid #dcddde;
+    &:hover {
+      .main-menu__link {
+        border-bottom: 2px solid #fff;
 
-    & > a {
-      text-decoration: none;
-      color: $default-text;
-    }
-    &:last-child {
-      border-bottom: 1px solid #dcddde;
-    }
-    &.active,
-    &.router-link-active {
-      color: $default-orange-btns;
-    }
-
-    .submenu {
-      .menu-item {
-        border-bottom-color: transparent !important;
-      }
-      li {
-        position: relative;
-        margin-bottom: 0px;
-
-        &::before {
-          width: 5px;
-          height: 5px;
-          background-color: #000;
-          content: "";
-          position: absolute;
-          left: 0px;
-          top: 50%;
-          transform: translateY(-50%);
-          border-radius: 50%;
-        }
-        a {
-          border: none;
-        }
-      }
-    }
-
-    @include xl {
-      .submenu {
-        position: absolute;
-        background-color: #fff;
-        width: 200px;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.4s;
-        padding: 5px;
-
-        padding: 24px 15px;
-        border-radius: 4px;
-        border: 1px solid #c7c7c7;
-        box-shadow: 0 12px 32px -8px rgba(26, 26, 26, 0.24);
-
-        &::before {
-          content: "";
-          display: block;
-          width: 0;
-          height: 0;
-          border-style: solid;
-          border-width: 0 5px 5px 5px;
-          border-color: transparent transparent rgba(26, 26, 26, 0.24)
-            transparent;
-          position: absolute;
-          top: -6px;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-
-        li {
-          &::before,
-          &::after {
-            // display: none;
-            background-color: #707070;
-            display: inline-block;
-            position: static;
-            opacity: 0;
-            transition: opacity 0.4s;
-          }
-
-          &::after {
-            width: 5px;
-            height: 5px;
-            background-color: #000;
-            content: "";
-            transform: translateY(-50%);
-            border-radius: 50%;
-          }
-
-          &:hover {
-            &::before,
-            &::after {
-              opacity: 1;
-            }
-          }
+        i {
+          transform: rotate(180deg);
         }
       }
 
-      &:hover .submenu {
+      .sub-menu {
         opacity: 1;
         pointer-events: all;
       }
     }
   }
 
-  .menu-icon {
-    display: inline-block;
-    width: 22px;
-    height: 25px;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .menu-icon span {
-    display: block;
-    position: absolute;
-    height: 3px;
-    width: 100%;
-    background: #333333;
-    border-radius: 9px;
-    opacity: 1;
-    left: 0;
-    transform: rotate(0deg);
-    transition: 0.25s ease-in-out;
-  }
-
-  .menu-icon span:nth-child(1) {
-    top: 3px;
-  }
-
-  .menu-icon span:nth-child(2),
-  .menu-icon span:nth-child(3) {
-    top: 11px;
-  }
-
-  .menu-icon span:nth-child(4) {
-    top: 19px;
-  }
-
-  .menu-links {
-    position: absolute;
-    display: none;
-    top: 0;
-    right: 0;
-    left: 0;
-    background-color: #fff;
-    margin-top: 65px;
-    z-index: 2;
-    // overflow: auto;
-    width: 100%;
-    height: 100vh;
-    opacity: 0;
-    .btn-wrap {
-      padding: 0 15px;
-      text-align: center;
-    }
-    .login-join-btn {
-      width: 100%;
-      max-width: 382px;
-      height: 48px;
-      color: #fff;
-      font: 16px/24px "Montserrat Bold", sans-serif;
-      border: none;
-      background: $default-orange-btns;
-      border-radius: 4px;
-      margin: 23px auto 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-  }
-
-  .top-menu.menu-state-open .menu-icon span:nth-child(1) {
-    top: 18px;
-    width: 0%;
-    left: 50%;
-  }
-
-  .top-menu.menu-state-open .menu-icon span:nth-child(2) {
-    transform: rotate(45deg);
-  }
-
-  .top-menu.menu-state-open .menu-icon span:nth-child(3) {
-    transform: rotate(-45deg);
-  }
-
-  .top-menu.menu-state-open .menu-icon span:nth-child(4) {
-    top: 18px;
-    width: 0%;
-    left: 50%;
-  }
-
-  .top-menu.menu-state-open .menu-links {
-    display: block;
-  }
-
-  .top-menu {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    height: 100%;
-    align-items: center;
-    .menu-item {
-      display: block;
-      padding: 16px 0 12px;
-      text-align: left;
-      z-index: 1;
-    }
-    &.menu-state-open {
-      .menu-links {
-        opacity: 1;
-      }
-      .menu-item {
-        margin: 0 16px;
-        @include xl {
-          margin: 0;
-        }
-      }
-    }
-  }
-
-  .tm-right {
-    text-align: center;
-    order: 3;
-    bottom: 15px;
-    left: 0;
-    .register-block {
-      display: flex;
-      align-items: center;
-      .login-register-btns-wrap {
-        position: relative;
-        margin-left: 0;
-        display: none;
-        a {
-          height: 48px;
-          font: 700 16px/24px "Montserrat Bold", sans-serif;
-          text-transform: uppercase;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: #000;
-        }
-        @include xl {
-          display: block;
-          margin-left: 20px;
-        }
-        @include xxl {
-          margin-left: 40px;
-        }
-      }
-      .login-register-btn {
-        width: 240px;
-        color: #000;
-        background-color: #eeb400;
-        transition: background-color 0.2s ease-in-out;
-
-        &:hover {
-          background-color: #c09205;
-        }
-      }
-      .login-and-new-account-btns {
-        position: absolute;
-        z-index: 1;
-        padding: 34px 15px;
-        border-radius: 4px;
-        border: 1px solid #c7c7c7;
-        box-shadow: 0 12px 32px -8px rgba(26, 26, 26, 0.24);
-        background-color: #fff;
-        left: -78px;
-        top: 63px;
-        &.show {
-          display: block;
-        }
-        p {
-          color: $default-text;
-          font: 700 16px/24px "Muli", sans-serif;
-          text-align: left;
-          margin-top: 19px;
-          margin-bottom: 9px;
-        }
-        button {
-          width: 288px;
-          margin: 0 auto;
-          height: 48px;
-          font: 700 16px/24px "Montserrat Bold", sans-serif;
-          text-transform: uppercase;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          color: #000;
-        }
-        .login-btn {
-          color: #fff;
-          background-color: #a1a1a1;
-        }
-        .register-btn {
-          background-color: $default-yellow-btns;
-        }
-      }
-    }
-    .search-icon,
-    .second-icon,
-    .avatar-icon,
-    .arrow-icon {
-      text-decoration: none;
-      display: inline-block;
-      svg {
-        vertical-align: middle;
-      }
-    }
-    .search-icon {
-      margin-right: 20px;
-      // display: none;
-    }
-    .second-icon {
-      margin-right: 12px;
-    }
-    .avatar-icon {
-      position: relative;
-      cursor: pointer;
-      margin-top: 8px;
-      margin-right: 8px;
-      padding-bottom: 8px;
-      > svg {
-        width: 22px;
-        height: 22px;
-      }
-      &:hover > ul {
-        display: block;
-      }
-      ul {
-        display: none;
-        position: absolute;
-        top: 33px;
-        right: -14px;
-        background-color: #fff;
-        border: 1px solid #c7c7c7;
-        border-radius: 4px;
-        width: 258px;
-        // padding-bottom: 25px;
-        @include xl {
-          right: -40px;
-          top: 55px;
-        }
-        a,
-        div {
-          color: $default-text;
-          font: 400 16px/20px "Muli", sans-serif;
-          display: block;
-          text-decoration: none;
-          text-align: left;
-          padding: 15px 0 15px 16px;
-          &:hover {
-            background-color: #eef3ff;
-            transition: 0.15s ease-in-out;
-          }
-          svg {
-            margin-right: 2px;
-            vertical-align: bottom;
-          }
-        }
-      }
-    }
-    .arrow-icon {
-      display: none;
-    }
-  }
-
-  @include xl {
-    height: 133px;
-    .menu-icon {
-      display: none;
-    }
-    .menu-links {
-      display: block;
-      margin: 15px 0 8px;
-      position: initial;
-      opacity: 1;
-      background-color: transparent;
-      height: auto;
-      order: 2;
-      width: auto;
-
-      display: flex;
-      justify-content: center;
-      flex: 1;
-      .menu-item {
-        display: inline-block;
-        border: none;
-        padding: 0 11px;
-      }
-      .btn-wrap {
-        display: none;
-      }
-    }
-    .tm-right {
-      .search-icon,
-      .arrow-icon {
-        display: inline-block;
-      }
-      .avatar-icon {
-        > svg {
-          width: 48px;
-          height: 48px;
-        }
-      }
-    }
-  }
-
-  @include xxl {
-    .top-menu {
-      justify-content: space-between;
-      width: 100%;
-    }
-    .menu-links {
-      margin-right: auto;
-      padding-left: 65px;
-      .menu-item {
-        display: inline-block;
-        border: none;
-        padding: 0 21px;
-      }
-    }
-  }
-}
-
-.user-avatar {
-  width: 48px;
-  height: 48px;
-  background-color: #7a7a7a;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 1;
-  color: #fff;
-  text-transform: uppercase;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-}
-
-.login-block {
-  display: flex;
-  align-items: center;
-}
-
-.profile-fill-alert {
-  background-color: #fefab6;
-  padding-top: 10px;
-  padding-bottom: 12px;
-  font: 400 16px/20px "Muli", sans-serif;
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-
-  .container {
-    display: flex;
-  }
-
-  .profile-fill-alert__warning {
-    width: 24px;
-    height: 24px;
-    margin-right: 24px;
-  }
-
-  p {
-    margin: 0px !important;
-    padding: 0px !important;
-  }
-
-  span {
-    margin-left: 0px;
-    display: inline-block;
-  }
-
-  a {
-    color: #393939;
+  .main-menu__link {
+    font-family: "Montserrat SemiBold", sans-serif;
+    text-transform: uppercase;
     text-decoration: none;
-    border-bottom: 1px solid #393939;
-  }
-}
-
-// Searchform
-header {
-  position: relative;
-}
-.search-form {
-  position: absolute;
-  background: #fff;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s;
-
-  &.active {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .container {
-    width: 100%;
+    color: #fff;
+    padding: 24px 10px 22px 10px;
+    display: block;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
-  }
+    align-items: center;
 
-  .search-form__container {
-    width: 50%;
-    display: flex;
+    &.router-link-active {
+      border-bottom: 2px solid #fff;
+    }
 
-    @include mdMax {
-      width: 100%;
+    i {
+      margin-left: 12px;
+      transition: transform 0.2s;
     }
   }
-  .search-form__field {
-    flex: 1;
-    padding: 10px 15px;
-    font-family: "Muli", sans-serif;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-right: none;
-    width: 100%;
-    appearance: none;
-  }
-  .search-form__submit {
-    min-width: 50px;
-    font-family: "Muli", sans-serif;
-    padding: 10px 15px;
-    background-color: #eeb400;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border: none;
-  }
-  .search-form__close {
-    margin-right: 24px;
-    font-size: 0px;
-    width: 48px;
-    height: 48px;
-    border: none;
-    background-color: transparent;
-    position: relative;
 
-    &::before,
-    &::after {
-      content: "";
-      width: 100%;
-      height: 2px;
-      display: block;
-      background-color: #393939;
-      transform-origin: center;
-    }
+  .sub-menu {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 15px 25px;
+    z-index: 5;
+    min-width: 200px;
+    // border: 2px solid #393939;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.3);
 
     &::before {
-      transform: rotate(45deg);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 5px solid #fff;
+      display: block;
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .sub-menu__item {
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateX(10px);
+    }
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+  }
+
+  .sub-menu__link {
+    font-family: "Montserrat SemiBold", sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #393939;
+  }
+}
+
+// Social icons
+.header-socials {
+  display: flex;
+  margin: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  .header-socials__item {
+    border: 1px solid #fff;
+    line-height: 1;
+    width: 24px;
+    height: 24px;
+    transition: background-color 0.2s;
+
+    &:not(:last-child) {
+      margin-right: 8px;
     }
 
-    &::after {
-      transform: rotate(-45deg) translate(0px, 0px);
+    &:hover {
+      background-color: #fff;
+
+      .header-socials__link {
+        color: #393939;
+      }
+    }
+  }
+
+  .header-socials__link {
+    color: #fff;
+    transition: color 0.2s;
+    display: block;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+}
+
+.button-search {
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  // transition: transform 0.2s;
+  margin-right: 12px;
+  position: relative;
+  overflow: hidden;
+  padding: 0px 2px 2px 3px;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #fff;
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: 1;
+    transition: top 0.2s;
+  }
+
+  i {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+  }
+
+  &:hover {
+    &::before {
+      top: 0px;
+    }
+
+    i {
+      color: #393939;
     }
   }
 }
 
-.header-social {
-  order: 3;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 5px;
-  ul {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 5px;
+.user-profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom: 2px;
+
+  & > i {
+    color: #fff;
   }
 
-  a {
+  .user-profile__circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-left: 24px;
+    margin-right: 12px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      border: 1px solid #d8d8d8;
+    }
+
+    &-loggedout {
+      @include font-size(2rem);
+    }
+
+    @include mdMax {
+      &.active + .fa.fa-angle-down {
+        transform: rotate(180deg);
+      }
+
+      &.active ~ .user-menu {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+  }
+
+  .fa.fa-angle-down {
+    transition: transform 0.2s;
+  }
+
+  @include md {
+    &:hover {
+      .fa.fa-angle-down {
+        transform: rotate(180deg);
+      }
+
+      .user-menu {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+  }
+}
+
+.user-menu {
+  position: absolute;
+  right: 0px;
+  top: calc(100% + 2px);
+  background-color: #fff;
+  z-index: 5;
+  min-width: 250px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.3);
+
+  &::before {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #fff;
     display: block;
-    line-height: 1;
-    font-size: 1rem;
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 40px;
+  }
+}
+
+.user-menu__item {
+  &--textual {
+    // text-align: center;
+    padding: 15px 25px;
+    font-family: "Montserrat SemiBold", sans-serif;
+    @include font-size(0.9rem);
+  }
+}
+
+.user-menu__link {
+  font-family: "Montserrat Regular", sans-serif;
+  text-decoration: none;
+  color: #393939;
+  padding: 15px 25px;
+  display: block;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none !important;
+  transition: background-color 0.2s;
+
+  &--register {
+    background-color: #ffec00 !important;
+  }
+
+  i {
+    margin-right: 12px;
+  }
+
+  &:hover {
+    background-color: #eef3ff;
+  }
+}
+
+.button-notification {
+  color: #fff;
+  transition: color 0.2s;
+  display: flex;
+  position: relative;
+
+  .button-notification__icon {
+    transform-origin: 50% 4px;
+    animation: ring 2s 0.7s ease-in-out infinite;
+  }
+}
+
+@keyframes ring {
+  0% {
+    transform: rotate(0);
+  }
+  1% {
+    transform: rotate(30deg);
+  }
+  3% {
+    transform: rotate(-28deg);
+  }
+  5% {
+    transform: rotate(34deg);
+  }
+  7% {
+    transform: rotate(-32deg);
+  }
+  9% {
+    transform: rotate(30deg);
+  }
+  11% {
+    transform: rotate(-28deg);
+  }
+  13% {
+    transform: rotate(26deg);
+  }
+  15% {
+    transform: rotate(-24deg);
+  }
+  17% {
+    transform: rotate(22deg);
+  }
+  19% {
+    transform: rotate(-20deg);
+  }
+  21% {
+    transform: rotate(18deg);
+  }
+  23% {
+    transform: rotate(-16deg);
+  }
+  25% {
+    transform: rotate(14deg);
+  }
+  27% {
+    transform: rotate(-12deg);
+  }
+  29% {
+    transform: rotate(10deg);
+  }
+  31% {
+    transform: rotate(-8deg);
+  }
+  33% {
+    transform: rotate(6deg);
+  }
+  35% {
+    transform: rotate(-4deg);
+  }
+  37% {
+    transform: rotate(2deg);
+  }
+  39% {
+    transform: rotate(-1deg);
+  }
+  41% {
+    transform: rotate(1deg);
+  }
+
+  43% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+body.mobile-menu--opened {
+  .mobile-menu-holder {
+    opacity: 1;
+    pointer-events: all;
+    left: 0px;
+  }
+}
+
+.mobile-menu-holder {
+  position: fixed;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 10;
+  background-color: #3d465a;
+  top: 0px;
+  // left: 0px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, left 0.2s;
+  display: flex;
+  flex-direction: column;
+
+  .close-menu {
+    color: #393939;
+    border: none !important;
+    margin-bottom: 36px;
+    text-transform: uppercase;
+    @include font-size(1rem);
+    width: 100%;
+    background-color: #fff;
+    width: 100%;
+    padding: 20px 20px;
+    i {
+      margin-right: 24px;
+    }
+  }
+
+  .mobile-menu-inner {
+    overflow: scroll;
+    height: 100%;
+    flex: 1;
+    width: 100%;
+    padding: 0px 20px 20px 20px;
+  }
+
+  .mobile-menu {
+    .mobile-menu__item {
+      margin-bottom: 12px;
+    }
+    .mobile-menu__link {
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none !important;
+    }
+
+    .sub-menu {
+      padding-top: 12px;
+      margin-bottom: 12px;
+      position: relative;
+
+      // &::before {
+      //   content: "";
+      //   height: calc(100% - 12px);
+      //   width: 0.%;
+      //   background-color: #fff;
+      //   position: absolute;
+      //   left: 0px;
+      //   top: 0px;
+      // }
+    }
+
+    .sub-menu__item {
+      padding-left: 24px;
+      margin-bottom: 12px;
+      position: relative;
+
+      &::before {
+        content: "";
+        left: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 1px;
+        background-color: #fff;
+        display: block;
+        position: absolute;
+      }
+    }
+
+    .sub-menu__link {
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none !important;
+    }
+  }
+
+  .header-socials {
+    padding-left: 0px;
+    padding-right: 0px;
+
+    .header-socials__item {
+      margin-right: 16px;
+      width: 36px;
+      height: 36px;
+    }
   }
 }
 </style>
