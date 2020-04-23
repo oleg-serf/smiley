@@ -18,7 +18,7 @@
           </button>
         </div>
       </div>
-      <form class="container" v-show="is_shown">
+      <form class="container" v-show="is_shown" @submit.prevent="sendFilterData">
         <div class="filters-container">
           <div class="filter-column filter filter--location">
             <label class="filter__label" for="inputLocation">
@@ -31,6 +31,7 @@
                 class="filter__input-field"
                 id="inputLocation"
                 placeholder="London, GB"
+                @place_changed="getAddressData"
               ></gmap-autocomplete>
             </div>
           </div>
@@ -73,7 +74,7 @@
             <div class="filter__input filter__input--icon">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               <date-picker
-                v-model="date"
+                v-model="filterQuery.date"
                 mode="range"
                 id="inputDate"
                 class="filter__input-date"
@@ -172,10 +173,6 @@ export default {
   },
   data() {
     return {
-      date: {
-        end: new Date(),
-        start: new Date()
-      },
       events: [],
       past: [],
       is_mobile: false,
@@ -237,10 +234,15 @@ export default {
       },
       filterQuery: {
         city: null,
+        country: null,
+        latitude: null,
+        longitude: null,
         radius: 0,
-        country: "London, GB",
         timing: "upcoming",
-        time: null
+        date: {
+          end: new Date(),
+          start: new Date()
+        }
       }
     };
   },
@@ -253,6 +255,27 @@ export default {
     },
     toggleFilterMenu() {
       this.is_shown = !this.is_shown;
+    },
+    getAddressData: function(data) {
+      data.address_components.forEach(prop => {
+        if (prop.types.includes("locality")) {
+          this.filterQuery.city = prop.long_name;
+        }
+        if (prop.types.includes("country")) {
+          this.filterQuery.country = prop.long_name;
+        }
+      });
+      this.filterQuery.latitude = data.geometry.location.lat();
+      this.filterQuery.longitude = data.geometry.location.lng();
+    },
+    sendFilterData() {
+      let filter = this.filterQuery;
+      // console.log(this.filterQuery);
+      filter.date.start = Math.floor(
+        new Date(filter.date.start).getTime() / 1000
+      );
+      filter.date.end = Math.floor(new Date(filter.date.end).getTime() / 1000);
+      console.log(filter);
     }
   },
   mounted() {

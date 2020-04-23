@@ -6,10 +6,6 @@
       <div class="container">
         <banner color="#F36E24" background="/img/homepage/banner-news.jpg">
           <template v-slot:name>news</template>
-          <!-- <template v-slot:title>Everyday heroes making the world a happier place</template>
-          <template
-            v-slot:content
-          >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>-->
           <template v-slot:title>POSITIVE JOURNALISM</template>
           <template
             v-slot:content
@@ -58,8 +54,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import axios from "@/axios-auth";
 import router from "@/router";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -67,7 +62,6 @@ import Banner from "@/components/homepage/Banner.vue";
 import NewsCard from "@/components/cards/NewsCard.vue";
 
 import Footer from "@/components/Footer";
-import axios from "@/axios-auth";
 
 export default {
   name: "News",
@@ -107,8 +101,6 @@ export default {
 
 
 <style lang="scss" scoped>
-// TODO: Make responsive
-// TODO: Move styles
 @import "@/scss/blocks/_homepage-news-grid";
 
 .news-category-section {
@@ -129,9 +121,9 @@ export default {
 .news-category {
   margin-top: 30px;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 180px;
+  grid-gap: 20px;
   border-bottom: 1px solid #e4e4e4;
   margin-bottom: 16px;
   padding-bottom: 16px;

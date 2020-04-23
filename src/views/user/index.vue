@@ -46,10 +46,18 @@
             <div class="profile-data">
               <div class="profile-data__column">
                 Matches
+                <i
+                  class="popover-icon fa fa-info-circle"
+                  v-popover:tooltip="'Members and organisations that match your interests, skills you are in need of or looking to offer.'"
+                ></i>
                 <br />50+
               </div>
               <div class="profile-data__column">
                 Community
+                <i
+                  class="popover-icon fa fa-info-circle"
+                  v-popover:tooltip="'See updates from members and organisations you have connected with.'"
+                ></i>
                 <br />0
               </div>
             </div>
@@ -396,7 +404,8 @@ export default {
     margin-top: 35px;
     font-family: "Montserrat Bold", sans-serif;
     color: #fff;
-    @include font-size(1.3);
+    @include font-size(1.3rem);
+    flex: 1;
   }
 
   .profile-name {

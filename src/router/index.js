@@ -258,7 +258,7 @@ const routes = [{
   {
     path: '/talks/:slug',
     name: 'event',
-    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/Single.vue'),
+    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/_slug.vue'),
     meta: {
       breadcrumbs: ['talks'],
     }

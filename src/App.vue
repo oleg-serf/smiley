@@ -2,6 +2,7 @@
   <div id="app">
     <Header />
     <router-view :key="$route.fullPath" />
+    <tooltip />
   </div>
 </template>
 

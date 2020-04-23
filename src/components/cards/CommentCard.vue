@@ -148,7 +148,7 @@ export default {
     edit() {},
     dateAgo(date) {
       const currentStamp = Date.now();
-      const realDate = this.$dayjs(date)["$d"];
+      const realDate = this.$dayjs(date);
       const postStamp = this.$dayjs(date).unix() * 1000;
       const dateDiff = currentStamp - postStamp;
       const days = dateDiff / (1000 * 3600 * 24);
@@ -162,12 +162,10 @@ export default {
       if (result < 28) {
         time = result + " " + append + " ago";
       } else {
-        time =
-          realDate.getDate() +
-          "-" +
-          realDate.getMonth() +
-          "-" +
-          realDate.getFullYear();
+        const month = realDate.date();
+        const day = realDate.month() + 1;
+        const year = realDate.year();
+        time = day + "-" + month + "-" + year;
       }
 
       return time;

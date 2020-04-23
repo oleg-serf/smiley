@@ -17,21 +17,23 @@
     </h2>
     <div class="organisation-item__categories">Arts, Culture, Leisure</div>
     <div class="organisation-item__spanner"></div>
-    <div
-      class="organisation-item__status"
-    >{{ organisation.is_following ? 'Connected' : 'Not Connected'}}</div>
-    <button
-      class="organisation-item__follow-btn"
-      @click.prevent="follow(organisation)"
-      v-if="!organisation.is_following"
-    >
-      <i class="fa fa-plus"></i>
-      Follow
-    </button>
-    <button class="organisation-item__follow-btn" @click.prevent="unfollow(organisation)" v-else>
-      <i class="fa fa-minus"></i>
-      UnFollow
-    </button>
+    <template v-if="loggedIn">
+      <div
+        class="organisation-item__status"
+      >{{ organisation.is_following ? 'Connected' : 'Not Connected'}}</div>
+      <button
+        class="organisation-item__follow-btn"
+        @click.prevent="follow(organisation)"
+        v-if="!organisation.is_following"
+      >
+        <i class="fa fa-plus"></i>
+        Follow
+      </button>
+      <button class="organisation-item__follow-btn" @click.prevent="unfollow(organisation)" v-else>
+        <i class="fa fa-minus"></i>
+        UnFollow
+      </button>
+    </template>
     <router-link
       class="organisation-item__visit"
       :to="'/organisation/' + organisation.slug"
@@ -52,6 +54,11 @@ export default {
     organisation: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters["user/isAuthenticated"];
     }
   },
   methods: {

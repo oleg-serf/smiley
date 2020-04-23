@@ -1,87 +1,53 @@
+// Core
 import Vue from 'vue'
 import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 import store from './store'
-import * as VueGoogleMaps from 'vue2-google-maps'
+
 import "regenerator-runtime";
 
-import Paginate from 'vuejs-paginate'
+// Plugins
 import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+import * as VueGoogleMaps from 'vue2-google-maps'
+import Paginate from 'vuejs-paginate'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import vueVimeoPlayer from 'vue-vimeo-player'
-// import VueBreadcrumbs from 'vue-breadcrumbs';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import Dayjs from 'vue-dayjs';
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-
-// import VCalendar from 'v-calendar';
+import Popover from 'vue-js-popover'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 
-// import style
+// Styles
+import 'sweetalert2/dist/sweetalert2.min.css';
 import 'swiper/css/swiper.css'
 
-Vue.use(VueAwesomeSwiper, /* { default options with global component } */ )
 
+Vue.use(VueAwesomeSwiper)
 Vue.use(Dayjs);
-
-// Vue.use(VueBreadcrumbs, {
-//   registerComponent: false
-// });
-
 Vue.use(CKEditor);
-
 Vue.use(vueVimeoPlayer)
+Vue.use(VueSweetalert2);
+Vue.use(Popover, {
+  tooltip: true
+});
 
 Vue.component('paginate', Paginate)
-Vue.use(VueSweetalert2);
-
 Vue.component('date-picker', DatePicker)
+
 
 Vue.config.productionTip = false;
 Vue.use(VueGoogleMaps, {
   load: {
-    // key: 'AIzaSyCZev7rHIwpAuuEVuVAFWEjxyXenFiUU6A',
+    // TODO: Pass key to variale
     key: 'AIzaSyCxye6NLxY1fS_CCwwgYLcnwNIOzozGD9I',
     libraries: 'places', // This is required if you use the Autocomplete plugin
-    // OR: libraries: 'places,drawing'
-    // OR: libraries: 'places,drawing,visualization'
-    // (as you require)
-
-    //// If you want to set the version, you can do so:
-    // v: '3.26',
   },
-
-  //// If you intend to programmatically custom event listener code
-  //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
-  //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
-  //// you might need to turn this on.
-  // autobindAllEvents: false,
-
-  //// If you want to manually install components, e.g.
-  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
-  //// Vue.component('GmapMarker', GmapMarker)
-  //// then disable the following:
-  // installComponents: true,
 })
 
-
-// axios.defaults.baseURL = 'https://new-admin.smileymovement.org/api'
-// axios.defaults.headers.common['Authorization'] = 'fasfdsa'
 axios.defaults.headers.get['Accepts'] = 'application/json'
 
-// const reqInterceptor = axios.interceptors.request.use(config => {
-//   console.log('Request Interceptor', config)
-//   return config
-// })
-// const resInterceptor = axios.interceptors.response.use(res => {
-//   console.log('Response Interceptor', res)
-//   return res
-// })
-
-// axios.interceptors.request.eject(reqInterceptor)
-// axios.interceptors.response.eject(resInterceptor)
-
+// TODO: Make more readable and compact
 Vue.prototype.$settings = {
   images_path: {
     events: `https://new-smiley.s3.eu-west-2.amazonaws.com/events/`,
@@ -134,6 +100,7 @@ Vue.filter('filterAvatar', function (username) {
   result = result.join("");
   return result;
 });
+// TODO: Remove this filter and replace it with lib
 // Safari doesn't recognize time in 0000-00-00 00:00:00 format toLocalString
 Vue.filter('formatDate', function (date, locale, format) {
   if (date === undefined) {

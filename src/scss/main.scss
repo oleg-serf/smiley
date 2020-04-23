@@ -308,3 +308,20 @@ html {
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+
+// Popover
+div[data-popover] {
+  background: #393939;
+  color: #f9f9f9;
+  text-align: center;
+
+  @include font-size(.8rem);
+  line-height: 1.5;
+  margin: 5px;
+  padding: 5px;
+}
+
+.popover-icon {
+  margin-left: 12px;
+}
