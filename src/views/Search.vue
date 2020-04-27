@@ -113,7 +113,7 @@
           </div>
         </section>
         <section class="section" v-if="organisations.length > 0" id="section-organisations">
-          <h2 class="section__title">Organisation</h2>
+          <h2 class="section__title">Organisations</h2>
           <swiper
             ref="organisationsSwiper"
             :options="organisationsSwiperOptions"
@@ -201,9 +201,9 @@ import Footer from "@/components/Footer";
 
 import NewsCard from "@/components/cards/NewsCard";
 import EventCard from "@/components/cards/EventCard";
+import ProjectCard from "@/components/cards/ProjectCard";
 import OrganisationCard from "@/components/cards/OrganisationCard";
 import UserCard from "@/components/cards/UserCard";
-import ProjectCard from "@/components/cards/ProjectCard";
 
 export default {
   name: "SearchPage",
@@ -462,7 +462,7 @@ h1 {
 
 .section {
   &__title {
-    font-family: "Montserrat Bold";
+    font-family: "Montserrat SemiBold";
     @include font-size(2rem);
     display: flex;
     align-items: center;

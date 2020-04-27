@@ -12,48 +12,169 @@
       </banner>
     </div>
 
-    <section class="content-block container">
-      <div class="news-category">
-        <h2 class="news-category__title">Latest News</h2>
-        <select class="news-category__dropdown" @change.prevent="goToCategory">
-          <option disabled selected>Select goal</option>
-          <option v-for="item in goals" :key="item.slug + item.id" :value="item.slug">{{item.name}}</option>
-        </select>
-      </div>
-      <div class="news-category-section latest-articles">
-        <div class="news-grid">
-          <news-card v-for="article in posts" :key="article.slug" :article="article" />
+    <div class="container">
+      <section class="content-block">
+        <div class="news-category">
+          <h2 class="news-category__title">Latest Updates</h2>
+          <select class="news-category__dropdown" @change.prevent="goToCategory">
+            <option disabled selected>Select goal</option>
+            <option
+              v-for="item in goals"
+              :key="item.slug + item.id"
+              :value="item.slug"
+            >{{item.name}}</option>
+          </select>
         </div>
-      </div>
-    </section>
-
-    <!-- <div class="smiley-pagination">
-      <paginate
-        :page-count="pagination.totalPages"
-        :click-handler="goToPage"
-        :prev-text="'Prev'"
-        :next-text="'Next'"
-        :prev-class="'smiley-pagination-back'"
-        :next-class="'smiley-pagination-next'"
-        :container-class="'app-pagination'"
-      >
-        <span slot="breakViewContent">...</span>
-      </paginate>
-    </div>-->
-    <section class="content-block container">
-      <div class="section-title">
-        <h2 class="section-title__title">Talks:</h2>
-      </div>
-      <div class="news-grid" v-if="events.length > 0">
-        <event-card v-for="event in events" :key="'event-'+event.id" :event="event" />
-      </div>
-    </section>
-
-    <section class="content-block container">
-      <div class="section-title">
-        <h2 class="section-title__title">Projects:</h2>
-      </div>
-    </section>
+      </section>
+      <section class="section" v-if="posts.length > 0" id="section-news">
+        <h2 class="section__title">News</h2>
+        <swiper
+          ref="newsSwiper"
+          :options="swiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide v-for="post in posts" :key="'post-swiper-'+post.slug">
+            <news-card :article="post" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="grid grid--news" v-else>
+          <news-card v-for="post in posts" :key="'post-'+post.slug" :article="post" />
+        </div>
+        <div class="smiley-pagination" v-if="postsPagination > 1">
+          <paginate
+            :page-count="postsPagination"
+            :click-handler="paginateNews"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :prev-class="'smiley-pagination-back'"
+            :next-class="'smiley-pagination-next'"
+            :container-class="'app-pagination'"
+          >
+            <span slot="breakViewContent">...</span>
+          </paginate>
+        </div>
+      </section>
+      <section class="section" v-if="events.length > 0" id="section-events">
+        <h2 class="section__title">Events</h2>
+        <swiper
+          ref="eventsSwiper"
+          :options="swiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
+            <event-card :event="event" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="grid grid--events" v-else>
+          <event-card
+            v-for="event in events"
+            :key="'event-'+event.slug"
+            :event="event"
+            :past="event.past"
+          />
+        </div>
+        <div class="smiley-pagination" v-if="eventsPagination > 1">
+          <paginate
+            :page-count="eventsPagination"
+            :click-handler="paginateEvents"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :prev-class="'smiley-pagination-back'"
+            :next-class="'smiley-pagination-next'"
+            :container-class="'app-pagination'"
+          >
+            <span slot="breakViewContent">...</span>
+          </paginate>
+        </div>
+      </section>
+      <section class="section" v-if="projects.length > 0" id="section-projects">
+        <h2 class="section__title">Projects</h2>
+        <swiper
+          ref="projectsSwiper"
+          :options="swiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide v-for="project in projects" :key="'project-swiper-'+project.slug">
+            <project-card :project="project" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="grid grid--projects" v-else>
+          <project-card
+            v-for="project in projects"
+            :key="'project-'+project.slug"
+            :project="project"
+          />
+        </div>
+        <div class="smiley-pagination" v-if="projectsPagination > 1">
+          <paginate
+            :page-count="projectsPagination"
+            :click-handler="paginateProjects"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :prev-class="'smiley-pagination-back'"
+            :next-class="'smiley-pagination-next'"
+            :container-class="'app-pagination'"
+          >
+            <span slot="breakViewContent">...</span>
+          </paginate>
+        </div>
+      </section>
+      <section class="section" v-if="organisations.length > 0" id="section-organisations">
+        <h2 class="section__title">Organisations</h2>
+        <swiper
+          ref="organisationsSwiper"
+          :options="organisationsSwiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide
+            v-for="organisation in organisations"
+            :key="'organisation-swiper-'+organisation.slug"
+          >
+            <organisation-card :organisation="organisation" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="grid grid--organisations" v-else>
+          <organisation-card
+            v-for="organisation in organisations"
+            :key="'organisation-'+organisation.slug"
+            :organisation="organisation"
+          />
+        </div>
+        <div class="smiley-pagination" v-if="organisationsPagination > 1">
+          <paginate
+            :page-count="organisationsPagination"
+            :click-handler="paginateOrganisations"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :prev-class="'smiley-pagination-back'"
+            :next-class="'smiley-pagination-next'"
+            :container-class="'app-pagination'"
+          >
+            <span slot="breakViewContent">...</span>
+          </paginate>
+        </div>
+      </section>
+    </div>
     <Footer />
   </div>
 </template>
@@ -62,12 +183,12 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 
-import Breadcrumbs from "@/components/Breadcrumbs";
 import Banner from "@/components/homepage/Banner.vue";
 
-import NewsCard from "@/components/cards/NewsCard.vue";
-
-import EventCard from "@/components/cards/EventCard.vue";
+import NewsCard from "@/components/cards/NewsCard";
+import EventCard from "@/components/cards/EventCard";
+import ProjectCard from "@/components/cards/ProjectCard";
+import OrganisationCard from "@/components/cards/OrganisationCard";
 
 import Footer from "@/components/Footer";
 
@@ -79,12 +200,60 @@ export default {
       goals: [],
 
       title: "",
+
+      is_mobile: false,
+
       posts: [],
-      pagination: {
-        currentPage: 1,
-        totalPages: 1
+      postsPagination: 0,
+
+      events: [],
+      eventsPagination: 0,
+
+      projects: [],
+      projectsPagination: 0,
+
+      organisations: [],
+      organisationsPagination: 0,
+
+      swiperOptions: {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        slidesPerView: 4,
+        spaceBetween: 15,
+        mousewheel: true,
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            centeredSlides: true
+          },
+          480: {
+            slidesPerView: 1.3
+          },
+          640: {
+            slidesPerView: 1.5
+          }
+        }
       },
-      events: []
+      organisationsSwiperOptions: {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        slidesPerView: 4,
+        spaceBetween: 15,
+        mousewheel: true,
+        breakpoints: {
+          320: {
+            slidesPerView: 1.15,
+            centeredSlides: true
+          },
+          480: {
+            slidesPerView: 2.15
+          }
+        }
+      }
     };
   },
   mounted() {
@@ -94,12 +263,20 @@ export default {
       .get("/goals/" + slug)
       .then(res => {
         this.posts = res.data.posts;
+        this.postsPagination = res.data.posts_pages_count;
 
         this.events = res.data.events;
+        this.eventsPagination = res.data.events_pages_count;
+
+        this.projects = res.data.projects;
+        this.projectsPagination = res.data.projects_pages_count;
+
+        this.organisations = res.data.organisations;
+        this.organisationsPagination = res.data.organisations_pages_count;
 
         console.log("Goal page", res);
 
-        console.log("loaded", this.events);
+        // console.log("Goal loaded", this.events);
 
         this.goal = res.data.goal;
       })
@@ -110,109 +287,175 @@ export default {
     });
   },
   methods: {
-    goToPage(pageNumb) {
-      let slug = this.$route.params.slug;
-
-      let url = slug == "all" ? "/news" : "/news/category/" + slug;
-
-      axios
-        .get(url + "?page=" + pageNumb)
-        .then(res => {
-          this.posts = res.data.posts;
-          this.pagination.totalPages = res.data.pages_count;
-        })
-        .catch(error => console.log(error));
-    },
     goToCategory(event) {
       router.push({
         name: "news-category-item",
         params: { slug: event.target.value }
       });
+    },
+    paginateNews(pageNum) {
+      axios
+        .post("/search?posts-page=" + pageNum)
+        .then(res => {
+          this.posts = res.data.posts;
+          this.postsPagination = res.data.posts_pages_count;
+
+          let sectionOffset = document.getElementById("section-news").offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth"
+          });
+        })
+        .catch(err => {
+          console.error("error", err);
+        });
+      // console.log(pageNum);
+    },
+    paginateEvents(pageNum) {
+      axios
+        .post("/search?events-page=" + pageNum)
+        .then(res => {
+          console.log("Events", res.data.events);
+          this.events = res.data.events;
+          this.eventsPagination = res.data.events_pages_count;
+
+          let sectionOffset = document.getElementById("section-events")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth"
+          });
+        })
+        .catch(err => {
+          console.error("error", err);
+        });
+      console.log(pageNum);
+    },
+    paginateProjects(pageNum) {
+      axios
+        .post("/search?projects-page=" + pageNum)
+        .then(res => {
+          console.log("Projects", res.data.events);
+          this.events = res.data.events;
+          this.eventsPagination = res.data.events_pages_count;
+
+          let sectionOffset = document.getElementById("section-projects")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth"
+          });
+        })
+        .catch(err => {
+          console.error("error", err);
+        });
+      console.log(pageNum);
+    },
+    paginateOrganisations(pageNum) {
+      axios
+        .post("/search?organisations-page=" + pageNum)
+        .then(res => {
+          this.organisations = res.data.organisations;
+          this.organisationsPagination = res.data.organisations_pages_count;
+
+          let sectionOffset = document.getElementById("section-organisations")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth"
+          });
+        })
+        .catch(err => {
+          console.error("error", err);
+        });
+      console.log(pageNum);
+    },
+    paginateUsers(pageNum) {
+      axios
+        .post("/search?users-page=" + pageNum)
+        .then(res => {
+          console.log(res.data.users);
+          this.users = res.data.users;
+          this.usersPagination = res.data.users_pages_count;
+
+          let sectionOffset = document.getElementById("section-users")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth"
+          });
+        })
+        .catch(err => {
+          console.error("error", err);
+        });
+      console.log(pageNum);
+    },
+    handleResize() {
+      this.is_mobile = window.innerWidth >= 768 ? false : true;
+      if (window.innerWidth >= 768) {
+        this.is_shown = true;
+      }
     }
   },
   components: {
-    Breadcrumbs,
     Banner,
     NewsCard,
-    Footer,
-    EventCard
+    EventCard,
+    ProjectCard,
+    OrganisationCard,
+    Footer
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/blocks/_homepage-news-grid";
-@import "@/scss/sections/_talks-card";
-
-.content-block {
-  padding-bottom: 10px;
-  position: relative;
-
-  &:not(:last-of-type) {
-    &::after {
-      width: calc(100% - 15px);
-      left: 15px;
-      bottom: 0px;
-      height: 1px;
-      display: block;
-      content: "";
-      position: absolute;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-  }
-}
-
-.section-title {
-  margin-top: 20px;
-  margin-bottom: 30px;
-
-  .section-title__title {
+.section {
+  &__title {
+    font-family: "Montserrat SemiBold";
     @include font-size(2rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    margin-bottom: 0px;
-  }
-  .section-title__subtitle {
-    margin-top: 0px;
-    font-family: "Montserrat Regular", sans-serif;
-    @include font-size(1.2rem);
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
   }
 }
 
-.latest-news-section--category {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 30px;
+.grid {
+  &--news,
+  &--events,
+  &--projects {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
 
-  .latest-news-wrap {
-    width: 100%;
-    max-width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
+    @include lgMax {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-    .title-colored-block {
-      height: auto;
-      width: 100%;
-      text-align: center;
+    @include mdMax {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
 
-      .smiley-news-main-title {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+  &--organisations {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 15px;
 
-      p {
-        transform: none !important;
-        padding-left: 30px;
-        position: static !important;
-      }
+    @include xlMax {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include lgMax {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 }
-
-.smiley-img-wrap {
-  height: 255px;
-}
-
 /* News Section Title with Read More button */
 .news-category {
   margin-top: 30px;
@@ -226,57 +469,10 @@ export default {
 
   .news-category__title {
     @include font-size(2rem);
-    font-family: "Montserrat SemiBold", sans-serif;
+    font-family: "Montserrat Bold", sans-serif;
     color: #393939;
     line-height: 1;
     margin: 0px;
-  }
-
-  .news-category__link {
-    color: #1a1a1a;
-    font-family: "Montserrat Bold", sans-serif;
-    font-size: 1rem;
-    line-height: 1;
-    text-decoration: none;
-    position: relative;
-    text-transform: uppercase;
-    padding-right: 45px;
-    height: 100%;
-
-    &:hover {
-      span {
-        right: 0;
-      }
-    }
-
-    span {
-      position: absolute;
-      top: 40%;
-      transform: translateY(-50%);
-      right: 7px;
-      width: 20px;
-      height: 2px;
-      background-color: #000;
-      transition: 0.25s ease-in-out;
-
-      &:before,
-      &:after {
-        position: absolute;
-        content: "";
-        height: 2px;
-        width: 8px;
-        right: 0;
-        background-color: #000;
-      }
-      &:before {
-        transform: rotate(50deg);
-        top: -4px;
-      }
-      &:after {
-        transform: rotate(-50deg);
-        top: 4px;
-      }
-    }
   }
 
   .news-category__dropdown {
@@ -288,12 +484,13 @@ export default {
 
     font-family: "Montserrat Regular", sans-serif;
 
-    @include lgMax {
+    @include mdMax {
       width: 100%;
+      margin-top: 15px;
     }
   }
 
-  @include lgMax {
+  @include mdMax {
     flex-direction: column;
   }
 }
