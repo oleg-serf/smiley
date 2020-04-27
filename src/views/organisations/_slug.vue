@@ -8,6 +8,22 @@
     </div>
     <div class="organisation-bg">
       <div class="organisation-grid container">
+        <div class="grid-item grid-item--top-panel" v-if="is_owner && loggedIn">
+          <router-link
+            :to="{name: 'edit-organisation'}"
+            class="button button--primary"
+            v-if="is_owner"
+            @click.prevent="follow"
+          >
+            <i class="fa fa-pencil"></i> Edit Organisation
+          </router-link>
+          <button class="button button--primary" @click.prevent="addOrganisationPost">
+            <i class="fa fa-newspaper-o"></i> Create Post
+          </button>
+          <router-link :to="{name: 'create-project'}" class="button button--primary">
+            <i class="fa fa-connectdevelop"></i> Create Project
+          </router-link>
+        </div>
         <div class="grid-item grid-item--main">
           <div class="organisation-avatar">
             <div class="organisation-avatar__logo">
@@ -17,14 +33,6 @@
               />
               <span v-else>{{ organisation.name | filterAvatar}}</span>
             </div>
-            <router-link
-              :to="{name: 'edit-organisation'}"
-              class="button button--primary button--edit"
-              v-if="is_owner"
-              @click.prevent="follow"
-            >
-              <i class="fa fa-pencil"></i> Edit
-            </router-link>
           </div>
           <div class="organisation-info">
             <div class="organisation-name">{{organisation.name}}</div>
@@ -42,7 +50,7 @@
             </div>
           </div>
         </div>
-        <div class="grid-item">
+        <div class="grid-item grid-item--socials">
           <template v-if="socials.length > 0">
             <ul class="organisation-social">
               <li>Social Networks:</li>
@@ -55,18 +63,18 @@
           </template>
           <template v-else>No networks connected</template>
           <div class="organisation-network">
-            <div class="network-row">
+            <!-- <div class="network-row">
               <div class="network-row__title">Message:</div>
               <div class="network-row__value">
                 <i class="fa fa-commenting-o" aria-hidden="true"></i>
                 <a href="#">Chat with Us</a>
               </div>
-            </div>
-            <div class="network-row">
+            </div>-->
+            <div class="network-row" v-if="organisation.website != null">
               <div class="network-row__title">Website:</div>
               <div class="network-row__value">
                 <i class="fa fa-link" aria-hidden="true"></i>
-                <a :href="organisation.website">{{organisation.website}}</a>
+                <a :href="organisation.website" target="_blank">{{organisation.website}}</a>
               </div>
             </div>
             <div class="network-row">
@@ -87,10 +95,15 @@
             <button class="button button--primary" v-else @click.prevent="unfollow">- unfollow</button>
           </div>
         </div>
-        <div class="grid-item">
+        <div class="grid-item grid-item--support">
           <div class="title">support us</div>
-          <div class="content">Our support text</div>
-          <button class="button">Make a donation</button>
+          <div class="content">{{organisation.donation__text || 'Not currently taking donations'}}</div>
+          <a
+            :href="organisation.donation__link"
+            class="button"
+            target="_blank"
+            v-if="organisation.donation__link != null"
+          >Make a donation</a>
         </div>
       </div>
     </div>
@@ -98,7 +111,12 @@
       <div class="grid-item">
         <div class="item-holder">
           <div class="title">About {{organisation.name}}</div>
-          <div class="about" v-html="organisation.description"></div>
+          <div
+            class="about"
+            v-html="organisation.description"
+            v-if="organisation.description != null && organisation.description.length > 10"
+          ></div>
+          <div class="about" v-else>No organisation bio to show</div>
         </div>
       </div>
       <div class="grid-item">
@@ -123,6 +141,7 @@
       <div class="grid-item grid-item--full-width">
         <div class="item-holder">
           <div class="title">Activity</div>
+
           <div class="activities">
             <ul class="activities__navigation">
               <li :class="{active: activity == 'projects'}">
@@ -134,15 +153,15 @@
               <li :class="{active: activity == 'news'}">
                 <button @click.prevent="activity = 'news'">
                   Our news
-                  <span>0</span>
+                  <span>{{feed.news_count}}</span>
                 </button>
               </li>
-              <li :class="{active: activity == 'hubs'}">
+              <!-- <li :class="{active: activity == 'hubs'}">
                 <button @click.prevent="activity = 'hubs'">
                   smiley hubs
                   <span>0</span>
                 </button>
-              </li>
+              </li>-->
             </ul>
             <div class="activities__tabs">
               <div class="activities__tab" v-show="activity == 'projects'">
@@ -155,7 +174,16 @@
                 </template>
               </div>
               <div class="activities__tab" v-show="activity == 'news'">
-                <template v-if="feed.news.length > 0"></template>
+                <template v-if="feed.news.length > 0">
+                  <div
+                    class="organisation-article"
+                    v-for="post in feed.news"
+                    :key="'organisation-post-'+post.id"
+                  >
+                    <div class="organisation-article__date">{{dateAgo(post.created_at)}}</div>
+                    <div class="organisation-article__content" v-html="post.content"></div>
+                  </div>
+                </template>
                 <template v-else>
                   <div class="no-posts">
                     <div class="no-posts__title">No News yet</div>
@@ -163,15 +191,15 @@
                   </div>
                 </template>
               </div>
-              <div class="activities__tab" v-show="activity == 'hubs'">
-                <template v-if="feed.hub.length > 0"></template>
+              <!-- <div class="activities__tab" v-show="activity == 'hubs'">
+                <template v-if="feed.hubs.length > 0"></template>
                 <template v-else>
                   <div class="no-posts">
-                    <div class="no-posts__title">No Hubs yer</div>
+                    <div class="no-posts__title">No Hubs yet</div>
                     <p class="no-posts__text">Here should be some error text i think</p>
                   </div>
                 </template>
-              </div>
+              </div>-->
             </div>
           </div>
         </div>
@@ -185,7 +213,7 @@
       <div class="grid-item">
         <div class="item-holder">
           <div class="title">
-            <img src="https://smileymovement.org/images/icons/support-need-icon.png" />
+            <img src="/img/icons/support-need-icon.png" />
             Support {{organisation.name}} need
           </div>
           <ul class="support">
@@ -201,7 +229,7 @@
       <div class="grid-item">
         <div class="item-holder">
           <div class="title">
-            <img src="https://smileymovement.org/images/icons/support-offer-icon.png" />
+            <img src="/img/icons/support-offer-icon.png" />
             Support {{organisation.name}} can offer
           </div>
           <ul class="support">
@@ -235,12 +263,19 @@ export default {
   },
   data() {
     return {
-      organisation: {},
+      organisation: {
+        followers: 0
+      },
+      is_owner: false,
+      following: false,
+      Toast: () => {},
       activity: "projects",
+      organisationPost: "",
       feed: {
         projects: [],
         news: [],
-        hub: []
+        news_count: 0,
+        hubs: []
       },
       socials: [],
       support: {
@@ -293,22 +328,23 @@ export default {
       }
     };
   },
+  computed: {
+    loggedIn() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
+  },
   methods: {
     follow() {
       axios
         .post("/organisations/" + this.$route.params.slug + "/follow")
         .then(result => {
-          console.log("following", result);
           if (result.data.success) {
-            this.$swal({
-              text: result.data.message,
-              icon: "info"
-            });
+            this.Toast.fire({ icon: "info", title: result.data.message });
+
             axios
               .get("/organisations/" + this.$route.params.slug)
               .then(res => {
                 this.organisation = res.data.organisation;
-                // this.tabs = res.data.organisation.organisation_tabs;
                 this.following = res.data.following;
               })
               .catch(error => console.error("Error", error));
@@ -322,17 +358,13 @@ export default {
       axios
         .post("/organisations/" + this.$route.params.slug + "/un-follow")
         .then(result => {
-          console.log("cancel following", result);
           if (result.data.success) {
-            this.$swal({
-              text: result.data.message,
-              icon: "info"
-            });
+            this.Toast.fire({ icon: "info", title: result.data.message });
+
             axios
               .get("/organisations/" + this.$route.params.slug)
               .then(res => {
                 this.organisation = res.data.organisation;
-                // this.tabs = res.data.organisation.organisation_tabs;
                 this.following = res.data.following;
               })
               .catch(error => console.error("Error", error));
@@ -341,9 +373,79 @@ export default {
         .catch(err => {
           // TODO: add error
         });
+    },
+    addOrganisationPost() {
+      this.$swal
+        .fire({
+          title: "Add Organisation Post",
+          text: "Please note, that min length should be 32 characters",
+          input: "textarea",
+          inputAttributes: {
+            autocapitalize: "off",
+            placeholder: ""
+          },
+          showCancelButton: true,
+          confirmButtonText: "Add post",
+          showLoaderOnConfirm: true
+        })
+        .then(result => {
+          if (result.value && result.value.length > 31) {
+            axios
+              .post("/organisations/posts", { content: result.value })
+              .then(res => {
+                axios
+                  .get("/organisations/" + this.$route.params.slug + "/posts")
+                  .then(res => {
+                    this.feed.news = res.data.organisation_posts;
+                  });
+                Toast.fire({ icon: "success", title: "Post added" });
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          }
+        });
+    },
+    dateAgo(date) {
+      const currentStamp = Date.now();
+      const realDate = this.$dayjs(date);
+      const postStamp = this.$dayjs(date).unix() * 1000;
+      const dateDiff = currentStamp - postStamp;
+      const days = dateDiff / (1000 * 3600 * 24);
+
+      const result = Math.floor(days);
+
+      const append = result == 1 ? "day" : "days";
+
+      let time = "";
+
+      if (result == 0) {
+        time = "Today";
+      } else if (result < 28) {
+        time = result + " " + append + " ago";
+      } else {
+        const month = realDate.date();
+        const day = realDate.month() + 1;
+        const year = realDate.year();
+        time = day + "-" + month + "-" + year;
+      }
+
+      return time;
     }
   },
   mounted() {
+    this.Toast = this.$swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      onOpen: toast => {
+        toast.addEventListener("mouseenter", this.$swal.stopTimer);
+        toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+      }
+    });
+
     axios
       .get("/organisations/" + this.$route.params.slug)
       .then(response => {
@@ -353,6 +455,7 @@ export default {
         );
 
         this.organisation = response.data.organisation;
+        this.feed.news = response.data.organisation_posts;
         this.is_owner = response.data.is_owner;
 
         if (response.data.organisation.facebook != null) {
@@ -389,9 +492,6 @@ export default {
         this.following = response.data.following;
 
         document.title = response.data.organisation.name + " | Smiley Movement";
-        // this.$refs.breadcrumbs.breadcrumbs[
-        //   this.$refs.breadcrumbs.breadcrumbs.length - 1
-        // ].meta.title = response.data.organisation.name;
       })
       .catch(error => console.error("Error", error));
   }
@@ -404,7 +504,7 @@ export default {
 }
 
 .organisation-bg {
-  background-image: url(https://smileymovement.org/images/pages/organisation/subheader_bg.jpg);
+  background-image: url("/img/backgrounds/subheader_bg.jpg");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -416,14 +516,75 @@ export default {
   color: #fff;
   grid-gap: 1px;
 
+  @include xlMax {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include mdMax {
+    display: flex;
+    flex-direction: column;
+  }
+
   .grid-item {
     padding: 25px;
     box-sizing: border-box;
     // border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-right: 1px solid rgba(255, 255, 255, 0.5);
 
+    &.grid-item--top-panel {
+      grid-column: 1 / span 3;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      border-right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+
+      @include xlMax {
+        grid-column: 1 / span 2;
+      }
+
+      @include lgMax {
+        flex-wrap: nowrap;
+      }
+
+      @include smMax {
+        flex-wrap: wrap;
+      }
+
+      .button {
+        margin: 5px !important;
+      }
+    }
+
     &.grid-item--main {
       display: flex;
+
+      @include lgMax {
+        flex-direction: column;
+      }
+    }
+
+    &.grid-item--socials {
+      @include lgMax {
+        border-right: 0;
+      }
+
+      @include smMax {
+        .organisation-social {
+          li {
+            &:first-child {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    &.grid-item--support {
+      @include xlMax {
+        grid-column: 1 / span 2;
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+      }
     }
 
     &:last-child {
@@ -465,6 +626,12 @@ export default {
 
   li {
     margin: 5px;
+
+    // @include lgMax {
+    //   &:first-child {
+    //     width: 100%;
+    //   }
+    // }
   }
 }
 
@@ -481,6 +648,10 @@ export default {
     display: flex;
     &:not(:last-child) {
       margin-bottom: 16px;
+    }
+
+    @include lgMax {
+      flex-direction: column;
     }
   }
 
@@ -562,6 +733,10 @@ export default {
   text-align: center;
   line-height: 1;
 
+  @include mdMax {
+    margin: 0 auto;
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -596,12 +771,21 @@ export default {
   .organisation-data__column {
     width: 50%;
     box-sizing: border-box;
-    padding-left: 50px;
+    padding-left: 25px;
 
     &:first-child {
       border-right: 2px solid #fff;
-      padding-right: 50px;
       padding-left: 0px;
+      padding-right: 25px;
+
+      @include smMax {
+        margin-bottom: 12px;
+      }
+    }
+
+    @include smMax {
+      width: 100%;
+      padding: 0px;
     }
   }
 }
@@ -631,6 +815,10 @@ export default {
       .item-holder {
         max-width: 1530px;
       }
+    }
+
+    @include lgMax {
+      grid-column: 1 / span 2;
     }
   }
 
@@ -679,6 +867,10 @@ export default {
   .activities__navigation {
     display: flex;
 
+    @include smMax {
+      overflow-x: scroll;
+    }
+
     li {
       &:not(:last-child) {
         margin-right: 18px;
@@ -707,6 +899,7 @@ export default {
       font-family: "Montserrat Bold", sans-serif;
       font-weight: bold;
       cursor: pointer;
+      background-color: #fff;
     }
 
     span {
@@ -750,6 +943,10 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 30px;
 
+  @include smMax {
+    grid-template-columns: 1fr;
+  }
+
   .support__item {
     padding-left: 48px;
     position: relative;
@@ -762,7 +959,7 @@ export default {
       position: absolute;
       left: 0px;
       top: 5px;
-      background-image: url("https://smileymovement.org/images/icons/checked@2x.png");
+      background-image: url("/img/checked@2x.png");
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
@@ -785,10 +982,18 @@ export default {
   display: flex;
   padding-top: 24px;
 
+  @include smMax {
+    flex-direction: column;
+  }
+
   input {
     padding: 5px 15px;
     min-width: 350px;
     margin-right: 15px;
+
+    @include smMax {
+      min-width: auto;
+    }
   }
 
   button {
@@ -796,27 +1001,25 @@ export default {
   }
 }
 
-.post-title {
-  font-family: "Montserrat Regular";
-  text-align: center;
-  line-height: 1.35;
-  @include font-size(1.1rem);
-  padding-top: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #c7c7c7;
-  background-color: #a0a0a0;
-  box-sizing: border-box;
-  color: #fff;
+.organisation-article {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed #c7c7c7;
 
-  .post-title__title {
-    @include font-size(2rem);
+  .organisation-article__date {
+    @include font-size(1rem);
     font-family: "Montserrat SemiBold", sans-serif;
     margin-bottom: 0px;
   }
 
-  p {
-    line-height: 1.45;
+  &::v-deep p {
+    font-family: "Montserrat Regular";
+    line-height: 1.35;
+    @include font-size(1rem);
+    padding-top: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
   }
 }
 </style>

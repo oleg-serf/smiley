@@ -82,11 +82,7 @@
           <div class="footer-column footer-column__alternative-logo">
             <span>A philanthropic venture from</span>
             <br />
-            <img
-              src="https://smileymovement.org/images/logos/Smiley-White@2x.png"
-              class="footer-logo-bottom"
-              alt
-            />
+            <img src="img/footer/Smiley-White@2x.png" class="footer-logo-bottom" alt />
           </div>
         </div>
       </div>

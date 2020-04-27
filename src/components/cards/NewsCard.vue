@@ -44,22 +44,53 @@
         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
         <span class="news-article__actions-text">Like</span>
       </button>
-      <button>
-        <i class="fa fa-commenting-o" aria-hidden="true"></i>
-        <span class="news-article__actions-text">Comment</span>
+      <button @click.prevent="openPage">
+        <span class="news-article__actions-text">Read more</span>
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
       </button>
-      <button>
+      <button @click.prevent="sharing = true">
         <i class="fa fa-share-alt" aria-hidden="true"></i>
         <span class="news-article__actions-text">Share</span>
       </button>
     </div>
+    <transition name="fade">
+      <div class="news-article__share" v-show="sharing">
+        <div class="news-article__share-title">Share this article:</div>
+        <ul class="news-article__share-links">
+          <li>
+            <a :href="shareLink('twitter')" target="_blank">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a :href="shareLink('facebook')" target="_blank">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a :href="shareLink('linkedin')" target="_blank">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+        <button class="news-article__share-close" @click.prevent="sharing = false">
+          <i class="fa fa-close"></i>
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import router from "@/router";
 import MediaImage from "@/components/Image.vue";
 export default {
   name: "NewsCard",
+  data() {
+    return {
+      sharing: false
+    };
+  },
   components: {
     MediaImage
   },
@@ -71,6 +102,28 @@ export default {
     }
   },
   methods: {
+    openPage() {
+      router.push({ name: "news-item", params: { slug: this.article.slug } });
+    },
+    shareLink(type) {
+      let result = "";
+      const title = encodeURI(this.article.title);
+      const url =
+        process.env.VUE_APP_DOMAIN + "news/" + encodeURI(this.article.slug);
+      switch (type) {
+        case "facebook":
+          result = `https://www.facebook.com/sharer.php?u=${url}&t=${title}`;
+          break;
+        case "twitter":
+          result = `http://twitter.com/share?text=${title}&url=${url}`;
+          break;
+        case "linkedin":
+          result = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`;
+          break;
+      }
+
+      return result;
+    },
     dateAgo(date) {
       const currentStamp = Date.now();
       const realDate = this.$dayjs(date);
@@ -84,7 +137,9 @@ export default {
 
       let time = "";
 
-      if (result < 28) {
+      if (result == 0) {
+        time = "Today";
+      } else if (result < 28) {
         time = result + " " + append + " ago";
       } else {
         const month = realDate.date();
@@ -332,6 +387,10 @@ export default {
         margin-left: 12px;
       }
 
+      .fa.fa-angle-right {
+        margin-left: 12px;
+      }
+
       @include mdMax {
         .news-article__actions-text {
           display: none;
@@ -339,5 +398,89 @@ export default {
       }
     }
   }
+
+  .news-article__share {
+    position: absolute;
+    background-color: rgba(238, 180, 0, 0.9);
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    left: 10px;
+    top: 10px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .news-article__share-title {
+      font-family: "Montserrat SemiBold", sans-serif;
+      margin-bottom: 12px;
+    }
+    .news-article__share-links {
+      display: flex;
+
+      li {
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+
+      a {
+        color: #fff;
+        border: 1px solid #fff;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        @include font-size(1.5rem);
+        line-height: 1;
+
+        overflow: hidden;
+        position: relative;
+
+        i {
+          position: relative;
+          z-index: 2;
+        }
+
+        &::before {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 100%;
+          background-color: #000;
+          position: absolute;
+          left: 0px;
+          top: 100%;
+          transition: top 0.2s;
+        }
+
+        &:hover::before {
+          top: 0px;
+        }
+      }
+    }
+
+    .news-article__share-close {
+      -webkit-appearance: none;
+      border: 0;
+      line-height: 1;
+      padding: 5px 10px;
+      margin-top: 24px;
+      background-color: transparent;
+      @include font-size(1.5rem);
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

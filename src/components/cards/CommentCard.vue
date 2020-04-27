@@ -2,23 +2,24 @@
   <div class="comment">
     <div class="comment__avatar">
       <router-link to="/">
-        <img src v-if="false" />
-        <div v-else>UN</div>
+        <img
+          :src="$settings.images_path.users + 'm_'+ comment.user.avatar"
+          v-if="comment.user.avatar != null"
+        />
+        <div v-else>{{comment.user.initials}}</div>
       </router-link>
     </div>
     <div class="comment__info">
       <div class="comment__meta">
-        <router-link to="/" class="comment__username">Username</router-link>
-        <div class="comment__date">{{dateAgo("2020-04-15 17:55:00")}}</div>
+        <router-link to="/" class="comment__username">{{comment.user.name}}</router-link>
+        <div class="comment__date">{{dateAgo(comment.date)}}</div>
         <!-- <div class="comment__settings">
           <button class="activator">
             <i class="fa fa-ellipsis-h"></i>
           </button>
         </div>-->
       </div>
-      <div
-        class="comment__text"
-      >Here we have some comment text or something .... heh, it's not real now tho..</div>
+      <div class="comment__text">{{comment.text}}</div>
       <div class="comment__actions">
         <button class="comment__actions-like" @click.prevent="like">
           <span class="likes-count">0</span>
@@ -31,7 +32,12 @@
           @click.prevent="toggleReplies = !toggleReplies"
         >
           <i class="fa fa-mail-reply" aria-hidden="true"></i>
-          <span class="button-text">Replies (2)</span>
+          <template v-if="comment.replies.length > 0">
+            <span class="button-text">Replies ({{comment.replies.length}})</span>
+          </template>
+          <template v-else>
+            <span class="button-text">Reply</span>
+          </template>
           <!-- TODO: Show replies number if they exist -->
         </button>
         <button class="comment__actions-report" @click.prevent="report">
@@ -56,7 +62,11 @@
       >
         <div class="comment__replies" v-show="toggleReplies">
           <slot name="replies"></slot>
-          <comment-form v-if="!is_reply" />
+          <comment-form
+            v-if="!is_reply"
+            :is_reply="true"
+            :post_to="'/news/' + this.$route.params.slug + '/comments/' + comment.id"
+          />
         </div>
       </transition>
     </div>
@@ -86,6 +96,10 @@ export default {
     is_reply: {
       type: Boolean,
       default: false
+    },
+    comment: {
+      type: Object,
+      required: true
     }
   },
   methods: {
@@ -121,27 +135,11 @@ export default {
           showCancelButton: true,
           confirmButtonText: "report",
           showLoaderOnConfirm: true
-          // preConfirm: login => {
-          //   return fetch(`//api.github.com/users/${login}`)
-          //     .then(response => {
-          //       if (!response.ok) {
-          //         throw new Error(response.statusText);
-          //       }
-          //       return response.json();
-          //     })
-          //     .catch(error => {
-          //       Swal.showValidationMessage(`Request failed: ${error}`);
-          //     });
-          // },
-          // allowOutsideClick: () => !Swal.isLoading()
         })
         .then(result => {
-          // if (result.value) {
-          //   Swal.fire({
-          //     title: `${result.value.login}'s avatar`,
-          //     imageUrl: result.value.avatar_url
-          //   });
-          // }
+          if (result.value) {
+            console.log(result.value);
+          }
         });
     },
     delete() {},
@@ -159,7 +157,9 @@ export default {
 
       let time = "";
 
-      if (result < 28) {
+      if (result == 0) {
+        time = "Today";
+      } else if (result < 28) {
         time = result + " " + append + " ago";
       } else {
         const month = realDate.date();

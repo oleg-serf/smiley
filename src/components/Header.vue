@@ -131,11 +131,11 @@
             </div>
             <i class="fa fa-angle-down"></i>
             <ul class="user-menu">
-              <li class="user-menu__item">
+              <!-- <li class="user-menu__item">
                 <router-link :to="{name: 'profile'}" class="user-menu__link">
                   <i class="fa fa-user"></i> My Profile
                 </router-link>
-              </li>
+              </li>-->
               <li class="user-menu__item">
                 <router-link :to="{name: 'account-settings'}" class="user-menu__link">
                   <i class="fa fa-cogs"></i> Account Settings

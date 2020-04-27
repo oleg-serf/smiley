@@ -59,10 +59,14 @@
           <div class="comments-title">Comments</div>
           <template v-if="comments.length > 0">
             <div class="comments">
-              <comment-card>
-                <template v-slot:replies>
-                  <comment-card :is_reply="true" />
-                  <comment-card :is_reply="true" />
+              <comment-card v-for="comment in comments" :key="comment.date" :comment="comment">
+                <template v-slot:replies v-if="comment.replies > 0">
+                  <comment-card
+                    v-for="childComment in comment.replies"
+                    :key="childComment.date"
+                    :comment="childComment"
+                    :is_reply="true"
+                  />
                 </template>
               </comment-card>
             </div>
@@ -192,6 +196,7 @@ export default {
       .get("/news/" + this.$route.params.slug + "/comments")
       .then(res => {
         console.log("Comments loaded", res);
+        this.comments = res.data.comments;
       })
       .catch(error => console.log(error));
 

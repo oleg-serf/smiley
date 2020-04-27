@@ -77,7 +77,7 @@
       <div class="grid-item">
         <div class="item-holder">
           <div class="title">
-            <img src="https://smileymovement.org/images/icons/support-offer-icon.png" />
+            <img src="/img/icons/support-offer-icon.png" />
             Support {{user.display_name}} can offer
           </div>
           <ul class="support">
@@ -93,7 +93,7 @@
       <div class="grid-item">
         <div class="item-holder">
           <div class="title">
-            <img src="https://smileymovement.org/images/icons/support-need-icon.png" />
+            <img src="/img/icons/support-need-icon.png" />
             Support {{user.display_name}} need
           </div>
           <ul class="support">
@@ -232,7 +232,7 @@ export default {
   // border-top: 1px solid hsla(0, 0%, 100%, 0.25);
   // margin-top: 50px;
 
-  background-image: url(https://smileymovement.org/images/bg/user-profile-bg.jpg);
+  background-image: url("/img/backgrounds/user-profile-bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -442,7 +442,7 @@ export default {
       position: absolute;
       left: 0px;
       top: 5px;
-      background-image: url("https://smileymovement.org/images/icons/checked@2x.png");
+      background-image: url("/img/checked@2x.png");
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;

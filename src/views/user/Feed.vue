@@ -43,7 +43,8 @@
             </div>
             <div class="profile-item profile-item--full-width">
               <div>
-                <router-link :to="{name: 'profile'}" class="profile__view">view profile</router-link>
+                <router-link :to="{name: 'profile'}" class="profile__view">My Profile</router-link>
+                <!-- <router-link :to="{name: 'profile'}" class="profile__view">view profile</router-link> -->
               </div>
             </div>
           </div>
