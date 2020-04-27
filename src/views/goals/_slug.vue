@@ -193,6 +193,15 @@ import OrganisationCard from "@/components/cards/OrganisationCard";
 import Footer from "@/components/Footer";
 
 export default {
+  name: "GoalSinglePage",
+  components: {
+    Banner,
+    NewsCard,
+    EventCard,
+    ProjectCard,
+    OrganisationCard,
+    Footer
+  },
   data() {
     return {
       goal: {},
@@ -256,36 +265,6 @@ export default {
       }
     };
   },
-  mounted() {
-    let slug = this.$route.params.slug;
-
-    axios
-      .get("/goals/" + slug)
-      .then(res => {
-        this.posts = res.data.posts;
-        this.postsPagination = res.data.posts_pages_count;
-
-        this.events = res.data.events;
-        this.eventsPagination = res.data.events_pages_count;
-
-        this.projects = res.data.projects;
-        this.projectsPagination = res.data.projects_pages_count;
-
-        this.organisations = res.data.organisations;
-        this.organisationsPagination = res.data.organisations_pages_count;
-
-        console.log("Goal page", res);
-
-        // console.log("Goal loaded", this.events);
-
-        this.goal = res.data.goal;
-      })
-      .catch(error => console.log(error));
-
-    axios.get("/goals").then(res => {
-      this.goals = res.data.goal_categories[0].goals;
-    });
-  },
   methods: {
     goToCategory(event) {
       router.push({
@@ -295,7 +274,7 @@ export default {
     },
     paginateNews(pageNum) {
       axios
-        .post("/search?posts-page=" + pageNum)
+        .post("/goals/" + this.$route.params.slug + "?posts-page=" + pageNum)
         .then(res => {
           this.posts = res.data.posts;
           this.postsPagination = res.data.posts_pages_count;
@@ -313,7 +292,7 @@ export default {
     },
     paginateEvents(pageNum) {
       axios
-        .post("/search?events-page=" + pageNum)
+        .post("/goals/" + this.$route.params.slug + "?events-page=" + pageNum)
         .then(res => {
           console.log("Events", res.data.events);
           this.events = res.data.events;
@@ -333,7 +312,7 @@ export default {
     },
     paginateProjects(pageNum) {
       axios
-        .post("/search?projects-page=" + pageNum)
+        .post("/goals/" + this.$route.params.slug + "?projects-page=" + pageNum)
         .then(res => {
           console.log("Projects", res.data.events);
           this.events = res.data.events;
@@ -353,7 +332,9 @@ export default {
     },
     paginateOrganisations(pageNum) {
       axios
-        .post("/search?organisations-page=" + pageNum)
+        .post(
+          "/goals/" + this.$route.params.slug + "?organisations-page=" + pageNum
+        )
         .then(res => {
           this.organisations = res.data.organisations;
           this.organisationsPagination = res.data.organisations_pages_count;
@@ -372,7 +353,7 @@ export default {
     },
     paginateUsers(pageNum) {
       axios
-        .post("/search?users-page=" + pageNum)
+        .post("/goals/" + this.$route.params.slug + "?users-page=" + pageNum)
         .then(res => {
           console.log(res.data.users);
           this.users = res.data.users;
@@ -397,13 +378,35 @@ export default {
       }
     }
   },
-  components: {
-    Banner,
-    NewsCard,
-    EventCard,
-    ProjectCard,
-    OrganisationCard,
-    Footer
+  mounted() {
+    let slug = this.$route.params.slug;
+
+    axios
+      .get("/goals/" + slug)
+      .then(res => {
+        console.log("Goal page", res);
+
+        this.goal = res.data.goal;
+
+        this.posts = res.data.posts;
+        this.postsPagination = res.data.posts_pages_count;
+
+        this.events = res.data.events;
+        this.eventsPagination = res.data.events_pages_count;
+
+        this.projects = res.data.projects;
+        this.projectsPagination = res.data.projects_pages_count;
+
+        this.organisations = res.data.organisations;
+        this.organisationsPagination = res.data.organisations_pages_count;
+
+        document.title = this.goal.description + " | Smiley Movement"; // console.log("Goal loaded", this.events);
+      })
+      .catch(error => console.log(error));
+
+    axios.get("/goals").then(res => {
+      this.goals = res.data.goal_categories[0].goals;
+    });
   },
   created() {
     window.addEventListener("resize", this.handleResize);

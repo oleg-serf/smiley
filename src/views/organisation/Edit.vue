@@ -110,6 +110,19 @@
               />
             </label>
           </div>
+          <div class="input-row">
+            <label for="organisation-sector" style="width: 100%;">
+              Organisation Sector *
+              <select v-model="reg.goal" style="width: 100%;">
+                <option disabled selected :value="null">Select goal</option>
+                <option
+                  v-for="item in goals"
+                  :key="item.slug + item.id"
+                  :value="item.slug"
+                >{{item.name}}</option>
+              </select>
+            </label>
+          </div>
           <div class="section-title">
             <h3 class="section-title__heading">Social media:</h3>
           </div>
@@ -247,11 +260,13 @@ export default {
         instagram: "",
         description: "",
         description_full: "",
+        goal: null,
         // organisation_tabs: [{ content: "" }]
         need_video: false,
         video_type: null,
         video_id: null
       },
+      goals: [],
       logoHolder: null,
       organisationSectors: null,
       editor: ClassicEditor,
@@ -367,6 +382,10 @@ export default {
         console.log("Error edit my org");
       }
     );
+
+    axios.get("/goals").then(res => {
+      this.goals = res.data.goal_categories[0].goals;
+    });
   },
   components: {
     Header,
