@@ -248,7 +248,7 @@ const routes = [{
    * Talks
    */
   {
-    path: '/talks',
+    path: '/smiley-talks',
     name: 'talks',
     component: () => import( /* webpackChunkName: "talks" */ '../views/talks/index.vue'),
     meta: {
@@ -256,7 +256,7 @@ const routes = [{
     }
   },
   {
-    path: '/talks/:slug',
+    path: '/smiley-talks/:slug',
     name: 'event',
     component: () => import( /* webpackChunkName: "talks" */ '../views/talks/_slug.vue'),
     meta: {

@@ -1,7 +1,5 @@
 <template>
   <div>
-    <breadcrumbs ref="breadcrumbs" />
-
     <div class="container">
       <banner :color="goal.colour" background="/img/goals-banner.jpg">
         <template v-slot:logo>

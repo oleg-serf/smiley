@@ -7,9 +7,7 @@
         <banner color="#F36E24" background="/img/homepage/banner-news.jpg">
           <template v-slot:name>news</template>
           <template v-slot:title>POSITIVE JOURNALISM</template>
-          <template
-            v-slot:content
-          >Smiley News brings you inspiring stories of people and communities working together to make the world a better place.</template>
+          <template v-slot:content>Good news is about people doing good</template>
         </banner>
       </div>
     </section>
@@ -17,7 +15,7 @@
       <div class="news-category">
         <form
           class="news-category__search-form"
-          @submit.prevent="$swal({text: 'News search test'})"
+          @submit.prevent="$swal({text: 'This feature will work soon'})"
         >
           <input type="text" minlength="3" required placeholder="Search News" />
           <button type="submit">

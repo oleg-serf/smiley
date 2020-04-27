@@ -123,6 +123,24 @@
         <event-card v-for="event in events" :key="'event-'+event.slug" :event="event" />
       </div>
     </div>
+    <div class="container">
+      <div class="smiley-pagination" v-if="events_pages > 1">
+        <br />
+        <br />
+        <paginate
+          :page-count="events_pages"
+          :click-handler="loadEvents"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :prev-class="'smiley-pagination-back'"
+          :next-class="'smiley-pagination-next'"
+          :container-class="'app-pagination'"
+        >
+          <span slot="breakViewContent">...</span>
+        </paginate>
+        <br />
+      </div>
+    </div>
     <div class="container" v-if="past.length > 0">
       <div class="talks-title">
         <h1 class="talks-title__title">Past Smiley Talks</h1>
@@ -131,7 +149,7 @@
         >Take a look at our past events highlights and access the full live videos of the talks</p>
       </div>
       <swiper
-        ref="mySwiper"
+        ref="pastEventsSwiper"
         :options="swiperOptions"
         :auto-update="true"
         :auto-destroy="true"
@@ -146,11 +164,29 @@
       </swiper>
       <div class="talks-grid" v-else>
         <event-card
-          v-for="event in events"
+          v-for="event in past"
           :key="'event-'+event.slug"
           :event="event"
           :active="false"
         />
+      </div>
+    </div>
+    <div class="container">
+      <div class="smiley-pagination" v-if="past_pages > 1">
+        <br />
+        <br />
+        <paginate
+          :page-count="past_pages"
+          :click-handler="loadPastEvents"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :prev-class="'smiley-pagination-back'"
+          :next-class="'smiley-pagination-next'"
+          :container-class="'app-pagination'"
+        >
+          <span slot="breakViewContent">...</span>
+        </paginate>
+        <br />
       </div>
     </div>
     <Footer />
@@ -175,6 +211,8 @@ export default {
     return {
       events: [],
       past: [],
+      events_pages: 0,
+      past_pages: 0,
       is_mobile: false,
       is_shown: false,
       swiperOptions: {
@@ -269,13 +307,30 @@ export default {
       this.filterQuery.longitude = data.geometry.location.lng();
     },
     sendFilterData() {
-      let filter = this.filterQuery;
-      // console.log(this.filterQuery);
-      filter.date.start = Math.floor(
-        new Date(filter.date.start).getTime() / 1000
-      );
-      filter.date.end = Math.floor(new Date(filter.date.end).getTime() / 1000);
-      console.log(filter);
+      // let filter = this.filterQuery;
+      // // console.log(this.filterQuery);
+      // filter.date.start = Math.floor(
+      //   new Date(filter.date.start).getTime() / 1000
+      // );
+      // filter.date.end = Math.floor(new Date(filter.date.end).getTime() / 1000);
+      // console.log(filter);
+      this.$swal({ text: "This feature will work soon" });
+    },
+    loadEvents(page) {
+      axios
+        .get("/events?page=" + page)
+        .then(res => {
+          this.events = res.data.events;
+        })
+        .catch(error => console.error(error));
+    },
+    loadPastEvents(page) {
+      axios
+        .get("/events/past?page=" + page)
+        .then(res => {
+          this.past = res.data.events;
+        })
+        .catch(error => console.error(error));
     }
   },
   mounted() {
@@ -284,6 +339,7 @@ export default {
       .then(res => {
         console.log("Future events", res);
         this.events = res.data.events;
+        this.events_pages = res.data.pages_count;
       })
       .catch(error => console.error(error));
     axios
@@ -291,6 +347,7 @@ export default {
       .then(res => {
         console.log("Past events", res);
         this.past = res.data.events;
+        this.past_pages = res.data.pages_count;
       })
       .catch(error => console.error(error));
   },

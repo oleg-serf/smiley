@@ -184,7 +184,7 @@ export default {
     },
     // Move these methods to component in future
     searchOrganisation() {
-      this.$swal({ text: "Testing search" });
+      this.$swal({ text: "This feature will work soon" });
     },
     handleResize() {
       this.is_mobile = window.innerWidth >= 768 ? false : true;

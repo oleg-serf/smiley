@@ -145,10 +145,6 @@ export default {
 }
 
 .users-grid {
-  // display: flex;
-  // flex-wrap: wrap;
-  // margin: 0px -16px;
-  // padding-top: 48px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 15px;

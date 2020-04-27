@@ -621,8 +621,11 @@ export default {
   margin-left: -5px;
   margin-top: -5px;
   font-size: 1rem;
+  line-height: 1;
+  align-items: center;
   color: #fff;
   font-family: "Montserrat SemiBold", sans-serif;
+  margin-bottom: 0px;
 
   li {
     margin: 5px;
