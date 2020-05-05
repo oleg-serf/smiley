@@ -112,16 +112,30 @@
           </div>
           <div class="input-row">
             <label for="organisation-sector" style="width: 100%;">
-              Organisation Sector *
-              <select v-model="reg.goal" style="width: 100%;">
+              Main Goal *
+              <select v-model="reg.goal" style="width: 100%;" required>
                 <option disabled selected :value="null">Select goal</option>
                 <option
                   v-for="item in goals"
                   :key="item.slug + item.id"
-                  :value="item.slug"
+                  :value="item.id"
                 >{{item.name}}</option>
               </select>
             </label>
+          </div>
+          <div class="input-row">
+            <label class="full-width">Goals *</label>
+            <div class="goal-grid">
+              <label
+                class="form-checkbox-label"
+                v-for="goal in goals"
+                :key="'goal-additional-'+goal.id"
+              >
+                <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
+                <input type="checkbox" :value="goal.id" name="goals_checkbox[]" v-model="reg.goals" />
+                <div class="checkbox"></div>
+              </label>
+            </div>
           </div>
           <div class="section-title">
             <h3 class="section-title__heading">Social media:</h3>
@@ -261,6 +275,7 @@ export default {
         description: "",
         description_full: "",
         goal: null,
+        goals: [],
         // organisation_tabs: [{ content: "" }]
         need_video: false,
         video_type: null,
@@ -411,6 +426,72 @@ export default {
 
 .add-organisation-info .finish-btn {
   margin-top: 30px;
+}
+
+.goal-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 25px;
+
+  label {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0px !important;
+  }
+
+  .form-checkbox-label {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0px;
+
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      border: 1px solid #393939;
+      cursor: pointer;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+
+      &::before {
+        content: "\f00c";
+        display: inline-block;
+        font-family: FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0px;
+        transition: font-size 0.4s, background-color 0.4s;
+      }
+    }
+
+    input[type="checkbox"] {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      opacity: 0;
+
+      &:checked + .checkbox {
+        background-color: #f4ed3b;
+        &::before {
+          @include font-size(1rem);
+        }
+      }
+    }
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    line-height: 1;
+  }
 }
 </style>
 

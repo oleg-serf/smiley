@@ -31,8 +31,8 @@ const routes = [{
    * User pages
    */
   {
-    path: '/users',
-    name: 'users',
+    path: '/members',
+    name: 'members',
     component: () => import( /* webpackChunkName: "user" */ '../views/users/index.vue'),
     meta: {
       title: 'Users',
@@ -40,15 +40,15 @@ const routes = [{
     }
   },
   {
-    path: '/users/:slug',
-    name: 'users',
+    path: '/members/:slug',
+    name: 'member',
     component: () => import( /* webpackChunkName: "user" */ '../views/users/_slug.vue'),
     meta: {
       requiresAuth: true,
     }
   },
   {
-    path: '/user/account-settings',
+    path: '/member/account-settings',
     name: 'account-settings',
     component: () => import( /* webpackChunkName: "user" */ '../views/user/Edit.vue'),
     meta: {
@@ -57,7 +57,7 @@ const routes = [{
     }
   },
   {
-    path: '/user/feed',
+    path: '/member/feed',
     name: 'feed',
     component: () => import( /* webpackChunkName: "user" */ '../views/user/Feed.vue'),
     meta: {
@@ -66,7 +66,7 @@ const routes = [{
     }
   },
   {
-    path: '/user/profile',
+    path: '/member/profile',
     name: 'profile',
     component: () => import( /* webpackChunkName: "user" */ '../views/user/index.vue'),
     meta: {
@@ -75,7 +75,7 @@ const routes = [{
     }
   },
   {
-    path: '/user/profile-new',
+    path: '/member/profile-new',
     name: 'newProfile',
     component: () => import( /* webpackChunkName: "user" */ '../views/user/newProfile.vue'),
     meta: {
@@ -151,7 +151,7 @@ const routes = [{
    * Network
    */
   {
-    path: '/network',
+    path: '/smiley-network',
     name: 'network',
     component: () => import( /* webpackChunkName: "news" */ '../views/Network.vue'),
     meta: {
@@ -210,7 +210,7 @@ const routes = [{
    * News
    */
   {
-    path: '/news',
+    path: '/smiley-news',
     name: 'news',
     component: () => import( /* webpackChunkName: "news" */ '../views/news/index.vue'),
     meta: {
@@ -218,7 +218,7 @@ const routes = [{
     }
   },
   {
-    path: '/news/:slug',
+    path: '/smiley-news/:slug',
     name: 'news-item',
     component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
     meta: {
@@ -226,7 +226,7 @@ const routes = [{
     }
   },
   {
-    path: '/news/category/:slug',
+    path: '/smiley-news/category/:slug',
     name: 'news-category-item',
     component: () => import( /* webpackChunkName: "news" */ '../views/news/category/_slug.vue'),
     meta: {
@@ -276,9 +276,9 @@ const routes = [{
     }
   },
   {
-    path: '/edit-organisation',
+    path: '/edit/organisation',
     name: 'edit-organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/Edit.vue'),
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/edit/organisation.vue'),
     meta: {
       title: 'Edit Organisation',
       requiresAuth: true,

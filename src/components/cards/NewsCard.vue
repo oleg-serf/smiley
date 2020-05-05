@@ -109,7 +109,10 @@ export default {
       let result = "";
       const title = encodeURI(this.article.title);
       const url =
-        process.env.VUE_APP_DOMAIN + "news/" + encodeURI(this.article.slug);
+        process.env.VUE_APP_DOMAIN +
+        "/smiley-news/" +
+        encodeURI(this.article.slug);
+
       switch (type) {
         case "facebook":
           result = `https://www.facebook.com/sharer.php?u=${url}&t=${title}`;

@@ -254,7 +254,7 @@ export default {
           link: "network",
           items: [
             { name: "organisations", link: "organisations" },
-            { name: "members", link: "users" },
+            { name: "members", link: "members" },
             { name: "projects", link: "projects" },
             { name: "partners", link: "partners" }
           ]

@@ -28,13 +28,42 @@
     </section>
 
     <!-- Projects Grid -->
-    <section class="projects-grid container section" v-if="myProjects.length >0">
-      <project-card
-        v-for="project in myProjects"
-        :key="'project-'+project.slug"
-        :project="project"
-      />
-    </section>
+    <div class="container" v-if="myProjects.length >0">
+      <swiper
+        ref="projectsSwiper"
+        :options="swiperOptions"
+        :auto-update="true"
+        :auto-destroy="true"
+        :delete-instance-on-destroy="true"
+        :cleanup-styles-on-destroy="true"
+        v-if="is_mobile"
+      >
+        <swiper-slide v-for="project in projects" :key="'project-swiper-'+project.slug">
+          <project-card :project="project" />
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+      <section class="projects-grid section">
+        <project-card
+          v-for="project in myProjects"
+          :key="'project-'+project.slug"
+          :project="project"
+        />
+      </section>
+      <div class="smiley-pagination" v-if="projectsPagination > 1">
+        <paginate
+          :page-count="projectsPagination"
+          :click-handler="paginateProjects"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :prev-class="'smiley-pagination-back'"
+          :next-class="'smiley-pagination-next'"
+          :container-class="'app-pagination'"
+        >
+          <span slot="breakViewContent">...</span>
+        </paginate>
+      </div>
+    </div>
 
     <!-- Title section -->
     <section class="section projects-section container">
@@ -101,15 +130,67 @@ export default {
   data() {
     return {
       projects: [],
-      myProjects: []
+      projectsPagination: 0,
+      myProjects: [],
+      myProjectsPagination: 0,
+      is_mobile: false,
+      // Slider Options
+      swiperOptions: {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        slidesPerView: 4,
+        spaceBetween: 15,
+        mousewheel: true,
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            centeredSlides: true
+          },
+          480: {
+            slidesPerView: 1.3
+          },
+          640: {
+            slidesPerView: 1.5
+          }
+        }
+      }
     };
   },
   computed: {
     isAuthenticated() {
       return this.$store.getters["user/isAuthenticated"];
+    },
+    paginateProjects(pageNum) {
+      axios
+        .post("/search?projects-page=" + pageNum)
+        .then(res => {
+          console.log("Projects", res.data.events);
+          this.events = res.data.events;
+          this.eventsPagination = res.data.events_pages_count;
+
+          let sectionOffset = document.getElementById("section-projects")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth"
+          });
+        })
+        .catch(err => {
+          console.error("error", err);
+        });
+      console.log(pageNum);
     }
   },
-  methods: {},
+  methods: {
+    handleResize() {
+      this.is_mobile = window.innerWidth >= 768 ? false : true;
+      if (window.innerWidth >= 768) {
+        this.is_shown = true;
+      }
+    }
+  },
   mounted() {
     axios.get("/projects").then(res => {
       console.log("Projects loaded", res);
@@ -122,6 +203,13 @@ export default {
         .get("/projects/my")
         .then(res => (this.myProjects = res.data.projects));
     }
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   }
 };
 </script>

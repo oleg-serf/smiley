@@ -9,7 +9,7 @@
     <!-- News section -->
     <div class="container">
       <banner
-        link="/news/"
+        link="/members/"
         color="#F36E24"
         background="/img/homepage/banner-news.jpg"
         v-if="Object.keys(banners.news).length"

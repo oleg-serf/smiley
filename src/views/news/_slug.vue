@@ -160,8 +160,8 @@ export default {
     shareLink(type) {
       let result = "";
       const title = encodeURI(this.post.title);
-      const url =
-        process.env.VUE_APP_DOMAIN + "news/" + encodeURI(this.post.slug);
+      const url = process.env.VUE_APP_DOMAIN + encodeURI(this.$route.path);
+
       switch (type) {
         case "facebook":
           result = `https://www.facebook.com/sharer.php?u=${url}&t=${title}`;

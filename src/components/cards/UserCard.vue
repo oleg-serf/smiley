@@ -1,7 +1,7 @@
 <template>
   <div class="user-item">
     <div class="user-item__avatar">
-      <router-link :to="'/users/' + user.slug">
+      <router-link :to="{name: 'member', params: {slug: user.slug}}">
         <img
           :src="$settings.images_path.users + 's_' + user.avatar"
           alt
@@ -14,7 +14,7 @@
       </router-link>
     </div>
     <h2 class="user-item__title">
-      <router-link :to="'/users/' + user.slug">{{ user.name }}</router-link>
+      <router-link :to="{name: 'member', params: {slug: user.slug}}">{{ user.name }}</router-link>
     </h2>
   </div>
 </template>

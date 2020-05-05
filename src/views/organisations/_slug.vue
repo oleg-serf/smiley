@@ -108,7 +108,7 @@
       </div>
     </div>
     <div class="organisation-additional">
-      <div class="grid-item">
+      <div class="grid-item align-right">
         <div class="item-holder">
           <div class="title">About {{organisation.name}}</div>
           <div
@@ -119,21 +119,41 @@
           <div class="about" v-else>No organisation bio to show</div>
         </div>
       </div>
-      <div class="grid-item">
+      <div class="grid-item align-left">
         <div class="item-holder">
           <div class="title">Stats for {{organisation.name}}</div>
+          <div class="goals-grid" v-if="organisation.other_goals.length > 0">
+            <ul class="goals">
+              <li v-for="goal in organisation.other_goals" :key="'goal-'+goal.slug">
+                <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
+              </li>
+            </ul>
+          </div>
+          <div v-else>
+            <p>No Goals selected for organisation</p>
+          </div>
         </div>
         <div class="item-holder">
           <div class="title">Share this page</div>
           <ul class="organisation-social">
-            <li v-for="social in socials" :key="'social-'+social.name">
-              <a target="_blank" :href="social.value">
-                <app-icon :name="social.name" />
+            <li>
+              <a :href="shareLink('twitter')" target="_blank">
+                <app-icon name="twitter" />
+              </a>
+            </li>
+            <li>
+              <a :href="shareLink('facebook')" target="_blank">
+                <app-icon name="facebook" />
+              </a>
+            </li>
+            <li>
+              <a :href="shareLink('linkedin')" target="_blank">
+                <app-icon name="linkedin" />
               </a>
             </li>
           </ul>
           <div class="url-share">
-            <input readonly value="https://smileymovement.org/organisations/myorganisation" />
+            <input readonly :value="domain+'/organisations/' + this.$route.params.slug" />
             <button type="button" class="button button--primary">Copy link</button>
           </div>
         </div>
@@ -204,19 +224,19 @@
           </div>
         </div>
       </div>
-      <div class="grid-item grid-item--full-width">
+      <!-- <div class="grid-item grid-item--full-width">
         <div class="item-holder">
           <div class="title">Our team</div>
           <div class="about">No team members to display.</div>
         </div>
-      </div>
-      <div class="grid-item">
+      </div>-->
+      <div class="grid-item align-right">
         <div class="item-holder">
           <div class="title">
             <img src="/img/icons/support-need-icon.png" />
             Support {{organisation.name}} need
           </div>
-          <ul class="support">
+          <ul class="support" v-if="support.need != null && support.need.length > 0">
             <li class="support__item" v-for="(item, index) in support.need" :key="'i-need-'+index">
               <div class="support__category-container">
                 <div class="support__category">{{item.support_category.title}}</div>
@@ -224,9 +244,10 @@
               </div>
             </li>
           </ul>
+          <p v-else>{{organisation.name}} don't need support</p>
         </div>
       </div>
-      <div class="grid-item">
+      <div class="grid-item align-left">
         <div class="item-holder">
           <div class="title">
             <img src="/img/icons/support-offer-icon.png" />
@@ -264,7 +285,8 @@ export default {
   data() {
     return {
       organisation: {
-        followers: 0
+        followers: 0,
+        other_goals: []
       },
       is_owner: false,
       following: false,
@@ -331,6 +353,9 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters["user/isAuthenticated"];
+    },
+    domain() {
+      return process.env.VUE_APP_DOMAIN;
     }
   },
   methods: {
@@ -431,9 +456,29 @@ export default {
       }
 
       return time;
+    },
+    shareLink(type) {
+      let result = "";
+      const title = encodeURI(this.organisation.title);
+      const url = process.env.VUE_APP_DOMAIN + encodeURI(this.$route.path);
+      switch (type) {
+        case "facebook":
+          result = `https://www.facebook.com/sharer.php?u=${url}&t=${title}`;
+          break;
+        case "twitter":
+          result = `http://twitter.com/share?text=${title}&url=${url}`;
+          break;
+        case "linkedin":
+          result = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`;
+          break;
+      }
+
+      return result;
     }
   },
   mounted() {
+    console.log("Current route", this.$route);
+
     this.Toast = this.$swal.mixin({
       toast: true,
       position: "top-end",
@@ -808,7 +853,11 @@ export default {
     display: flex;
     flex-direction: column;
 
-    &:nth-child(odd) {
+    &.align-left {
+      align-items: flex-start;
+    }
+
+    &.align-right {
       align-items: flex-end;
     }
 
@@ -1023,6 +1072,24 @@ export default {
     margin-top: 5px;
     margin-bottom: 5px;
     box-sizing: border-box;
+  }
+}
+
+.goals {
+  margin: 0px -30px -26px -31px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  li {
+    margin: -1px;
+    border: 1px solid #393939;
+    font-size: 0px;
+    line-height: 1;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 }
 </style>

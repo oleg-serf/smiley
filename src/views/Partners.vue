@@ -14,6 +14,7 @@
             <a
               class="partner"
               :href="(partner.website != null) ? partner.website : '/#'"
+              target="_blank"
               v-for="partner in partners"
               :key="partner.id"
             >

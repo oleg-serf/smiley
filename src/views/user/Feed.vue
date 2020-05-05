@@ -23,11 +23,23 @@
               </div>
             </div>
             <div class="profile-item profile-item--matches">
-              <div class="profile-title">Matches</div>
+              <div class="profile-title">
+                Matches
+                <i
+                  class="popover-icon fa fa-info-circle"
+                  v-popover:tooltip="'Members and organisations that match your interests, skills you are in need of or looking to offer.'"
+                ></i>
+              </div>
               <div class="profile__numbers">50+</div>
             </div>
             <div class="profile-item">
-              <div class="profile-title">Community</div>
+              <div class="profile-title">
+                Community
+                <i
+                  class="popover-icon fa fa-info-circle"
+                  v-popover:tooltip="'See updates from members and organisations you have connected with.'"
+                ></i>
+              </div>
               <div class="profile__numbers">0</div>
             </div>
             <div class="profile-item profile-item--full-width">
@@ -335,6 +347,12 @@ export default {
   },
   mounted() {
     axios
+      .get("/users/feed")
+      .then(res => {
+        console.log("Feed loaded", res);
+      })
+      .catch(error => console.error(error));
+    axios
       .get("/news/latest")
       .then(res => {
         this.latest = res.data.latest_news;
@@ -343,14 +361,14 @@ export default {
     axiosBase
       .get("https://randomuser.me/api/?results=20&nat=gb")
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.fakeUsers = res.data.results;
       })
       .catch(error => console.error(error));
     axiosBase
       .get("https://randomuser.me/api/?results=20&nat=gb")
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.fakeUsersFollowing = res.data.results;
       })
       .catch(error => console.error(error));

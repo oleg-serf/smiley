@@ -13,6 +13,7 @@
     </div>
 
     <div class="container">
+      <section class="goal-description" v-html="goal.description"></section>
       <section class="content-block">
         <div class="news-category">
           <h2 class="news-category__title">Latest Updates</h2>

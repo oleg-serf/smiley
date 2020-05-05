@@ -219,6 +219,7 @@
           flex-direction: column;
           height: 200px;
           cursor: pointer;
+          transition: box-shadow .25s;
 
           &:hover {
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
