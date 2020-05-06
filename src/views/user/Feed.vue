@@ -11,11 +11,17 @@
         <div class="feed-grid__item feed-grid__item--profile">
           <div class="profile">
             <div class="profile-item">
-              <img :src="eventsList[0].avatar" class="profile__avatar" />
+              <div class="profile-avatar">
+                <img
+                  v-if="user.avatar != null"
+                  :src="$settings.images_path.users + 'm_'+ user.avatar"
+                />
+                <span v-else>{{ user.display_name | filterAvatar}}</span>
+              </div>
             </div>
             <div class="profile-item">
-              <div class="profile__name">John Doe</div>
-              <div class="profile__job">Atque fugit adipisc at Wynn Leach Co</div>
+              <div class="profile__name">{{user.display_name}}</div>
+              <div class="profile__job" v-if="(user.job_title != null)">{{user.job_title}}</div>
             </div>
             <div class="profile-item profile-item--full-width">
               <div class="profile__location">
@@ -250,7 +256,7 @@
       </div>
       <div class="updates-tabs container">
         <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'news'">
-          <news-card v-for="article in latest" :key="'latest-'+article.slug" :article="article" />
+          <news-card v-for="article in posts" :key="'latest-'+article.slug" :article="article" />
         </div>
         <div class="updates-tabs__tab" v-show="updatesTab == 'updates'">no updates for now</div>
       </div>
@@ -274,6 +280,9 @@ export default {
   },
   data() {
     return {
+      user: {},
+      posts: [],
+      //
       fakeUsersFollowing: [],
       fakeUsers: [],
       latest: [],
@@ -350,6 +359,8 @@ export default {
       .get("/users/feed")
       .then(res => {
         console.log("Feed loaded", res);
+        this.user = res.data.user;
+        this.posts = res.data.posts;
       })
       .catch(error => console.error(error));
     axios
@@ -441,10 +452,30 @@ export default {
     @include font-size(1.1rem);
   }
 
-  .profile__avatar {
-    width: 120px;
-    height: 120px;
+  .profile-avatar {
+    // margin-top: 35px;
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
+    overflow: hidden;
+    font-family: "Montserrat Bold", sans-serif;
+    text-transform: uppercase;
+    @include font-size(2rem);
+    letter-spacing: 4px;
+    color: #393939;
+    background-color: #eeb400;
+    text-align: center;
+
+    img {
+      width: 100%;
+      height: 100;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 
   .profile__name {
