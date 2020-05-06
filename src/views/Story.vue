@@ -19,6 +19,15 @@
             </div>
           </div>
 
+          <div class="container">
+            <video controls style="width: 100%; height: auto; padding-top: 24px;">
+              <source
+                src="https://old-admin.smileymovement.org/app/uploads/2019/07/Smiley-Movement-V03.mp4"
+                type="video/mp4"
+              />Your browser does not support the video tag
+            </video>
+          </div>
+
           <div class="our-story__blocks">
             <div class="item">
               <div class="item__icon">
