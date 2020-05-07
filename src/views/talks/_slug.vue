@@ -945,9 +945,9 @@ export default {
       .then(res => {
         console.log("event loaded", res);
 
-        // if ([11, 13, 16, 18, 17, 14, 15].includes(res.data.event.id)) {
-        // res.data.event.event_sections = this.videosStatic[res.data.event.id];
-        // }
+        if ([11, 13, 16, 18, 17, 14, 15].includes(res.data.event.id)) {
+          res.data.event.event_sections = this.videosStatic[res.data.event.id];
+        }
         this.event = res.data.event;
 
         // console.log(this.event);
