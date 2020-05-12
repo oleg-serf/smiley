@@ -161,6 +161,7 @@ export default {
         {
           title: "Organisations",
           link: "/organisations",
+          disabled: false,
           description:
             "Connect with groups working towards solving societal issues and find ways to get involved.",
           image: "/img/homepage/homepage-organisations.jpg"
@@ -168,6 +169,7 @@ export default {
         {
           title: "Projects",
           link: "/projects",
+          disabled: false,
           description:
             "Explore initiatives about causes you care about and kickstart your own purpose-driven projects",
           image: "/img/homepage/homepage-chatroom.jpg"
@@ -175,6 +177,7 @@ export default {
         {
           title: "Chatroom",
           link: "/chatroom",
+          disabled: true,
           description:
             "Take part in community discussions and share ideas with other members",
           image: "/img/homepage/homepage-projects.jpg"

@@ -38,6 +38,7 @@
                 <div class="panel-content-wrap">
                   <div
                     class="event-date-time"
+                    v-if="event.date != null"
                   >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}}</div>
                   <div
                     class="event-date-time"
@@ -274,10 +275,10 @@
 
           <div class="event-tabs" id="tabs">
             <ul class="tabs-nav">
-              <li v-for="(ev, index) in event.event_blocks" :key="ev.id">
+              <li v-for="(ev, index) in event.tabs" :key="ev.id">
                 <a :href="'#tab-' + ++index" :class="{active: index === 0}">{{ev.title}}</a>
               </li>
-              <li>
+              <li v-if="event.speakers.length >0">
                 <a href="#tab-speakers">Speakers</a>
               </li>
             </ul>
@@ -286,14 +287,18 @@
               <div
                 :class="'tabs-item item-' + ++index"
                 :id="'tab-' + index"
-                v-for="(ev, index) in event.event_blocks"
+                v-for="(ev, index) in event.tabs"
                 :key="ev.id"
               >
                 <div :class="'content-tab-' + index">
                   <p v-html="ev.content"></p>
                 </div>
               </div>
-              <div class="tabs-item item-speakers" id="tab-speakers">
+              <div
+                class="tabs-item item-speakers"
+                id="tab-speakers"
+                v-if="event.speakers.length >0"
+              >
                 <div class="content-tab-speakers content-tab-speakers--columns">
                   <div class="speaker-item" v-for="speaker in event.speakers" :key="speaker.id">
                     <div class="speaker-avatar-wrap">
@@ -314,14 +319,14 @@
           </div>
 
           <!-- TODO: Manage blocks into components? -->
-          <template v-for="block in event.event_sections">
-            <section class="event-videos" v-if="block.type == 'video'" :key="block.title">
+          <template v-for="block in event.video_blocks">
+            <section class="event-videos" :key="block.title">
               <div class="event-videos-wrap">
                 <h2 class="event-videos-title" v-if="block.title !== null">{{block.title}}</h2>
                 <div class="event-videos-cards">
                   <div
                     class="video-card-holder"
-                    v-for="(video, index) in block.json_content"
+                    v-for="(video, index) in block.videos"
                     :key="index +'-vd'"
                   >
                     <div class="video-card">
@@ -342,43 +347,18 @@
                         ></iframe>
                       </template>
                     </div>
-                    <div class="video-card__title">{{video.title}}</div>
+                    <div class="video-card__info">
+                      <div class="video-card__title">{{video.title}}</div>
+                      <div
+                        class="video-card__description"
+                        v-if="video.description != null"
+                      >{{video.description}}</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </section>
           </template>
-          <!-- TODO: Show event video block -->
-          <section class="event-videos" v-if="videos.length > 0">
-            <div class="event-videos-wrap">
-              <h2 class="event-videos-title">Videos</h2>
-
-              <div class="event-videos-cards">
-                <div
-                  class="video-card"
-                  v-for="(video, index) in videos"
-                  :key="video.id +'-vd-'+index"
-                >
-                  <template v-if="video.type == 'vimeo'">
-                    <iframe
-                      :src="'https://player.vimeo.com/video/'+video.id+'?title=0&amp;byline=0&amp;portrait=0'"
-                      frameborder="0"
-                      allow="fullscreen"
-                      allowfullscreen
-                    ></iframe>
-                  </template>
-                  <template v-else>
-                    <iframe
-                      :src="'https://www.youtube.com/embed/'+video.id"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
-                    ></iframe>
-                  </template>
-                </div>
-              </div>
-            </div>
-          </section>
 
           <!-- TODO: Show event audio block -->
           <section class="event-audios" v-if="audios.length > 0">
@@ -502,373 +482,6 @@ export default {
       event: null,
       audios: [],
       videos: [],
-      videosStatic: {
-        "11": [
-          {
-            title: "highlights",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Organisations come together to encourage you to take action and face the climate crisis",
-                sub_type: "vimeo",
-                content: "392229611"
-              }
-            ]
-          },
-          {
-            title: "interviews",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Henry from Friends of the Earth says we’re not immmune to the effects of the climate emergency",
-                sub_type: "vimeo",
-                content: "389282950"
-              },
-              {
-                title:
-                  "Jess from XR says we live in a society that doesn’t allow us to make ethical choices",
-                sub_type: "vimeo",
-                content: "389281991"
-              },
-              {
-                title:
-                  "Dilyana from Plastic Oceans UK says we are literally holding a lot of power in our hands",
-                sub_type: "vimeo",
-                content: "389279017"
-              },
-              {
-                title:
-                  "Sarah from XR urges to think about the youngest person you love.",
-                sub_type: "vimeo",
-                content: "388185317"
-              },
-              {
-                title:
-                  "Greg from Transport & Environment explains what it’s like driving an electric car",
-                sub_type: "vimeo",
-                content: "386723714"
-              },
-              {
-                title:
-                  "Clara from the Climate Coalition says we can only do more by coming together",
-                sub_type: "vimeo",
-                content: "386434575"
-              },
-              {
-                title:
-                  "Andrea from TRAID talks about the way we produce, consume and dispose of our clothes.",
-                sub_type: "vimeo",
-                content: "386434413"
-              }
-            ]
-          }
-        ],
-        "13": [
-          {
-            title: "highlights",
-            type: "video",
-            json_content: [
-              {
-                title: "Do you embody the wisdom that comes with learning?",
-                sub_type: "vimeo",
-                content: "368792231"
-              }
-            ]
-          },
-          {
-            title: "INTERVIEWS",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Rae, National Leader of Education: 'what does it mean to be human?'",
-                sub_type: "vimeo",
-                content: "386174750"
-              },
-              {
-                title:
-                  "Michelle from Region of Learning: ‘whats happens after the schoolbell rings?'",
-                sub_type: "vimeo",
-                content: "386174373"
-              },
-              {
-                title:
-                  "Douglas Archibald from Whole Education: ‘eduactors are swimming against the tide'",
-                sub_type: "vimeo",
-                content: "386174091"
-              },
-              {
-                title:
-                  "Carrie Herbert MBE: ‘I’m very disappointed in how education ig going in this country'",
-                sub_type: "vimeo",
-                content: "386173813"
-              },
-              {
-                title:
-                  "Kate from Crisis Classroom: ‘We chip away children’s confidence'",
-                sub_type: "vimeo",
-                content: "386173572"
-              },
-              {
-                title:
-                  "Ben from Realtionships Foundation: ‘We can learn from Finland’s education system'",
-                sub_type: "vimeo",
-                content: "386173250"
-              }
-            ]
-          }
-        ],
-        "16": [
-          {
-            title: "highlights",
-            type: "video",
-            json_content: [
-              {
-                title: "Is there a world outside the Internet giants?",
-                sub_type: "vimeo",
-                content: "377261743"
-              }
-            ]
-          },
-          {
-            title: "INTERVIEWS",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Robin from Charity Retail: ‘is the future of the High Street death, decay and destruction?'",
-                sub_type: "vimeo",
-                content: "382555072"
-              },
-              {
-                title:
-                  "Neil from Retail TRUST: ‘We can help get people back to work'",
-                sub_type: "vimeo",
-                content: "382554594"
-              },
-              {
-                title:
-                  "Andrea from TRAID: ‘we offer people a different experience of buying clothes'",
-                sub_type: "vimeo",
-                content: "382554372"
-              },
-              {
-                title:
-                  "Lucy from Local Data Comapny: ‘we cannot be sat at home doing eveything online'",
-                sub_type: "vimeo",
-                content: "378824714"
-              },
-              {
-                title:
-                  "Ben, winner of Young Volunteer of the Year Award: ’the biggest sense of community is in the small shops'",
-                sub_type: "vimeo",
-                content: "378824081"
-              },
-              {
-                title:
-                  "Andrew from Bira: ’a world that will actually help and support you'",
-                sub_type: "vimeo",
-                content: "378823330"
-              }
-            ]
-          }
-        ],
-        "18": [
-          {
-            title: "highlights",
-            type: "video",
-            json_content: [
-              {
-                title: "How do we reduce or impact on the planet?",
-                sub_type: "vimeo",
-                content: "376769359"
-              }
-            ]
-          },
-          {
-            title: "INTERVIEWS",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Steve from Circular Brighton and Hove: ‘You don’t own something until you know how to repair it'",
-                sub_type: "vimeo",
-                content: "378804650"
-              },
-              {
-                title:
-                  "Darren from The Human Hive: ‘how can we repurpose people?'",
-                sub_type: "vimeo",
-                content: "378804419"
-              },
-              {
-                title:
-                  "Claire from Claire Potter Design: ‘How can each person have a ciritical role in a circular economy?'",
-                sub_type: "vimeo",
-                content: "378803778"
-              },
-              {
-                title:
-                  "Kirsten from Sew2Speak: ’think more consciously about your fashion choices'",
-                sub_type: "vimeo",
-                content: "378803203"
-              },
-              {
-                title: "David from Circular Economy Club: ’stop consuming!'",
-                sub_type: "vimeo",
-                content: "378802959"
-              }
-            ]
-          }
-        ],
-        "17": [
-          {
-            title: "highlights",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "A room full of strangers comes together to talk about mental health",
-                sub_type: "vimeo",
-                content: "370822277"
-              }
-            ]
-          },
-          {
-            title: "INTERVIEWS",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Pete from Rolling Jovi: ‘People shouldn’t behidden away because of mental health'",
-                sub_type: "vimeo",
-                content: "370893441"
-              },
-              {
-                title:
-                  "Lara from Red Sofa Conversations: ‘we are not our mental health issues'",
-                sub_type: "vimeo",
-                content: "370892747"
-              },
-              {
-                title:
-                  "Lee from Southeastern railway: ‘It took me a long time to realise that I should ask for help'",
-                sub_type: "vimeo",
-                content: "370891422"
-              },
-              {
-                title:
-                  "Jo from Time to Change: ‘You don’t have to be an expert to have a converation about mental health'",
-                sub_type: "vimeo",
-                content: "370890241"
-              },
-              {
-                title:
-                  "Ellen, writer and activist: ’there is no correct way to talk about mental health'",
-                sub_type: "vimeo",
-                content: "370889727"
-              },
-              {
-                title:
-                  "Chris from Time to Change: ‘It’s normal not to feel okay'",
-                sub_type: "vimeo",
-                content: "370888515"
-              },
-              {
-                title:
-                  "Georgia from Selfcare Queen: ‘it makes me so happy to be at a Smiley Movement event'",
-                sub_type: "vimeo",
-                content: "370887819"
-              }
-            ]
-          }
-        ],
-        "14": [
-          {
-            title: "INTERVIEWS",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Smiley Talks: What’s the point of Education? - Highlights",
-                sub_type: "vimeo",
-                content: "396914673"
-              },
-
-              {
-                title: "Rachel Snape, National Leader of Education",
-                sub_type: "vimeo",
-                content: "397243288"
-              },
-              {
-                title: "Sebastien Chapleau, The Big Education Conversation",
-                sub_type: "vimeo",
-                content: "397497515"
-              },
-              {
-                title: "Evelyn Haywood, Skills Builder",
-                sub_type: "vimeo",
-                content: "397514851"
-              },
-              {
-                title: "Loic Menzies, The Centre of Education and Schools",
-                sub_type: "vimeo",
-                content: "397527627"
-              },
-              {
-                title:
-                  "Dan Frost, Learning Technology Lead, Cambridge Assessment English",
-                sub_type: "vimeo",
-                content: "398064121"
-              },
-              {
-                title: "John Wroe, Street Child United",
-                sub_type: "vimeo",
-                content: "398306707"
-              }
-            ]
-          }
-        ],
-        "15": [
-          {
-            title: "highlights",
-            type: "video",
-            json_content: [
-              {
-                title: "The deep societil ill that is loneliness",
-                sub_type: "vimeo",
-                content: "366189552"
-              }
-            ]
-          },
-          {
-            title: "INTERVIEWS",
-            type: "video",
-            json_content: [
-              {
-                title:
-                  "Charlotte from Samaritans: ‘It is difficult for young people to admit they feel lonlely'",
-                sub_type: "vimeo",
-                content: "367228601"
-              },
-              {
-                title:
-                  "Dame Esther Rantzen DBE: ‘People can only enjoy each other’s company if they feel equal'",
-                sub_type: "vimeo",
-                content: "367228644"
-              },
-              {
-                title:
-                  "James from Alertacall: ’This Smiley TALKS is inspirational'",
-                sub_type: "vimeo",
-                content: "367228701"
-              }
-            ]
-          }
-        ]
-      },
       inviteEmails: null
     };
   },
@@ -945,9 +558,9 @@ export default {
       .then(res => {
         console.log("event loaded", res);
 
-        if ([11, 13, 16, 18, 17, 14, 15].includes(res.data.event.id)) {
-          res.data.event.event_sections = this.videosStatic[res.data.event.id];
-        }
+        // if ([11, 13, 16, 18, 17, 14, 15].includes(res.data.event.id)) {
+        //   res.data.event.event_sections = this.videosStatic[res.data.event.id];
+        // }
         this.event = res.data.event;
 
         // console.log(this.event);
@@ -1117,18 +730,29 @@ export default {
     }
   }
 
-  .video-card__title {
+  .video-card__info {
     width: 50%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    font-family: "Montserrat SemiBold", sans-serif;
+    justify-content: center;
     padding: 16px;
-    font-size: 24px;
     box-sizing: border-box;
 
     @include mdMax {
       width: 100%;
     }
+  }
+
+  .video-card__title {
+    font-family: "Montserrat SemiBold", sans-serif;
+    font-size: 24px;
+    width: 100%;
+  }
+
+  .video-card__description {
+    width: 100%;
+    margin-top: 12px;
   }
 }
 </style>

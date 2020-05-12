@@ -53,9 +53,12 @@
                 <div class="profile-title">Profile completion</div>
                 <div class="progress-bar">
                   <div class="progress-bar__bar">
-                    <div class="progress-bar__progress" style="width: 60%"></div>
+                    <div
+                      class="progress-bar__progress"
+                      :style="{width: user.completed_profile + '%'}"
+                    ></div>
                   </div>
-                  <div class="progress-bar__percents">60%</div>
+                  <div class="progress-bar__percents">{{user.completed_profile}}%</div>
                 </div>
               </div>
             </div>

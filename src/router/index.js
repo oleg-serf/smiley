@@ -361,6 +361,16 @@ const routes = [{
     component: () => import( /* webpackChunkName: "chat" */ '../views/FormKit.vue'),
     meta: {}
   },
+  // Redirects
+  {
+    path: '/ckdb',
+    redirect: {
+      name: 'news-item',
+      params: {
+        slug: 'ckdb'
+      }
+    }
+  }
 ];
 
 

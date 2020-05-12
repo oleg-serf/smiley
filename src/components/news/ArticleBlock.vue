@@ -1,5 +1,6 @@
 <template>
   <div class="article">
+    <div class="article__comming-soon" v-if="information.disabled">Comming Soon</div>
     <div class="article__image" v-if="information.image != null">
       <router-link :to="information.link">
         <img :src="information.image" :alt="information.title" :title="information.title" />
@@ -32,6 +33,7 @@ export default {
 .article {
   box-sizing: border-box;
   border: 1px solid #c7c7c7;
+  position: relative;
 
   &:hover {
     .article__image {
@@ -84,6 +86,20 @@ export default {
     &::first-letter {
       text-transform: uppercase;
     }
+  }
+
+  .article__comming-soon {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-family: "Montserrat SemiBold", sans-serif;
   }
 }
 </style>
