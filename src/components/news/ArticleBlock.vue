@@ -100,6 +100,16 @@ export default {
     z-index: 2;
     background-color: rgba(255, 255, 255, 0.7);
     font-family: "Montserrat SemiBold", sans-serif;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  &:hover {
+    .article__comming-soon {
+      opacity: 1;
+      pointer-events: all;
+    }
   }
 }
 </style>
