@@ -1,6 +1,6 @@
 <template>
   <div class="article">
-    <div class="article__comming-soon" v-if="information.disabled">Comming Soon</div>
+    <div class="article__comming-soon" v-if="information.disabled">Coming Soon</div>
     <div class="article__image" v-if="information.image != null">
       <router-link :to="information.link">
         <img :src="information.image" :alt="information.title" :title="information.title" />
