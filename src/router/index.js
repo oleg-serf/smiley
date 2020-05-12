@@ -225,14 +225,14 @@ const routes = [{
       breadcrumbs: ['news'],
     }
   },
-  {
-    path: '/smiley-news/category/:slug',
-    name: 'news-category-item',
-    component: () => import( /* webpackChunkName: "news" */ '../views/news/category/_slug.vue'),
-    meta: {
-      breadcrumbs: ['news'],
-    }
-  },
+  // {
+  //   path: '/smiley-news/category/:slug',
+  //   name: 'news-category-item',
+  //   component: () => import( /* webpackChunkName: "news" */ '../views/news/category/_slug.vue'),
+  //   meta: {
+  //     breadcrumbs: ['news'],
+  //   }
+  // },
   /**
    * News & Talks on same page
    */

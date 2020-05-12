@@ -7,7 +7,7 @@
         <banner :color="goal.colour" background="/img/homepage/banner-news.jpg">
           <template v-slot:name>news</template>
           <template v-slot:title>{{goal.prefix}} {{goal.name}}</template>
-          <template v-slot:content v-if="goal.description != null">{{goal.description}}</template>
+          <!-- <template v-slot:content v-if="goal.description != null">{{goal.description}}</template> -->
         </banner>
       </div>
     </section>

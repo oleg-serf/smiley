@@ -9,9 +9,9 @@
     </div>
     <div class="project-article__content">
       <div class="project-article__category">
-        <div class="project-article__header">
+        <div class="project-article__header" v-if="project.goals.length > 0">
           <div class="project-article__category-name">{{ project.goals[0].name}}</div>
-          <div class="project-article__category-circle">
+          <div class="project-article__category-circle" v-if="project.goals.length > 1">
             <span>+{{project.goals.length - 1}}</span>
           </div>
         </div>

@@ -430,6 +430,10 @@ export default {
   }
 }
 
+.goal-description {
+  margin-top: 24px;
+}
+
 .grid {
   &--news,
   &--events,
