@@ -13,7 +13,14 @@
     </div>
 
     <div class="container">
-      <section class="goal-description" v-html="goal.description"></section>
+      <section class="goal-description">
+        <div class="goal-description__logo">
+          <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
+        </div>
+        <div class="goal-description__text">
+          <div class="goal-description__text-container" v-html="goal.description"></div>
+        </div>
+      </section>
       <section class="content-block">
         <div class="news-category">
           <h2 class="news-category__title">Latest Updates</h2>
@@ -432,6 +439,65 @@ export default {
 
 .goal-description {
   margin-top: 24px;
+
+  line-height: 1.5;
+
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+
+  .goal-description__logo {
+    float: left;
+    margin-right: 15px;
+
+    @include smMax() {
+      float: none;
+      text-align: center;
+
+      margin-bottom: 15px;
+    }
+
+    img {
+      font-size: 0px;
+      margin: 0px;
+    }
+  }
+
+  .goal-description__text {
+    position: relative;
+
+    .goal-description__text-container {
+      @include smMax {
+        height: 320px;
+        overflow-y: scroll;
+      }
+
+      &::v-deep {
+        @include font-size(1.2rem);
+        line-height: 1.65;
+      }
+    }
+
+    &::after {
+      display: none;
+
+      @include smMax {
+        margin-top: 5px;
+        content: "Scroll to read";
+        // position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        display: block;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.05);
+        box-sizing: border-box;
+        padding: 5px 0px;
+      }
+    }
+  }
 }
 
 .grid {
