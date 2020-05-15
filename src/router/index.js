@@ -370,7 +370,13 @@ const routes = [{
         slug: 'ckdb'
       }
     }
-  }
+  },
+  {
+    path: '/news/:slug',
+    redirect: {
+      name: 'news-item',
+    }
+  },
 ];
 
 

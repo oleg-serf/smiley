@@ -69,7 +69,7 @@
     <section class="section projects-section container">
       <h2 class="projects-section__title">
         Explore Projects
-        <span class="projects-section__count">1 552 Projects</span>
+        <span class="projects-section__count">{{totalProjects}} Projects</span>
       </h2>
       <div class="projects-section__subtitle">Check out the projects needing your support right now</div>
     </section>
@@ -106,10 +106,24 @@
     </section>
 
     <!-- Projects Grid -->
-    <section class="projects-grid container section">
+    <section class="projects-grid container section" id="section-projects">
       <!-- TODO: Make component from Project -->
       <project-card v-for="project in projects" :key="'project-'+project.slug" :project="project" />
     </section>
+
+    <div class="smiley-pagination" v-if="projectsPagination > 1">
+      <paginate
+        :page-count="projectsPagination"
+        :click-handler="paginateProjects"
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        :prev-class="'smiley-pagination-back'"
+        :next-class="'smiley-pagination-next'"
+        :container-class="'app-pagination'"
+      >
+        <span slot="breakViewContent">...</span>
+      </paginate>
+    </div>
     <Footer />
   </div>
 </template>
@@ -133,6 +147,7 @@ export default {
       projectsPagination: 0,
       myProjects: [],
       myProjectsPagination: 0,
+      totalProjects: 0,
       is_mobile: false,
       // Slider Options
       swiperOptions: {
@@ -161,14 +176,16 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.getters["user/isAuthenticated"];
-    },
+    }
+  },
+  methods: {
     paginateProjects(pageNum) {
       axios
-        .post("/search?projects-page=" + pageNum)
+        .get("/projects?page=" + pageNum)
         .then(res => {
-          console.log("Projects", res.data.events);
-          this.events = res.data.events;
-          this.eventsPagination = res.data.events_pages_count;
+          console.log("Projects pagination:", res.data.projects);
+          this.projects = res.data.projects;
+          console.log(this.projects);
 
           let sectionOffset = document.getElementById("section-projects")
             .offsetTop;
@@ -180,10 +197,7 @@ export default {
         .catch(err => {
           console.error("error", err);
         });
-      console.log(pageNum);
-    }
-  },
-  methods: {
+    },
     handleResize() {
       this.is_mobile = window.innerWidth >= 768 ? false : true;
       if (window.innerWidth >= 768) {
@@ -196,6 +210,8 @@ export default {
       console.log("Projects loaded", res);
 
       this.projects = res.data.projects;
+      this.totalProjects = res.data.count;
+      this.projectsPagination = res.data.pages_count;
     });
 
     if (this.isAuthenticated) {

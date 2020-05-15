@@ -389,7 +389,7 @@ export default {
 
         this.goal = res.data.goal;
 
-        this.posts = res.data.posts;
+        this.posts = res.data.news;
         this.postsPagination = res.data.posts_pages_count;
 
         this.events = res.data.events;
