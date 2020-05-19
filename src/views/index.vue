@@ -9,7 +9,7 @@
     <!-- News section -->
     <div class="container">
       <banner
-        link="/members/"
+        link="/smiley-news/"
         color="#F36E24"
         background="/img/homepage/banner-news.jpg"
         v-if="Object.keys(banners.news).length"
@@ -27,7 +27,7 @@
 
     <!-- Network banner -->
     <div class="container">
-      <banner link="/network" color="#4696D2" v-if="Object.keys(banners.network).length">
+      <banner link="/smiley-network" color="#4696D2" v-if="Object.keys(banners.network).length">
         <template v-slot:name>Network</template>
         <template v-slot:title v-if="banners.network.title">{{banners.network.title}}</template>
         <template v-slot:content v-if="banners.network.description">{{banners.network.description}}</template>
@@ -48,7 +48,7 @@
     <!-- Events | Talks section -->
     <div class="container">
       <banner
-        link="/talks"
+        link="/smiley-talks"
         color="#D12121"
         background="/img/homepage/banner-talks.jpg"
         v-if="Object.keys(banners.talks).length"
