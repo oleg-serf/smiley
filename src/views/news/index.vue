@@ -12,7 +12,7 @@
       </div>
     </section>
     <div class="container">
-      <div class="news-category">
+      <div class="news-category" style="border-bottom: 0">
         <form
           class="news-category__search-form"
           @submit.prevent="$swal({text: 'This feature will work soon'})"
@@ -26,6 +26,12 @@
           <option disabled selected>Select goal</option>
           <option v-for="item in news" :key="item.slug + item.id" :value="item.slug">{{item.name}}</option>
         </select>
+      </div>
+      <div class="news-category">
+        <h2 class="news-category__title">Latest News</h2>
+        <router-link :to="{name: 'news-latest'}" class="news-category__link">
+          <span></span>Read more
+        </router-link>
       </div>
     </div>
     <section class="news-grid news-grid--featured container" v-if="latest.length > 0">

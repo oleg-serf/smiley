@@ -218,6 +218,14 @@ const routes = [{
     }
   },
   {
+    path: '/smiley-news-latest',
+    name: 'news-latest',
+    component: () => import( /* webpackChunkName: "news" */ '../views/news/_all.vue'),
+    meta: {
+      title: 'News',
+    }
+  },
+  {
     path: '/smiley-news/:slug',
     name: 'news-item',
     component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
@@ -319,7 +327,8 @@ const routes = [{
     meta: {
       title: 'Our story'
     }
-  }, {
+  },
+  {
     path: '/partners',
     name: 'partners',
     component: () => import( /* webpackChunkName: "page" */ '../views/Partners.vue'),
