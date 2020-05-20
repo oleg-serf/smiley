@@ -409,7 +409,7 @@ export default {
         this.organisations = res.data.organisations;
         this.organisationsPagination = res.data.organisations_pages_count;
 
-        document.title = this.goal.description + " | Smiley Movement"; // console.log("Goal loaded", this.events);
+        document.title = this.goal.name + " | Smiley Movement"; // console.log("Goal loaded", this.events);
       })
       .catch(error => console.log(error));
 
@@ -442,6 +442,11 @@ export default {
   margin-top: 24px;
 
   line-height: 1.5;
+  display: flex;
+
+  @include smMax() {
+    display: block;
+  }
 
   &::after {
     display: block;
@@ -450,7 +455,7 @@ export default {
   }
 
   .goal-description__logo {
-    float: left;
+    // float: left;
     margin-right: 15px;
 
     @include smMax() {
