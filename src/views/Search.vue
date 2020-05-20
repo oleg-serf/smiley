@@ -313,8 +313,8 @@ export default {
       axios
         .post("/search?posts-page=" + pageNum)
         .then(res => {
-          this.posts = res.data.posts;
-          this.postsPagination = res.data.posts_pages_count;
+          this.posts = res.data.news;
+          this.postsPagination = res.data.news_pages_count;
 
           let sectionOffset = document.getElementById("section-news").offsetTop;
           window.scrollTo({
@@ -419,8 +419,8 @@ export default {
       .then(res => {
         console.log("Search results loaded", res);
 
-        this.posts = res.data.posts;
-        this.postsPagination = res.data.posts_pages_count;
+        this.posts = res.data.news;
+        this.postsPagination = res.data.news_pages_count;
 
         this.events = res.data.events;
         this.eventsPagination = res.data.events_pages_count;
