@@ -6,11 +6,29 @@
       <div class="news-category">
         <h2 class="section__title">Latest news</h2>
       </div>
-      <div class="news-grid">
+      <div class="news-grid" id="section-news">
         <news-card v-for="article in latest_news" :key="article.slug" :article="article" />
       </div>
       <div class="more-link-wrap"></div>
     </section>
+    <div class="container">
+      <div class="smiley-pagination" v-if="pages > 1">
+        <br />
+        <br />
+        <paginate
+          :page-count="pages"
+          :click-handler="loadNews"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :prev-class="'smiley-pagination-back'"
+          :next-class="'smiley-pagination-next'"
+          :container-class="'app-pagination'"
+        >
+          <span slot="breakViewContent">...</span>
+        </paginate>
+        <br />
+      </div>
+    </div>
     <Footer />
   </div>
 </template>
@@ -34,8 +52,24 @@ export default {
   },
   data() {
     return {
-      latest_news: []
+      latest_news: [],
+      pages: 0
     };
+  },
+  methods: {
+    loadNews(page) {
+      axios
+        .get("/news?page=" + page)
+        .then(res => {
+          this.latest_news = res.data.news;
+          let sectionOffset = document.getElementById("section-news").offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth"
+          });
+        })
+        .catch(error => console.error(error));
+    }
   },
   mounted() {
     axios
@@ -45,9 +79,7 @@ export default {
         this.latest_news = res.data.news;
         this.pages = res.data.pages_count;
 
-        this.title = res.data.goal.name;
-
-        document.title = this.title + " | Smiley Movement";
+        document.title = "Latest News | Smiley Movement";
         // this.$refs.breadcrumbs.breadcrumbs[
         //   this.$refs.breadcrumbs.breadcrumbs.length - 1
         // ].meta.title = this.title;

@@ -13,11 +13,8 @@
     </section>
     <div class="container">
       <div class="news-category" style="border-bottom: 0">
-        <form
-          class="news-category__search-form"
-          @submit.prevent="$swal({text: 'This feature will work soon'})"
-        >
-          <input type="text" minlength="3" required placeholder="Search News" />
+        <form class="news-category__search-form" @submit.prevent="find">
+          <input type="text" minlength="3" required placeholder="Search News" v-model="search" />
           <button type="submit">
             <i class="fa fa-search"></i>
           </button>
@@ -75,7 +72,8 @@ export default {
   data() {
     return {
       latest: [],
-      news: []
+      news: [],
+      search: ""
     };
   },
   mounted() {
@@ -94,6 +92,12 @@ export default {
       router.push({
         name: "news-category-item",
         params: { slug: event.target.value }
+      });
+    },
+    find() {
+      router.push({
+        name: "search",
+        params: { keyword: this.search }
       });
     }
   },

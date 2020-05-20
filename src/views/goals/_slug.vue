@@ -282,7 +282,7 @@ export default {
     },
     paginateNews(pageNum) {
       axios
-        .post("/goals/" + this.$route.params.slug + "?posts-page=" + pageNum)
+        .post("/goals/" + this.$route.params.slug + "?news-page=" + pageNum)
         .then(res => {
           this.posts = res.data.posts;
           this.postsPagination = res.data.posts_pages_count;

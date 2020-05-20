@@ -311,7 +311,7 @@ export default {
   methods: {
     paginateNews(pageNum) {
       axios
-        .post("/search?posts-page=" + pageNum)
+        .post("/search?news-page=" + pageNum)
         .then(res => {
           this.posts = res.data.news;
           this.postsPagination = res.data.news_pages_count;
