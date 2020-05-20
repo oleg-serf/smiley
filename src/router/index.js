@@ -147,6 +147,14 @@ const routes = [{
       title: 'Search results',
     }
   },
+  {
+    path: '/news-search/:keyword',
+    name: 'news-search',
+    component: () => import( /* webpackChunkName: "news" */ '../views/SearchNews.vue'),
+    meta: {
+      title: 'Search results',
+    }
+  },
   /**
    * Network
    */

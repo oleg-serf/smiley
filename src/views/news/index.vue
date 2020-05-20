@@ -96,7 +96,7 @@ export default {
     },
     find() {
       router.push({
-        name: "search",
+        name: "news-search",
         params: { keyword: this.search }
       });
     }

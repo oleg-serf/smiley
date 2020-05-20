@@ -36,7 +36,7 @@
           </div>
           <div class="organisation-info">
             <div class="organisation-name">{{organisation.name}}</div>
-            <div class="organisation-job">Arts, Culture, Leisure</div>
+            <!-- <div class="organisation-job">Arts, Culture, Leisure</div> -->
             <div class="organisation-data">
               <div class="organisation-data__column">
                 Employees
@@ -97,7 +97,7 @@
         </div>
         <div class="grid-item grid-item--support">
           <div class="title">support us</div>
-          <div class="content">{{organisation.donation__text || 'Not currently taking donations'}}</div>
+          <div class="content">{{organisation.donation__text || ''}}</div>
           <a
             :href="organisation.donation__link"
             class="button"
@@ -230,7 +230,7 @@
           <div class="about">No team members to display.</div>
         </div>
       </div>-->
-      <div class="grid-item align-right">
+      <div class="grid-item align-right" style="display: none;">
         <div class="item-holder">
           <div class="title">
             <img src="/img/icons/support-need-icon.png" />
@@ -247,7 +247,7 @@
           <p v-else>{{organisation.name}} don't need support</p>
         </div>
       </div>
-      <div class="grid-item align-left">
+      <div class="grid-item align-left" style="display: none;">
         <div class="item-holder">
           <div class="title">
             <img src="/img/icons/support-offer-icon.png" />

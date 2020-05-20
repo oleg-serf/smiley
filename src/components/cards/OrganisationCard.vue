@@ -15,9 +15,9 @@
     <h2 class="organisation-item__title">
       <router-link :to="'/organisation/' + organisation.slug">{{ organisation.name }}</router-link>
     </h2>
-    <div class="organisation-item__categories">Arts, Culture, Leisure</div>
+    <!-- <div class="organisation-item__categories">Arts, Culture, Leisure</div> -->
     <div class="organisation-item__spanner"></div>
-    <template v-if="loggedIn">
+    <template v-if="loggedIn && !replaceFollowButton">
       <div
         class="organisation-item__status"
       >{{ organisation.is_following ? 'Connected' : 'Not Connected'}}</div>
@@ -34,9 +34,18 @@
         UnFollow
       </button>
     </template>
+    <template v-else>
+      <a
+        :href="organisation.website"
+        v-if="organisation.website != null"
+        target="_blank"
+        class="organisation-item__follow-btn"
+      >Visit</a>
+    </template>
     <router-link
       class="organisation-item__visit"
       :to="'/organisation/' + organisation.slug"
+      v-if="!replaceFollowButton"
     >Visit page</router-link>
     <!-- <p class="organisation-item__description">{{ organisation.description }}</p> -->
   </div>
@@ -54,6 +63,10 @@ export default {
     organisation: {
       type: Object,
       required: true
+    },
+    replaceFollowButton: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -206,6 +219,8 @@ export default {
     margin-bottom: 12px;
     transition: background-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
+    text-decoration: none;
+    color: #393939;
 
     &:hover {
       box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.3);

@@ -21,6 +21,47 @@
           <div class="goal-description__text-container" v-html="goal.description"></div>
         </div>
       </section>
+      <section class="section" v-if="organisations.length > 0" id="section-organisations">
+        <h2 class="section__title">Organisations working towards {{goal.name}}</h2>
+        <swiper
+          ref="organisationsSwiper"
+          :options="organisationsSwiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide
+            v-for="organisation in organisations"
+            :key="'organisation-swiper-'+organisation.slug"
+          >
+            <organisation-card :organisation="organisation" :replaceFollowButton="true" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="grid grid--organisations" v-else>
+          <organisation-card
+            v-for="organisation in organisations"
+            :key="'organisation-'+organisation.slug"
+            :organisation="organisation"
+            :replaceFollowButton="true"
+          />
+        </div>
+        <div class="smiley-pagination" v-if="false">
+          <paginate
+            :page-count="organisationsPagination"
+            :click-handler="paginateOrganisations"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :prev-class="'smiley-pagination-back'"
+            :next-class="'smiley-pagination-next'"
+            :container-class="'app-pagination'"
+          >
+            <span slot="breakViewContent">...</span>
+          </paginate>
+        </div>
+      </section>
       <section class="content-block">
         <div class="news-category">
           <h2 class="news-category__title">Latest Updates</h2>
@@ -132,46 +173,6 @@
           <paginate
             :page-count="projectsPagination"
             :click-handler="paginateProjects"
-            :prev-text="'Prev'"
-            :next-text="'Next'"
-            :prev-class="'smiley-pagination-back'"
-            :next-class="'smiley-pagination-next'"
-            :container-class="'app-pagination'"
-          >
-            <span slot="breakViewContent">...</span>
-          </paginate>
-        </div>
-      </section>
-      <section class="section" v-if="organisations.length > 0" id="section-organisations">
-        <h2 class="section__title">Organisations</h2>
-        <swiper
-          ref="organisationsSwiper"
-          :options="organisationsSwiperOptions"
-          :auto-update="true"
-          :auto-destroy="true"
-          :delete-instance-on-destroy="true"
-          :cleanup-styles-on-destroy="true"
-          v-if="is_mobile"
-        >
-          <swiper-slide
-            v-for="organisation in organisations"
-            :key="'organisation-swiper-'+organisation.slug"
-          >
-            <organisation-card :organisation="organisation" />
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
-        <div class="grid grid--organisations" v-else>
-          <organisation-card
-            v-for="organisation in organisations"
-            :key="'organisation-'+organisation.slug"
-            :organisation="organisation"
-          />
-        </div>
-        <div class="smiley-pagination" v-if="organisationsPagination > 1">
-          <paginate
-            :page-count="organisationsPagination"
-            :click-handler="paginateOrganisations"
             :prev-text="'Prev'"
             :next-text="'Next'"
             :prev-class="'smiley-pagination-back'"

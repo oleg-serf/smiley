@@ -311,7 +311,7 @@ export default {
   methods: {
     paginateNews(pageNum) {
       axios
-        .post("/search?news-page=" + pageNum)
+        .get("/search?news-page=" + pageNum)
         .then(res => {
           this.posts = res.data.news;
           this.postsPagination = res.data.news_pages_count;
@@ -329,7 +329,7 @@ export default {
     },
     paginateEvents(pageNum) {
       axios
-        .post("/search?events-page=" + pageNum)
+        .get("/search?events-page=" + pageNum)
         .then(res => {
           console.log("Events", res.data.events);
           this.events = res.data.events;
@@ -349,7 +349,7 @@ export default {
     },
     paginateProjects(pageNum) {
       axios
-        .post("/search?projects-page=" + pageNum)
+        .get("/search?projects-page=" + pageNum)
         .then(res => {
           console.log("Projects", res.data.events);
           this.events = res.data.events;
@@ -369,7 +369,7 @@ export default {
     },
     paginateOrganisations(pageNum) {
       axios
-        .post("/search?organisations-page=" + pageNum)
+        .get("/search?organisations-page=" + pageNum)
         .then(res => {
           this.organisations = res.data.organisations;
           this.organisationsPagination = res.data.organisations_pages_count;
@@ -388,7 +388,7 @@ export default {
     },
     paginateUsers(pageNum) {
       axios
-        .post("/search?users-page=" + pageNum)
+        .get("/search?users-page=" + pageNum)
         .then(res => {
           console.log(res.data.users);
           this.users = res.data.users;
@@ -415,7 +415,7 @@ export default {
   },
   mounted() {
     axios
-      .post("/search", { keyword: this.$route.params.keyword })
+      .get("/search", { keyword: this.$route.params.keyword })
       .then(res => {
         console.log("Search results loaded", res);
 

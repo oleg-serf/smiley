@@ -17,6 +17,7 @@
       <div class="container">
         <div class="textual-banner__title">17 GOALS TO TRANSFORM OUR WORLD</div>
         <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the planet, now and into the future. Everything we do is guided by these goals, from the events we host, content we produce to the way organisations and projects are presented to you.Click through each Goal below to uncover the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get involved.</p>
+        <p>Click on each goal to learn more</p>
       </div>
     </div>
 
