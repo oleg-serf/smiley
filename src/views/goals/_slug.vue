@@ -14,53 +14,65 @@
 
     <div class="container">
       <section class="goal-description">
-        <div class="goal-description__logo">
-          <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
-        </div>
-        <div class="goal-description__text">
-          <div class="goal-description__text-container" v-html="goal.description"></div>
-        </div>
-      </section>
-      <section class="section" v-if="organisations.length > 0" id="section-organisations">
-        <h2 class="section__title">Organisations working towards {{goal.name}}</h2>
-        <swiper
-          ref="organisationsSwiper"
-          :options="organisationsSwiperOptions"
-          :auto-update="true"
-          :auto-destroy="true"
-          :delete-instance-on-destroy="true"
-          :cleanup-styles-on-destroy="true"
-          v-if="is_mobile"
+        <section class="goal-descripion--1 goal-block" :style="{borderColor: goal.colour}">
+          <div
+            class="goal-description__text"
+            :style="{color: goal.colour}"
+          >How we can attain {{goal.name}} ?</div>
+          <div class="goal-description__logo" :style="{backgroundColor: goal.colour}">
+            <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
+          </div>
+        </section>
+        <section
+          class="goal-descripion--2 section"
+          v-if="organisations.length > 0"
+          id="section-organisations"
         >
-          <swiper-slide
-            v-for="organisation in organisations"
-            :key="'organisation-swiper-'+organisation.slug"
+          <h2 class="section__title">Support these organisations</h2>
+          <swiper
+            ref="organisationsSwiper"
+            :options="organisationsSwiperOptions"
+            :auto-update="true"
+            :auto-destroy="true"
+            :delete-instance-on-destroy="true"
+            :cleanup-styles-on-destroy="true"
+            v-if="is_mobile"
           >
-            <organisation-card :organisation="organisation" :replaceFollowButton="true" />
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
-        <div class="grid grid--organisations" v-else>
-          <organisation-card
-            v-for="organisation in organisations"
-            :key="'organisation-'+organisation.slug"
-            :organisation="organisation"
-            :replaceFollowButton="true"
-          />
-        </div>
-        <div class="smiley-pagination" v-if="false">
-          <paginate
-            :page-count="organisationsPagination"
-            :click-handler="paginateOrganisations"
-            :prev-text="'Prev'"
-            :next-text="'Next'"
-            :prev-class="'smiley-pagination-back'"
-            :next-class="'smiley-pagination-next'"
-            :container-class="'app-pagination'"
-          >
-            <span slot="breakViewContent">...</span>
-          </paginate>
-        </div>
+            <swiper-slide
+              v-for="organisation in organisations"
+              :key="'organisation-swiper-'+organisation.slug"
+            >
+              <organisation-card-goal :organisation="organisation" />
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+          <div class="grid grid--organisations" v-else>
+            <organisation-card-goal
+              v-for="organisation in organisations"
+              :key="'organisation-'+organisation.slug"
+              :organisation="organisation"
+            />
+          </div>
+          <div class="smiley-pagination" v-if="false">
+            <paginate
+              :page-count="organisationsPagination"
+              :click-handler="paginateOrganisations"
+              :prev-text="'Prev'"
+              :next-text="'Next'"
+              :prev-class="'smiley-pagination-back'"
+              :next-class="'smiley-pagination-next'"
+              :container-class="'app-pagination'"
+            >
+              <span slot="breakViewContent">...</span>
+            </paginate>
+          </div>
+        </section>
+        <section
+          class="goal-descripion--3 goal-description__content"
+          :style="{backgroundColor: goal.colour}"
+        >
+          <div class="goal-description__content-container" v-html="goal.description"></div>
+        </section>
       </section>
       <section class="content-block">
         <div class="news-category">
@@ -197,7 +209,7 @@ import Banner from "@/components/homepage/Banner.vue";
 import NewsCard from "@/components/cards/NewsCard";
 import EventCard from "@/components/cards/EventCard";
 import ProjectCard from "@/components/cards/ProjectCard";
-import OrganisationCard from "@/components/cards/OrganisationCard";
+import OrganisationCardGoal from "@/components/cards/OrganisationCardGoal";
 
 import Footer from "@/components/Footer";
 
@@ -208,7 +220,7 @@ export default {
     NewsCard,
     EventCard,
     ProjectCard,
-    OrganisationCard,
+    OrganisationCardGoal,
     Footer
   },
   data() {
@@ -438,69 +450,95 @@ export default {
   }
 }
 
+#section-organisations {
+  margin-bottom: 0px;
+}
+
 .goal-description {
-  margin-top: 24px;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
 
-  line-height: 1.5;
-  display: flex;
+  @include lgMax {
+    display: flex;
+    flex-direction: column;
 
-  @include smMax() {
-    display: block;
-  }
-
-  &::after {
-    display: block;
-    content: "";
-    clear: both;
-  }
-
-  .goal-description__logo {
-    // float: left;
-    margin-right: 15px;
-
-    @include smMax() {
-      float: none;
-      text-align: center;
-
-      margin-bottom: 15px;
+    .goal-descripion--1 {
+      order: 1;
     }
-
-    img {
-      font-size: 0px;
-      margin: 0px;
+    .goal-descripion--2 {
+      order: 3;
+    }
+    .goal-descripion--3 {
+      order: 2;
     }
   }
 
   .goal-description__text {
-    position: relative;
+    font-family: "Montserrat SemiBold";
+    @include font-size(2rem);
+  }
 
-    .goal-description__text-container {
-      @include smMax {
-        height: 320px;
-        overflow-y: scroll;
-      }
+  .goal-block {
+    width: 100%;
+    border-width: 3px;
+    border-style: solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 
-      &::v-deep {
-        @include font-size(1.2rem);
-        line-height: 1.65;
-      }
+    @include smMax {
+      border: 0;
+    }
+  }
+
+  .goal-description__text {
+    @include font-size(1.3rem);
+    color: #393939;
+    font-family: "Montserrat SemiBold";
+    padding: 20px;
+    flex: 1;
+
+    @include smMax {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+  .goal-description__logo {
+    height: 100%;
+
+    @include smMax {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .goal-description__content {
+    padding: 25px;
+    color: #fff;
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    .goal-description__content-container {
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      top: 24px;
     }
 
-    &::after {
-      display: none;
+    &::v-deep {
+      line-height: 1.5;
+      ul {
+        li {
+          position: relative;
+          padding-left: 36px;
 
-      @include smMax {
-        margin-top: 5px;
-        content: "Scroll to read";
-        // position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 100%;
-        display: block;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.05);
-        box-sizing: border-box;
-        padding: 5px 0px;
+          &::before {
+            position: absolute;
+            content: "\2014\a0";
+            left: 0px;
+          }
+        }
       }
     }
   }
@@ -525,14 +563,11 @@ export default {
 
   &--organisations {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 15px;
 
-    @include xlMax {
-      grid-template-columns: repeat(4, 1fr);
-    }
     @include lgMax {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

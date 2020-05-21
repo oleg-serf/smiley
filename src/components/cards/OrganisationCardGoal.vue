@@ -17,23 +17,12 @@
     </h2>
     <!-- <div class="organisation-item__categories">Arts, Culture, Leisure</div> -->
     <div class="organisation-item__spanner"></div>
-    <template v-if="loggedIn">
-      <div
-        class="organisation-item__status"
-      >{{ organisation.is_following ? 'Connected' : 'Not Connected'}}</div>
-      <button
-        class="organisation-item__follow-btn"
-        @click.prevent="follow(organisation)"
-        v-if="!organisation.is_following"
-      >
-        <i class="fa fa-plus"></i>
-        Follow
-      </button>
-      <button class="organisation-item__follow-btn" @click.prevent="unfollow(organisation)" v-else>
-        <i class="fa fa-minus"></i>
-        UnFollow
-      </button>
-    </template>
+    <a
+      :href="organisation.website"
+      v-if="organisation.website != null"
+      target="_blank"
+      class="organisation-item__follow-btn"
+    >Visit</a>
 
     <router-link
       class="organisation-item__visit"
@@ -47,7 +36,7 @@
 import axios from "@/axios-auth";
 
 export default {
-  name: "OrganisationCard",
+  name: "OrganisationCardGoal",
   data() {
     return {};
   },
