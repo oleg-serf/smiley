@@ -103,9 +103,12 @@ export default {
     paginateNews(pageNum) {
       axios
         // .get("/search?news-page=" + pageNum)
-        .get("/news-search?news-page=" + pageNum, {
-          keyword: this.$route.params.keyword
-        })
+        .get(
+          "/news-search?news-page=" +
+            pageNum +
+            "&keyword=" +
+            this.$route.params.keyword
+        )
 
         .then(res => {
           this.posts = res.data.news;
@@ -131,7 +134,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/news-search", { keyword: this.$route.params.keyword })
+      .get("/news-search?keyword=" + this.$route.params.keyword)
       .then(res => {
         console.log("Search results loaded", res);
 
