@@ -14,11 +14,6 @@ RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
     RequestHeader set X-Prerender-Version "prerender-apache@2.0.0"
 </IfModule>
 
-
-
-
-
-
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
