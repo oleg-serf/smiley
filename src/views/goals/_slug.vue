@@ -540,8 +540,12 @@ export default {
 
           &::before {
             position: absolute;
-            content: "—";
+            content: "";
             left: 0px;
+            top: 10px;
+            height: 1px;
+            width: 20px;
+            background-color: #fff;
           }
         }
       }
