@@ -537,6 +537,11 @@ export default {
         li {
           position: relative;
           padding-left: 36px;
+          margin-top: 0.8rem;
+
+          &:first-child {
+            margin-top: 0px;
+          }
 
           &::before {
             position: absolute;
