@@ -488,6 +488,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    margin-bottom: -1px;
 
     @include smMax {
       border: 0;
@@ -513,6 +514,10 @@ export default {
       width: 100%;
       text-align: center;
     }
+
+    img {
+      margin: -1px;
+    }
   }
 
   .goal-description__content {
@@ -535,7 +540,7 @@ export default {
 
           &::before {
             position: absolute;
-            content: "\2014\a0";
+            content: "—";
             left: 0px;
           }
         }
