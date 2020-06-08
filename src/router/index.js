@@ -318,6 +318,14 @@ const routes = [{
     }
   },
   {
+    path: '/organisation-smiley/',
+    name: 'organisation',
+    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/_slug-by-smiley.vue'),
+    meta: {
+      breadcrumbs: ['organisations'],
+    }
+  },
+  {
     path: '/organisations',
     name: 'organisations',
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/index.vue'),

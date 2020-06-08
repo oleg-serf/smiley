@@ -641,10 +641,20 @@ export default {
   letter-spacing: 2px;
   text-align: center;
   text-transform: uppercase;
+  transition: background-color 0.2s, color 0.2s;
 
   &.button--primary {
     background-color: #f4ed3b;
     color: #000;
+
+    &:hover {
+      background-color: #e0db36;
+    }
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: #535763;
   }
 }
 
