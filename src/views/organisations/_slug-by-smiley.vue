@@ -112,7 +112,7 @@
           v-if="organisation.donation_link || organisation.volunteer_link || organisation.fundraise_link"
         >
           <div class="volunteer">
-            <div class="title">How to support org name</div>
+            <div class="title">How to support {{organisation.name}}</div>
             <ul class="volunteer-actions">
               <li v-if="organisation.donation_link">
                 <a
