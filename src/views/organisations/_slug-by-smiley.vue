@@ -107,28 +107,36 @@
         </div>
       </div>
       <div class="grid-item align-left">
-        <div class="item-holder">
+        <div
+          class="item-holder"
+          v-if="organisation.donation_link || organisation.volunteer_link || organisation.fundraise_link"
+        >
           <div class="volunteer">
             <div class="title">How to support org name</div>
             <ul class="volunteer-actions">
-              <li>
+              <li v-if="organisation.donation_link">
                 <a
-                  href
+                  :href="organisation.donation_link"
                   target="_blank"
                   class="button button--primary"
                   rel="noopener noreferrer"
                 >Donate</a>
               </li>
-              <li>
+              <li v-if="organisation.volunteer_link">
                 <a
-                  href
+                  :href="organisation.volunteer_link"
                   target="_blank"
                   class="button button--primary"
                   rel="noopener noreferrer"
                 >Volunteer</a>
               </li>
-              <li>
-                <a href target="_blank" class="button" rel="noopener noreferrer">Fundrise</a>
+              <li v-if="organisation.fundraise_link">
+                <a
+                  :href="organisation.fundraise_link"
+                  target="_blank"
+                  class="button"
+                  rel="noopener noreferrer"
+                >Fundrise</a>
               </li>
             </ul>
           </div>
@@ -416,8 +424,7 @@ export default {
     });
 
     axios
-      // .get("/organisations/" + this.$route.params.slug)
-      .get("/organisations/owens-and-odonnell-traders")
+      .get("/organisations/" + this.$route.params.slug)
       .then(response => {
         console.log(
           `Organisation Loaded: ${this.$route.params.slug}`,

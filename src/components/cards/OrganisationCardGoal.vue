@@ -25,8 +25,14 @@
     >Visit</a>
 
     <router-link
+      v-if="!organisation.admin_created"
       class="organisation-item__visit"
       :to="'/organisation/' + organisation.slug"
+    >Visit page</router-link>
+    <router-link
+      v-else
+      class="organisation-item__visit"
+      :to="'/organisation-by-smiley/' + organisation.slug"
     >Visit page</router-link>
     <!-- <p class="organisation-item__description">{{ organisation.description }}</p> -->
   </div>
