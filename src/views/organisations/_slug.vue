@@ -122,7 +122,10 @@
       <div class="grid-item align-left">
         <div class="item-holder">
           <div class="title">Stats for {{organisation.name}}</div>
-          <div class="goals-grid" v-if="organisation.other_goals.length > 0">
+          <div
+            class="goals-grid"
+            v-if="organisation.other_goals != null && organisation.other_goals.length > 0"
+          >
             <ul class="goals">
               <li v-for="goal in organisation.other_goals" :key="'goal-'+goal.slug">
                 <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
