@@ -86,7 +86,7 @@
           <img src="/img/created-by-smiley.png" />
           <i
             class="popover-icon fa fa-info-circle"
-            v-popover:tooltip="'Members and organisations that match your interests, skills you are in need of or looking to offer.'"
+            v-popover:tooltip="'This editorial page has been created by Smiley Movement. If you are associated with this organisation and would like to manage this page, please contact us'"
           ></i>
         </div>
       </div>
@@ -94,7 +94,7 @@
     <div class="organisation-additional">
       <div
         class="grid-item align-right"
-        :class="{'grid-item--rows-2': !photos, 'grid-item--rows-3': photos}"
+        :class="{'grid-item--rows-2': organisation.organisation_images, 'grid-item--rows-3': organisation.organisation_images != null && organisation.organisation_images.length > 0}"
       >
         <div class="item-holder">
           <div class="title">About {{organisation.name}}</div>
@@ -142,30 +142,17 @@
           </div>
         </div>
       </div>
-      <div class="grid-item align-left" v-if="photos">
-        <div class="item-holder">
-          <div class="title">Share this page</div>
-          <ul class="organisation-social">
-            <li>
-              <a :href="shareLink('twitter')" target="_blank">
-                <app-icon name="twitter" />
-              </a>
-            </li>
-            <li>
-              <a :href="shareLink('facebook')" target="_blank">
-                <app-icon name="facebook" />
-              </a>
-            </li>
-            <li>
-              <a :href="shareLink('linkedin')" target="_blank">
-                <app-icon name="linkedin" />
-              </a>
-            </li>
-          </ul>
-          <div class="url-share">
-            <input readonly :value="domain+'/organisations/' + this.$route.params.slug" />
-            <button type="button" class="button button--primary">Copy link</button>
-          </div>
+      <div
+        class="grid-item align-left"
+        v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"
+      >
+        <div class="item-holder item-holder--gallery">
+          <swiper ref="mySwiper" :options="swiperOptions">
+            <swiper-slide v-for="image in organisation.organisation_images" :key="'image-'+image">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ image" />
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
         </div>
       </div>
       <div class="grid-item align-left">
@@ -196,6 +183,53 @@
       </div>
     </div>
 
+    <div class="container">
+      <section class="section" v-if="posts.length > 0" id="section-news">
+        <h2 class="section__title">News</h2>
+        <swiper
+          ref="newsSwiper"
+          :options="itemsSwiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide v-for="post in posts" :key="'post-swiper-'+post.slug">
+            <news-card :article="post" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="grid grid--news" v-else>
+          <news-card v-for="post in posts" :key="'post-'+post.slug" :article="post" />
+        </div>
+      </section>
+      <section class="section" v-if="events.length > 0" id="section-events">
+        <h2 class="section__title">Events</h2>
+        <swiper
+          ref="eventsSwiper"
+          :options="itemsSwiperOptions"
+          :auto-update="true"
+          :auto-destroy="true"
+          :delete-instance-on-destroy="true"
+          :cleanup-styles-on-destroy="true"
+          v-if="is_mobile"
+        >
+          <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
+            <event-card :event="event" />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="grid grid--events" v-else>
+          <event-card
+            v-for="event in events"
+            :key="'event-'+event.slug"
+            :event="event"
+            :past="event.past"
+          />
+        </div>
+      </section>
+    </div>
     <Footer />
   </div>
 </template>
@@ -205,23 +239,31 @@ import axios from "@/axios-auth";
 
 import AppIcon from "@/components/AppIcon";
 
+import NewsCard from "@/components/cards/NewsCard";
+import EventCard from "@/components/cards/EventCard";
 import Footer from "@/components/Footer";
 
 export default {
   name: "OrganisationProfile",
   components: {
     AppIcon,
+    NewsCard,
+    EventCard,
     Footer
   },
   data() {
     return {
-      photos: false,
+      photos: true,
       organisation: {
         followers: 0,
         other_goals: []
       },
       is_owner: false,
+      is_mobile: false,
+
       following: false,
+      posts: [],
+      events: [],
       Toast: () => {},
       activity: "projects",
       organisationPost: "",
@@ -232,53 +274,35 @@ export default {
         hubs: []
       },
       socials: [],
-      support: {
-        offer: [
-          {
-            id: 13,
-            title: "Architecture",
-            support_category_id: 1,
-            pivot: { user_id: 620, support_id: 13, offer: 1 },
-            support_category: { id: 1, title: "Skills" }
+      swiperOptions: {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        slidesPerView: 1.2,
+        spaceBetween: 30,
+        mousewheel: true
+      },
+      itemsSwiperOptions: {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        slidesPerView: 4,
+        spaceBetween: 15,
+        mousewheel: true,
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            centeredSlides: true
           },
-          {
-            id: 14,
-            title: "Branding",
-            support_category_id: 1,
-            pivot: { user_id: 620, support_id: 14, offer: 1 },
-            support_category: { id: 1, title: "Skills" }
+          480: {
+            slidesPerView: 1.3
           },
-          {
-            id: 7,
-            title: "Government Funding",
-            support_category_id: 3,
-            pivot: { user_id: 620, support_id: 7, offer: 1 },
-            support_category: { id: 3, title: "Financial support" }
+          640: {
+            slidesPerView: 1.5
           }
-        ],
-        need: [
-          {
-            id: 2,
-            title: "Few hours a month",
-            support_category_id: 2,
-            pivot: { user_id: 620, support_id: 2, offer: 0 },
-            support_category: { id: 2, title: "Volonteering" }
-          },
-          {
-            id: 5,
-            title: "Social Investment",
-            support_category_id: 3,
-            pivot: { user_id: 620, support_id: 5, offer: 0 },
-            support_category: { id: 3, title: "Financial support" }
-          },
-          {
-            id: 15,
-            title: "Business Development",
-            support_category_id: 1,
-            pivot: { user_id: 620, support_id: 15, offer: 0 },
-            support_category: { id: 1, title: "Skills" }
-          }
-        ]
+        }
       }
     };
   },
@@ -406,6 +430,12 @@ export default {
       }
 
       return result;
+    },
+    handleResize() {
+      this.is_mobile = window.innerWidth >= 768 ? false : true;
+      if (window.innerWidth >= 768) {
+        this.is_shown = true;
+      }
     }
   },
   mounted() {
@@ -424,7 +454,7 @@ export default {
     });
 
     axios
-      .get("/organisations/" + this.$route.params.slug)
+      .get("/organisations/" + this.$route.params.slug + "/admin-created")
       .then(response => {
         console.log(
           `Organisation Loaded: ${this.$route.params.slug}`,
@@ -434,6 +464,9 @@ export default {
         this.organisation = response.data.organisation;
         this.feed.news = response.data.organisation_posts;
         this.is_owner = response.data.is_owner;
+
+        this.posts = response.data.news;
+        this.events = response.data.events;
 
         if (response.data.organisation.facebook != null) {
           this.socials.push({
@@ -471,6 +504,13 @@ export default {
         document.title = response.data.organisation.name + " | Smiley Movement";
       })
       .catch(error => console.error("Error", error));
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   }
 };
 </script>
@@ -878,6 +918,13 @@ export default {
     height: 100%;
     background-color: #eeeeee;
 
+    &.item-holder--gallery {
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
     &:last-child {
       border: none;
     }
@@ -1104,6 +1151,44 @@ export default {
   .button {
     min-width: 150px;
     width: 100%;
+  }
+}
+
+.section {
+  &__title {
+    font-family: "Montserrat SemiBold";
+    @include font-size(2rem);
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.grid {
+  &--news,
+  &--events,
+  &--projects {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
+
+    @include lgMax {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mdMax {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  &--organisations {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+
+    @include lgMax {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
 </style>

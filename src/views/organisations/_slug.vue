@@ -6,6 +6,13 @@
         <p>This is where we learn about your organisation, charitable vision and mission whether you're a registered non-profit, social enterprise, charitable foundation, Trust, educational institution, local authority or conscientious private business</p>
       </div>
     </div>
+    <!-- <div v-if="organisation.organisation_images != null">
+      <img
+        v-for="image in organisation.organisation_images"
+        :key="'image-'+image"
+        :src="$settings.images_path.organisations + 'images/m_'+ image"
+      />
+    </div>-->
     <div class="organisation-bg">
       <div class="organisation-grid container">
         <div class="grid-item grid-item--top-panel" v-if="is_owner && loggedIn">
