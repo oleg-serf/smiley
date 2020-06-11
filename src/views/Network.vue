@@ -8,7 +8,7 @@
     <div class="container">
       <banner color="#4696D2">
         <template v-slot:name>Network</template>
-        <template v-slot:title>MATCHMAKER FOR GOOD</template>
+        <template v-slot:title>MATCHMAKER FOR GOOD &trade;</template>
         <template v-slot:content>Connect with changemakers and get inspired to take positive action</template>
       </banner>
 
