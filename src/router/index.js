@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import ga from 'vue-ga'
+
 
 
 Vue.use(VueRouter)
@@ -416,7 +418,7 @@ router.beforeEach(function (to, from, next) {
   // TODO: Scroll top after pagination also
   window.scrollTo(0, 0)
   document.body.classList.remove("mobile-menu--opened");
-  const isLogged = (localStorage.getItem('token')) ? true : false;
+  const isLogged = !!(localStorage.getItem('token'));
 
   if (to.meta.requiresAuth) {
 
@@ -438,5 +440,7 @@ router.beforeEach(function (to, from, next) {
     next();
   }
 });
+
+ga(router, 'UA-149279942-1');
 
 export default router
