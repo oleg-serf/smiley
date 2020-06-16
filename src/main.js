@@ -4,6 +4,7 @@ import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 import store from './store'
+import VueMeta from 'vue-meta'
 
 import "regenerator-runtime";
 
@@ -24,6 +25,7 @@ import 'swiper/css/swiper.css'
 
 
 Vue.use(VueAwesomeSwiper)
+Vue.use(VueMeta)
 Vue.use(Dayjs);
 Vue.use(CKEditor);
 Vue.use(vueVimeoPlayer)

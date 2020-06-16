@@ -42,18 +42,18 @@
               v-for="organisation in organisations"
               :key="'organisation-swiper-'+organisation.slug"
             >
-              <organisation-card-goal :organisation="organisation" />
+              <organisation-card :organisation="organisation" />
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
           <div class="grid grid--organisations" v-else>
-            <organisation-card-goal
+            <organisation-card
               v-for="organisation in organisations"
               :key="'organisation-'+organisation.slug"
               :organisation="organisation"
             />
           </div>
-          <div class="smiley-pagination" v-if="false">
+          <div class="smiley-pagination" v-if="organisationsPagination > 1 && false">
             <paginate
               :page-count="organisationsPagination"
               :click-handler="paginateOrganisations"
@@ -209,7 +209,7 @@ import Banner from "@/components/homepage/Banner.vue";
 import NewsCard from "@/components/cards/NewsCard";
 import EventCard from "@/components/cards/EventCard";
 import ProjectCard from "@/components/cards/ProjectCard";
-import OrganisationCardGoal from "@/components/cards/OrganisationCardGoal";
+import OrganisationCard from "@/components/cards/OrganisationCard";
 
 import Footer from "@/components/Footer";
 
@@ -220,7 +220,7 @@ export default {
     NewsCard,
     EventCard,
     ProjectCard,
-    OrganisationCardGoal,
+    OrganisationCard,
     Footer
   },
   data() {
@@ -354,7 +354,7 @@ export default {
     paginateOrganisations(pageNum) {
       axios
         .post(
-          "/goals/" + this.$route.params.slug + "?organisations-page=" + pageNum
+          "/goals/" + this.$route.params.slug + "?organisations-page=" + pageNum + "/admin-created"
         )
         .then(res => {
           this.organisations = res.data.organisations;

@@ -404,6 +404,11 @@ const routes = [{
       name: 'news-item',
     }
   },
+  {
+    path: '/test-meta',
+    name: 'metatest',
+    component: () => import(/* webpackChunkName: "metatest" */ '../views/test-meta'),
+  },
 ];
 
 
