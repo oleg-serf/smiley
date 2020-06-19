@@ -48,7 +48,7 @@
             loggedIn() {
                 return this.$store.getters["user/isAuthenticated"];
             },
-            linkedComponent: function(){
+            linkedComponent: function () {
                 return {
                     name: this.organisation.admin_created ? 'organisation-by-smiley' : 'organisation',
                     params: {

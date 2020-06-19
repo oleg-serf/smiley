@@ -152,7 +152,7 @@ export default {
           button_text: "Learn More",
           description:
             "Connect with changemakers and get inspired to take positive action",
-          title: "MATCHMAKER FOR GOOD"
+          title: "MATCHMAKER FOR GOOD ™"
         },
         talks: {},
         goals: {}

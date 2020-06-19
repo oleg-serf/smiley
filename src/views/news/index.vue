@@ -201,6 +201,8 @@ export default {
     height: 46px;
     background-color: #fff;
     border: 1px solid #e0e6eb !important;
+    padding-left: 20px;
+    padding-right: 20px;
 
     font-family: "Montserrat Regular", sans-serif;
 
