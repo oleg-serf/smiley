@@ -19,7 +19,7 @@
           <div
               class="goal-description__text"
               :style="{color: goal.colour}"
-          >How can we attain {{goal.name}} ?
+          >How we can attain {{goal.name}} ?
           </div>
           <div class="goal-description__logo" :style="{backgroundColor: goal.colour}">
             <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
