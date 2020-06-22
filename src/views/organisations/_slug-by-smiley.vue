@@ -79,6 +79,9 @@
               </div>
             </div>
             <ul class="goals">
+              <li v-if="organisation.main_goal != null">
+                <img :src="$settings.images_path.goals + 's_' + organisation.main_goal.image" alt="icon"/>
+              </li>
               <li v-for="goal in organisation.other_goals" :key="'goal-'+goal.slug">
                 <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
               </li>
