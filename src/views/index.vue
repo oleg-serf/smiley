@@ -214,6 +214,14 @@ export default {
           this.$settings.images_path.pages + "l_" + this.hero.url_source;
 
         this.quote = res.data.page_sections.bottom_quote[0];
+
+          const metaPayload = {
+              meta: res.data?.meta || {},
+              title: 'Smiley Talks',
+          }
+
+          metaPayload.meta.description = 'A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals';
+          this.$store.dispatch('meta/setMeta', metaPayload);
       })
       .catch(error => console.log(error));
   }

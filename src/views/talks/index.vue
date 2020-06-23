@@ -340,6 +340,14 @@ export default {
         console.log("Future events", res);
         this.events = res.data.events;
         this.events_pages = res.data.pages_count;
+
+          const metaPayload = {
+              meta: {},
+              title: 'Smiley Talks',
+          }
+
+          metaPayload.meta.description = 'Free live-events themed around the Sustainable Development Goals. A chance to interact with leading organisations and meet like-minded individuals.';
+          this.$store.dispatch('meta/setMeta', metaPayload);
       })
       .catch(error => console.error(error));
     axios

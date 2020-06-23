@@ -193,7 +193,15 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
+  mounted() {
+      const metaPayload = {
+          meta: {},
+          title: 'Our Story'
+      }
+
+      metaPayload.meta.description = 'The history and evolution of licensing brand Smiley that led to the full support and creation of Smiley Movement';
+      this.$store.dispatch('meta/setMeta', metaPayload);
+  },
   methods: {}
 };
 </script>

@@ -201,8 +201,15 @@ export default {
 
         this.organisations = res.data.organisations;
         this.pages_count = res.data.pages_count;
-        // this.post = res.data.post;
-        // this.related_posts = res.data.related;
+
+          const metaPayload = {
+              // meta: res.data.meta,
+              meta: res.data?.meta || {},
+              title: 'Organisations'
+          }
+
+          metaPayload.meta.description = 'Discover charities and organisations tackling each of the Sustainable Development Goals. Support their cause and get involved.';
+          this.$store.dispatch('meta/setMeta', metaPayload);
       })
       .catch(error => console.log(error));
 

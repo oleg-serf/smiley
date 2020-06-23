@@ -143,7 +143,7 @@
                 },
                 related_posts: [],
                 goals: [],
-                comments: []
+                comments: [],
             };
         },
         computed: {
@@ -189,7 +189,12 @@
                     this.post = res.data.post;
                     this.related_posts = res.data.related;
 
-                    document.title = res.data.post.title + " | Smiley Movement";
+                    const metaPayload = {
+                        meta: res.data.meta,
+                        title: res.data.post.title
+                    }
+                    this.$store.dispatch('meta/setMeta', metaPayload);
+
                     this.$refs.breadcrumbs.breadcrumbs[
                     this.$refs.breadcrumbs.breadcrumbs.length - 1
                         ].meta.title = res.data.post.title;
@@ -217,7 +222,7 @@
             CommentCard,
             CommentForm,
             Footer
-        }
+        },
     };
 </script>
 

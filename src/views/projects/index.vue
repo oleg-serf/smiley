@@ -212,6 +212,15 @@ export default {
       this.projects = res.data.projects;
       this.totalProjects = res.data.count;
       this.projectsPagination = res.data.pages_count;
+
+        const metaPayload = {
+            // meta: res.data.meta,
+            meta: res.data?.meta || {},
+            title: 'Projects'
+        }
+
+        metaPayload.meta.description = 'Initiatives and campaigns by members and organisations part of our network. Offer your support, lend your skills or create your own project.';
+        this.$store.dispatch('meta/setMeta', metaPayload);
     });
 
     if (this.isAuthenticated) {

@@ -71,6 +71,15 @@ export default {
       .then(res => {
         console.log("/goals", res.data);
         this.categories = res.data.goal_categories;
+
+          const metaPayload = {
+              meta: res.data?.meta || {},
+              // meta: res.data.meta,
+              title: 'UN Goals'
+          }
+
+          metaPayload.meta.description = 'Explore tools and solutions to connect and learn about each of the Sustainable Development Goals.'
+          this.$store.dispatch('meta/setMeta', metaPayload);
       })
       .catch(error => console.error(error));
   }

@@ -415,6 +415,12 @@
 
                     this.goal = res.data.goal;
 
+                    const metaPayload = {
+                        meta: res.data.meta,
+                        title: res.data.goal.name
+                    }
+                    this.$store.dispatch('meta/setMeta', metaPayload);
+
                     this.posts = res.data.news;
                     this.postsPagination = res.data.posts_pages_count;
 

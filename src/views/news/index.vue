@@ -84,6 +84,15 @@ export default {
 
         this.latest = res.data.latest_news;
         this.news = res.data.featured_goals;
+
+          const metaPayload = {
+              meta: {},
+              // meta: res.data.meta,
+              title: 'Smiley News'
+          }
+
+          metaPayload.meta.description = 'Daily positive news about charities, organisations and everyday heroes making the world a better place.'
+          this.$store.dispatch('meta/setMeta', metaPayload);
       })
       .catch(error => console.error(error));
   },

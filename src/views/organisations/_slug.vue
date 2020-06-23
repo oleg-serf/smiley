@@ -513,6 +513,13 @@ export default {
         this.feed.news = response.data.organisation_posts;
         this.is_owner = response.data.is_owner;
 
+          const metaPayload = {
+              meta: response.data.meta,
+              title: response.data.organisation.name
+          }
+
+          this.$store.dispatch('meta/setMeta', metaPayload);
+
         if (response.data.organisation.facebook != null) {
           this.socials.push({
             name: "facebook",

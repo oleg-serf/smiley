@@ -93,6 +93,14 @@ export default {
         console.log("Partners", res);
         this.partners = res.data.partners;
         this.totalPages = res.data.pages_count;
+
+          const metaPayload = {
+              meta: res.data?.meta || {},
+              title: 'Partners',
+          }
+
+          metaPayload.meta.description = 'Leaders who support our vision and whose work contributes to the Sustainable Development Goals. Together we co-host events and facilitate support.';
+          this.$store.dispatch('meta/setMeta', metaPayload);
       })
       .catch(error => console.log(error));
   },
