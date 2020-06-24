@@ -42,18 +42,17 @@
             let metaArray = [];
             if (this.appMeta != null) {
                 metaArray = [
-                    {name: "og:locale", content: 'en_US'},
-                    {name: "og:title", content: this.appMeta?.title || this.appTitle},
                     {name: "title", content: this.appMeta?.title || this.appTitle},
-                    {name: "og:site_name", content: "SmileyMovement"},
-                    {name: "og:description", content: this.appMeta?.description},
                     {name: "description", content: this.appMeta?.description},
-                    {name: "og:url", content: process.env.VUE_APP_DOMAIN + this.$route.path},
-
-                    {name: "fb:app_id", content: this.appMeta?.facebook_app_id || 486208715194516},
-                    {name: "og:image", content: this.appMeta?.image || '/img/smiley_default.png'},
-                    {name: "og:image:width", content: this.appMeta?.image_width || 1200},
-                    {name: "og:image:height", content: this.appMeta?.image_height || 628},
+                    {property: "og:locale", content: 'en_US'},
+                    {property: "og:title", content: this.appMeta?.title || this.appTitle},
+                    {property: "og:site_property", content: "SmileyMovement"},
+                    {property: "og:description", content: this.appMeta?.description},
+                    {property: "og:url", content: process.env.VUE_APP_DOMAIN + this.$route.path},
+                    {property: "fb:app_id", content: this.appMeta?.facebook_app_id || 486208715194516},
+                    {property: "og:image", content: this.appMeta?.image || '/img/smiley_default.png'},
+                    {property: "og:image:width", content: this.appMeta?.image_width || 1200},
+                    {property: "og:image:height", content: this.appMeta?.image_height || 628},
 
                     {name: "twitter:card", content: "summary_large_image"},
                     {name: "twitter:title", content: this.appMeta?.title || this.appTitle},
