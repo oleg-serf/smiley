@@ -55,7 +55,9 @@
                     {name: "og:image:width", content: this.appMeta?.image_width || 1200},
                     {name: "og:image:height", content: this.appMeta?.image_height || 628},
 
-                    {name: "twitter:card", content: "summary"},
+                    {name: "twitter:card", content: "summary_large_image"},
+                    {name: "twitter:title", content: this.appMeta?.title || this.appTitle},
+                    {name: "twitter:description", content: this.appMeta?.description},
                     {name: "twitter:site", content: this.appMeta?.twitter_user || '@Smiley_Movement'},
                     {name: "twitter:creator", content: this.appMeta?.twitter_user || '@Smiley_Movement'},
                 ]
