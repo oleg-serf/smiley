@@ -8,6 +8,9 @@ dist/
 .deploy*/
 src/_drafts
 package-lock.json
+.htaccess
+sitemap.xml
+site_map.xml
 
 # local env files
 .env.local
@@ -21,3 +24,4 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw*
+
