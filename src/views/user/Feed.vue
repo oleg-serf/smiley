@@ -146,29 +146,26 @@
         <div class="feed-grid__item feed-grid__item--projects">
           <div class="projects-block">
             <h2 class="projects-block__title">Projects</h2>
-            <div class="projects-block__items">
+            <div class="projects-block__items" v-if="projects != null">
               <div
                 class="projects-block__item"
-                v-for="(event, index) in eventsList"
+                v-for="(project, index) in projects"
                 :key="'projects-'+index"
               >
                 <div class="projects-block__item-column">
-                  <img :src="event.avatar" class="projects-block__item-image" />
+                  <img         :src="$settings.images_path.projects +'m_'+project.cover_image"
+                               class="projects-block__item-image" />
                 </div>
                 <div class="projects-block__item-column">
                   <div
                     class="projects-block__item-title"
-                  >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}</div>
+                  >{{ project.name.length > 20 ? project.name.substring(0, 15) + '...' : project.name }}</div>
                   <div
                     class="projects-block__item-description"
-                  >{{ description.length > 255 ? description.substring(0, 255) + '...' : description }}</div>
+                  >{{ project.description.length > 255 ? description.substring(0, 255) + '...' : project.description }}</div>
                 </div>
                 <div class="projects-block__item-column projects-block__item-column--full-width">
-                  <router-link
-                    :to="event.link"
-                    :title="event.title"
-                    class="projects-block__item-link"
-                  >offer support</router-link>
+                  <router-link :to="{name: 'project', params: {slug: project.slug}}" class="projects-block__item-link">offer support</router-link>
                 </div>
               </div>
               <div class="projects-block__item projects-block__item--show-more">
@@ -285,6 +282,7 @@ export default {
     return {
       user: {},
       posts: [],
+      projects: [],
       //
       fakeUsersFollowing: [],
       fakeUsers: [],
@@ -364,6 +362,7 @@ export default {
         console.log("Feed loaded", res);
         this.user = res.data.user;
         this.posts = res.data.posts;
+        this.projects = res.data.projects;
       })
       .catch(error => console.error(error));
     axios

@@ -177,7 +177,7 @@ export default {
         {
           title: "Chatroom",
           link: "/chatroom",
-          disabled: true,
+          disabled: false,
           description:
             "Take part in community discussions and share ideas with other members",
           image: "/img/homepage/homepage-projects.jpg"

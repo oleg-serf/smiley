@@ -19,6 +19,9 @@
                 Community
                 <br />0
               </div>
+              <div class="message-me">
+                <button>Message</button>
+              </div>
             </div>
           </div>
         </div>
@@ -508,4 +511,23 @@ export default {
     }
   }
 }
+
+  .message-me {
+
+    button {
+      margin-top: 1.5;
+      border: 1px solid #e5e5e5;
+      padding: 13px 10px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      @include font-size(0.8rem);
+      cursor: pointer;
+      transition: background-color 0.4s;
+      display: block;
+      background-color: #f4ed3b;
+      font-family: "Montserrat SemiBold", sans-serif;
+      margin-left: auto;
+    }
+  }
 </style>
