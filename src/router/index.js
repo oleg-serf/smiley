@@ -374,9 +374,9 @@ const routes = [{
    * Miscellenous
    */
   {
-    path: '/chat',
+    path: '/chatroom',
     name: 'chat',
-    component: () => import( /* webpackChunkName: "chat" */ '../views/Chat.vue'),
+    component: () => import( /* webpackChunkName: "chat" */ '../views/chatroom/index.vue'),
     meta: {
       title: 'Chat',
       requiresAuth: true,
