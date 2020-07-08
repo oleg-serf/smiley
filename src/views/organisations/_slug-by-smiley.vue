@@ -97,12 +97,15 @@
     <div class="organisation-additional container">
       <div class="grid-item grid-item--full-width align-right">
         <div class="item-holder">
-          <div
-              class="about"
-              v-html="organisation.description"
-              v-if="organisation.description != null && organisation.description.length > 10"
-          ></div>
-          <div class="about" v-else>No organisation bio to show</div>
+          <div class="about">
+            <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]" v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+            <div
+                v-html="organisation.description"
+                v-if="organisation.description != null && organisation.description.length > 10"
+            ></div>
+            <div v-else>No organisation bio to show</div>
+            <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[1]" v-if="organisation.organisation_images != null && organisation.organisation_images.length > 1"/>
+          </div>
         </div>
       </div>
       <div class="grid-item">
@@ -539,7 +542,8 @@
       // border-top: 1px solid rgba(255, 255, 255, 0.5);
       border-right: 1px solid rgba(255, 255, 255, 0.5);
 
-      &.grid-item--full-width {}
+      &.grid-item--full-width {
+      }
 
       &.grid-item--top-panel {
         grid-column: 1 / span 3;
@@ -1207,10 +1211,17 @@
 
     column-count: 2;
     column-gap: 60px;
+
     @include margin-top(2.5rem);
 
     @include lgMax {
       column-count: 1;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      @include margin-bottom(1.5rem);
     }
   }
 </style>
