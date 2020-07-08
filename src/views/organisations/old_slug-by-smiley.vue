@@ -94,8 +94,11 @@
         </div>
       </div>
     </div>
-    <div class="organisation-additional container">
-      <div class="grid-item grid-item--full-width align-right">
+    <div class="organisation-additional">
+      <div
+          class="grid-item align-right"
+          :class="{'grid-item--rows-2': organisation.organisation_images, 'grid-item--rows-3': organisation.organisation_images != null && organisation.organisation_images.length > 0}"
+      >
         <div class="item-holder">
           <div
               class="about"
@@ -105,7 +108,7 @@
           <div class="about" v-else>No organisation bio to show</div>
         </div>
       </div>
-      <div class="grid-item">
+      <div class="grid-item align-left">
         <div
             class="item-holder"
             v-if="organisation.donation_link || organisation.volunteer_link || organisation.fundraise_link"
@@ -144,7 +147,22 @@
           </div>
         </div>
       </div>
-      <div class="grid-item">
+      <div
+          class="grid-item align-left"
+          v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"
+      >
+        <div class="item-holder item-holder--gallery">
+          <img v-for="image in organisation.organisation_images" :key="'image-'+image"
+               :src="$settings.images_path.organisations + 'images/m_'+ image"/>
+          <swiper ref="mySwiper" :options="swiperOptions" v-if="false">
+            <swiper-slide v-for="image in organisation.organisation_images" :key="'image-'+image">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ image"/>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+        </div>
+      </div>
+      <div class="grid-item align-left">
         <div class="item-holder">
           <div class="title">Share this page</div>
           <ul class="organisation-social">
@@ -539,8 +557,6 @@
       // border-top: 1px solid rgba(255, 255, 255, 0.5);
       border-right: 1px solid rgba(255, 255, 255, 0.5);
 
-      &.grid-item--full-width {}
-
       &.grid-item--top-panel {
         grid-column: 1 / span 3;
         border-bottom: 1px solid rgba(255, 255, 255, 0.5);
@@ -864,6 +880,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
 
     @include lgMax {
@@ -872,8 +890,18 @@
 
     .grid-item {
       box-sizing: border-box;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+      border-right: 1px solid rgba(0, 0, 0, 0.2);
       display: flex;
       flex-direction: column;
+
+      &.grid-item--rows-2 {
+        grid-row: 1 / span 2 !important;
+      }
+
+      &.grid-item--rows-3 {
+        grid-row: 1 / span 3 !important;
+      }
 
       &.align-left {
         align-items: flex-start;
@@ -905,11 +933,13 @@
     }
 
     .item-holder {
+      max-width: 764px;
       width: 100%;
       box-sizing: border-box;
       padding: 25px 30px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       height: 100%;
+      background-color: #eeeeee;
 
       &.item-holder--gallery {
         display: grid;
@@ -1137,18 +1167,11 @@
     }
   }
 
-  .volunteer {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
   .volunteer-actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
     margin: -15px;
 
     li {
@@ -1203,14 +1226,6 @@
     &::v-deep {
       font-size: 19px;
       line-height: 1.85;
-    }
-
-    column-count: 2;
-    column-gap: 60px;
-    @include margin-top(2.5rem);
-
-    @include lgMax {
-      column-count: 1;
     }
   }
 </style>
