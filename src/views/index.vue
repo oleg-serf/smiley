@@ -1,3 +1,4 @@
+<script src="../main.js"></script>
 <template>
   <div class="home">
     <hero :video="hero.url_source" :link="'/our-story'">
