@@ -257,7 +257,7 @@ export default {
             { name: "members", link: "members" },
             { name: "projects", link: "projects" },
             { name: "partners", link: "partners" },``
-            // { name: "chat", link: "chat" }
+            { name: "chat", link: "chat" }
           ]
         },
         {
