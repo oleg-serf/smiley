@@ -221,28 +221,41 @@ const routes = [{
    */
   {
     path: '/smiley-news',
-    name: 'news',
     component: () => import( /* webpackChunkName: "news" */ '../views/news/index.vue'),
     meta: {
-      title: 'News',
-    }
+      title: "Smiley News"
+    },
+    children: [
+      {
+        path: '',
+        name: 'news',
+        component: () => import( /* webpackChunkName: "news" */ '../views/news/_main.vue'),
+      }, {
+        path: ':slug',
+        name: 'news-item',
+        component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
+        meta: {
+          title: "Item"
+        }
+      },
+    ]
   },
   {
     path: '/smiley-news-latest',
     name: 'news-latest',
-    component: () => import( /* webpackChunkName: "news" */ '../views/news/_all.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/news/_latest.vue'),
     meta: {
       title: 'News',
     }
   },
-  {
-    path: '/smiley-news/:slug',
-    name: 'news-item',
-    component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
-    meta: {
-      breadcrumbs: ['news'],
-    }
-  },
+  // {
+  //   path: '/smiley-news/:slug',
+  //   name: 'news-item',
+  //   component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
+  //   meta: {
+  //     breadcrumbs: ['news'],
+  //   }
+  // },
   // {
   //   path: '/smiley-news/category/:slug',
   //   name: 'news-category-item',

@@ -1,49 +1,65 @@
 <template>
   <section class="breadcrumbs">
-    <ul v-if="breadcrumbs.length > 0">
-      <li v-for="(crumb) in breadcrumbs" :key="crumb.name + '-crumb'">
-        <router-link class="breadcrumbs-item" :to="{ name: crumb.name }">{{ crumb.meta.title }}</router-link>
-        <svg
-          width="11"
-          height="9"
-          viewBox="0 0 11 9"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M6.52699 9L10.9815 4.54545L6.52699 0.0909092L5.76136 0.856534L8.91335 3.99858H0.75V5.09233H8.91335L5.76136 8.24432L6.52699 9Z"
-            fill="#656565"
-          />
-        </svg>
+    <ul>
+      <li>
+        <router-link to="/">Home</router-link>
       </li>
+      <template v-if="breadcrumbs.length > 0">
+          <li v-if="breadcrumb.meta.title" v-for="(breadcrumb, index) in breadcrumbs" :key="'breadcrumb-'+index">
+            <template v-if="itemsCount !== index">
+              <router-link :to="breadcrumb.path">{{ breadcrumb.meta.title }}</router-link>
+            </template>
+            <template v-else>
+              <span>{{ breadcrumb.meta.title }}</span>
+            </template>
+          </li>
+      </template>
     </ul>
   </section>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      breadcrumbs: [{ path: "/", name: "home", meta: { title: "Home" } }]
+    export default {
+        data() {
+            return {
+                breadcrumbs: []
+            };
+        },
+        computed: {
+            itemsCount() {
+                return this.breadcrumbs.length - 1;
+            },
+        },
+        mounted() {
+            this.breadcrumbs = this.$router.currentRoute.matched;
+        }
     };
-  },
-  mounted() {
-    let currentItem = this.$router.currentRoute;
+</script>
 
-    if (currentItem.meta.hasOwnProperty("breadcrumbs")) {
-      let parentsList = currentItem.meta.breadcrumbs;
+<style lang="scss">
+  .breadcrumbs {
+    padding-left: 0px;
+    padding-right: 0px;
 
-      let chain = this.$router.options.routes.filter(item =>
-        parentsList.includes(item.name)
-      );
+    li {
 
-      this.breadcrumbs = this.breadcrumbs.concat(chain);
+      &::after {
+        content: '/';
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 12px;
+      }
+
+      &:last-child {
+        &::after {
+          content: '';
+        }
+      }
     }
 
-    this.breadcrumbs.push({
-      name: this.$router.currentRoute.name,
-      meta: { title: this.$router.currentRoute.meta.title }
-    });
+    a, span {
+      color: #1a1a1a;
+      font: 400 16px/21px "Muli", sans-serif;
+    }
   }
-};
-</script>
+</style>

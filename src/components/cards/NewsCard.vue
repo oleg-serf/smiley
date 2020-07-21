@@ -16,7 +16,7 @@
           <div
             class="news-article__category-name"
             v-if="manualGoal == null"
-          >{{ (article.goals != null) ? article.goals[0].name : article.goal.name }}</div>
+          >{{ (article.goals != null && article.goals.length > 0) ? article.goals[0].name : '' }}</div>
           <div class="news-article__category-name" v-else>{{ manualGoal }}</div>
           <!-- <div class="news-article__category-circle">
             <span>+15</span>
