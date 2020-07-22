@@ -1,230 +1,239 @@
 <template>
-  <div class="main-bg">
-    <div class="textual-banner textual-banner--contained">
-      <div class="container">
-        <div class="textual-banner__title">Organisation page</div>
-        <p>This is where we learn about your organisation, charitable vision and mission whether you're a
-          registered non-profit, social enterprise, charitable foundation, Trust, educational institution,
-          local authority or conscientious private business</p>
+  <div>
+    <Breadcrumbs :custom="true" :items="breadcrumbsItems"/>
+
+    <div class="main-bg">
+      <div class="textual-banner textual-banner--contained">
+        <div class="container">
+          <div class="textual-banner__title">Organisation page</div>
+          <p>This is where we learn about your organisation, charitable vision and mission whether you're a
+            registered non-profit, social enterprise, charitable foundation, Trust, educational institution,
+            local authority or conscientious private business</p>
+        </div>
       </div>
-    </div>
-    <div class="organisation-bg">
-      <div class="organisation-grid container">
-        <div class="grid-item grid-item--top-panel" v-if="is_owner && loggedIn">
-          <router-link
-              :to="{name: 'edit-organisation'}"
-              class="button button--primary"
-              v-if="is_owner"
-              @click.prevent="follow"
+      <div class="organisation-bg">
+        <div class="organisation-grid container">
+          <div class="grid-item grid-item--top-panel" v-if="is_owner && loggedIn">
+            <router-link
+                :to="{name: 'edit-organisation'}"
+                class="button button--primary"
+                v-if="is_owner"
+                @click.prevent="follow"
+            >
+              <i class="fa fa-pencil"></i> Edit Organisation
+            </router-link>
+            <button class="button button--primary" @click.prevent="addOrganisationPost">
+              <i class="fa fa-newspaper-o"></i> Create Post
+            </button>
+            <router-link :to="{name: 'create-project'}" class="button button--primary">
+              <i class="fa fa-connectdevelop"></i> Create Project
+            </router-link>
+          </div>
+          <div class="grid-item grid-item--main">
+            <div class="organisation-avatar">
+              <div class="organisation-avatar__logo">
+                <img
+                    v-if="organisation.logo != null"
+                    :src="$settings.images_path.organisations + 'm_'+ organisation.logo"
+                />
+                <span v-else>{{ organisation.name | filterAvatar}}</span>
+              </div>
+            </div>
+            <div class="organisation-info">
+              <div class="organisation-name">{{organisation.name}}</div>
+              <div class="organisation-data">
+                <button
+                    class="button button--primary"
+                    v-if="!following"
+                    @click.prevent="follow"
+                >+ follow
+                </button>
+                <button class="button button--primary" v-else @click.prevent="unfollow">- unfollow</button>
+              </div>
+            </div>
+          </div>
+          <div class="grid-item grid-item--socials">
+            <template v-if="socials.length > 0">
+              <ul class="organisation-social organisation-social--header">
+                <li v-for="social in socials" :key="'social-'+social.name">
+                  <a target="_blank" :href="social.value">
+                    <i class="fa" :class="'fa-'+social.name" aria-hidden="true"></i>
+                  </a>
+                </li>
+              </ul>
+            </template>
+            <template v-else>No networks connected</template>
+            <div class="organisation-network">
+              <div class="network-row" v-if="organisation.website != null">
+                <div class="network-row__title">Website:</div>
+                <div class="network-row__value">
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                  <a :href="organisation.website" target="_blank">{{organisation.website}}</a>
+                </div>
+              </div>
+              <div class="network-row">
+                <div class="network-row__title">Location:</div>
+                <div class="network-row__value">
+                  <template v-if="organisation.location != null">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    {{organisation.location}}
+                  </template>
+                  <template v-else>No location selected</template>
+                </div>
+              </div>
+              <ul class="goals">
+                <li v-if="organisation.main_goal != null">
+                  <img :src="$settings.images_path.goals + 's_' + organisation.main_goal.image" alt="icon"/>
+                </li>
+                <li v-for="goal in organisation.other_goals" :key="'goal-'+goal.slug">
+                  <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="grid-item grid-item--support">
+            <img src="/img/created-by-smiley.png"/>
+            <i
+                class="popover-icon fa fa-info-circle"
+                v-popover:tooltip="'This editorial page has been created by Smiley Movement. If you are associated with this organisation and would like to manage this page, please contact us'"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <div class="organisation-additional container">
+        <div class="grid-item grid-item--full-width align-right">
+          <div class="item-holder">
+            <div class="about">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+              <div
+                  v-html="organisation.description"
+                  v-if="organisation.description != null && organisation.description.length > 10"
+              ></div>
+              <div v-else>No organisation bio to show</div>
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[1]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 1"/>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div
+              class="item-holder"
+              v-if="organisation.donation_link || organisation.volunteer_link || organisation.fundraise_link"
           >
-            <i class="fa fa-pencil"></i> Edit Organisation
-          </router-link>
-          <button class="button button--primary" @click.prevent="addOrganisationPost">
-            <i class="fa fa-newspaper-o"></i> Create Post
-          </button>
-          <router-link :to="{name: 'create-project'}" class="button button--primary">
-            <i class="fa fa-connectdevelop"></i> Create Project
-          </router-link>
-        </div>
-        <div class="grid-item grid-item--main">
-          <div class="organisation-avatar">
-            <div class="organisation-avatar__logo">
-              <img
-                  v-if="organisation.logo != null"
-                  :src="$settings.images_path.organisations + 'm_'+ organisation.logo"
-              />
-              <span v-else>{{ organisation.name | filterAvatar}}</span>
+            <div class="volunteer">
+              <div class="title">How to support {{organisation.name}}</div>
+              <ul class="volunteer-actions">
+                <li>
+                  <a
+                      :href="organisation.donation_link"
+                      target="_blank"
+                      class="button button--primary"
+                      :class="{'disabled': !organisation.donation_link}"
+                      rel="noopener noreferrer"
+                  >Donate</a>
+                </li>
+                <li>
+                  <a
+                      :href="organisation.volunteer_link"
+                      target="_blank"
+                      class="button button--primary"
+                      :class="{'disabled': !organisation.volunteer_link}"
+                      rel="noopener noreferrer"
+                  >Volunteer</a>
+                </li>
+                <li>
+                  <a
+                      :href="organisation.fundraise_link"
+                      target="_blank"
+                      class="button button--primary"
+                      :class="{'disabled': !organisation.fundraise_link}"
+                      rel="noopener noreferrer"
+                  >Fundraise</a>
+                </li>
+              </ul>
             </div>
           </div>
-          <div class="organisation-info">
-            <div class="organisation-name">{{organisation.name}}</div>
-            <div class="organisation-data">
-              <button
-                  class="button button--primary"
-                  v-if="!following"
-                  @click.prevent="follow"
-              >+ follow
-              </button>
-              <button class="button button--primary" v-else @click.prevent="unfollow">- unfollow</button>
-            </div>
-          </div>
         </div>
-        <div class="grid-item grid-item--socials">
-          <template v-if="socials.length > 0">
-            <ul class="organisation-social organisation-social--header">
-              <li v-for="social in socials" :key="'social-'+social.name">
-                <a target="_blank" :href="social.value">
-                  <i class="fa" :class="'fa-'+social.name" aria-hidden="true"></i>
+        <div class="grid-item">
+          <div class="item-holder">
+            <div class="title">Share this page</div>
+            <ul class="organisation-social">
+              <li>
+                <a :href="shareLink('twitter')" target="_blank">
+                  <app-icon name="twitter"/>
+                </a>
+              </li>
+              <li>
+                <a :href="shareLink('facebook')" target="_blank">
+                  <app-icon name="facebook"/>
+                </a>
+              </li>
+              <li>
+                <a :href="shareLink('linkedin')" target="_blank">
+                  <app-icon name="linkedin"/>
                 </a>
               </li>
             </ul>
-          </template>
-          <template v-else>No networks connected</template>
-          <div class="organisation-network">
-            <div class="network-row" v-if="organisation.website != null">
-              <div class="network-row__title">Website:</div>
-              <div class="network-row__value">
-                <i class="fa fa-link" aria-hidden="true"></i>
-                <a :href="organisation.website" target="_blank">{{organisation.website}}</a>
-              </div>
+            <div class="url-share">
+              <input readonly :value="domain+'/organisations/' + this.$route.params.slug"/>
+              <button type="button" class="button button--primary">Copy link</button>
             </div>
-            <div class="network-row">
-              <div class="network-row__title">Location:</div>
-              <div class="network-row__value">
-                <template v-if="organisation.location != null">
-                  <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  {{organisation.location}}
-                </template>
-                <template v-else>No location selected</template>
-              </div>
-            </div>
-            <ul class="goals">
-              <li v-for="goal in organisation.other_goals" :key="'goal-'+goal.slug">
-                <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="grid-item grid-item--support">
-          <img src="/img/created-by-smiley.png"/>
-          <i
-              class="popover-icon fa fa-info-circle"
-              v-popover:tooltip="'This editorial page has been created by Smiley Movement. If you are associated with this organisation and would like to manage this page, please contact us'"
-          ></i>
-        </div>
-      </div>
-    </div>
-    <div class="organisation-additional container">
-      <div class="grid-item grid-item--full-width align-right">
-        <div class="item-holder">
-          <div class="about">
-            <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]" v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
-            <div
-                v-html="organisation.description"
-                v-if="organisation.description != null && organisation.description.length > 10"
-            ></div>
-            <div v-else>No organisation bio to show</div>
-            <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[1]" v-if="organisation.organisation_images != null && organisation.organisation_images.length > 1"/>
           </div>
         </div>
       </div>
-      <div class="grid-item">
-        <div
-            class="item-holder"
-            v-if="organisation.donation_link || organisation.volunteer_link || organisation.fundraise_link"
-        >
-          <div class="volunteer">
-            <div class="title">How to support {{organisation.name}}</div>
-            <ul class="volunteer-actions">
-              <li>
-                <a
-                    :href="organisation.donation_link"
-                    target="_blank"
-                    class="button button--primary"
-                    :class="{'disabled': !organisation.donation_link}"
-                    rel="noopener noreferrer"
-                >Donate</a>
-              </li>
-              <li>
-                <a
-                    :href="organisation.volunteer_link"
-                    target="_blank"
-                    class="button button--primary"
-                    :class="{'disabled': !organisation.volunteer_link}"
-                    rel="noopener noreferrer"
-                >Volunteer</a>
-              </li>
-              <li>
-                <a
-                    :href="organisation.fundraise_link"
-                    target="_blank"
-                    class="button button--primary"
-                    :class="{'disabled': !organisation.fundraise_link}"
-                    rel="noopener noreferrer"
-                >Fundraise</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="item-holder">
-          <div class="title">Share this page</div>
-          <ul class="organisation-social">
-            <li>
-              <a :href="shareLink('twitter')" target="_blank">
-                <app-icon name="twitter"/>
-              </a>
-            </li>
-            <li>
-              <a :href="shareLink('facebook')" target="_blank">
-                <app-icon name="facebook"/>
-              </a>
-            </li>
-            <li>
-              <a :href="shareLink('linkedin')" target="_blank">
-                <app-icon name="linkedin"/>
-              </a>
-            </li>
-          </ul>
-          <div class="url-share">
-            <input readonly :value="domain+'/organisations/' + this.$route.params.slug"/>
-            <button type="button" class="button button--primary">Copy link</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <template v-if="false">
-      <div class="container">
-        <section class="section" v-if="posts.length > 0" id="section-news">
-          <h2 class="section__title">News</h2>
-          <swiper
-              ref="newsSwiper"
-              :options="itemsSwiperOptions"
-              :auto-update="true"
-              :auto-destroy="true"
-              :delete-instance-on-destroy="true"
-              :cleanup-styles-on-destroy="true"
-              v-if="is_mobile"
-          >
-            <swiper-slide v-for="post in posts" :key="'post-swiper-'+post.slug">
-              <news-card :article="post"/>
-            </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
-          </swiper>
-          <div class="grid grid--news" v-else>
-            <news-card v-for="post in posts" :key="'post-'+post.slug" :article="post"/>
-          </div>
-        </section>
-        <section class="section" v-if="events.length > 0" id="section-events">
-          <h2 class="section__title">Events</h2>
-          <swiper
-              ref="eventsSwiper"
-              :options="itemsSwiperOptions"
-              :auto-update="true"
-              :auto-destroy="true"
-              :delete-instance-on-destroy="true"
-              :cleanup-styles-on-destroy="true"
-              v-if="is_mobile"
-          >
-            <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
-              <event-card :event="event"/>
-            </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
-          </swiper>
-          <div class="grid grid--events" v-else>
-            <event-card
-                v-for="event in events"
-                :key="'event-'+event.slug"
-                :event="event"
-                :past="event.past"
-            />
-          </div>
-        </section>
-      </div>
-    </template>
-    <Footer/>
+      <template v-if="false">
+        <div class="container">
+          <section class="section" v-if="posts.length > 0" id="section-news">
+            <h2 class="section__title">News</h2>
+            <swiper
+                ref="newsSwiper"
+                :options="itemsSwiperOptions"
+                :auto-update="true"
+                :auto-destroy="true"
+                :delete-instance-on-destroy="true"
+                :cleanup-styles-on-destroy="true"
+                v-if="is_mobile"
+            >
+              <swiper-slide v-for="post in posts" :key="'post-swiper-'+post.slug">
+                <news-card :article="post"/>
+              </swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+            <div class="grid grid--news" v-else>
+              <news-card v-for="post in posts" :key="'post-'+post.slug" :article="post"/>
+            </div>
+          </section>
+          <section class="section" v-if="events.length > 0" id="section-events">
+            <h2 class="section__title">Events</h2>
+            <swiper
+                ref="eventsSwiper"
+                :options="itemsSwiperOptions"
+                :auto-update="true"
+                :auto-destroy="true"
+                :delete-instance-on-destroy="true"
+                :cleanup-styles-on-destroy="true"
+                v-if="is_mobile"
+            >
+              <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
+                <event-card :event="event"/>
+              </swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+            <div class="grid grid--events" v-else>
+              <event-card
+                  v-for="event in events"
+                  :key="'event-'+event.slug"
+                  :event="event"
+                  :past="event.past"
+              />
+            </div>
+          </section>
+        </div>
+      </template>
+      <Footer/>
+    </div>
   </div>
 </template>
 
@@ -233,6 +242,7 @@
 
     import AppIcon from "@/components/AppIcon";
 
+    import Breadcrumbs from "@/components/Breadcrumbs";
     import NewsCard from "@/components/cards/NewsCard";
     import EventCard from "@/components/cards/EventCard";
     import Footer from "@/components/Footer";
@@ -240,6 +250,7 @@
     export default {
         name: "OrganisationProfile",
         components: {
+            Breadcrumbs,
             AppIcon,
             NewsCard,
             EventCard,
@@ -247,6 +258,14 @@
         },
         data() {
             return {
+                breadcrumbsItems: [
+                    {
+                        path: '/organisations',
+                        meta: {
+                            title: 'Organisations'
+                        }
+                    }
+                ],
                 photos: true,
                 organisation: {
                     followers: 0,
@@ -434,7 +453,6 @@
             }
         },
         mounted() {
-            console.log("Current route", this.$route);
 
             this.Toast = this.$swal.mixin({
                 toast: true,
@@ -459,6 +477,22 @@
                     this.organisation = response.data.organisation;
                     this.feed.news = response.data.organisation_posts;
                     this.is_owner = response.data.is_owner;
+
+                    const metaPayload = {
+                        meta: response.data.meta,
+                        title: response.data.organisation.name
+                    }
+
+                    this.$store.dispatch('meta/setMeta', metaPayload);
+
+                    this.breadcrumbsItems.push(
+                        {
+                            meta: {
+                                title: response.data.organisation.name
+                            }
+                        }
+                    );
+
 
                     this.posts = response.data.news;
                     this.events = response.data.events;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <breadcrumbs /> -->
+     <breadcrumbs />
 
     <section class="news-category-section container">
       <div class="news-category">
@@ -79,10 +79,14 @@ export default {
         this.latest_news = res.data.news;
         this.pages = res.data.pages_count;
 
-        document.title = "Latest News | Smiley Movement";
-        // this.$refs.breadcrumbs.breadcrumbs[
-        //   this.$refs.breadcrumbs.breadcrumbs.length - 1
-        // ].meta.title = this.title;
+          const metaPayload = {
+              meta: res.data?.meta || {},
+              title: 'Latest News'
+          }
+
+          metaPayload.meta.description = 'Latest news about charities and organisations doing good and how you can support them'
+          this.$store.dispatch('meta/setMeta', metaPayload);
+
       })
       .catch(error => console.log(error));
   }

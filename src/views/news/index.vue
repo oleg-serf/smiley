@@ -1,10 +1,8 @@
 <template>
   <div>
-
     <Breadcrumbs/>
     <router-view key="$route.fullPath"></router-view>
     <Footer/>
-
   </div>
 </template>
 
@@ -18,7 +16,13 @@
             Breadcrumbs
         },
         mounted() {
-            console.log('Router', this.$route);
+            const metaPayload = {
+                title: 'Smiley News',
+                meta: {
+                    description: 'Daily positive news about charities, organisations and everyday heroes making the world a better place.'
+                }
+            }
+            this.$store.dispatch('meta/setMeta', metaPayload);
         }
     }
 </script>

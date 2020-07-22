@@ -139,7 +139,7 @@
                 },
                 related_posts: [],
                 goals: [],
-                comments: []
+                comments: [],
             };
         },
         computed: {
@@ -185,14 +185,12 @@
                     this.post = res.data.post;
                     this.related_posts = res.data.related;
 
-                    console.log(this.$router.currentRoute);
-
+                    const metaPayload = {
+                        meta: res.data.meta,
+                        title: res.data.post.title
+                    }
+                    this.$store.dispatch('meta/setMeta', metaPayload);
                     this.$router.currentRoute.meta.title = this.post.title;
-
-                    // document.title = res.data.post.title + " | Smiley Movement";
-                    // this.$refs.breadcrumbs.breadcrumbs[
-                    // this.$refs.breadcrumbs.breadcrumbs.length - 1
-                    //     ].meta.title = res.data.post.title;
                 })
                 .catch(error => console.log(error));
             axios
@@ -215,7 +213,7 @@
             NewsCard,
             CommentCard,
             CommentForm,
-        }
+        },
     };
 </script>
 

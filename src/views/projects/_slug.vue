@@ -4,19 +4,19 @@
       <img
         :src="$settings.images_path.projects +'l_'+project.cover_image"
         class="project-information__banner"
-        alt
+        v-if="project.cover_image"
       />
 
       <div class="project-information__top container">
         <div class="project-information__user">
           <img
             :src="$settings.images_path.users +'m_'+project.owner.avatar"
-            v-if="project.owner.avatar != null"
+            v-if="project.owner != null && project.owner.avatar != null"
             class="project-information__user-avatar"
           />
           <div class="project-information__user-content">
             <div class="project-information__user-hosted">Project hosted by</div>
-            <div class="project-information__user-name">{{project.owner.name}}</div>
+            <div class="project-information__user-name" v-if="project.owner != null">{{project.owner.name}}</div>
           </div>
         </div>
       </div>
@@ -174,7 +174,7 @@
         </div>
       </div>
     </section>
-    <Footer />
+
   </div>
 </template>
 
@@ -187,11 +187,10 @@ export default {
   name: "Project",
   components: {
     AppIcon,
-    Footer
   },
   data() {
     return {
-      project: {}
+      project: {},
     };
   },
   methods: {
@@ -205,8 +204,17 @@ export default {
       console.log("Project loaded", res);
 
       this.project = res.data.project;
+
+        const metaPayload = {
+            meta: res.data?.meta || {},
+            // meta: res.data.meta,
+            title: res.data.project.name
+        }
+        this.$store.dispatch('meta/setMeta', metaPayload);
+        this.$router.currentRoute.meta.title = this.project.name;
+
     });
-  }
+  },
 };
 </script>
 
