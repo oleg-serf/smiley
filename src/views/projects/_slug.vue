@@ -4,7 +4,7 @@
       <img
         :src="$settings.images_path.projects +'l_'+project.cover_image"
         class="project-information__banner"
-        alt
+        v-if="project.cover_image"
       />
 
       <div class="project-information__top container">
@@ -174,7 +174,7 @@
         </div>
       </div>
     </section>
-    <Footer />
+
   </div>
 </template>
 
@@ -187,7 +187,6 @@ export default {
   name: "Project",
   components: {
     AppIcon,
-    Footer
   },
   data() {
     return {
@@ -212,6 +211,7 @@ export default {
             title: res.data.project.name
         }
         this.$store.dispatch('meta/setMeta', metaPayload);
+        this.$router.currentRoute.meta.title = this.project.name;
 
     });
   },

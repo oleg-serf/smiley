@@ -22,7 +22,7 @@
           >How we can attain {{goal.name}} ?
           </div>
           <div class="goal-description__logo" :style="{backgroundColor: goal.colour}">
-            <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
+            <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" v-if="goal.image"/>
           </div>
         </section>
         <section class="goal-description__content">
@@ -202,7 +202,6 @@
         </div>
       </section>
     </div>
-    <Footer/>
   </div>
 </template>
 
@@ -217,8 +216,6 @@
     import ProjectCard from "@/components/cards/ProjectCard";
     import OrganisationCard from "@/components/cards/OrganisationCard";
 
-    import Footer from "@/components/Footer";
-
     export default {
         name: "GoalSinglePage",
         components: {
@@ -227,7 +224,6 @@
             EventCard,
             ProjectCard,
             OrganisationCard,
-            Footer
         },
         data() {
             return {
@@ -433,7 +429,8 @@
                     this.organisations = res.data.organisations;
                     this.organisationsPagination = res.data.organisations_pages_count;
 
-                    document.title = this.goal.name + " | Smiley Movement"; // console.log("Goal loaded", this.events);
+                    this.$router.currentRoute.meta.title = this.goal.name;
+
                 })
                 .catch(error => console.log(error));
 

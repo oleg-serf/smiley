@@ -1,6 +1,5 @@
 <template>
   <div>
-    <breadcrumbs ref="breadcrumbs"/>
 
     <article class="article container">
       <div class="article-content">
@@ -120,7 +119,6 @@
       </div>
     </article>
 
-    <Footer/>
   </div>
 </template>
 
@@ -128,11 +126,9 @@
     import axios from "@/axios-auth";
     import router from "@/router";
 
-    import Breadcrumbs from "@/components/Breadcrumbs";
     import NewsCard from "@/components/cards/NewsCard";
     import CommentCard from "@/components/cards/CommentCard";
     import CommentForm from "@/components/forms/CommentForm";
-    import Footer from "@/components/Footer";
 
     export default {
         data() {
@@ -194,10 +190,7 @@
                         title: res.data.post.title
                     }
                     this.$store.dispatch('meta/setMeta', metaPayload);
-
-                    this.$refs.breadcrumbs.breadcrumbs[
-                    this.$refs.breadcrumbs.breadcrumbs.length - 1
-                        ].meta.title = res.data.post.title;
+                    this.$router.currentRoute.meta.title = this.post.title;
                 })
                 .catch(error => console.log(error));
             axios
@@ -217,11 +210,9 @@
                 .catch(error => console.error("Error", error));
         },
         components: {
-            Breadcrumbs,
             NewsCard,
             CommentCard,
             CommentForm,
-            Footer
         },
     };
 </script>

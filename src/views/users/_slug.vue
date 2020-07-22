@@ -138,7 +138,6 @@
       </div>
     </div>
 
-    <Footer />
   </div>
 </template>
 
@@ -147,13 +146,11 @@ import axios from "@/axios-auth";
 
 import AppIcon from "@/components/AppIcon";
 
-import Footer from "@/components/Footer";
 
 export default {
   name: "UserProfile",
   components: {
     AppIcon,
-    Footer
   },
   data() {
     return {
@@ -177,7 +174,10 @@ export default {
         this.support.offer = response.data.user.supports_offer;
         this.support.need = response.data.user.supports_need;
 
-        this.goals = response.data.user.goals.filter(item =>
+        this.$router.currentRoute.meta.title = this.user.display_name;
+
+
+          this.goals = response.data.user.goals.filter(item =>
           response.data.goals.includes(item.id)
         );
 
@@ -211,15 +211,6 @@ export default {
             value: response.data.user.google
           });
         }
-
-        // this.user = response.data.user;
-
-        // this.supportOffer = response.data.offer_support;
-        // this.supportNeed = response.data.need_support;
-        // this.goals = response.data.all_goals.filter(item =>
-        //   response.data.goals.includes(item.id)
-        // );
-        // document.title = response.data.user.full_name + " | Smiley Movement";
       })
       .catch(error => console.error(error));
   }

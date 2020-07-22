@@ -519,8 +519,10 @@ export default {
           }
 
           this.$store.dispatch('meta/setMeta', metaPayload);
+          this.$router.currentRoute.meta.title = this.organisation.name;
 
-        if (response.data.organisation.facebook != null) {
+
+          if (response.data.organisation.facebook != null) {
           this.socials.push({
             name: "facebook",
             value: response.data.organisation.facebook

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <breadcrumbs ref="breadcrumbs"/>
 
     <section class="event-section" v-if="event">
       <h1 class="event-section-title container">{{event.title}}</h1>
@@ -11,6 +10,7 @@
                 :src="$settings.images_path.events  +'l_'+event.cover_image"
                 :alt="event.title"
                 :title="event.title"
+                v-if="event.cover_image"
             />
           </div>
           <div class="event-sidebar">
@@ -456,14 +456,10 @@
     <!--&gt;</gmap-marker>-->
     <!--</gmap-map>-->
     <!--</section>-->
-    <Footer/>
   </div>
 </template>
 
 <script>
-    import Footer from "@/components/Footer.vue";
-    import Breadcrumbs from "@/components/Breadcrumbs";
-
     import $ from "jquery";
     import axios from "@/axios-auth";
 
@@ -473,10 +469,6 @@
 
     export default {
         name: "Event",
-        components: {
-            Breadcrumbs,
-            Footer
-        },
         data() {
             return {
                 center: {lat: 45.508, lng: -73.587},
@@ -571,11 +563,7 @@
                         title: res.data.event.title
                     }
                     this.$store.dispatch('meta/setMeta', metaPayload);
-
-
-                    this.$refs.breadcrumbs.breadcrumbs[
-                    this.$refs.breadcrumbs.breadcrumbs.length - 1
-                        ].meta.title = res.data.event.title;
+                    this.$router.currentRoute.meta.title = this.event.title;
                 })
                 .catch(error => console.log(error));
 

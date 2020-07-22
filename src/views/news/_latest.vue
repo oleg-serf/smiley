@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <breadcrumbs /> -->
+     <breadcrumbs />
 
     <section class="news-category-section container">
       <div class="news-category">
@@ -81,16 +81,12 @@ export default {
 
           const metaPayload = {
               meta: res.data?.meta || {},
-              // meta: res.data.meta,
               title: 'Latest News'
           }
 
           metaPayload.meta.description = 'Latest news about charities and organisations doing good and how you can support them'
           this.$store.dispatch('meta/setMeta', metaPayload);
 
-        // this.$refs.breadcrumbs.breadcrumbs[
-        //   this.$refs.breadcrumbs.breadcrumbs.length - 1
-        // ].meta.title = this.title;
       })
       .catch(error => console.log(error));
   }

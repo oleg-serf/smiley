@@ -187,30 +187,6 @@
     }
   }
 
-  .breadcrumbs {
-    margin: 13px auto;
-    padding: 0 15px;
-    max-width: 1530px;
-
-    li {
-      display: inline-block;
-    }
-
-    .breadcrumbs-item {
-      text-decoration: none;
-      color: #1a1a1a;
-      font: 400 16px/21px "Muli", sans-serif;
-    }
-
-    svg {
-      margin-right: 5px;
-    }
-
-    @media (max-width: 992px) {
-      margin: 37px auto;
-    }
-  }
-
   .container {
     max-width: 1560px;
     margin: 0 auto;

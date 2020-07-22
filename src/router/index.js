@@ -3,20 +3,19 @@ import VueRouter from 'vue-router'
 import ga from 'vue-ga'
 
 
-
 Vue.use(VueRouter)
 
 const routes = [{
-    /**
-     * Main and service routes
-     */
-    path: '/',
-    name: 'home',
-    component: () => import( /* webpackChunkName: "web" */ '../views/index.vue'),
-    meta: {
-      title: 'Home',
-    }
-  },
+  /**
+   * Main and service routes
+   */
+  path: '/',
+  name: 'home',
+  component: () => import( /* webpackChunkName: "web" */ '../views/index.vue'),
+  meta: {
+    title: 'Home',
+  }
+},
   {
     path: '/404',
     name: '404',
@@ -34,21 +33,32 @@ const routes = [{
    */
   {
     path: '/members',
-    name: 'members',
     component: () => import( /* webpackChunkName: "user" */ '../views/users/index.vue'),
     meta: {
       title: 'Users',
       requiresAuth: true,
-    }
+    },
+    children: [
+      {
+        path: '',
+        name: 'members',
+        component: () => import( /* webpackChunkName: "user" */ '../views/users/_main.vue'),
+        meta: {
+          requiresAuth: true,
+        }
+      },
+      {
+        path: ':slug',
+        name: 'member',
+        component: () => import( /* webpackChunkName: "user" */ '../views/users/_slug.vue'),
+        meta: {
+          requiresAuth: true,
+          title: ''
+        }
+      },
+    ]
   },
-  {
-    path: '/members/:slug',
-    name: 'member',
-    component: () => import( /* webpackChunkName: "user" */ '../views/users/_slug.vue'),
-    meta: {
-      requiresAuth: true,
-    }
-  },
+
   {
     path: '/member/account-settings',
     name: 'account-settings',
@@ -169,34 +179,28 @@ const routes = [{
     }
   },
   /**
-   * Goals
-   */
-  {
-    path: '/goals/',
-    name: 'goals',
-    component: () => import( /* webpackChunkName: "goals" */ '../views/goals/index.vue'),
-    meta: {
-      title: 'UN Goals',
-    }
-  },
-  /**
    * Projects
    */
   {
     path: '/projects/',
-    name: 'projects',
-    component: () => import( /* webpackChunkName: "goals" */ '../views/projects/index.vue'),
+    component: () => import( /* webpackChunkName: "projects" */ '../views/projects/index.vue'),
     meta: {
-      title: 'Projects',
-    }
-  },
-  {
-    path: '/projects/:slug',
-    name: 'project',
-    component: () => import( /* webpackChunkName: "goals" */ '../views/projects/_slug.vue'),
-    meta: {
-      title: 'project',
-    }
+      title: 'Projects'
+    },
+    children: [
+      {
+        path: '',
+        name: 'projects',
+        component: () => import( /* webpackChunkName: "projects" */ '../views/projects/_main.vue'),
+      }, {
+        path: ':slug',
+        name: 'project',
+        component: () => import( /* webpackChunkName: "projects" */ '../views/projects/_slug.vue'),
+        meta: {
+          title: ''
+        }
+      },
+    ]
   },
   {
     path: '/create/project',
@@ -221,65 +225,80 @@ const routes = [{
    */
   {
     path: '/smiley-news',
-    name: 'news',
     component: () => import( /* webpackChunkName: "news" */ '../views/news/index.vue'),
     meta: {
-      title: 'News',
-    }
+      title: 'Smiley News'
+    },
+    children: [
+      {
+        path: '',
+        name: 'news',
+        component: () => import( /* webpackChunkName: "news" */ '../views/news/_main.vue'),
+      }, {
+        path: ':slug',
+        name: 'news-item',
+        component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
+        meta: {
+          title: ''
+        }
+      },
+    ]
   },
   {
     path: '/smiley-news-latest',
     name: 'news-latest',
-    component: () => import( /* webpackChunkName: "news" */ '../views/news/_all.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/news/_latest.vue'),
     meta: {
-      title: 'News',
+      title: 'Latest News',
     }
   },
-  {
-    path: '/smiley-news/:slug',
-    name: 'news-item',
-    component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
-    meta: {
-      breadcrumbs: ['news'],
-    }
-  },
-  // {
-  //   path: '/smiley-news/category/:slug',
-  //   name: 'news-category-item',
-  //   component: () => import( /* webpackChunkName: "news" */ '../views/news/category/_slug.vue'),
-  //   meta: {
-  //     breadcrumbs: ['news'],
-  //   }
-  // },
   /**
-   * News & Talks on same page
+   * Goals
    */
   {
-    path: '/goals/:slug',
-    name: 'news-category-item',
-    component: () => import( /* webpackChunkName: "news" */ '../views/goals/_slug.vue'),
+    path: '/goals/',
+    component: () => import( /* webpackChunkName: "goals" */ '../views/goals/index.vue'),
     meta: {
-      breadcrumbs: ['news'],
-    }
+      title: 'UN Goals',
+    },
+    children: [
+      {
+        path: '',
+        name: 'goals',
+        component: () => import( /* webpackChunkName: "goals" */ '../views/goals/_main.vue'),
+      }, {
+        path: ':slug',
+        name: 'news-category-item',
+        component: () => import( /* webpackChunkName: "goals" */ '../views/goals/_slug.vue'),
+        meta: {
+          title: ''
+        }
+      }
+    ]
   },
   /**
    * Talks
    */
   {
     path: '/smiley-talks',
-    name: 'talks',
     component: () => import( /* webpackChunkName: "talks" */ '../views/talks/index.vue'),
     meta: {
-      title: 'Talks',
-    }
-  },
-  {
-    path: '/smiley-talks/:slug',
-    name: 'event',
-    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/_slug.vue'),
-    meta: {
-      breadcrumbs: ['talks'],
-    }
+      title: 'Smiley Talks'
+    },
+    children: [
+      {
+        path: '',
+        name: 'talks',
+        component: () => import( /* webpackChunkName: "talks" */ '../views/talks/_main.vue'),
+      }, {
+        path: ':slug',
+        name: 'event',
+        component: () => import( /* webpackChunkName: "talks" */ '../views/talks/_slug.vue'),
+        meta: {
+          title: ''
+        }
+      }
+    ]
   },
   /**
    * Organisation routes
@@ -300,23 +319,34 @@ const routes = [{
     meta: {
       title: 'Edit Organisation',
       requiresAuth: true,
-      // TODO: Add check if user is admin of organisation?
     }
   },
-  // {
-  //   path: '/organisation/the-human-hive',
-  //   name: 'organisations',
-  //   component: () => import( /* webpackChunkName: "organisation" */ '../views/organisation/fake_temp.vue'),
-  //   meta: {
-  //     title: 'Organisations',
-  //   }
-  // },
+  {
+    path: '/organisations',
+    component: () => import( /* webpackChunkName: "organisations" */ '../views/organisations/index.vue'),
+    meta: {
+      title: 'Organisations'
+    },
+    children: [
+      {
+        path: '',
+        name: 'organisations',
+        component: () => import( /* webpackChunkName: "organisations" */ '../views/organisations/_main.vue'),
+      }, {
+        path: ':slug',
+        name: 'organisation',
+        component: () => import( /* webpackChunkName: "organisations" */ '../views/organisations/_slug.vue'),
+        meta: {
+          title: ''
+        }
+      }
+    ]
+  },
   {
     path: '/organisation/:slug',
-    name: 'organisation',
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/_slug.vue'),
-    meta: {
-      breadcrumbs: ['organisations'],
+    redirect: {
+      name: 'organisation',
     }
   },
   {
@@ -324,15 +354,7 @@ const routes = [{
     name: 'organisation-by-smiley',
     component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/_slug-by-smiley.vue'),
     meta: {
-      breadcrumbs: ['organisations'],
-    }
-  },
-  {
-    path: '/organisations',
-    name: 'organisations',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/index.vue'),
-    meta: {
-      title: 'Organisations',
+      title: ''
     }
   },
   /**
@@ -410,7 +432,6 @@ const routes = [{
     component: () => import(/* webpackChunkName: "metatest" */ '../views/test-meta'),
   },
 ];
-
 
 
 const router = new VueRouter({
