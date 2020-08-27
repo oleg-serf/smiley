@@ -74,7 +74,7 @@
             </label>
           </div>
         </div>
-        <template v-if="supportType == 'combined' || supportType == 'offer'">
+        <template v-if="supportType == 'combined' || supportType == 'need'">
           <div class="section-support-title">What support do you need?</div>
           <label
             for="reg-support"
@@ -173,7 +173,7 @@
           </div>
           <br />
         </template>
-        <template v-if="supportType == 'combined' || supportType == 'need'">
+        <template v-if="supportType == 'combined' || supportType == 'offer'">
           <div class="section-support-title">What support do you offer?</div>
           <label
             for="reg-support"
