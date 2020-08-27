@@ -21,6 +21,7 @@
             name="display-name"
             id="display-name"
             v-model="user.display_name"
+            minlength="6"
             placeholder
             required
           />
