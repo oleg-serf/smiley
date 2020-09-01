@@ -3,7 +3,8 @@
     <div class="textual-banner textual-banner--contained">
       <div class="container">
         <div class="textual-banner__title">Newsfeed</div>
-        <p>Your personalised portal to share information about yourself and hear about the latest news, events, organisations, projects and new members that share your interests.</p>
+        <p>Your personalised portal to share information about yourself and hear about the latest news, events,
+          organisations, projects and new members that share your interests.</p>
       </div>
     </div>
     <div class="feed-header">
@@ -13,15 +14,15 @@
             <div class="profile-item">
               <div class="profile-avatar">
                 <img
-                  v-if="user.avatar != null"
-                  :src="$settings.images_path.users + 'm_'+ user.avatar"
+                    v-if="user.avatar != null"
+                    :src="$settings.images_path.users + 'm_'+ user.avatar"
                 />
-                <span v-else>{{ user.display_name | filterAvatar}}</span>
+                <span v-else>{{ user.display_name | filterAvatar }}</span>
               </div>
             </div>
             <div class="profile-item">
-              <div class="profile__name">{{user.display_name}}</div>
-              <div class="profile__job" v-if="(user.job_title != null)">{{user.job_title}}</div>
+              <div class="profile__name">{{ user.display_name }}</div>
+              <div class="profile__job" v-if="(user.job_title != null)">{{ user.job_title }}</div>
             </div>
             <div class="profile-item profile-item--full-width">
               <div class="profile__location">
@@ -32,18 +33,18 @@
               <div class="profile-title">
                 Matches
                 <i
-                  class="popover-icon fa fa-info-circle"
-                  v-popover:tooltip="'Members and organisations that match your interests, skills you are in need of or looking to offer.'"
+                    class="popover-icon fa fa-info-circle"
+                    v-popover:tooltip="'Members and organisations that match your interests, skills you are in need of or looking to offer.'"
                 ></i>
               </div>
-              <div class="profile__numbers">50+</div>
+              <div class="profile__numbers">{{ feedPage.match_users_counter }}</div>
             </div>
             <div class="profile-item">
               <div class="profile-title">
                 Community
                 <i
-                  class="popover-icon fa fa-info-circle"
-                  v-popover:tooltip="'See updates from members and organisations you have connected with.'"
+                    class="popover-icon fa fa-info-circle"
+                    v-popover:tooltip="'See updates from members and organisations you have connected with.'"
                 ></i>
               </div>
               <div class="profile__numbers">0</div>
@@ -54,11 +55,11 @@
                 <div class="progress-bar">
                   <div class="progress-bar__bar">
                     <div
-                      class="progress-bar__progress"
-                      :style="{width: user.completed_profile + '%'}"
+                        class="progress-bar__progress"
+                        :style="{width: user.completed_profile + '%'}"
                     ></div>
                   </div>
-                  <div class="progress-bar__percents">{{user.completed_profile}}%</div>
+                  <div class="progress-bar__percents">{{ user.completed_profile }}%</div>
                 </div>
               </div>
             </div>
@@ -74,194 +75,242 @@
           <div class="community">
             <ul class="community-navigation">
               <li
-                class="community-navigation__item"
-                :class="{active: tab == 'community'}"
-                @click="tab = 'community'"
-              >My community</li>
+                  class="community-navigation__item"
+                  :class="{active: tab == 'community'}"
+                  @click="tab = 'community'"
+              >My community
+              </li>
               <li
-                class="community-navigation__item"
-                :class="{active: tab == 'matches'}"
-                @click="tab = 'matches'"
-              >Suggested matches</li>
+                  class="community-navigation__item"
+                  :class="{active: tab == 'matches'}"
+                  @click="tab = 'matches'"
+              >Suggested matches
+              </li>
             </ul>
             <div class="community-tabs">
               <div class="community-tabs__tab" v-show="tab == 'community'">
+                <div v-if="friends != null">
                 <div class="users-list">
                   <div
-                    class="users-list__item"
-                    v-for="(event, index) in fakeUsersFollowing"
-                    :key="'user-'+index"
+                      class="users-list__item"
+                      v-for="(user, index) in fakeUsersFollowing"
+                      :key="'user-'+index"
                   >
-                    <img :src="event.picture.medium" class="user-list__user-avatar" />
-                    <div class="user-list__user-info">
-                      <div class="user-list__user-title">{{ event.name.first }} {{event.name.last}}</div>
-                      <div
-                        class="user-list__user-description"
-                      >{{ event.location.city}}, {{event.location.country}}</div>
-                      <div class="user-list__user-connect__actions-holder">
-                        <button class="user-list__user-connect__actions">
-                          <i class="fa fa-user"></i> View
-                        </button>
-                        <button class="user-list__user-connect__actions">
-                          <i class="fa fa-envelope"></i> Message
-                        </button>
-                      </div>
-                    </div>
+                    <img
+                        :src="$settings.images_path.users + 's_' + user.avatar"
+                        alt
+                        title
+                        class="user-list__user-avatar"
+                        v-if="user.avatar !== null"
+                    />
+                    <span v-else>{{ user.initials }}</span>
                   </div>
-                  <div class="users-list__item users-list__item--show-more">
-                    <div>
-                      <a href="#">Show more</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="community-tabs__tab" v-show="tab == 'matches'">
-                <div class="users-list">
-                  <div
-                    class="users-list__item"
-                    v-for="(event, index) in fakeUsers"
-                    :key="'user-'+index"
-                  >
-                    <img :src="event.picture.medium" class="user-list__user-avatar" />
-                    <div class="user-list__user-info">
-                      <div class="user-list__user-title">{{ event.name.first }} {{event.name.last}}</div>
-                      <div
+                  <div class="user-list__user-info">
+                    <div class="user-list__user-title">{{ user.name }}</div>
+                    <div
                         class="user-list__user-description"
-                      >{{ event.location.city}}, {{event.location.country}}</div>
-                      <button class="user-list__user-connect__connect">
-                        <i class="fa fa-user-plus"></i> Connect
+                    >{{ user.location }}
+                    </div>
+                    <div class="user-list__user-connect__actions-holder">
+                      <button class="user-list__user-connect__actions">
+                        <i class="fa fa-user"></i> View
+                      </button>
+                      <button class="user-list__user-connect__actions">
+                        <i class="fa fa-envelope"></i> Message
                       </button>
                     </div>
                   </div>
-                  <div class="users-list__item users-list__item--show-more">
-                    <div>
-                      <a href="#">Show more</a>
-                    </div>
+                </div>
+                <div class="users-list__item users-list__item--show-more">
+                  <div>
+                    <a href="#">Show more</a>
+                  </div>
+                </div>
+                </div>
+                <div v-else>
+                <div class="users-list__item users-list__item--show-more">
+                  <div>
+                    Oh, you don't have any friend connections yet :( try to add some friends
                   </div>
                 </div>
               </div>
             </div>
+            <div class="community-tabs__tab" v-show="tab == 'matches'">
+              <div class="users-list">
+                <div v-if="feedPage.match_users != null && feedPage.match_users.length > 0">
+                <div
+                    class="users-list__item"
+                    v-for="(user, index) in feedPage.match_users"
+                    :key="'user-'+index"
+                >
+                  <div class="users-list__item-image-holder">
+                    <img
+                        :src="$settings.images_path.users + 's_' + user.avatar"
+                        alt
+                        title
+                        class="user-list__user-avatar"
+                        v-if="user.avatar !== null"
+                    />
+                    <span v-else>{{ user.initials }}</span>
+                  </div>
+                  <div class="user-list__user-info">
+                    <div class="user-list__user-title">{{ user.name }}</div>
+                    <div
+                        class="user-list__user-description"
+                    >{{ user.location }}
+                    </div>
+                    <button class="user-list__user-connect__connect">
+                      <i class="fa fa-user-plus"></i> Connect
+                    </button>
+                  </div>
+                </div>
+                <div class="users-list__item users-list__item--show-more">
+                  <div>
+                    <a href="#">Show more</a>
+                  </div>
+                </div>
+                </div>
+                <div v-else>
+                 <div class="users-list__item users-list__item--show-more">
+                  <div>
+                    Oh, you don't have any friend connections yet :( try to add some friends
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="feed-grid__item feed-grid__item--projects">
-          <div class="projects-block">
-            <h2 class="projects-block__title">Projects</h2>
-            <div class="projects-block__items" v-if="projects != null">
-              <div
+      </div>
+      <div class="feed-grid__item feed-grid__item--projects">
+        <div class="projects-block">
+          <h2 class="projects-block__title">Projects</h2>
+          <div class="projects-block__items" v-if="projects != null">
+            <div
                 class="projects-block__item"
                 v-for="(project, index) in projects"
                 :key="'projects-'+index"
-              >
-                <div class="projects-block__item-column">
-                  <img         :src="$settings.images_path.projects +'m_'+project.cover_image"
-                               class="projects-block__item-image" />
-                </div>
-                <div class="projects-block__item-column">
-                  <div
+            >
+              <div class="projects-block__item-column" v-if="project.cover_image">
+                <img :src="$settings.images_path.projects +'m_'+project.cover_image"
+
+                     class="projects-block__item-image"/>
+              </div>
+              <div class="projects-block__item-column"
+                   :class="{'projects-block__item-column--full-width' : !project.cover_image}">
+                <div
                     class="projects-block__item-title"
-                  >{{ project.name.length > 20 ? project.name.substring(0, 15) + '...' : project.name }}</div>
-                  <div
-                    class="projects-block__item-description"
-                  >{{ project.description.length > 255 ? description.substring(0, 255) + '...' : project.description }}</div>
+                >{{ project.name.length > 20 ? project.name.substring(0, 15) + '...' : project.name }}
                 </div>
-                <div class="projects-block__item-column projects-block__item-column--full-width">
-                  <router-link :to="{name: 'project', params: {slug: project.slug}}" class="projects-block__item-link">offer support</router-link>
+                <div
+                    class="projects-block__item-description"
+                >{{ project.description.length > 255 ? description.substring(0, 255) + '...' : project.description }}
                 </div>
               </div>
-              <div class="projects-block__item projects-block__item--show-more">
-                <div>
-                  <a href="#">Show more</a>
-                </div>
+              <div class="projects-block__item-column projects-block__item-column--full-width">
+                <router-link :to="{name: 'project', params: {slug: project.slug}}" class="projects-block__item-link">
+                  offer
+                  support
+                </router-link>
+              </div>
+            </div>
+            <div class="projects-block__item projects-block__item--show-more">
+              <div>
+                <a href="#">Show more</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="feed-grid__item feed-grid__item--events">
-          <div class="events-block">
-            <h2 class="events-block__title">UPCOMING EVENTS</h2>
-            <div class="events-block__items">
-              <div
+      </div>
+      <div class="feed-grid__item feed-grid__item--events">
+        <div class="events-block">
+          <h2 class="events-block__title">UPCOMING EVENTS</h2>
+          <div class="events-block__items">
+            <div
                 class="event-block__item"
                 v-for="(event, index) in eventsList"
                 :key="'event-'+index"
-              >
-                <div class="event-block__item-column">
-                  <img :src="event.avatar" class="event-block__item-image" />
-                </div>
-                <div class="event-block__item-column">
-                  <div
+            >
+              <div class="event-block__item-column">
+                <img :src="event.avatar" class="event-block__item-image"/>
+              </div>
+              <div class="event-block__item-column">
+                <div
                     class="event-block__item-title"
-                  >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}</div>
+                >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}
                 </div>
-                <div class="event-block__item-column">
-                  <router-link
+              </div>
+              <div class="event-block__item-column">
+                <router-link
                     :to="event.link"
                     :title="event.title"
                     class="event-block__item-link"
-                  >details</router-link>
-                </div>
+                >details
+                </router-link>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="feed-sections">
-      <div class="feed-sections-grid container">
-        <div class="feed-section__item">
-          <router-link :to="{name: 'projects'}" class="feed-section__link">
-            <i class="fa fa-neuter"></i> Projects
-          </router-link>
-        </div>
-        <div class="feed-section__item">
-          <router-link :to="{name: 'users'}" class="feed-section__link">
-            <i class="fa fa-users"></i> Members
-          </router-link>
-        </div>
-        <!-- <div class="feed-section__item">
-          <router-link to="/" class="feed-section__link">
-            <i class="fa fa-qq"></i> Ecosystem
-            <br />(comming soon)
-          </router-link>
-        </div>-->
-        <div class="feed-section__item">
-          <router-link :to="{name: 'talks'}" class="feed-section__link">
-            <i class="fa fa-calendar-check-o"></i> Events
-          </router-link>
-        </div>
-        <!-- <div class="feed-section__item">
-          <router-link to="/" class="feed-section__link feed-section__link--hub">
-            <i class="fa fa-plus"></i> Create a smiley hub
-          </router-link>
-        </div>-->
+  </div>
+  <div class="feed-sections">
+    <div class="feed-sections-grid container">
+      <div class="feed-section__item">
+        <router-link :to="{name: 'projects'}" class="feed-section__link">
+          <i class="fa fa-neuter"></i> Projects
+        </router-link>
       </div>
+      <div class="feed-section__item">
+        <router-link :to="{name: 'users'}" class="feed-section__link">
+          <i class="fa fa-users"></i> Members
+        </router-link>
+      </div>
+      <!-- <div class="feed-section__item">
+        <router-link to="/" class="feed-section__link">
+          <i class="fa fa-qq"></i> Ecosystem
+          <br />(comming soon)
+        </router-link>
+      </div>-->
+      <div class="feed-section__item">
+        <router-link :to="{name: 'talks'}" class="feed-section__link">
+          <i class="fa fa-calendar-check-o"></i> Events
+        </router-link>
+      </div>
+      <!-- <div class="feed-section__item">
+        <router-link to="/" class="feed-section__link feed-section__link--hub">
+          <i class="fa fa-plus"></i> Create a smiley hub
+        </router-link>
+      </div>-->
     </div>
-    <div class="feed-updates">
-      <div class="updates-navigation">
-        <div class="container">
-          <div
+  </div>
+  <div class="feed-updates">
+    <div class="updates-navigation">
+      <div class="container">
+        <div
             class="updates-navigation__item"
             :class="{active: updatesTab == 'news'}"
             @click="updatesTab = 'news'"
-          >
-            Smiley
-            <small>®</small> News
-          </div>
-          <div
+        >
+          Smiley
+          <small>®</small> News
+        </div>
+        <div
             class="updates-navigation__item"
             :class="{active: updatesTab == 'updates'}"
             @click="updatesTab = 'updates'"
-          >Updates</div>
+        >Updates
         </div>
-      </div>
-      <div class="updates-tabs container">
-        <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'news'">
-          <news-card v-for="article in posts" :key="'latest-'+article.slug" :article="article" />
-        </div>
-        <div class="updates-tabs__tab" v-show="updatesTab == 'updates'">no updates for now</div>
       </div>
     </div>
-    <Footer />
+    <div class="updates-tabs container">
+      <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'news'">
+        <news-card v-for="article in posts" :key="'latest-'+article.slug" :article="article"/>
+      </div>
+      <div class="updates-tabs__tab" v-show="updatesTab == 'updates'">no updates for now</div>
+    </div>
+  </div>
+  <Footer/>
   </div>
 </template>
 
@@ -290,101 +339,105 @@ export default {
       tab: "community",
       updatesTab: "news",
       description:
-        "A route-planning app that finds the safest route from A to B thanks to users' ratings of how safe they felt on each road. Users can rate roads for how safe they felt and at what time. Out of five for how safe they felt, box for written explanation, and notes for council – if they felt unsafe, why? Like google maps, the app will find a route for you but you can choose for it to be based on how safe people felt on it. People have to sign up through a facebook, insta or twitter account which is checked to be a real account.",
+          "A route-planning app that finds the safest route from A to B thanks to users' ratings of how safe they felt on each road. Users can rate roads for how safe they felt and at what time. Out of five for how safe they felt, box for written explanation, and notes for council – if they felt unsafe, why? Like google maps, the app will find a route for you but you can choose for it to be based on how safe people felt on it. People have to sign up through a facebook, insta or twitter account which is checked to be a real account.",
       eventsList: [
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Project 1",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Project With long title",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Zero Dawn",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Project 1",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Project With long title",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Zero Dawn",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Project 1",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Project With long title",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Zero Dawn",
           link: "/"
         },
         {
           avatar:
-            "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
+              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
           title: "Uncharted",
           link: "/"
         }
-      ]
+      ],
+      //  testing
+      feedPage: {}
     };
   },
   mounted() {
     axios
-      .get("/users/feed")
-      .then(res => {
-        console.log("Feed loaded", res);
-        this.user = res.data.user;
-        this.posts = res.data.posts;
-        this.projects = res.data.projects;
-      })
-      .catch(error => console.error(error));
+        .get("/users/feed")
+        .then(res => {
+          console.log("Feed loaded", res);
+          this.user = res.data.user;
+          this.posts = res.data.posts;
+          this.projects = res.data.projects;
+
+          this.feedPage = res.data;
+        })
+        .catch(error => console.error(error));
     axios
-      .get("/news/latest")
-      .then(res => {
-        this.latest = res.data.latest_news;
-      })
-      .catch(error => console.error(error));
+        .get("/news/latest")
+        .then(res => {
+          this.latest = res.data.latest_news;
+        })
+        .catch(error => console.error(error));
     axiosBase
-      .get("https://randomuser.me/api/?results=20&nat=gb")
-      .then(res => {
-        // console.log(res);
-        this.fakeUsers = res.data.results;
-      })
-      .catch(error => console.error(error));
+        .get("https://randomuser.me/api/?results=20&nat=gb")
+        .then(res => {
+          // console.log(res);
+          this.fakeUsers = res.data.results;
+        })
+        .catch(error => console.error(error));
     axiosBase
-      .get("https://randomuser.me/api/?results=20&nat=gb")
-      .then(res => {
-        // console.log(res);
-        this.fakeUsersFollowing = res.data.results;
-      })
-      .catch(error => console.error(error));
+        .get("https://randomuser.me/api/?results=20&nat=gb")
+        .then(res => {
+          // console.log(res);
+          this.fakeUsersFollowing = res.data.results;
+        })
+        .catch(error => console.error(error));
   }
 };
 </script>
@@ -396,6 +449,7 @@ export default {
   background-position: center;
   min-height: 450px;
 }
+
 .feed-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -442,6 +496,7 @@ export default {
     &--matches {
       border-right: 1px solid #fff;
     }
+
     &--full-width {
       grid-column: 1 / span 2;
     }
@@ -486,6 +541,7 @@ export default {
     @include font-size(1.1rem);
     color: #fff;
   }
+
   .profile__job {
     @include font-size(0.9rem);
     color: #fff;
@@ -516,6 +572,7 @@ export default {
       background-color: rgba(216, 216, 216, 0.7);
       position: relative;
     }
+
     .progress-bar__progress {
       display: block;
       position: absolute;
@@ -524,6 +581,7 @@ export default {
       background-color: #f4ed3b;
       height: 100%;
     }
+
     .progress-bar__percents {
       @include font-size(1rem);
       margin-left: 20px;
@@ -562,6 +620,24 @@ export default {
     grid-template-columns: 50px auto;
     grid-gap: 20px;
 
+    &-image-holder {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      line-height: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px auto 14px auto;
+      background-color: #e5e9f0;
+      text-decoration: none;
+      color: #393939;
+      font-family: "Montserrat Bold", sans-serif;
+      @include font-size(1.2rem);
+      letter-spacing: 2px;
+    }
+
     &:not(:last-child) {
       margin-bottom: 20px;
     }
@@ -590,25 +666,29 @@ export default {
       }
     }
   }
+
   .user-list__user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: contain;
   }
+
   .user-list__user-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
+
   .user-list__user-title {
     @include font-size(1rem);
     font-family: "Montserrat Bold", sans-serif;
   }
+
   .user-list__user-description {
     @include font-size(0.75rem);
   }
+
   .user-list__user-connect__connect {
     display: inline-block;
     max-width: 130px;
@@ -704,6 +784,7 @@ export default {
       }
     }
   }
+
   .community-tabs {
     padding: 0px 20px;
     color: #fff;
@@ -886,6 +967,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .feed-section__link {
   @include font-size(1rem);
   color: #393939;
@@ -932,6 +1014,7 @@ export default {
       grid-template-columns: repeat(2, 1fr);
     }
   }
+
   .updates-navigation__item {
     display: block;
     text-align: center;
@@ -961,9 +1044,11 @@ export default {
       }
     }
   }
+
   .updates-tabs {
     padding-top: 24px;
   }
+
   .updates-tabs__tab {
     &--news-grid {
       display: grid;

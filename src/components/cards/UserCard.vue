@@ -7,8 +7,7 @@
           alt
           title
           class="user-item__image"
-          ccv-if="user.avatar !== null"
-          v-if="user.avatar != null"
+          v-if="user.avatar !== null"
         />
         <span v-else>{{ user.initials }}</span>
       </router-link>
