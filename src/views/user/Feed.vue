@@ -72,337 +72,142 @@
           </div>
         </div>
         <div class="feed-grid__item feed-grid__item--community">
-          <div class="community">
-            <ul class="community-navigation">
-              <li
-                  class="community-navigation__item"
-                  :class="{active: tab == 'community'}"
-                  @click="tab = 'community'"
-              >My community
-              </li>
-              <li
-                  class="community-navigation__item"
-                  :class="{active: tab == 'matches'}"
-                  @click="tab = 'matches'"
-              >Suggested matches
-              </li>
-            </ul>
-            <div class="community-tabs">
-              <div class="community-tabs__tab" v-show="tab == 'community'">
-                <div v-if="friends != null">
-                <div class="users-list">
+          <div class="community-block">
+            <h2 class="community-block__title">My community</h2>
+            <UsersList :users="friends">
+              <template v-slot:no_users>You don't have any friends yet, try to connect with people from suggested matches</template>
+            </UsersList>
+          </div>
+        </div>
+        <div class="feed-grid__item feed-grid__item--projects">
+          <div class="projects-block">
+            <h2 class="projects-block__title">Suggested Matches</h2>
+            <UsersList :users="matches"></UsersList>
+          </div>
+        </div>
+        <div class="feed-grid__item feed-grid__item--events">
+          <div class="events-block">
+            <h2 class="events-block__title">UPCOMING EVENTS</h2>
+            <div class="events-block__items">
+              <div
+                  class="event-block__item"
+                  v-for="(event, index) in events"
+                  :key="'event-'+index"
+              >
+                <div class="event-block__item-column">
+                  <img :src="$settings.images_path.events +'s_'+event.cover_image" class="event-block__item-image"/>
+                </div>
+                <div class="event-block__item-column">
                   <div
-                      class="users-list__item"
-                      v-for="(user, index) in fakeUsersFollowing"
-                      :key="'user-'+index"
-                  >
-                    <img
-                        :src="$settings.images_path.users + 's_' + user.avatar"
-                        alt
-                        title
-                        class="user-list__user-avatar"
-                        v-if="user.avatar !== null"
-                    />
-                    <span v-else>{{ user.initials }}</span>
-                  </div>
-                  <div class="user-list__user-info">
-                    <div class="user-list__user-title">{{ user.name }}</div>
-                    <div
-                        class="user-list__user-description"
-                    >{{ user.location }}
-                    </div>
-                    <div class="user-list__user-connect__actions-holder">
-                      <button class="user-list__user-connect__actions">
-                        <i class="fa fa-user"></i> View
-                      </button>
-                      <button class="user-list__user-connect__actions">
-                        <i class="fa fa-envelope"></i> Message
-                      </button>
-                    </div>
+                      class="event-block__item-title"
+                  >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}
                   </div>
                 </div>
-                <div class="users-list__item users-list__item--show-more">
-                  <div>
-                    <a href="#">Show more</a>
-                  </div>
-                </div>
-                </div>
-                <div v-else>
-                <div class="users-list__item users-list__item--show-more">
-                  <div>
-                    Oh, you don't have any friend connections yet :( try to add some friends
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="community-tabs__tab" v-show="tab == 'matches'">
-              <div class="users-list">
-                <div v-if="feedPage.match_users != null && feedPage.match_users.length > 0">
-                <div
-                    class="users-list__item"
-                    v-for="(user, index) in feedPage.match_users"
-                    :key="'user-'+index"
-                >
-                  <div class="users-list__item-image-holder">
-                    <img
-                        :src="$settings.images_path.users + 's_' + user.avatar"
-                        alt
-                        title
-                        class="user-list__user-avatar"
-                        v-if="user.avatar !== null"
-                    />
-                    <span v-else>{{ user.initials }}</span>
-                  </div>
-                  <div class="user-list__user-info">
-                    <div class="user-list__user-title">{{ user.name }}</div>
-                    <div
-                        class="user-list__user-description"
-                    >{{ user.location }}
-                    </div>
-                    <button class="user-list__user-connect__connect">
-                      <i class="fa fa-user-plus"></i> Connect
-                    </button>
-                  </div>
-                </div>
-                <div class="users-list__item users-list__item--show-more">
-                  <div>
-                    <a href="#">Show more</a>
-                  </div>
-                </div>
-                </div>
-                <div v-else>
-                 <div class="users-list__item users-list__item--show-more">
-                  <div>
-                    Oh, you don't have any friend connections yet :( try to add some friends
-                  </div>
-                </div>
+                <div class="event-block__item-column">
+                  <router-link
+                      :to="{name: 'event', params: {slug: event.slug}}"
+                      :title="event.title"
+                      class="event-block__item-link"
+                  >details
+                  </router-link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="feed-grid__item feed-grid__item--projects">
-        <div class="projects-block">
-          <h2 class="projects-block__title">Projects</h2>
-          <div class="projects-block__items" v-if="projects != null">
-            <div
-                class="projects-block__item"
-                v-for="(project, index) in projects"
-                :key="'projects-'+index"
-            >
-              <div class="projects-block__item-column" v-if="project.cover_image">
-                <img :src="$settings.images_path.projects +'m_'+project.cover_image"
-
-                     class="projects-block__item-image"/>
-              </div>
-              <div class="projects-block__item-column"
-                   :class="{'projects-block__item-column--full-width' : !project.cover_image}">
-                <div
-                    class="projects-block__item-title"
-                >{{ project.name.length > 20 ? project.name.substring(0, 15) + '...' : project.name }}
-                </div>
-                <div
-                    class="projects-block__item-description"
-                >{{ project.description.length > 255 ? description.substring(0, 255) + '...' : project.description }}
-                </div>
-              </div>
-              <div class="projects-block__item-column projects-block__item-column--full-width">
-                <router-link :to="{name: 'project', params: {slug: project.slug}}" class="projects-block__item-link">
-                  offer
-                  support
-                </router-link>
-              </div>
-            </div>
-            <div class="projects-block__item projects-block__item--show-more">
-              <div>
-                <a href="#">Show more</a>
-              </div>
-            </div>
+    </div>
+    <div class="feed-sections">
+      <div class="feed-sections-grid container">
+        <div class="feed-section__item">
+          <router-link :to="{name: 'projects'}" class="feed-section__link">
+            <i class="fa fa-neuter"></i> Projects
+          </router-link>
+        </div>
+        <div class="feed-section__item">
+          <router-link :to="{name: 'members'}" class="feed-section__link">
+            <i class="fa fa-users"></i> Members
+          </router-link>
+        </div>
+        <!-- <div class="feed-section__item">
+          <router-link to="/" class="feed-section__link">
+            <i class="fa fa-qq"></i> Ecosystem
+            <br />(comming soon)
+          </router-link>
+        </div>-->
+        <div class="feed-section__item">
+          <router-link :to="{name: 'talks'}" class="feed-section__link">
+            <i class="fa fa-calendar-check-o"></i> Events
+          </router-link>
+        </div>
+        <!-- <div class="feed-section__item">
+          <router-link to="/" class="feed-section__link feed-section__link--hub">
+            <i class="fa fa-plus"></i> Create a smiley hub
+          </router-link>
+        </div>-->
+      </div>
+    </div>
+    <div class="feed-updates">
+      <div class="updates-navigation">
+        <div class="container">
+          <div
+              class="updates-navigation__item"
+              :class="{active: updatesTab == 'news'}"
+              @click="updatesTab = 'news'"
+          >
+            Smiley
+            <small>®</small> News
+          </div>
+          <div
+              class="updates-navigation__item"
+              :class="{active: updatesTab == 'updates'}"
+              @click="updatesTab = 'updates'"
+          >Updates
           </div>
         </div>
       </div>
-      <div class="feed-grid__item feed-grid__item--events">
-        <div class="events-block">
-          <h2 class="events-block__title">UPCOMING EVENTS</h2>
-          <div class="events-block__items">
-            <div
-                class="event-block__item"
-                v-for="(event, index) in eventsList"
-                :key="'event-'+index"
-            >
-              <div class="event-block__item-column">
-                <img :src="event.avatar" class="event-block__item-image"/>
-              </div>
-              <div class="event-block__item-column">
-                <div
-                    class="event-block__item-title"
-                >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}
-                </div>
-              </div>
-              <div class="event-block__item-column">
-                <router-link
-                    :to="event.link"
-                    :title="event.title"
-                    class="event-block__item-link"
-                >details
-                </router-link>
-              </div>
-            </div>
-          </div>
+      <div class="updates-tabs container">
+        <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'news'">
+          <template v-if="latestNews != null && latestNews.length > 0">
+            <news-card v-for="article in latestNews" :key="'latest-'+article.slug" :article="article"/>
+          </template>
+          <template v-else>No updates yet</template>
+        </div>
+        <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'updates'">
+          <news-card v-for="article in userNews" :key="'latest-'+article.slug" :article="article"/>
         </div>
       </div>
     </div>
-  </div>
-  <div class="feed-sections">
-    <div class="feed-sections-grid container">
-      <div class="feed-section__item">
-        <router-link :to="{name: 'projects'}" class="feed-section__link">
-          <i class="fa fa-neuter"></i> Projects
-        </router-link>
-      </div>
-      <div class="feed-section__item">
-        <router-link :to="{name: 'users'}" class="feed-section__link">
-          <i class="fa fa-users"></i> Members
-        </router-link>
-      </div>
-      <!-- <div class="feed-section__item">
-        <router-link to="/" class="feed-section__link">
-          <i class="fa fa-qq"></i> Ecosystem
-          <br />(comming soon)
-        </router-link>
-      </div>-->
-      <div class="feed-section__item">
-        <router-link :to="{name: 'talks'}" class="feed-section__link">
-          <i class="fa fa-calendar-check-o"></i> Events
-        </router-link>
-      </div>
-      <!-- <div class="feed-section__item">
-        <router-link to="/" class="feed-section__link feed-section__link--hub">
-          <i class="fa fa-plus"></i> Create a smiley hub
-        </router-link>
-      </div>-->
-    </div>
-  </div>
-  <div class="feed-updates">
-    <div class="updates-navigation">
-      <div class="container">
-        <div
-            class="updates-navigation__item"
-            :class="{active: updatesTab == 'news'}"
-            @click="updatesTab = 'news'"
-        >
-          Smiley
-          <small>®</small> News
-        </div>
-        <div
-            class="updates-navigation__item"
-            :class="{active: updatesTab == 'updates'}"
-            @click="updatesTab = 'updates'"
-        >Updates
-        </div>
-      </div>
-    </div>
-    <div class="updates-tabs container">
-      <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'news'">
-        <news-card v-for="article in posts" :key="'latest-'+article.slug" :article="article"/>
-      </div>
-      <div class="updates-tabs__tab" v-show="updatesTab == 'updates'">no updates for now</div>
-    </div>
-  </div>
-  <Footer/>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import axios from "@/axios-auth";
-import axiosBase from "axios";
 
+import UsersList from "@/components/feed/UsersList.vue";
 import NewsCard from "@/components/cards/NewsCard.vue";
 import Footer from "@/components/Footer";
 
 export default {
   name: "UserFeed",
   components: {
+    UsersList,
     NewsCard,
     Footer
   },
   data() {
     return {
       user: {},
-      posts: [],
-      projects: [],
+      userNews: [],
+      latestNews: [],
+      events: [],
       //
-      fakeUsersFollowing: [],
-      fakeUsers: [],
-      latest: [],
       tab: "community",
       updatesTab: "news",
-      description:
-          "A route-planning app that finds the safest route from A to B thanks to users' ratings of how safe they felt on each road. Users can rate roads for how safe they felt and at what time. Out of five for how safe they felt, box for written explanation, and notes for council – if they felt unsafe, why? Like google maps, the app will find a route for you but you can choose for it to be based on how safe people felt on it. People have to sign up through a facebook, insta or twitter account which is checked to be a real account.",
-      eventsList: [
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Project 1",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Project With long title",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Zero Dawn",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Project 1",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Project With long title",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Zero Dawn",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Project 1",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Project With long title",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Zero Dawn",
-          link: "/"
-        },
-        {
-          avatar:
-              "https://new-smiley.s3.eu-west-2.amazonaws.com/organisations/s_0o0clq4P1238223851.jpg",
-          title: "Uncharted",
-          link: "/"
-        }
-      ],
       //  testing
+      friends: [],
+      matches: [],
       feedPage: {}
     };
   },
@@ -412,8 +217,9 @@ export default {
         .then(res => {
           console.log("Feed loaded", res);
           this.user = res.data.user;
-          this.posts = res.data.posts;
-          this.projects = res.data.projects;
+          this.userNews = res.data.news;
+          this.events = res.data.events;
+          this.matches = res.data.match_users;
 
           this.feedPage = res.data;
         })
@@ -421,23 +227,20 @@ export default {
     axios
         .get("/news/latest")
         .then(res => {
-          this.latest = res.data.latest_news;
+          this.latestNews = res.data.latest_news;
+
+          console.log('Latest Feed News', this.latest);
         })
         .catch(error => console.error(error));
-    axiosBase
-        .get("https://randomuser.me/api/?results=20&nat=gb")
-        .then(res => {
-          // console.log(res);
-          this.fakeUsers = res.data.results;
-        })
-        .catch(error => console.error(error));
-    axiosBase
-        .get("https://randomuser.me/api/?results=20&nat=gb")
-        .then(res => {
-          // console.log(res);
-          this.fakeUsersFollowing = res.data.results;
-        })
-        .catch(error => console.error(error));
+
+    const metaPayload = {
+      title: 'Feed',
+      meta: {
+        description: ''
+      }
+    }
+
+    this.$store.dispatch('meta/setMeta', metaPayload);
   }
 };
 </script>
@@ -471,7 +274,7 @@ export default {
     }
 
     &--community {
-      padding-top: 20px;
+      padding: 20px;
     }
 
     &--projects {
@@ -529,7 +332,7 @@ export default {
 
     img {
       width: 100%;
-      height: 100;
+      height: 100%;
       object-fit: cover;
       object-position: center;
     }
@@ -611,186 +414,12 @@ export default {
 }
 
 //
-.users-list {
-  height: 360px;
-  overflow-y: scroll;
-
-  .users-list__item {
-    display: grid;
-    grid-template-columns: 50px auto;
-    grid-gap: 20px;
-
-    &-image-holder {
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      overflow: hidden;
-      line-height: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 5px auto 14px auto;
-      background-color: #e5e9f0;
-      text-decoration: none;
-      color: #393939;
-      font-family: "Montserrat Bold", sans-serif;
-      @include font-size(1.2rem);
-      letter-spacing: 2px;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: 20px;
-    }
-
-    padding-bottom: 20px;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    }
-
-    &--show-more {
-      text-align: center;
-      grid-template-columns: 1fr;
-
-      a {
-        color: #fff;
-        text-decoration: none;
-        border-bottom: 1px solid #fff;
-        display: inline-block;
-        transition: border-color 0.2s;
-        @include font-size(0.8rem);
-
-        &:hover {
-          border-color: transparent;
-        }
-      }
-    }
-  }
-
-  .user-list__user-avatar {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: contain;
-  }
-
-  .user-list__user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .user-list__user-title {
-    @include font-size(1rem);
+.community-block {
+  .community-block__title {
+    color: #fff;
     font-family: "Montserrat Bold", sans-serif;
-  }
-
-  .user-list__user-description {
-    @include font-size(0.75rem);
-  }
-
-  .user-list__user-connect__connect {
-    display: inline-block;
-    max-width: 130px;
-    margin-top: 6px;
-    color: #fff;
-    border: 1px solid #fff;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-family: "Montserrat SemiBold", sans-serif;
-    display: block;
-    padding: 2px 15px;
     text-transform: uppercase;
-    height: auto;
-    transition: background-color 0.2s, color 0.2s;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-
-    i {
-      margin-right: 12px;
-    }
-
-    &:hover {
-      background-color: #ffec00;
-      color: #393939;
-    }
-  }
-
-  .user-list__user-connect__actions-holder {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-  }
-
-  .user-list__user-connect__actions {
-    display: inline-block;
-    max-width: 130px;
-    text-align: center;
-    margin-top: 6px;
-    color: #fff;
-    border: 1px solid #fff;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-family: "Montserrat SemiBold", sans-serif;
-    display: block;
-    padding: 2px 15px;
-    text-transform: uppercase;
-    height: auto;
-    transition: background-color 0.2s, color 0.2s;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    i {
-      margin-right: 12px;
-    }
-
-    &:hover {
-      background-color: #ffec00;
-      color: #393939;
-    }
-  }
-}
-
-//
-.community {
-  .community-navigation {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
-    &__item {
-      text-align: center;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-      transition: border-color 0.2s;
-      cursor: pointer;
-      padding-bottom: 10px;
-      @include font-size(0.8rem);
-      text-transform: uppercase;
-      font-family: "Montserrat Regular", sans-serif;
-      color: #fff;
-      padding: 0px 5px 10px 5px;
-
-      &:hover {
-        border-bottom-color: rgba(255, 255, 255, 0.7);
-      }
-
-      &.active {
-        border-bottom-color: rgba(255, 255, 255, 1);
-        font-family: "Montserrat Bold", sans-serif;
-      }
-    }
-  }
-
-  .community-tabs {
-    padding: 0px 20px;
-    color: #fff;
-
-    &__tab {
-    }
+    @include font-size(1.1rem);
   }
 }
 
@@ -853,7 +482,7 @@ export default {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    object-position: contain;
+    object-position: center;
   }
 
   .projects-block__item-title {
@@ -922,7 +551,7 @@ export default {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    object-position: contain;
+    object-position: center;
   }
 
   .event-block__item-title {
