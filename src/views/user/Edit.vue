@@ -626,6 +626,7 @@ export default {
       this.activeTab = menuItem;
     },
     getToData(test, placeResult) {
+      console.log('GA', placeResult.address_components[0].long_name);
       this.user.city = placeResult.address_components[0].long_name;
     },
     getLocation() {

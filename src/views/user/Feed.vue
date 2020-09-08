@@ -26,7 +26,7 @@
             </div>
             <div class="profile-item profile-item--full-width">
               <div class="profile__location">
-                <i class="fa fa-map-marker"></i> London, UK
+                <i class="fa fa-map-marker"></i> {{ user.country }}, {{ user.city }}
               </div>
             </div>
             <div class="profile-item profile-item--matches">
@@ -56,10 +56,10 @@
                   <div class="progress-bar__bar">
                     <div
                         class="progress-bar__progress"
-                        :style="{width: user.completed_profile + '%'}"
+                        :style="{width: user.profile_completion + '%'}"
                     ></div>
                   </div>
-                  <div class="progress-bar__percents">{{ user.completed_profile }}%</div>
+                  <div class="progress-bar__percents">{{ user.profile_completion }}%</div>
                 </div>
               </div>
             </div>
@@ -534,7 +534,7 @@ export default {
   }
 
   .events-block__items {
-    height: 360px;
+    height: 420px;
     overflow-y: scroll;
   }
 
