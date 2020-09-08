@@ -124,7 +124,7 @@ export default {
 .users-list {
   height: 400px;
   overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-x: hidden;
 
   .users-list__item {
     display: grid;
