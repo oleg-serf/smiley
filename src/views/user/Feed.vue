@@ -44,7 +44,7 @@
                 Community
                 <i
                     class="popover-icon fa fa-info-circle"
-                    v-popover:tooltip="'See updates from members and organisations you have connected with.'"
+                    v-popover:tooltip="'People & Organisations that 100% match the 3 main criteria for a match (needs/wants, location, interests)'"
                 ></i>
               </div>
               <div class="profile__numbers">0</div>
@@ -82,6 +82,7 @@
         <div class="feed-grid__item feed-grid__item--projects">
           <div class="projects-block">
             <h2 class="projects-block__title">Suggested Matches</h2>
+            <h3 class="projects-block__subtitle">People & organisations that are a close match, that might be of interest</h3>
             <UsersList :users="matches"></UsersList>
           </div>
         </div>
@@ -430,6 +431,12 @@ export default {
     font-family: "Montserrat Bold", sans-serif;
     text-transform: uppercase;
     @include font-size(1.1rem);
+  }
+  .projects-block__subtitle {
+    color: #fff;
+    font-family: "Montserrat Bold", sans-serif;
+    text-transform: uppercase;
+    @include font-size(.7rem);
   }
 
   .projects-block__items {

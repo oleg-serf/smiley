@@ -56,7 +56,7 @@
                 Community
                 <i
                   class="popover-icon fa fa-info-circle"
-                  v-popover:tooltip="'See updates from members and organisations you have connected with.'"
+                  v-popover:tooltip="'People & Organisations that 100% match the 3 main criteria for a match (needs/ants, location, interests)'"
                 ></i>
                 <br />0
               </div>
