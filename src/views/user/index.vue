@@ -50,7 +50,7 @@
                   class="popover-icon fa fa-info-circle"
                   v-popover:tooltip="'Members and organisations that match your interests, skills you are in need of or looking to offer.'"
                 ></i>
-                <br />{{ feedPage.match_users_counter }}
+                <br />{{ matches }}
               </div>
               <div class="profile-data__column">
                 Community
@@ -81,7 +81,7 @@
           </div>
           <div class="profile-section">
             <div class="profile-section__detail">Location:</div>
-            <div class="profile-section__detail"> {{ feedPage.user.country }}, {{ feedPage.user.city }}</div>
+            <div class="profile-section__detail"> {{ user.country }}, {{ user.city }}</div>
           </div>
         </div>
       </div>
@@ -236,6 +236,7 @@ export default {
   data() {
     return {
       userMenuActivator: false,
+      matches: 0,
       feedPage: {},
       user: {},
       socials: [],
@@ -254,18 +255,11 @@ export default {
   },
   mounted() {
     axios
-        .get("/users/feed")
-        .then(res => {
-
-          this.feedPage = res.data;
-        })
-        .catch(error => console.error(error));
-    axios
       .get("/users/settings")
       .then(response => {
-        console.log("User profile data", response.data);
 
         this.user = response.data.user;
+        this.matches = response.data.match_users_counter;
 
         this.support.offer = response.data.offer_support;
         this.support.need = response.data.need_support;
