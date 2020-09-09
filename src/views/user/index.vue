@@ -150,12 +150,6 @@
           <div class="title">My Activity</div>
           <div class="activities">
             <ul class="activities__navigation">
-              <li :class="{active: activity == 'events'}">
-                <button @click.prevent="activity = 'events'">
-                  Events
-                  <span>0</span>
-                </button>
-              </li>
               <li :class="{active: activity == 'projects'}">
                 <button @click.prevent="activity = 'projects'">
                   Projects
@@ -170,18 +164,6 @@
               </li>
             </ul>
             <div class="activities__tabs">
-              <div class="activities__tab" v-show="activity == 'events'">
-                <template v-if="feed.events.length > 0"></template>
-                <template v-else>
-                  <div class="no-posts">
-                    <div class="no-posts__title">No events added yet.</div>
-                    <p
-                      class="no-posts__text"
-                    >You can attened events by clicking on the "Register" button of an event of your choice.</p>
-                    <router-link :to="{name: 'talks'}" class="button button--primary">Go to events</router-link>
-                  </div>
-                </template>
-              </div>
               <div class="activities__tab" v-show="activity == 'projects'">
                 <template v-if="feed.events.length > 0"></template>
                 <template v-else>
@@ -250,7 +232,7 @@ export default {
         goals: [],
         posts: []
       },
-      activity: "events"
+      activity: "projects"
     };
   },
   mounted() {

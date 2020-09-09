@@ -12,6 +12,9 @@
         <div class="feed-grid__item feed-grid__item--profile">
           <div class="profile">
             <div class="profile-item">
+              <div class="profile-title">
+                My profile
+              </div>
               <div class="profile-avatar">
                 <img
                     v-if="user.avatar != null"
@@ -20,7 +23,7 @@
                 <span v-else>{{ user.display_name | filterAvatar }}</span>
               </div>
             </div>
-            <div class="profile-item">
+            <div class="profile-item profile-item--full-width">
               <div class="profile__name">{{ user.display_name }}</div>
               <div class="profile__job" v-if="(user.job_title != null)">{{ user.job_title }}</div>
             </div>
