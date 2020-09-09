@@ -56,7 +56,7 @@
                 Community
                 <i
                   class="popover-icon fa fa-info-circle"
-                  v-popover:tooltip="'People & Organisations that 100% match the 3 main criteria for a match (needs/ants, location, interests)'"
+                  v-popover:tooltip="'People & Organisations that 100% match the 3 main criteria for a match (needs/wants, location, interests)'"
                 ></i>
                 <br />0
               </div>
@@ -263,7 +263,7 @@ export default {
     axios
       .get("/users/settings")
       .then(response => {
-        console.log("user-data", response.data);
+        console.log("User profile data", response.data);
 
         this.user = response.data.user;
 
