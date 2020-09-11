@@ -269,8 +269,7 @@ export default {
   }
 
   .user-list__user-connect__actions {
-    display: inline-block;
-    max-width: 130px;
+    max-width: 200px;
     text-align: center;
     margin-top: 6px;
     color: #fff;
@@ -278,7 +277,6 @@ export default {
     text-decoration: none;
     font-size: 0.8rem;
     font-family: "Montserrat SemiBold", sans-serif;
-    display: block;
     padding: 2px 15px;
     text-transform: uppercase;
     height: auto;
