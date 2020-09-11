@@ -226,7 +226,6 @@ export default {
     text-decoration: none;
     font-size: 0.8rem;
     font-family: "Montserrat SemiBold", sans-serif;
-    display: block;
     padding: 2px 15px;
     text-transform: uppercase;
     height: auto;
