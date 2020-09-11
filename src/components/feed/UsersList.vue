@@ -20,7 +20,13 @@
           <div class="user-list__user-title">{{ user.name }}</div>
           <div
               class="user-list__user-description"
+              v-if="user.location != null"
           >{{ user.location }}
+          </div>
+          <div
+              class="user-list__user-description"
+              v-if="user.job_titl != null"
+          >{{ user.job_title }}
           </div>
           <template v-if="is_friends_list">
             <button class="user-list__user-connect__actions">
@@ -122,9 +128,9 @@ export default {
 
 <style lang="scss" scoped>
 .users-list {
-  height: 400px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  //height: 400px;
+  //overflow-y: scroll;
+  //overflow-x: hidden;
 
   .users-list__item {
     display: grid;
@@ -205,6 +211,8 @@ export default {
 
   .user-list__user-description {
     @include font-size(0.75rem);
+    color: #fff;
+    margin-bottom: .5rem;
   }
 
   .user-list__user-connect__connect {

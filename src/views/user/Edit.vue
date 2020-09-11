@@ -98,6 +98,15 @@
                 v-model="user.dob"
               />
             </label>
+            <label for="job-title">
+              Job Title
+              <input
+                type="text"
+                name="job-title"
+                id="job-title"
+                v-model="user.job_title"
+              />
+            </label>
           </div>
 
           <div class="section-title">
@@ -322,6 +331,7 @@ export default {
         display_name: "",
 
         bio: "",
+        job_title: "",
 
         avatar_image: null,
 
@@ -727,6 +737,7 @@ export default {
         console.log(response);
         this.user.full_name = response.data.user.full_name;
         this.user.display_name = response.data.user.display_name;
+        this.user.job_title = response.data.user.job_title;
         this.user.dob = response.data.user.dob;
         this.user.bio = response.data.user.bio;
         // this.user.location = response.data.user.location;

@@ -77,46 +77,58 @@
         <div class="feed-grid__item feed-grid__item--community">
           <div class="community-block">
             <h2 class="community-block__title">My community</h2>
-            <UsersList :users="friends">
-              <template v-slot:no_users>You don't have any friends yet, try to connect with people from suggested matches</template>
-            </UsersList>
+            <perfect-scrollbar>
+              <UsersList :users="friends">
+                <template v-slot:no_users>You don't have any friends yet, try to connect with people from suggested
+                  matches
+                </template>
+              </UsersList>
+            </perfect-scrollbar>
           </div>
         </div>
         <div class="feed-grid__item feed-grid__item--projects">
           <div class="projects-block">
             <h2 class="projects-block__title">Suggested Matches</h2>
-            <h3 class="projects-block__subtitle">People & organisations that are a close match, that might be of interest</h3>
-            <UsersList :users="matches"></UsersList>
+            <h3 class="projects-block__subtitle">People & organisations that are a close match, that might be of
+              interest</h3>
+            <perfect-scrollbar>
+              <UsersList :users="matches">
+                <template v-slot:no_users>Your don't have any matches yet. Please fill in more information to your profile
+                </template>
+              </UsersList>
+            </perfect-scrollbar>
           </div>
         </div>
         <div class="feed-grid__item feed-grid__item--events">
           <div class="events-block">
             <h2 class="events-block__title">UPCOMING EVENTS</h2>
-            <div class="events-block__items">
-              <div
-                  class="event-block__item"
-                  v-for="(event, index) in events"
-                  :key="'event-'+index"
-              >
-                <div class="event-block__item-column">
-                  <img :src="$settings.images_path.events +'s_'+event.cover_image" class="event-block__item-image"/>
-                </div>
-                <div class="event-block__item-column">
-                  <div
-                      class="event-block__item-title"
-                  >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}
+              <div class="events-block__items">
+            <perfect-scrollbar>
+                <div
+                    class="event-block__item"
+                    v-for="(event, index) in events"
+                    :key="'event-'+index"
+                >
+                  <div class="event-block__item-column">
+                    <img :src="$settings.images_path.events +'s_'+event.cover_image" class="event-block__item-image"/>
+                  </div>
+                  <div class="event-block__item-column">
+                    <div
+                        class="event-block__item-title"
+                    >{{ event.title.length > 20 ? event.title.substring(0, 15) + '...' : event.title }}
+                    </div>
+                  </div>
+                  <div class="event-block__item-column">
+                    <router-link
+                        :to="{name: 'event', params: {slug: event.slug}}"
+                        :title="event.title"
+                        class="event-block__item-link"
+                    >details
+                    </router-link>
                   </div>
                 </div>
-                <div class="event-block__item-column">
-                  <router-link
-                      :to="{name: 'event', params: {slug: event.slug}}"
-                      :title="event.title"
-                      class="event-block__item-link"
-                  >details
-                  </router-link>
-                </div>
+            </perfect-scrollbar>
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -279,15 +291,27 @@ export default {
 
     &--community {
       padding: 20px;
+
+      .ps {
+        height: 480px;
+      }
     }
 
     &--projects {
       padding: 20px;
+
+      .ps {
+        height: 440px;
+      }
     }
 
     &--events {
       padding-top: 20px;
       padding-left: 20px;
+
+      .ps {
+        height: 500px;
+      }
     }
   }
 }
@@ -435,6 +459,7 @@ export default {
     text-transform: uppercase;
     @include font-size(1.1rem);
   }
+
   .projects-block__subtitle {
     color: #fff;
     font-family: "Montserrat Bold", sans-serif;
@@ -534,11 +559,6 @@ export default {
     font-family: "Montserrat Bold", sans-serif;
     text-transform: uppercase;
     @include font-size(1.1rem);
-  }
-
-  .events-block__items {
-    height: 420px;
-    overflow-y: scroll;
   }
 
   .event-block__item {
