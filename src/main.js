@@ -6,30 +6,33 @@ import router from './router'
 import store from './store'
 import VueMeta from 'vue-meta'
 
-import "regenerator-runtime";
+import "regenerator-runtime"
 
 // Plugins
-import VueSweetalert2 from 'vue-sweetalert2';
+import VueSweetalert2 from 'vue-sweetalert2'
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Paginate from 'vuejs-paginate'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import vueVimeoPlayer from 'vue-vimeo-player'
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import Dayjs from 'vue-dayjs';
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import Dayjs from 'vue-dayjs'
 import Popover from 'vue-js-popover'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 
 // Styles
-import 'sweetalert2/dist/sweetalert2.min.css';
+import 'sweetalert2/dist/sweetalert2.min.css'
 import 'swiper/css/swiper.css'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueMeta)
-Vue.use(Dayjs);
+Vue.use(Dayjs)
 Vue.use(CKEditor);
 Vue.use(vueVimeoPlayer)
-Vue.use(VueSweetalert2);
+Vue.use(VueSweetalert2)
+Vue.use(PerfectScrollbar)
 Vue.use(Popover, {
   tooltip: true
 });
