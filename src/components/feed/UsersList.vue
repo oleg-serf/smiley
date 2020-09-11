@@ -25,7 +25,7 @@
           </div>
           <div
               class="user-list__user-description"
-              v-if="user.job_titl != null"
+              v-if="user.job_title != null"
           >{{ user.job_title }}
           </div>
           <template v-if="is_friends_list">
@@ -216,10 +216,8 @@ export default {
   }
 
   .user-list__user-connect__connect {
-    display: inline-block;
     max-width: 200px;
     width: 100%;
-    text-align: center;
     margin-top: 6px;
     color: #fff;
     border: 1px solid #fff;
@@ -233,6 +231,7 @@ export default {
     background-color: transparent;
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
 
     i {
