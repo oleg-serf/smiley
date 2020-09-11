@@ -143,7 +143,7 @@ const actions = {
         })
         .then((res) => {
           console.log('Forgot request', res);
-          resolve('success');
+          resolve(res);
         })
         .catch((error) => {
           let content = JSON.parse(error.request.response);

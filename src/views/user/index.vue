@@ -305,7 +305,7 @@ export default {
   // margin-top: 50px;
 
   background-image: url("/img/backgrounds/user-profile-bg.jpg");
-  background-position: bottom;
+  background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
 }

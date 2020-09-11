@@ -6,7 +6,7 @@
     >Please enter your email address in order to receive instructions on how to reset your account</p>
 
     <form class="forgot-pass-wrap" @submit.prevent="onSubmit">
-      <label for="forgot-pass-email">
+      <label for="forgot-pass-email" style="width: 100%;">
         Email Address
         <input
           type="text"
@@ -46,6 +46,8 @@ export default {
         .dispatch("user/forgot", this.email)
         .then(res => {
           console.log("Reset password reset", res);
+          this.$swal({ text: res.data.message });
+
         })
         .catch(error => {
           this.$swal({ text: error });
