@@ -217,7 +217,9 @@ export default {
 
   .user-list__user-connect__connect {
     display: inline-block;
-    max-width: 130px;
+    max-width: 200px;
+    width: 100%;
+    text-align: center;
     margin-top: 6px;
     color: #fff;
     border: 1px solid #fff;
