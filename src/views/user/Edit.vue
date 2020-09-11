@@ -738,6 +738,8 @@ export default {
         this.user.full_name = response.data.user.full_name;
         this.user.display_name = response.data.user.display_name;
         this.user.job_title = response.data.user.job_title;
+        this.user.country = response.data.user.country;
+        this.user.city = response.data.user.city;
         this.user.dob = response.data.user.dob;
         this.user.bio = response.data.user.bio;
         // this.user.location = response.data.user.location;
@@ -746,6 +748,8 @@ export default {
         this.user.google = response.data.user.google;
         this.user.instagram = response.data.user.instagram;
         this.user.twitter = response.data.user.twitter;
+
+
 
         this.avatarHolder =
           "https://new-smiley.s3.eu-west-2.amazonaws.com/users/s_" +
@@ -761,6 +765,10 @@ export default {
         this.user.offer = response.data.offer_support.map(item => item.id);
 
         this.allGoals = response.data.all_goals;
+
+        setTimeout(function(){
+        document.getElementById('map').value = response.data.user.city;
+        }, 1500);
       })
       .catch(error => console.error(error.request));
 
