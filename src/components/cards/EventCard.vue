@@ -20,6 +20,10 @@
             class="event-item__category-name"
             v-if="event.goals.length > 0"
           >{{event.goals[0].name}}</div>
+          <div
+            class="event-item__category-postponed"
+            v-if="event.postponed === 'true'"
+          >Postponed</div>
           <!-- <div class="event-item__category-circle">
             <span>+15</span>
           </div>-->
@@ -246,6 +250,18 @@ export default {
     padding: 6px 14px;
     text-transform: uppercase;
     display: inline-block;
+    font-family: "Montserrat SemiBold";
+    transition: background-color 0.4s;
+
+    @include font-size(0.6rem);
+  }
+
+  .event-item__category-postponed {
+    background-color: rgb(208 73 73 / 88%);
+    color: #fff;
+    padding: 6px 14px;
+    text-transform: uppercase;
+    display: block;
     font-family: "Montserrat SemiBold";
     transition: background-color 0.4s;
 

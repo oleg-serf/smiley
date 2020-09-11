@@ -12,6 +12,7 @@
                 :title="event.title"
                 v-if="event.cover_image"
             />
+            <div v-if="event.postponed === 'true'" class="event-postponed">Postponed</div>
           </div>
           <div class="event-sidebar">
             <div class="sidebar-btn-wrap" v-if="isEventRegisterable(event.to_past_event)">
@@ -752,5 +753,17 @@
       width: 100%;
       margin-top: 12px;
     }
+  }
+
+  .event-postponed {
+    background-color: rgb(208 73 73 / 88%);
+    color: #fff;
+    padding: 6px 14px;
+    text-transform: uppercase;
+    display: block;
+    font-family: "Montserrat SemiBold";
+    transition: background-color 0.4s;
+
+    @include font-size(1.6rem);
   }
 </style>
