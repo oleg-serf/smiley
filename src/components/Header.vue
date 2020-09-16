@@ -62,6 +62,7 @@
         <div class="grid-item grid-item--logo">
           <router-link class="tm-logo" to="/">
             <img src="/img/smiley-logo-white-header.png" alt="Smiley Movement" />
+            <span>Matchmaker for good<sup>TM</sup></span>
           </router-link>
         </div>
         <div class="grid-item grid-item--menu">
@@ -1013,6 +1014,26 @@ body.mobile-menu--opened {
       margin-right: 16px;
       width: 36px;
       height: 36px;
+    }
+  }
+}
+
+.tm-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  img {
+    margin-bottom: .5rem
+  }
+
+  span {
+    color: #fff;
+    @include font-size(.8rem);
+
+    @include smMax {
+      @include font-size(.45rem);
     }
   }
 }

@@ -37,7 +37,7 @@
             </button>
           </template>
           <template v-else>
-            <button class="user-list__user-connect__connect">
+            <button class="user-list__user-connect__connect" v-on:click="connectFriend(user.slug)">
               <i class="fa fa-user-plus"></i> Connect
             </button>
             <div class="user-list__user-score">
@@ -108,17 +108,12 @@ export default {
     uploadMore() {
     //  Loads more friends? (Suggested matches/communities)
     },
-    addFriend() {
+    connectFriend(frined_slug) {
       axios
-          .get("/users/feed")
+          .post("/users/friends/request", {slug: frined_slug})
           .then(res => {
-            console.log("Feed loaded", res);
-            this.user = res.data.user;
-            this.userNews = res.data.news;
-            this.events = res.data.events;
-            this.matches = res.data.match_users;
+            console.log("Friend request sent", res);
 
-            this.feedPage = res.data;
           })
           .catch(error => console.error(error));
     }
