@@ -1,5 +1,8 @@
 <template>
   <div class="users-list">
+    <div v-if="title" class="users-list__list-title">
+      {{title}}
+    </div>
     <div>
       <div
           class="users-list__item"
@@ -37,7 +40,7 @@
             </button>
           </template>
           <template v-else>
-            <button class="user-list__user-connect__connect" v-on:click="connectFriend(user.slug)">
+            <button class="user-list__user-connect__connect" @click="connectFriend(user.slug)">
               <i class="fa fa-user-plus"></i> Connect
             </button>
             <div class="user-list__user-score">
@@ -83,6 +86,9 @@ export default {
       type: Boolean,
       default: false
     },
+    title: {
+      type: String,
+    },
     is_friends_list: {
       type: Boolean,
       default: false
@@ -108,12 +114,15 @@ export default {
     uploadMore() {
     //  Loads more friends? (Suggested matches/communities)
     },
-    connectFriend(frined_slug) {
+    connectFriend(friend_slug) {
       axios
-          .post("/users/friends/request", {slug: frined_slug})
+          .post("/users/friends/request", {slug: friend_slug})
           .then(res => {
-            console.log("Friend request sent", res);
-
+            if (res.data.success) {
+              // console.log("Friend request sent", res);
+              this.$swal({ text: 'Friend request was sent' });
+              this.$emit('friend_invite_sent');
+            }
           })
           .catch(error => console.error(error));
     }
@@ -126,6 +135,10 @@ export default {
   //height: 400px;
   //overflow-y: scroll;
   //overflow-x: hidden;
+
+  .users-list__list-title {
+    color: #fff;
+  }
 
   .users-list__item {
     display: grid;

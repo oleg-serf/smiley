@@ -78,7 +78,13 @@
           <div class="community-block">
             <h2 class="community-block__title">My community</h2>
             <perfect-scrollbar>
-              <UsersList :users="friends">
+              <UsersList :users="friend_requests_received" title="Pending Friends" v-if="friend_requests_received.length > 0" @friend_invite_sent="loadData">
+                <template v-slot:no_users>You don't have any friend requests yet</template>
+              </UsersList>
+              <UsersList :users="friend_requests_sent" title="Pending Requests" v-if="friend_requests_sent.length > 0">
+                <template v-slot:no_users>You didn't sent any friend requests yet</template>
+              </UsersList>
+              <UsersList :users="friends" title="Friends">
                 <template v-slot:no_users>You don't have any friends yet, try to connect with people from suggested
                   matches
                 </template>
@@ -218,28 +224,40 @@ export default {
       userNews: [],
       latestNews: [],
       events: [],
+      friends: [],
+      friend_requests_received: [],
+      friend_requests_sent: [],
       //
       tab: "community",
       updatesTab: "news",
       //  testing
-      friends: [],
       matches: [],
       feedPage: {}
     };
   },
-  mounted() {
-    axios
-        .get("/users/feed")
-        .then(res => {
-          console.log("Feed loaded", res);
-          this.user = res.data.user;
-          this.userNews = res.data.news;
-          this.events = res.data.events;
-          this.matches = res.data.match_users;
+  methods: {
+    loadData() {
+      axios
+          .get("/users/feed")
+          .then(res => {
+            console.log("Feed loaded", res);
+            this.user = res.data.user;
+            this.userNews = res.data.news;
+            this.events = res.data.events;
+            this.matches = res.data.match_users;
 
-          this.feedPage = res.data;
-        })
-        .catch(error => console.error(error));
+            this.riend_requests_received = res.data.riend_requests_received;
+            this.friend_requests_sent = res.data.friend_requests_sent;
+            this.friends = res.data.friends;
+
+            this.feedPage = res.data;
+          })
+          .catch(error => console.error(error));
+    }
+  },
+  mounted() {
+    this.loadData();
+
     axios
         .get("/news/latest")
         .then(res => {
