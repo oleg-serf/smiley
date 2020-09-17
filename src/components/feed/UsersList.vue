@@ -1,7 +1,7 @@
 <template>
   <div class="users-list">
     <div v-if="title" class="users-list__list-title">
-      {{title}}
+      {{ title }}
     </div>
     <div>
       <div
@@ -31,18 +31,25 @@
               v-if="user.job_title != null"
           >{{ user.job_title }}
           </div>
-            <button class="user-list__user-connect__actions" @click="acceptInvite(user.slug)" v-if="showAcceptButton">
-              <i class="fa fa-check"></i> Accept
-            </button>
+          <button class="user-list__user-connect__actions" @click="acceptInvite(user.slug)" v-if="showAcceptButton">
+            <i class="fa fa-check"></i> Accept
+          </button>
+          <button class="user-list__user-connect__actions" @click="rejectInvite(user.slug)" v-if="showAcceptButton">
+            <i class="fa fa-times"></i> Decline
+          </button>
           <button class="user-list__user-connect__actions" @click="cancelInvite(user.slug)" v-if="showCancelButton">
-              <i class="fa fa-times"></i> Cancel
-            </button>
+            <i class="fa fa-times"></i> Cancel
+          </button>
           <template v-if="is_friends_list">
-            <router-link :to="{name: 'member', params: {slug: user.slug}}" tag="button" class="user-list__user-connect__actions">
+            <router-link :to="{name: 'member', params: {slug: user.slug}}" tag="button"
+                         class="user-list__user-connect__actions">
               <i class="fa fa-user"></i> View
             </router-link>
             <button class="user-list__user-connect__actions" style="display: none;">
               <i class="fa fa-envelope"></i> Message
+            </button>
+            <button class="user-list__user-connect__actions" @click="removeFriend(user.slug, user.name)">
+              <i class="fa fa-times"></i> Delete
             </button>
           </template>
           <template v-else>
@@ -50,7 +57,7 @@
               <i class="fa fa-user-plus"></i> Connect
             </button>
             <div class="user-list__user-score" v-if="showMatchScore">
-              <span>Match {{user.match_score | scoreFilter}}%</span>
+              <span>Match {{ user.match_score | scoreFilter }}%</span>
               <i class="fa fa-globe" v-if="user.location_reason" v-popover:tooltip="'Same location'"></i>
               <i class="fa fa-lightbulb-o" v-if="user.goal_reason" v-popover:tooltip="'Similar goals'"></i>
               <i class="fa fa-handshake-o" v-if="user.support_reason" v-popover:tooltip="'Similar support'"></i>
@@ -137,19 +144,82 @@ export default {
       axios
           .post("/users/friends/request", {slug: friend_slug})
           .then(res => {
-            if (res.data.success) {
-              console.log("Friend request sent", res);
-              this.$emit('friend_invite_sent');
+            if (res.data?.success == true) {
+              this.$emit('reload_lists');
+              this.$swal({text: 'Request Sent'});
+            } else {
+              this.$swal({text: res.data.messages});
+              this.$emit('reload_lists');
+            }
+
+
+          })
+          .catch(error => console.error(error));
+    },
+    cancelInvite(friend_slug) {
+      axios
+          .post("users/friends/request/cancel", {slug: friend_slug})
+          .then(res => {
+            console.log('Ss', res.data);
+            if (res.data?.success == true) {
+              this.$emit('reload_lists');
+            } else {
+              this.$swal({text: res.data.messages});
             }
           })
           .catch(error => console.error(error));
     },
-    cancelInvite() {
+    acceptInvite(friend_slug) {
+      axios
+          .post("users/friends/request/accept", {slug: friend_slug})
+          .then(res => {
+            if (process.env.NODE_ENV === 'development') {
+              console.log('users/friends/request/accept', res);
+            }
+            if (res.data?.success == true) {
+              this.$emit('reload_lists');
+            } else {
+              this.$swal({text: res.data.messages});
+            }
+          })
+          .catch(error => console.error(error));
+    },
+    rejectInvite(friend_slug) {
+      axios
+          .post("users/friends/request/reject", {slug: friend_slug})
+          .then(res => {
+            console.log('Ss', res.data);
+            if (res.data?.success == true) {
+              this.$emit('reload_lists');
+            } else {
+              this.$swal({text: res.data.messages});
+            }
+          })
+          .catch(error => console.error(error));
+    },
+    removeFriend(friend_slug, name) {
+      let swal = {
+        text:
+            `You want to delete ${name} from friend list?`,
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel"
+      };
+
+      this.$swal(swal).then(result => {
+        if (result.value) {
+          axios
+              .post("users/friends/delete", {slug: friend_slug})
+              .then(res => {
+                this.$swal({text: res.data.messages});
+                this.$emit('reload_lists');
+              })
+              .catch(error => console.error(error));
+        }
+      });
+
 
     },
-    acceptInvite() {
-
-    }
   }
 }
 </script>

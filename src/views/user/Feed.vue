@@ -78,13 +78,13 @@
           <div class="community-block">
             <h2 class="community-block__title">My community</h2>
             <perfect-scrollbar>
-              <UsersList :users="friend_requests_received" title="Pending Friends" v-if="friend_requests_received.length > 0" @friend_invite_sent="loadData" :showAcceptButton="true">
+              <UsersList :users="friend_requests_received" title="Pending Friends" v-if="friend_requests_received && friend_requests_received.length > 0" @reload_lists="loadData" :showAcceptButton="true">
                 <template v-slot:no_users>You don't have any friend requests yet</template>
               </UsersList>
-              <UsersList :users="friend_requests_sent" title="Pending Requests" v-if="friend_requests_sent.length > 0" :showCancelButton="true">
+              <UsersList :users="friend_requests_sent" title="Pending Requests" v-if="friend_requests_sent && friend_requests_sent.length > 0" @reload_lists="loadData" :showCancelButton="true">
                 <template v-slot:no_users>You didn't sent any friend requests yet</template>
               </UsersList>
-              <UsersList :users="friends" title="Friends">
+              <UsersList :users="friends" @reload_lists="loadData" :is_friends_list="true" title="Friends">
                 <template v-slot:no_users>You don't have any friends yet, try to connect with people from suggested
                   matches
                 </template>
@@ -98,7 +98,7 @@
             <h3 class="projects-block__subtitle">People & organisations that are a close match, that might be of
               interest</h3>
             <perfect-scrollbar>
-              <UsersList :users="matches" :showMatchScore="true" :showConnectButton="true">
+              <UsersList :users="matches" @reload_lists="loadData" :showMatchScore="true" :showConnectButton="true">
                 <template v-slot:no_users>Your don't have any matches yet. Please fill in more information to your profile
                 </template>
               </UsersList>
@@ -246,7 +246,7 @@ export default {
             this.events = res.data.events;
             this.matches = res.data.match_users;
 
-            this.riend_requests_received = res.data.riend_requests_received;
+            this.friend_requests_received = res.data.friend_requests_received;
             this.friend_requests_sent = res.data.friend_requests_sent;
             this.friends = res.data.friends;
 
