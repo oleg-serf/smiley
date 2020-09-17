@@ -160,7 +160,6 @@ export default {
       axios
           .post("users/friends/request/cancel", {slug: friend_slug})
           .then(res => {
-            console.log('Ss', res.data);
             if (res.data?.success == true) {
               this.$emit('reload_lists');
             } else {
@@ -188,7 +187,6 @@ export default {
       axios
           .post("users/friends/request/reject", {slug: friend_slug})
           .then(res => {
-            console.log('Ss', res.data);
             if (res.data?.success == true) {
               this.$emit('reload_lists');
             } else {
