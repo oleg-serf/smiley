@@ -78,10 +78,10 @@
           <div class="community-block">
             <h2 class="community-block__title">My community</h2>
             <perfect-scrollbar>
-              <UsersList :users="friend_requests_received" title="Pending Friends" v-if="friend_requests_received.length > 0" @friend_invite_sent="loadData">
+              <UsersList :users="friend_requests_received" title="Pending Friends" v-if="friend_requests_received.length > 0" @friend_invite_sent="loadData" :showAcceptButton="true">
                 <template v-slot:no_users>You don't have any friend requests yet</template>
               </UsersList>
-              <UsersList :users="friend_requests_sent" title="Pending Requests" v-if="friend_requests_sent.length > 0">
+              <UsersList :users="friend_requests_sent" title="Pending Requests" v-if="friend_requests_sent.length > 0" :showCancelButton="true">
                 <template v-slot:no_users>You didn't sent any friend requests yet</template>
               </UsersList>
               <UsersList :users="friends" title="Friends">
@@ -98,7 +98,7 @@
             <h3 class="projects-block__subtitle">People & organisations that are a close match, that might be of
               interest</h3>
             <perfect-scrollbar>
-              <UsersList :users="matches">
+              <UsersList :users="matches" :showMatchScore="true" :showConnectButton="true">
                 <template v-slot:no_users>Your don't have any matches yet. Please fill in more information to your profile
                 </template>
               </UsersList>

@@ -31,19 +31,25 @@
               v-if="user.job_title != null"
           >{{ user.job_title }}
           </div>
-          <template v-if="is_friends_list">
-            <button class="user-list__user-connect__actions">
-              <i class="fa fa-user"></i> View
+            <button class="user-list__user-connect__actions" @click="acceptInvite(user.slug)" v-if="showAcceptButton">
+              <i class="fa fa-check"></i> Accept
             </button>
-            <button class="user-list__user-connect__actions">
+          <button class="user-list__user-connect__actions" @click="cancelInvite(user.slug)" v-if="showCancelButton">
+              <i class="fa fa-times"></i> Cancel
+            </button>
+          <template v-if="is_friends_list">
+            <router-link :to="{name: 'member', params: {slug: user.slug}}" tag="button" class="user-list__user-connect__actions">
+              <i class="fa fa-user"></i> View
+            </router-link>
+            <button class="user-list__user-connect__actions" style="display: none;">
               <i class="fa fa-envelope"></i> Message
             </button>
           </template>
           <template v-else>
-            <button class="user-list__user-connect__connect" @click="connectFriend(user.slug)">
+            <button class="user-list__user-connect__connect" @click="connectFriend(user.slug)" v-if="showConnectButton">
               <i class="fa fa-user-plus"></i> Connect
             </button>
-            <div class="user-list__user-score">
+            <div class="user-list__user-score" v-if="showMatchScore">
               <span>Match {{user.match_score | scoreFilter}}%</span>
               <i class="fa fa-globe" v-if="user.location_reason" v-popover:tooltip="'Same location'"></i>
               <i class="fa fa-lightbulb-o" v-if="user.goal_reason" v-popover:tooltip="'Similar goals'"></i>
@@ -97,6 +103,22 @@ export default {
       type: Array,
       default: () => []
     },
+    showMatchScore: {
+      type: Boolean,
+      default: false
+    },
+    showConnectButton: {
+      type: Boolean,
+      default: false
+    },
+    showAcceptButton: {
+      type: Boolean,
+      default: false
+    },
+    showCancelButton: {
+      type: Boolean,
+      default: false
+    },
   },
   filters: {
     scoreFilter(value) {
@@ -111,20 +133,22 @@ export default {
     }
   },
   methods: {
-    uploadMore() {
-    //  Loads more friends? (Suggested matches/communities)
-    },
     connectFriend(friend_slug) {
       axios
           .post("/users/friends/request", {slug: friend_slug})
           .then(res => {
             if (res.data.success) {
-              // console.log("Friend request sent", res);
-              this.$swal({ text: 'Friend request was sent' });
+              console.log("Friend request sent", res);
               this.$emit('friend_invite_sent');
             }
           })
           .catch(error => console.error(error));
+    },
+    cancelInvite() {
+
+    },
+    acceptInvite() {
+
     }
   }
 }
