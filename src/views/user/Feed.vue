@@ -191,13 +191,15 @@
       </div>
       <div class="updates-tabs container">
         <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'news'">
-          <template v-if="latestNews != null && latestNews.length > 0">
-            <news-card v-for="article in latestNews" :key="'latest-'+article.slug" :article="article"/>
+          <template v-if="userNews != null && userNews.length > 0">
+            <news-card v-for="article in userNews" :key="'latest-'+article.slug" :article="article"/>
+
           </template>
           <template v-else>No updates yet</template>
         </div>
         <div class="updates-tabs__tab updates-tabs__tab--news-grid" v-show="updatesTab == 'updates'">
-          <news-card v-for="article in userNews" :key="'latest-'+article.slug" :article="article"/>
+          <news-card v-for="article in latestNews" :key="'latest-'+article.slug" :article="article"/>
+
         </div>
       </div>
     </div>
