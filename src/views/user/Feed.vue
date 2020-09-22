@@ -2,9 +2,10 @@
   <div>
     <div class="textual-banner textual-banner--contained">
       <div class="container">
-        <div class="textual-banner__title">Newsfeed</div>
-        <p>Your personalised portal to share information about yourself and hear about the latest news, events,
-          organisations, projects and new members that share your interests.</p>
+        <div class="textual-banner__title">This is where the matching happens.</div>
+        <p>As the Matchmaker for Good, we rely on the information provided in your Profile to match you with people and organisations around causes you care about.</p>
+
+        <p>Matching is based on 1) shared interests linked to the UN Goals, 2) tools you or your organisation needs or can offer charities within the Smiley community and 3) location</p>
       </div>
     </div>
     <div class="feed-header">
