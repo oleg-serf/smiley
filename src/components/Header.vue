@@ -144,7 +144,7 @@
               </li>
               <li class="user-menu__item">
                 <router-link :to="{name: 'feed'}" class="user-menu__link">
-                  <i class="fa fa-cloud"></i> My News Feed
+                  <i class="fa fa-user"></i> My Profile
                 </router-link>
               </li>
               <li class="user-menu__item">
