@@ -41,14 +41,14 @@
         <div class="event-item__location">{{ event.location }}</div>
         <div class="event-item__button">
           <router-link :to="{name: 'event', params: {slug: event.slug}}">talk details</router-link>
-          <template v-if="isAuthenticated">
-            <button class="register" v-if="active" @click.prevent="attend">register</button>
+          <template v-if="!event.past">
             <button
-              class="register"
-              v-if="active"
-              @click.prevent="unattend"
-              style="display: none;"
+                class="register"
+                v-if="event.attending == true"
+                @click.prevent="unattend"
             >Unattend</button>
+            <button class="register" v-else @click.prevent="attend">register</button>
+
           </template>
           <template v-else>
             <button class="register" v-if="active" @click.prevent="attendNotAuthed">register</button>
@@ -77,11 +77,6 @@ export default {
         : description;
     }
   },
-  computed: {
-    isAuthenticated() {
-      return this.$store.getters["user/isAuthenticated"];
-    }
-  },
   methods: {
     format(date, format) {
       const result = this.$dayjs(date).format(format);
@@ -91,8 +86,10 @@ export default {
       axios
         .post("/events/" + this.event.slug + "/attend")
         .then(res => {
-          console.log("Registering for event", res);
+          this.$swal('You are now attending this event');
           let result = res.data.attending;
+          this.$emit('reload_events');
+
           // commit("user/SET_USER_ATTENDING_EVENTS", result, {
           //   root: true
           // });
@@ -103,7 +100,9 @@ export default {
       axios
         .post("/events/" + this.event.slug + "/attend/cancel")
         .then(res => {
+          this.$swal('You are now not attending this event');
           console.log("Cancellation for event", res);
+          this.$emit('reload_events');
           // let result = res.data.attending;
           // commit("user/SET_USER_ATTENDING_EVENTS", result, {
           //   root: true

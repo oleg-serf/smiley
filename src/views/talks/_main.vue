@@ -115,12 +115,12 @@
         v-if="is_mobile"
       >
         <swiper-slide v-for="event in events" :key="'event-news-'+event.slug">
-          <event-card :event="event" />
+          <event-card :event="event" @reload_events="loadEvents(1)"  />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
       <div class="talks-grid" v-else>
-        <event-card v-for="event in events" :key="'event-'+event.slug" :event="event" />
+        <event-card v-for="event in events"  @reload_events="loadEvents(1)" :key="'event-'+event.slug" :event="event" />
       </div>
     </div>
     <div class="container">
