@@ -87,12 +87,7 @@ export default {
         .post("/events/" + this.event.slug + "/attend")
         .then(res => {
           this.$swal('You are now attending this event');
-          let result = res.data.attending;
           this.$emit('reload_events');
-
-          // commit("user/SET_USER_ATTENDING_EVENTS", result, {
-          //   root: true
-          // });
         })
         .catch(error => console.error(error));
     },
@@ -101,12 +96,7 @@ export default {
         .post("/events/" + this.event.slug + "/attend/cancel")
         .then(res => {
           this.$swal('You are now not attending this event');
-          console.log("Cancellation for event", res);
           this.$emit('reload_events');
-          // let result = res.data.attending;
-          // commit("user/SET_USER_ATTENDING_EVENTS", result, {
-          //   root: true
-          // });
         })
         .catch(error => console.error(error));
     },

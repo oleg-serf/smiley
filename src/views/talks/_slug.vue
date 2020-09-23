@@ -2,7 +2,7 @@
   <div>
 
     <section class="event-section" v-if="event">
-      <h1 class="event-section-title container">{{event.title}}</h1>
+      <h1 class="event-section-title container">{{ event.title }}</h1>
       <div class="event-content">
         <div class="event-content-wrap">
           <div class="event-img">
@@ -15,21 +15,21 @@
             <div v-if="event.postponed === 'true'" class="event-postponed">Postponed</div>
           </div>
           <div class="event-sidebar">
-            <div class="sidebar-btn-wrap" v-if="isEventRegisterable(event.to_past_event)">
+            <div class="sidebar-btn-wrap" v-if="!event.past">
               <template v-if="isAuthenticated">
                 <button
                     class="reg-event-btn"
-                    @click="unregisterUser(event.id)"
-                    v-if="attendedEvents.includes(event.id) && isAuthenticated"
+                    v-if="event.attending"
+                    @click="unattend"
                 >CANCEL ATTENDENCE
                 </button>
                 <button
                     class="reg-event-btn"
-                    @click="registerUser(event.id)"
+                    @click="attend"
                     v-else
                 >Register for event
                 </button>
-                <button class="chat-btn">Join the chat room</button>
+                <!--                <button class="chat-btn">Join the chat room</button>-->
               </template>
               <template v-else>
                 <button class="reg-event-btn" @click="joinAsGuest">Register for event</button>
@@ -42,12 +42,16 @@
                   <div
                       class="event-date-time"
                       v-if="event.date != null"
-                  >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year:
-                    'numeric'}) | stripComas}}
+                  >{{
+                      event.date | formatDate('en-US', {
+                        weekday: 'short', day: 'numeric', month: 'long', year:
+                            'numeric'
+                      }) | stripComas
+                    }}
                   </div>
                   <div
                       class="event-date-time"
-                  >{{event.time_start | formatTime }} - {{event.time_end | formatTime }}
+                  >{{ event.time_start | formatTime }} - {{ event.time_end | formatTime }}
                   </div>
                 </div>
               </div>
@@ -56,7 +60,7 @@
               <button class="accordion">Location</button>
               <div class="panel">
                 <div class="panel-content-wrap">
-                  <div class="event-location">{{event.location}}</div>
+                  <div class="event-location">{{ event.location }}</div>
                 </div>
               </div>
             </div>
@@ -74,8 +78,8 @@
                       </div>
                     </div>
                     <div class="speaker-name-caption">
-                      <div class="speaker-name">{{speaker.full_name}}</div>
-                      <div class="speaker-caption">{{speaker.role}}</div>
+                      <div class="speaker-name">{{ speaker.full_name }}</div>
+                      <div class="speaker-caption">{{ speaker.role }}</div>
                     </div>
                   </div>
                 </div>
@@ -111,7 +115,7 @@
                           <div class="attendees-avatar__letter-holder">
                             <span
                                 class="attendees-avatar__letter"
-                            >{{attendee.full_name | filterAvatar}}</span>
+                            >{{ attendee.full_name | filterAvatar }}</span>
                           </div>
                         </template>
                       </router-link>
@@ -119,7 +123,7 @@
 
                     <div class="attendees-avatar next last" v-if="event.attendees.length > 0">
                       <div class="attendees-avatar__letter-holder">
-                        <span class="attendees-avatar__letter">{{event.attendees.length}}</span>
+                        <span class="attendees-avatar__letter">{{ event.attendees.length }}</span>
                       </div>
                     </div>
                   </div>
@@ -282,7 +286,7 @@
           <div class="event-tabs" id="tabs">
             <ul class="tabs-nav">
               <li v-for="(ev, index) in event.tabs" :key="ev.id">
-                <a :href="'#tab-' + ++index" :class="{active: index === 0}">{{ev.title}}</a>
+                <a :href="'#tab-' + ++index" :class="{active: index === 0}">{{ ev.title }}</a>
               </li>
               <li v-if="event.speakers.length >0">
                 <a href="#tab-speakers">Speakers</a>
@@ -315,8 +319,8 @@
                       </div>
                     </div>
                     <div class="speaker-name-caption">
-                      <div class="speaker-name">{{speaker.full_name}}</div>
-                      <div class="speaker-caption">{{speaker.role}}</div>
+                      <div class="speaker-name">{{ speaker.full_name }}</div>
+                      <div class="speaker-caption">{{ speaker.role }}</div>
                     </div>
                   </div>
                 </div>
@@ -328,7 +332,7 @@
           <template v-for="block in event.video_blocks">
             <section class="event-videos" :key="block.title">
               <div class="event-videos-wrap">
-                <h2 class="event-videos-title" v-if="block.title !== null">{{block.title}}</h2>
+                <h2 class="event-videos-title" v-if="block.title !== null">{{ block.title }}</h2>
                 <div class="event-videos-cards">
                   <div
                       class="video-card-holder"
@@ -354,11 +358,11 @@
                       </template>
                     </div>
                     <div class="video-card__info">
-                      <div class="video-card__title">{{video.title}}</div>
+                      <div class="video-card__title">{{ video.title }}</div>
                       <div
                           class="video-card__description"
                           v-if="video.description != null"
-                      >{{video.description}}
+                      >{{ video.description }}
                       </div>
                     </div>
                   </div>
@@ -378,7 +382,7 @@
                     v-for="(audio, index) in audios"
                     :key="audio.title +'-vd-'+index"
                 >
-                  <div class="audio-item__title">{{audio.title}}</div>
+                  <div class="audio-item__title">{{ audio.title }}</div>
                   <audio controls :src="audio.url">
                     Your browser does not support the
                     <code>audio</code> element.
@@ -461,309 +465,316 @@
 </template>
 
 <script>
-    import $ from "jquery";
-    import axios from "@/axios-auth";
+import $ from "jquery";
+import axios from "@/axios-auth";
 
-    import router from "@/router";
+import router from "@/router";
 
-    import {mapState, mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 
-    export default {
-        name: "Event",
-        data() {
-            return {
-                center: {lat: 45.508, lng: -73.587},
-                attendeesDisplayStatus: false,
-                markers: [],
-                places: [],
-                currentPlace: null,
-                id: this.$route.params.id,
-                event: null,
-                audios: [],
-                videos: [],
-                inviteEmails: null,
-            };
-        },
-        computed: {
-            ...mapState("user", {
-                attendedEvents: state => state.attendingEvents
-            }),
-            isAuthenticated() {
-                return this.$store.getters["user/isAuthenticated"];
-            }
-        },
-        mounted() {
-            setTimeout(() => {
-                var acc = document.getElementsByClassName("accordion");
-                var i;
-
-                for (i = 0; i < acc.length; i++) {
-                    acc[i].addEventListener("click", function () {
-                        this.classList.toggle("active");
-                        var panel = this.nextElementSibling;
-                        if (panel.style.maxHeight) {
-                            panel.style.maxHeight = null;
-                        } else {
-                            panel.style.maxHeight = panel.scrollHeight + "px";
-                        }
-                    });
-                }
-                $(window).on("resize", function () {
-                    let ss = acc;
-                    let el = $(window).width() >= 1200;
-
-                    if ($(window).width() >= 1200) {
-                        $(acc)
-                            .addClass("active")
-                            .attr("disabled", true)
-                            .next()
-                            .css("max-height", "initial");
-                    }
-                    if ($(window).width() < 1200) {
-                        $(acc)
-                            .removeClass("active")
-                            .attr("disabled", false)
-                            .next()
-                            .removeAttr("style");
-                    }
-                });
-
-                var tab = $("#tabs .tabs-items > div");
-                tab
-                    .hide()
-                    .filter(":first")
-                    .show();
-
-                $("#tabs .tabs-nav a")
-                    .click(function () {
-                        tab.hide();
-                        tab.filter(this.hash).show();
-                        $("#tabs .tabs-nav a").removeClass("active");
-                        $(this).addClass("active");
-                        return false;
-                    })
-                    .filter(":first")
-                    .click();
-
-                $(".tabs-target").click(function () {
-                    $("#tabs .tabs-nav a[href=" + $(this).data("id") + "]").click();
-                });
-
-                $(window).resize();
-            }, 500);
-
-            axios
-                .get("/events/" + this.$route.params.slug)
-                .then(res => {
-                    console.log("event loaded", res);
-
-                    this.event = res.data.event;
-
-                    const metaPayload = {
-                        meta: res.data.meta,
-                        title: res.data.event.title
-                    }
-                    this.$store.dispatch('meta/setMeta', metaPayload);
-                    this.$router.currentRoute.meta.title = this.event.title;
-                })
-                .catch(error => console.log(error));
-
-        },
-        methods: {
-            sendInvite() {
-                let emails = this.inviteEmails.split(",");
-                axios
-                    .post("/events/" + this.$route.params.slug + "/invite", {
-                        emails: emails
-                    })
-                    .then(res => {
-                        console.log("success", res);
-                    })
-                    .catch(error => console.error("error", error.response));
-            },
-            isEventRegisterable(time) {
-                if (time === undefined) {
-                    return false;
-                }
-                time = time.toString().match(/\d{4}-\d{2}-\d{2}/) || [time];
-                let result = Date.now() < Date.parse(time) ? true : false;
-                return result;
-            },
-            unregisterUser(id) {
-                this.unregisterUserForEvent({id: id, organisation: false});
-            },
-            registerUser(id) {
-                this.registerUserForEvent({id: id, organisation: false});
-            },
-            joinAsGuest() {
-                let swal = {
-                    title: "Register or Login",
-                    text:
-                        "In order to oarticipate to an event, you will need an account for Smiley Movement",
-                    showCancelButton: true,
-                    confirmButtonText: "Create Account",
-                    cancelButtonText: "Login"
-                };
-                this.$swal(swal).then(result => {
-                    if (result.value) {
-                        router.push({path: "/register"});
-                    } else if (
-                        /* Read more about handling dismissals below */
-                        result.dismiss === "cancel"
-                    ) {
-                        router.push({path: "/login"});
-                    }
-                });
-            },
-            ...mapActions("events", ["registerUserForEvent", "unregisterUserForEvent"]),
-            setPlace(place) {
-                this.currentPlace = place;
-            },
-            addMarker() {
-                if (this.currentPlace) {
-                    const marker = {
-                        lat: this.currentPlace.geometry.location.lat(),
-                        lng: this.currentPlace.geometry.location.lng()
-                    };
-                    this.markers.push({position: marker});
-                    this.places.push(this.currentPlace);
-                    this.center = marker;
-                    this.currentPlace = null;
-                }
-            },
-            geolocate: function () {
-                navigator.geolocation.getCurrentPosition(position => {
-                    this.center = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                });
-            }
-        },
-        // TODO: Remake it for global scope, refactor
-
+export default {
+  name: "Event",
+  data() {
+    return {
+      center: {lat: 45.508, lng: -73.587},
+      attendeesDisplayStatus: false,
+      markers: [],
+      places: [],
+      currentPlace: null,
+      id: this.$route.params.id,
+      event: null,
+      audios: [],
+      videos: [],
+      inviteEmails: null,
     };
+  },
+  computed: {
+    ...mapState("user", {
+      attendedEvents: state => state.attendingEvents
+    }),
+    isAuthenticated() {
+      return this.$store.getters["user/isAuthenticated"];
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      var acc = document.getElementsByClassName("accordion");
+      var i;
+
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var panel = this.nextElementSibling;
+          if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+          } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+          }
+        });
+      }
+      $(window).on("resize", function () {
+        let ss = acc;
+        let el = $(window).width() >= 1200;
+
+        if ($(window).width() >= 1200) {
+          $(acc)
+              .addClass("active")
+              .attr("disabled", true)
+              .next()
+              .css("max-height", "initial");
+        }
+        if ($(window).width() < 1200) {
+          $(acc)
+              .removeClass("active")
+              .attr("disabled", false)
+              .next()
+              .removeAttr("style");
+        }
+      });
+
+      var tab = $("#tabs .tabs-items > div");
+      tab
+          .hide()
+          .filter(":first")
+          .show();
+
+      $("#tabs .tabs-nav a")
+          .click(function () {
+            tab.hide();
+            tab.filter(this.hash).show();
+            $("#tabs .tabs-nav a").removeClass("active");
+            $(this).addClass("active");
+            return false;
+          })
+          .filter(":first")
+          .click();
+
+      $(".tabs-target").click(function () {
+        $("#tabs .tabs-nav a[href=" + $(this).data("id") + "]").click();
+      });
+
+      $(window).resize();
+    }, 500);
+
+    this.loadEvent();
+
+  },
+  methods: {
+    loadEvent() {
+      axios
+          .get("/events/" + this.$route.params.slug)
+          .then(res => {
+            console.log("event loaded", res);
+
+            this.event = res.data.event;
+
+            const metaPayload = {
+              meta: res.data.meta,
+              title: res.data.event.title
+            }
+            this.$store.dispatch('meta/setMeta', metaPayload);
+            this.$router.currentRoute.meta.title = this.event.title;
+          })
+          .catch(error => console.log(error));
+    },
+    sendInvite() {
+      let emails = this.inviteEmails.split(",");
+      axios
+          .post("/events/" + this.$route.params.slug + "/invite", {
+            emails: emails
+          })
+          .then(res => {
+            console.log("success", res);
+          })
+          .catch(error => console.error("error", error.response));
+    },
+    attend() {
+      axios
+          .post("/events/" + this.event.slug + "/attend")
+          .then(res => {
+            this.$swal('You are now attending this event');
+            this.loadEvent();
+          })
+          .catch(error => console.error(error));
+    },
+    unattend() {
+      axios
+          .post("/events/" + this.event.slug + "/attend/cancel")
+          .then(res => {
+            this.$swal('You are now not attending this event');
+            this.loadEvent();
+          })
+          .catch(error => console.error(error));
+    },
+    attendNotAuthed() {
+      let swal = {
+        title: "Register or Login",
+        text:
+            "To register for an event you will need to login or create an account",
+        showCancelButton: true,
+        confirmButtonText: "Create Account",
+        cancelButtonText: "Login"
+      };
+      this.$swal(swal).then(result => {
+        if (result.value) {
+          router.push({name: "register"});
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === "cancel"
+        ) {
+          router.push({name: "login"});
+        }
+      });
+    },
+    ...mapActions("events", ["registerUserForEvent", "unregisterUserForEvent"]),
+    setPlace(place) {
+      this.currentPlace = place;
+    },
+    addMarker() {
+      if (this.currentPlace) {
+        const marker = {
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng()
+        };
+        this.markers.push({position: marker});
+        this.places.push(this.currentPlace);
+        this.center = marker;
+        this.currentPlace = null;
+      }
+    },
+    geolocate: function () {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
+    }
+  },
+  // TODO: Remake it for global scope, refactor
+
+};
 </script>
 
 
 <style lang="scss" scoped>
-  @import "@/scss/sections/_single-event";
-  @import "@/scss/sections/_single-event-content-section";
-  @import "@/scss/sections/_single-event-partners";
-  @import "@/scss/sections/_single-event-video";
-  @import "@/scss/sections/_single-event-audio";
-  @import "@/scss/sections/_single-event-chatroom";
-  @import "@/scss/sections/_single-event-invite-friends";
-  @import "@/scss/sections/_single-event-location";
+@import "@/scss/sections/_single-event";
+@import "@/scss/sections/_single-event-content-section";
+@import "@/scss/sections/_single-event-partners";
+@import "@/scss/sections/_single-event-video";
+@import "@/scss/sections/_single-event-audio";
+@import "@/scss/sections/_single-event-chatroom";
+@import "@/scss/sections/_single-event-invite-friends";
+@import "@/scss/sections/_single-event-location";
 
-  // TODO - move styles to wile
+// TODO - move styles to wile
+.attendees-avatar.next.last {
+  position: relative;
+  z-index: 2;
+}
+
+.hidden-item {
+  display: none !important;
+}
+
+.attendees-avatar {
+  position: relative;
+  z-index: 1;
+}
+
+.attendees-avatar {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.attendees-wrap--full {
   .attendees-avatar.next.last {
-    position: relative;
-    z-index: 2;
+    display: none;
+  }
+
+  .attendees-avatar.next {
+    margin: auto !important;
   }
 
   .hidden-item {
-    display: none !important;
+    display: inline-block !important;
   }
+}
 
-  .attendees-avatar {
-    position: relative;
-    z-index: 1;
-  }
+.attendees-avatar__letter-holder {
+  width: 100%;
+  height: 100%;
+  background-color: #7a7a7a;
+  position: relative;
+}
 
-  .attendees-avatar {
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+.attendees-avatar__letter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Muli", sans-serif;
+}
+
+.video-card-holder {
+  width: 100%;
+  display: flex;
+
+  @include mdMax {
+    flex-direction: column;
+
+    .video-card {
+      width: calc(100% - 32px);
     }
   }
 
-  .attendees-wrap--full {
-    .attendees-avatar.next.last {
-      display: none;
-    }
-
-    .attendees-avatar.next {
-      margin: auto !important;
-    }
-
-    .hidden-item {
-      display: inline-block !important;
+  @include md {
+    &:nth-child(even) {
+      flex-direction: row-reverse;
     }
   }
 
-  .attendees-avatar__letter-holder {
-    width: 100%;
-    height: 100%;
-    background-color: #7a7a7a;
-    position: relative;
-  }
-
-  .attendees-avatar__letter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    text-transform: uppercase;
-    font-family: "Muli", sans-serif;
-  }
-
-  .video-card-holder {
-    width: 100%;
+  .video-card__info {
+    width: 50%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
 
     @include mdMax {
-      flex-direction: column;
-
-      .video-card {
-        width: calc(100% - 32px);
-      }
-    }
-
-    @include md {
-      &:nth-child(even) {
-        flex-direction: row-reverse;
-      }
-    }
-
-    .video-card__info {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      box-sizing: border-box;
-
-      @include mdMax {
-        width: 100%;
-      }
-    }
-
-    .video-card__title {
-      font-family: "Montserrat SemiBold", sans-serif;
-      font-size: 24px;
       width: 100%;
-    }
-
-    .video-card__description {
-      width: 100%;
-      margin-top: 12px;
     }
   }
 
-  .event-postponed {
-    background-color: rgb(208 73 73 / 88%);
-    color: #fff;
-    padding: 6px 14px;
-    text-transform: uppercase;
-    display: block;
-    font-family: "Montserrat SemiBold";
-    transition: background-color 0.4s;
-
-    @include font-size(1.6rem);
+  .video-card__title {
+    font-family: "Montserrat SemiBold", sans-serif;
+    font-size: 24px;
+    width: 100%;
   }
+
+  .video-card__description {
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+.event-postponed {
+  background-color: rgb(208 73 73 / 88%);
+  color: #fff;
+  padding: 6px 14px;
+  text-transform: uppercase;
+  display: block;
+  font-family: "Montserrat SemiBold";
+  transition: background-color 0.4s;
+
+  @include font-size(1.6rem);
+}
 </style>
