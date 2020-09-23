@@ -148,7 +148,7 @@
                     <ul>
                       <li class="facebook">
                         <a
-                            :href="'https://www.facebook.com/sharer.php?u='+$settings.domain+'talks/'+encodeURI(event.slug)+'&t='+encodeURI(event.title)"
+                            :href="'https://www.facebook.com/sharer.php?u='+$settings.domain+'smiley-talks/'+encodeURI(event.slug)+'&t='+encodeURI(event.title)"
                             target="_blank"
                             title="Share on Facebook"
                         >
@@ -176,7 +176,7 @@
                       </li>
                       <li class="linkedin">
                         <a
-                            :href="'https://www.linkedin.com/shareArticle?mini=true&amp;url='+$settings.domain+'talks/'+encodeURI(event.slug)"
+                            :href="'https://www.linkedin.com/shareArticle?mini=true&amp;url='+$settings.domain+'smiley-talks/'+encodeURI(event.slug)"
                             target="_blank"
                             title="Share on LinkedIn"
                         >
@@ -216,7 +216,7 @@
                       </li>
                       <li class="google-plus">
                         <a
-                            :href="'https://plus.google.com/share?url='+$settings.domain+'talks/'+encodeURI(event.slug)"
+                            :href="'https://plus.google.com/share?url='+$settings.domain+'smiley-talks/'+encodeURI(event.slug)"
                             target="_blank"
                             title="Share on Google+"
                         >
@@ -250,7 +250,7 @@
                       </li>
                       <li class="twitter">
                         <a
-                            :href="'https://twitter.com/share?text='+encodeURI(event.short_description)+'&url='+$settings.domain+'talks/'+encodeURI(event.slug)"
+                            :href="'https://twitter.com/share?text='+encodeURI(event.short_description)+'&url='+$settings.domain+'smiley-talks/'+encodeURI(event.slug)"
                             target="_blank"
                             title="Share on Twitter"
                         >
