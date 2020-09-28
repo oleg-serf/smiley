@@ -100,10 +100,6 @@
                         :key="attendee.id + '-attendee'"
                         :class="{'next': index > 0, 'hidden-item': index > 10}"
                     >
-                      <router-link
-                          :to="{name: 'member', params: {slug: attendee.slug}}"
-                          :title="attendee.full_name"
-                      >
                         <template v-if="attendee.avatar != null">
                           <img
                               :src="$settings.images_path.users + 's_' + attendee.avatar"
@@ -118,7 +114,6 @@
                             >{{ attendee.full_name | filterAvatar }}</span>
                           </div>
                         </template>
-                      </router-link>
                     </div>
 
                     <div class="attendees-avatar next last" v-if="event.attendees.length > 0">
@@ -423,7 +418,7 @@
             </div>
           </section>
 
-          <section class="invite-friends">
+          <section class="invite-friends" v-if="isAuthenticated">
             <div class="invite-friends-section-wrap">
               <h2 class="invite-friends-title">Invite friends</h2>
               <form class="invite-friends-form-wrap" @submit.prevent="sendInvite">
@@ -579,14 +574,17 @@ export default {
     },
     sendInvite() {
       let emails = this.inviteEmails.split(",");
-      axios
-          .post("/events/" + this.$route.params.slug + "/invite", {
-            emails: emails
-          })
-          .then(res => {
-            console.log("success", res);
-          })
-          .catch(error => console.error("error", error.response));
+      if (emails.length > 0) {
+        axios
+            .post("/events/" + this.$route.params.slug + "/invite", {
+              emails: emails
+            })
+            .then(res => {
+              this.$swal({text: res.data.message});
+              this.inviteEmails = [];
+            })
+            .catch(error => console.error("error", error.response));
+      }
     },
     attend() {
       axios
