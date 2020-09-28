@@ -41,7 +41,7 @@
         <div class="event-item__location">{{ event.location }}</div>
         <div class="event-item__button">
           <router-link :to="{name: 'event', params: {slug: event.slug}}">talk details</router-link>
-          <template v-if="!event.past">
+          <template v-if="!event.past && isAuthenticated">
             <button
                 class="register"
                 v-if="event.attending == true"
@@ -51,7 +51,7 @@
 
           </template>
           <template v-else>
-            <button class="register" v-if="active" @click.prevent="attendNotAuthed">register</button>
+            <button class="register" v-if="active" @click.prevent="attendNotAuthed">register 1</button>
           </template>
         </div>
       </div>
@@ -76,6 +76,11 @@ export default {
         ? description.substring(0, 120) + "..."
         : description;
     }
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters["user/isAuthenticated"];
+    },
   },
   methods: {
     format(date, format) {

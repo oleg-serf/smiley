@@ -32,7 +32,7 @@
                 <!--                <button class="chat-btn">Join the chat room</button>-->
               </template>
               <template v-else>
-                <button class="reg-event-btn" @click="joinAsGuest">Register for event</button>
+                <button class="reg-event-btn" @click="attendNotAuthed">Register for event</button>
               </template>
             </div>
             <div class="sidebar-block">
