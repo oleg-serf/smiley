@@ -431,6 +431,11 @@ const routes = [{
     name: 'metatest',
     component: () => import(/* webpackChunkName: "metatest" */ '../views/test-meta'),
   },
+  {
+    path: '/test-youtube',
+    name: 'youtube_streem',
+    component: () => import(/* webpackChunkName: "metatest" */ '../views/test-youtube'),
+  },
 ];
 
 
