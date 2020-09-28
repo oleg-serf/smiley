@@ -51,7 +51,7 @@
 
           </template>
           <template v-else>
-            <button class="register" v-if="active" @click.prevent="attendNotAuthed">register 1</button>
+            <button class="register" v-if="active" @click.prevent="attendNotAuthed">register</button>
           </template>
         </div>
       </div>
