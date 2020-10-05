@@ -192,14 +192,13 @@ const mutations = {
     // TODO: Clear all stuff
     state.token = null;
     state.attendingEvents = null;
+    state.organisation.admin = null;
+    state.organisation.slug = null;
     localStorage.removeItem('token');
     localStorage.setItem('attendingEvents', []);
     localStorage.removeItem('organisation-user');
     localStorage.removeItem('organisation-slug');
     localStorage.removeItem('attendingEvents');
-    // router.push({
-    //   name: 'home'
-    // });
   },
   SET_USER_ATTENDING_EVENTS(state, data) {
     let attendeesList = data.map(item => item.event_id);
