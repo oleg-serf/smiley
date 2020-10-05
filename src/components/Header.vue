@@ -293,7 +293,7 @@ export default {
       return this.$store.getters["user/full_name"];
     },
     organisation() {
-      console.log(this.$store.getters["user/organisation"]);
+      console.log('organisation', this.$store.getters["user/organisation"]);
       return this.$store.getters["user/organisation"];
     }
   },

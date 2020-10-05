@@ -398,7 +398,15 @@
                     v-for="partner in event.partners"
                     :key="partner.name + partner.id"
                 >
+                  <a :href="partner.website" target="_blank" v-if="partner.website !== null">
                   <img
+                      :src="$settings.images_path.partners + 'm_' +partner.image"
+                      :alt="partner.name"
+                      :title="partner.name"
+                  />
+                  </a>
+                  <img
+                      v-else
                       :src="$settings.images_path.partners + 'm_' +partner.image"
                       :alt="partner.name"
                       :title="partner.name"
