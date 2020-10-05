@@ -6,9 +6,19 @@
         <p>Explore our directory of organisations doing good and how to get involved</p>
       </template>
       <template v-slot:buttons>
-        <router-link :to="{name: 'add-organisation'}" class="primary">
-          <i class="fa fa-users"></i>&nbsp; &nbsp; &nbsp;Create organisation
-        </router-link>
+        <template v-if="loggedIn">
+          <router-link
+              v-if="organisation.admin != null"
+              :to="{name: 'organisation', params: {slug: organisation.slug}}"
+              class="primary"
+          >
+            <i class="fa fa-users"></i> My Organisation
+          </router-link>
+          <router-link v-else :to="{name: 'create-organisation'}" class="primary">
+            <i class="fa fa-users"></i> Create organisation
+          </router-link>
+        </template>
+
       </template>
     </information-hero>
 
@@ -24,12 +34,12 @@
           <label class="search">
             <i class="fa fa-search"></i>
             <input
-              type="text"
-              class="filter"
-              required
-              minlength="3"
-              v-model="search.keyword"
-              placeholder="Search by name"
+                type="text"
+                class="filter"
+                required
+                minlength="3"
+                v-model="search.keyword"
+                placeholder="Search by name"
             />
           </label>
         </div>
@@ -53,7 +63,7 @@
           <label class="dropdown">
             <select v-model="search.goal">
               <option selected disabled :value="null">Select Goal</option>
-              <option v-for="goal in goals" :key="'goal-'+goal.id" :value="goal.id">{{goal.name}}</option>
+              <option v-for="goal in goals" :key="'goal-'+goal.id" :value="goal.id">{{ goal.name }}</option>
             </select>
             <i class="fa fa-angle-down"></i>
           </label>
@@ -70,46 +80,46 @@
       <div class="container">
         <div style="height: 75px;"></div>
         <swiper
-          ref="mySwiper"
-          :options="swiperOptions"
-          :auto-update="true"
-          :auto-destroy="true"
-          :delete-instance-on-destroy="true"
-          :cleanup-styles-on-destroy="true"
-          v-if="is_mobile"
+            ref="mySwiper"
+            :options="swiperOptions"
+            :auto-update="true"
+            :auto-destroy="true"
+            :delete-instance-on-destroy="true"
+            :cleanup-styles-on-destroy="true"
+            v-if="is_mobile"
         >
           <swiper-slide
-            v-for="(organisation,index) in organisations"
-            :key="organisation.slug+index+'-org-slider'"
+              v-for="(organisation,index) in organisations"
+              :key="organisation.slug+index+'-org-slider'"
           >
-            <organisation-card :organisation="organisation" />
+            <organisation-card :organisation="organisation"/>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
         <section class="organisations-grid" v-else>
           <organisation-card
-            v-for="(organisation,index) in organisations"
-            :key="organisation.slug+index+'-org-archive'"
-            :organisation="organisation"
+              v-for="(organisation,index) in organisations"
+              :key="organisation.slug+index+'-org-archive'"
+              :organisation="organisation"
           />
         </section>
       </div>
     </div>
     <div class="container">
       <div class="smiley-pagination" v-if="pages_count > 1">
-        <br />
+        <br/>
         <paginate
-          :page-count="pages_count"
-          :click-handler="loadPageNumb"
-          :prev-text="'Prev'"
-          :next-text="'Next'"
-          :prev-class="'smiley-pagination-back'"
-          :next-class="'smiley-pagination-next'"
-          :container-class="'app-pagination'"
+            :page-count="pages_count"
+            :click-handler="loadPageNumb"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :prev-class="'smiley-pagination-back'"
+            :next-class="'smiley-pagination-next'"
+            :container-class="'app-pagination'"
         >
           <span slot="breakViewContent">...</span>
         </paginate>
-        <br />
+        <br/>
       </div>
     </div>
 
@@ -159,29 +169,35 @@ export default {
   computed: {
     swiper() {
       return this.$refs.mySwiper.$swiper;
-    }
+    },
+    organisation() {
+      return this.$store.getters["user/organisation"];
+    },
+    loggedIn() {
+      return this.$store.getters["user/isAuthenticated"];
+    },
   },
   methods: {
     toggleFilterMenu() {
       console.log("Toggling menu");
       this.is_shown = !this.is_shown;
     },
-    say: function(message) {
+    say: function (message) {
       alert(message);
       console.log("ervevr");
     },
     loadPageNumb(pageNumb) {
       axios
-        .get("/organisations?page=" + pageNumb)
-        .then(res => {
-          this.organisations = res.data.organisations;
-          this.pages_count = res.data.pages_count;
-        })
-        .catch(error => console.log(error));
+          .get("/organisations?page=" + pageNumb)
+          .then(res => {
+            this.organisations = res.data.organisations;
+            this.pages_count = res.data.pages_count;
+          })
+          .catch(error => console.log(error));
     },
     // Move these methods to component in future
     searchOrganisation() {
-      this.$swal({ text: "This feature will work soon" });
+      this.$swal({text: "This feature will work soon"});
     },
     handleResize() {
       this.is_mobile = window.innerWidth >= 768 ? false : true;
@@ -192,22 +208,22 @@ export default {
   },
   mounted() {
     axios
-      .get("/organisations")
-      .then(res => {
-        console.log("Organisations", res);
+        .get("/organisations")
+        .then(res => {
+          console.log("Organisations", res);
 
-        this.organisations = res.data.organisations;
-        this.pages_count = res.data.pages_count;
+          this.organisations = res.data.organisations;
+          this.pages_count = res.data.pages_count;
 
-      })
-      .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
 
     axios
-      .get("/goals")
-      .then(res => {
-        this.goals = res.data.goal_categories[0].goals;
-      })
-      .catch(err => console.error("Load goals error", err));
+        .get("/goals")
+        .then(res => {
+          this.goals = res.data.goal_categories[0].goals;
+        })
+        .catch(err => console.error("Load goals error", err));
   },
   components: {
     InformationHero,
@@ -322,6 +338,7 @@ export default {
           transform: translateY(-50%) rotate(180deg);
         }
       }
+
       i {
         position: absolute;
         right: 10px;
