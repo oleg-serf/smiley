@@ -30,7 +30,7 @@
             <i class="fa fa-sliders"></i>
           </button>
         </div>
-        <div v-show="is_shown" class="filter-grid__item">
+        <div  class="filter-grid__item">
           <label class="search">
             <i class="fa fa-search"></i>
             <input
@@ -43,40 +43,30 @@
             />
           </label>
         </div>
-        <div v-show="is_shown" class="filter-grid__item">
-          <label class="dropdown">
-            <select v-model="search.industry">
-              <option selected disabled :value="null">Organisation Industry</option>
-            </select>
-            <i class="fa fa-angle-down"></i>
-          </label>
-        </div>
-        <div v-show="is_shown" class="filter-grid__item">
-          <label class="dropdown">
-            <select v-model="search.interest">
-              <option selected disabled :value="null">Select Interest</option>
-            </select>
-            <i class="fa fa-angle-down"></i>
-          </label>
-        </div>
-        <div v-show="is_shown" class="filter-grid__item">
+        <div  class="filter-grid__item">
           <label class="dropdown">
             <select v-model="search.goal">
-              <option selected disabled :value="null">Select Goal</option>
-              <option v-for="goal in goals" :key="'goal-'+goal.id" :value="goal.id">{{ goal.name }}</option>
+              <option selected :value="null">All Goals</option>
+              <option v-for="goal in goals" :key="'goal-'+goal.id" :value="goal.slug">{{ goal.name }}</option>
             </select>
             <i class="fa fa-angle-down"></i>
           </label>
         </div>
-        <div v-show="is_shown" class="filter-grid__item filter-grid__item--full-width">
+        <div  class="filter-grid__item">
           <button type="submit">
             <i class="fa fa-search"></i>
             search
           </button>
         </div>
+        <div  class="filter-grid__item">
+          <button type="button" @click="resetFilter">
+            <i class="fa fa-times"></i>
+            Reset
+          </button>
+        </div>
       </div>
     </form>
-    <div class>
+    <div v-if="organisations.length > 0">
       <div class="container">
         <div style="height: 75px;"></div>
         <swiper
@@ -105,6 +95,13 @@
         </section>
       </div>
     </div>
+    <div v-else>
+      <div class="container">
+        <br><br>
+        <p style="text-align: center">No organisations found</p>
+        <br><br>
+      </div>
+    </div>
     <div class="container">
       <div class="smiley-pagination" v-if="pages_count > 1">
         <br/>
@@ -122,7 +119,8 @@
         <br/>
       </div>
     </div>
-
+  <br>
+  <br>
   </div>
 </template>
 
@@ -140,8 +138,6 @@ export default {
       goals: [],
       search: {
         keyword: null,
-        industry: null,
-        interest: null,
         goal: null
       },
       is_mobile: false,
@@ -182,10 +178,6 @@ export default {
       console.log("Toggling menu");
       this.is_shown = !this.is_shown;
     },
-    say: function (message) {
-      alert(message);
-      console.log("ervevr");
-    },
     loadPageNumb(pageNumb) {
       axios
           .get("/organisations?page=" + pageNumb)
@@ -195,9 +187,26 @@ export default {
           })
           .catch(error => console.log(error));
     },
-    // Move these methods to component in future
     searchOrganisation() {
-      this.$swal({text: "This feature will work soon"});
+      axios
+          .get("/organisations", {params: this.search})
+          .then(res => {
+            this.organisations = res.data.organisations;
+            this.pages_count = res.data.pages_count;
+          })
+          .catch(error => console.log(error));
+    },
+    resetFilter() {
+      axios
+          .get("/organisations")
+          .then(res => {
+            console.log("Organisations", res);
+
+            this.organisations = res.data.organisations;
+            this.pages_count = res.data.pages_count;
+
+          })
+          .catch(error => console.log(error));
     },
     handleResize() {
       this.is_mobile = window.innerWidth >= 768 ? false : true;
@@ -262,7 +271,7 @@ export default {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
   max-width: 1080px;
   // margin: 0 auto -40px;
@@ -270,20 +279,14 @@ export default {
   padding: 30px 30px 20px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
 
-  @include lgMax {
-    grid-template-columns: repeat(2, 1fr);
-  }
   @include smMax {
     grid-template-columns: repeat(1, 1fr);
   }
 
   .filter-grid__item {
     &--full-width {
-      grid-column: 1 / span 4;
+      grid-column: 1 / span 2;
 
-      @include lgMax {
-        grid-column: 1 / span 2;
-      }
       @include smMax {
         grid-column: 1 / span 1;
       }
@@ -374,7 +377,7 @@ export default {
     padding-left: 35px;
   }
 
-  button[type="submit"] {
+  button {
     letter-spacing: 2px;
     border: 1px solid #f4ed3b !important;
     color: #393939;
