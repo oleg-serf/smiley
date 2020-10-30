@@ -117,6 +117,7 @@ const actions = {
           token: credentials
         })
         .then((res) => {
+          console.log('loggined as google', res);
           commit('SET_USERDATA', res.data);
           commit('SET_USER_ATTENDING_EVENTS', res.data.attending);
           commit('SET_ORGANISATION_DATA', res.data.organisation);
@@ -160,7 +161,7 @@ const actions = {
         return res;
       })
   },
-  // logout 
+  // logout
   logout({
     commit
   }) {
