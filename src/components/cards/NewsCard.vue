@@ -30,7 +30,8 @@
           <router-link :to="{name: 'news-item', params: {slug: article.slug}}">{{article.title}}</router-link>
         </h3>
         <div class="news-article__description">
-          {{ article.description | trimDescription }}
+          {{ /*  article.description | trimDescription  */ }}
+          <span v-html="article.description"></span>
           <router-link :to="{name: 'news-item', params: {slug: article.slug}}">Continue Reading</router-link>
         </div>
         <!-- <div class="news-article__button">
@@ -306,11 +307,11 @@ export default {
   .news-article__description {
     font-family: "Inter Regular";
     // margin-bottom: 24px;
-    text-transform: lowercase;
-
-    &:first-letter {
-      text-transform: uppercase;
-    }
+    //text-transform: lowercase;
+    //
+    //&:first-letter {
+    //  text-transform: uppercase;
+    //}
 
     a {
       color: #f4ed3b;
