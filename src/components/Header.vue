@@ -123,7 +123,7 @@
               :class="{active: userMenu}"
               @click="userMenu = !userMenu"
             >
-              <template v-if="userAvatar != 'null'">
+              <template v-if="userAvatar !== null">
                 <img :src="$settings.images_path.users + 's_' + userAvatar" />
               </template>
               <template v-else>
