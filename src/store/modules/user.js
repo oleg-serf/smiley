@@ -7,6 +7,7 @@ const state = {
     info: {
         avatar: (localStorage.getItem('avatar')) || null,
         full_name: (localStorage.getItem('full_name')) || null,
+        initials: (localStorage.getItem('initials')) || null,
     },
     completed_profile: parseInt(localStorage.getItem('completed_profile')) || false,
     organisation: {
@@ -26,6 +27,9 @@ const getters = {
     },
     full_name(state) {
         return state.info.full_name || null;
+    },
+    get_initials(state) {
+        return state.info.initials || null;
     },
     organisation(state) {
         return state.organisation
@@ -192,10 +196,12 @@ const mutations = {
 
         state.info.avatar = data.user.avatar;
         state.info.full_name = data.user.full_name;
+        state.info.initials = data.user.initials;
         state.completed_profile = data.user.completed_profile;
 
         localStorage.setItem('avatar', data.user.avatar);
         localStorage.setItem('full_name', data.user.full_name);
+        localStorage.setItem('initials', data.user.initials);
         localStorage.setItem('completed_profile', data.user.completed_profile);
     },
     REMOVE_USERDATA(state) {
