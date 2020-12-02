@@ -32,7 +32,8 @@
                 <!--                <button class="chat-btn">Join the chat room</button>-->
               </template>
               <template v-else>
-                <button class="reg-event-btn" @click="attendNotAuthed">Register for event</button>
+                <button class="reg-event-btn" @click="quickRegistration">Quick event registration</button>
+                <button class="reg-event-btn" @click="attendNotAuthed">Join Smiley News</button>
               </template>
             </div>
             <div class="sidebar-block">
@@ -100,20 +101,20 @@
                         :key="attendee.id + '-attendee'"
                         :class="{'next': index > 0, 'hidden-item': index > 10}"
                     >
-                        <template v-if="attendee.avatar != null">
-                          <img
-                              :src="$settings.images_path.users + 's_' + attendee.avatar"
-                              :alt="attendee.full_name"
-                              :title="attendee.full_name"
-                          />
-                        </template>
-                        <template v-else>
-                          <div class="attendees-avatar__letter-holder">
+                      <template v-if="attendee.avatar != null">
+                        <img
+                            :src="$settings.images_path.users + 's_' + attendee.avatar"
+                            :alt="attendee.full_name"
+                            :title="attendee.full_name"
+                        />
+                      </template>
+                      <template v-else>
+                        <div class="attendees-avatar__letter-holder">
                             <span
                                 class="attendees-avatar__letter"
                             >{{ attendee.full_name | filterAvatar }}</span>
-                          </div>
-                        </template>
+                        </div>
+                      </template>
                     </div>
 
                     <div class="attendees-avatar next last" v-if="event.attendees.length > 0">
@@ -399,11 +400,11 @@
                     :key="partner.name + partner.id"
                 >
                   <a :href="partner.website" target="_blank" v-if="partner.website !== null">
-                  <img
-                      :src="$settings.images_path.partners + 'm_' +partner.image"
-                      :alt="partner.name"
-                      :title="partner.name"
-                  />
+                    <img
+                        :src="$settings.images_path.partners + 'm_' +partner.image"
+                        :alt="partner.name"
+                        :title="partner.name"
+                    />
                   </a>
                   <img
                       v-else
@@ -612,6 +613,44 @@ export default {
           })
           .catch(error => console.error(error));
     },
+    async quickRegistration() {
+      const {value: formValues} = await this.$swal.fire({
+        title: 'Quick Registration',
+        html:
+            '<input id="qr-name" class="swal2-input" placeholder="Your Name">' +
+            '<input id="qr-email" class="swal2-input" placeholder="Email Address">' +
+            '<input id="qr-password" class="swal2-input" placeholder="Password">',
+        focusConfirm: false,
+        confirmButtonText: "Submit",
+        width: 480,
+        preConfirm: () => {
+          return {
+            full_name: document.getElementById('qr-name').value,
+            email: document.getElementById('qr-email').value,
+            password: document.getElementById('qr-password').value,
+            event: this.event.slug
+          }
+        }
+      })
+
+      console.log('Before send: ', formValues);
+
+      if (formValues.full_name && formValues.email && formValues.password && formValues.event) {
+      axios
+          .post("auth/register/quick", formValues)
+          .then(res => {
+            console.log('register success', res);
+            if (res?.data?.success) {
+              this.$store
+                  .dispatch("user/loginAsGuest", res);
+              this.loadEvent();
+            }
+          })
+          .catch(error => console.log(error));
+      } else {
+        this.quickRegistration();
+      }
+    },
     attendNotAuthed() {
       let swal = {
         title: "Register or Login",
@@ -782,5 +821,13 @@ export default {
   transition: background-color 0.4s;
 
   @include font-size(1.6rem);
+}
+</style>
+
+<style>
+.swal2-input {
+  margin-bottom: 0px;
+  font-size: 16px;
+  height: 3rem;
 }
 </style>

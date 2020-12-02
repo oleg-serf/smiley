@@ -123,7 +123,7 @@
               :class="{active: userMenu}"
               @click="userMenu = !userMenu"
             >
-              <template v-if="userAvatar != null">
+              <template v-if="userAvatar !== null">
                 <img :src="$settings.images_path.users + 's_' + userAvatar" />
               </template>
               <template v-else>
@@ -290,7 +290,7 @@ export default {
       return this.$store.getters["user/avatar"];
     },
     userName() {
-      return this.$store.getters["user/full_name"];
+      return this.$store.getters["user/get_initials"];
     },
     organisation() {
       console.log('organisation', this.$store.getters["user/organisation"]);
