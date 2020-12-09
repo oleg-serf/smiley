@@ -6,6 +6,7 @@
         type="text"
         minlength="3"
         :placeholder="placeholder"
+        @input="$emit('input', $event.target.value)"
       />
       <button class="v-search__button" type="submit">
         <i class="fa fa-v-search"></i>

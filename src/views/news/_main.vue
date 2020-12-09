@@ -2,25 +2,40 @@
   <div class="news">
     <section
       class="news-category-section container"
-      v-for="item in news"
+      v-for="(item, key) in news"
       :key="'news-item-' + item.slug"
     >
       <div class="news-category">
         <h2 class="news-category__title">{{ item.prefix }} {{ item.name }}</h2>
         <VSearch
-          @submit.prevent="find"
+          @submit.native.prevent="find"
           placeholder="Search topic..."
           v-model="search"
         />
       </div>
-      <div class="news-gallery">
-        <NewsCard
-          class="news-gallery__card"
-          v-for="article in item.latest_news"
-          :key="article.slug"
-          :article="article"
-        />
-      </div>
+      <ButtonArrow
+        :id="'news-gallery-button-prev-' + key"
+        class="news-gallery-button news-gallery-button-prev"
+      />
+      <Swiper
+        class="news-gallery"
+        :key="swiperKey"
+        :options="{
+          ...options,
+          navigation: {
+            nextEl: `#news-gallery-button-next-${key}`,
+            prevEl: `#news-gallery-button-prev-${key}`,
+          },
+        }"
+      >
+        <SwiperSlide v-for="article in item.latest_news" :key="article.slug">
+          <NewsCard class="news-gallery__card" :article="article" />
+        </SwiperSlide>
+      </Swiper>
+      <ButtonArrow
+        :id="'news-gallery-button-next-' + key"
+        class="news-gallery-button news-gallery-button-next"
+      />
     </section>
   </div>
 </template>
@@ -31,6 +46,8 @@ import router from "@/router";
 import { VSearch } from "@/components/app";
 import Banner from "@/components/homepage/Banner.vue";
 import NewsCard from "@/components/cards/NewsCard.vue";
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import { ButtonArrow } from "@/components/buttons";
 
 export default {
   name: "News",
@@ -38,12 +55,25 @@ export default {
     Banner,
     NewsCard,
     VSearch,
+    ButtonArrow,
   },
   data() {
     return {
       latest: [],
       news: [],
       search: "",
+      swiperKey: 0,
+      options: {
+        slidesPerView: 3,
+        spaceBetween: 25,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: null,
+          prevEl: null,
+        },
+      },
     };
   },
   created() {
@@ -58,6 +88,13 @@ export default {
       })
       .catch((error) => console.error(error));
   },
+  mounted() {
+    this.resizeHandler();
+    window.addEventListener("resize", this.resizeHandler);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.resizeHandler);
+  },
   methods: {
     goToCategory(event) {
       router.push({
@@ -71,6 +108,29 @@ export default {
         params: { keyword: this.search },
       });
     },
+    resizeHandler(e) {
+      if (window.innerWidth < 1500 && window.innerWidth >= 1050) {
+        if (this.options.slidesPerView === 2) return;
+
+        this.options.slidesPerView = 2;
+        this.options.slidesPerGroup = 2;
+      } else if (window.innerWidth < 1050) {
+        if (this.options.slidesPerView === 1) return;
+
+        this.options.slidesPerView = 1;
+        this.options.slidesPerGroup = 1;
+      } else {
+        if (this.options.slidesPerView === 3) return;
+
+        this.options.slidesPerView = 3;
+        this.options.slidesPerGroup = 3;
+      }
+
+      this.genKey();
+    },
+    genKey() {
+      this.swiperKey = Math.random();
+    },
   },
 };
 </script>
@@ -82,6 +142,7 @@ export default {
 
 .news-category-section {
   margin-bottom: 100px;
+  position: relative;
 }
 
 .news-category {
@@ -102,19 +163,34 @@ export default {
 }
 
 .news-gallery {
-  display: flex;
+  padding: 10px;
+}
 
-  .news-gallery__card {
-    margin-left: 25px;
-    margin-right: 25px;
+.news-gallery-button {
+  position: absolute;
+  cursor: pointer;
+  z-index: 5;
+  top: 400px;
+}
 
-    &:first-child {
-      margin-left: 0px;
-    }
-
-    &:last-child {
-      margin-right: 0px;
-    }
+.news-gallery-button-prev {
+  @include custom-max-width(1600px) {
+    left: 0;
+    top: 300px;
+    opacity: 0.8;
   }
+
+  left: -80px;
+}
+
+.news-gallery-button-next {
+  @include custom-max-width(1600px) {
+    right: 0;
+    top: 300px;
+    opacity: 0.8;
+  }
+
+  right: -80px;
+  transform: rotate(180deg);
 }
 </style>

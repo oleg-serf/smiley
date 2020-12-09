@@ -121,8 +121,8 @@ export default {
     display: block;
   }
 }
-  #app {
-  }
+#app {
+}
 
 #nav {
   padding: 30px;

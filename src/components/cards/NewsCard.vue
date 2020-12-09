@@ -8,25 +8,27 @@
         size="m"
         type="news"
       />
-      <div class="news-article__image-label">
-        <span>123</span>
+      <div class="news-article-category">
+        <span class="news-article-category__name" v-if="manualGoal == null">
+          {{ article.goal.name }}
+        </span>
+        <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
       </div>
     </div>
+
     <div class="news-article__content">
       <h3 class="news-article__content-title">
-        {{ article.title }}
+        {{ cutText(article.title, 90) }}
       </h3>
       <div
         class="news-article__content-description"
-        v-html="cutText(article.description)"
+        v-html="cutText(article.description, 55)"
       ></div>
-      <!-- <router-link
-          class="news-article__content-link"
-          :to="{ name: 'news-item', params: { slug: article.slug } }"
-        >
-          More>
-        </router-link> -->
+      <div class="news-article__content-metadata">
+        <span>Lorem</span> | ipsum | {{ dateAgo(article.published_at) }}
+      </div>
     </div>
+
     <div class="news-article__readmore">
       <VButton
         class="news-article__button"
@@ -49,6 +51,14 @@ export default {
   components: {
     MediaImage,
     VButton,
+  },
+  props: {
+    article: {
+      type: Object,
+    },
+    manualGoal: {
+      default: null,
+    },
   },
   data() {
     return {
@@ -92,17 +102,12 @@ export default {
 
       return time;
     },
-    cutText(text) {
-      if (text.length > 55) {
-        return text.slice(0, 55) + "...";
+    cutText(text, limit) {
+      if (text.length > limit) {
+        return text.slice(0, limit).trim() + "...";
       }
 
       return text;
-    },
-  },
-  props: {
-    article: {
-      type: Object,
     },
   },
 };
@@ -112,8 +117,7 @@ export default {
 .news-article {
   background-color: white;
   position: relative;
-  height: 865px;
-  width: 510px;
+  min-height: 865px;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
 
@@ -130,7 +134,7 @@ export default {
       object-position: center;
     }
 
-    .news-article__image-label {
+    .news-article-category {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -139,15 +143,20 @@ export default {
       font-size: 24px;
       font-family: "Gotham Bold";
       padding: 8px 16px;
+
+      .news-article-category__name {
+        color: white;
+      }
     }
   }
 
   .news-article__content {
-    height: 310px;
+    min-height: 310px;
     padding: {
       top: 26px;
       left: 16px;
       right: 16px;
+      bottom: 20px;
     }
 
     .news-article__content-title {
@@ -165,19 +174,23 @@ export default {
       margin-top: 40px;
     }
 
-    // .news-article__content-link {
-    //   float: right;
-    //   margin-right: 12px;
-    //   color: black;
-    //   font-family: "Gotham Medium", sans-serif;
-    //   font-size: 25px;
-    // }
+    .news-article__content-metadata {
+      color: black;
+      font-family: "Gotham Medium";
+      font-size: 22px;
+      margin-top: 16px;
+
+      span {
+        font-family: "Gotham Bold";
+      }
+    }
   }
 
   .news-article__readmore {
     display: flex;
     justify-content: center;
     margin: 0 auto;
+    padding-bottom: 26px;
   }
 }
 </style>
