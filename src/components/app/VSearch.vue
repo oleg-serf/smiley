@@ -9,7 +9,7 @@
         @input="$emit('input', $event.target.value)"
       />
       <button class="v-search__button" type="submit">
-        <i class="fa fa-v-search"></i>
+        <img src="/images/main/icon-search.svg" alt="search" />
       </button>
     </div>
   </form>
@@ -55,6 +55,7 @@ export default {
   cursor: pointer;
   background: none;
   border: none;
+  transform: scale(0.7);
 
   &:focus {
     outline: none;
