@@ -22,6 +22,9 @@ const getters = {
     isAuthenticated(state) {
         return state.token !== null;
     },
+    user(state) {
+        return state.info || null;
+    },
     avatar(state) {
         return state.info.avatar || null;
     },

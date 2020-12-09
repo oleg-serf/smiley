@@ -1,254 +1,57 @@
 <template>
-  <div class="footer-wrapper">
+  <footer class="footer">
     <div class="container">
-      <form
-        class="smiley-signup-form"
-        action="https://smileymovement.us19.list-manage.com/subscribe/post?u=720898364c202fd6f72071ca6&amp;id=ee54f0e12c"
-        method="POST"
-        style="overflow: hidden"
-      >
-        <div class="signup-logo">
-          <img src="/img/homepage/footer-logo.png" alt="footer logo" />
-        </div>
-        <div style="position: absolute; left: -5000px;" aria-hidden="true">
-          <input type="text" name="b_720898364c202fd6f72071ca6_ee54f0e12c" tabindex="-1" value />
-        </div>
-        <label for="signup-firstname">
-          <input
-            type="text"
-            name="FNAME"
-            id="signup-firstname"
-            placeholder="First Name"
-            min-length="2"
-            required
-          />
-        </label>
-
-        <label for="signup-lastname">
-          <input
-            type="text"
-            name="LNAME"
-            id="signup-lastname"
-            placeholder="Last Name"
-            min-length="2"
-            required
-          />
-        </label>
-
-        <label for="email">
-          <input
-            type="email"
-            name="EMAIL"
-            id="email"
-            placeholder="Your Email"
-            required
-            class="mailchimp-form__input"
-          />
-        </label>
-        <div class="signup-btn-wrap">
-          <button class="btn-signup" type="submit" name="submit" value="Subscribe">Subscribe</button>
-        </div>
-      </form>
-    </div>
-    <footer class="main-footer">
-      <div class="container">
-        <div class="footer-top">
-          <div class="footer-column">
-            <div class="footer-logo-subtitle">A philanthropic venture sponsored by</div>
-            <img src="/img/footer/smiley-logo-white.svg" class="footer-logo" />
-          </div>
-          <div class="footer-column"></div>
-          <div class="footer-column">
-            <div class="footer-section">
-              <div class="footer-section__title">Support</div>
-              <ul class="footer-section__menu">
-                <li>
-                  <router-link :to="{name: 'partners'}">Partners</router-link>
-                </li>
-                <li>
-                  <router-link :to="{name: 'terms'}">Terms and Conditions</router-link>
-                </li>
-                <!-- <li>
-                  <router-link :to="{name: 'support'}">Support</router-link>
-                </li>-->
-                <li>
-                  <router-link :to="{name: 'contact'}">Contact Us</router-link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom" style="display: none;">
-          <div class="footer-column footer-column__alternative-logo">
-            <span>A philanthropic venture from</span>
-            <br />
-            <img src="img/footer/Smiley-White@2x.png" class="footer-logo-bottom" alt />
-          </div>
-        </div>
+      <p class="footer__trademark">Powered by Smiley Movement. A philanthropic venture sponsored by Smiley.</p>
+      <div class="footer__logos-holder">
+        <router-link :to="{name: 'home'}" class="footer__link">
+          <img src="/images/main/logo-smiley-1.png"/>
+        </router-link>
+        <router-link :to="{name: 'home'}" class="footer__link">
+          <img src="/images/main/logo-smiley-2.png"/>
+        </router-link>
       </div>
-    </footer>
-  </div>
+      <p class="footer__copyrights">All rights reserved Smiley News 2020</p>
+    </div>
+  </footer>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Footer",
+};
 </script>
 
 <style lang="scss" scoped>
-.main-footer {
-  background-color: #3d465a;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
+.footer {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 
-.footer-top,
-.footer-bottom {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 30px;
-  color: #fff;
-
-  .footer-column:nth-child(2) {
-    grid-column: 2 / span 2;
-  }
-}
-
-.footer-bottom {
-  @include margin-top(2rem);
-  @include padding-top(2rem);
-  border-top: 2px solid #50586a;
-
-  img {
-    max-width: 100px;
-  }
-}
-
-.footer-logo-subtitle {
-  font-family: "Montserrat Regular", sans-serif;
-  padding-bottom: 12px;
-}
-
-.footer-logo {
-  max-width: 200px;
-  width: 100%;
-  height: auto;
-}
-
-.footer-section {
-  &:not(:last-child) {
-    @include margin-bottom(1.5rem);
-  }
-  .footer-section__title {
-    text-transform: uppercase;
-    font-family: "Montserrat Regular";
-    letter-spacing: 4px;
-    color: #fff;
-    @include margin-bottom(0.7rem);
-  }
-  .footer-section__content {
-    font-family: "Montserrat Regular";
-    color: #fff;
-  }
-
-  .footer-section__menu {
-    font-family: "Montserrat Regular";
-
-    a {
-      text-decoration: none;
-      color: #fff;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.4s;
-
-      &:hover {
-        border-color: #fff;
-      }
-    }
-  }
-}
-
-.footer-column__form {
-  grid-column: 1 / span 2;
-}
-
-.smiley-signup-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 60px;
-  margin-bottom: 60px;
-
-  .signup-logo {
+  &__trademark {
     text-align: center;
-    margin-bottom: 30px;
-    width: 100%;
-    img {
-      max-width: 100%;
-    }
+    margin-bottom: 1rem;
   }
-  label,
-  input {
-    max-width: 331px;
-    width: 100%;
-  }
-  @include md {
-    flex-direction: row;
-    flex-wrap: wrap;
+
+  &__logos-holder {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: flex-start;
-    label {
-      margin-right: 30px;
-      &:last-of-type {
-        margin-right: 0;
-      }
-    }
-  }
-  input {
-    border: 1px solid #c7c7c7;
-    box-sizing: border-box;
-    border-radius: 4px;
-    height: 48px;
-    margin-bottom: 20px;
-    text-indent: 16px;
-    font: 400 16px/24px "Montserrat Regular", sans-serif;
-    &:focus {
-      border: 1px solid #eeb400;
-      box-shadow: 0 2px 31px 13px rgba(0, 0, 0, 0.05);
-      transition: 0.2s ease-in;
-    }
-    @include xxl {
-      margin-bottom: 0;
-    }
-    &::placeholder {
-      color: #656565;
-      font: 400 16px/24px "Muli", sans-serif;
-    }
-  }
-  .signup-btn-wrap {
-    width: 100%;
-    text-align: center;
-    @include xl {
-      max-width: 218px;
-      margin: -1px 30px 0;
-    }
-  }
-  .btn-signup {
-    border: none;
-    box-sizing: border-box;
-    background-color: $default-orange-btns;
-    border-radius: 4px;
-    color: #fff;
-    height: 48px;
-    max-width: 218px;
-    margin-bottom: -1px;
-    text-transform: uppercase;
-    font: 700 16px/24px "Montserrat Bold", sans-serif;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    flex-wrap: wrap;
 
-    &:hover {
-      background-color: #c09205;
+    img {
+      width: 240px;
+      height: auto;
+      object-fit: contain;
     }
+  }
+
+  &__link {
+    margin: 1rem;
+  }
+
+  &__copyrights {
+    margin-top: 1rem;
+    margin-bottom: 0px;
+    text-align: center;
   }
 }
 </style>

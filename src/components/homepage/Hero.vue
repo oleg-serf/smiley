@@ -1,24 +1,24 @@
 <template>
   <div class="hero">
-    <video
-      v-if="!isMobile"
-      :src="video"
-      muted
-      id="background_video"
-      autoplay
-      loop
-      class="hero__overlay"
-    ></video>
-    <img v-else :src="image" class="hero__overlay" />
+<!--    <video-->
+<!--      v-if="!isMobile"-->
+<!--      :src="video"-->
+<!--      muted-->
+<!--      id="background_video"-->
+<!--      autoplay-->
+<!--      loop-->
+<!--      class="hero__overlay"-->
+<!--    ></video>-->
+    <img :src="image" class="hero__overlay" />
     <div class="hero__content">
       <h1 class="hero__title">
         <slot></slot>
       </h1>
-      <div class="hero__subtitle">
-        Join our movement to create a happier,
-        <br />more equal and sustainable world
-      </div>
-      <router-link :to="link" class="hero__button" v-if="link != null">Learn more</router-link>
+<!--      <div class="hero__subtitle">-->
+<!--        Join our movement to create a happier,-->
+<!--        <br />more equal and sustainable world-->
+<!--      </div>-->
+<!--      <router-link :to="link" class="hero__button" v-if="link != null">Learn more</router-link>-->
     </div>
   </div>
 </template>
