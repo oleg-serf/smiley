@@ -94,8 +94,35 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
+/* Utils */
+.social {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+
+  li {
+    margin-left: .5rem;
+    margin-right: .5rem;
+
+    &:first-child {
+      margin-left: 0px;
+    }
+
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  &__icon {
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+  }
 }
+  #app {
+  }
 
 #nav {
   padding: 30px;
