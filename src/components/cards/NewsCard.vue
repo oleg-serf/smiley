@@ -10,7 +10,11 @@
       />
       <div class="news-article-category">
         <span class="news-article-category__name" v-if="manualGoal == null">
-          {{ article.goal.name }}
+          {{
+            article.goals != null && article.goals.length > 0
+              ? article.goals[0].name
+              : ""
+          }}
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
       </div>
@@ -129,7 +133,7 @@ export default {
     img {
       width: 100%;
       height: 100%;
-      opacity: 0.8;
+      opacity: 0.9;
       object-fit: cover;
       object-position: center;
     }
