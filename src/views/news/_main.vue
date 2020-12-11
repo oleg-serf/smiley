@@ -14,7 +14,7 @@
           v-model="search"
         />
       </div>
-      <NewsGallery :news="item.latest_news" :screen="screenSize"></NewsGallery>
+      <NewsGallery :news="item.latest_news"></NewsGallery>
     </section>
   </div>
 </template>
@@ -23,12 +23,10 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 import NewsGallery from "@/components/news/NewsGallery.vue";
-import ResizeHandler from "@/mixins/resize-handler.js";
 import { VSearch } from "@/components/app";
 
 export default {
   name: "News",
-  mixins: [ResizeHandler],
   components: {
     NewsGallery,
     VSearch,

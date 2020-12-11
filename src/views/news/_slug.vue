@@ -67,16 +67,14 @@
       <div class="articles-related">
         <section class="news-section container">
           <div class="news-category">
-            <h2 class="news-category__title">
-              Related | News
-            </h2>
+            <h2 class="news-category__title"><b>Related</b> | News</h2>
             <VSearch
               @submit.native.prevent="find"
               placeholder="Search topic..."
               v-model="search"
             />
           </div>
-          <NewsGallery :news="related_posts" :screen="screenSize"></NewsGallery>
+          <NewsGallery :news="related_posts"></NewsGallery>
         </section>
       </div>
     </article>
@@ -87,7 +85,6 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 import NewsGallery from "@/components/news/NewsGallery.vue";
-import ResizeHandler from "@/mixins/resize-handler.js";
 import { VSearch } from "@/components/app";
 // import CommentCard from "@/components/cards/CommentCard";
 // import CommentForm from "@/components/forms/CommentForm";
@@ -99,7 +96,6 @@ export default {
     // CommentCard,
     // CommentForm,
   },
-  mixins: [ResizeHandler],
   data() {
     return {
       post: {
@@ -316,9 +312,13 @@ export default {
 
   .news-category__title {
     color: black;
-    font-family: "Gotham Bold";
+    font-family: "Gotham Light", sans-serif;
     font-size: 30px;
     line-height: 40px;
+
+    b {
+      font-family: "Gotham Bold", sans-serif;
+    }
   }
 }
 </style>

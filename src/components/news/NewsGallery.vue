@@ -29,10 +29,6 @@ export default {
       type: Array,
       required: true,
     },
-    screen: {
-      type: Number,
-      required: true,
-    },
   },
   components: {
     NewsCard,
@@ -43,41 +39,27 @@ export default {
       id: 0,
       key: 0,
       options: {
-        slidesPerView: 3,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
         spaceBetween: 25,
-        slidesPerGroup: 3,
         loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
           nextEl: "",
           prevEl: "",
         },
+        breakpoints: {
+          900: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+          },
+          1440: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+          },
+        },
       },
     };
-  },
-  methods: {
-    configureSlider() {
-      if (this.screen < 1500 && this.screen >= 1050) {
-        if (this.options.slidesPerView === 2) return;
-        this.options.slidesPerView = 2;
-        this.options.slidesPerGroup = 2;
-      } else if (this.screen < 1050) {
-        if (this.options.slidesPerView === 1) return;
-        this.options.slidesPerView = 1;
-        this.options.slidesPerGroup = 1;
-      } else {
-        if (this.options.slidesPerView === 3) return;
-        this.options.slidesPerView = 3;
-        this.options.slidesPerGroup = 3;
-      }
-
-      this.key = Math.random();
-    },
-  },
-  watch: {
-    screen() {
-      this.configureSlider();
-    },
   },
   created() {
     this.id = this._uid;
@@ -85,7 +67,6 @@ export default {
       nextEl: `#news-gallery-button-next-${this.id}`,
       prevEl: `#news-gallery-button-prev-${this.id}`,
     };
-    this.configureSlider();
   },
 };
 </script>
