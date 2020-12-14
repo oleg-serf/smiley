@@ -5,7 +5,7 @@
         <router-link to="/">Home</router-link>
       </li>
       <template v-if="breadcrumbs.length > 0">
-        <li v-if="breadcrumb.meta.title" v-for="(breadcrumb, index) in breadcrumbs" :key="'breadcrumb-'+index">
+        <li v-for="(breadcrumb, index) in breadcrumbsWithTitle" :key="'breadcrumb-'+index">
           <template v-if="itemsCount !== index">
             <router-link :to="breadcrumb.path">{{ breadcrumb.meta.title }}</router-link>
           </template>
@@ -19,63 +19,75 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                breadcrumbs: []
-            };
-        },
-        computed: {
-            itemsCount() {
-                return this.breadcrumbs.length - 1;
-            },
-        },
-        mounted() {
-            if (!this.custom) {
-                this.breadcrumbs = this.$router.currentRoute.matched;
-            } else {
-                console.log('custom items', this.items);
-                this.breadcrumbs = this.items;
-            }
-        },
-        props: {
-            custom: {
-                default: false,
-                type: Boolean
-            },
-            items: {
-                default: () => ([]),
-                type: Array
-            }
-        }
+export default {
+  data() {
+    return {
+      breadcrumbs: []
     };
+  },
+  computed: {
+    itemsCount() {
+      return this.breadcrumbsWithTitle.length - 1;
+    },
+    breadcrumbsWithTitle() {
+      return this.breadcrumbs.filter(el => el.meta.title)
+    }
+  },
+  mounted() {
+    if (!this.custom) {
+      this.breadcrumbs = this.$router.currentRoute.matched;
+    } else {
+      console.log('custom items', this.items);
+      this.breadcrumbs = this.items;
+    }
+  },
+  props: {
+    custom: {
+      default: false,
+      type: Boolean
+    },
+    items: {
+      default: () => ([]),
+      type: Array
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .breadcrumbs {
-    margin-top: 24px;
-    margin-bottom: 24px;
+.breadcrumbs {
+  margin-top: 24px;
+  margin-bottom: 24px;
 
-    li {
-      display: inline-block;
-
-      &::after {
-        content: '/';
-        padding-left: 10px;
-        padding-right: 10px;
-        font-size: 12px;
-      }
-
-      &:last-child {
-        &::after {
-          content: '';
-        }
+  li {
+    display: inline-block;
+    span {
+      color: #B7B7B7 !important;
+    }
+    a {
+      color: #B7B7B7 !important;
+      &:hover {
+        color: unset !important;
       }
     }
+    &::after {
+      content: '/';
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 12px;
+      color: #B7B7B7 !important;
+    }
 
-    a, span {
-      color: #1a1a1a;
-      font: 400 16px/21px "Muli", sans-serif;
+    &:last-child {
+      &::after {
+        content: '';
+      }
     }
   }
+
+  a, span {
+    color: #1a1a1a;
+    font: 400 16px/21px "Muli", sans-serif;
+  }
+}
 </style>

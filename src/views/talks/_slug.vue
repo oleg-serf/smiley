@@ -1,6 +1,6 @@
 <template>
   <div class="talks_container" style="margin-bottom: 150px;">
-    
+
     <div class="event-title">
       <div class="event-category">
         <h2 class="event-category__title"><b>Event title</b></h2>
@@ -28,7 +28,7 @@
             class="event__button-link"
             :to="'#'">Register</router-link>
         </VButton>
-  
+
         <div class="event-title__link-actions__un-goals">
           <VButton
             class="event-title__link-actions__icon-btn"
@@ -99,19 +99,19 @@
       </div>
       <div class="event-title__paragraph-section">
         <p class="event-title__paragraph-section__paragraph">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore reiciendis in aliquid temporibus culpa harum? Officia.
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus beatae atque mollitia corrupti aliquam veniam architecto rerum, sed iure eaque voluptate ea dolorem iusto perferendis blanditiis eum magni consequuntur asperiores.
         </p>
         <p class="event-title__paragraph-section__paragraph">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore reiciendis in aliquid temporibus culpa harum? Officia.
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, laudantium excepturi porro, sunt sequi impedit cupiditate dolorem dicta beatae ut, veniam molestias animi possimus! Fugit corrupti error nulla esse beatae?
         </p>
       </div>
       <div class="event-title__people-section">
         <div v-for="(user, index) in peoples" :key="index">
-          <PeopleSection 
+          <PeopleSection
             :profilePicture="user.profilePicture"
             :userName="user.userName"
             :partnership="user.partnership"
@@ -119,7 +119,9 @@
           />
         </div>
       </div>
-      <div class="event-title__comments-section">
+      <!-- Comments Section -->
+      <CommentsSection></CommentsSection>
+<!--      <div class="event-title__comments-section">
         <div class="event-title__comments-section__category">
           <h2 class="event-title__comments-section__category__title">
             <b>Comments</b>
@@ -129,7 +131,9 @@
             <div class="event-title__comments-section__category__info__comments-counter">
               <b>1 Comment</b>
             </div>
-            <div class="event-title__comments-section__category__info__user-login"><img height="30" width="30" src="/images/main/icon-profile.svg" class="user__avatar"/>Login</div>
+            <div class="event-title__comments-section__category__info__user-login">
+              <img height="30" width="30" src="/images/main/icon-profile.svg" class="user__avatar"/>Login
+            </div>
           </div>
         </div>
         <div class="event-title__comments-section__recommend">
@@ -218,7 +222,7 @@
           </div>
           <LogInComments :is-hovered="isHovered" @mouse-enter="mouseEnter" @mouse-leave="mouseLeave" />
         </div>
-      </div>
+      </div>-->
     </div>
 
     <div class="event-category">
@@ -244,7 +248,8 @@ import EventCard from "@/components/cards/EventCard.vue";
 import { VSearchLocation, VDropdown, VSwitch, VButton } from "@/components/app";
 import PeopleSection from "@/components/People.vue";
 import Subscribe from '@/components/forms/Subscribe.vue';
-import LogInComments from '@/components/forms/LogInComments.vue';
+// import LogInComments from '@/components/forms/LogInComments.vue';
+import CommentsSection from "@/components/CommentsSection";
 export default {
   name: "Talks",
   components: {
@@ -255,7 +260,8 @@ export default {
     EventCard,
     PeopleSection,
     Subscribe,
-    LogInComments,
+    // LogInComments,
+    CommentsSection
   },
   data() {
     return {
@@ -265,7 +271,7 @@ export default {
       // past_pages: 0,
       // is_mobile: false,
       // is_shown: false,
-      isHovered: false,
+      // isHovered: false,
       peoples: [
         {
           profilePicture: 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png',
@@ -343,12 +349,12 @@ export default {
     };
   },
   methods: {
-    mouseEnter() {
+    /*mouseEnter() {
       this.isHovered = true;
     },
     mouseLeave() {
       this.isHovered = false;
-    },
+    },*/
     handleResize() {
       this.is_mobile = window.innerWidth >= 768 ? false : true;
       if (window.innerWidth >= 768) {
@@ -503,7 +509,7 @@ export default {
     justify-content: space-between;
     margin-top: 20px;
   }
-  &__comments-section {
+  /*&__comments-section {
     &__category {
       display: flex;
       flex-direction: column;
@@ -592,7 +598,7 @@ export default {
         position: static;
         width: 200px;
         margin-top: 30px;
-  
+
         a {
           color: white;
         }
@@ -637,13 +643,13 @@ export default {
         }
       }
     }
-  }
+  }*/
 }
 .event-category {
   padding: 16px 0;
   border-bottom: 2px solid #ffe300;
   display: flex;
-  margin: 150px 0;
+  margin: 70px 0;
   .event-category__title {
     color: black;
     font-family: "Gotham Light", sans-serif;

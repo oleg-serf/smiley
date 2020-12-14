@@ -7,11 +7,11 @@
             <h1>{{ post.title }}</h1>
           </div>
           <img
-            :src="$settings.images_path.news + 'l_' + post.cover_image"
-            :alt="post.title"
-            :title="post.title"
-            v-if="post.cover_image != null"
-            class="article-header__image"
+              :src="$settings.images_path.news + 'l_' + post.cover_image"
+              :alt="post.title"
+              :title="post.title"
+              v-if="post.cover_image != null"
+              class="article-header__image"
           />
           <div class="article-header__metadata">
             Lorem | {{ post.published_at }} | {{ comments.length }} Comments
@@ -19,8 +19,8 @@
           <div class="article-header__sharing">
             <div class="article-header__sharing-goals">
               <ul class="article-header__sharing-goals-badges">
-                <li><img src="/img/goals/goals-1.svg" alt="goal" /></li>
-                <li><img src="/img/goals/goals-2.svg" alt="goal" /></li>
+                <li><img src="/img/goals/goals-1.svg" alt="goal"/></li>
+                <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
               </ul>
               <span>| UN Goals</span>
             </div>
@@ -28,23 +28,23 @@
               <ul>
                 <li>
                   <a :href="shareLink('twitter')" target="_blank">
-                    <img src="/img/social/twitter.svg" alt="twitter" />
+                    <img src="/img/social/twitter.svg" alt="twitter"/>
                   </a>
                 </li>
                 <li>
                   <a :href="shareLink('instagram')" target="_blank">
                     <img src="/img/social/insta.svg" alt="instagram"
-                  /></a>
+                    /></a>
                 </li>
                 <li>
                   <a :href="shareLink('facebook')" target="_blank">
                     <img src="/img/social/fb.svg" alt="facebook"
-                  /></a>
+                    /></a>
                 </li>
                 <li>
                   <a :href="shareLink('youtube')" target="_blank">
                     <img src="/img/social/youtube.svg" alt="youtube"
-                  /></a>
+                    /></a>
                 </li>
               </ul>
               <span>&#60;share</span>
@@ -56,22 +56,26 @@
 
         <div class="article-author">
           <img
-            class="article-author__pic"
-            src="/img/organization/avatar-1.jpg"
-            alt="author"
+              class="article-author__pic"
+              src="/img/organization/avatar-1.jpg"
+              alt="author"
           />
           <span class="article-author__name">| Editors Name</span>
         </div>
       </div>
+
+      <!-- BAKHTIYOR ADDED THIS COMMENTS_SECTION COMPONENT 14.02.2020 -->
+      <!--   COMMENTS SECTION   -->
+      <CommentsSection></CommentsSection>
 
       <div class="articles-related">
         <section class="news-section container">
           <div class="news-category">
             <h2 class="news-category__title"><b>Related</b> | News</h2>
             <VSearch
-              @submit.native.prevent="find"
-              placeholder="Search topic..."
-              v-model="search"
+                @submit.native.prevent="find"
+                placeholder="Search topic..."
+                v-model="search"
             />
           </div>
           <NewsGallery :news="related_posts"></NewsGallery>
@@ -85,12 +89,14 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 import NewsGallery from "@/components/news/NewsGallery.vue";
-import { VSearch } from "@/components/app";
+import {VSearch} from "@/components/app";
+import CommentsSection from "@/components/CommentsSection";
 // import CommentCard from "@/components/cards/CommentCard";
 // import CommentForm from "@/components/forms/CommentForm";
 
 export default {
   components: {
+    CommentsSection,
     NewsGallery,
     VSearch,
     // CommentCard,
@@ -118,16 +124,17 @@ export default {
     find() {
       router.push({
         name: "news-search",
-        params: { keyword: this.search },
+        params: {keyword: this.search},
       });
     },
     goToCategory(event) {
       router.push({
         name: "news-category-item",
-        params: { slug: event.target.value },
+        params: {slug: event.target.value},
       });
     },
-    comment() {},
+    comment() {
+    },
     shareLink(type) {
       let result = "";
       const title = encodeURI(this.post.title);
@@ -150,36 +157,36 @@ export default {
   },
   mounted() {
     axios
-      .get("/news/" + this.$route.params.slug)
-      .then((res) => {
-        console.log("News item loaded", res);
+        .get("/news/" + this.$route.params.slug)
+        .then((res) => {
+          console.log("News item loaded", res);
 
-        this.post = res.data.post;
-        this.related_posts = res.data.related;
+          this.post = res.data.post;
+          this.related_posts = res.data.related;
 
-        const metaPayload = {
-          meta: res.data.meta,
-          title: res.data.post.title,
-        };
-        this.$store.dispatch("meta/setMeta", metaPayload);
-        this.$router.currentRoute.meta.title = this.post.title;
-      })
-      .catch((error) => console.log(error));
+          const metaPayload = {
+            meta: res.data.meta,
+            title: res.data.post.title,
+          };
+          this.$store.dispatch("meta/setMeta", metaPayload);
+          this.$router.currentRoute.meta.title = this.post.title;
+        })
+        .catch((error) => console.log(error));
     axios
-      .get("/news/" + this.$route.params.slug + "/comments")
-      .then((res) => {
-        console.log("Comments loaded", res);
-        this.comments = res.data.comments;
-      })
-      .catch((error) => console.log(error));
+        .get("/news/" + this.$route.params.slug + "/comments")
+        .then((res) => {
+          console.log("Comments loaded", res);
+          this.comments = res.data.comments;
+        })
+        .catch((error) => console.log(error));
 
     axios
-      .get("/goals")
-      .then((result) => {
-        console.log("Goals loaded", result);
-        this.goals = result.data.goal_categories[0].goals;
-      })
-      .catch((error) => console.error("Error", error));
+        .get("/goals")
+        .then((result) => {
+          console.log("Goals loaded", result);
+          this.goals = result.data.goal_categories[0].goals;
+        })
+        .catch((error) => console.error("Error", error));
   },
 };
 </script>
@@ -253,6 +260,7 @@ export default {
 
       display: flex;
       margin-left: 50px;
+
       ul {
         display: flex;
 
