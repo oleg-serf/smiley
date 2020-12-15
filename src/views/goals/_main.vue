@@ -154,6 +154,7 @@ export default {
   color: #000000 !important;
   font-weight: bold !important;
   text-decoration: none !important;
+  font-family: "Gotham Bold", sans-serif !important;
 }
 
 .post-title {
