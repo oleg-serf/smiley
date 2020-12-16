@@ -1,7 +1,7 @@
 <template>
   <div class="article">
     <div class="article__image">
-      <router-link :to="'/'+type+'/' + information.slug">
+      <router-link :to="'/' + type + '/' + information.slug">
         <img
           :src="getImageUrl(information.cover_image)"
           :alt="information.title"
@@ -12,22 +12,25 @@
     <div class="article__content">
       <h2 class="article__title">
         <router-link
-          :to="'/'+type+'/' + information.slug"
+          :to="'/' + type + '/' + information.slug"
           class="article__title-link"
-        >{{ information.title }}</router-link>
+          >{{ information.title }}</router-link
+        >
       </h2>
-      <div
-        class="article__date"
-        v-if="information.date != null"
-      >{{information.date | articleDateFormat }}</div>
-      <div
-        class="article__categories"
-        v-if="information.goals != null"
-      >{{ information.goals | formatCategories }}</div>
-      <div class="article__location" v-if="information.location != null">{{ information.location }}</div>
+      <div class="article__date" v-if="information.date != null">
+        {{ information.date | articleDateFormat }}
+      </div>
+      <div class="article__categories" v-if="information.goals != null">
+        {{ information.goals | formatCategories }}
+      </div>
+      <div class="article__location" v-if="information.location != null">
+        {{ information.location }}
+      </div>
       <div class="article__description">
         {{
-        (information.description != null) ? information.description.substring(0, 110) : information.short_description.substring(0, 110)
+          information.description != null
+            ? information.description.substring(0, 110)
+            : information.short_description.substring(0, 110)
         }}...
       </div>
     </div>
@@ -43,7 +46,7 @@ export default {
   filters: {
     formatCategories(categories) {
       let result = [];
-      categories.forEach(category => {
+      categories.forEach((category) => {
         result.push(category.name);
       });
 
@@ -58,7 +61,7 @@ export default {
       const year = dateObj.getFullYear();
 
       return day + "-" + month + "-" + year;
-    }
+    },
   },
   methods: {
     getImageUrl(image) {
@@ -67,17 +70,17 @@ export default {
       let url = this.$settings.images_path[type] + "m_" + image;
 
       return url;
-    }
+    },
   },
   props: {
     information: {
-      type: Object
+      type: Object,
     },
     type: {
       type: String,
-      default: "news"
-    }
-  }
+      default: "news",
+    },
+  },
 };
 </script>
 

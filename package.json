@@ -22,6 +22,7 @@
     "vue-breadcrumbs": "^1.2.0",
     "vue-clickaway": "^2.2.2",
     "vue-facebook-login-component": "^1.6.0",
+    "vue-fragment": "^1.5.1",
     "vue-ga": "^1.1.0",
     "vue-google-autocomplete": "^1.1.0",
     "vue-google-login": "^2.0.5",

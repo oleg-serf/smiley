@@ -49,9 +49,13 @@ export default {
     margin-bottom: 2rem;
 
     &__title {
-      @include font-size(2rem);
+      @include font-size(1.5rem);
       margin-bottom: 1.5rem;
-      text-align: center
+      text-align: center;
+      font-weight: bold;
+      &:hover {
+        color: #FFE300;
+      }
     }
 
     &__form {
