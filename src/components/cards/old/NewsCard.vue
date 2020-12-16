@@ -46,7 +46,7 @@
         <span class="news-article__actions-text">Like</span>
       </button>
       <button @click.prevent="openPage">
-        <span class="news-article__actions-text">Read more</span>
+        <span class="news-article__actions-text">Read More</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </button>
       <button @click.prevent="sharing = true">

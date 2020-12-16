@@ -23,7 +23,7 @@ export default {
     },
     size: {
       validator(s) {
-        return ["small", "medium"].includes(s);
+        return ["small", "medium", "height_45"].includes(s);
       },
       default: "medium",
     },
@@ -126,7 +126,10 @@ export default {
 .medium {
   height: 60px;
 }
-
+.height_45 {
+  height: 45px;
+  line-height: 48px;
+}
 .small {
   height: 30px;
 }

@@ -3,7 +3,7 @@
     <div class="container">
       <goals-banner :color="goal.colour" background="/img/goals-banner.jpg">
         <template v-slot:logo>
-          <img src="/img/un-goals-white.png" style="width: 200px"/>
+          <img src="/img/un-goals-white.png" style="width: 107px"/>
         </template>
 
         <template
@@ -119,6 +119,8 @@
           </div>
         </section>
       </section>
+
+      <!--   NEWS   -->
       <section class="content-block">
         <BottomBorderedTitleWithSearch
             title="<b>No Poverty</b> | News"
@@ -128,7 +130,7 @@
         ></BottomBorderedTitleWithSearch>
       </section>
       <section class="section" v-if="posts.length > 0" id="section-news">
-        <h2 class="section__title">News</h2>
+        <!--        <h2 class="section__title">News</h2>-->
         <swiper
             ref="newsSwiper"
             :options="swiperOptions"
@@ -160,8 +162,18 @@
           </paginate>
         </div>
       </section>
+
+      <!--   EVENTS   -->
+      <section class="content-block">
+        <BottomBorderedTitleWithSearch
+            title="<b>No Poverty</b> | Events"
+            :is-search="true"
+            :hover-effect="true"
+            :hover-color="'yellow'"
+        ></BottomBorderedTitleWithSearch>
+      </section>
       <section class="section" v-if="events.length > 0" id="section-events">
-        <h2 class="section__title">Events</h2>
+        <!--        <h2 class="section__title">Events</h2>-->
         <swiper
             ref="eventsSwiper"
             :options="swiperOptions"
@@ -198,8 +210,68 @@
           </paginate>
         </div>
       </section>
-      <section class="section" v-if="projects.length > 0" id="section-projects">
-        <h2 class="section__title">Projects</h2>
+
+      <!--   INTERVIEWS   -->
+      <section class="content-block">
+        <BottomBorderedTitleWithSearch
+            title="<b>No Poverty</b> | Interviews"
+            :is-search="true"
+            :hover-effect="true"
+            :hover-color="'yellow'"
+        ></BottomBorderedTitleWithSearch>
+      </section>
+      <section class="section" v-if="events.length > 0" id="section-interviews">
+        <!--        <h2 class="section__title">Events</h2>-->
+        <!--        <swiper
+                    ref="eventsSwiper"
+                    :options="swiperOptions"
+                    :auto-update="true"
+                    :auto-destroy="true"
+                    :delete-instance-on-destroy="true"
+                    :cleanup-styles-on-destroy="true"
+                    v-if="is_mobile"
+                >
+                  <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
+                    <event-card :event="event"/>
+                  </swiper-slide>
+                  <div class="swiper-pagination" slot="pagination"></div>
+                </swiper>-->
+        <div class="grid grid--events">
+          <template v-for="n in 3">
+            <interview-card
+                v-for="interview in events"
+                :key="'event-'+interview.slug + n"
+                :interview="interview"
+                :past="interview.past"
+            />
+          </template>
+        </div>
+        <!--        <div class="smiley-pagination" v-if="eventsPagination > 1">
+                  <paginate
+                      :page-count="eventsPagination"
+                      :click-handler="paginateEvents"
+                      :prev-text="'Prev'"
+                      :next-text="'Next'"
+                      :prev-class="'smiley-pagination-back'"
+                      :next-class="'smiley-pagination-next'"
+                      :container-class="'app-pagination'"
+                  >
+                    <span slot="breakViewContent">...</span>
+                  </paginate>
+                </div>-->
+      </section>
+
+      <!--   PROJECTS   -->
+      <section class="content-block">
+        <BottomBorderedTitleWithSearch
+            title="<b>No Poverty</b> | Projects"
+            :is-search="true"
+            :hover-effect="true"
+            :hover-color="'yellow'"
+        ></BottomBorderedTitleWithSearch>
+      </section>
+      <section class="section" v-if="events.length > 0" id="section-projects">
+        <!--        <h2 class="section__title">Events</h2>-->
         <swiper
             ref="projectsSwiper"
             :options="swiperOptions"
@@ -214,8 +286,8 @@
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
-        <div class="grid grid--projects" v-else>
-          <project-card
+        <div class="grid grid--events" v-else>
+          <project-card-new
               v-for="project in projects"
               :key="'project-'+project.slug"
               :project="project"
@@ -235,7 +307,46 @@
           </paginate>
         </div>
       </section>
+      <!--      <section class="section" v-if="projects.length > 0" id="section-projects">
+              <h2 class="section__title">Projects</h2>
+              <swiper
+                  ref="projectsSwiper"
+                  :options="swiperOptions"
+                  :auto-update="true"
+                  :auto-destroy="true"
+                  :delete-instance-on-destroy="true"
+                  :cleanup-styles-on-destroy="true"
+                  v-if="is_mobile"
+              >
+                <swiper-slide v-for="project in projects" :key="'project-swiper-'+project.slug">
+                  <project-card :project="project"/>
+                </swiper-slide>
+                <div class="swiper-pagination" slot="pagination"></div>
+              </swiper>
+              <div class="grid grid&#45;&#45;projects" v-else>
+                <project-card
+                    v-for="project in projects"
+                    :key="'project-'+project.slug"
+                    :project="project"
+                />
+              </div>
+
+              <div class="smiley-pagination" v-if="projectsPagination > 1">
+                <paginate
+                    :page-count="projectsPagination"
+                    :click-handler="paginateProjects"
+                    :prev-text="'Prev'"
+                    :next-text="'Next'"
+                    :prev-class="'smiley-pagination-back'"
+                    :next-class="'smiley-pagination-next'"
+                    :container-class="'app-pagination'"
+                >
+                  <span slot="breakViewContent">...</span>
+                </paginate>
+              </div>
+            </section>-->
     </div>
+    <Subscribe/>
   </div>
 </template>
 
@@ -252,10 +363,16 @@ import EventCard from "@/components/cards/EventCard";
 import ProjectCard from "@/components/cards/ProjectCard";
 import OrganisationCard from "@/components/cards/OrganisationCard";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
+import ProjectCardNew from "@/components/cards/ProjectCardNew";
+import Subscribe from '@/components/forms/Subscribe.vue';
+import InterviewCard from "@/components/cards/InterviewCard";
 
 export default {
   name: "GoalSinglePage",
   components: {
+    InterviewCard,
+    Subscribe,
+    ProjectCardNew,
     BottomBorderedTitleWithSearch,
     VButton,
     SocialNetworkShare,
@@ -500,6 +617,8 @@ export default {
 @import "@/scss/blocks/homepage/_goals-grid";
 
 .section {
+  margin-bottom: 50px;
+
   &__title {
     font-family: "Montserrat SemiBold";
     @include font-size(2rem);
@@ -591,6 +710,7 @@ export default {
       height: 100%;
       font-size: 0px;
       display: block;
+
       div {
         height: 100%;
       }
@@ -609,7 +729,7 @@ export default {
   &--events,
   &--projects {
     display: grid;
-    grid-gap: 5px;
+    grid-gap: 1.5rem;
     grid-template-columns: repeat(3, 1fr);
 
     @include lgMax {

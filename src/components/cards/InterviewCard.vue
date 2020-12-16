@@ -1,33 +1,33 @@
 <template>
-  <div class="event">
+  <div class="interview">
     <div
         class="event__image"
         @mouseenter="showDescription = true"
         @mouseleave="showDescription = false"
     >
       <MediaImage
-        :src="event.cover_image"
-        :alt="event.title"
-        :title="event.title"
-        size="m"
-        type="events"
+          :src="interview.cover_image"
+          :alt="interview.title"
+          :title="interview.title"
+          size="m"
+          type="events"
       />
       <div
-        class="event-category"
+          class="interview-category"
       >
-        <span class="event-category__name" v-if="manualGoal == null">
+        <span class="interview-category__name" v-if="manualGoal == null">
           {{
-            event.goals != null && event.goals.length > 0
-              ? event.goals[0].name
-              : ""
+            interview.goals != null && interview.goals.length > 0
+                ? interview.goals[0].name
+                : ""
           }}
         </span>
-        <span class="event-category__name" v-else>{{ manualGoal }}</span>
+        <span class="interview-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="event-category__description"
-            >UN Goal 0{{
-              event.goals != null && event.goals.length > 0
-                  ? event.goals[0].prefix
+          <span v-if="showDescription" class="interview-category__description"
+          >UN Goal 0{{
+              interview.goals != null && interview.goals.length > 0
+                  ? interview.goals[0].prefix
                   : ""
             }} | <br>
             Quality Education</span
@@ -38,27 +38,28 @@
 
     <div class="event__content">
       <h3 class="event__content-title">
-        {{ cutText(event.title, 40) }}
+        {{ cutText(interview.title, 40) }}
       </h3>
-      <div class="event__content-description" v-html="cutText(event.short_description, 50, 'description')">
+      <div class="event__content-description" v-html="cutText(interview.short_description, 50, 'description')">
       </div>
       <div class="event__content-metadata">
-        <span>{{ event.location }}</span> |
-        {{ dateAgo(event.published_at) }}
+        <span>{{ interview.location }}</span> |
+        {{ dateAgo(interview.published_at) }}
       </div>
     </div>
 
     <div class="event__readmore">
       <VButton
-        class="event__button"
-        size="height_45"
-        @click.native.prevent="openPage"
-        shape="round"
+          class="event__button"
+          size="height_45"
+          @click.native.prevent="openPage"
+          shape="round"
       >
         <router-link
-          class="event__button-link"
-          :to="{ name: 'event', params: { slug: event.slug } }"
-          >{{ buttonName }}</router-link
+            class="event__button-link"
+            :to="{ name: 'interview', params: { slug: interview.slug } }"
+        >{{ buttonName }}
+        </router-link
         >
       </VButton>
     </div>
@@ -70,12 +71,12 @@ import axios from "@/axios-auth";
 import router from "@/router";
 
 import MediaImage from "@/components/Image.vue";
-import { VButton } from "@/components/app";
+import {VButton} from "@/components/app";
 
 export default {
-  name: "EventCard",
+  name: "InterviewCard",
   props: {
-    event: {
+    interview: {
       type: Object,
     },
     active: {
@@ -102,8 +103,8 @@ export default {
   filters: {
     trimDescription(description) {
       return description.length > 120
-        ? description.substring(0, 120) + "..."
-        : description;
+          ? description.substring(0, 120) + "..."
+          : description;
     },
   },
   computed: {
@@ -140,39 +141,39 @@ export default {
     },
     attend() {
       axios
-        .post("/events/" + this.event.slug + "/attend")
-        .then((res) => {
-          this.$swal("You are now attending this event");
-          this.$emit("reload_events");
-        })
-        .catch((error) => console.error(error));
+          .post("/events/" + this.interview.slug + "/attend")
+          .then((res) => {
+            this.$swal("You are now attending this interview");
+            this.$emit("reload_events");
+          })
+          .catch((error) => console.error(error));
     },
     unattend() {
       axios
-        .post("/events/" + this.event.slug + "/attend/cancel")
-        .then((res) => {
-          this.$swal("You are now not attending this event");
-          this.$emit("reload_events");
-        })
-        .catch((error) => console.error(error));
+          .post("/events/" + this.interview.slug + "/attend/cancel")
+          .then((res) => {
+            this.$swal("You are now not attending this interview");
+            this.$emit("reload_events");
+          })
+          .catch((error) => console.error(error));
     },
     attendNotAuthed() {
       let swal = {
         title: "Register or Login",
         text:
-          "To register for an event you will need to login or create an account",
+            "To register for an interview you will need to login or create an account",
         showCancelButton: true,
         confirmButtonText: "Create Account",
         cancelButtonText: "Login",
       };
       this.$swal(swal).then((result) => {
         if (result.value) {
-          router.push({ name: "register" });
+          router.push({name: "register"});
         } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === "cancel"
+            /* Read more about handling dismissals below */
+            result.dismiss === "cancel"
         ) {
-          router.push({ name: "login" });
+          router.push({name: "login"});
         }
       });
     },
@@ -188,7 +189,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.event {
+.interview {
   background-color: white;
   position: relative;
   min-height: 540px;
@@ -208,7 +209,7 @@ export default {
       object-position: center;
     }
 
-    .event-category {
+    .interview-category {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -218,11 +219,11 @@ export default {
       font-family: "Gotham Bold";
       padding: 8px 16px;
 
-      .event-category__name {
+      .interview-category__name {
         color: white;
       }
 
-      .event-category__description {
+      .interview-category__description {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
@@ -271,6 +272,7 @@ export default {
     justify-content: center;
     margin: 0 auto;
     padding-bottom: 26px;
+
     button {
       font-size: 18px !important;
     }
