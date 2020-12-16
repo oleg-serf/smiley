@@ -1,7 +1,7 @@
 <template>
-  <div class="interview">
+  <article class="news-article">
     <div
-        class="event__image"
+        class="news-article__image"
         @mouseenter="showDescription = true"
         @mouseleave="showDescription = false"
     >
@@ -10,82 +10,71 @@
           :alt="interview.title"
           :title="interview.title"
           size="m"
-          type="events"
+          type="news"
       />
-      <div
-          class="interview-category"
-      >
-        <span class="interview-category__name" v-if="manualGoal == null">
+      <div class="news-article-category">
+        <span class="news-article-category__name" v-if="manualGoal == null">
           {{
             interview.goals != null && interview.goals.length > 0
                 ? interview.goals[0].name
                 : ""
           }}
         </span>
-        <span class="interview-category__name" v-else>{{ manualGoal }}</span>
+        <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="interview-category__description"
+          <span v-if="showDescription" class="news-article-category__description"
           >UN Goal 0{{
               interview.goals != null && interview.goals.length > 0
                   ? interview.goals[0].prefix
                   : ""
             }} | <br>
-            Quality Education</span
+            Quality Education
+          </span
           >
         </transition>
       </div>
     </div>
 
-    <div class="event__content">
-      <h3 class="event__content-title">
+    <div class="news-article__content">
+      <h3 class="news-article__content-title">
         {{ cutText(interview.title, 40) }}
       </h3>
-      <div class="event__content-description" v-html="cutText(interview.short_description, 50, 'description')">
-      </div>
-      <div class="event__content-metadata">
-        <span>{{ interview.location }}</span> |
-        {{ dateAgo(interview.published_at) }}
+      <div
+          class="news-article__content-description"
+          v-html="cutText(interview.description, 50, 'description')"
+      ></div>
+      <div class="news-article__content-metadata">
+        <span>Lorem</span> | ipsum | {{ dateAgo(interview.published_at) }}
       </div>
     </div>
 
-    <div class="event__readmore">
+    <div class="news-article__readmore">
       <VButton
-          class="event__button"
+          class="news-article__button"
           size="height_45"
           @click.native.prevent="openPage"
           shape="round"
       >
-        <router-link
-            class="event__button-link"
-            :to="{ name: 'interview', params: { slug: interview.slug } }"
-        >{{ buttonName }}
-        </router-link
-        >
+        Read More
       </VButton>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>
-import axios from "@/axios-auth";
 import router from "@/router";
-
 import MediaImage from "@/components/Image.vue";
-import {VButton} from "@/components/app";
+import { VButton } from "@/components/app";
 
 export default {
-  name: "InterviewCard",
+  name: "InterviewsCard",
+  components: {
+    MediaImage,
+    VButton,
+  },
   props: {
     interview: {
       type: Object,
-    },
-    active: {
-      type: Boolean,
-      default: true,
-    },
-    buttonName: {
-      type: String,
-      default: "Read More",
     },
     manualGoal: {
       default: null,
@@ -93,12 +82,9 @@ export default {
   },
   data() {
     return {
-      showDescription: false,
+      sharing: false,
+      showDescription: false
     };
-  },
-  components: {
-    MediaImage,
-    VButton,
   },
   filters: {
     trimDescription(description) {
@@ -107,12 +93,10 @@ export default {
           : description;
     },
   },
-  computed: {
-    isAuthenticated() {
-      return this.$store.getters["user/isAuthenticated"];
-    },
-  },
   methods: {
+    openPage() {
+      router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
+    },
     dateAgo(date) {
       const currentStamp = Date.now();
       const realDate = this.$dayjs(date);
@@ -139,44 +123,6 @@ export default {
 
       return time;
     },
-    attend() {
-      axios
-          .post("/events/" + this.interview.slug + "/attend")
-          .then((res) => {
-            this.$swal("You are now attending this interview");
-            this.$emit("reload_events");
-          })
-          .catch((error) => console.error(error));
-    },
-    unattend() {
-      axios
-          .post("/events/" + this.interview.slug + "/attend/cancel")
-          .then((res) => {
-            this.$swal("You are now not attending this interview");
-            this.$emit("reload_events");
-          })
-          .catch((error) => console.error(error));
-    },
-    attendNotAuthed() {
-      let swal = {
-        title: "Register or Login",
-        text:
-            "To register for an interview you will need to login or create an account",
-        showCancelButton: true,
-        confirmButtonText: "Create Account",
-        cancelButtonText: "Login",
-      };
-      this.$swal(swal).then((result) => {
-        if (result.value) {
-          router.push({name: "register"});
-        } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === "cancel"
-        ) {
-          router.push({name: "login"});
-        }
-      });
-    },
     cutText(text, limit, stringName) {
       if (text.length > limit) {
         return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
@@ -189,14 +135,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.interview {
+.news-article {
   background-color: white;
   position: relative;
   min-height: 540px;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
 
-  .event__image {
+  .news-article__image {
     position: relative;
     height: 230px;
     width: 100%;
@@ -209,7 +155,7 @@ export default {
       object-position: center;
     }
 
-    .interview-category {
+    .news-article-category {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -219,11 +165,10 @@ export default {
       font-family: "Gotham Bold";
       padding: 8px 16px;
 
-      .interview-category__name {
+      .news-article-category__name {
         color: white;
       }
-
-      .interview-category__description {
+      .news-article-category__description {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
@@ -231,7 +176,7 @@ export default {
     }
   }
 
-  .event__content {
+  .news-article__content {
     min-height: 230px;
     padding: {
       top: 26px;
@@ -240,14 +185,14 @@ export default {
       bottom: 20px;
     }
 
-    .event__content-title {
+    .news-article__content-title {
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
       line-height: 30px;
     }
 
-    .event__content-description {
+    .news-article__content-description {
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -255,7 +200,7 @@ export default {
       margin-top: 30px;
     }
 
-    .event__content-metadata {
+    .news-article__content-metadata {
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;
@@ -267,28 +212,13 @@ export default {
     }
   }
 
-  .event__readmore {
+  .news-article__readmore {
     display: flex;
     justify-content: center;
     margin: 0 auto;
     padding-bottom: 26px;
-
     button {
       font-size: 18px !important;
-    }
-  }
-
-  .event__button {
-    .event__button-link {
-      display: block;
-      color: black;
-      width: 100%;
-      height: 100%;
-      line-height: 48px;
-
-      &:hover {
-        text-decoration: none;
-      }
     }
   }
 }

@@ -237,10 +237,10 @@
                   <div class="swiper-pagination" slot="pagination"></div>
                 </swiper>-->
         <div class="grid grid--events">
-          <template v-for="n in 3">
-            <interview-card
-                v-for="interview in events"
-                :key="'event-'+interview.slug + n"
+          <template>
+            <interviews-card
+                v-for="interview in posts"
+                :key="'event-'+interview.slug"
                 :interview="interview"
                 :past="interview.past"
             />
@@ -365,12 +365,12 @@ import OrganisationCard from "@/components/cards/OrganisationCard";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import ProjectCardNew from "@/components/cards/ProjectCardNew";
 import Subscribe from '@/components/forms/Subscribe.vue';
-import InterviewCard from "@/components/cards/InterviewCard";
+import InterviewsCard from "@/components/cards/InterviewsCard";
 
 export default {
   name: "GoalSinglePage",
   components: {
-    InterviewCard,
+    InterviewsCard,
     Subscribe,
     ProjectCardNew,
     BottomBorderedTitleWithSearch,
