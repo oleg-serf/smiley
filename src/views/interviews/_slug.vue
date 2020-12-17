@@ -66,7 +66,9 @@
 
       <!-- BAKHTIYOR ADDED THIS COMMENTS_SECTION COMPONENT 14.02.2020 -->
       <!--   COMMENTS SECTION   -->
-      <CommentsSection></CommentsSection>
+      <div class="comments-section">
+        <CommentsSection></CommentsSection>
+      </div>
 
       <div class="articles-related">
         <section class="news-section container">
@@ -91,16 +93,12 @@ import router from "@/router";
 import NewsGallery from "@/components/news/NewsGallery.vue";
 import {VSearch} from "@/components/app";
 import CommentsSection from "@/components/CommentsSection";
-// import CommentCard from "@/components/cards/CommentCard";
-// import CommentForm from "@/components/forms/CommentForm";
 
 export default {
   components: {
     CommentsSection,
     NewsGallery,
-    VSearch,
-    // CommentCard,
-    // CommentForm,
+    VSearch
   },
   data() {
     return {
@@ -192,6 +190,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.comments-section {
+  margin-bottom: 8rem;
+}
 .article {
   margin-top: 100px;
 }

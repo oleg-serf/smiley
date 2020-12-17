@@ -1,25 +1,12 @@
 <template>
-  <!--  <fragment>
-      <ButtonArrow
-        :id="'news-gallery-button-prev-' + id"
-        class="news-gallery-button news-gallery-button-prev"
-      />
-      <Swiper class="news-gallery" :key="key" :options="options">
-        <SwiperSlide v-for="article in interviews" :key="article.slug">
-          <InterviewsCard class="news-gallery__card" :interview="article" />
-        </SwiperSlide>
-      </Swiper>
-      <ButtonArrow
-        :id="'news-gallery-button-next-' + id"
-        class="news-gallery-button news-gallery-button-next"
-      />
-    </fragment>-->
   <section class="section" v-if="interviews.length > 0" id="section-news">
     <div class="grid grid--news">
       <InterviewsCard
           class="news-gallery__card"
           v-for="interview in interviews"
           :key="'interview-'+interview.slug"
+          :type="imageType"
+          :button-text="buttonText"
           :interview="interview"/>
     </div>
   </section>
@@ -34,6 +21,14 @@ import InterviewsCard from "@/components/cards/InterviewsCard";
 export default {
   name: "InterviewsGallery",
   props: {
+    buttonText: {
+      type: String,
+      default: 'Read More'
+    },
+    imageType: {
+      type: String,
+      default: 'news'
+    },
     interviews: {
       type: Array,
       required: true,

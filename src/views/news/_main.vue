@@ -6,28 +6,30 @@
       :key="'news-item-' + item.slug"
       :item="item"
     >
-      <div class="news-category">
-        <h2 class="news-category__title">{{ item.prefix }} {{ item.name }}</h2>
-        <VSearch
-          @submit.native.prevent="find"
-          placeholder="Search topic..."
-          v-model="search"
-        />
-      </div>
+      <BottomBorderedTitleWithSearch
+          :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | News'"
+          :with-search="true"
+          :search-expandable="true"
+      ></BottomBorderedTitleWithSearch>
       <NewsGallery :news="item.latest_news"></NewsGallery>
     </section>
+    <Subscribe />
   </div>
 </template>
 
 <script>
 import axios from "@/axios-auth";
 import router from "@/router";
-import NewsGallery from "@/components/news/NewsGallery.vue";
 import { VSearch } from "@/components/app";
+import NewsGallery from "@/components/news/NewsGallery.vue";
+import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
+import Subscribe from "@/components/forms/Subscribe";
 
 export default {
   name: "News",
   components: {
+    Subscribe,
+    BottomBorderedTitleWithSearch,
     NewsGallery,
     VSearch,
   },
@@ -63,7 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 .news {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .news-section {

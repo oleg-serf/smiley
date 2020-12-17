@@ -1,5 +1,5 @@
 <template>
-  <fragment>
+<!--  <fragment>
     <ButtonArrow
       :id="'news-gallery-button-prev-' + id"
       class="news-gallery-button news-gallery-button-prev"
@@ -13,7 +13,16 @@
       :id="'news-gallery-button-next-' + id"
       class="news-gallery-button news-gallery-button-next"
     />
-  </fragment>
+  </fragment>-->
+  <section class="section" v-if="news.length > 0" id="section-news">
+    <div class="grid grid--news">
+      <NewsCard
+          class="news-gallery__card"
+          v-for="article in news"
+          :key="'article-'+article.slug"
+          :article="article"/>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -72,6 +81,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.grid {
+  &--news {
+    display: grid;
+    grid-gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+
+    @include lgMax {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mdMax {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
 .news-gallery {
   padding: 10px;
 }

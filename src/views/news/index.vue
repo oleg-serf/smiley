@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="news_container">
+    <Breadcrumbs/>
     <router-view key="$route.fullPath"></router-view>
     <Footer />
   </div>
@@ -26,3 +27,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.news_container {
+  padding: 0 150px;
+}
+</style>

@@ -10,15 +10,24 @@
           :alt="interview.title"
           :title="interview.title"
           size="m"
-          type="news"
+          :type="type"
       />
       <div class="news-article-category">
         <span class="news-article-category__name" v-if="manualGoal == null">
-          {{
-            interview.goal != null && interview.goal.name
-                ? interview.goal.name
-                : ""
-          }}
+          <template v-if="interview.goal != null && interview.goal.name">
+            {{
+              interview.goal != null && interview.goal.name
+                  ? interview.goal.name
+                  : ""
+            }}
+          </template>
+          <template v-else>
+            {{
+              interview.goals != null && interview.goals.length > 0
+                  ? interview.goals[0].name
+                  : ""
+            }}
+          </template>
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
@@ -41,7 +50,7 @@
       </h3>
       <div
           class="news-article__content-description"
-          v-html="cutText(interview.description, 50, 'description')"
+          v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 50, 'description')"
       ></div>
       <div class="news-article__content-metadata">
         <span>Lorem</span> | ipsum | {{ dateAgo(interview.published_at) }}
@@ -55,7 +64,7 @@
           @click.native.prevent="openPage"
           shape="round"
       >
-        Read More
+        {{ buttonText }}
       </VButton>
     </div>
   </article>
@@ -73,12 +82,20 @@ export default {
     VButton,
   },
   props: {
+    type: {
+      type: String,
+      default: 'news'
+    },
     interview: {
       type: Object,
     },
     manualGoal: {
       default: null,
     },
+    buttonText: {
+      type: String,
+      default: 'Read More'
+    }
   },
   data() {
     return {

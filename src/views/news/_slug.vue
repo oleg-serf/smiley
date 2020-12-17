@@ -66,7 +66,9 @@
 
       <!-- BAKHTIYOR ADDED THIS COMMENTS_SECTION COMPONENT 14.02.2020 -->
       <!--   COMMENTS SECTION   -->
-      <CommentsSection></CommentsSection>
+      <div class="comments-section">
+        <CommentsSection></CommentsSection>
+      </div>
 
       <div class="articles-related">
         <section class="news-section container">
@@ -192,6 +194,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.comments-section {
+  margin-bottom: 8rem;
+}
 .article {
   margin-top: 100px;
 }

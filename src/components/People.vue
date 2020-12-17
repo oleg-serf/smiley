@@ -1,10 +1,10 @@
 <template>
   <div class="people-section">
-    <img :src="profilePicture" height="75" width="75"/>
+    <img :src="profilePicture"/>
     <div class="people-section__info">
       <div class="people-section__info__name">{{ userName }}</div>
-      <div class="people-section__info__partnership">{{ partnership }}</div>
       <div class="people-section__info__role">{{ role }}</div>
+<!--      <div class="people-section__info__partnership">{{ partnership }}</div>-->
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@
 export default {
   name: "PeopleSection",
   props: {
-    profilePicture: { 
+    profilePicture: {
       type: String,
       default: "#"
     },
@@ -36,6 +36,13 @@ export default {
 <style lang="scss" scoped>
 .people-section {
   display: flex;
+  img {
+    min-width: 75px;
+    min-height: 75px;
+    max-width: 75px;
+    max-height: 75px;
+    border-radius: 50%;
+  }
   &__info {
     display: flex;
     flex-direction: column;
@@ -46,10 +53,10 @@ export default {
       font-weight: bold;
       color: black;
     }
-    &__role {
-      color: gray;
-      font-size: 14px;
-    }
+    //&__role {
+    //  color: gray;
+    //  font-size: 14px;
+    //}
   }
 }
-</style> 
+</style>

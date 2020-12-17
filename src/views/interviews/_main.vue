@@ -1,22 +1,16 @@
 <template>
-  <div class="interviews container">
+  <div class="interviews">
     <section
       class="interviews-section container"
       v-for="item in interviews"
       :key="'interviews-item-' + item.slug"
       :item="item"
     >
-<!--      <div class="interviews-category">
-        <h2 class="interviews-category__title">{{ item.prefix }} {{ item.name }}</h2>
-        <VSearch
-          @submit.native.prevent="find"
-          placeholder="Search topic..."
-          v-model="search"
-        />
-      </div>-->
       <BottomBorderedTitleWithSearch
           :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | Interviews'"
-          :is-search="true"
+          :with-search="true"
+          :hover-effect="true"
+          hover-color="#FFE300"
       ></BottomBorderedTitleWithSearch>
       <InterviewsGallery :interviews="item.latest_news"></InterviewsGallery>
     </section>

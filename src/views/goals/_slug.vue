@@ -83,7 +83,7 @@
         >
           <BottomBorderedTitleWithSearch
               title="<b>Organisations to support</b>"
-              :is-search="false"
+              :with-search="false"
           ></BottomBorderedTitleWithSearch>
           <section class="goals-grid">
             <div class="goals-grid__grid">
@@ -124,7 +124,7 @@
       <section class="content-block">
         <BottomBorderedTitleWithSearch
             title="<b>No Poverty</b> | News"
-            :is-search="true"
+            :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
         ></BottomBorderedTitleWithSearch>
@@ -167,7 +167,7 @@
       <section class="content-block">
         <BottomBorderedTitleWithSearch
             title="<b>No Poverty</b> | Events"
-            :is-search="true"
+            :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
         ></BottomBorderedTitleWithSearch>
@@ -215,7 +215,7 @@
       <section class="content-block">
         <BottomBorderedTitleWithSearch
             title="<b>No Poverty</b> | Interviews"
-            :is-search="true"
+            :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
         ></BottomBorderedTitleWithSearch>
@@ -265,7 +265,7 @@
       <section class="content-block">
         <BottomBorderedTitleWithSearch
             title="<b>No Poverty</b> | Projects"
-            :is-search="true"
+            :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
         ></BottomBorderedTitleWithSearch>

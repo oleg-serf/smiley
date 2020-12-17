@@ -14,11 +14,20 @@
       />
       <div class="news-article-category">
         <span class="news-article-category__name" v-if="manualGoal == null">
-          {{
-            article.goals != null && article.goals.length > 0
-              ? article.goals[0].name
-              : ""
-          }}
+          <template v-if="article.goal != null && article.goal.name">
+            {{
+              article.goal != null && article.goal.name
+                  ? article.goal.name
+                  : ""
+            }}
+          </template>
+          <template v-else>
+            {{
+              article.goals != null && article.goals.length > 0
+                  ? article.goals[0].name
+                  : ""
+            }}
+          </template>
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
