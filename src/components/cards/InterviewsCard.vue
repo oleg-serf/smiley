@@ -15,8 +15,8 @@
       <div class="news-article-category">
         <span class="news-article-category__name" v-if="manualGoal == null">
           {{
-            interview.goals != null && interview.goals.length > 0
-                ? interview.goals[0].name
+            interview.goal != null && interview.goal.name
+                ? interview.goal.name
                 : ""
           }}
         </span>
@@ -24,8 +24,8 @@
         <transition name="fade">
           <span v-if="showDescription" class="news-article-category__description"
           >UN Goal 0{{
-              interview.goals != null && interview.goals.length > 0
-                  ? interview.goals[0].prefix
+              interview.goal != null && interview.goal
+                  ? interview.goal.prefix
                   : ""
             }} | <br>
             Quality Education
