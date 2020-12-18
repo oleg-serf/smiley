@@ -1,258 +1,227 @@
 <template>
-  <div class="talks_container" style="margin-bottom: 150px;">
+  <div class="container">
 
     <div class="event-title">
-      <div class="event-category">
-        <h2 class="event-category__title"><b>Event title</b></h2>
-      </div>
-      <div>
-        <iframe
-          class="event-title__video"
-          style="display: block;"
-          width="100%"
-          height="700"
-          src="https://www.youtube.com/embed/4b33NTAuF5E"
-        >
-        </iframe>
+      <BottomBorderedTitleWithSearch
+          :title="`<b>${post.title}</b>`"
+          :with-search="false"
+      ></BottomBorderedTitleWithSearch>
+      <div style="position: relative;">
+        <fragment>
+          <ButtonArrow
+              :id="'news-gallery-button-prev-' + id"
+              class="news-gallery-button news-gallery-button-prev"
+          />
+          <Swiper class="news-gallery" :key="key" :options="options">
+            <SwiperSlide v-for="n in 4" :key="`testEvent-${n}`">
+              <iframe
+                  class="event-title__video"
+                  style="display: block;"
+                  width="100%"
+                  height="700"
+                  src="https://www.youtube.com/embed/4b33NTAuF5E"
+              >
+              </iframe>
+            </SwiperSlide>
+          </Swiper>
+          <ButtonArrow
+              :id="'news-gallery-button-next-' + id"
+              class="news-gallery-button news-gallery-button-next"
+          />
+        </fragment>
       </div>
       <p class="event-title__video-description">
         Partners/ Speakers | Tuesday 12pm (BST), Dec 8<sup>th</sup>,2020 | 3 Comments
       </p>
       <div class="event-title__link-actions">
-        <VButton
-          class="event-title__link-actions__register-button"
-          shape="round"
-          size="small"
-        >
-          <router-link
-            class="event__button-link"
-            :to="'#'">Register</router-link>
-        </VButton>
-
         <div class="event-title__link-actions__un-goals">
           <VButton
-            class="event-title__link-actions__icon-btn"
-            shape="round"
-            size="small"
-            color="red"
+              class="event-title__link-actions__icon-btn"
+              shape="round"
+              size="small"
+              color="red"
           >
             <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-facebook"></i></router-link>
+                class="event__button-link"
+                :to="'#'"><i class="fa fa-facebook"></i></router-link>
           </VButton>
           <VButton
-            class="event-title__link-actions__icon-btn"
-            shape="round"
-            size="small"
-            color="orange"
+              class="event-title__link-actions__icon-btn"
+              shape="round"
+              size="small"
+              color="orange"
           >
             <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-facebook"></i></router-link>
+                class="event__button-link"
+                :to="'#'"><i class="fa fa-facebook"></i></router-link>
           </VButton>
           <p><b>{{ unGoalsText }}</b></p>
         </div>
 
         <div class="event-title__link-actions__social-networks">
           <VButton
-            class="event-title__link-actions__icon-btn"
-            shape="round"
-            size="small"
-            color="blue"
+              class="event-title__link-actions__icon-btn"
+              shape="round"
+              size="small"
+              color="blue"
           >
             <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-facebook"></i></router-link>
+                class="event__button-link"
+                :to="'#'"><i class="fa fa-facebook"></i></router-link>
           </VButton>
           <VButton
-            class="event-title__link-actions__icon-btn"
-            shape="round"
-            size="small"
-            color="purple"
+              class="event-title__link-actions__icon-btn"
+              shape="round"
+              size="small"
+              color="purple"
           >
             <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-instagram"></i></router-link>
+                class="event__button-link"
+                :to="'#'"><i class="fa fa-instagram"></i></router-link>
           </VButton>
           <VButton
-            class="event-title__link-actions__icon-btn"
-            shape="round"
-            size="small"
-            color="light-blue"
+              class="event-title__link-actions__icon-btn"
+              shape="round"
+              size="small"
+              color="light-blue"
           >
             <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-twitter"></i></router-link>
+                class="event__button-link"
+                :to="'#'"><i class="fa fa-twitter"></i></router-link>
           </VButton>
           <VButton
-            class="event-title__link-actions__icon-btn"
-            shape="round"
-            size="small"
-            color="red"
+              class="event-title__link-actions__icon-btn"
+              shape="round"
+              size="small"
+              color="red"
           >
             <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-youtube"></i></router-link>
+                class="event__button-link"
+                :to="'#'"><i class="fa fa-youtube"></i></router-link>
           </VButton>
           <p>{{ shareText }}</p>
         </div>
+        <VButton
+            class="event-title__link-actions__register-button mr-2"
+            shape="round"
+            size="small"
+        >
+          <router-link
+              class="event__button-link"
+              :to="'#'">Register
+          </router-link>
+        </VButton>
+        <VButton
+            class="event-title__link-actions__register-button mr-2"
+            shape="round"
+            size="small"
+        >
+          <router-link
+              class="event__button-link"
+              :to="'#'">Donate
+          </router-link>
+        </VButton>
+        <VButton
+            class="event-title__link-actions__register-button mr-2"
+            shape="round"
+            size="small"
+        >
+          <router-link
+              class="event__button-link"
+              :to="'#'">Volunteer
+          </router-link>
+        </VButton>
       </div>
       <div class="event-title__paragraph-section">
         <p class="event-title__paragraph-section__paragraph">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore reiciendis in aliquid temporibus culpa harum? Officia.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus beatae atque mollitia corrupti aliquam veniam architecto rerum, sed iure eaque voluptate ea dolorem iusto perferendis blanditiis eum magni consequuntur asperiores.
+          Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore
+          reiciendis in aliquid temporibus culpa harum? Officia.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus beatae atque mollitia corrupti aliquam
+          veniam architecto rerum, sed iure eaque voluptate ea dolorem iusto perferendis blanditiis eum magni
+          consequuntur asperiores.
         </p>
         <p class="event-title__paragraph-section__paragraph">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore reiciendis in aliquid temporibus culpa harum? Officia.
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, laudantium excepturi porro, sunt sequi impedit cupiditate dolorem dicta beatae ut, veniam molestias animi possimus! Fugit corrupti error nulla esse beatae?
+          Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore
+          reiciendis in aliquid temporibus culpa harum? Officia.
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, laudantium excepturi porro, sunt sequi impedit
+          cupiditate dolorem dicta beatae ut, veniam molestias animi possimus! Fugit corrupti error nulla esse beatae?
         </p>
       </div>
-      <div class="event-title__people-section">
-        <div v-for="(user, index) in peoples" :key="index">
+      <div class="speakers-grid">
+        <div v-for="(user, index) in post.speakers" :key="index">
           <PeopleSection
-            :profilePicture="user.profilePicture"
-            :userName="user.userName"
-            :partnership="user.partnership"
-            :role="user.role"
+              :profilePicture="$settings.images_path.speakers + 's_' + user.image"
+              :userName="user.full_name"
+              :partnership="user.biography"
+              :role="user.role"
           />
         </div>
       </div>
-      <!-- Comments Section -->
+    </div>
+    <div class="section">
+      <section class="goals-grid">
+        <div class="goals-grid__grid">
+          <div class="goals-grid__item" v-for="(partner, i) in post.partners" :key="partner.name+i">
+            <a :href="partner.website" target="_blank">
+              <div
+                  :style="{background: `url(${$settings.images_path.partners + 's_' + partner.image})` + 'no-repeat center', 'background-size': 'cover'}"
+              ></div>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+<!--  SPEAKER INTERVIEWS  -->
+    <BottomBorderedTitleWithSearch
+        :title="'<b>Speaker Interviews</b>'"
+        :with-search="false"
+    ></BottomBorderedTitleWithSearch>
+    <InterviewsGallery :interviews="past" image-type="events" button-text="Speaker Bio"></InterviewsGallery>
+    <!-- Comments Section -->
+    <div class="comments-section">
       <CommentsSection></CommentsSection>
-<!--      <div class="event-title__comments-section">
-        <div class="event-title__comments-section__category">
-          <h2 class="event-title__comments-section__category__title">
-            <b>Comments</b>
-            <span>Visit our comments page| Read our comments policy</span>
-          </h2>
-          <div class="event-title__comments-section__category__info">
-            <div class="event-title__comments-section__category__info__comments-counter">
-              <b>1 Comment</b>
-            </div>
-            <div class="event-title__comments-section__category__info__user-login">
-              <img height="30" width="30" src="/images/main/icon-profile.svg" class="user__avatar"/>Login
-            </div>
-          </div>
-        </div>
-        <div class="event-title__comments-section__recommend">
-          <b>Recommend</b>
-          <VButton
-            class="event-title__comments-section__recommend__icon-btn"
-            shape="round"
-            size="small"
-            color="blue"
-          >
-            <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-facebook"></i></router-link>
-          </VButton>
-          <span>{{ shareText }}</span>
-
-          <VButton
-            class="event-title__comments-section__recommend__icon-btn"
-            shape="round"
-            size="small"
-            color="light-blue"
-          >
-            <router-link
-              class="event__button-link"
-              :to="'#'"><i class="fa fa-twitter"></i></router-link>
-          </VButton>
-          <span>Tweet</span>
-        </div>
-        <input class="event-title__comments-section__join-conversation-input" placeholder="Join the conversation..."/>
-        <div class="event-title__comments-section__login-view">
-          <div class="event-title__comments-section__login-view__left-side">
-            <b>Login with</b>
-            <div class="event-title__comments-section__login-view__left-side__login-with">
-              <VButton
-                class="event-title__comments-section__login-view__left-side__login-with__icon-btn"
-                shape="round"
-                size="small"
-                color="blue"
-              >
-                <router-link
-                  class="event__button-link"
-                  :to="'#'"><i class="fa fa-facebook"></i></router-link>
-              </VButton>
-              <VButton
-                class="event-title__comments-section__login-view__left-side__login-with__icon-btn"
-                shape="round"
-                size="small"
-                color="purple"
-              >
-                <router-link
-                  class="event__button-link"
-                  :to="'#'"><i class="fa fa-instagram"></i></router-link>
-              </VButton>
-              <VButton
-                class="event-title__comments-section__login-view__left-side__login-with__icon-btn"
-                shape="round"
-                size="small"
-                color="light-blue"
-              >
-                <router-link
-                  class="event__button-link"
-                  :to="'#'"><i class="fa fa-twitter"></i></router-link>
-              </VButton>
-              <VButton
-                class="event-title__comments-section__login-view__left-side__login-with__icon-btn"
-                shape="round"
-                size="small"
-                color="red"
-              >
-                <router-link
-                  class="event__button-link"
-                  :to="'#'"><i class="fa fa-google"></i></router-link>
-              </VButton>
-            </div>
-            <div v-if="!isHovered" class="event-title__comments-section__login-view__left-side__comments">
-              <img src="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png" height="75" width="75"/>
-              <div>
-                <p><b>John Smith|</b> 1 hour ago</p>
-                <p>The last event was great one, incredibly inspiring</p>
-                <div>
-                  <button>Replay</button>
-                  <button href="#">Share</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <LogInComments :is-hovered="isHovered" @mouse-enter="mouseEnter" @mouse-leave="mouseLeave" />
-        </div>
-      </div>-->
     </div>
 
-    <div class="event-category">
-      <h2 class="event-category__title"><b>Related</b> | Events</h2>
-    </div>
-    <div class="event-grid">
-      <EventCard
-        class="event-card"
-        v-for="(event, key) in past"
-        :key="'event-card-' + key"
-        :event="event"
-        button-name="Watch Now"
-      ></EventCard>
-    </div>
+    <!--   EVENTS   -->
+    <section class="content-block">
+      <BottomBorderedTitleWithSearch
+          title="<b>Related</b> | Events"
+          :with-search="true"
+      ></BottomBorderedTitleWithSearch>
+    </section>
+    <section class="section" id="section-events">
+      <div class="grid grid--events">
+        <event-card
+            v-for="event in past"
+            :key="'event-'+event.slug"
+            :event="event"
+        />
+      </div>
+    </section>
 
-    <Subscribe />
+    <Subscribe/>
   </div>
 </template>
 
 <script>
 import axios from "@/axios-auth";
 import EventCard from "@/components/cards/EventCard.vue";
-import { VSearchLocation, VDropdown, VSwitch, VButton } from "@/components/app";
+import {VSearchLocation, VDropdown, VSwitch, VButton} from "@/components/app";
 import PeopleSection from "@/components/People.vue";
 import Subscribe from '@/components/forms/Subscribe.vue';
-// import LogInComments from '@/components/forms/LogInComments.vue';
 import CommentsSection from "@/components/CommentsSection";
+import ButtonArrow from "@/components/buttons/ButtonArrow";
+import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
+import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+
 export default {
   name: "Talks",
   components: {
+    InterviewsGallery,
+    BottomBorderedTitleWithSearch,
+    ButtonArrow,
     VSearchLocation,
     VDropdown,
     VSwitch,
@@ -260,18 +229,39 @@ export default {
     EventCard,
     PeopleSection,
     Subscribe,
-    // LogInComments,
     CommentsSection
   },
   data() {
     return {
+      post: {
+        title: "",
+        content: "",
+      },
+      id: 0,
+      key: 0,
+      options: {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 25,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: "",
+          prevEl: "",
+        },
+        breakpoints: {
+          900: {
+            slidesPerView: 1,
+            slidesPerGroup: 1,
+          },
+          1440: {
+            slidesPerView: 1,
+            slidesPerGroup: 1,
+          },
+        },
+      },
       events: [],
       past: [],
-      // events_pages: 0,
-      // past_pages: 0,
-      // is_mobile: false,
-      // is_shown: false,
-      // isHovered: false,
       peoples: [
         {
           profilePicture: 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png',
@@ -349,12 +339,6 @@ export default {
     };
   },
   methods: {
-    /*mouseEnter() {
-      this.isHovered = true;
-    },
-    mouseLeave() {
-      this.isHovered = false;
-    },*/
     handleResize() {
       this.is_mobile = window.innerWidth >= 768 ? false : true;
       if (window.innerWidth >= 768) {
@@ -364,7 +348,7 @@ export default {
     toggleFilterMenu() {
       this.is_shown = !this.is_shown;
     },
-    getAddressData: function(data) {
+    getAddressData: function (data) {
       data.address_components.forEach((prop) => {
         if (prop.types.includes("locality")) {
           this.filterQuery.city = prop.long_name;
@@ -384,42 +368,58 @@ export default {
       // );
       // filter.date.end = Math.floor(new Date(filter.date.end).getTime() / 1000);
       // console.log(filter);
-      this.$swal({ text: "This feature will work soon" });
+      this.$swal({text: "This feature will work soon"});
     },
     loadEvents(page) {
       axios
-        .get("/events?page=" + page)
-        .then((res) => {
-          this.events = res.data.events;
-        })
-        .catch((error) => console.error(error));
+          .get("/events?page=" + page)
+          .then((res) => {
+            this.events = res.data.events;
+          })
+          .catch((error) => console.error(error));
     },
     loadPastEvents(page) {
       axios
-        .get("/events/past?page=" + page)
-        .then((res) => {
-          this.past = res.data.events;
-        })
-        .catch((error) => console.error(error));
+          .get("/events/past?page=" + page)
+          .then((res) => {
+            this.past = res.data.events;
+          })
+          .catch((error) => console.error(error));
     },
   },
   mounted() {
     axios
-      .get("/events")
-      .then((res) => {
-        console.log("Future events", res);
-        this.events = res.data.events;
-        this.events_pages = res.data.pages_count;
-      })
-      .catch((error) => console.error(error));
+        .get("/events/" + this.$route.params.slug)
+        .then((res) => {
+          console.log("events item loaded", res);
+
+          this.post = res.data.event;
+          // this.related_posts = res.data.related;
+
+          const metaPayload = {
+            meta: res.data.meta,
+            title: res.data.event.title,
+          };
+          this.$store.dispatch("meta/setMeta", metaPayload);
+          this.$router.currentRoute.meta.title = this.post.title;
+        })
+        .catch((error) => console.log(error));
     axios
-      .get("/events/past")
-      .then((res) => {
-        console.log("Past events", res);
-        this.past = res.data.events;
-        this.past_pages = res.data.pages_count;
-      })
-      .catch((error) => console.error(error));
+        .get("/events")
+        .then((res) => {
+          console.log("Future events", res);
+          this.events = res.data.events;
+          this.events_pages = res.data.pages_count;
+        })
+        .catch((error) => console.error(error));
+    axios
+        .get("/events/past")
+        .then((res) => {
+          console.log("Past events", res);
+          this.past = res.data.events;
+          this.past_pages = res.data.pages_count;
+        })
+        .catch((error) => console.error(error));
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -432,48 +432,158 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.talks_container {
-  padding: 0 150px;
+@import "@/scss/blocks/homepage/_goals-grid";
+.grid {
+  &--events {
+    display: grid;
+    grid-gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 5rem;
+
+    @include lgMax {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mdMax {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
 }
+.comments-section {
+  margin-bottom: 1rem;
+}
+.goals-grid {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 4.8rem;
+
+  .goals-grid__grid {
+    height: 100%;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 20px;
+
+    @include xxlMax {
+      grid-template-columns: repeat(10, 1fr);
+    }
+    @include lgMax {
+      grid-template-columns: repeat(8, 1fr);
+    }
+    @include mdMax {
+      grid-template-columns: repeat(7, 1fr);
+    }
+    @include mdMax {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  .goals-grid__item {
+    height: 100%;
+    line-height: 1;
+
+    a {
+      height: 100%;
+      font-size: 0px;
+      display: block;
+
+      div {
+        height: 100%;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+}
+
+.speakers-grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.news-gallery {
+  padding: 10px 0;
+}
+
+.news-gallery-button {
+  position: absolute;
+  cursor: pointer;
+  z-index: 5;
+  top: 400px;
+}
+
+.news-gallery-button-prev {
+  @include custom-max-width(1600px) {
+    left: -100px;
+    top: 300px;
+    opacity: 0.8;
+  }
+
+  left: -80px;
+}
+
+.news-gallery-button-next {
+  @include custom-max-width(1600px) {
+    right: -100px;
+    top: 300px;
+    opacity: 0.8;
+  }
+
+  right: -80px;
+  transform: rotate(180deg);
+}
+
 .event-title {
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
+
   &__video {
     border: none;
   }
+
   &__video-description {
     color: red;
     font-weight: 700;
     margin-top: 20px;
   }
+
   &__link-actions {
     display: flex;
     flex-direction: row;
     align-content: center;
     align-items: center;
+
     a {
       text-decoration: none;
       color: white
     }
+
     &__un-goals {
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-left: 15px;
+
       p {
         margin-top: 5px;
       }
     }
+
     &__social-networks {
       display: flex;
       flex-direction: row;
       align-items: center;
       margin-left: 30px;
+      margin-right: 30px;
+
       p {
         margin-top: 5px;
       }
     }
+
     &__register-button {
       display: flex;
       justify-content: center;
@@ -481,10 +591,12 @@ export default {
       font-size: 14px;
       font-weight: 700;
       margin: 20px 15px 30px 0;
+
       a {
         color: black;
       }
     }
+
     &__icon-btn {
       display: flex;
       justify-content: center;
@@ -497,169 +609,44 @@ export default {
       padding: 0;
     }
   }
+
   &__paragraph-section {
     &__paragraph {
       font-size: 14px;
       font-weight: 600;
     }
   }
+
   &__people-section {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 20px;
   }
-  /*&__comments-section {
-    &__category {
-      display: flex;
-      flex-direction: column;
-      padding-top: 14px;
-      border-bottom: 2px solid #ffe300;
-      border-top: 2px solid #ffe300;
-      &__title {
-        color: black;
-        font-family: "Gotham Light", sans-serif;
-        font-size: 30px;
-        line-height: 40px;
-        display: flex;
-        flex-direction: column;
-        b {
-          font-family: "Gotham Bold", sans-serif;
-        }
-        span {
-          font-size: 15px;
-          margin-top: -10px;
-        }
-      }
-      &__subtitle {
-        color: black;
-        font-family: "Gotham Light", sans-serif;
-        line-height: 40px;
-        margin: 0;
-        b {
-          font-family: "Gotham Bold", sans-serif;
-        }
-      }
-      &__info {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        &__comments-counter {
-          color: black;
-          font-family: "Gotham Light", sans-serif;
-          font-size: 17px;
-          margin-top: 5px;
-          b {
-          font-family: "Gotham Bold", sans-serif;
-        }
-        }
-        &__user-login {
-          img {
-            margin: 0 15px;
-            margin-bottom: 4px;
-          }
-        }
-      }
-    }
-    &__recommend {
-      display: flex;
-      flex-direction: row;
-      margin-top: 20px;
-      a {
-        text-decoration: none;
-        color: white
-      }
-      &__icon-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 700;
-        margin: 0 10px;
-        width: 25px;
-        height: 23px;
-        padding: 0;
-      }
-    }
-    &__join-conversation-input {
-      width: 70%;
-      border-radius: 10px;
-      font-size: 16px;
-      padding: 10px;
-      margin-top: 20px;
-      &::placeholder {
-        font-weight: bold;
-        color: black;
-      }
-    }
-    &__login-view {
-      display: flex;
-      &__left-side {
-        position: static;
-        width: 200px;
-        margin-top: 30px;
-
-        a {
-          color: white;
-        }
-        &__comments {
-          display: flex;
-          flex-direction: row;
-          width: 600px;
-          text-align: left;
-          margin-left: 20px;
-          position: absolute;
-          p {
-            margin-left: 20px;
-          }
-          button {
-            border: none;
-            background: none;
-            color: black;
-            font-weight: bold;
-            font-size: 16px;
-            margin: 0 15px;
-            z-index: 999;
-            &:hover {
-              color: #ffe300;
-              cursor: pointer;
-            }
-          }
-        }
-        &__login-with {
-          display: flex;
-          margin-top: -10px;
-          &__icon-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 700;
-            margin: 20px 10px 30px 0;
-            width: 25px;
-            height: 23px;
-            padding: 0;
-          }
-        }
-      }
-    }
-  }*/
 }
+
 .event-category {
   padding: 16px 0;
   border-bottom: 2px solid #ffe300;
   display: flex;
+  /*
+  BAKHTIYOR CHANGED THIS FROM 150PX TO 70PX 14.02.2020
+  FOR SEPARATING COMMENTS SECTION AND IT'S STYLES AS WELL
+  */
   margin: 70px 0;
+  /* --------------- ------------------ */
   .event-category__title {
     color: black;
     font-family: "Gotham Light", sans-serif;
     font-size: 30px;
     line-height: 40px;
+
     b {
       font-family: "Gotham Bold", sans-serif;
     }
   }
 }
+
 .event-grid {
   margin-top: 16px;
   display: grid;

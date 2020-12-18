@@ -1,45 +1,41 @@
 <template>
-<!--  <fragment>
-    <ButtonArrow
-      :id="'news-gallery-button-prev-' + id"
-      class="news-gallery-button news-gallery-button-prev"
-    />
-    <Swiper class="news-gallery" :key="key" :options="options">
-      <SwiperSlide v-for="article in news" :key="article.slug">
-        <NewsCard class="news-gallery__card" :article="article" />
-      </SwiperSlide>
-    </Swiper>
-    <ButtonArrow
-      :id="'news-gallery-button-next-' + id"
-      class="news-gallery-button news-gallery-button-next"
-    />
-  </fragment>-->
-  <section class="section" v-if="news.length > 0" id="section-news">
+  <section class="section" v-if="interviews.length > 0" id="section-news">
     <div class="grid grid--news">
-      <NewsCard
+      <InterviewsCard
           class="news-gallery__card"
-          v-for="article in news"
-          :key="'article-'+article.slug"
-          :article="article"/>
+          v-for="interview in interviews"
+          :key="'interview-'+interview.slug"
+          :type="imageType"
+          :button-text="buttonText"
+          :interview="interview"/>
     </div>
   </section>
+
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import { VSearch } from "@/components/app";
-import { ButtonArrow } from "@/components/buttons";
+import {ButtonArrow} from "@/components/buttons";
 import NewsCard from "@/components/cards/NewsCard.vue";
+import InterviewsCard from "@/components/cards/InterviewsCard";
 
 export default {
-  name: "NewsGallery",
+  name: "InterviewsGallery",
   props: {
-    news: {
+    buttonText: {
+      type: String,
+      default: 'Read More'
+    },
+    imageType: {
+      type: String,
+      default: 'news'
+    },
+    interviews: {
       type: Array,
       required: true,
     },
   },
   components: {
+    InterviewsCard,
     NewsCard,
     ButtonArrow,
   },
@@ -59,12 +55,12 @@ export default {
         },
         breakpoints: {
           900: {
-            slidesPerView: 2,
-            slidesPerGroup: 2,
-          },
-          1440: {
             slidesPerView: 3,
             slidesPerGroup: 3,
+          },
+          1440: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
           },
         },
       },

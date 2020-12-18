@@ -1,40 +1,31 @@
 <template>
-  <article class="news-article">
+  <article class="projects-project">
     <div
-        class="news-article__image"
+        class="projects-article__image"
         @mouseenter="showDescription = true"
         @mouseleave="showDescription = false"
     >
       <MediaImage
-        :src="article.cover_image"
-        :alt="article.title"
-        :title="article.title"
-        size="m"
-        type="news"
+          :src="project.cover_image"
+          :alt="project.name"
+          :title="project.name"
+          size="m"
+          type="news"
       />
-      <div class="news-article-category">
-        <span class="news-article-category__name" v-if="manualGoal == null">
-          <template v-if="article.goal != null && article.goal.name">
-            {{
-              article.goal != null && article.goal.name
-                  ? article.goal.name
-                  : ""
-            }}
-          </template>
-          <template v-else>
-            {{
-              article.goals != null && article.goals.length > 0
-                  ? article.goals[0].name
-                  : ""
-            }}
-          </template>
+      <div class="projects-project-category">
+        <span class="projects-project-category__name" v-if="manualGoal == null">
+          {{
+            project.goals != null && project.goals.length > 0
+                ? project.goals[0].name
+                : ""
+          }}
         </span>
-        <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
+        <span class="projects-project-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="news-article-category__description"
+          <span v-if="showDescription" class="projects-project-category__description"
           >UN Goal 0{{
-              article.goals != null && article.goals.length > 0
-                  ? article.goals[0].prefix
+              project.goals != null && project.goals.length > 0
+                  ? project.goals[0].prefix
                   : ""
             }} | <br>
             Quality Education
@@ -44,25 +35,25 @@
       </div>
     </div>
 
-    <div class="news-article__content">
-      <h3 class="news-article__content-title">
-        {{ cutText(article.title, 40) }}
+    <div class="projects-article__content">
+      <h3 class="projects-article__content-title">
+        {{ cutText(project.name, 40) }}
       </h3>
       <div
-        class="news-article__content-description"
-        v-html="cutText(article.description, 50, 'description')"
+          class="projects-article__content-description"
+          v-html="cutText(project.description, 50, 'description')"
       ></div>
-      <div class="news-article__content-metadata">
-        <span>Lorem</span> | ipsum | {{ dateAgo(article.published_at) }}
+      <div class="projects-article__content-metadata">
+        <span>Lorem</span> | ipsum | {{ dateAgo('2020-12-14 13:30:00') }}
       </div>
     </div>
 
-    <div class="news-article__readmore">
+    <div class="projects-article__readmore">
       <VButton
-        class="news-article__button"
-        size="height_45"
-        @click.native.prevent="openPage"
-        shape="round"
+          class="projects-article__button"
+          size="height_45"
+          @click.native.prevent="openPage"
+          shape="round"
       >
         Read More
       </VButton>
@@ -76,13 +67,13 @@ import MediaImage from "@/components/Image.vue";
 import { VButton } from "@/components/app";
 
 export default {
-  name: "NewsCard",
+  name: "ProjectCardNew",
   components: {
     MediaImage,
     VButton,
   },
   props: {
-    article: {
+    project: {
       type: Object,
     },
     manualGoal: {
@@ -98,13 +89,13 @@ export default {
   filters: {
     trimDescription(description) {
       return description.length > 120
-        ? description.substring(0, 120) + "..."
-        : description;
+          ? description.substring(0, 120) + "..."
+          : description;
     },
   },
   methods: {
     openPage() {
-      router.push({ name: "news-item", params: { slug: this.article.slug } });
+      router.push({ name: "projects-item", params: { slug: this.project.slug } });
     },
     dateAgo(date) {
       const currentStamp = Date.now();
@@ -144,14 +135,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.news-article {
+.projects-project {
   background-color: white;
   position: relative;
   min-height: 540px;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
 
-  .news-article__image {
+  .projects-article__image {
     position: relative;
     height: 230px;
     width: 100%;
@@ -164,7 +155,7 @@ export default {
       object-position: center;
     }
 
-    .news-article-category {
+    .projects-project-category {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -174,10 +165,10 @@ export default {
       font-family: "Gotham Bold";
       padding: 8px 16px;
 
-      .news-article-category__name {
+      .projects-project-category__name {
         color: white;
       }
-      .news-article-category__description {
+      .projects-project-category__description {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
@@ -185,7 +176,7 @@ export default {
     }
   }
 
-  .news-article__content {
+  .projects-article__content {
     min-height: 230px;
     padding: {
       top: 26px;
@@ -194,14 +185,14 @@ export default {
       bottom: 20px;
     }
 
-    .news-article__content-title {
+    .projects-article__content-title {
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
       line-height: 30px;
     }
 
-    .news-article__content-description {
+    .projects-article__content-description {
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -209,7 +200,7 @@ export default {
       margin-top: 30px;
     }
 
-    .news-article__content-metadata {
+    .projects-article__content-metadata {
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;
@@ -221,7 +212,7 @@ export default {
     }
   }
 
-  .news-article__readmore {
+  .projects-article__readmore {
     display: flex;
     justify-content: center;
     margin: 0 auto;

@@ -253,6 +253,38 @@ const routes = [{
     }
   },
   /**
+   * Interviews
+   */
+  {
+    path: '/smiley-interviews',
+    component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/index.vue'),
+    meta: {
+      title: 'Smiley Interviews'
+    },
+    children: [
+      {
+        path: '',
+        name: 'interviews',
+        component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_main.vue'),
+      }, {
+        path: ':slug',
+        name: 'interviews-item',
+        component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_slug.vue'),
+        meta: {
+          title: ''
+        }
+      },
+    ]
+  },
+  {
+    path: '/smiley-interviews-latest',
+    name: 'interviews-latest',
+    component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_latest.vue'),
+    meta: {
+      title: 'Latest Interviews',
+    }
+  },
+  /**
    * Goals
    */
   {

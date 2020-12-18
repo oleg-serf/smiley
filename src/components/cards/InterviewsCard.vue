@@ -6,25 +6,25 @@
         @mouseleave="showDescription = false"
     >
       <MediaImage
-        :src="article.cover_image"
-        :alt="article.title"
-        :title="article.title"
-        size="m"
-        type="news"
+          :src="interview.cover_image"
+          :alt="interview.title"
+          :title="interview.title"
+          size="m"
+          :type="type"
       />
       <div class="news-article-category">
         <span class="news-article-category__name" v-if="manualGoal == null">
-          <template v-if="article.goal != null && article.goal.name">
+          <template v-if="interview.goal != null && interview.goal.name">
             {{
-              article.goal != null && article.goal.name
-                  ? article.goal.name
+              interview.goal != null && interview.goal.name
+                  ? interview.goal.name
                   : ""
             }}
           </template>
           <template v-else>
             {{
-              article.goals != null && article.goals.length > 0
-                  ? article.goals[0].name
+              interview.goals != null && interview.goals.length > 0
+                  ? interview.goals[0].name
                   : ""
             }}
           </template>
@@ -33,8 +33,8 @@
         <transition name="fade">
           <span v-if="showDescription" class="news-article-category__description"
           >UN Goal 0{{
-              article.goals != null && article.goals.length > 0
-                  ? article.goals[0].prefix
+              interview.goal != null && interview.goal
+                  ? interview.goal.prefix
                   : ""
             }} | <br>
             Quality Education
@@ -46,25 +46,25 @@
 
     <div class="news-article__content">
       <h3 class="news-article__content-title">
-        {{ cutText(article.title, 40) }}
+        {{ cutText(interview.title, 40) }}
       </h3>
       <div
-        class="news-article__content-description"
-        v-html="cutText(article.description, 50, 'description')"
+          class="news-article__content-description"
+          v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 50, 'description')"
       ></div>
       <div class="news-article__content-metadata">
-        <span>Lorem</span> | ipsum | {{ dateAgo(article.published_at) }}
+        <span>Lorem</span> | ipsum | {{ dateAgo(interview.published_at) }}
       </div>
     </div>
 
     <div class="news-article__readmore">
       <VButton
-        class="news-article__button"
-        size="height_45"
-        @click.native.prevent="openPage"
-        shape="round"
+          class="news-article__button"
+          size="height_45"
+          @click.native.prevent="openPage"
+          shape="round"
       >
-        Read More
+        {{ buttonText }}
       </VButton>
     </div>
   </article>
@@ -76,18 +76,26 @@ import MediaImage from "@/components/Image.vue";
 import { VButton } from "@/components/app";
 
 export default {
-  name: "NewsCard",
+  name: "InterviewsCard",
   components: {
     MediaImage,
     VButton,
   },
   props: {
-    article: {
+    type: {
+      type: String,
+      default: 'news'
+    },
+    interview: {
       type: Object,
     },
     manualGoal: {
       default: null,
     },
+    buttonText: {
+      type: String,
+      default: 'Read More'
+    }
   },
   data() {
     return {
@@ -98,13 +106,13 @@ export default {
   filters: {
     trimDescription(description) {
       return description.length > 120
-        ? description.substring(0, 120) + "..."
-        : description;
+          ? description.substring(0, 120) + "..."
+          : description;
     },
   },
   methods: {
     openPage() {
-      router.push({ name: "news-item", params: { slug: this.article.slug } });
+      router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
     },
     dateAgo(date) {
       const currentStamp = Date.now();

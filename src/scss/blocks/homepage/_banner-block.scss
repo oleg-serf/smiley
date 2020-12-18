@@ -3,7 +3,7 @@
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
-  min-height: 200px;
+  min-height: 100px;
 
   &--reversed {
     .banner-block__left-column {
@@ -28,7 +28,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px 15px;
+    padding: 20px 15px;
 
     @include xlMax {
       max-width: 320px;
@@ -49,7 +49,7 @@
     flex: 1;
     position: relative;
     box-sizing: border-box;
-    padding: 30px;
+    padding: 10px;
     display: flex;
     align-items: center;
 
@@ -145,7 +145,7 @@
 
     @include margin-bottom(.5rem);
     @include margin-top(.5rem);
-    @include font-size(2rem);
+    @include font-size(1.2rem);
   }
 
   .banner-block__subtitle {

@@ -93,16 +93,12 @@ import router from "@/router";
 import NewsGallery from "@/components/news/NewsGallery.vue";
 import {VSearch} from "@/components/app";
 import CommentsSection from "@/components/CommentsSection";
-// import CommentCard from "@/components/cards/CommentCard";
-// import CommentForm from "@/components/forms/CommentForm";
 
 export default {
   components: {
     CommentsSection,
     NewsGallery,
-    VSearch,
-    // CommentCard,
-    // CommentForm,
+    VSearch
   },
   data() {
     return {

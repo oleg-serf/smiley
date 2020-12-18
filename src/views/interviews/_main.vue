@@ -1,17 +1,18 @@
 <template>
-  <div class="news">
+  <div class="interviews">
     <section
-      class="news-section container"
-      v-for="item in news"
-      :key="'news-item-' + item.slug"
+      class="interviews-section container"
+      v-for="item in interviews"
+      :key="'interviews-item-' + item.slug"
       :item="item"
     >
       <BottomBorderedTitleWithSearch
-          :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | News'"
+          :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | Interviews'"
           :with-search="true"
-          :search-expandable="true"
+          :hover-effect="true"
+          hover-color="#FFE300"
       ></BottomBorderedTitleWithSearch>
-      <NewsGallery :news="item.latest_news"></NewsGallery>
+      <InterviewsGallery :interviews="item.latest_news"></InterviewsGallery>
     </section>
     <Subscribe />
   </div>
@@ -20,43 +21,43 @@
 <script>
 import axios from "@/axios-auth";
 import router from "@/router";
+import InterviewsGallery from "@/components/interviews/InterviewsGallery.vue";
 import { VSearch } from "@/components/app";
-import NewsGallery from "@/components/news/NewsGallery.vue";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import Subscribe from "@/components/forms/Subscribe";
 
 export default {
-  name: "News",
+  name: "Interviews",
   components: {
     Subscribe,
     BottomBorderedTitleWithSearch,
-    NewsGallery,
+    InterviewsGallery,
     VSearch,
   },
   data() {
     return {
       latest: [],
-      news: [],
+      interviews: [],
       search: "",
     };
   },
   methods: {
     find() {
       router.push({
-        name: "news-search",
+        name: "interviews-search",
         params: { keyword: this.search },
       });
     },
   },
   created() {
-    console.log("news triggered");
+    console.log("interviews triggered");
     axios
       .get("/news/latest")
       .then((res) => {
-        console.log("news", res);
+        console.log("interviews", res);
 
         this.latest = res.data.latest_news;
-        this.news = res.data.featured_goals;
+        this.interviews = res.data.featured_goals;
       })
       .catch((error) => console.error(error));
   },
@@ -64,16 +65,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.news {
+.interviews {
   margin-top: 30px;
 }
 
-.news-section {
+.interviews-section {
   margin-bottom: 100px;
   position: relative;
 }
 
-.news-category {
+.interviews-category {
   margin-top: 30px;
   width: 100%;
   display: flex;
@@ -82,7 +83,7 @@ export default {
   margin-bottom: 16px;
   padding-bottom: 24px;
 
-  .news-category__title {
+  .interviews-category__title {
     color: black;
     font-family: "Gotham Bold";
     font-size: 30px;

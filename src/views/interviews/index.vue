@@ -1,5 +1,5 @@
 <template>
-  <div class="news_container">
+  <div class="interviews_container">
     <Breadcrumbs/>
     <router-view key="$route.fullPath"></router-view>
     <Footer />
@@ -17,10 +17,10 @@ export default {
   },
   mounted() {
     const metaPayload = {
-      title: "Smiley News",
+      title: "Smiley Interviews",
       meta: {
         description:
-          "Daily positive news about charities, organisations and everyday heroes making the world a better place.",
+          "Positive interviews about charities, organisations and everyday heroes making the world a better place.",
       },
     };
     this.$store.dispatch("meta/setMeta", metaPayload);
@@ -28,7 +28,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.news_container {
+.interviews_container {
   padding: 0 150px;
 }
 </style>

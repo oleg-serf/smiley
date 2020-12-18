@@ -1,6 +1,10 @@
 <template>
   <div class="event">
-    <div class="event__image">
+    <div
+        class="event__image"
+        @mouseenter="showDescription = true"
+        @mouseleave="showDescription = false"
+    >
       <MediaImage
         :src="event.cover_image"
         :alt="event.title"
@@ -10,8 +14,6 @@
       />
       <div
         class="event-category"
-        @mouseenter="showDescription = true"
-        @mouseleave="showDescription = false"
       >
         <span class="event-category__name" v-if="manualGoal == null">
           {{
@@ -23,7 +25,12 @@
         <span class="event-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
           <span v-if="showDescription" class="event-category__description"
-            >UN Goal 01</span
+            >UN Goal 0{{
+              event.goals != null && event.goals.length > 0
+                  ? event.goals[0].prefix
+                  : ""
+            }} | <br>
+            Quality Education</span
           >
         </transition>
       </div>
@@ -31,10 +38,9 @@
 
     <div class="event__content">
       <h3 class="event__content-title">
-        {{ event.title }}
+        {{ cutText(event.title, 40) }}
       </h3>
-      <div class="event__content-description">
-        {{ cutText(event.short_description, 90) }}
+      <div class="event__content-description" v-html="cutText(event.short_description, 50, 'description')">
       </div>
       <div class="event__content-metadata">
         <span>{{ event.location }}</span> |
@@ -45,6 +51,7 @@
     <div class="event__readmore">
       <VButton
         class="event__button"
+        size="height_45"
         @click.native.prevent="openPage"
         shape="round"
       >
@@ -77,7 +84,7 @@ export default {
     },
     buttonName: {
       type: String,
-      default: "Button Name",
+      default: "Read More",
     },
     manualGoal: {
       default: null,
@@ -169,9 +176,9 @@ export default {
         }
       });
     },
-    cutText(text, limit) {
+    cutText(text, limit, stringName) {
       if (text.length > limit) {
-        return text.slice(0, limit).trim() + "...";
+        return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
       }
 
       return text;
@@ -184,13 +191,13 @@ export default {
 .event {
   background-color: white;
   position: relative;
-  min-height: 865px;
+  min-height: 540px;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
 
   .event__image {
     position: relative;
-    height: 460px;
+    height: 230px;
     width: 100%;
 
     img {
@@ -224,7 +231,7 @@ export default {
   }
 
   .event__content {
-    min-height: 310px;
+    min-height: 230px;
     padding: {
       top: 26px;
       left: 16px;
@@ -235,23 +242,23 @@ export default {
     .event__content-title {
       color: black;
       font-family: "Gotham Bold", sans-serif;
-      font-size: 26px;
-      line-height: 35px;
+      font-size: 20px;
+      line-height: 30px;
     }
 
     .event__content-description {
       color: black;
       font-family: "Gotham Book", sans-serif;
-      font-size: 25px;
-      line-height: 33px;
-      margin-top: 40px;
+      font-size: 18px;
+      line-height: 28px;
+      margin-top: 30px;
     }
 
     .event__content-metadata {
       color: black;
       font-family: "Gotham Medium";
-      font-size: 22px;
-      margin-top: 16px;
+      font-size: 16px;
+      margin-top: 14px;
 
       span {
         font-family: "Gotham Bold";
@@ -264,6 +271,9 @@ export default {
     justify-content: center;
     margin: 0 auto;
     padding-bottom: 26px;
+    button {
+      font-size: 18px !important;
+    }
   }
 
   .event__button {
@@ -272,7 +282,7 @@ export default {
       color: black;
       width: 100%;
       height: 100%;
-      line-height: 60px;
+      line-height: 48px;
 
       &:hover {
         text-decoration: none;

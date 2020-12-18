@@ -2,8 +2,9 @@
   <div class="title-with-search">
     <h3 :style="styleObject" class="title-with-search__title" :class="[hoverEffect ? 'hover-effect' : '']" v-html="title"></h3>
     <input
-        v-if="isSearch"
+        v-if="withSearch"
         class="title-with-search__search-input"
+        :class="[searchExpandable ? 'expandable' : '']"
         type="text"
         placeholder="Search Topics...">
   </div>
@@ -13,13 +14,21 @@
 export default {
   name: "BottomBorderedTitleWithSearch",
   props: {
+    titleClasses: {
+      type: String,
+      default: ''
+    },
     title: {
       // SHOULD BE STRING HTML FOR V-HTML
       type: String
     },
-    isSearch: {
+    withSearch: {
       type: Boolean,
       default: true
+    },
+    searchExpandable: {
+      type: Boolean,
+      default: false
     },
     hoverEffect: {
       type: Boolean,
@@ -74,6 +83,11 @@ export default {
     background-position: 95% center;
     background-size: 1rem 1rem;
     outline: 0;
+    &.expandable {
+      &:hover, &:focus-within {
+        width: 34rem;
+      }
+    }
   }
 }
 </style>
