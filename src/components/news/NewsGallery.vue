@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import { VSearch } from "@/components/app";
 import { ButtonArrow } from "@/components/buttons";
 import NewsCard from "@/components/cards/NewsCard.vue";
 
