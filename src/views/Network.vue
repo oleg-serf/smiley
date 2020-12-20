@@ -136,6 +136,7 @@
 </template>
 
 <script>
+import MembersAndOrganizationsGallery from "@/components/cardGalleries/MembersAndOrganizationsGallery";
 import DiscussionsGallery from "@/components/cardGalleries/DiscussionsGallery";
 import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";

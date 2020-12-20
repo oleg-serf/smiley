@@ -11,7 +11,7 @@ export default {
     color: {
       validator(s) {
         //return ["yellow"].includes(s);
-        return ["yellow", "orange", "red", "blue", "light-blue", "purple"].includes(s);
+        return ["yellow", "orange", "red", "blue", "light-blue", "purple", "black"].includes(s);
       },
       default: "yellow",
     },
@@ -27,6 +27,10 @@ export default {
       },
       default: "medium",
     },
+    hoverText: {
+      type: String,
+      default: ''
+    }
   },
 };
 </script>
@@ -66,10 +70,12 @@ export default {
 
 .orange {
   background: #E8B740;
+
   &:hover {
     background: #ffd675;
     filter: drop-shadow(0 1px 5px);
   }
+
   &:active {
     background: #ffd675;
   }
@@ -77,10 +83,12 @@ export default {
 
 .red {
   background: #F11E24;
+
   &:hover {
     background: #ff7075;
     filter: drop-shadow(0 1px 5px);
   }
+
   &:active {
     background: #ff7075;
   }
@@ -88,10 +96,12 @@ export default {
 
 .blue {
   background: #134BCE;
+
   &:hover {
     background: #3773ff;
     filter: drop-shadow(0 1px 5px);
   }
+
   &:active {
     background: #3773ff;
   }
@@ -99,10 +109,12 @@ export default {
 
 .purple {
   background: #CB65C8;
+
   &:hover {
     background: #ffa8fc;
     filter: drop-shadow(0 1px 5px);
   }
+
   &:active {
     background: #ffa8fc;
   }
@@ -110,12 +122,31 @@ export default {
 
 .light-blue {
   background: #15BCDE;
+
   &:hover {
     background: #57e3ff;
     filter: drop-shadow(0 1px 5px);
   }
+
   &:active {
     background: #57e3ff;
+  }
+}
+
+.black {
+  background: #000000;
+
+  a {
+    color: white !important;
+  }
+
+  &:hover {
+    background: #000000;
+    filter: drop-shadow(0 1px 5px);
+  }
+
+  &:active {
+    background: #000000;
   }
 }
 
@@ -126,10 +157,12 @@ export default {
 .medium {
   height: 60px;
 }
+
 .height_45 {
   height: 45px;
   line-height: 48px;
 }
+
 .small {
   height: 30px;
 }

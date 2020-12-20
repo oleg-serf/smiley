@@ -10,7 +10,7 @@
           :alt="project.name"
           :title="project.name"
           size="m"
-          type="news"
+          type="projects"
       />
       <div class="projects-project-category">
         <span class="projects-project-category__name" v-if="manualGoal == null">
@@ -55,7 +55,7 @@
           @click.native.prevent="openPage"
           shape="round"
       >
-        Read More
+        {{ buttonText }}
       </VButton>
     </div>
   </article>
@@ -79,6 +79,10 @@ export default {
     manualGoal: {
       default: null,
     },
+    buttonText: {
+      type: String,
+      default: 'View Project'
+    }
   },
   data() {
     return {
@@ -139,6 +143,7 @@ export default {
   background-color: white;
   position: relative;
   min-height: 540px;
+  height: 100%;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
 
