@@ -10,7 +10,7 @@
           :alt="project.name"
           :title="project.name"
           size="m"
-          type="projects"
+          type="discussions"
       />
       <div class="projects-project-category">
         <span class="projects-project-category__name" v-if="manualGoal == null">
@@ -67,7 +67,7 @@ import MediaImage from "@/components/Image.vue";
 import { VButton } from "@/components/app";
 
 export default {
-  name: "ProjectCardNew",
+  name: "DiscussionCard",
   components: {
     MediaImage,
     VButton,
@@ -143,7 +143,6 @@ export default {
   background-color: white;
   position: relative;
   min-height: 540px;
-  height: 100%;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
 
