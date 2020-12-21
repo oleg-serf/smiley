@@ -142,6 +142,14 @@ export default {
     },
     cutText(text, limit, stringName) {
       if (text.length > limit) {
+        // CHECK IF CHARACTER IS <SPACE> OR END OF STRING
+        for (let i = 0; i < text.length - limit; i++) {
+          if (text[limit].trim() !== '' && limit !== text.length) {
+            limit++
+          } else {
+            break;
+          }
+        }
         return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
       }
 
