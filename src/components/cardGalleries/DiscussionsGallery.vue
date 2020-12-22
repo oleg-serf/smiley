@@ -1,6 +1,6 @@
 <template>
   <div class="projects-gallery__container">
-    <fragment v-if="withSlider">
+    <fragment v-if="withSlider || isMobile">
       <ButtonArrow
           :id="'news-gallery-button-prev-' + id"
           class="news-gallery-button news-gallery-button-prev"
@@ -54,11 +54,12 @@ export default {
   },
   data() {
     return {
+      isMobile: true,
       id: 0,
       key: 0,
       options: {
-        slidesPerView: 3,
-        slidesPerGroup: 3,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
         spaceBetween: 25,
         loop: true,
         loopFillGroupWithBlank: true,
@@ -68,10 +69,10 @@ export default {
         },
         breakpoints: {
           900: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
+            slidesPerView: 2,
+            slidesPerGroup: 2,
           },
-          1440: {
+          1200: {
             slidesPerView: 3,
             slidesPerGroup: 3,
           },
@@ -79,13 +80,26 @@ export default {
       },
     };
   },
+  /*
+  * METHODS */
+  methods: {
+    handleResize() {
+      this.isMobile = window.innerWidth >= 900 ? false : true;
+    },
+  },
+
   created() {
     this.id = this._uid;
     this.options.navigation = {
       nextEl: `#news-gallery-button-next-${this.id}`,
       prevEl: `#news-gallery-button-prev-${this.id}`,
     };
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  }
 };
 </script>
 
@@ -93,13 +107,14 @@ export default {
 .projects-gallery__container {
   position: relative;
 }
+
 .grid {
   &--news {
     display: grid;
     grid-gap: 1.5rem;
     grid-template-columns: repeat(3, 1fr);
 
-    @include lgMax {
+    @include xlMax {
       grid-template-columns: repeat(2, 1fr);
     }
 

@@ -237,6 +237,7 @@ export default {
 
     .article-header__sharing-goals {
       display: flex;
+      align-items: flex-end;
 
       font: {
         family: "Gotham Medium";
@@ -265,6 +266,7 @@ export default {
 
       display: flex;
       margin-left: 50px;
+      align-items: flex-end;
 
       ul {
         display: flex;

@@ -9,6 +9,7 @@
       >
       </iframe>
     </div>
+    <a class="cta cta--solid-yellow" href="/login">Sign up / Log in</a>
     <div class="network-page__content-wrapper">
 
       <!--   PROJECTS   -->
@@ -196,6 +197,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cta {
+  margin: 0 auto;
+  width: 14rem;
+  min-width: 100px;
+  color: #fff;
+  display: block;
+  padding: 0 12px;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  clear: both;
+  height: 46px;
+  line-height: 46px;
+  position: relative;
+  overflow: hidden;
+  -webkit-transition: all .4s ease;
+  transition: all .4s ease;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 800;
+
+  &:hover {
+    background-color: #f6f162;
+    box-shadow: 0 2px 28px -13px rgba(0, 0, 0, .4);
+    color: #000;
+    transition: all .2s ease;
+  }
+
+  &.cta--solid-yellow {
+    border: none;
+    background-color: #f4ed3b;
+    color: #000;
+  }
+}
 .network-page {
   .header {
     margin-bottom: 4rem;
@@ -213,7 +254,7 @@ export default {
   &__projects,
   &__organisations,
   &__members,
-  &__discussions
+  &__discussions,
   {
     margin-bottom: 4rem;
   }

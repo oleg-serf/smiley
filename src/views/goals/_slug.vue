@@ -1,14 +1,24 @@
 <template>
   <div>
     <div class="container">
-      <goals-banner :color="goal.colour" background="/img/goals-banner.jpg">
-        <template v-slot:logo>
+      <goals-banner
+          :color="goal.colour"
+          :background="$settings.images_path.goals + 's_' + goal.image"
+          :name-length="goal.name ? goal.name.length : 20"
+      >
+<!--        <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 107px"/>
-        </template>
+        </template>-->
 
         <template
-            v-slot:title
-        >News, Events and Projects linked to Goal {{ goal.prefix }} {{ goal.name }}
+            v-slot:prefix
+        >
+            {{ goal.prefix }}
+        </template>
+        <template
+              v-slot:name
+        >
+            {{ goal.name }}
         </template>
       </goals-banner>
     </div>

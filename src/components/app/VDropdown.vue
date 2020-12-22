@@ -2,15 +2,19 @@
   <div class="dropdown">
     <i class="dropdown__icon"></i>
     <select
-      class="dropdown__select"
-      :id="id"
-      @change="$emit('input', $event.target.value)"
+        class="dropdown__select"
+        :id="id"
+        ref="select"
+        @change="$emit('input', $event.target.value)"
     >
+      <option v-if="forGoals" value="" disabled selected>Sort by UN Goals</option>
       <option
-        v-for="(option, key) in options"
-        :key="'dropdown-option-' + key"
-        :value="option.value"
-        >{{ option.text }}</option
+          v-for="(option, key) in options"
+          :key="'dropdown-option-' + key"
+          :value="forGoals ? option.id : option.value"
+      >
+        {{ forGoals ? (option.prefix < 10 ? '0' : '') + option.prefix + ': ' + option.name : option.text }}
+      </option
       >
     </select>
   </div>
@@ -27,12 +31,29 @@ export default {
     options: {
       validator(s) {
         return s.every(
-          (item) => item.hasOwnProperty("text") && item.hasOwnProperty("value")
+            (item) => (item.hasOwnProperty("text") || item.hasOwnProperty("name")) && (item.hasOwnProperty("value") || item.hasOwnProperty("prefix"))
         );
       },
       required: true,
     },
+    forGoals: {
+      type: Boolean,
+      default: false
+    },
+    hovered: {
+      type: Boolean,
+      default: false
+    }
   },
+  watch: {
+    hovered: {
+      handler(newVal) {
+        if (newVal) {
+          this.$refs.select.focus().click();
+        }
+      }
+    }
+  }
 };
 </script>
 
@@ -84,6 +105,16 @@ export default {
 
     &::-ms-expand {
       display: none;
+    }
+  }
+
+  &.in-title-with-search {
+    .dropdown__icon {
+      top: 14px;
+    }
+
+    .dropdown__select {
+      padding: 10px;
     }
   }
 }

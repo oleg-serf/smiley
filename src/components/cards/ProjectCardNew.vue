@@ -129,6 +129,14 @@ export default {
     },
     cutText(text, limit, stringName) {
       if (text.length > limit) {
+        // CHECK IF CHARACTER IS <SPACE> OR END OF STRING
+        for (let i = 0; i < text.length - limit; i++) {
+          if (text[limit].trim() !== '' && limit !== text.length) {
+            limit++
+          } else {
+            break;
+          }
+        }
         return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
       }
 
@@ -191,6 +199,7 @@ export default {
     }
 
     .projects-article__content-title {
+      height: 4rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -198,6 +207,7 @@ export default {
     }
 
     .projects-article__content-description {
+      height: 6rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -206,6 +216,7 @@ export default {
     }
 
     .projects-article__content-metadata {
+      height: 3.5rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

@@ -116,9 +116,16 @@
     </div>
 
     <div class="container">
-      <div class="event-category">
+<!--      <div class="event-category">
         <h2 class="event-category__title"><b>Past</b> | Events</h2>
-      </div>
+      </div>-->
+      <BottomBorderedTitleWithSearch
+          :title="'<b>Past | </b>Events'"
+          :with-search="true"
+          :with-dropdown="true"
+          :dropdown-options="goals"
+          search-expandable
+      ></BottomBorderedTitleWithSearch>
       <div class="event-grid">
         <EventCard
           class="event-card"
@@ -128,6 +135,24 @@
           button-name="Watch Now"
         ></EventCard>
       </div>
+      <div style="text-align: center">
+        <VButton
+            class="event__button"
+            size="height_45"
+            @click.native.prevent="openPage('smiley-events', '')"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: 'discussions', params: { slug: 'slug' } }"
+          >
+            More Events
+          </router-link
+          >
+        </VButton>
+      </div>
+      <Subscribe></Subscribe>
     </div>
   </div>
 </template>
@@ -136,11 +161,17 @@
 import axios from "@/axios-auth";
 
 import EventCard from "@/components/cards/EventCard.vue";
-import { VSearchLocation, VDropdown, VSwitch } from "@/components/app";
+import { VSearchLocation, VDropdown, VSwitch, VButton } from "@/components/app";
+import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
+import Subscribe from "@/components/forms/Subscribe";
+import router from "@/router";
 
 export default {
   name: "Talks",
   components: {
+    Subscribe,
+    VButton,
+    BottomBorderedTitleWithSearch,
     VSearchLocation,
     VDropdown,
     VSwitch,
@@ -148,6 +179,7 @@ export default {
   },
   data() {
     return {
+      goals: [],
       events: [],
       past: [],
       // events_pages: 0,
@@ -203,6 +235,9 @@ export default {
     };
   },
   methods: {
+    openPage(name, slug) {
+      router.push({name: name, params: {slug: slug}});
+    },
     handleResize() {
       this.is_mobile = window.innerWidth >= 768 ? false : true;
       if (window.innerWidth >= 768) {
@@ -272,6 +307,13 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    axios
+        .get("/goals")
+        .then(res => {
+          console.log("/goals", res.data);
+          this.goals = res.data.goal_categories[0].goals;
+        })
+        .catch(error => console.error(error));
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
@@ -488,7 +530,23 @@ export default {
 .event-grid {
   margin-top: 16px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
-  grid-gap: 100px 50px;
+  //grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+  grid-gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  //grid-gap: 100px 50px;
+}
+.event__button {
+  margin-top: 2rem;
+  .event__button-link {
+    display: block;
+    color: black;
+    width: 100%;
+    height: 100%;
+    line-height: 48px;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 </style>
