@@ -1,18 +1,39 @@
 <template>
   <div class="title-with-search">
-    <h3 :style="styleObject" class="title-with-search__title" :class="[hoverEffect ? 'hover-effect' : '']" v-html="title"></h3>
-    <input
-        v-if="withSearch"
-        class="title-with-search__search-input"
-        :class="[searchExpandable ? 'expandable' : '']"
-        type="text"
-        placeholder="Search Topics...">
+    <h3 :style="styleObject" class="title-with-search__title" :class="[hoverEffect ? 'hover-effect' : '']"
+        v-html="title"></h3>
+    <div style="display: flex; align-items: center;">
+      <input
+          v-if="withSearch"
+          :style="[withDropdown ? {'margin-right': '1rem'} : {}]"
+          class="title-with-search__search-input"
+          :class="[searchExpandable ? 'expandable' : '']"
+          type="text"
+          placeholder="Search Topics..."/>
+      <div class="dropdown-wrapper" v-if="withDropdown">
+        <VDropdown
+            for-goals
+            class="in-title-with-search"
+            :options="dropdownOptions"
+            :hovered="hovered"
+            @mouseenter="hovered = true"
+            @mouseleave="hovered = false"
+            v-model="dropdownValue"
+        ></VDropdown>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
+import {VDropdown} from "@/components/app";
+
 export default {
   name: "BottomBorderedTitleWithSearch",
+  components: {
+    VDropdown
+  },
   props: {
     titleClasses: {
       type: String,
@@ -25,6 +46,14 @@ export default {
     withSearch: {
       type: Boolean,
       default: true
+    },
+    withDropdown: {
+      type: Boolean,
+      default: false
+    },
+    dropdownOptions: {
+      type: Array,
+      default: () => []
     },
     searchExpandable: {
       type: Boolean,
@@ -40,9 +69,17 @@ export default {
     }
   },
   /*
+  * DATA */
+  data() {
+    return {
+      dropdownValue: null,
+      hovered: false
+    }
+  },
+  /*
   * COMPUTED */
   computed: {
-    styleObject () {
+    styleObject() {
       return {
         '--color-hover': this.hoverColor
       }
@@ -62,15 +99,18 @@ export default {
   &__title {
     color: black;
     font-family: "Gotham Light", sans-serif;
+
     &::v-deep b {
       font-family: "Gotham Bold", sans-serif !important;
     }
+
     &.hover-effect {
       &:hover {
         color: var(--color-hover);
       }
     }
   }
+
   .title-with-search__search-input {
     width: 10rem;
     padding: .5rem 1rem;
@@ -83,10 +123,34 @@ export default {
     background-position: 95% center;
     background-size: 1rem 1rem;
     outline: 0;
+
     &.expandable {
       &:hover, &:focus-within {
         width: 34rem;
+        @include lgMax {
+          width: 20rem;
+        }
+
+        @include mdMax {
+          width: 15rem;
+        }
       }
+    }
+  }
+
+  .dropdown-wrapper {
+    width: 16rem;
+    height: 2.9rem;
+    color: #666666;
+
+    .dropdown {
+      height: 100%;
+      &__icon {
+        top: 14px;
+      }
+    }
+    .dropdown__select {
+      padding: 10px;
     }
   }
 }

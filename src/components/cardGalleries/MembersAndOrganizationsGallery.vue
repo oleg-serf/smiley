@@ -82,8 +82,8 @@ export default {
       id: 0,
       key: 0,
       options: {
-        slidesPerView: 3,
-        slidesPerGroup: 3,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
         spaceBetween: 25,
         loop: true,
         loopFillGroupWithBlank: true,
@@ -93,10 +93,10 @@ export default {
         },
         breakpoints: {
           900: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
+            slidesPerView: 2,
+            slidesPerGroup: 2,
           },
-          1440: {
+          1200: {
             slidesPerView: 3,
             slidesPerGroup: 3,
           },
@@ -125,7 +125,7 @@ export default {
     grid-gap: 1.5rem;
     grid-template-columns: repeat(3, 1fr);
 
-    @include lgMax {
+    @include xlMax {
       grid-template-columns: repeat(2, 1fr);
     }
 

@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="container">
-      <goals-banner :color="goal.colour" :background="$settings.images_path.goals + 's_' + goal.image">
+      <goals-banner
+          :color="goal.colour"
+          :background="$settings.images_path.goals + 's_' + goal.image"
+          :name-length="goal.name ? goal.name.length : 20"
+      >
 <!--        <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 107px"/>
         </template>-->

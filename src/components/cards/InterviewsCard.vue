@@ -211,6 +211,7 @@ export default {
     }
 
     .news-article__content-title {
+      height: 4rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -218,6 +219,7 @@ export default {
     }
 
     .news-article__content-description {
+      height: 6rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -226,6 +228,7 @@ export default {
     }
 
     .news-article__content-metadata {
+      height: 3.5rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

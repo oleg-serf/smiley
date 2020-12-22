@@ -135,13 +135,20 @@ export default {
     width: 100%;
 
     &__title {
+      height: 3rem;
       color: #393939;
       font-family: "Gotham Bold", sans-serif;
       font-size: 16px;
       line-height: 18px;
     }
-
+    &__skill {
+      height: 3rem;
+    }
+    &__work {
+      height: 3rem;
+    }
     &__location {
+      height: 2rem;
       color: #DC3E2B;
       font-family: "Gotham Bold", sans-serif;
       font-size: 14px;
