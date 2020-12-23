@@ -1,22 +1,16 @@
 <script src="../main.js"></script>
 <template>
   <div class="home">
-    <!--    <hero image="/images/banner-homepage-1.jpg" :link="'/our-story'">
-          <slot>
-            Creating <span style="color: #FFE300">positive</span> impact
-            <br>through journalism
-          </slot>
-        </hero>-->
-    <iframe
-        class="event-title__video"
-        width="100%"
-        :height="mainVideoHeight"
-        frameborder="0"
-        allow="fullscreen"
-        allowfullscreen
-        src="https://player.vimeo.com/video/493954791"
-    >
-    </iframe>
+    <hero :video="'https://player.vimeo.com/video/493954791'" :link="'/our-story'">
+      <template v-slot:title>
+        Creating <span style="color: #FFE300">positive</span> impact
+        <br>through journalism
+      </template>
+      <template v-slot:subtitle>
+        Join our movement to create a happier,
+        <br />more equal and sustainable world
+      </template>
+    </hero>
 
     <section class="section container">
       <div class="section__title">

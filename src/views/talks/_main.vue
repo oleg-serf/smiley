@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div class="header">
-      <iframe
-        class="header-video"
-        width="100%"
-        height="580"
-        frameborder="0"
-        allow="fullscreen"
-        allowfullscreen
-        src="https://player.vimeo.com/video/494083042"
-      >
-      </iframe>
-    </div>
+    <hero :video="'https://player.vimeo.com/video/493954791'" :link="'/our-story'">
+      <template v-slot:title>
+        Creating <span style="color: #FFE300">positive</span> impact
+        <br>through journalism
+      </template>
+      <template v-slot:subtitle>
+        Join our movement to create a happier,
+        <br />more equal and sustainable world
+      </template>
+    </hero>
     <div class="filters">
       <div class="container filter-toggle">
         <div class="filter-toggle__title">Filter</div>
@@ -164,6 +162,7 @@
 import axios from "@/axios-auth";
 
 import EventCard from "@/components/cards/EventCard.vue";
+import Hero from "@/components/homepage/Hero.vue";
 import { VSearchLocation, VDropdown, VSwitch, VButton } from "@/components/app";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import Subscribe from "@/components/forms/Subscribe";
@@ -172,6 +171,7 @@ import router from "@/router";
 export default {
   name: "Talks",
   components: {
+    Hero,
     Subscribe,
     VButton,
     BottomBorderedTitleWithSearch,
