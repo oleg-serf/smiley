@@ -1,28 +1,33 @@
 <template>
-<!--  <fragment>
-    <ButtonArrow
-      :id="'news-gallery-button-prev-' + id"
-      class="news-gallery-button news-gallery-button-prev"
-    />
-    <Swiper class="news-gallery" :key="key" :options="options">
-      <SwiperSlide v-for="article in news" :key="article.slug">
-        <NewsCard class="news-gallery__card" :article="article" />
-      </SwiperSlide>
-    </Swiper>
-    <ButtonArrow
-      :id="'news-gallery-button-next-' + id"
-      class="news-gallery-button news-gallery-button-next"
-    />
-  </fragment>-->
-  <section class="section" v-if="news.length > 0" id="section-news">
-    <div class="grid grid--news">
-      <NewsCard
-          class="news-gallery__card"
-          v-for="article in news"
-          :key="'article-'+article.slug"
-          :article="article"/>
-    </div>
-  </section>
+  <div style="position:relative;">
+    <template v-if="withSlider">
+      <ButtonArrow
+          :id="'news-gallery-button-prev-' + id"
+          :style="{left: prevButtonLeft}"
+          class="news-gallery-button news-gallery-button-prev"
+      />
+      <Swiper class="news-gallery" :key="key" :options="options">
+        <SwiperSlide v-for="article in news" :key="article.slug">
+          <NewsCard class="news-gallery__card" :article="article" />
+        </SwiperSlide>
+      </Swiper>
+      <ButtonArrow
+          :id="'news-gallery-button-next-' + id"
+          :style="{right: nextButtonRight}"
+          class="news-gallery-button news-gallery-button-next"
+      />
+    </template>
+    <section class="section" v-else id="section-news">
+      <div class="grid grid--news">
+        <NewsCard
+            class="news-gallery__card"
+            v-for="article in news"
+            :key="'article-'+article.slug"
+            :article="article"
+        />
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -36,6 +41,18 @@ export default {
       type: Array,
       required: true,
     },
+    withSlider: {
+      type: Boolean,
+      default: false
+    },
+    prevButtonLeft: {
+      type: Number,
+      default: 0
+    },
+    nextButtonRight: {
+      type: Number,
+      default: 0
+    }
   },
   components: {
     NewsCard,
@@ -48,7 +65,7 @@ export default {
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,
-        spaceBetween: 25,
+        spaceBetween: 10,
         loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
@@ -60,7 +77,7 @@ export default {
             slidesPerView: 2,
             slidesPerGroup: 2,
           },
-          1440: {
+          1300: {
             slidesPerView: 3,
             slidesPerGroup: 3,
           },

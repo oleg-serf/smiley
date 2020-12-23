@@ -198,7 +198,7 @@ export default {
   margin-bottom: 8rem;
 }
 .article {
-  margin-top: 100px;
+  margin-top: 24px;
 }
 
 .article-header {

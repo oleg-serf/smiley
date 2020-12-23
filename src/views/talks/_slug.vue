@@ -7,19 +7,29 @@
           :with-search="false"
       ></BottomBorderedTitleWithSearch>
       <div style="position: relative;">
-        <fragment>
+        <template>
           <ButtonArrow
               :id="'news-gallery-button-prev-' + id"
               class="news-gallery-button news-gallery-button-prev"
           />
           <Swiper class="news-gallery" :key="key" :options="options">
             <SwiperSlide v-for="n in 4" :key="`testEvent-${n}`">
-              <iframe
+<!--              <iframe
                   class="event-title__video"
                   style="display: block;"
                   width="100%"
                   height="700"
                   src="https://www.youtube.com/embed/4b33NTAuF5E"
+              >
+              </iframe>-->
+              <iframe
+                  class="event-title__video"
+                  width="100%"
+                  height="570"
+                  frameborder="0"
+                  allow="fullscreen"
+                  allowfullscreen
+                  src="https://player.vimeo.com/video/494083042"
               >
               </iframe>
             </SwiperSlide>
@@ -28,7 +38,7 @@
               :id="'news-gallery-button-next-' + id"
               class="news-gallery-button news-gallery-button-next"
           />
-        </fragment>
+        </template>
       </div>
       <p class="event-title__video-description">
         Partners/ Speakers | Tuesday 12pm (BST), Dec 8<sup>th</sup>,2020 | 3 Comments
@@ -518,7 +528,7 @@ export default {
 .news-gallery-button-prev {
   @include custom-max-width(1600px) {
     left: -100px;
-    top: 300px;
+    top: 250px;
     opacity: 0.8;
   }
 
@@ -528,7 +538,7 @@ export default {
 .news-gallery-button-next {
   @include custom-max-width(1600px) {
     right: -100px;
-    top: 300px;
+    top: 250px;
     opacity: 0.8;
   }
 

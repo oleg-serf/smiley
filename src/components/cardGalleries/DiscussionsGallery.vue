@@ -1,6 +1,6 @@
 <template>
   <div class="projects-gallery__container">
-    <fragment v-if="withSlider || isMobile">
+    <template v-if="withSlider || isMobile">
       <ButtonArrow
           :id="'news-gallery-button-prev-' + id"
           class="news-gallery-button news-gallery-button-prev"
@@ -14,7 +14,7 @@
           :id="'news-gallery-button-next-' + id"
           class="news-gallery-button news-gallery-button-next"
       />
-    </fragment>
+    </template>
     <section v-else class="section" id="section-news">
       <div class="grid grid--news">
         <DiscussionCard
@@ -60,7 +60,7 @@ export default {
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,
-        spaceBetween: 25,
+        spaceBetween: 10,
         loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
@@ -71,10 +71,12 @@ export default {
           900: {
             slidesPerView: 2,
             slidesPerGroup: 2,
+            spaceBetween: 25,
           },
           1200: {
             slidesPerView: 3,
             slidesPerGroup: 3,
+            spaceBetween: 25,
           },
         },
       },
