@@ -1,13 +1,14 @@
 <template>
   <div>
-    <hero :video="'https://player.vimeo.com/video/493954791'" :link="'/our-story'">
+    <hero video="https://player.vimeo.com/video/493954791?autoplay=1&loop=1&title=0&byline=0&portrait=0"
+          :link="'/our-story'" type="iframe">
       <template v-slot:title>
         Creating <span style="color: #FFE300">positive</span> impact
         <br>through journalism
       </template>
       <template v-slot:subtitle>
         Join our movement to create a happier,
-        <br />more equal and sustainable world
+        <br/>more equal and sustainable world
       </template>
     </hero>
     <div class="filters">
@@ -15,18 +16,18 @@
         <div class="filter-toggle__title">Filter</div>
         <div class="filter-toggle__button-holder">
           <button
-            type="button"
-            class="filter-toggle__button"
-            @click.prevent="toggleFilterMenu"
+              type="button"
+              class="filter-toggle__button"
+              @click.prevent="toggleFilterMenu"
           >
             <i class="fa fa-sliders"></i>
           </button>
         </div>
       </div>
       <form
-        class="container"
-        v-show="is_shown"
-        @submit.prevent="sendFilterData"
+          class="container"
+          v-show="is_shown"
+          @submit.prevent="sendFilterData"
       >
         <div class="filters-container">
           <div class="filter-column filter filter--location">
@@ -35,8 +36,8 @@
             </label>
 
             <VSearchLocation
-              id="inputLocation"
-              @place_changed="getAddressData"
+                id="inputLocation"
+                @place_changed="getAddressData"
             ></VSearchLocation>
           </div>
           <div class="filter-column filter filter--radius">
@@ -45,9 +46,9 @@
             </label>
 
             <VDropdown
-              id="inputRadius"
-              :options="filter.radius"
-              v-model="filterQuery.radius"
+                id="inputRadius"
+                :options="filter.radius"
+                v-model="filterQuery.radius"
             ></VDropdown>
           </div>
           <div class="filter-column filter filter--timing">
@@ -56,10 +57,10 @@
             </div>
 
             <VSwitch
-              name="timing"
-              left="Upcoming"
-              right="Past"
-              v-model="filterQuery.timing"
+                name="timing"
+                left="Upcoming"
+                right="Past"
+                v-model="filterQuery.timing"
             >
             </VSwitch>
           </div>
@@ -71,18 +72,18 @@
             <div class="filter__input filter__input--icon">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               <date-picker
-                v-model="filterQuery.date"
-                mode="range"
-                id="inputDate"
-                class="filter__input-date"
-                color="red"
+                  v-model="filterQuery.date"
+                  mode="range"
+                  id="inputDate"
+                  class="filter__input-date"
+                  color="red"
               />
             </div>
           </div>
           <div class="filter-column filter filter--submit">
             <div class="filter__label">
               <div class="filter__title">
-                <br />
+                <br/>
               </div>
             </div>
             <button type="submit" class="filter__button filter__button-submit">
@@ -92,7 +93,7 @@
           <div class="filter-column filter filter--reset">
             <div class="filter__label">
               <div class="filter__title">
-                <br />
+                <br/>
               </div>
             </div>
             <button type="reset" class="filter__button filter__button-reset">
@@ -108,18 +109,18 @@
       </div>
       <div class="event-grid">
         <EventCard
-          v-for="(event, key) in events"
-          :key="'event-card-' + key"
-          :event="event"
-          button-name="Register"
+            v-for="(event, key) in events"
+            :key="'event-card-' + key"
+            :event="event"
+            button-name="Register"
         ></EventCard>
       </div>
     </div>
 
     <div class="container">
-<!--      <div class="event-category">
-        <h2 class="event-category__title"><b>Past</b> | Events</h2>
-      </div>-->
+      <!--      <div class="event-category">
+              <h2 class="event-category__title"><b>Past</b> | Events</h2>
+            </div>-->
       <BottomBorderedTitleWithSearch
           :title="'<b>Past | </b>Events'"
           :with-search="true"
@@ -129,11 +130,11 @@
       ></BottomBorderedTitleWithSearch>
       <div class="event-grid">
         <EventCard
-          class="event-card"
-          v-for="(event, key) in past"
-          :key="'event-card-' + key"
-          :event="event"
-          button-name="Watch Now"
+            class="event-card"
+            v-for="(event, key) in past"
+            :key="'event-card-' + key"
+            :event="event"
+            button-name="Watch Now"
         ></EventCard>
       </div>
       <div style="text-align: center">
@@ -163,7 +164,7 @@ import axios from "@/axios-auth";
 
 import EventCard from "@/components/cards/EventCard.vue";
 import Hero from "@/components/homepage/Hero.vue";
-import { VSearchLocation, VDropdown, VSwitch, VButton } from "@/components/app";
+import {VButton, VDropdown, VSearchLocation, VSwitch} from "@/components/app";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import Subscribe from "@/components/forms/Subscribe";
 import router from "@/router";
@@ -250,7 +251,7 @@ export default {
     toggleFilterMenu() {
       this.is_shown = !this.is_shown;
     },
-    getAddressData: function(data) {
+    getAddressData: function (data) {
       data.address_components.forEach((prop) => {
         if (prop.types.includes("locality")) {
           this.filterQuery.city = prop.long_name;
@@ -270,42 +271,42 @@ export default {
       // );
       // filter.date.end = Math.floor(new Date(filter.date.end).getTime() / 1000);
       // console.log(filter);
-      this.$swal({ text: "This feature will work soon" });
+      this.$swal({text: "This feature will work soon"});
     },
     loadEvents(page) {
       axios
-        .get("/events?page=" + page)
-        .then((res) => {
-          this.events = res.data.events;
-        })
-        .catch((error) => console.error(error));
+          .get("/events?page=" + page)
+          .then((res) => {
+            this.events = res.data.events;
+          })
+          .catch((error) => console.error(error));
     },
     loadPastEvents(page) {
       axios
-        .get("/events/past?page=" + page)
-        .then((res) => {
-          this.past = res.data.events;
-        })
-        .catch((error) => console.error(error));
+          .get("/events/past?page=" + page)
+          .then((res) => {
+            this.past = res.data.events;
+          })
+          .catch((error) => console.error(error));
     },
   },
   mounted() {
     axios
-      .get("/events")
-      .then((res) => {
-        console.log("Future events", res);
-        this.events = res.data.events;
-        this.events_pages = res.data.pages_count;
-      })
-      .catch((error) => console.error(error));
+        .get("/events")
+        .then((res) => {
+          console.log("Future events", res);
+          this.events = res.data.events;
+          this.events_pages = res.data.pages_count;
+        })
+        .catch((error) => console.error(error));
     axios
-      .get("/events/past")
-      .then((res) => {
-        console.log("Past events", res);
-        this.past = res.data.events;
-        this.past_pages = res.data.pages_count;
-      })
-      .catch((error) => console.error(error));
+        .get("/events/past")
+        .then((res) => {
+          console.log("Past events", res);
+          this.past = res.data.events;
+          this.past_pages = res.data.pages_count;
+        })
+        .catch((error) => console.error(error));
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -370,6 +371,7 @@ export default {
       grid-column: 1 / span 4;
     }
   }
+
   &.filter--radius {
     grid-column: 3 / span 2;
 
@@ -377,6 +379,7 @@ export default {
       grid-column: 5 / span 4;
     }
   }
+
   &.filter--timing {
     grid-column: 5 / span 2;
 
@@ -385,6 +388,7 @@ export default {
       grid-column: 5 / span 4;
     }
   }
+
   &.filter--date {
     grid-column: 7 / span 2;
 
@@ -393,6 +397,7 @@ export default {
       grid-column: 1 / span 4;
     }
   }
+
   &.filter--submit {
     @include xxlMax {
       grid-column: 9 / span 2;
@@ -403,6 +408,7 @@ export default {
       }
     }
   }
+
   &.filter--reset {
     @include xxlMax {
       order: 3;
@@ -420,16 +426,19 @@ export default {
     width: 100%;
     margin-bottom: 0px;
   }
+
   .filter__title {
     width: 100%;
     font-family: "Gotham Medium", sans-serif;
     font-size: 20px;
     margin-bottom: 6px;
   }
+
   .filter__input {
     position: relative;
     width: 100%;
   }
+
   .filter__input--icon {
     i {
       position: absolute;
@@ -538,8 +547,10 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   //grid-gap: 100px 50px;
 }
+
 .event__button {
   margin-top: 2rem;
+
   .event__button-link {
     display: block;
     color: black;

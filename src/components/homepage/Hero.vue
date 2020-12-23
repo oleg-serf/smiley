@@ -1,15 +1,22 @@
 <template>
   <div class="hero">
-    <video
-      v-if="!isMobile"
-      :src="video"
-      muted
-      id="background_video"
-      autoplay
-      loop
-      class="hero__overlay"
-    ></video>
-    <img :src="image" v-else class="hero__overlay" />
+    <template v-if="type == 'iframe'">
+      <iframe title="vimeo-player" :src="video" class="hero__overlay"
+              v-if="!isMobile" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <img :src="image" v-else class="hero__overlay"/>
+    </template>
+    <template v-else>
+      <video
+          v-if="!isMobile"
+          :src="video"
+          muted
+          id="background_video"
+          autoplay
+          loop
+          class="hero__overlay"
+      ></video>
+      <img :src="image" v-else class="hero__overlay"/>
+    </template>
     <div class="hero__content">
       <h1 class="hero__title">
         <slot name="title"></slot>
@@ -40,6 +47,10 @@ export default {
     },
     link: {
       type: String
+    },
+    type: {
+      type: String,
+      default: 'video'
     }
   },
   methods: {
