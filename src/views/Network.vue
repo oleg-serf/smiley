@@ -249,6 +249,10 @@ export default {
   &__content-wrapper {
     padding: 0 150px;
     text-align: center;
+    @include mdMax {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   &__projects,

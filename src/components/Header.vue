@@ -5,19 +5,25 @@
         <div class="header__grid-top">
           <div class="header__column header__column--actions">
             <div class="actions">
-              <img src="/images/main/icon-bars.svg" class="header__bars" @click="openNav"/>
+              <button @click="openNav"
+                      style="font-size: 100%; font-family: inherit; border: 0; padding: 0; background-color: #ffffff;">
+                <img src="/images/main/icon-bars.svg" class="header__bars"/>
+              </button>
               <!--     HEADER BAR MENU       -->
               <div id="mySidenav" class="sidenav">
-                <span class="closebtn" @click="closeNav">&times;</span>
-                <router-link class="sideNavLink" to="/smiley-news">News</router-link>
-                <router-link class="sideNavLink" to="/smiley-talks">Events</router-link>
-                <router-link class="sideNavLink" to="/smiley-interviews">Interviews</router-link>
-                <router-link class="sideNavLink yellow-bottom" to="/chatroom">Chatrooms</router-link>
+                <button @click="closeNav"
+                        style="font-size: 100%; font-family: inherit; border: 0; padding: 0; background-color: #ffffff;">
+                  <span class="closebtn">&times;</span>
+                </button>
+                <router-link class="sideNavLink" :to="{name: 'news'}">News</router-link>
+                <router-link class="sideNavLink" :to="{name: 'talks'}">Events</router-link>
+                <router-link class="sideNavLink" :to="{name: 'interviews'}">Interviews</router-link>
+                <router-link class="sideNavLink yellow-bottom" :to="{name: 'chat'}">Chatrooms</router-link>
                 <!--YELLOW LINE-->
-                <router-link class="sideNavLink after-yellow-bottom" to="/smiley-network">Network</router-link>
-                <router-link class="sideNavLink" to="">About us</router-link>
-                <router-link class="sideNavLink" to="/goals">UN Goals</router-link>
-                <router-link class="sideNavLink" to="/contact">Contact us</router-link>
+                <router-link class="sideNavLink after-yellow-bottom" :to="{name: 'network'}">Network</router-link>
+                <router-link class="sideNavLink" :to="{name: 'goals'}">About us</router-link>
+                <router-link class="sideNavLink" :to="{name: 'goals'}">UN Goals</router-link>
+                <router-link class="sideNavLink" :to="{name: 'contact'}">Contact us</router-link>
               </div>
               <template v-if="loggedIn">
                 <router-link :to="{name: 'feed'}" class="home-link">

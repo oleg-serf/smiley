@@ -1,12 +1,22 @@
 <script src="../main.js"></script>
 <template>
   <div class="home">
-    <hero image="/images/banner-homepage-1.jpg" :link="'/our-story'">
-      <slot>
-        Creating <span style="color: #FFE300">positive</span> impact
-        <br>through journalism
-      </slot>
-    </hero>
+    <!--    <hero image="/images/banner-homepage-1.jpg" :link="'/our-story'">
+          <slot>
+            Creating <span style="color: #FFE300">positive</span> impact
+            <br>through journalism
+          </slot>
+        </hero>-->
+    <iframe
+        class="event-title__video"
+        width="100%"
+        :height="mainVideoHeight"
+        frameborder="0"
+        allow="fullscreen"
+        allowfullscreen
+        src="https://player.vimeo.com/video/493954791"
+    >
+    </iframe>
 
     <section class="section container">
       <div class="section__title">
@@ -20,7 +30,7 @@
       <news-card-new
           v-for="article in newsList"
           :key="article.slug"
-          :article="article" />
+          :article="article"/>
     </section>
 
     <section class="section container">
@@ -32,7 +42,7 @@
     </section>
 
     <section class="events-grid container" v-if="eventList.length > 0">
-      <event-card-new v-for="event in eventList" :key="'event-'+event.slug" :event="event" />
+      <event-card-new v-for="event in eventList" :key="'event-'+event.slug" :event="event"/>
     </section>
 
     <section class="section container">
@@ -47,11 +57,11 @@
       <news-card-new
           v-for="article in newsList"
           :key="article.slug"
-          :article="article" />
+          :article="article"/>
     </section>
 
-    <subscribe-form />
-    <Footer />
+    <subscribe-form/>
+    <Footer/>
   </div>
 </template>
 
@@ -88,6 +98,7 @@ export default {
   },
   data() {
     return {
+      vimeoVideoHeight: 700,
       news: [],
       events: [],
       eventList: [],
@@ -107,7 +118,7 @@ export default {
         network: {
           button_text: "Learn More",
           description:
-            "Connect with changemakers and get inspired to take positive action",
+              "Connect with changemakers and get inspired to take positive action",
           title: "MATCHMAKER FOR GOOD ™"
         },
         talks: {},
@@ -119,7 +130,7 @@ export default {
           link: "/organisations",
           disabled: false,
           description:
-            "Connect with groups working towards solving societal issues and find ways to get involved.",
+              "Connect with groups working towards solving societal issues and find ways to get involved.",
           image: "/img/homepage/homepage-organisations.jpg"
         },
         {
@@ -127,7 +138,7 @@ export default {
           link: "/projects",
           disabled: false,
           description:
-            "Explore initiatives about causes you care about and kickstart your own purpose-driven projects",
+              "Explore initiatives about causes you care about and kickstart your own purpose-driven projects",
           image: "/img/homepage/homepage-chatroom.jpg"
         },
         {
@@ -135,7 +146,7 @@ export default {
           link: "/chatroom",
           disabled: true,
           description:
-            "Take part in community discussions and share ideas with other members",
+              "Take part in community discussions and share ideas with other members",
           image: "/img/homepage/homepage-projects.jpg"
         }
       ],
@@ -146,40 +157,62 @@ export default {
     };
   },
   computed: {
+    mainVideoHeight() {
+      return this.vimeoVideoHeight
+    },
     auth() {
       return this.$store.getters["user/isAuthenticated"];
     }
   },
-  methods: {},
+  methods: {
+    handleResize() {
+      if (window.innerWidth > 1400) {
+        this.vimeoVideoHeight = 900
+      } else if (window.innerWidth > 1200) {
+        this.vimeoVideoHeight = 780
+      } else if (window.innerWidth > 900) {
+        this.vimeoVideoHeight = 640
+      } else if (window.innerWidth < 900) {
+        this.vimeoVideoHeight = 500
+      }
+    },
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   mounted() {
     axios
-      .get("/pages/1")
-      .then(res => {
-        console.log(res);
-        this.eventList = res.data.future_events;
-        this.newsList = res.data.latest_news;
+        .get("/pages/1")
+        .then(res => {
+          console.log(res);
+          this.eventList = res.data.future_events;
+          this.newsList = res.data.latest_news;
 
-        this.banners.news = res.data.page_sections.smiley_news[0];
-        // this.banners.network = res.data.page_sections.smiley_network[0];
-        this.banners.talks = res.data.page_sections.smiley_talks[0];
-        this.banners.goals = res.data.page_sections.un_goals[0];
+          this.banners.news = res.data.page_sections.smiley_news[0];
+          // this.banners.network = res.data.page_sections.smiley_network[0];
+          this.banners.talks = res.data.page_sections.smiley_talks[0];
+          this.banners.goals = res.data.page_sections.un_goals[0];
 
-        this.videos = res.data.page_sections.bottom_videos;
-        this.hero = res.data.page_sections.top_video[0];
-        this.hero.url_source =
-          this.$settings.images_path.pages + "l_" + this.hero.url_source;
+          this.videos = res.data.page_sections.bottom_videos;
+          this.hero = res.data.page_sections.top_video[0];
+          this.hero.url_source =
+              this.$settings.images_path.pages + "l_" + this.hero.url_source;
 
-        this.quote = res.data.page_sections.bottom_quote[0];
+          this.quote = res.data.page_sections.bottom_quote[0];
 
           const metaPayload = {
-              meta: res.data?.meta || {},
-              title: 'Smiley Talks',
+            meta: res.data?.meta || {},
+            title: 'Smiley Talks',
           }
 
           metaPayload.meta.description = 'A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals';
           this.$store.dispatch('meta/setMeta', metaPayload);
-      })
-      .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
   }
 };
 </script>
@@ -208,6 +241,7 @@ export default {
     margin-top: 1.5rem;
   }
 }
+
 .news-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -221,6 +255,7 @@ export default {
   grid-gap: 2rem;
   margin-bottom: 5rem;
 }
+
 //@import "@/scss/blocks/_homepage-news-grid";
 ////
 //@import "@/scss/blocks/homepage/_goals-grid";

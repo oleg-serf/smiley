@@ -4,8 +4,11 @@
       <iframe
         class="header-video"
         width="100%"
-        height="775"
-        src="https://www.youtube.com/embed/4b33NTAuF5E"
+        height="580"
+        frameborder="0"
+        allow="fullscreen"
+        allowfullscreen
+        src="https://player.vimeo.com/video/494083042"
       >
       </iframe>
     </div>

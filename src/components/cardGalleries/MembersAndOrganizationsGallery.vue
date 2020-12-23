@@ -1,6 +1,6 @@
 <template>
   <div class="projects-gallery__container">
-    <fragment v-if="withSlider">
+    <template v-if="withSlider">
       <ButtonArrow
           :id="'news-gallery-button-prev-' + id"
           class="news-gallery-button news-gallery-button-prev"
@@ -25,7 +25,7 @@
           :id="'news-gallery-button-next-' + id"
           class="news-gallery-button news-gallery-button-next"
       />
-    </fragment>
+    </template>
     <section v-else class="section" id="section-news">
       <div class="grid grid--news">
         <member-card
