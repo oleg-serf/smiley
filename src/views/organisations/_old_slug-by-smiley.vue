@@ -1,233 +1,329 @@
 <template>
   <div>
-    <!--    <Breadcrumbs :custom="true" :items="breadcrumbsItems"/>-->
-    <div class="org-banner-img">
-      <img src="/img/organization/org-header-img.jpg" alt="org-profile-img">
-    </div>
+    <Breadcrumbs :custom="true" :items="breadcrumbsItems"/>
+
     <div class="main-bg">
-      <div class="organisation-main-info">
-        <div class="org-text">
-          <div class="organisation-grid container">
-            <div class="grid-item grid-item--main">
-              <div class="organisation-avatar">
-                <div class="organisation-avatar__logo">
-                  <img
-                      v-if="organisation.logo != null"
-                      :src="$settings.images_path.organisations + 'm_'+ organisation.logo"
-                  />
-                  <span v-else>{{ organisation.name | filterAvatar }}</span>
+      <div class="textual-banner textual-banner--contained">
+        <div class="container">
+          <div class="textual-banner__title">Organisation page</div>
+          <p>This is where we learn about your organisation, charitable vision and mission whether you're a
+            registered non-profit, social enterprise, charitable foundation, Trust, educational institution,
+            local authority or conscientious private business</p>
+        </div>
+      </div>
+      <div class="organisation-bg">
+        <div class="organisation-grid container">
+          <div class="grid-item grid-item--top-panel" v-if="is_owner && loggedIn">
+            <router-link
+                :to="{name: 'edit-organisation'}"
+                class="button button--primary"
+                v-if="is_owner"
+                @click.prevent="follow"
+            >
+              <i class="fa fa-pencil"></i> Edit Organisation
+            </router-link>
+            <button class="button button--primary" @click.prevent="addOrganisationPost">
+              <i class="fa fa-newspaper-o"></i> Create Post
+            </button>
+            <router-link :to="{name: 'create-project'}" class="button button--primary">
+              <i class="fa fa-connectdevelop"></i> Create Project
+            </router-link>
+          </div>
+          <div class="grid-item grid-item--main">
+            <div class="organisation-avatar">
+              <div class="organisation-avatar__logo">
+                <img
+                    v-if="organisation.logo != null"
+                    :src="$settings.images_path.organisations + 'm_'+ organisation.logo"
+                />
+                <span v-else>{{ organisation.name | filterAvatar }}</span>
+              </div>
+            </div>
+            <div class="organisation-info">
+              <div class="organisation-name">{{ organisation.name }}</div>
+              <div class="organisation-data">
+                <button
+                    class="button button--primary"
+                    v-if="!following"
+                    @click.prevent="follow"
+                >+ follow
+                </button>
+                <button class="button button--primary" v-else @click.prevent="unfollow">- unfollow</button>
+              </div>
+            </div>
+          </div>
+          <div class="grid-item grid-item--socials">
+            <template v-if="socials.length > 0">
+              <ul class="organisation-social organisation-social--header">
+                <li v-for="social in socials" :key="'social-'+social.name">
+                  <a target="_blank" :href="social.value">
+                    <i class="fa" :class="'fa-'+social.name" aria-hidden="true"></i>
+                  </a>
+                </li>
+              </ul>
+            </template>
+            <template v-else>No networks connected</template>
+            <div class="organisation-network">
+              <div class="network-row" v-if="organisation.website != null">
+                <div class="network-row__title">Website:</div>
+                <div class="network-row__value">
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                  <a :href="organisation.website" target="_blank">{{ organisation.website }}</a>
                 </div>
               </div>
-              <div class="organisation-info">
-                <div class="organisation-name">{{ organisation.name }}</div>
-                <div class="organisation-desc">
-                  Non-Profit Organisation
-                </div>
-                <div class="organisation-location">
+              <div class="network-row">
+                <div class="network-row__title">Location:</div>
+                <div class="network-row__value">
                   <template v-if="organisation.location != null">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
                     {{ organisation.location }}
                   </template>
                   <template v-else>No location selected</template>
                 </div>
-                <div class="organisation-employees">
-                  50-100 Employees
-                </div>
-                <div class="organisation-goal">
-                  <template v-if="organisation.main_goal != null">
-                    {{ organisation.main_goal.name }}
-                  </template>
-                </div>
               </div>
-            </div>
-            <div class="grid-item grid-item--socials">
-              <template v-if="socials.length > 0">
-                <ul class="organisation-social organisation-social--header">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-heart-o"></i> Like
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-plus-circle"></i> Follow
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-share"></i> Share
-                    </a>
-                  </li>
-                </ul>
-              </template>
-              <!-- template v-else>No networks connected</template> -->
-              <div class="organisation-network">
-                <VButton
-                    class="projects-article__button message-btn"
-                    size="height_45"
-                    @click.native.prevent="openPage"
-                    shape="round"
-                >
-                  <i class="fa fa-envelope-o"></i> Message
-                </VButton>
-                <VButton
-                    class="projects-article__button"
-                    size="height_45"
-                    @click.native.prevent="openPage"
-                    shape="round"
-                >
-                  Donate
-                </VButton>
-                <VButton
-                    class="projects-article__button"
-                    size="height_45"
-                    @click.native.prevent="openPage"
-                    shape="round"
-                >
-                  Volunteer
-                </VButton>
-              </div>
+              <ul class="goals">
+                <li v-if="organisation.main_goal != null">
+                  <img :src="$settings.images_path.goals + 's_' + organisation.main_goal.image" alt="icon"/>
+                </li>
+                <li v-for="goal in organisation.other_goals" :key="'goal-'+goal.slug">
+                  <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
+                </li>
+              </ul>
             </div>
           </div>
-          <div class="tab">
-            <button class="tablinks about-org active" @click="openTab('about-org')"><span>About</span></button>
-            <button class="tablinks news" @click="openTab('news')"><span>News</span></button>
-            <button class="tablinks projects" @click="openTab('projects')"><span>Projects</span></button>
-            <button class="tablinks people" @click="openTab('people')"><span>People</span></button>
-            <button class="tablinks events" @click="openTab('events')"><span>Events</span></button>
-            <button class="tablinks videos" @click="openTab('videos')"><span>Videos</span></button>
-            <button class="tablinks photos" @click="openTab('photos')"><span>Photos</span></button>
-            <button class="tablinks reports" @click="openTab('reports')"><span>Reports</span></button>
-          </div>
-
-          <div id="about-org" class="tabcontent active">
-            <div class="about-img">
-              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
-                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
-            </div>
-            <div class="about-text">
-              <div class="about-title" style="display: flex; justify-content: space-between">
-                <h3 style="font-family: 'Montserrat Bold', sans-serif; font-size: 22px">About</h3>
-                <a href="#" style="color: #000000">See All</a>
-              </div>
-              <div class="about-additional-info">
-                <i class="fa fa-info-circle"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nunc condimentum dolor quis arcu gravida, sed
-                  placerat sem euismod. Quisque at pretium odio. Donec
-                  vestibulum, nisi in malesuada convallis, eros nulla
-                  egestas lectus, sed maximus sem elit ullamcorper elit.
-                  Donec aliquam tortor sit amet.</p>
-              </div>
-              <div class="about-additional-info">
-                <i class="fa fa-info-circle"></i>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nunc condimentum dolor quis arcu gravida, sed
-                  placerat sem euismod. Quisque at pretium odio.
-                </p>
-              </div>
-              <div class="about-additional-info">
-                <i class="fa fa-thumbs-up"></i>
-                <p>
-                  2,455,234 people like this
-                </p>
-              </div>
-              <div class="about-additional-info">
-                <i class="fa fa-info-circle"></i>
-                <p>
-                  2,455,234 people follow this
-                </p>
-              </div>
-              <div class="about-additional-info">
-                <i class="fa fa-globe" aria-hidden="true"></i>
-                <p>
-                  <a :href="organisation.website" target="_blank" style="color: #000000;">{{ organisation.website }}</a>
-                </p>
-              </div>
-              <div class="article-header__sharing">
-                <div class="article-header__sharing-goals">
-                  <span style="margin-right: 10px">
-                    <i class="fa fa-circle-o" style="color: grey; margin-right: 1.2rem; font-size: 24px;"></i>
-                    UN Goals:
-                  </span>
-                  <ul class="article-header__sharing-goals-badges">
-                    <li><img src="/img/goals/goals-1.svg" alt="goal"/></li>
-                    <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
-                  </ul>
-                </div>
-                <div class="article-header__sharing-social">
-                  <ul>
-                    <li>
-                      <a :href="shareLink('twitter')" target="_blank">
-                        <img src="/img/social/twitter.svg" alt="twitter"/>
-                      </a>
-                    </li>
-                    <li>
-                      <a :href="shareLink('instagram')" target="_blank">
-                        <img src="/img/social/insta.svg" alt="instagram"
-                        /></a>
-                    </li>
-                    <li>
-                      <a :href="shareLink('facebook')" target="_blank">
-                        <img src="/img/social/fb.svg" alt="facebook"
-                        /></a>
-                    </li>
-                    <li>
-                      <a :href="shareLink('youtube')" target="_blank">
-                        <img src="/img/social/youtube.svg" alt="youtube"
-                        /></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="news" class="tabcontent">
-            <h3>News</h3>
-          </div>
-
-          <div id="projects" class="tabcontent">
-            <h3>Projects</h3>
-          </div>
-          <div id="people" class="tabcontent">
-            <h3>People</h3>
-          </div>
-          <div id="events" class="tabcontent">
-            <h3>Events</h3>
-          </div>
-          <div id="videos" class="tabcontent">
-            <h3>Videos</h3>
-          </div>
-          <div id="photos" class="tabcontent">
-            <h3>Photos</h3>
-          </div>
-          <div id="reports" class="tabcontent">
-            <h3>Reports</h3>
+          <div class="grid-item grid-item--support">
+            <img src="/img/created-by-smiley.png"/>
+            <i
+                class="popover-icon fa fa-info-circle"
+                v-popover:tooltip="'This editorial page has been created by Smiley Movement. If you are associated with this organisation and would like to manage this page, please contact us'"
+            ></i>
           </div>
         </div>
       </div>
-      <template>
-        <div class="container">
-          <section
-              class="section"
-              id="section-news"
+      <div class="organisation-additional container">
+        <template v-if="organisation.video">
+          <div class="grid-item ">
+            <div class="item-holder">
+              <div class="about">
+                <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                     v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+                <div
+                    v-html="organisation.description"
+                    v-if="organisation.description != null && organisation.description.length > 10"
+                ></div>
+                <div v-else>No organisation bio to show</div>
+                <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[1]"
+                     v-if="organisation.organisation_images != null && organisation.organisation_images.length > 1"/>
+              </div>
+            </div>
+          </div>
+          <div class="grid-item" v-if="organisation.video">
+            <div
+                class="item-holder"
+                v-html="organisation.video"
+            >
+            </div>
+            <div class="grid-item">
+              <div
+                  class="item-holder"
+                  v-if="organisation.donation_link || organisation.volunteer_link || organisation.fundraise_link"
+              >
+                <div class="volunteer">
+                  <div class="title">How to support {{ organisation.name }}</div>
+                  <ul class="volunteer-actions">
+                    <li>
+                      <a
+                          :href="organisation.donation_link"
+                          target="_blank"
+                          class="button button--primary"
+                          :class="{'disabled': !organisation.donation_link}"
+                          rel="noopener noreferrer"
+                      >Donate</a>
+                    </li>
+                    <li>
+                      <a
+                          :href="organisation.volunteer_link"
+                          target="_blank"
+                          class="button button--primary"
+                          :class="{'disabled': !organisation.volunteer_link}"
+                          rel="noopener noreferrer"
+                      >Volunteer</a>
+                    </li>
+                    <li>
+                      <a
+                          :href="organisation.fundraise_link"
+                          target="_blank"
+                          class="button button--primary"
+                          :class="{'disabled': !organisation.fundraise_link}"
+                          rel="noopener noreferrer"
+                      >Fundraise</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item">
+              <div class="item-holder">
+                <div class="title">Share this page</div>
+                <ul class="organisation-social">
+                  <li>
+                    <a :href="shareLink('twitter')" target="_blank">
+                      <app-icon name="twitter"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a :href="shareLink('facebook')" target="_blank">
+                      <app-icon name="facebook"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a :href="shareLink('linkedin')" target="_blank">
+                      <app-icon name="linkedin"/>
+                    </a>
+                  </li>
+                </ul>
+                <div class="url-share">
+                  <input readonly :value="domain+'/organisations/' + this.$route.params.slug"/>
+                  <button type="button" class="button button--primary">Copy link</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="grid-item grid-item--full-width align-right">
+            <div class="item-holder">
+              <div class="about about--columns">
+                <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                     v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+                <div
+                    v-html="organisation.description"
+                    v-if="organisation.description != null && organisation.description.length > 10"
+                ></div>
+                <div v-else>No organisation bio to show</div>
+                <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[1]"
+                     v-if="organisation.organisation_images != null && organisation.organisation_images.length > 1"/>
+              </div>
+            </div>
+          </div>
+        <div class="grid-item">
+          <div
+              class="item-holder"
+              v-if="organisation.donation_link || organisation.volunteer_link || organisation.fundraise_link"
           >
-            <BottomBorderedTitleWithSearch
-                :title="'<b>Latest Activity | </b>News'"
-                :with-search="true"
-                :search-expandable="true"
-            ></BottomBorderedTitleWithSearch>
-            <NewsGallery
-                :news="posts"
-                with-slider
-                :prev-button-left="-60"
-                :next-button-right="-60"
-            ></NewsGallery>
-          </section>          
+            <div class="volunteer">
+              <div class="title">How to support {{ organisation.name }}</div>
+              <ul class="volunteer-actions">
+                <li>
+                  <a
+                      :href="organisation.donation_link"
+                      target="_blank"
+                      class="button button--primary"
+                      :class="{'disabled': !organisation.donation_link}"
+                      rel="noopener noreferrer"
+                  >Donate</a>
+                </li>
+                <li>
+                  <a
+                      :href="organisation.volunteer_link"
+                      target="_blank"
+                      class="button button--primary"
+                      :class="{'disabled': !organisation.volunteer_link}"
+                      rel="noopener noreferrer"
+                  >Volunteer</a>
+                </li>
+                <li>
+                  <a
+                      :href="organisation.fundraise_link"
+                      target="_blank"
+                      class="button button--primary"
+                      :class="{'disabled': !organisation.fundraise_link}"
+                      rel="noopener noreferrer"
+                  >Fundraise</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="item-holder">
+            <div class="title">Share this page</div>
+            <ul class="organisation-social">
+              <li>
+                <a :href="shareLink('twitter')" target="_blank">
+                  <app-icon name="twitter"/>
+                </a>
+              </li>
+              <li>
+                <a :href="shareLink('facebook')" target="_blank">
+                  <app-icon name="facebook"/>
+                </a>
+              </li>
+              <li>
+                <a :href="shareLink('linkedin')" target="_blank">
+                  <app-icon name="linkedin"/>
+                </a>
+              </li>
+            </ul>
+            <div class="url-share">
+              <input readonly :value="domain+'/organisations/' + this.$route.params.slug"/>
+              <button type="button" class="button button--primary">Copy link</button>
+            </div>
+          </div>
+        </div>
+        </template>
+
+      </div>
+
+      <template v-if="false">
+        <div class="container">
+          <section class="section" v-if="posts.length > 0" id="section-news">
+            <h2 class="section__title">News</h2>
+            <swiper
+                ref="newsSwiper"
+                :options="itemsSwiperOptions"
+                :auto-update="true"
+                :auto-destroy="true"
+                :delete-instance-on-destroy="true"
+                :cleanup-styles-on-destroy="true"
+                v-if="is_mobile"
+            >
+              <swiper-slide v-for="post in posts" :key="'post-swiper-'+post.slug">
+                <news-card :article="post"/>
+              </swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+            <div class="grid grid--news" v-else>
+              <news-card v-for="post in posts" :key="'post-'+post.slug" :article="post"/>
+            </div>
+          </section>
+          <section class="section" v-if="events.length > 0" id="section-events">
+            <h2 class="section__title">Events</h2>
+            <swiper
+                ref="eventsSwiper"
+                :options="itemsSwiperOptions"
+                :auto-update="true"
+                :auto-destroy="true"
+                :delete-instance-on-destroy="true"
+                :cleanup-styles-on-destroy="true"
+                v-if="is_mobile"
+            >
+              <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
+                <event-card :event="event"/>
+              </swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+            <div class="grid grid--events" v-else>
+              <event-card
+                  v-for="event in events"
+                  :key="'event-'+event.slug"
+                  :event="event"
+                  :past="event.past"
+              />
+            </div>
+          </section>
         </div>
       </template>
-      <Subscribe/>
       <Footer/>
     </div>
   </div>
@@ -236,11 +332,8 @@
 <script>
 import axios from "@/axios-auth";
 
-import Subscribe from "@/components/forms/Subscribe";
-import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
-import NewsGallery from "@/components/news/NewsGallery";
 import AppIcon from "@/components/AppIcon";
-import {VButton} from "@/components/app";
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import NewsCard from "@/components/cards/NewsCard";
 import EventCard from "@/components/cards/EventCard";
@@ -249,10 +342,6 @@ import Footer from "@/components/Footer";
 export default {
   name: "OrganisationProfile",
   components: {
-    Subscribe,
-    BottomBorderedTitleWithSearch,
-    NewsGallery,
-    VButton,
     Breadcrumbs,
     AppIcon,
     NewsCard,
@@ -332,32 +421,6 @@ export default {
     }
   },
   methods: {
-    openTab(tabName) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-      if (document.getElementById(tabName)) {
-        if (tabName === 'about-org') {
-          document.getElementById(tabName).style.display = "flex";
-        } else {
-          document.getElementById(tabName).style.display = "block";
-        }
-        let targetIndex = -1
-        for (const [key, value] of Object.entries(tablinks)) {
-          if (value.classList.value.includes(tabName)) {
-            targetIndex = key
-            break;
-          }
-        }
-        tablinks[targetIndex].className += " active";
-      }
-    },
     follow() {
       axios
           .post("/organisations/" + this.$route.params.slug + "/follow")
@@ -564,8 +627,6 @@ export default {
         .catch(error => console.error("Error", error));
   },
   created() {
-    // MAKE ABOUT TAB ACTIVE
-    this.openTab('about-org')
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -577,210 +638,20 @@ export default {
 
 <style lang="scss" scoped>
 .main-bg {
-  padding: 0 60px;
-  background-color: #ffffff;
+  background-color: #f4f6f9;
 }
 
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  //padding: 14px 0;
-  display: flex;
-  justify-content: space-between;
-  //margin: 0 24px;
-  @include xlMax {
-    flex-wrap: wrap;
-    overflow: unset;
-  }
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  border-bottom: 2px solid transparent;
-  outline: none;
-  cursor: pointer;
-  //padding: 0;
-  //margin: 0 16px;
-  transition: 0.3s;
-  font-size: 20px;
-  font-family: "Montserrat Bold", sans-serif;
-  //background-color: #555;
-  //color: white;
-  //float: left;
-  //border: none;
-  //outline: none;
-  //cursor: pointer;
-  padding: 14px 32px;
-  //font-size: 17px;
-  width: 25%;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  span {
-    border-bottom: 2px solid yellow;
-  }
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  span {
-    border-bottom: 2px solid yellow;
-  }
-  -webkit-box-shadow: 0 8px 13px -7px grey;
-  -moz-box-shadow: 0 8px 13px -7px grey;
-  box-shadow: 0 8px 13px -7px grey;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 10px 40px;
-  border-top: none;
-  //color: white;
-  //display: none;
-  //padding: 100px 20px;
-  //height: 100%;
-
-  &.active {
-    display: block;
-    -webkit-box-shadow: 0 8px 13px -7px grey;
-    -moz-box-shadow: 0 8px 13px -7px grey;
-    box-shadow: 0 8px 13px -7px grey;
-
-    border-radius: 20px;
-    //background-color: blue;
-    &#about-org {
-      display: flex;
-      flex-wrap: wrap;
-
-      .about-text {
-        .about-additional-info {
-          display: flex;
-          align-items: baseline;
-          justify-content: right;
-
-          i {
-            font-size: 24px;
-            color: grey;
-            margin-right: 1.5rem;
-          }
-        }
-      }
-
-      .about-img {
-        width: 46%;
-        margin-right: 2rem;
-        @include lgMax {
-          width: 100%;
-        }
-
-        img {
-          width: 100%;
-          border-radius: 20px;
-        }
-      }
-
-      .about-text {
-        width: 50%;
-        @include lgMax {
-          width: 100%;
-          margin-top: 2rem;
-        }
-      }
-    }
-
-    .article-header__sharing {
-      display: flex;
-      flex-direction: column;
-      @include smMax {
-        flex-direction: column;
-      }
-
-      .article-header__sharing-goals {
-        display: flex;
-        align-items: center;
-
-        font: {
-          family: "Gotham Medium";
-          size: 20px;
-        }
-        line-height: 27px;
-
-        .article-header__sharing-goals-badges {
-          display: flex;
-          align-items: center;
-
-          ul {
-            margin: 0;
-          }
-
-          li {
-            img {
-              width: 22px;
-            }
-
-            margin-right: 10px;
-          }
-        }
-      }
-
-      .article-header__sharing-social {
-        margin-top: 10px;
-        @include smMax {
-          margin-left: 0px;
-          margin-top: 20px;
-        }
-
-        display: flex;
-        align-items: center;
-        font-size: 20px;
-
-        span {
-          font-size: 22px;
-        }
-
-        ul {
-          display: flex;
-
-          li {
-            margin-right: 10px;
-
-            img {
-              width: 22px;
-            }
-          }
-        }
-
-        span {
-          font: {
-            family: "Gotham Book";
-            size: 22px;
-          }
-          line-height: 24px;
-        }
-      }
-    }
-  }
-
-}
-
-.org-banner-img {
-  height: 370px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.organisation-bg {
+  background-image: url("/img/backgrounds/subheader_bg.jpg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .organisation-grid {
   display: grid;
-  grid-template-columns: 64% 36%;
+  grid-template-columns: 40% 40% 20%;
+  color: #fff;
   grid-gap: 1px;
 
   @include xlMax {
@@ -793,7 +664,6 @@ export default {
 
   .grid-item {
     padding: 25px;
-    padding-top: 10px;
     box-sizing: border-box;
     // border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-right: 1px solid rgba(255, 255, 255, 0.5);
@@ -829,7 +699,6 @@ export default {
 
     &.grid-item--main {
       display: flex;
-      flex-wrap: wrap;
 
       @include lgMax {
         flex-direction: column;
@@ -837,9 +706,6 @@ export default {
     }
 
     &.grid-item--socials {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       @include lgMax {
         border-right: 0;
       }
@@ -884,6 +750,7 @@ export default {
       @include font-size(1.2rem);
       font-weight: bold;
       font-family: "Montserrat Bold", sans-serif;
+      color: #fff;
       text-transform: uppercase;
       display: flex;
       align-items: center;
@@ -892,6 +759,7 @@ export default {
     .content {
       @include font-size(1rem);
       font-family: "Montserrat Regular", sans-serif;
+      color: #fff;
       text-transform: uppercase;
       display: flex;
       align-items: center;
@@ -910,25 +778,28 @@ export default {
   font-size: 1rem;
   line-height: 1;
   align-items: center;
-  font-family: "Montserrat Regular", sans-serif;
+  color: #fff;
+  font-family: "Montserrat SemiBold", sans-serif;
   margin-bottom: 0px;
 
   &.organisation-social--header {
-    justify-content: space-around;
+    justify-content: center;
 
     a {
+      color: #fff;
       display: flex;
       width: 36px;
       height: 36px;
       line-height: 1;
       align-items: center;
-      color: #000000;
       justify-content: center;
+      border: 1px solid #fff;
       padding: 2px;
       @include font-size(1.2rem);
       transition: background-color 0.2s, color 0.2s;
 
       &:hover {
+        background-color: #fff;
         color: #393939;
         text-decoration: none;
       }
@@ -941,22 +812,14 @@ export default {
 }
 
 .organisation-network {
+  margin-left: -25px;
+  margin-right: -25px;
+  margin-top: 25px;
+  padding: 25px;
+  border-top: 1px solid #fff;
   font-family: "Montserrat Regular", sans-serif;
-  margin: 25px -25px 0px;
-  padding: 25px 25px 0;
-  display: flex;
-  justify-content: space-between;
-
-  .v-button {
-    height: 40px;
-    font-size: 16px;
-    line-height: 42px;
-
-    &.message-btn {
-      background: #ffffff;
-      border: 1px solid;
-    }
-  }
+  margin-bottom: 0px;
+  padding-bottom: 0;
 
   .network-row {
     display: flex;
@@ -983,6 +846,7 @@ export default {
     }
 
     a {
+      color: #fff;
     }
   }
 }
@@ -993,6 +857,7 @@ export default {
   width: 100%;
   min-width: 100px;
   max-width: 240px;
+  color: #fff;
   background-color: #7d8494;
   display: block;
   padding: 0 12px;
@@ -1029,6 +894,7 @@ export default {
     &.disabled {
       pointer-events: none;
       background-color: rgba(0, 0, 0, .3);
+      color: #fff;
     }
 
     &:hover {
@@ -1038,25 +904,24 @@ export default {
   }
 
   &:hover {
+    color: #fff;
     background-color: #535763;
   }
 }
 
 .organisation-avatar {
   margin-bottom: 24px;
-  margin-top: -204px;
 }
 
 .organisation-avatar__logo {
   margin-top: 35px;
-  margin-right: 10px;
+  margin-right: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 320px;
-  height: 320px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  border: 14px solid white;
   overflow: hidden;
   font-family: "Montserrat Bold", sans-serif;
   text-transform: uppercase;
@@ -1080,19 +945,16 @@ export default {
 }
 
 .organisation-info {
-  color: #000000;
-
-  .organisation-name {
-    font-family: "Montserrat Bold", sans-serif;
-  }
-
-  @include font-size(1.15rem);
+  margin-top: 35px;
+  font-family: "Montserrat Bold", sans-serif;
+  color: #fff;
+  @include font-size(1.3);
 }
 
 .organisation-name {
   @include font-size(1.5rem);
-  @include margin-bottom(.3rem);
-  font-family: "Montserrat Bold", sans-serif;
+  @include margin-bottom(1rem);
+  font-family: "Montserrat SemiBold", sans-serif;
 }
 
 .organisation-job {
@@ -1112,6 +974,7 @@ export default {
     padding-left: 25px;
 
     &:first-child {
+      border-right: 2px solid #fff;
       padding-left: 0px;
       padding-right: 25px;
 
@@ -1258,6 +1121,7 @@ export default {
       font-family: "Montserrat Bold", sans-serif;
       font-weight: bold;
       cursor: pointer;
+      background-color: #fff;
     }
 
     span {
