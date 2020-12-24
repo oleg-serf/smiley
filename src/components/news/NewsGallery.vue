@@ -23,8 +23,7 @@
             class="news-gallery__card"
             v-for="article in news"
             :key="'article-'+article.slug"
-            :article="article"
-        />
+            :article="article"/>
       </div>
     </section>
   </div>
@@ -65,7 +64,7 @@ export default {
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,
-        spaceBetween: 10,
+        spaceBetween: 25,
         loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
@@ -76,6 +75,7 @@ export default {
           900: {
             slidesPerView: 2,
             slidesPerGroup: 2,
+            spaceBetween: 10,
           },
           1300: {
             slidesPerView: 3,
@@ -119,13 +119,13 @@ export default {
   position: absolute;
   cursor: pointer;
   z-index: 5;
-  top: 400px;
+  top: 38%;
 }
 
 .news-gallery-button-prev {
   @include custom-max-width(1600px) {
     left: 0;
-    top: 300px;
+    top: 38%;
     opacity: 0.8;
   }
 
@@ -135,7 +135,7 @@ export default {
 .news-gallery-button-next {
   @include custom-max-width(1600px) {
     right: 0;
-    top: 300px;
+    top: 38%;
     opacity: 0.8;
   }
 
