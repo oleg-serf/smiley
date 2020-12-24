@@ -18,7 +18,7 @@
                 <router-link class="sideNavLink" :to="{name: 'news'}">News</router-link>
                 <router-link class="sideNavLink" :to="{name: 'talks'}">Events</router-link>
                 <router-link class="sideNavLink" :to="{name: 'interviews'}">Interviews</router-link>
-                <router-link class="sideNavLink yellow-bottom" :to="{name: 'chat'}">Chatrooms</router-link>
+                <router-link class="sideNavLink" :to="{name: 'chat'}">Chatrooms</router-link>
                 <!--YELLOW LINE-->
                 <router-link class="sideNavLink after-yellow-bottom" :to="{name: 'network'}">Network</router-link>
                 <router-link class="sideNavLink" :to="{name: 'goals'}">About us</router-link>
