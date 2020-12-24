@@ -1,6 +1,6 @@
 <template>
   <div>
-    <hero video="https://player.vimeo.com/video/493954791?autoplay=1&loop=1&title=0&byline=0&portrait=0"
+    <hero video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
           :link="'/our-story'" type="iframe">
       <template v-slot:title>
         Creating <span style="color: #FFE300">positive</span> impact
