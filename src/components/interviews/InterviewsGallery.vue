@@ -1,16 +1,38 @@
 <template>
-  <section class="section" v-if="interviews.length > 0" id="section-news">
-    <div class="grid grid--news">
-      <InterviewsCard
-          class="news-gallery__card"
-          v-for="interview in interviews"
-          :key="'interview-'+interview.slug"
-          :type="imageType"
-          :button-text="buttonText"
-          :interview="interview"/>
-    </div>
-  </section>
-
+  <div style="position:relative;">
+    <template v-if="withSlider">
+      <ButtonArrow
+          :id="'news-gallery-button-prev-' + id"
+          :style="{left: prevButtonLeft}"
+          class="news-gallery-button news-gallery-button-prev"
+      />
+      <Swiper class="news-gallery" :key="key" :options="options">
+        <SwiperSlide v-for="article in interviews" :key="article.slug">
+          <InterviewsCard
+              class="news-gallery__card"
+              :type="imageType"
+              :button-text="buttonText"
+              :interview="article"/>
+        </SwiperSlide>
+      </Swiper>
+      <ButtonArrow
+          :id="'news-gallery-button-next-' + id"
+          :style="{right: nextButtonRight}"
+          class="news-gallery-button news-gallery-button-next"
+      />
+    </template>
+    <section class="section" v-else id="section-news">
+      <div class="grid grid--news">
+        <InterviewsCard
+            class="news-gallery__card"
+            v-for="interview in interviews"
+            :key="'interview-'+interview.slug"
+            :type="imageType"
+            :button-text="buttonText"
+            :interview="interview"/>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -21,6 +43,10 @@ import InterviewsCard from "@/components/cards/InterviewsCard";
 export default {
   name: "InterviewsGallery",
   props: {
+    withSlider: {
+      type: Boolean,
+      default: false
+    },
     buttonText: {
       type: String,
       default: 'Read More'
@@ -33,6 +59,14 @@ export default {
       type: Array,
       required: true,
     },
+    prevButtonLeft: {
+      type: Number,
+      default: 0
+    },
+    nextButtonRight: {
+      type: Number,
+      default: 0
+    }
   },
   components: {
     InterviewsCard,
@@ -47,7 +81,6 @@ export default {
         slidesPerView: 1,
         slidesPerGroup: 1,
         spaceBetween: 25,
-        loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
           nextEl: "",
@@ -55,12 +88,13 @@ export default {
         },
         breakpoints: {
           900: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            spaceBetween: 10,
+          },
+          1300: {
             slidesPerView: 3,
             slidesPerGroup: 3,
-          },
-          1440: {
-            slidesPerView: 4,
-            slidesPerGroup: 4,
           },
         },
       },
@@ -100,27 +134,28 @@ export default {
   position: absolute;
   cursor: pointer;
   z-index: 5;
-  top: 400px;
+  top: 50%;
+  transform: translate(0, -49%);
 }
 
 .news-gallery-button-prev {
   @include custom-max-width(1600px) {
     left: 0;
-    top: 300px;
+    top: 50%;
     opacity: 0.8;
   }
-
+  transform: translate(0, -49%);
   left: -80px;
 }
 
 .news-gallery-button-next {
   @include custom-max-width(1600px) {
     right: 0;
-    top: 300px;
+    top: 50%;
     opacity: 0.8;
   }
-
+  transform: translate(0, -53%) rotate(180deg);
   right: -80px;
-  transform: rotate(180deg);
+  //transform: rotate(180deg);
 }
 </style>

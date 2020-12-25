@@ -1,41 +1,42 @@
 <template>
-  <div class="projects-gallery__container">
+  <div style="position:relative;">
     <template v-if="withSlider">
       <ButtonArrow
           :id="'news-gallery-button-prev-' + id"
+          :style="{left: prevButtonLeft}"
           class="news-gallery-button news-gallery-button-prev"
       />
       <Swiper class="news-gallery" :key="key" :options="options">
-        <SwiperSlide v-for="project in projects" :key="project.slug">
-          <ProjectCardNew class="news-gallery__card" :project="project"/>
+        <SwiperSlide v-for="article in events" :key="article.slug">
+          <EventCard class="news-gallery__card" :event="article" />
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
           :id="'news-gallery-button-next-' + id"
+          :style="{right: nextButtonRight}"
           class="news-gallery-button news-gallery-button-next"
       />
     </template>
-    <section v-else class="section" id="section-news">
+    <section class="section" v-else id="section-news">
       <div class="grid grid--news">
-        <ProjectCardNew
+        <EventCard
             class="news-gallery__card"
-            v-for="project in projects"
-            :key="'project-'+project.slug"
-            :button-text="buttonText"
-            :project="project"/>
+            v-for="article in events"
+            :key="'article-'+article.slug"
+            :event="article"/>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import {ButtonArrow} from "@/components/buttons";
-import ProjectCardNew from "@/components/cards/ProjectCardNew";
+import { ButtonArrow } from "@/components/buttons";
+import EventCard from "@/components/events/Event-Card";
 
 export default {
-  name: "ProjectsGallery",
+  name: "EventsGallery",
   props: {
-    projects: {
+    events: {
       type: Array,
       required: true,
     },
@@ -43,13 +44,21 @@ export default {
       type: Boolean,
       default: false
     },
-    buttonText: {
-      type: String,
-      default: 'View Project'
+    prevButtonLeft: {
+      type: Number,
+      default: 0
+    },
+    nextButtonRight: {
+      type: Number,
+      default: 0
+    },
+    slidesPerView: {
+      type: Number,
+      default: 3
     }
   },
   components: {
-    ProjectCardNew,
+    EventCard,
     ButtonArrow,
   },
   data() {
@@ -59,8 +68,7 @@ export default {
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,
-        spaceBetween: 25,
-        loop: true,
+        spaceBetween: 10,
         loopFillGroupWithBlank: true,
         navigation: {
           nextEl: "",
@@ -70,10 +78,12 @@ export default {
           900: {
             slidesPerView: 2,
             slidesPerGroup: 2,
+            spaceBetween: 10,
           },
-          1200: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
+          1300: {
+            slidesPerView: this.slidesPerView,
+            slidesPerGroup: this.slidesPerView,
+            spaceBetween: 25,
           },
         },
       },
@@ -90,16 +100,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.projects-gallery__container {
-  position: relative;
-}
 .grid {
   &--news {
     display: grid;
     grid-gap: 1.5rem;
     grid-template-columns: repeat(3, 1fr);
 
-    @include xlMax {
+    @include lgMax {
       grid-template-columns: repeat(2, 1fr);
     }
 
@@ -108,12 +115,8 @@ export default {
     }
   }
 }
-
 .news-gallery {
   padding: 10px;
-  .swiper-slide {
-    height: unset;
-  }
 }
 
 .news-gallery-button {
@@ -126,7 +129,7 @@ export default {
 
 .news-gallery-button-prev {
   @include custom-max-width(1600px) {
-    left: -100px;
+    left: 0;
     top: 50%;
     opacity: 0.8;
   }
@@ -136,11 +139,12 @@ export default {
 
 .news-gallery-button-next {
   @include custom-max-width(1600px) {
-    right: -100px;
+    right: 0;
     top: 50%;
     opacity: 0.8;
   }
   transform: translate(0, -53%) rotate(180deg);
   right: -80px;
+  //transform: rotate(180deg);
 }
 </style>

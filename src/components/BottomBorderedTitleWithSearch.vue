@@ -9,7 +9,7 @@
           class="title-with-search__search-input"
           :class="[searchExpandable ? 'expandable' : '']"
           type="text"
-          placeholder="Search Topics..."/>
+          :placeholder="searchText"/>
       <div class="dropdown-wrapper" v-if="withDropdown">
         <VDropdown
             for-goals
@@ -35,6 +35,10 @@ export default {
     VDropdown
   },
   props: {
+    searchText: {
+      type: String,
+      default: 'Search topics...'
+    },
     titleClasses: {
       type: String,
       default: ''
@@ -93,7 +97,7 @@ export default {
   padding: 16px 0;
   border-bottom: 2px solid #ffe300;
   display: flex;
-  margin: 30px 0;
+  margin: 30px 0 15px 0;
   justify-content: space-between;
 
   &__title {
