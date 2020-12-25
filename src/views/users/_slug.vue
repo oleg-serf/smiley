@@ -109,7 +109,7 @@
               </div>
               <div class="icon-block share">
                 <i class="fa fa-share-alt icon-block__icon"></i>
-                Share this page:
+                Social Media:
                 <ul class="social-share">
                   <li class="social-share__item">
                     <a href="" class="social-share__link social-share__link--facebook">
@@ -575,7 +575,7 @@ export default {
 
 .share {
   i.icon-block__icon {
-    top: .5rem;
+    top: 1rem;
   }
 
   .social-share {
