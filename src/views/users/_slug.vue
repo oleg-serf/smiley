@@ -1,524 +1,612 @@
 <template>
-  <div class="profile-bg">
-    <div class="profile-holder">
-      <div class="profile container">
-        <div class="profile-column profile-column__left">
-          <div class="profile-avatar">
-            <img v-if="user.avatar != null" :src="$settings.images_path.users + 'm_'+ user.avatar" />
-            <span v-else>{{ user.display_name | filterAvatar}}</span>
-          </div>
-          <div class="profile-info">
-            <div class="profile-name">{{user.display_name}}</div>
-            <div class="profile-job" v-if="(user.job_title != null)">{{user.job_title}}</div>
-            <div class="profile-data">
-              <div class="profile-data__column">
-                Matches
-                <br />50+
-              </div>
-              <div class="profile-data__column">
-                Community
-                <br />0
-              </div>
-              <div class="message-me">
-                <button>Message</button>
-              </div>
+  <section>
+    <div class="profile">
+      <div class="profile__background">
+        <img src="/images/remove-profile_background.jpg">
+      </div>
+      <div class="profile__info container">
+        <div class="profile__avatar">
+          <img src="/images/remove-profile_image.jpg">
+          <!--          <span class="profile__avatar-initials">-->
+          <!--            TJ-->
+          <!--          </span>-->
+        </div>
+        <div class="profile__description">
+          <h1 class="profile__name">Anica Nilise</h1>
+          <div class="profile__job-title">Oxfam - Regional Manager</div>
+          <div class="profile__location">London, United Kingdom</div>
+          <div class="profile__matches">58 Matches</div>
+          <div class="profile__slogan">"Looking for opportunities to do good!"</div>
+        </div>
+        <div class="profile__holder-actions">
+          <div class="profile__actions">
+            <div class="profile__actions-item">
+              <button class="button">
+                <i class="fa fa-plus fa-i-prepend"></i>
+                Follow
+              </button>
+            </div>
+            <div class="profile__actions-item">
+              <button class="button">
+                <i class="fa fa-envelope-o fa-i-prepend"></i>
+                Message
+              </button>
+            </div>
+            <div class="profile__actions-item">
+              <span class="tag">Matches: <strong class="append">50+</strong></span>
+            </div>
+            <div class="profile__actions-item">
+              <span class="tag">Communities: <strong class="append">5</strong></span>
             </div>
           </div>
         </div>
-        <div class="profile-column profile-column__right">
-          <div class="profile-section">
-            <div class="profile-section__detail">
-              <template v-if="socials.length > 0">
-                <ul class="profile-social">
-                  <li>Networks:</li>
-                  <li v-for="social in socials" :key="'social-'+social.name">
-                    <a target="_blank" :href="social.value">
-                      <app-icon :name="social.name" />
+      </div>
+    </div>
+    <div class="tabs container">
+      <div class="tabs__navigation">
+        <button class="tabs__navigation-item"
+                @click="tab = 'about'"
+                :class="activeTab('about')"
+        >About
+        </button>
+        <button class="tabs__navigation-item"
+                @click="tab = 'projects'"
+                :class="activeTab('projects')"
+        >Projects
+        </button>
+        <button class="tabs__navigation-item"
+                @click="tab = 'events'"
+                :class="activeTab('events')"
+        >Events
+        </button>
+        <button class="tabs__navigation-item"
+                @click="tab = 'videos'"
+                :class="activeTab('videos')"
+        >Videos
+        </button>
+        <button class="tabs__navigation-item"
+                @click="tab = 'photos'"
+                :class="activeTab('photos')"
+        >Photos
+        </button>
+      </div>
+      <div class="tabs__content">
+        <button class="tabs__content-button"
+                @click="tab = 'about'"
+                :class="activeTab('about')"
+        >About
+        </button>
+        <div class="tabs__content-item"
+             v-show="tab === 'about'">
+          <div class="about__column">
+            <div>
+              <img src="/images/remove-profile_background.jpg" class="about__column-image">
+            </div>
+            <div>
+              <h2>About</h2>
+              <div class="icon-block about">
+                <i class="fa fa-info-circle icon-block__icon"></i>
+                <div class="about__text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum dolor quis arcu gravida,
+                    sed placerat sem euismod. Quisque at pretium odio. Donec vestibulum, nisi in malesuada convallis,
+                    eros
+                    nulla egestas lectus, sed maximus sem elit ullamcorper elit. Donec aliquam tortor sit amet.</p>
+                </div>
+                <div class="about__text--more">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum dolor quis arcu gravida,
+                    sed placerat sem euismod. Quisque at pretium odio. Donec vestibulum, nisi in malesuada convallis,
+                    eros
+                    nulla egestas lectus, sed maximus sem elit ullamcorper elit. Donec aliquam tortor sit amet.</p>
+                </div>
+              </div>
+              <div class="icon-block link">
+                <i class="fa fa-link icon-block__icon"></i>
+                <a href="https://smileymovement.com" target="_blank" style="word-break: break-all">https://smileymovement.com</a>
+              </div>
+              <div class="icon-block goals">
+                <i class="fa fa-connectdevelop icon-block__icon"></i>
+                Interests | UN Goals:
+              </div>
+              <div class="icon-block share">
+                <i class="fa fa-share-alt icon-block__icon"></i>
+                Share this page:
+                <ul class="social-share">
+                  <li class="social-share__item">
+                    <a href="" class="social-share__link social-share__link--facebook">
+                      <i class="fa fa-facebook"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item">
+                    <a href="" class="social-share__link social-share__link--instagram">
+                      <i class="fa fa-instagram"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item">
+                    <a href="" class="social-share__link social-share__link--twitter">
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item">
+                    <a href="" class="social-share__link social-share__link--youtube">
+                      <i class="fa fa-youtube-play"></i>
                     </a>
                   </li>
                 </ul>
-              </template>
-              <template v-else>No networks connected</template>
+              </div>
+              <div class="icon-block support">
+                <i class="fa fa-hand-o-right icon-block__icon"></i>
+                Support offered:<br>
+                <ul>
+                  <li>Engineering</li>
+                  <li>Entrepreneurship</li>
+                  <li>Finance</li>
+                  <li>Fundraising</li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div class="profile-section">
-            <div class="profile-section__detail">Location:</div>
-            <div class="profile-section__detail">{{user.city}}</div>
-          </div>
+          <div class="about__column"></div>
+        </div>
+        <button class="tabs__content-button"
+                @click="tab = 'projects'"
+                :class="activeTab('projects')"
+        >Projects
+        </button>
+        <div class="tabs__content-item"
+             v-show="tab === 'projects'">
+          2
+        </div>
+        <button class="tabs__content-button"
+                @click="tab = 'events'"
+                :class="activeTab('events')"
+        >Events
+        </button>
+        <div class="tabs__content-item"
+             v-show="tab === 'events'">
+          3
+        </div>
+        <button class="tabs__content-button"
+                @click="tab = 'videos'"
+                :class="activeTab('videos')"
+        >Videos
+        </button>
+        <div class="tabs__content-item"
+             v-show="tab === 'videos'">
+          4
+        </div>
+        <button class="tabs__content-button"
+                @click="tab = 'photos'"
+                :class="activeTab('photos')"
+        >Photos
+        </button>
+        <div class="tabs__content-item"
+             v-show="tab === 'photos'">
+          5
         </div>
       </div>
     </div>
-    <div class="profile-additional">
-      <div class="grid-item">
-        <div class="item-holder">
-          <div class="title">About {{user.display_name}}</div>
-          <template v-if="user.bio != null">
-            <div class="about" v-html="user.bio"></div>
-          </template>
-          <template v-else>
-            <div
-              class="about"
-            >Tell us about yourself, what you're passionate about, causes you support and topics you're interested in learning more about so we can match you to likeminded people</div>
-          </template>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="item-holder">
-          <div class="title" style="padding-bottom: 0px;">
-            Interests
-            <span>(UN goals)</span>:
-          </div>
-        </div>
-        <div class="item-holder">
-          <ul class="goals">
-            <li v-for="goal in goals" :key="goal.id">
-              <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon" />
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="item-holder">
-          <div class="title">
-            <img src="/img/icons/support-offer-icon.png" />
-            Support {{user.display_name}} can offer
-          </div>
-          <ul class="support">
-            <li class="support__item" v-for="(item, index) in support.offer" :key="'i-need-'+index">
-              <div class="support__category-container">
-                <div class="support__category">{{item.support_category.title}}</div>
-                <div class="support__subcategory">{{item.title}}</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="item-holder">
-          <div class="title">
-            <img src="/img/icons/support-need-icon.png" />
-            Support {{user.display_name}} need
-          </div>
-          <ul class="support">
-            <li class="support__item" v-for="(item, index) in support.need" :key="'i-need-'+index">
-              <div class="support__category-container">
-                <div class="support__category">{{item.support_category.title}}</div>
-                <div class="support__subcategory">{{item.title}}</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="grid-item grid-item--full-width">
-        <div class="item-holder">
-          <div class="title">{{user.display_name}}'s Activity</div>
-          <div class="activities">
-            <ul class="activities__navigation">
-              <li class="active">
-                <button>
-                  Events
-                  <span>0</span>
-                </button>
-              </li>
-              <li>
-                <button>
-                  Projects
-                  <span>0</span>
-                </button>
-              </li>
-              <li>
-                <button>
-                  Following
-                  <span>0</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  </section>
 </template>
 
 <script>
-import axios from "@/axios-auth";
-
-import AppIcon from "@/components/AppIcon";
-
-
 export default {
   name: "UserProfile",
-  components: {
-    AppIcon,
-  },
+  components: {},
   data() {
     return {
       user: {},
-      socials: [],
-      goals: [],
-      support: {
-        offer: [],
-        need: []
-      }
+      tab: 'about',
     };
   },
-  mounted() {
-    axios
-      .get("/users/" + this.$route.params.slug)
-      .then(response => {
-        console.log("user-data", response.data);
-
-        this.user = response.data.user;
-
-        this.support.offer = response.data.user.supports_offer;
-        this.support.need = response.data.user.supports_need;
-
-        this.$router.currentRoute.meta.title = this.user.display_name;
-
-
-          this.goals = response.data.user.goals.filter(item =>
-          response.data.goals.includes(item.id)
-        );
-
-        if (response.data.user.facebook != null) {
-          this.socials.push({
-            name: "facebook",
-            value: response.data.user.facebook
-          });
-        }
-        if (response.data.user.instagram != null) {
-          this.socials.push({
-            name: "instagram",
-            value: response.data.user.instagram
-          });
-        }
-        if (response.data.user.twitter != null) {
-          this.socials.push({
-            name: "twitter",
-            value: response.data.user.twitter
-          });
-        }
-        if (response.data.user.linkedin != null) {
-          this.socials.push({
-            name: "linkedin",
-            value: response.data.user.linkedin
-          });
-        }
-        if (response.data.user.google != null) {
-          this.socials.push({
-            name: "google",
-            value: response.data.user.google
-          });
-        }
-      })
-      .catch(error => console.error(error));
+  methods: {
+    activeTab(tab) {
+      return tab === this.tab ? 'tabs__navigation-item--active' : '';
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-.profile-bg {
-  background-color: #f4f6f9;
+// TODO: Move to global styles
+.container {
+  width: 1140px;
+  padding: 0px 15px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1199px) {
+    width: 960px;
+  }
+  @media screen and (max-width: 991px) {
+    width: 720px;
+  }
+  @media screen and (max-width: 767px) {
+    width: 540px;
+  }
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
 }
 
-.profile-holder {
-  // border-top: 1px solid hsla(0, 0%, 100%, 0.25);
-  // margin-top: 50px;
+// TODO: Move to global styles
+.button {
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, .15);
+  padding: .5rem 1rem;
+  line-height: 1;
+  font-size: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #000;
+  background-color: #fff;
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color .2s, transform .2s, box-shadow .2s;
 
-  background-image: url("/img/backgrounds/user-profile-bg.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  &:hover {
+    background-color: #000;
+    color: #fff;
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .fa-i-prepend {
+    margin-right: .8rem;
+    @include font-size(.8rem);
+  }
+
+  .fa-i-append {
+    margin-left: 1rem;
+    @include font-size(.8rem);
+  }
+}
+
+// TODO: Move to global styles
+.tag {
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, .15);
+  padding: .5rem 1rem;
+  line-height: 1;
+  font-size: 1rem;
+  border-radius: 1rem;
+  background-color: #FFE300;
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  strong {
+    &.append {
+      margin-left: .5rem;
+    }
+
+    &.prepend {
+      margin-right: .5rem;
+    }
+  }
 }
 
 .profile {
-  display: flex;
-  flex-wrap: wrap;
+  margin-bottom: 3.5rem;
 
-  .profile-column {
-    flex-basis: 50%;
-    width: auto;
-    min-height: 350px;
-    box-sizing: border-box;
-  }
+  &__background {
+    position: relative;
+    height: 360px;
+    width: 100%;
 
-  .profile-column__left {
-    border-right: 1px solid hsla(0, 0%, 100%, 0.5);
-    display: flex;
-  }
+    img {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-  .profile-section {
-    border-bottom: 1px solid hsla(0, 0%, 100%, 0.5);
-    padding: 35px 50px;
-    display: flex;
-    flex-wrap: wrap;
-
-    .profile-section__detail {
-      width: 50%;
-      @include font-size(1.1rem);
-      color: #fff;
-      font-family: "Montserrat Regular", sans-serif;
+    @include smMax {
+      display: none;
     }
   }
 
-  .profile-avatar {
-    margin-top: 35px;
-    margin-right: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 180px;
-    height: 180px;
+  &__info {
+    background: #fff;
+    display: grid;
+    grid-template-columns: .5fr 1fr 1fr;
+    grid-gap: 1rem;
+    position: relative;
+
+    @include lgMax {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include smMax {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  &__avatar {
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
+    border: 1rem solid #fff;
+    margin-top: -50%;
     overflow: hidden;
-    font-family: "Montserrat Bold", sans-serif;
-    text-transform: uppercase;
-    @include font-size(2rem);
-    letter-spacing: 4px;
-    color: #393939;
-    background-color: #eeb400;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0px 0px 6px rgba(0, 0, 0, .15);
+    background-color: #FFE300;
 
     img {
       width: 100%;
-      height: 100;
+      height: 100%;
       object-fit: cover;
-      object-position: center;
     }
-  }
 
-  .profile-info {
-    margin-top: 35px;
-    font-family: "Montserrat Bold", sans-serif;
-    color: #fff;
-    @include font-size(1.3);
-  }
+    &-initials {
+      @include font-size(5rem);
+      font-weight: bold;
 
-  .profile-name {
-    @include font-size(1.5rem);
-    @include margin-bottom(1rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-  }
-  .profile-job {
-    @include margin-bottom(1rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-  }
-
-  .profile-data {
-    display: flex;
-    flex-wrap: wrap;
-    @include font-size(1.3rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-
-    .profile-data__column {
-      width: 50%;
-      box-sizing: border-box;
-      padding-left: 50px;
-
-      &:first-child {
-        border-right: 2px solid #fff;
-        padding-right: 50px;
-        padding-left: 0px;
+      @include mdMax {
+        @include font-size(7rem);
       }
     }
+
+    @include lgMax {
+      margin-top: -36%;
+    }
+    @include smMax {
+      margin-top: 0px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
-  .profile-social {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -5px;
-    margin-top: -5px;
+  &__name {
+    margin-top: 1rem;
+    @include font-size(2rem);
+  }
 
-    li {
-      margin: 5px;
+  &__slogan {
+    color: #717171;
+    font-weight: lighter;
+  }
+
+  &__holder-actions {
+    @include lgMax {
+      grid-column: 1 / span 2;
+    }
+  }
+
+  &__actions {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 1.45rem;
+
+    @include lgMax {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include mdMax {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include smMax {
+      grid-template-columns: 1fr;
+
+      &-item {
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 }
 
-.profile-additional {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1px;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
-
-  .grid-item {
-    box-sizing: border-box;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
+.tabs {
+  &__navigation {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
 
-    &:nth-child(odd) {
-      align-items: flex-end;
+    @include smMax {
+      display: none;
     }
-    &.grid-item--full-width {
-      grid-column: 1 / span 2;
-      align-items: center;
-      .item-holder {
-        max-width: 1530px;
+
+    &-item {
+      padding: .8rem 1rem;
+      border-top-left-radius: .5rem;
+      border-top-right-radius: .5rem;
+      border-left: 1px solid;
+      border-right: 1px solid;
+      border-top: 1px solid;
+      border-bottom: none;
+      border-color: transparent;
+      line-height: 1;
+      margin-bottom: -1px;
+      @include font-size(1.25rem);
+      font-weight: bold;
+      position: relative;
+      transition: border-color .2s;
+      background-color: #fff;
+      cursor: pointer;
+
+      &:hover {
+        border-color: rgba(112, 112, 112, .15);
+      }
+
+      &--active {
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, .15);
+        border-bottom: 1px solid #fff;
+        border-color: rgba(112, 112, 112, .3);
+
+        &::after {
+          content: '';
+          position: absolute;
+          height: 10px;
+          width: 100%;
+          background-color: #fff;
+          left: 0px;
+          bottom: -5px;
+          z-index: 3;
+        }
+      }
+    }
+  }
+
+  &__content {
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, .15);
+    border: 1px solid rgba(112, 112, 112, .3);
+    position: relative;
+    z-index: 2;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    padding: 1rem;
+    background-color: #fff;
+
+    @include smMax {
+      border-radius: .5rem;
+      padding: 0px;
+      overflow: hidden;
+    }
+
+    &-item {
+      @include smMax {
+        padding-left: 1rem;
+        padding-right: 1rem;
       }
     }
 
-    .item-holder {
-      max-width: 780px;
+    &-button {
       width: 100%;
-      box-sizing: border-box;
-      padding: 25px 30px;
-      border-bottom: 1px solid #393939;
+      padding: 1rem;
+      @include font-size(1.2rem);
+      font-weight: bold;
+      background-color: #fff;
+      border-radius: .5rem;
+      border: none;
+      border-top: 1px solid rgba(112, 112, 112, 0.3);
 
-      &:last-child {
+      &:first-child {
         border: none;
       }
 
-      .title {
-        @include font-size(1.2rem);
-        font-weight: bold;
-        font-family: "Montserrat Bold", sans-serif;
-        color: #393939;
-        @include padding-bottom(1rem);
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-
-        img {
-          max-width: 34px;
-          max-height: 34px;
-          height: auto;
-          margin-right: 24px;
-        }
-
-        span {
-          font-family: "Montserrat Regular", sans-serif;
-          @include font-size(1rem);
-
-          padding-left: 8px;
-          padding-right: 8;
-        }
+      &.tabs__navigation-item--active {
+        background-color: #FFE300;
+        margin-bottom: 1.5rem;
       }
 
-      .goals {
-        margin: -25px -30px -26px -31px;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-
-        li {
-          margin: -1px;
-          border: 1px solid #393939;
-          font-size: 0px;
-          line-height: 1;
-
-          img {
-            width: 100%;
-            height: auto;
-          }
-        }
+      @include sm {
+        display: none;
       }
     }
+  }
+}
+
+// TODO: Move to global
+.social-share {
+  display: inline-flex;
+
+  &__item {
+    margin: 0px .3rem;
+  }
+
+  &__link {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff !important;
+    text-decoration: none !important;
+    transition: background-color .2s, box-shadow .2s;
+
+    &:hover {
+      box-shadow: 0px 0px 6px rgba(0,0,0,.5);
+    }
+
+    &--facebook {
+      background-color: #134BCE;
+
+      &:hover {
+        background-color: lighten(#134BCE, 15%);
+      }
+    }
+
+    &--instagram {
+      background-color: #E1306C;
+
+      &:hover {
+        background-color: darken(#E1306C, 15%);
+      }
+    }
+
+    &--twitter {
+      background-color: #15BCDE;
+
+      &:hover {
+        background-color: darken(#15BCDE, 15%);
+      }
+    }
+
+    &--youtube {
+      background-color: #E70F0F;
+
+      &:hover {
+        background-color: lighten(#E70F0F, 15%);
+      }
+    }
+  }
+}
+
+.icon-block {
+  padding-left: 2rem;
+  position: relative;
+  margin-bottom: 1.5rem;
+
+  i.icon-block__icon {
+    position: absolute;
+    left: 0px;
+    top: .25rem;
+  }
+}
+
+.share {
+  i.icon-block__icon {
+    top: .5rem;
+  }
+
+  .social-share {
+    margin-left: -.5rem;
+    margin-top: .5rem;
+  }
+}
+
+.about__column {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 3rem;
+
+  .about__column-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .5rem;
+  }
+
+  @include lgMax {
+    grid-template-columns: 1fr;
+    grid-gap: 1.5rem;
   }
 }
 
 .support {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 30px;
-
-  .support__item {
-    padding-left: 48px;
-    position: relative;
-
-    &::before {
-      content: "";
-      width: 24px;
-      height: 24px;
-      display: block;
-      position: absolute;
-      left: 0px;
-      top: 5px;
-      background-image: url("/img/checked@2x.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-    }
-  }
-
-  .support__category {
-    @include font-size(1rem);
-    font-family: "Montserrat SemiBold", sans-serif;
-    color: #000;
-  }
-  .support__subcategory {
-    @include font-size(1rem);
-    font-family: "Montserrat Regular", sans-serif;
-    color: #000;
+  ul {
+    margin-top: .5rem;
+    padding-left: 1rem;
+    list-style: disc;
   }
 }
-
-.activities {
-  .activities__navigation {
-    display: flex;
-
-    li {
-      &:not(:last-child) {
-        margin-right: 18px;
-      }
-
-      &.active {
-        button {
-          border-bottom: 2px solid;
-        }
-        span {
-          background-color: #f4ed3b;
-        }
-      }
-    }
-
-    button {
-      color: #000;
-      padding: 25px 30px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      border: none;
-      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-      white-space: nowrap;
-      justify-content: center;
-      font-family: "Montserrat Bold", sans-serif;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    span {
-      margin-left: 16px;
-      width: 20px;
-      height: 20px;
-      background-color: rgba(0, 0, 0, 0.1);
-      line-height: 1;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-}
-
-  .message-me {
-
-    button {
-      margin-top: 1.5;
-      border: 1px solid #e5e5e5;
-      padding: 13px 10px;
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      @include font-size(0.8rem);
-      cursor: pointer;
-      transition: background-color 0.4s;
-      display: block;
-      background-color: #f4ed3b;
-      font-family: "Montserrat SemiBold", sans-serif;
-      margin-left: auto;
-    }
-  }
 </style>

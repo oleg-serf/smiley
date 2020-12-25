@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <section id="app">
     <Header />
     <router-view :key="$route.fullPath" />
     <tooltip />
-  </div>
+  </section>
 </template>
 
 <script>
