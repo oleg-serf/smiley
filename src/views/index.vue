@@ -4,9 +4,10 @@ import NewsGallery from "@/components/news/NewsGallery";
 import VButton from "@/components/app/VButton";
 import EventsGallery from "@/components/events/EventsGallery";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 
 export default {
-  components: {InterviewsGallery, EventsGallery, VButton, NewsGallery, BottomBorderedTitleWithSearch}
+  components: {ProjectsGallery, InterviewsGallery, EventsGallery, VButton, NewsGallery, BottomBorderedTitleWithSearch}
 }
 </script>
 <template>
@@ -43,6 +44,8 @@ export default {
             :title="'<b>Featured News</b>| Editors pick'"
             :with-search="true"
             :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
             search-text="Search events..."
         ></bottom-bordered-title-with-search>
         <news-gallery
@@ -74,6 +77,8 @@ export default {
             :title="'<b>Upcoming Events</b>'"
             :with-search="true"
             :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
             search-text="Search events..."
         ></bottom-bordered-title-with-search>
         <events-gallery
@@ -105,6 +110,8 @@ export default {
             :title="'<b>Featured Interviews</b>'"
             :with-search="true"
             :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
             search-text="Search interviews..."
         ></bottom-bordered-title-with-search>
         <interviews-gallery
@@ -125,6 +132,39 @@ export default {
               :to="{ name: 'interviews' }"
           >
             More Interviews
+          </router-link
+          >
+        </VButton>
+      </section>
+
+      <!--  NETWORK SECTION  -->
+      <section class="news-section" v-if="projects.length > 0">
+        <bottom-bordered-title-with-search
+            :title="'<b>Smiley Movement Network |</b> Latest Projects & Campaigns'"
+            :with-search="true"
+            :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
+            search-text="Search projects..."
+        ></bottom-bordered-title-with-search>
+        <projects-gallery
+            :projects="projects"
+            with-slider
+            :prev-button-left="-80"
+            :next-button-right="-80"
+            button-text="More"
+        ></projects-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: 'network' }"
+          >
+            Join Network
           </router-link
           >
         </VButton>
@@ -172,6 +212,7 @@ import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithS
 import SubscribeForm from "@/components/forms/Subscribe.vue";
 import Footer from "@/components/Footer.vue";
 // Page components
+import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery";
 import EventsGallery from "@/components/events/EventsGallery";
 import NewsGallery from "@/components/news/NewsGallery";
@@ -188,6 +229,7 @@ import VimeoVideo from "@/components/homepage/VimeoVideo.vue";
 export default {
   name: "home",
   components: {
+    ProjectsGallery,
     InterviewsGallery,
     EventsGallery,
     VButton,
@@ -211,6 +253,7 @@ export default {
       events: [],
       eventList: [],
       newsList: [],
+      projects: [],
 
       goals: [],
 
@@ -321,6 +364,12 @@ export default {
           this.$store.dispatch('meta/setMeta', metaPayload);
         })
         .catch(error => console.log(error));
+    axios
+        .get("/projects")
+        .then((res) => {
+          this.projects = res.data.projects;
+        })
+        .catch((error) => console.error(error));
   }
 };
 </script>

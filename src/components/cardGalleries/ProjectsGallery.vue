@@ -3,15 +3,20 @@
     <template v-if="withSlider">
       <ButtonArrow
           :id="'news-gallery-button-prev-' + id"
+          :style="[prevButtonLeft ? {left: prevButtonLeft} : '']"
           class="news-gallery-button news-gallery-button-prev"
       />
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="project in projects" :key="project.slug">
-          <ProjectCardNew class="news-gallery__card" :project="project"/>
+          <ProjectCardNew
+              class="news-gallery__card"
+              :button-text="buttonText"
+              :project="project"/>
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
           :id="'news-gallery-button-next-' + id"
+          :style="[nextButtonRight !== 0 ? {right: nextButtonRight} : '']"
           class="news-gallery-button news-gallery-button-next"
       />
     </template>
@@ -46,6 +51,14 @@ export default {
     buttonText: {
       type: String,
       default: 'View Project'
+    },
+    prevButtonLeft: {
+      type: Number,
+      default: 0
+    },
+    nextButtonRight: {
+      type: Number,
+      default: 0
     }
   },
   components: {

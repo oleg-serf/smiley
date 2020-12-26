@@ -2,7 +2,7 @@
   <div class="title-with-search">
     <h3 :style="styleObject" class="title-with-search__title" :class="[hoverEffect ? 'hover-effect' : '']"
         v-html="title"></h3>
-    <div style="display: flex; align-items: center;">
+    <div class="title-with-search__input-search-wrapper">
       <input
           v-if="withSearch"
           :style="[withDropdown ? {'margin-right': '1rem'} : {}]"
@@ -99,6 +99,10 @@ export default {
   display: flex;
   margin: 30px 0 15px 0;
   justify-content: space-between;
+  @include mdMax {
+    display: block;
+    text-align: center;
+  }
 
   &__title {
     color: black;
@@ -112,6 +116,14 @@ export default {
       &:hover {
         color: var(--color-hover);
       }
+    }
+  }
+
+  &__input-search-wrapper {
+    display: flex;
+    align-items: center;
+    @include mdMax {
+      justify-content: center;
     }
   }
 
@@ -134,7 +146,6 @@ export default {
         @include lgMax {
           width: 20rem;
         }
-
         @include mdMax {
           width: 15rem;
         }
@@ -149,10 +160,12 @@ export default {
 
     .dropdown {
       height: 100%;
+
       &__icon {
         top: 14px;
       }
     }
+
     .dropdown__select {
       padding: 10px;
     }

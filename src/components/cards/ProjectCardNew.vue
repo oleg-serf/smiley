@@ -37,7 +37,7 @@
 
     <div class="projects-article__content">
       <h3 class="projects-article__content-title">
-        {{ cutText(project.name, 40) }}
+        {{ cutText(project.name ? project.name : project.title, 40) }}
       </h3>
       <div
           class="projects-article__content-description"
