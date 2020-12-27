@@ -6,13 +6,11 @@
       </div>
       <div class="profile__info container">
         <div class="profile__avatar">
-          <img src="/images/remove-profile_image.jpg">
-          <!--          <span class="profile__avatar-initials">-->
-          <!--            TJ-->
-          <!--          </span>-->
+          <img v-if="user.avatar != null" :src="$settings.images_path.users + 'm_'+ user.avatar"/>
+          <span v-else class="profile__avatar-initials">{{ user.display_name }}</span>
         </div>
         <div class="profile__description">
-          <h1 class="profile__name">Anica Nilise</h1>
+          <h1 class="profile__name">{{ user.display_name }}</h1>
           <div class="profile__job-title">Oxfam - Regional Manager</div>
           <div class="profile__location">London, United Kingdom</div>
           <div class="profile__matches">58 Matches</div>
@@ -84,20 +82,9 @@
             </div>
             <div>
               <h2>About</h2>
-              <div class="icon-block about">
+              <div class="icon-block about" v-if="user.bio">
                 <i class="fa fa-info-circle icon-block__icon"></i>
-                <div class="about__text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum dolor quis arcu gravida,
-                    sed placerat sem euismod. Quisque at pretium odio. Donec vestibulum, nisi in malesuada convallis,
-                    eros
-                    nulla egestas lectus, sed maximus sem elit ullamcorper elit. Donec aliquam tortor sit amet.</p>
-                </div>
-                <div class="about__text--more">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum dolor quis arcu gravida,
-                    sed placerat sem euismod. Quisque at pretium odio. Donec vestibulum, nisi in malesuada convallis,
-                    eros
-                    nulla egestas lectus, sed maximus sem elit ullamcorper elit. Donec aliquam tortor sit amet.</p>
-                </div>
+                <div class="about__text" v-html="user.bio"></div>
               </div>
               <div class="icon-block link">
                 <i class="fa fa-link icon-block__icon"></i>
@@ -107,40 +94,69 @@
                 <i class="fa fa-connectdevelop icon-block__icon"></i>
                 Interests | UN Goals:
               </div>
-              <div class="icon-block share">
+              <div v-if="user.facebook || user.instagram || user.linkedin || user.twitter || user.youtube"
+                   class="icon-block share">
                 <i class="fa fa-share-alt icon-block__icon"></i>
                 Social Media:
                 <ul class="social-share">
-                  <li class="social-share__item">
-                    <a href="" class="social-share__link social-share__link--facebook">
+                  <li class="social-share__item" v-if="user.facebook">
+                    <a :href="user.facebook"
+                       class="social-share__link social-share__link--facebook"
+                       target="_blank">
                       <i class="fa fa-facebook"></i>
                     </a>
                   </li>
-                  <li class="social-share__item">
-                    <a href="" class="social-share__link social-share__link--instagram">
+                  <li class="social-share__item" v-if="user.instagram">
+                    <a :href="user.instagram"
+                       class="social-share__link social-share__link--instagram" target="_blank">
                       <i class="fa fa-instagram"></i>
                     </a>
                   </li>
-                  <li class="social-share__item">
-                    <a href="" class="social-share__link social-share__link--twitter">
+                  <li class="social-share__item" v-if="user.linkedin">
+                    <a :href="user.linkedin"
+                       class="social-share__link social-share__link--linkedin" target="_blank">
+                      <i class="fa fa-linkedin"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item" v-if="user.twitter">
+                    <a :href="user.twitter"
+                       class="social-share__link social-share__link--twitter" target="_blank">
                       <i class="fa fa-twitter"></i>
                     </a>
                   </li>
-                  <li class="social-share__item">
-                    <a href="" class="social-share__link social-share__link--youtube">
+                  <li class="social-share__item" v-if="user.youtube">
+                    <a :href="user.youtube"
+                       class="social-share__link social-share__link--youtube" target="_blank">
                       <i class="fa fa-youtube-play"></i>
                     </a>
                   </li>
+                </ul>
+              </div>
+              <div class="icon-block support" v-if="user.supports_offer && user.supports_offer.length > 0">
+                <i class="fa fa-hand-o-right icon-block__icon"></i>
+                Support offered:<br>
+                <ul>
+                  <li v-for="item in user.supports_offer">{{ item }}</li>
                 </ul>
               </div>
               <div class="icon-block support">
                 <i class="fa fa-hand-o-right icon-block__icon"></i>
                 Support offered:<br>
                 <ul>
-                  <li>Engineering</li>
-                  <li>Entrepreneurship</li>
-                  <li>Finance</li>
-                  <li>Fundraising</li>
+                  <li><strong>Support cat name</strong>
+                    <ul>
+                      <li>support item</li>
+                      <li>support item</li>
+                      <li>support item</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="icon-block support" v-if="user.supports_need && user.supports_need.length > 0">
+                <i class="fa fa-hand-o-right icon-block__icon"></i>
+                Support needed:<br>
+                <ul>
+                  <li v-for="item in user.supports_need">{{ item }}</li>
                 </ul>
               </div>
             </div>
@@ -172,7 +188,31 @@
         </button>
         <div class="tabs__content-item"
              v-show="tab === 'videos'">
-          4
+          <div class="video">
+            <div class="video__grid">
+              <div class="video__item">
+                <iframe class="video__element"
+                        src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+              </div>
+              <div class="video__item">
+                <iframe class="video__element"
+                        src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+              </div>
+              <div class="video__item">
+                <iframe class="video__element"
+                        src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
         </div>
         <button class="tabs__content-button"
                 @click="tab = 'photos'"
@@ -181,7 +221,44 @@
         </button>
         <div class="tabs__content-item"
              v-show="tab === 'photos'">
-          5
+          <div class="gallery">
+            <LightGallery
+                :images="temp.gallery"
+                :index="temp.galleryIndex"
+                :disable-scroll="true"
+                @close="temp.galleryIndex = null"
+            />
+            <h4 class="gallery__title">Gallery 1</h4>
+            <ul class="gallery__grid">
+              <li
+                  v-for="(thumb, thumbIndex) in temp.gallery"
+                  :key="thumbIndex"
+                  @click="temp.galleryIndex = thumbIndex"
+                  class="gallery__item"
+              >
+                <img :src="thumb.url" class="gallery__image">
+              </li>
+            </ul>
+          </div>
+          <div class="gallery">
+            <LightGallery
+                :images="temp.gallery"
+                :index="temp.galleryIndex"
+                :disable-scroll="true"
+                @close="temp.galleryIndex = null"
+            />
+            <h4 class="gallery__title">Gallery 1</h4>
+            <ul class="gallery__grid">
+              <li
+                  v-for="(thumb, thumbIndex) in temp.gallery"
+                  :key="thumbIndex"
+                  @click="temp.galleryIndex = thumbIndex"
+                  class="gallery__item"
+              >
+                <img :src="thumb.url" class="gallery__image">
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -189,19 +266,46 @@
 </template>
 
 <script>
+import axios from "@/axios-auth";
+import {LightGallery} from 'vue-light-gallery';
+
 export default {
   name: "UserProfile",
-  components: {},
+  components: {
+    LightGallery
+  },
   data() {
     return {
       user: {},
       tab: 'about',
+      temp: {
+        gallery: [
+          {url: 'https://images.pexels.com/photos/6102477/pexels-photo-6102477.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
+          {url: 'https://images.pexels.com/photos/5913949/pexels-photo-5913949.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
+          {url: 'https://images.pexels.com/photos/4969882/pexels-photo-4969882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
+          {url: 'https://images.pexels.com/photos/3394293/pexels-photo-3394293.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
+          {url: 'https://images.pexels.com/photos/6070129/pexels-photo-6070129.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
+          {url: 'https://images.pexels.com/photos/6030096/pexels-photo-6030096.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
+        ],
+        galleryIndex: null,
+      },
     };
   },
   methods: {
     activeTab(tab) {
       return tab === this.tab ? 'tabs__navigation-item--active' : '';
     }
+  },
+  mounted() {
+    //  Move api calls to vuex
+    axios
+        .get("/users/" + this.$route.params.slug)
+        .then(response => {
+          // TODO: remove consol logs on production
+          console.log("User profile", response.data);
+          this.user = response.data.user;
+        })
+        .catch(error => console.error(error));
   }
 }
 </script>
@@ -475,6 +579,7 @@ export default {
       @include smMax {
         padding-left: 1rem;
         padding-right: 1rem;
+        padding-bottom: 1rem;
       }
     }
 
@@ -504,6 +609,94 @@ export default {
   }
 }
 
+.video {
+  &__grid {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+
+    @include smMax {
+      grid-gap: .5rem;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    height: 0px;
+    padding-top: 56.25%;
+    border-radius: .5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__element {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.gallery {
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  &__title {
+    @include font-size(1.5rem);
+    font-weight: bolder;
+    margin-bottom: 1.5rem;
+
+    @include smMax {
+      margin-bottom: .8rem;
+      @include font-size(1.2rem);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+
+    @include smMax {
+      grid-gap: .5rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__item {
+    width: 100%;
+    height: 0px;
+    padding-top: 56.25%;
+    border-radius: .5rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow .2s;
+
+    &:hover {
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, .3);
+    }
+  }
+
+  &__image {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .2s;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
 // TODO: Move to global
 .social-share {
   display: inline-flex;
@@ -524,7 +717,7 @@ export default {
     transition: background-color .2s, box-shadow .2s;
 
     &:hover {
-      box-shadow: 0px 0px 6px rgba(0,0,0,.5);
+      box-shadow: 0px 0px 6px rgba(0, 0, 0, .5);
     }
 
     &--facebook {
@@ -532,6 +725,14 @@ export default {
 
       &:hover {
         background-color: lighten(#134BCE, 15%);
+      }
+    }
+
+    &--linkedin {
+      background-color: #0A66C2;
+
+      &:hover {
+        background-color: lighten(#0A66C2, 15%);
       }
     }
 
@@ -579,8 +780,8 @@ export default {
   }
 
   .social-share {
-    margin-left: -.5rem;
     margin-top: .5rem;
+    margin-left: .5rem;
   }
 }
 
