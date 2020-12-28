@@ -17,7 +17,7 @@
                     Close menu
                   </button>
                 </div>
-                <div class="sidebar__item sidebar__item--actions">
+                <div class="sidebar__item sidebar__item--actions" :class="{'sidebar__item--logged-in' : loggedIn}">
                   <template v-if="!loggedIn">
                     <h3>Join Us / Login</h3>
                   </template>
@@ -491,10 +491,11 @@ header {
         }
       }
 
-      &--actions {
+      &--logged-in {
         display: flex;
         align-items: center;
-
+      }
+      &--actions {
         .user-avatar {
           width: 3rem;
           height: 3rem;
