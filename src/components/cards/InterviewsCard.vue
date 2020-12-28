@@ -53,7 +53,7 @@
           v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 50, 'description')"
       ></div>
       <div class="news-article__content-metadata">
-        <span>Lorem</span> | ipsum | {{ dateAgo(interview.published_at) }}
+        <span>Interview</span> | ipsum | {{ dateAgo(interview.published_at) }}
       </div>
     </div>
 

@@ -44,7 +44,7 @@
           v-html="cutText(project.description, 50, 'description')"
       ></div>
       <div class="projects-article__content-metadata">
-        <span>Lorem</span> | ipsum | {{ dateAgo('2020-12-14 13:30:00') }}
+        <span>Project</span> | ipsum | {{ dateAgo('2020-12-14 13:30:00') }}
       </div>
     </div>
 
