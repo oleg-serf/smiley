@@ -65,7 +65,6 @@ export default {
         slidesPerView: 1,
         slidesPerGroup: 1,
         spaceBetween: 25,
-        loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
           nextEl: "",
@@ -119,27 +118,28 @@ export default {
   position: absolute;
   cursor: pointer;
   z-index: 5;
-  top: 38%;
+  top: 50%;
+  transform: translate(0, -49%);
 }
 
 .news-gallery-button-prev {
   @include custom-max-width(1600px) {
     left: 0;
-    top: 38%;
+    top: 50%;
     opacity: 0.8;
   }
-
+  transform: translate(0, -49%);
   left: -80px;
 }
 
 .news-gallery-button-next {
   @include custom-max-width(1600px) {
     right: 0;
-    top: 38%;
+    top: 50%;
     opacity: 0.8;
   }
-
+  transform: translate(0, -53%) rotate(180deg);
   right: -80px;
-  transform: rotate(180deg);
+  //transform: rotate(180deg);
 }
 </style>

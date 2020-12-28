@@ -53,6 +53,10 @@ export default {
   &:focus {
     outline: none;
   }
+
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .yellow {

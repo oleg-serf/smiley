@@ -31,15 +31,14 @@
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="news-article-category__description"
-          >UN Goal 0{{
+          <span v-if="showDescription" class="news-article-category__description">
+            UN Goal 0{{
               article.goals != null && article.goals.length > 0
                   ? article.goals[0].prefix
                   : ""
             }} | <br>
             Quality Education
-          </span
-          >
+          </span>
         </transition>
       </div>
     </div>
@@ -142,7 +141,8 @@ export default {
             break;
           }
         }
-        return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
+        let moreLink = `<router-link :to="{ name: 'news-item', params: { slug: ${this.article.slug} }}"><b>More</b>></router-link>`;
+        return text.slice(0, limit).trim() + "..." + (stringName === 'description' ? moreLink : "");
       }
 
       return text;

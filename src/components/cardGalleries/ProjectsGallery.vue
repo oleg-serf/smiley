@@ -3,15 +3,20 @@
     <template v-if="withSlider">
       <ButtonArrow
           :id="'news-gallery-button-prev-' + id"
+          :style="[prevButtonLeft ? {left: prevButtonLeft} : '']"
           class="news-gallery-button news-gallery-button-prev"
       />
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="project in projects" :key="project.slug">
-          <ProjectCardNew class="news-gallery__card" :project="project"/>
+          <ProjectCardNew
+              class="news-gallery__card"
+              :button-text="buttonText"
+              :project="project"/>
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
           :id="'news-gallery-button-next-' + id"
+          :style="[nextButtonRight !== 0 ? {right: nextButtonRight} : '']"
           class="news-gallery-button news-gallery-button-next"
       />
     </template>
@@ -46,6 +51,14 @@ export default {
     buttonText: {
       type: String,
       default: 'View Project'
+    },
+    prevButtonLeft: {
+      type: Number,
+      default: 0
+    },
+    nextButtonRight: {
+      type: Number,
+      default: 0
     }
   },
   components: {
@@ -120,27 +133,27 @@ export default {
   position: absolute;
   cursor: pointer;
   z-index: 5;
-  top: 38%;
+  top: 50%;
+  transform: translate(0, -49%);
 }
 
 .news-gallery-button-prev {
   @include custom-max-width(1600px) {
     left: -100px;
-    top: 38%;
+    top: 50%;
     opacity: 0.8;
   }
-
+  transform: translate(0, -49%);
   left: -80px;
 }
 
 .news-gallery-button-next {
   @include custom-max-width(1600px) {
     right: -100px;
-    top: 38%;
+    top: 50%;
     opacity: 0.8;
   }
-
+  transform: translate(0, -53%) rotate(180deg);
   right: -80px;
-  transform: rotate(180deg);
 }
 </style>

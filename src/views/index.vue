@@ -1,4 +1,15 @@
-<script src="../main.js"></script>
+<script>
+import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
+import NewsGallery from "@/components/news/NewsGallery";
+import VButton from "@/components/app/VButton";
+import EventsGallery from "@/components/events/EventsGallery";
+import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
+
+export default {
+  components: {ProjectsGallery, InterviewsGallery, EventsGallery, VButton, NewsGallery, BottomBorderedTitleWithSearch}
+}
+</script>
 <template>
   <div class="home">
     <hero video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
@@ -12,47 +23,180 @@
       </template>
     </hero>
 
-    <section class="section container">
-      <div class="section__title">
-        <h2>Featured News <span>| Editors pick</span></h2>
-        <input type="search" class="section__search" placeholder="Search news">
-      </div>
-      <div class="section__border"></div>
-    </section>
+    <!--    <section class="section container">
+          <div class="section__title">
+            <h2>Featured News <span>| Editors pick</span></h2>
+            <input type="search" class="section__search" placeholder="Search news">
+          </div>
+          <div class="section__border"></div>
+        </section>
 
-    <section class="news-grid container" v-if="newsList.length > 0">
-      <news-card-new
-          v-for="article in newsList"
-          :key="article.slug"
-          :article="article"/>
-    </section>
+        <section class="news-grid container" v-if="newsList.length > 0">
+          <news-card-new
+              v-for="article in newsList"
+              :key="article.slug"
+              :article="article"/>
+        </section>-->
+    <div class="cards-sections-wrapper">
+      <!--  NEWS SECTION   -->
+      <section class="news-section" v-if="newsList.length > 0">
+        <bottom-bordered-title-with-search
+            :title="'<b>Featured News</b>| Editors pick'"
+            :with-search="true"
+            :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
+            search-text="Search events..."
+        ></bottom-bordered-title-with-search>
+        <news-gallery
+            :news="newsList"
+            with-slider
+            :prev-button-left="-80"
+            :next-button-right="-80"
+        ></news-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: 'news' }"
+          >
+            More News
+          </router-link
+          >
+        </VButton>
+      </section>
 
-    <section class="section container">
-      <div class="section__title">
-        <h2>Upcoming events</h2>
-        <input type="search" class="section__search" placeholder="Search events">
-      </div>
-      <div class="section__border"></div>
-    </section>
+      <!--  EVENTS SECTION  -->
+      <!--   TEMPORARY HIDDEN <API> NEEDED   -->
+      <section class="events-section" v-if="false">
+        <bottom-bordered-title-with-search
+            :title="'<b>Upcoming Events</b>'"
+            :with-search="true"
+            :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
+            search-text="Search events..."
+        ></bottom-bordered-title-with-search>
+        <events-gallery
+            :events="banners.talks"
+            with-slider
+            :prev-button-left="-80"
+            :next-button-right="-80"
+            :slides-per-view="2"
+        ></events-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: 'talks' }"
+          >
+            More Events
+          </router-link
+          >
+        </VButton>
+      </section>
 
-    <section class="events-grid container" v-if="eventList.length > 0">
-      <event-card-new v-for="event in eventList" :key="'event-'+event.slug" :event="event"/>
-    </section>
+      <!--  INTERVIEWS SECTION  -->
+      <section class="news-section" v-if="newsList.length > 0">
+        <bottom-bordered-title-with-search
+            :title="'<b>Featured Interviews</b>'"
+            :with-search="true"
+            :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
+            search-text="Search interviews..."
+        ></bottom-bordered-title-with-search>
+        <interviews-gallery
+            :interviews="newsList"
+            with-slider
+            :prev-button-left="-80"
+            :next-button-right="-80"
+            button-text="More"
+        ></interviews-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: 'interviews' }"
+          >
+            More Interviews
+          </router-link
+          >
+        </VButton>
+      </section>
 
-    <section class="section container">
-      <div class="section__title">
-        <h2>Daily News</h2>
-        <input type="search" class="section__search" placeholder="Search news">
-      </div>
-      <div class="section__border"></div>
-    </section>
+      <!--  NETWORK SECTION  -->
+      <section class="news-section" v-if="projects.length > 0">
+        <bottom-bordered-title-with-search
+            :title="'<b>Smiley Movement Network |</b> Latest Projects & Campaigns'"
+            :with-search="true"
+            :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
+            search-text="Search projects..."
+        ></bottom-bordered-title-with-search>
+        <projects-gallery
+            :projects="projects"
+            with-slider
+            :prev-button-left="-80"
+            :next-button-right="-80"
+            button-text="More"
+        ></projects-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: 'network' }"
+          >
+            Join Network
+          </router-link
+          >
+        </VButton>
+      </section>
 
-    <section class="news-grid container" v-if="newsList.length > 0">
-      <news-card-new
-          v-for="article in newsList"
-          :key="article.slug"
-          :article="article"/>
-    </section>
+      <section class="section container">
+        <div class="section__title">
+          <h2>Upcoming events</h2>
+          <input type="search" class="section__search" placeholder="Search events">
+        </div>
+        <div class="section__border"></div>
+      </section>
+
+      <section class="events-grid container" v-if="eventList.length > 0">
+        <event-card-new v-for="event in eventList" :key="'event-'+event.slug" :event="event"/>
+      </section>
+
+      <section class="section container">
+        <div class="section__title">
+          <h2>Daily News</h2>
+          <input type="search" class="section__search" placeholder="Search news">
+        </div>
+        <div class="section__border"></div>
+      </section>
+
+      <section class="news-grid container" v-if="newsList.length > 0">
+        <news-card-new
+            v-for="article in newsList"
+            :key="article.slug"
+            :article="article"/>
+      </section>
+    </div>
 
     <subscribe-form/>
     <Footer/>
@@ -63,9 +207,15 @@
 // Tools
 import axios from "@/axios-auth";
 // Global components
+import {VButton} from "@/components/app";
+import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import SubscribeForm from "@/components/forms/Subscribe.vue";
 import Footer from "@/components/Footer.vue";
 // Page components
+import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
+import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+import EventsGallery from "@/components/events/EventsGallery";
+import NewsGallery from "@/components/news/NewsGallery";
 import Hero from "@/components/homepage/Hero.vue";
 import Banner from "@/components/homepage/Banner.vue";
 import NewsCard from "@/components/cards/NewsCard.vue";
@@ -79,6 +229,12 @@ import VimeoVideo from "@/components/homepage/VimeoVideo.vue";
 export default {
   name: "home",
   components: {
+    ProjectsGallery,
+    InterviewsGallery,
+    EventsGallery,
+    VButton,
+    NewsGallery,
+    BottomBorderedTitleWithSearch,
     Hero,
     NewsCardNew,
     NewsCard,
@@ -97,6 +253,7 @@ export default {
       events: [],
       eventList: [],
       newsList: [],
+      projects: [],
 
       goals: [],
 
@@ -115,7 +272,7 @@ export default {
               "Connect with changemakers and get inspired to take positive action",
           title: "MATCHMAKER FOR GOOD ™"
         },
-        talks: {},
+        talks: [],
         goals: {}
       },
       sections: [
@@ -188,7 +345,7 @@ export default {
 
           this.banners.news = res.data.page_sections.smiley_news[0];
           // this.banners.network = res.data.page_sections.smiley_network[0];
-          this.banners.talks = res.data.page_sections.smiley_talks[0];
+          this.banners.talks = res.data.page_sections.smiley_talks;
           this.banners.goals = res.data.page_sections.un_goals[0];
 
           this.videos = res.data.page_sections.bottom_videos;
@@ -207,11 +364,28 @@ export default {
           this.$store.dispatch('meta/setMeta', metaPayload);
         })
         .catch(error => console.log(error));
+    axios
+        .get("/projects")
+        .then((res) => {
+          this.projects = res.data.projects;
+        })
+        .catch((error) => console.error(error));
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.cards-sections-wrapper {
+  padding: 0 100px;
+  text-align: center;
+
+  .news-section {
+    .more__button {
+      margin: 2rem auto;
+    }
+  }
+}
+
 .section {
   &__title {
     display: flex;

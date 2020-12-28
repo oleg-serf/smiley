@@ -2,14 +2,14 @@
   <div class="title-with-search">
     <h3 :style="styleObject" class="title-with-search__title" :class="[hoverEffect ? 'hover-effect' : '']"
         v-html="title"></h3>
-    <div style="display: flex; align-items: center;">
+    <div class="title-with-search__input-search-wrapper">
       <input
           v-if="withSearch"
           :style="[withDropdown ? {'margin-right': '1rem'} : {}]"
           class="title-with-search__search-input"
           :class="[searchExpandable ? 'expandable' : '']"
           type="text"
-          placeholder="Search Topics..."/>
+          :placeholder="searchText"/>
       <div class="dropdown-wrapper" v-if="withDropdown">
         <VDropdown
             for-goals
@@ -35,6 +35,10 @@ export default {
     VDropdown
   },
   props: {
+    searchText: {
+      type: String,
+      default: 'Search topics...'
+    },
     titleClasses: {
       type: String,
       default: ''
@@ -93,8 +97,12 @@ export default {
   padding: 16px 0;
   border-bottom: 2px solid #ffe300;
   display: flex;
-  margin: 30px 0;
+  margin: 30px 0 15px 0;
   justify-content: space-between;
+  @include mdMax {
+    display: block;
+    text-align: center;
+  }
 
   &__title {
     color: black;
@@ -108,6 +116,14 @@ export default {
       &:hover {
         color: var(--color-hover);
       }
+    }
+  }
+
+  &__input-search-wrapper {
+    display: flex;
+    align-items: center;
+    @include mdMax {
+      justify-content: center;
     }
   }
 
@@ -130,7 +146,6 @@ export default {
         @include lgMax {
           width: 20rem;
         }
-
         @include mdMax {
           width: 15rem;
         }
@@ -145,10 +160,12 @@ export default {
 
     .dropdown {
       height: 100%;
+
       &__icon {
         top: 14px;
       }
     }
+
     .dropdown__select {
       padding: 10px;
     }
