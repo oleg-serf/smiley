@@ -4,10 +4,10 @@
       <p class="footer__trademark">Powered by Smiley Movement. A philanthropic venture sponsored by Smiley.</p>
       <div class="footer__logos-holder">
         <router-link :to="{name: 'home'}" class="footer__link">
-          <img src="/images/main/logo-smiley-1.png"/>
+          <img src="/images/main/logo-smiley-1.svg"/>
         </router-link>
         <router-link :to="{name: 'home'}" class="footer__link">
-          <img src="/images/main/logo-smiley-2.png"/>
+          <img src="/images/main/logo-smiley-2.svg"/>
         </router-link>
       </div>
       <p class="footer__copyrights">All rights reserved Smiley News 2020</p>
