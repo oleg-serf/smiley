@@ -13,7 +13,7 @@
               <div id="mySidenav" class="sidenav">
                 <button @click="closeNav"
                         style="font-size: 100%; font-family: inherit; border: 0; padding: 0; background-color: #ffffff;">
-                  <span class="closebtn">&times;</span>
+                  <span class="closebtn">&#x2715;</span>
                 </button>
                 <router-link class="sideNavLink" :to="{name: 'news'}">News</router-link>
                 <router-link class="sideNavLink" :to="{name: 'talks'}">Events</router-link>
