@@ -5,25 +5,117 @@
         <div class="header__grid-top">
           <div class="header__column header__column--actions">
             <div class="actions">
-              <button @click="openNav"
+              <button @click="sidebar = true"
                       style="font-size: 100%; font-family: inherit; border: 0; padding: 0; background-color: #ffffff;">
-                <img src="/images/main/icon-bars.svg" class="header__bars"/>
+                <i class="fa fa-bars"></i>
               </button>
-              <!--     HEADER BAR MENU       -->
-              <div id="mySidenav" class="sidenav">
-                <button @click="closeNav"
-                        style="font-size: 100%; font-family: inherit; border: 0; padding: 0; background-color: #ffffff;">
-                  <span class="closebtn">&#x2715;</span>
-                </button>
-                <router-link class="sideNavLink" :to="{name: 'news'}">News</router-link>
-                <router-link class="sideNavLink" :to="{name: 'talks'}">Events</router-link>
-                <router-link class="sideNavLink" :to="{name: 'interviews'}">Interviews</router-link>
-                <router-link class="sideNavLink" :to="{name: 'chat'}">Chatrooms</router-link>
-                <!--YELLOW LINE-->
-                <router-link class="sideNavLink after-yellow-bottom" :to="{name: 'network'}">Network</router-link>
-                <router-link class="sideNavLink" :to="{name: 'goals'}">About us</router-link>
-                <router-link class="sideNavLink" :to="{name: 'goals'}">UN Goals</router-link>
-                <router-link class="sideNavLink" :to="{name: 'contact'}">Contact us</router-link>
+              <!--              New whole menu-->
+              <div class="sidebar" :class="{'active' : sidebar}">
+                <div class="sidebar__item sidebar__item--close">
+                  <button @click="sidebar = false">
+                    <i class="fa fa-arrow-left"></i>
+                    Close menu
+                  </button>
+                </div>
+                <div class="sidebar__item sidebar__item--actions">
+                  <template v-if="!loggedIn">
+                    <h3>Join Us / Login</h3>
+                  </template>
+                  <template v-if="loggedIn">
+                    <router-link :to="{name: 'feed'}" class="user-avatar">
+                      <template v-if="user.avatar">
+                        <img :src="$settings.images_path.users + 's_' + user.avatar" class="user__avatar"/>
+                      </template>
+                      <template v-else>
+                        <img src="/images/main/icon-profile.svg" class="user-avatar"/>
+                      </template>
+                    </router-link>
+                  </template>
+                  <template v-if="loggedIn">
+                    <router-link :to="{name: 'feed'}" class="user-initials">{{ user.initials }}</router-link>
+                  </template>
+                  <template v-else>
+                    <ul class="mobile-menu">
+                      <li class="mobile-menu__item">
+                        <router-link :to="{name: 'register'}" class="mobile-menu__link">
+                          <i class="fa fa-address-book-o"></i>
+                          Register
+                        </router-link>
+                      </li>
+                      <li class="mobile-menu__item">
+                        <router-link :to="{name: 'login'}" class="mobile-menu__link">
+                          <i class="fa fa-user-circle-o"></i>
+                          Login
+                        </router-link>
+                      </li>
+                    </ul>
+                  </template>
+                </div>
+                <div class="sidebar__item sidebar__item--menu">
+                  <h3>Navigation:</h3>
+                  <ul class="mobile-menu">
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'news'}" class="mobile-menu__link">News</router-link>
+                    </li>
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'talks'}" class="mobile-menu__link">Events</router-link>
+                    </li>
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'interviews'}" class="mobile-menu__link">Interviews</router-link>
+                    </li>
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'chat'}" class="mobile-menu__link">Chatrooms</router-link>
+                    </li>
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'network'}" class="mobile-menu__link">Network</router-link>
+                    </li>
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'goals'}" class="mobile-menu__link">About us</router-link>
+                    </li>
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'goals'}" class="mobile-menu__link">UN Goals</router-link>
+                    </li>
+                    <li class="mobile-menu__item">
+                      <router-link :to="{name: 'contact'}" class="mobile-menu__link">Contact us</router-link>
+                    </li>
+                  </ul>
+                </div>
+                <div class="sidebar__item sidebar__item--share">
+                  <h3>Our social networks:</h3>
+                  <ul class="social-share">
+                    <li class="social-share__item" v-if="social.facebook">
+                      <a :href="social.facebook"
+                         class="social-share__link social-share__link--facebook"
+                         target="_blank">
+                        <i class="fa fa-facebook"></i>
+                      </a>
+                    </li>
+                    <li class="social-share__item" v-if="social.instagram">
+                      <a :href="social.instagram"
+                         class="social-share__link social-share__link--instagram" target="_blank">
+                        <i class="fa fa-instagram"></i>
+                      </a>
+                    </li>
+                    <li class="social-share__item" v-if="social.linkedin">
+                      <a :href="social.linkedin"
+                         class="social-share__link social-share__link--linkedin" target="_blank">
+                        <i class="fa fa-linkedin"></i>
+                      </a>
+                    </li>
+                    <li class="social-share__item" v-if="social.twitter">
+                      <a :href="social.twitter"
+                         class="social-share__link social-share__link--twitter" target="_blank">
+                        <i class="fa fa-twitter"></i>
+                      </a>
+                    </li>
+                    <li class="social-share__item" v-if="social.youtube">
+                      <a :href="social.youtube"
+                         class="social-share__link social-share__link--youtube" target="_blank">
+                        <i class="fa fa-youtube-play"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
               <template v-if="loggedIn">
                 <router-link :to="{name: 'feed'}" class="home-link">
@@ -64,49 +156,44 @@
               <img src="/images/main/smiley-news-logo.svg" alt="Smiley Movement"/>
             </router-link>
           </div>
-          <nav class="header__column header__column--socials">
-            <ul class="social">
-              <li class="social__item">
-                <a :href="social.instagram" class="social__icon">
-                  <img
-                      src="/images/main/social-instagram.svg"
-                      class="social__image"
-                      alt="SmileyMovement on Instagram"
-                      title="SmileyMovement on Instagram"/>
+          <div class="header__column header__column--socials">
+            <ul class="social-share">
+              <li class="social-share__item" v-if="social.facebook">
+                <a :href="social.facebook"
+                   class="social-share__link social-share__link--facebook"
+                   target="_blank">
+                  <i class="fa fa-facebook"></i>
                 </a>
               </li>
-              <li class="social__item">
-                <a :href="social.youtube" class="social__icon">
-                  <img
-                      src="/images/main/social-youtube.svg"
-                      class="social__image"
-                      alt="SmileyMovement on YouTube"
-                      title="SmileyMovement on YouTube"/>
+              <li class="social-share__item" v-if="social.instagram">
+                <a :href="social.instagram"
+                   class="social-share__link social-share__link--instagram" target="_blank">
+                  <i class="fa fa-instagram"></i>
                 </a>
               </li>
-              <li class="social__item">
-                <a :href="social.facebook" class="social__icon">
-                  <img
-                      src="/images/main/social-facebook.svg"
-                      class="social__image"
-                      alt="SmileyMovement on Facebook"
-                      title="SmileyMovement on Facebook"/>
+              <li class="social-share__item" v-if="social.linkedin">
+                <a :href="social.linkedin"
+                   class="social-share__link social-share__link--linkedin" target="_blank">
+                  <i class="fa fa-linkedin"></i>
                 </a>
               </li>
-              <li class="social__item">
-                <a :href="social.twitter" class="social__icon">
-                  <img
-                      src="/images/main/social-twitter.svg"
-                      class="social__image"
-                      alt="SmileyMovement on Twitter"
-                      title="SmileyMovement on Twitter"/>
+              <li class="social-share__item" v-if="social.twitter">
+                <a :href="social.twitter"
+                   class="social-share__link social-share__link--twitter" target="_blank">
+                  <i class="fa fa-twitter"></i>
                 </a>
               </li>
-              <li class="social__item">
-                <img src="/images/main/icon-search.svg"/>
+              <li class="social-share__item" v-if="social.youtube">
+                <a :href="social.youtube"
+                   class="social-share__link social-share__link--youtube" target="_blank">
+                  <i class="fa fa-youtube-play"></i>
+                </a>
               </li>
             </ul>
-          </nav>
+            <button class="search-trigger" @click="search.trigger = true">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
       <div class="container">
@@ -273,6 +360,25 @@
           </li>
         </ul>
       </div>
+      <div class="search-form" :class="{'active' : search.trigger}">
+        <div class="search-form__title">What do you want to find?</div>
+        <form class="container" @submit.prevent="find">
+          <button type="reset" class="search-form__reset" @click="search.trigger = false;">
+            <i class="fa fa-close"></i>
+          </button>
+          <input
+              type="search"
+              class="search-form__input"
+              placeholder="Your search request..."
+              aria-label="Search through site content"
+              required
+              minlength="2"
+              v-model="search.value">
+          <button class="search-form__submit" type="submit">
+            Search <i class="fa fa-search"></i>
+          </button>
+        </form>
+      </div>
     </header>
   </div>
 </template>
@@ -284,6 +390,11 @@ export default {
   name: "Header",
   data() {
     return {
+      sidebar: false,
+      search: {
+        trigger: false,
+        value: '',
+      },
       social: {
         facebook: process.env.VUE_APP_SOCIAL_FACEBOOK,
         linkedin: process.env.VUE_APP_SOCIAL_LINKEDIN,
@@ -321,15 +432,15 @@ export default {
     find() {
       router.push({
         name: "search",
-        params: {keyword: this.search}
+        params: { keyword: this.search.value }
       });
-      this.searchActive = false;
+      this.search.trigger = false;
     },
   },
   watch: {
     '$route.path': {
       handler() {
-        this.closeNav()
+        this.sidebar = false;
       }
     }
   }
@@ -343,6 +454,148 @@ header {
   position: relative;
   z-index: 10;
   background: #fff;
+
+  .sidebar {
+    position: fixed;
+    overflow-x: hidden;
+    padding: 1.5rem 2rem;
+    width: 100%;
+    max-width: 260px;
+    height: 100%;
+    background-color: #fff;
+    z-index: 20;
+    left: -100%;
+    top: 0px;
+    transition: left .2s;
+    box-shadow: 3px 0px 6px rgba(0,0,0,.5);
+
+    &.active {
+      left: 0px;
+    }
+
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: 1.5rem;
+      }
+
+      &--close {
+        button {
+          border: none;
+          background: transparent;
+          font-size: .8rem;
+          padding: 0px;
+
+          i {
+            margin-right: 1rem;
+          }
+        }
+      }
+
+      &--actions {
+        display: flex;
+        align-items: center;
+
+        .user-avatar {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
+          margin-right: 1.5rem;
+          box-shadow: 0px 0px 6px rgba(0,0,0,.3);
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .user-initials {
+          @include font-size(1.25rem);
+          color: #000;
+          text-decoration: none !important;
+        }
+      }
+
+      &--share {
+        h3 {
+          margin-bottom: 1rem;
+        }
+
+        .social-share {
+          margin-bottom: 0px;
+          display: flex;
+          margin-left: -.3rem;
+          margin-right: -.3rem;
+
+          li {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: .3rem;
+            margin-right: .3rem;
+            cursor: pointer;
+            transition: background-color .2s, transform .2s, color .2s;
+
+            &:hover,
+            &:active {
+              background-color: #fff;
+            }
+
+            &:active {
+              transform: translate(1px, 1px);
+            }
+          }
+
+          a {
+            color: #fff;
+            @include font-size(1.2rem);
+            transition: color .2s;
+
+            &:hover,
+            &:active {
+              color: #000;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mobile-menu {
+    display: inline-flex;
+    flex-direction: column;
+
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: .5rem;
+      }
+
+      padding-left: 1.5rem;
+      position: relative;
+
+      &::before {
+        content: '';
+        width: .25rem;
+        height: .25rem;
+        top: 50%;
+        left: 0px;
+        transform: translateY(-50%);
+        background: #000;
+        display: block;
+        position: absolute;
+        border-radius: 50%;
+      }
+    }
+
+    &__link {
+      color: #000;
+      text-decoration: none !important;
+    }
+  }
 
   .sidenav {
     font-family: "Gotham Bold", sans-serif;
@@ -465,6 +718,17 @@ header {
         flex-direction: row;
         align-items: center;
       }
+
+      button {
+        @include font-size(1.5rem);
+        margin-right: 1rem;
+      }
+
+      .text-link {
+        @include lgMax {
+          display: none;
+        }
+      }
     }
 
     &--socials {
@@ -472,12 +736,84 @@ header {
 
       ul {
         margin-bottom: 0px;
+        display: flex;
+
+        @include lgMax {
+          display: none;
+        }
+      }
+
+      li {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background-color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: .3rem;
+        margin-right: .3rem;
+        cursor: pointer;
+        transition: background-color .2s, transform .2s, color .2s;
+
+        &:hover,
+        &:active {
+          background-color: #fff;
+        }
+
+        &:active {
+          transform: translate(1px, 1px);
+        }
+      }
+
+      a {
+        color: #fff;
+        @include font-size(1.2rem);
+        transition: color .2s;
+
+        &:hover,
+        &:active {
+          color: #000;
+        }
       }
     }
 
     &--logo {
       justify-content: center;
+
+      img {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+      }
     }
+
+    .search-trigger {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include font-size(1.2rem);
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: #000;
+      cursor: pointer;
+      transition: background-color .2s, transform .2s, color .2s;
+      margin-left: .2rem;
+
+      &:hover,
+      &:active {
+        background-color: #000;
+        color: #fff;
+      }
+
+      &:active {
+        transform: translate(1px, 1px);
+      }
+    }
+
   }
 
   &__bars {
@@ -526,6 +862,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include lgMax {
+    display: none;
+  }
 
   &__item {
     position: relative;
@@ -611,4 +951,85 @@ header {
     }
   }
 }
+
+.search-form {
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #000;
+  transition: opacity .2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  opacity: 0;
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    //align-items: center;
+  }
+
+  &__title {
+    color: #fff;
+    @include font-size(1.2rem);
+    text-align: center;
+    margin-bottom: .5rem;
+  }
+
+  &__input {
+    flex: 1;
+    width: auto;
+    padding: .5rem 1rem;
+    font-size: 16px;
+    border: none;
+  }
+
+  &__reset {
+    width: 2rem;
+    height: 2.625rem;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    transition: color .2s, background-color .2s;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      background: #fff;
+      color: #000;
+    }
+  }
+
+  &__submit {
+    background-color: #eeb400;
+    color: #fff;
+    height: 2.625rem;
+    border: none;
+    padding: 0px 1rem;
+
+    @include smMax {
+      font-size: 0px;
+    }
+
+    i {
+      margin-left: .5rem;
+
+      @include smMax {
+        font-size: 16px;
+        margin-left: 0px;
+      }
+    }
+  }
+}
+
 </style>
