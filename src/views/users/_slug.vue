@@ -262,17 +262,25 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <activity-card type="video"></activity-card>
+      <activity-card type="image" source="/images/remove-profile-news.jpg"></activity-card>
+      <activity-card type="image" source="/images/remove-profile_background.jpg"></activity-card>
+    </div>
   </section>
 </template>
 
 <script>
 import axios from "@/axios-auth";
+import ActivityCard from "@/components/cards/ActivityCard";
+
 import {LightGallery} from 'vue-light-gallery';
 
 export default {
   name: "UserProfile",
   components: {
-    LightGallery
+    ActivityCard,
+    LightGallery,
   },
   data() {
     return {
@@ -510,6 +518,8 @@ export default {
 }
 
 .tabs {
+  margin-bottom: 1.5rem;
+
   &__navigation {
     display: flex;
     justify-content: space-between;
@@ -714,7 +724,11 @@ export default {
     border-radius: 50%;
     color: #fff !important;
     text-decoration: none !important;
-    transition: background-color .2s, box-shadow .2s;
+    transition: background-color .2s, box-shadow .2s, transform .2s;
+
+    &:active {
+      transform: translate(1px, 1px);
+    }
 
     &:hover {
       box-shadow: 0px 0px 6px rgba(0, 0, 0, .5);
