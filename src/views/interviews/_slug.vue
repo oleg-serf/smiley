@@ -14,7 +14,7 @@
               class="article-header__image"
           />
           <div class="article-header__metadata">
-            Lorem | {{ post.published_at }} | {{ comments.length }} Comments
+            Interview | {{ post.published_at }} | {{ comments.length }} Comments
           </div>
           <div class="article-header__sharing">
             <div class="article-header__sharing-goals">
