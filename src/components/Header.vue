@@ -500,7 +500,6 @@ header {
           width: 3rem;
           height: 3rem;
           border-radius: 50%;
-          margin-right: 1.5rem;
           box-shadow: 0px 0px 6px rgba(0,0,0,.3);
 
           img {
@@ -838,9 +837,12 @@ header {
 }
 
 .home-link {
+  margin-right: 1.5rem;
+
   img {
     max-width: 320px;
     height: auto;
+    margin: 0px;
   }
 }
 
