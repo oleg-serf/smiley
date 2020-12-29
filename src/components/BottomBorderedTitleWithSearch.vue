@@ -47,6 +47,10 @@ export default {
       // SHOULD BE STRING HTML FOR V-HTML
       type: String
     },
+    titleFontSize: {
+      type: Number,
+      default: 0
+    },
     withSearch: {
       type: Boolean,
       default: true
@@ -84,8 +88,14 @@ export default {
   * COMPUTED */
   computed: {
     styleObject() {
+      if (this.titleFontSize > 0) {
+        return {
+          '--color-hover': this.hoverColor,
+          'font-size': `${this.titleFontSize}px`
+        }
+      }
       return {
-        '--color-hover': this.hoverColor
+        '--color-hover': this.hoverColor,
       }
     }
   }

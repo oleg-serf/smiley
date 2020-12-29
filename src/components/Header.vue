@@ -21,7 +21,7 @@
                 <router-link class="sideNavLink" :to="{name: 'chat'}">Chatrooms</router-link>
                 <!--YELLOW LINE-->
                 <router-link class="sideNavLink after-yellow-bottom" :to="{name: 'network'}">Network</router-link>
-                <router-link class="sideNavLink" :to="{name: 'goals'}">About us</router-link>
+                <router-link class="sideNavLink" :to="{name: 'story'}">About us</router-link>
                 <router-link class="sideNavLink" :to="{name: 'goals'}">UN Goals</router-link>
                 <router-link class="sideNavLink" :to="{name: 'contact'}">Contact us</router-link>
               </div>

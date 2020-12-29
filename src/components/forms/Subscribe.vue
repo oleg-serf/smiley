@@ -67,13 +67,17 @@ export default {
       margin: 0 auto;
 
       @include mdMax {
+        display: flex;
+        flex-direction: column;
+      }
+      /*@include mdMax {
         grid-template-columns: repeat(2, 1fr);
         max-width: 540px;
       }
       @include smMax {
         grid-template-columns: 1fr;
         max-width: 420px;
-      }
+      }*/
     }
 
     &__input {
