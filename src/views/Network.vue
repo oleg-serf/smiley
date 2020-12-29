@@ -1,13 +1,18 @@
 <template>
   <div class="network-page">
     <div class="header">
-      <iframe
-          class="header-video"
-          width="100%"
-          height="775"
-          src="https://www.youtube.com/embed/4b33NTAuF5E"
-      >
-      </iframe>
+      <!--      <iframe
+                class="header-video"
+                width="100%"
+                height="775"
+                src="https://www.youtube.com/embed/4b33NTAuF5E"
+            >
+            </iframe>-->
+      <img
+          src="/img/network_main.png"
+          alt="goalsImg"
+          title="Goals"
+      />
     </div>
     <a class="cta cta--solid-yellow" href="/login">Sign up / Log in</a>
     <div class="network-page__content-wrapper">
@@ -172,7 +177,7 @@ export default {
     },
   },
   computed: {
-    isProjectBtnHovered () {
+    isProjectBtnHovered() {
       return this.projectsBtnHovered
     }
   },
@@ -237,12 +242,14 @@ export default {
     color: #000;
   }
 }
+
 .network-page {
   .header {
     margin-bottom: 4rem;
 
-    .header-video {
-      border: none;
+    img {
+      width: 100%;
+      max-height: 700px;
     }
   }
 
@@ -266,6 +273,7 @@ export default {
 
 .event__button {
   margin-top: 2rem;
+
   .event__button-link {
     display: block;
     color: black;

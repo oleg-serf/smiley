@@ -69,7 +69,7 @@
                       <router-link :to="{name: 'network'}" class="mobile-menu__link">Network</router-link>
                     </li>
                     <li class="mobile-menu__item">
-                      <router-link :to="{name: 'goals'}" class="mobile-menu__link">About us</router-link>
+                      <router-link :to="{name: 'story'}" class="mobile-menu__link">About us</router-link>
                     </li>
                     <li class="mobile-menu__item">
                       <router-link :to="{name: 'goals'}" class="mobile-menu__link">UN Goals</router-link>

@@ -10,6 +10,7 @@
           :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | News'"
           :with-search="true"
           :search-expandable="true"
+          @search="find(item, $event)"
       ></BottomBorderedTitleWithSearch>
       <NewsGallery :news="item.latest_news"></NewsGallery>
     </section>
@@ -41,11 +42,18 @@ export default {
     };
   },
   methods: {
-    find() {
-      router.push({
-        name: "news-search",
-        params: { keyword: this.search },
-      });
+    find(item, keyword) {
+      /*router.push({
+        name: "news",
+        params: { keyword: keyword },
+      });*/
+      axios
+          .get(`/news?keyword=${keyword}&goal=${item.slug}`)
+          .then((res) => {
+            console.log('searched for news')
+            console.log(res)
+          })
+          .catch((error) => console.error(error));
     },
   },
   created() {

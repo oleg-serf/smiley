@@ -2,13 +2,11 @@
   <div class="container">
     <div>
       <div class="header">
-        <iframe
-            class="header-video"
-            width="100%"
-            height="550"
-            src="https://www.youtube.com/embed/4b33NTAuF5E"
-        >
-        </iframe>
+        <img
+            src="/img/goals/goals_main.png"
+            alt="goalsImg"
+            title="Goals"
+        />
       </div>
     </div>
 
@@ -129,10 +127,13 @@ export default {
 }
 
 .header {
-  margin: 0 4rem;
+  margin-bottom: 4rem;
+  @include lgMax {
+    margin: 0 1rem;
+  }
 
-  .header-video {
-    border: none;
+  img {
+    width: 100%;
   }
 }
 
