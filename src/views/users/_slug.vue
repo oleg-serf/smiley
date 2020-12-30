@@ -57,16 +57,6 @@
                 :class="activeTab('events')"
         >Events
         </button>
-        <button class="tabs__navigation-item"
-                @click="tab = 'videos'"
-                :class="activeTab('videos')"
-        >Videos
-        </button>
-        <button class="tabs__navigation-item"
-                @click="tab = 'photos'"
-                :class="activeTab('photos')"
-        >Photos
-        </button>
       </div>
       <div class="tabs__content">
         <button class="tabs__content-button"
@@ -92,7 +82,8 @@
               </div>
               <div class="icon-block goals">
                 <i class="fa fa-connectdevelop icon-block__icon"></i>
-                Interests | UN Goals:
+                <span>Interests | UN Goals:</span>
+                <goals-list :goals="[1,2,3,4,5,5,7,8,9,10,11,12,13,14,15,16,17]" />
               </div>
               <div v-if="user.facebook || user.instagram || user.linkedin || user.twitter || user.youtube"
                    class="icon-block share">
@@ -181,85 +172,6 @@
              v-show="tab === 'events'">
           3
         </div>
-        <button class="tabs__content-button"
-                @click="tab = 'videos'"
-                :class="activeTab('videos')"
-        >Videos
-        </button>
-        <div class="tabs__content-item"
-             v-show="tab === 'videos'">
-          <div class="video">
-            <div class="video__grid">
-              <div class="video__item">
-                <iframe class="video__element"
-                        src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-              </div>
-              <div class="video__item">
-                <iframe class="video__element"
-                        src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-              </div>
-              <div class="video__item">
-                <iframe class="video__element"
-                        src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="tabs__content-button"
-                @click="tab = 'photos'"
-                :class="activeTab('photos')"
-        >Photos
-        </button>
-        <div class="tabs__content-item"
-             v-show="tab === 'photos'">
-          <div class="gallery">
-            <LightGallery
-                :images="temp.gallery"
-                :index="temp.galleryIndex"
-                :disable-scroll="true"
-                @close="temp.galleryIndex = null"
-            />
-            <h4 class="gallery__title">Gallery 1</h4>
-            <ul class="gallery__grid">
-              <li
-                  v-for="(thumb, thumbIndex) in temp.gallery"
-                  :key="thumbIndex"
-                  @click="temp.galleryIndex = thumbIndex"
-                  class="gallery__item"
-              >
-                <img :src="thumb.url" class="gallery__image">
-              </li>
-            </ul>
-          </div>
-          <div class="gallery">
-            <LightGallery
-                :images="temp.gallery"
-                :index="temp.galleryIndex"
-                :disable-scroll="true"
-                @close="temp.galleryIndex = null"
-            />
-            <h4 class="gallery__title">Gallery 1</h4>
-            <ul class="gallery__grid">
-              <li
-                  v-for="(thumb, thumbIndex) in temp.gallery"
-                  :key="thumbIndex"
-                  @click="temp.galleryIndex = thumbIndex"
-                  class="gallery__item"
-              >
-                <img :src="thumb.url" class="gallery__image">
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
     <div class="container">
@@ -273,6 +185,7 @@
 <script>
 import axios from "@/axios-auth";
 import ActivityCard from "@/components/cards/ActivityCard";
+import GoalsList from "@/components/app/GoalsList";
 
 import {LightGallery} from 'vue-light-gallery';
 
@@ -280,6 +193,7 @@ export default {
   name: "UserProfile",
   components: {
     ActivityCard,
+    GoalsList,
     LightGallery,
   },
   data() {
@@ -815,6 +729,11 @@ export default {
     grid-template-columns: 1fr;
     grid-gap: 1.5rem;
   }
+}
+
+.goals {
+  display: inline-flex;
+  flex-wrap: wrap;
 }
 
 .support {
