@@ -18,7 +18,7 @@
                 </div>
                 <div class="sidebar__item sidebar__item--actions" :class="{'sidebar__item--logged-in' : loggedIn}">
                   <template v-if="!loggedIn">
-                    <h3>Join Us / Login</h3>
+                    <h3>Join Us</h3>
                   </template>
                   <template v-if="loggedIn">
                     <router-link :to="{name: 'feed'}" class="user-avatar">
@@ -135,7 +135,7 @@
                 <router-link :to="{name: 'feed'}" class="text-link">{{ user.initials }}</router-link>
               </template>
               <template v-else>
-                <router-link :to="{name: 'register'}" class="text-link">Join us</router-link>
+                <button @click="authentification" class="text-link">Register / Login</button>
               </template>
             </div>
           </div>
@@ -384,6 +384,7 @@
 
 <script>
 import router from "@/router";
+import axios from "@/axios-auth";
 
 export default {
   name: "Header",
@@ -412,26 +413,68 @@ export default {
     },
   },
   methods: {
-    openNav() {
-      document.getElementById("mySidenav").style.width = "19rem";
-      let sideNavLinks = document.getElementsByClassName("sideNavLink");
-      setTimeout(() => {
-        for (let i = 0; i < sideNavLinks.length; i++) {
-          sideNavLinks[i].style["display"] = 'block';
+    authentification() {
+      this.$swal({
+        title: 'Register or Login',
+        text: "Register for an event or 'Create Account' to connect with people and good causes",
+        showDenyButton: true,
+        showCancelButton: true,
+        denyButtonText: 'Login',
+        confirmButtonText: 'Register',
+        cancelButtonText: 'Quick Registration',
+        customClass: {
+          popup: 'auth-modal',
+          denyButton: 'auth-modal__login swal2-cancel',
+          confirmButton: 'auth-modal__register',
+          cancelButton: 'auth-modal__quick',
         }
-      }, 300)
+      }).then((result) => {
+        console.log(result);
+        if (result.isConfirmed) {
+          router.push({name: "register"});
+        } else if (result.isDenied) {
+          router.push({name: "login"});
+        } else if (result.isDismissed && result.dismiss === 'cancel') {
+          this.quickRegistration();
+        }
+      });
     },
-    closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-      let sideNavLinks = document.getElementsByClassName("sideNavLink");
-      for (let i = 0; i < sideNavLinks.length; i++) {
-        sideNavLinks[i].style["display"] = 'none';
+    async quickRegistration() {
+      const {value: formValues} = await this.$swal.fire({
+        title: 'Quick Registration',
+        html:
+            '<input id="qr-name" class="swal2-input" placeholder="Your Name">' +
+            '<input id="qr-email" class="swal2-input" placeholder="Email Address">' +
+            '<input id="qr-password" class="swal2-input" placeholder="Password">',
+        focusConfirm: false,
+        confirmButtonText: "Submit",
+        showCancelButton: true,
+        preConfirm: () => {
+          return {
+            full_name: document.getElementById('qr-name').value,
+            email: document.getElementById('qr-email').value,
+            password: document.getElementById('qr-password').value,
+          }
+        }
+      });
+
+      if (formValues?.full_name && formValues?.email && formValues?.password) {
+        axios
+            .post("auth/register/quick", formValues)
+            .then(res => {
+              console.log('register success', res);
+              if (res?.data?.success) {
+                this.$store
+                    .dispatch("user/loginAsGuest", res);
+              }
+            })
+            .catch(error => console.log(error));
       }
     },
     find() {
       router.push({
         name: "search",
-        params: { keyword: this.search.value }
+        params: {keyword: this.search.value}
       });
       this.search.trigger = false;
     },
@@ -442,7 +485,7 @@ export default {
         this.sidebar = false;
       }
     }
-  }
+  },
 };
 </script>
 
@@ -466,7 +509,7 @@ header {
     left: -100%;
     top: 0px;
     transition: left .2s;
-    box-shadow: 3px 0px 6px rgba(0,0,0,.5);
+    box-shadow: 3px 0px 6px rgba(0, 0, 0, .5);
 
     &.active {
       left: 0px;
@@ -494,12 +537,13 @@ header {
         display: flex;
         align-items: center;
       }
+
       &--actions {
         .user-avatar {
           width: 3rem;
           height: 3rem;
           border-radius: 50%;
-          box-shadow: 0px 0px 6px rgba(0,0,0,.3);
+          box-shadow: 0px 0px 6px rgba(0, 0, 0, .3);
 
           img {
             width: 100%;
@@ -827,8 +871,8 @@ header {
 
 .user {
   &__avatar {
-    height: 36px;
-    width: 36px;
+    height: 2.1rem !important;
+    width: 2.1rem !important;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 1rem;
@@ -848,8 +892,12 @@ header {
 .text-link {
   font-size: 1.4rem;
   color: #000;
-  border-bottom: 1px solid transparent;
   transition: border-color .2s;
+  margin: 0px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
 
   &:hover {
     text-decoration: none;
