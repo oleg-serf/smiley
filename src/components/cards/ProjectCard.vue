@@ -6,6 +6,9 @@
         v-if="project.cover_image != null"
         alt
       />
+      <template v-else>
+        <img :src="staticImageBySlug(project.slug)">
+      </template>
     </div>
     <div class="project-article__content">
       <div class="project-article__category">
@@ -33,13 +36,45 @@
 
 <script>
 export default {
-  name: "EventCard",
+  name: "ProjectCard",
   methods: {
     trimDescription(description) {
       return description.length > 80
         ? description.substring(0, 80) + "..."
         : description;
-    }
+    },
+    staticImageBySlug(slug) {
+      let result = null;
+
+      switch (slug) {
+        case 'smiling-clubs': {
+          result = '/images/remove-smiling-clubs.jpg';
+          break;
+        }
+        case 'mobile-laughter-booth': {
+          result = '/images/remove-mobile-laughter-booth.jpg';
+          break;
+        }
+        case 'accelerating-community-driven-leaders': {
+          result = '/images/remove-accelerating-community-driven-leaders.jpg';
+          break;
+        }
+        case 'affordable-and-social-housing': {
+          result = '/images/remove-affordable-and-social-housing.jpeg';
+          break;
+        }
+        case 'journey-of-hope': {
+          result = '/images/remove-journey-of-hope.jpg';
+          break;
+        }
+        case 'aimeverhigh-bereavement-support-for-young-people': {
+          result = '/images/remove-aimeverhigh-bereavement-support-for-young-people.jpg';
+          break;
+        }
+      }
+
+      return result;
+    },
   },
   props: {
     project: {
