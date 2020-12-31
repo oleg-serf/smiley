@@ -11,7 +11,8 @@
           class="title-with-search__search-input"
           :class="[searchExpandable ? 'expandable' : '']"
           type="text"
-          :placeholder="searchText"/>
+          :placeholder="searchText"
+      />
       <div class="dropdown-wrapper" v-if="withDropdown">
         <VDropdown
             for-goals

@@ -23,20 +23,6 @@ export default {
       </template>
     </hero>
 
-    <!--    <section class="section container">
-          <div class="section__title">
-            <h2>Featured News <span>| Editors pick</span></h2>
-            <input type="search" class="section__search" placeholder="Search news">
-          </div>
-          <div class="section__border"></div>
-        </section>
-
-        <section class="news-grid container" v-if="newsList.length > 0">
-          <news-card-new
-              v-for="article in newsList"
-              :key="article.slug"
-              :article="article"/>
-        </section>-->
     <div class="cards-sections-wrapper">
       <!--  NEWS SECTION   -->
       <section class="news-section" v-if="newsList.length > 0">
@@ -339,7 +325,7 @@ export default {
     axios
         .get("/pages/1")
         .then(res => {
-          console.log(res);
+          console.log(res, "homepage");
           this.eventList = res.data.future_events;
           this.newsList = res.data.latest_news;
 

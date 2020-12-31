@@ -99,7 +99,7 @@
             <button class="tablinks reports" @click="openTab('reports')"><span>Reports</span></button>
           </div>
 
-          <div id="about-org" class="tabcontent active">
+          <div id="about-org" class="tabcontent tabContentCommon active">
             <div class="about-img">
               <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
                    v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
@@ -119,14 +119,6 @@
                   Donec aliquam tortor sit amet.</p>
               </div>
               <div class="about-additional-info">
-                <i class="fa fa-info-circle"></i>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nunc condimentum dolor quis arcu gravida, sed
-                  placerat sem euismod. Quisque at pretium odio.
-                </p>
-              </div>
-              <div class="about-additional-info">
                 <i class="fa fa-thumbs-up"></i>
                 <p>
                   2,455,234 people like this
@@ -141,7 +133,9 @@
               <div class="about-additional-info">
                 <i class="fa fa-globe" aria-hidden="true"></i>
                 <p>
-                  <a :href="organisation.website" target="_blank" style="color: #000000;">{{ organisation.website }}</a>
+                  <a :href="organisation.website" target="_blank" style="color: #000000;">{{
+                      organisation.website
+                    }}</a>
                 </p>
               </div>
               <div class="article-header__sharing">
@@ -155,7 +149,8 @@
                     <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
                   </ul>
                 </div>
-                <div class="article-header__sharing-social">
+                <div class="article-header__sharing-social about-additional-info">
+                  <i class="fa fa-users"></i>
                   <ul>
                     <li>
                       <a :href="shareLink('twitter')" target="_blank">
@@ -179,30 +174,121 @@
                     </li>
                   </ul>
                 </div>
+                <div class="about-additional-info">
+                  <div class="article-header__sharing-goals">
+                  <div style="display: flex">
+                    <i class="fa fa-handshake-o" style="color: grey; font-size: 24px;"></i>Support Needed:
+                    <ul class="main-menu">
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Sales
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Management
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Designers
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Engineering
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Entrepreneurship
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Finance
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Fundraising
+                        </router-link>
+                      </li>
+                    </ul>
+                  </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div id="news" class="tabcontent">
-            <h3>News</h3>
+          <div id="news" class="tabcontent tabContentCommon">
+            <div class="about-img">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+            </div>
+            <div class="about-text">
+              <div class="about-title" style="display: flex; justify-content: space-between">
+                <h3 style="font-family: 'Montserrat Bold', sans-serif; font-size: 22px">News</h3>
+                <a href="#" style="color: #000000">Read More</a>
+              </div>
+              <div class="about-additional-info">
+                <i class="fa fa-info-circle"></i>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nunc condimentum dolor quis arcu gravida, sed
+                  placerat sem euismod. Quisque at pretium odio. Donec
+                  vestibulum, nisi in malesuada convallis, eros nulla
+                  egestas lectus, sed maximus sem elit ullamcorper elit.
+                  Donec aliquam tortor sit amet.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nunc condimentum dolor quis arcu gravida, sed
+                  placerat sem euismod. Quisque at pretium odio. Donec
+                  vestibulum, nisi in malesuada convallis, eros nulla
+                  egestas lectus, sed maximus sem elit ullamcorper elit.
+                  Donec aliquam tortor sit amet.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nunc condimentum dolor quis arcu gravida, sed
+                  placerat sem euismod. Quisque at pretium odio. Donec
+                  vestibulum, nisi in malesuada convallis, eros nulla
+                  egestas lectus, sed maximus sem elit ullamcorper elit.
+                  Donec aliquam tortor sit amet.</p>
+              </div>
+              <div class="article-header__sharing">
+                <div class="article-header__sharing-goals">
+                  <span style="margin-right: 10px">
+                    <i class="fa fa-circle-o" style="color: grey; margin-right: 1.2rem; font-size: 24px;"></i>
+                    UN Goals:
+                  </span>
+                  <ul class="article-header__sharing-goals-badges">
+                    <li><img src="/img/goals/goals-1.svg" alt="goal"/></li>
+                    <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div id="projects" class="tabcontent">
+          <div id="projects" class="tabcontent tabContentCommon">
             <h3>Projects</h3>
           </div>
-          <div id="people" class="tabcontent">
+          <div id="people" class="tabcontent tabContentCommon">
             <h3>People</h3>
           </div>
-          <div id="events" class="tabcontent">
+          <div id="events" class="tabcontent tabContentCommon">
             <h3>Events</h3>
           </div>
-          <div id="videos" class="tabcontent">
+          <div id="videos" class="tabcontent tabContentCommon">
             <h3>Videos</h3>
           </div>
-          <div id="photos" class="tabcontent">
+          <div id="photos" class="tabcontent tabContentCommon">
             <h3>Photos</h3>
           </div>
-          <div id="reports" class="tabcontent">
+          <div id="reports" class="tabcontent tabContentCommon">
             <h3>Reports</h3>
           </div>
         </div>
@@ -224,7 +310,7 @@
                 :prev-button-left="-60"
                 :next-button-right="-60"
             ></NewsGallery>
-          </section>          
+          </section>
         </div>
       </template>
       <Subscribe/>
@@ -337,17 +423,14 @@ export default {
       tabcontent = document.getElementsByClassName("tabcontent");
       for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
+        tabcontent[i].className = tabcontent[i].className.replace(" active", "");
       }
       tablinks = document.getElementsByClassName("tablinks");
       for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
       if (document.getElementById(tabName)) {
-        if (tabName === 'about-org') {
-          document.getElementById(tabName).style.display = "flex";
-        } else {
-          document.getElementById(tabName).style.display = "block";
-        }
+        document.getElementById(tabName).style.display = "flex";
         let targetIndex = -1
         for (const [key, value] of Object.entries(tablinks)) {
           if (value.classList.value.includes(tabName)) {
@@ -356,6 +439,7 @@ export default {
           }
         }
         tablinks[targetIndex].className += " active";
+        tabcontent[targetIndex].className += " active";
       }
     },
     follow() {
@@ -580,7 +664,44 @@ export default {
   padding: 0 60px;
   background-color: #ffffff;
 }
+.main-menu {
+  font-family: "Gotham Light", sans-serif;
+  padding: 0px;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 
+  &__item {
+    position: relative;
+    padding: 0 1rem;
+    margin: .1rem 0;
+    line-height: 20px;
+
+    &:not(:last-child) {
+      border-right: 2px solid yellow;
+    }
+  }
+
+  &__link {
+    color: #000;
+    font-size: 1.2rem;
+    border-bottom: 1px solid transparent;
+    transition: .2s;
+
+    &:hover {
+      color: #000;
+      text-decoration: none;
+      border-color: yellow
+    }
+
+    /*&.router-link-exact-active {
+      color: #000;
+      border-color: yellow
+    }*/
+  }
+}
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -630,6 +751,7 @@ export default {
   span {
     border-bottom: 2px solid yellow;
   }
+
   -webkit-box-shadow: 0 8px 13px -7px grey;
   -moz-box-shadow: 0 8px 13px -7px grey;
   box-shadow: 0 8px 13px -7px grey;
@@ -653,20 +775,20 @@ export default {
 
     border-radius: 20px;
     //background-color: blue;
-    &#about-org {
+    &.tabContentCommon {
       display: flex;
       flex-wrap: wrap;
 
       .about-text {
         .about-additional-info {
-          display: flex;
-          align-items: baseline;
-          justify-content: right;
+          display: flex !important;
+          align-items: baseline !important;
+          justify-content: right !important;
 
           i {
-            font-size: 24px;
-            color: grey;
-            margin-right: 1.5rem;
+            font-size: 24px !important;
+            color: grey !important;
+            margin-right: 1.5rem !important;
           }
         }
       }
@@ -765,7 +887,6 @@ export default {
       }
     }
   }
-
 }
 
 .org-banner-img {
