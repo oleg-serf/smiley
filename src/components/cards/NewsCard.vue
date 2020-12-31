@@ -52,7 +52,7 @@
         v-html="cutText(article.description, 50, 'description')"
       ></div>
       <div class="news-article__content-metadata">
-        <span>News</span> | ipsum | {{ dateAgo(article.published_at) }}
+        <span>News</span> | {{ article.author }} | {{ dateAgo(article.published_at) }}
       </div>
     </div>
 

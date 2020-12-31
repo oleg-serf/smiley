@@ -91,7 +91,7 @@ export default {
       </section>
 
       <!--  INTERVIEWS SECTION  -->
-      <section class="news-section" v-if="newsList.length > 0">
+      <section class="news-section" v-if="interviewList.length > 0">
         <bottom-bordered-title-with-search
             :title="'<b>Featured Interviews</b>'"
             :with-search="true"
@@ -101,7 +101,7 @@ export default {
             search-text="Search interviews..."
         ></bottom-bordered-title-with-search>
         <interviews-gallery
-            :interviews="newsList"
+            :interviews="interviewList"
             with-slider
             :prev-button-left="-80"
             :next-button-right="-80"
@@ -239,6 +239,7 @@ export default {
       events: [],
       eventList: [],
       newsList: [],
+      interviewList: [],
       projects: [],
 
       goals: [],
@@ -328,6 +329,7 @@ export default {
           console.log(res, "homepage");
           this.eventList = res.data.future_events;
           this.newsList = res.data.latest_news;
+          this.interviewList = res.data.latest_interviews;
 
           this.banners.news = res.data.page_sections.smiley_news[0];
           // this.banners.network = res.data.page_sections.smiley_network[0];

@@ -63,7 +63,7 @@ export default {
       .then((res) => {
         console.log("news", res);
 
-        this.latest = res.data.latest_news;
+        // this.latest = res.data.latest_news;
         this.news = res.data.featured_goals;
       })
       .catch((error) => console.error(error));

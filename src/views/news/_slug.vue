@@ -60,7 +60,7 @@
               src="/img/organization/avatar-1.jpg"
               alt="author"
           />
-          <span class="article-author__name">| {{ post.published_by }}</span>
+          <span class="article-author__name">| {{ post.author }}</span>
         </div>
       </div>
 

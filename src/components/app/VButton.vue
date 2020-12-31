@@ -11,7 +11,7 @@ export default {
     color: {
       validator(s) {
         //return ["yellow"].includes(s);
-        return ["yellow", "orange", "red", "blue", "light-blue", "purple", "black"].includes(s);
+        return ["yellow", "orange", "red", "blue", "light-blue", "purple", "black", "white"].includes(s);
       },
       default: "yellow",
     },
@@ -23,7 +23,7 @@ export default {
     },
     size: {
       validator(s) {
-        return ["small", "medium", "height_45"].includes(s);
+        return ["small", "medium", "height_45", "height_2rem"].includes(s);
       },
       default: "medium",
     },
@@ -165,6 +165,11 @@ export default {
 .height_45 {
   height: 45px;
   line-height: 48px;
+}
+.height_2rem {
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 1rem;
 }
 
 .small {

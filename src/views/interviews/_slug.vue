@@ -60,7 +60,7 @@
               src="/img/organization/avatar-1.jpg"
               alt="author"
           />
-          <span class="article-author__name">| Editors Name</span>
+          <span class="article-author__name">| {{ post.author }}</span>
         </div>
       </div>
 
@@ -155,13 +155,12 @@ export default {
   },
   mounted() {
     axios
-        .get("/news/" + this.$route.params.slug)
+        .get("/interviews/" + this.$route.params.slug)
         .then((res) => {
-          console.log("News item loaded", res);
-
           this.post = res.data.post;
           this.related_posts = res.data.related;
-
+          this.comments = res.data.comments;
+          
           const metaPayload = {
             meta: res.data.meta,
             title: res.data.post.title,
@@ -170,13 +169,13 @@ export default {
           this.$router.currentRoute.meta.title = this.post.title;
         })
         .catch((error) => console.log(error));
-    axios
-        .get("/news/" + this.$route.params.slug + "/comments")
-        .then((res) => {
-          console.log("Comments loaded", res);
-          this.comments = res.data.comments;
-        })
-        .catch((error) => console.log(error));
+    // axios
+    //     .get("/interviews/" + this.$route.params.slug + "/comments")
+    //     .then((res) => {
+    //       console.log("Comments loaded", res);
+    //       this.comments = res.data.comments;
+    //     })
+    //     .catch((error) => console.log(error));
 
     axios
         .get("/goals")
