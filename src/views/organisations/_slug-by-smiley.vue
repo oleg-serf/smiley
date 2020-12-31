@@ -99,7 +99,7 @@
             <button class="tablinks reports" @click="openTab('reports')"><span>Reports</span></button>
           </div>
 
-          <div id="about-org" class="tabcontent active">
+          <div id="about-org" class="tabcontent tabContentCommon active">
             <div class="about-img">
               <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
                    v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
@@ -119,14 +119,6 @@
                   Donec aliquam tortor sit amet.</p>
               </div>
               <div class="about-additional-info">
-                <i class="fa fa-info-circle"></i>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nunc condimentum dolor quis arcu gravida, sed
-                  placerat sem euismod. Quisque at pretium odio.
-                </p>
-              </div>
-              <div class="about-additional-info">
                 <i class="fa fa-thumbs-up"></i>
                 <p>
                   2,455,234 people like this
@@ -141,7 +133,9 @@
               <div class="about-additional-info">
                 <i class="fa fa-globe" aria-hidden="true"></i>
                 <p>
-                  <a :href="organisation.website" target="_blank" style="color: #000000;">{{ organisation.website }}</a>
+                  <a :href="organisation.website" target="_blank" style="color: #000000;">{{
+                      organisation.website
+                    }}</a>
                 </p>
               </div>
               <div class="article-header__sharing">
@@ -155,7 +149,8 @@
                     <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
                   </ul>
                 </div>
-                <div class="article-header__sharing-social">
+                <div class="article-header__sharing-social about-additional-info">
+                  <i class="fa fa-users"></i>
                   <ul>
                     <li>
                       <a :href="shareLink('twitter')" target="_blank">
@@ -179,31 +174,381 @@
                     </li>
                   </ul>
                 </div>
+                <div class="about-additional-info">
+                  <div style="display: flex">
+                    <ul class="main-menu">
+                      <li class="main-menu__item">
+                        <i class="fa fa-handshake-o"
+                           style="color: grey; font-size: 24px; margin-right: 1rem !important;"></i>Support Needed:
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Sales
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Management
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Designers
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Engineering
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Entrepreneurship
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Finance
+                        </router-link>
+                      </li>
+                      <li class="main-menu__item">
+                        <router-link
+                            class="main-menu__link"
+                            :to="{}">Fundraising
+                        </router-link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div id="news" class="tabcontent">
-            <h3>News</h3>
+          <div id="news" class="tabcontent tabContentCommon">
+            <div class="about-img">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+            </div>
+            <div class="about-text">
+              <div class="about-title" style="display: flex; justify-content: space-between">
+                <h3 style="font-family: 'Montserrat Bold', sans-serif; font-size: 22px">Big Issue Invest Report Shows
+                  £41.7m Investment Into Charities</h3>
+                <a href="#" style="color: #000000; width: 24%;">Read More</a>
+              </div>
+              <div class="about-additional-info f-direction-column">
+                <p>Big Issue Invest has launched its Impact Report revealing
+                  that between April 2019 and March 2020, the social
+                  investor supported 160 investees with a total of
+                  £41.7million.</p>
+                <p>
+                  In turn, collectively, the social enterprises were able to
+                  provide services to over 1million customers in the UK that
+                  are often marginalised from mainstream support and
+                  opportunities or live in the most deprived areas.
+                </p>
+                <p>
+                  St Helena’s Hospice (SHH) is just one of the social
+                  enterprises supported by Big Issue Invest. The hospice
+                  helps local people facing incurable illness and
+                  bereavement, supporting them and their families, friends
+                  and carers to bring comfort and relief to tens of thousands
+                  of people.
+                </p>
+              </div>
+              <div class="article-header__sharing">
+                <div class="article-header__sharing-goals">
+                  <span style="margin-right: 10px">
+                    <i class="fa fa-circle-o" style="color: grey; margin-right: 1.2rem; font-size: 24px;"></i>
+                    UN Goals:
+                  </span>
+                  <ul class="article-header__sharing-goals-badges">
+                    <li><img src="/img/goals/goals-1.svg" alt="goal"/></li>
+                    <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
+                  </ul>
+                  <div class="news-article__content-metadata">
+                    <span>News</span> | 8 Days ago | 12 Comment
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab_actions">
+              <TriangleNextPrevButtons
+                  text="Next article"
+              />
+            </div>
           </div>
 
-          <div id="projects" class="tabcontent">
-            <h3>Projects</h3>
+          <div id="projects" class="tabcontent tabContentCommon">
+            <div class="about-img">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+            </div>
+            <div class="about-text">
+              <div class="about-title" style="display: flex; justify-content: space-between">
+                <h3 style="font-family: 'Montserrat Bold', sans-serif; font-size: 22px">How to spread comfort and joy
+                  with a reverse advent calendar</h3>
+                <a href="#" style="color: #000000; width: 24%;">Read More</a>
+              </div>
+              <div class="about-additional-info f-direction-column">
+                <p>
+                  This year, we are facing a very different Christmas.
+                  Covid might deny some of us the family feasts of years
+                  past, but it won’t stop us spreading comfort and joy in
+                  the community with a reverse advent calendar.
+                </p>
+                <p>
+                  Covid-19 has put record numbers of families at risk of
+                  going hungry. This Christmas, food banks will need your
+                  help to offer the necessities – and some festive cheer –
+                  to those in need.
+                </p>
+                <p>
+                  In the first six months of the Covid-19 pandemic, from
+                  April 1 to September 30, the Trussell Trust and its food
+                  banks gave out 1.2 million emergency food parcels
+                  across the UK. On average, 2,600 were distributed
+                  every day to children around the country.
+                </p>
+              </div>
+              <div class="article-header__sharing">
+                <div class="article-header__sharing-goals">
+                  <span style="margin-right: 10px">
+                    <i class="fa fa-circle-o" style="color: grey; margin-right: 1.2rem; font-size: 24px;"></i>
+                    UN Goals:
+                  </span>
+                  <ul class="article-header__sharing-goals-badges">
+                    <li><img src="/img/goals/goals-1.svg" alt="goal"/></li>
+                    <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
+                  </ul>
+                  <div class="about-additional-info">
+                    <div style="display: flex">
+                      <ul class="main-menu">
+                        <li class="main-menu__item">
+                          <i class="fa fa-handshake-o"
+                             style="color: grey; font-size: 24px; margin-right: 1rem !important;"></i>Support Needed:
+                        </li>
+                        <li class="main-menu__item">
+                          <router-link
+                              class="main-menu__link"
+                              :to="{}">Sales
+                          </router-link>
+                        </li>
+                        <li class="main-menu__item">
+                          <router-link
+                              class="main-menu__link"
+                              :to="{}">Management
+                          </router-link>
+                        </li>
+                        <li class="main-menu__item">
+                          <router-link
+                              class="main-menu__link"
+                              :to="{}">Designers
+                          </router-link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab_actions">
+              <VButton
+                  class="projects-article__button"
+                  size="height_45"
+                  @click.native.prevent="openPage"
+                  shape="round"
+              >
+                Donate
+              </VButton>
+              <VButton
+                  class="projects-article__button"
+                  size="height_45"
+                  @click.native.prevent="openPage"
+                  shape="round"
+              >
+                Volunteer
+              </VButton>
+              <TriangleNextPrevButtons
+                  text="Next article"
+              />
+            </div>
           </div>
-          <div id="people" class="tabcontent">
-            <h3>People</h3>
+          <div id="people" class="tabcontent tabContentCommon">
+            <div class="people-grid">
+              <div
+                  v-for="n in 14"
+                  :key="`each-person-${n}`"
+                  class="people-grid__each-person"
+              >
+                <div class="people-grid__each-person__logo">
+                  <img
+                      src="/img/members/dale.jpg"
+                      alt
+                      title
+                      class="people-grid__each-person__image"
+                  />
+                </div>
+                <div class="people-grid__each-person__info">
+                  <h2 class="people-grid__each-person__info__title">
+                    Dale Crover
+                  </h2>
+                  <p class="people-grid__each-person__info__location">
+                    <i class="fa fa-map-marker"></i>
+                    London
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="tab_actions">
+              <TriangleNextPrevButtons
+                  text="See more"
+              />
+            </div>
           </div>
-          <div id="events" class="tabcontent">
-            <h3>Events</h3>
+          <div id="events" class="tabcontent tabContentCommon">
+            <div class="about-img">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+            </div>
+            <div class="about-text">
+              <div class="about-title" style="display: flex; justify-content: space-between">
+                <h3 style="font-family: 'Montserrat Bold', sans-serif; font-size: 22px">LONDON TO PARIS CYCLE 2021
+                  TOUR DE FRANCE EDITION</h3>
+                <a href="#" style="color: #000000; width: 24%;">Read More</a>
+              </div>
+              <div class="about-additional-info f-direction-column">
+                <p>
+                  Be part of your own Tour de France as you cycle London
+                  to Paris to raise money for The Big issue Foundation. On
+                  this popular cycling challenge you’ll spend 4 days in the
+                  saddle, cycling 311 miles from capital to capital before
+                  soaking up the atmosphere and enjoying the finale of the
+                  Tour de France in Paris on the last day.
+                </p>
+                <p>
+                  Your journey will begin in London with the route weaving
+                  through glorious English countryside from Kent to Dover,
+                  before crossing the Channel to Calais. Once across the
+                  water, you’ll start cycling ‘French style’, remembering to
+                  keep to the right! The route takes you along quiet French
+                  country lanes, through traditional market towns with views
+                  of the rolling green hills of Northern France, passing the
+                  war memorials and cemeteries of the Somme.
+                </p>
+              </div>
+              <div class="article-header__sharing">
+                <div class="article-header__sharing-goals">
+                  <span style="margin-right: 10px">
+                    <i class="fa fa-circle-o" style="color: grey; margin-right: 1.2rem; font-size: 24px;"></i>
+                    UN Goals:
+                  </span>
+                  <ul class="article-header__sharing-goals-badges">
+                    <li><img src="/img/goals/goals-1.svg" alt="goal"/></li>
+                    <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
+                  </ul>
+                  <div class="news-article__content-metadata">
+                    <span>Event</span> | 12 January 2021 | 86 Comment
+                  </div>
+                </div>
+              </div>
+              <VButton
+                  class="projects-article__button event-register-btn"
+                  size="height_2rem"
+                  @click.native.prevent="openPage"
+                  shape="round"
+              >
+                Register
+              </VButton>
+            </div>
+            <div class="tab_actions">
+              <TriangleNextPrevButtons
+                  text="Previous Events"
+              />
+            </div>
           </div>
-          <div id="videos" class="tabcontent">
-            <h3>Videos</h3>
+          <div id="videos" class="tabcontent tabContentCommon">
+            <div class="tab-video">
+              <iframe
+                  width="100%"
+                  height="500"
+                  frameborder="0"
+                  style="border-radius: 1.5rem"
+                  allow="fullscreen"
+                  allowfullscreen
+                  src="https://player.vimeo.com/video/494083042"
+              >
+              </iframe>
+            </div>
+            <div class="tab_actions">
+              <TriangleNextPrevButtons
+                  text="Previous Videos"
+              />
+            </div>
           </div>
-          <div id="photos" class="tabcontent">
-            <h3>Photos</h3>
+          <div id="photos" class="tabcontent tabContentCommon">
+            <div class="about-img">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+            </div>
+            <div class="tab-info">
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+            </div>
+            <div class="tab_actions">
+              <TriangleNextPrevButtons
+                  text="More Pictures"
+              />
+            </div>
           </div>
-          <div id="reports" class="tabcontent">
-            <h3>Reports</h3>
+          <div id="reports" class="tabcontent tabContentCommon">
+            <div class="reports-grid">
+              <div
+                  v-for="n in 3"
+                  :key="`each-report-${n}`"
+                  class="reports-grid__each-report"
+              >
+                <div class="reports-grid__each-report__logo">
+                  <img
+                      :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
+                      alt
+                      title
+                      class="reports-grid__each-report__image"
+                  />
+                </div>
+                <div class="reports-grid__each-report__info">
+                  <h2 class="reports-grid__each-report__info__title">
+                    Financial Statement
+                  </h2>
+                  <p class="reports-grid__each-report__info__metadata">
+                    Report | 12 Jan 2021 | 0 Comment
+                  </p>
+                  <div class="reports-grid__each-report__info__action">
+                    <VButton
+                        size="height_2rem"
+                        @click.native.prevent="openPage"
+                        shape="round"
+                    >
+                      Download PDF
+                    </VButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab_actions">
+              <TriangleNextPrevButtons
+                  text="More Reports"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -224,7 +569,7 @@
                 :prev-button-left="-60"
                 :next-button-right="-60"
             ></NewsGallery>
-          </section>          
+          </section>
         </div>
       </template>
       <Subscribe/>
@@ -236,6 +581,7 @@
 <script>
 import axios from "@/axios-auth";
 
+import TriangleNextPrevButtons from "@/components/buttons/TriangleNextPrevButtons";
 import Subscribe from "@/components/forms/Subscribe";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import NewsGallery from "@/components/news/NewsGallery";
@@ -249,6 +595,7 @@ import Footer from "@/components/Footer";
 export default {
   name: "OrganisationProfile",
   components: {
+    TriangleNextPrevButtons,
     Subscribe,
     BottomBorderedTitleWithSearch,
     NewsGallery,
@@ -337,17 +684,14 @@ export default {
       tabcontent = document.getElementsByClassName("tabcontent");
       for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
+        tabcontent[i].className = tabcontent[i].className.replace(" active", "");
       }
       tablinks = document.getElementsByClassName("tablinks");
       for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
       if (document.getElementById(tabName)) {
-        if (tabName === 'about-org') {
-          document.getElementById(tabName).style.display = "flex";
-        } else {
-          document.getElementById(tabName).style.display = "block";
-        }
+        document.getElementById(tabName).style.display = "flex";
         let targetIndex = -1
         for (const [key, value] of Object.entries(tablinks)) {
           if (value.classList.value.includes(tabName)) {
@@ -356,6 +700,7 @@ export default {
           }
         }
         tablinks[targetIndex].className += " active";
+        tabcontent[targetIndex].className += " active";
       }
     },
     follow() {
@@ -581,6 +926,53 @@ export default {
   background-color: #ffffff;
 }
 
+.main-menu {
+  font-family: "Gotham Light", sans-serif;
+  padding: 0px;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &__item {
+    &:first-child {
+      font-size: 20px;
+      line-height: 27px;
+      font-family: "Gotham Medium", sans-serif;
+      border-right: none !important;
+    }
+
+    &:not(:first-child) {
+      position: relative;
+      padding: 0 .5rem;
+      margin: .5rem 0;
+      line-height: 22px;
+    }
+
+    &:not(:last-child) {
+      border-right: 2px solid yellow;
+    }
+  }
+
+  &__link {
+    color: #000;
+    font-size: 1.2rem;
+    border-bottom: 1px solid transparent;
+    transition: .2s;
+
+    &:hover {
+      color: #000;
+      text-decoration: none;
+      border-color: yellow
+    }
+
+    /*&.router-link-exact-active {
+      color: #000;
+      border-color: yellow
+    }*/
+  }
+}
+
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -602,20 +994,14 @@ export default {
   border-bottom: 2px solid transparent;
   outline: none;
   cursor: pointer;
-  //padding: 0;
-  //margin: 0 16px;
   transition: 0.3s;
   font-size: 20px;
   font-family: "Montserrat Bold", sans-serif;
-  //background-color: #555;
-  //color: white;
-  //float: left;
-  //border: none;
-  //outline: none;
-  //cursor: pointer;
   padding: 14px 32px;
-  //font-size: 17px;
   width: 25%;
+  @include mdMax {
+    font-size: 16px;
+  }
 }
 
 /* Change background color of buttons on hover */
@@ -630,6 +1016,7 @@ export default {
   span {
     border-bottom: 2px solid yellow;
   }
+
   -webkit-box-shadow: 0 8px 13px -7px grey;
   -moz-box-shadow: 0 8px 13px -7px grey;
   box-shadow: 0 8px 13px -7px grey;
@@ -638,7 +1025,7 @@ export default {
 /* Style the tab content */
 .tabcontent {
   display: none;
-  padding: 10px 40px;
+  padding: 1.5rem;
   border-top: none;
   //color: white;
   //display: none;
@@ -653,20 +1040,63 @@ export default {
 
     border-radius: 20px;
     //background-color: blue;
-    &#about-org {
+    &.tabContentCommon {
       display: flex;
       flex-wrap: wrap;
 
+      &#videos {
+        justify-content: center;
+      }
+
+      .tab-video {
+        flex: 0 0 100%;
+      }
+
+      .tab_actions {
+        display: flex;
+        flex: 0 0 100%;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: .5rem;
+        @include mdMax {
+          display: block;
+          text-align: center;
+          button {
+            margin-bottom: .5rem;
+          }
+        }
+
+        .v-button {
+          height: 2rem;
+          line-height: 2rem;
+          margin-right: 1rem;
+          font-size: 16px;
+        }
+      }
+
       .about-text {
+        margin: 1rem 0;
+        font-family: "Gotham Book", sans-serif;
+
         .about-additional-info {
-          display: flex;
-          align-items: baseline;
-          justify-content: right;
+          display: flex !important;
+          align-items: baseline !important;
+          justify-content: right !important;
+
+          &.f-direction-column {
+            flex-direction: column;
+          }
 
           i {
-            font-size: 24px;
-            color: grey;
-            margin-right: 1.5rem;
+            font-size: 24px !important;
+            color: grey !important;
+            margin-right: 1.5rem !important;
+          }
+        }
+
+        @include smMax {
+          .event-register-btn {
+            margin-top: 1rem;
           }
         }
       }
@@ -676,6 +1106,7 @@ export default {
         margin-right: 2rem;
         @include lgMax {
           width: 100%;
+          margin-right: 0;
         }
 
         img {
@@ -691,21 +1122,252 @@ export default {
           margin-top: 2rem;
         }
       }
+
+      .tab-info {
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        @include xlMax {
+          width: 50%;
+          margin-top: 2rem;
+        }
+        @include lgMax {
+          width: 100%;
+          margin-top: 2rem;
+        }
+
+        img {
+          margin: .5rem;
+          object-fit: cover;
+          width: 47%;
+          border-radius: 20px;
+          @include xlMax {
+            width: 46%;
+          }
+
+          &:first-child {
+            margin-top: 0;
+            margin-right: 0;
+            width: 100%;
+            max-height: 160px;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+
+          @include smMax {
+            &:first-child {
+              width: 100% !important;
+            }
+            width: 100%;
+          }
+        }
+      }
+
+      .people-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-gap: 5px;
+        width: 100%;
+
+        @include xlMax {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        @include lgMax {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        @include mdMax {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @include smMax {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        &__each-person {
+          padding: 20px 0;
+          background-color: #fff;
+          transition: transform 0.15s, box-shadow 0.15s;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          &__info {
+            text-align: left;
+            width: 100%;
+
+            &__title {
+              margin-top: .5rem;
+              color: #000000;
+              font-family: "Gotham Bold", sans-serif;
+              font-size: 16px;
+              line-height: 18px;
+            }
+
+            &__location {
+              margin-top: .5rem;
+
+              i {
+                color: #000000;
+                font-size: 1.5rem;
+              }
+
+              height: 2rem;
+              color: #DC3E2B;
+              font-family: "Gotham Bold", sans-serif;
+              font-size: 14px;
+              line-height: 16px;
+            }
+          }
+
+          &__logo {
+            background-color: gray;
+            width: 145px;
+            height: 145px;
+            border: 1px solid gray;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+
+            &::before {
+              content: "";
+              display: block;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 0px;
+              top: 0px;
+              border-radius: 50%;
+              border: 1px solid gray;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              object-position: center;
+            }
+          }
+        }
+      }
+
+      .reports-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 15px;
+        width: 100%;
+
+        @include xlMax {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        @include lgMax {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        @include mdMax {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @include smMax {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        &__each-report {
+          padding: 20px 0;
+          background-color: #fff;
+          transition: transform 0.15s, box-shadow 0.15s;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          &__info {
+            margin: .5rem;
+            padding: 1rem;
+            text-align: left;
+            width: 100%;
+
+            &__title {
+              color: #000000;
+              font-family: "Gotham Bold", sans-serif;
+              font-size: 18px;
+              line-height: 20px;
+            }
+
+            &__metadata {
+              color: #000000;
+              margin-top: 1rem;
+              height: 2rem;
+              font-family: "Gotham Bold", sans-serif;
+              font-size: 16px;
+              line-height: 18px;
+            }
+
+            &__action {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              button {
+                background: #ffffff;
+                border: 1px solid;
+              }
+            }
+          }
+
+          &__logo {
+            background-color: gray;
+            width: 100%;
+            max-height: 330px;
+            border: 1px solid gray;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              object-position: center;
+            }
+          }
+        }
+      }
     }
 
     .article-header__sharing {
       display: flex;
       flex-direction: column;
+      margin-top: .6rem;
+
       @include smMax {
         flex-direction: column;
+      }
+
+      .news-article__content-metadata {
+        height: 2.5rem;
+        color: black;
+        font-family: "Gotham Medium", sans-serif;
+        font-size: 16px;
+        flex: 0 0 100%;
+        margin-top: 1rem;
+
+        span {
+          font-family: "Gotham Bold", sans-serif;
+        }
       }
 
       .article-header__sharing-goals {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
 
         font: {
-          family: "Gotham Medium";
           size: 20px;
         }
         line-height: 27px;
@@ -765,7 +1427,6 @@ export default {
       }
     }
   }
-
 }
 
 .org-banner-img {
@@ -938,6 +1599,17 @@ export default {
   li {
     margin: 5px;
   }
+
+  @include mdMax {
+    display: block;
+    li {
+      text-align: center;
+
+      a {
+        width: unset !important;
+      }
+    }
+  }
 }
 
 .organisation-network {
@@ -946,6 +1618,9 @@ export default {
   padding: 25px 25px 0;
   display: flex;
   justify-content: space-between;
+  @include mdMax {
+    display: block;
+  }
 
   .v-button {
     height: 40px;
@@ -955,6 +1630,8 @@ export default {
     &.message-btn {
       background: #ffffff;
       border: 1px solid;
+      overflow: hidden;
+      text-align: center;
     }
   }
 

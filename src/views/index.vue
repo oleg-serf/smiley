@@ -23,20 +23,6 @@ export default {
       </template>
     </hero>
 
-    <!--    <section class="section container">
-          <div class="section__title">
-            <h2>Featured News <span>| Editors pick</span></h2>
-            <input type="search" class="section__search" placeholder="Search news">
-          </div>
-          <div class="section__border"></div>
-        </section>
-
-        <section class="news-grid container" v-if="newsList.length > 0">
-          <news-card-new
-              v-for="article in newsList"
-              :key="article.slug"
-              :article="article"/>
-        </section>-->
     <div class="cards-sections-wrapper">
       <!--  NEWS SECTION   -->
       <section class="news-section" v-if="newsList.length > 0">
@@ -105,7 +91,7 @@ export default {
       </section>
 
       <!--  INTERVIEWS SECTION  -->
-      <section class="news-section" v-if="newsList.length > 0">
+      <section class="news-section" v-if="interviewList.length > 0">
         <bottom-bordered-title-with-search
             :title="'<b>Featured Interviews</b>'"
             :with-search="true"
@@ -115,7 +101,7 @@ export default {
             search-text="Search interviews..."
         ></bottom-bordered-title-with-search>
         <interviews-gallery
-            :interviews="newsList"
+            :interviews="interviewList"
             with-slider
             :prev-button-left="-80"
             :next-button-right="-80"
@@ -253,6 +239,7 @@ export default {
       events: [],
       eventList: [],
       newsList: [],
+      interviewList: [],
       projects: [],
 
       goals: [],
@@ -339,9 +326,10 @@ export default {
     axios
         .get("/pages/1")
         .then(res => {
-          console.log(res);
+          console.log(res, "homepage");
           this.eventList = res.data.future_events;
           this.newsList = res.data.latest_news;
+          this.interviewList = res.data.latest_interviews;
 
           this.banners.news = res.data.page_sections.smiley_news[0];
           // this.banners.network = res.data.page_sections.smiley_network[0];

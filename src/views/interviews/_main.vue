@@ -52,11 +52,11 @@ export default {
   created() {
     console.log("interviews triggered");
     axios
-      .get("/news/latest")
+      .get("/interviews/latest")
       .then((res) => {
         console.log("interviews", res);
 
-        this.latest = res.data.latest_news;
+        // this.latest = res.data.latest_interviews;
         this.interviews = res.data.featured_goals;
       })
       .catch((error) => console.error(error));

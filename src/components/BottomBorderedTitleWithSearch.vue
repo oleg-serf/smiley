@@ -5,11 +5,14 @@
     <div class="title-with-search__input-search-wrapper">
       <input
           v-if="withSearch"
+          v-model="searchKeyword"
+          @keyup.enter="$emit('search', searchKeyword)"
           :style="[withDropdown ? {'margin-right': '1rem'} : {}]"
           class="title-with-search__search-input"
           :class="[searchExpandable ? 'expandable' : '']"
           type="text"
-          :placeholder="searchText"/>
+          :placeholder="searchText"
+      />
       <div class="dropdown-wrapper" v-if="withDropdown">
         <VDropdown
             for-goals
@@ -80,6 +83,7 @@ export default {
   * DATA */
   data() {
     return {
+      searchKeyword: '',
       dropdownValue: null,
       hovered: false
     }

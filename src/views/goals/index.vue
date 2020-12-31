@@ -28,7 +28,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.goals_container {
-  padding: 0 150px;
-}
+// .goals_container {
+//   padding: 0 150px;
+// }
 </style>
