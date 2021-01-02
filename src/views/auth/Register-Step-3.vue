@@ -374,6 +374,8 @@ export default {
       });
     },
     addNewOfferItem() {
+      console.log("add new offered item");
+
       this.offeredItems.push({
         parent: 1,
         child: null

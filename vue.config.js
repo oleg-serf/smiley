@@ -5,9 +5,6 @@ module.exports = {
   },
   css: {
     loaderOptions: {
-      css: {
-
-      },
       sass: {
         prependData: `
           @import "@/scss/vars.scss";

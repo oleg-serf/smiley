@@ -11,7 +11,7 @@ const routes = [{
    */
   path: '/',
   name: 'home',
-  component: () => import( /* webpackChunkName: "web" */ '../views/Home.vue'),
+  component: () => import( /* webpackChunkName: "web" */ '../views/index.vue'),
   meta: {
     title: 'Home',
   }
@@ -59,20 +59,10 @@ const routes = [{
     ]
   },
 
-  // {
-  //   path: '/member/account-settings',
-  //   name: 'account-settings',
-  //   component: () => import( /* webpackChunkName: "user" */ '../views/user/Edit.vue'),
-  //   meta: {
-  //     title: 'Edit account settings',
-  //     requiresAuth: true,
-  //   }
-  // },
-  //  Testing new "Edit Account"
   {
-    path: '/member/settings',
+    path: '/member/account-settings',
     name: 'account-settings',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/Settings.vue'),
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/Edit.vue'),
     meta: {
       title: 'Edit account settings',
       requiresAuth: true,
@@ -260,38 +250,6 @@ const routes = [{
     component: () => import( /* webpackChunkName: "news" */ '../views/news/_latest.vue'),
     meta: {
       title: 'Latest News',
-    }
-  },
-  /**
-   * Interviews
-   */
-  {
-    path: '/smiley-interviews',
-    component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/index.vue'),
-    meta: {
-      title: 'Smiley Interviews'
-    },
-    children: [
-      {
-        path: '',
-        name: 'interviews',
-        component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_main.vue'),
-      }, {
-        path: ':slug',
-        name: 'interviews-item',
-        component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_slug.vue'),
-        meta: {
-          title: ''
-        }
-      },
-    ]
-  },
-  {
-    path: '/smiley-interviews-latest',
-    name: 'interviews-latest',
-    component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_latest.vue'),
-    meta: {
-      title: 'Latest Interviews',
     }
   },
   /**
