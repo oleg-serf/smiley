@@ -24,15 +24,15 @@ export default {
     </hero>
 
     <div class="cards-sections-wrapper">
-      <!--  NEWS SECTION   -->
+      <!--  FEATURED NEWS SECTION  -->
       <section class="news-section" v-if="newsList.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Featured News</b>| Editors pick'"
+            :title="'<b>Featured News</b> | Editors pick'"
             :with-search="true"
             :search-expandable="true"
             hover-effect
             hover-color="#FFE300"
-            search-text="Search events..."
+            search-text="Search News..."
         ></bottom-bordered-title-with-search>
         <news-gallery
             :news="newsList"
@@ -57,8 +57,7 @@ export default {
       </section>
 
       <!--  EVENTS SECTION  -->
-      <!--   TEMPORARY HIDDEN <API> NEEDED   -->
-      <section class="events-section" v-if="false">
+      <section class="events-section" v-if="eventList.length > 0">
         <bottom-bordered-title-with-search
             :title="'<b>Upcoming Events</b>'"
             :with-search="true"
@@ -68,7 +67,7 @@ export default {
             search-text="Search events..."
         ></bottom-bordered-title-with-search>
         <events-gallery
-            :events="banners.talks"
+            :events="eventList"
             with-slider
             :prev-button-left="-80"
             :next-button-right="-80"
@@ -156,19 +155,7 @@ export default {
         </VButton>
       </section>
 
-      <section class="section container">
-        <div class="section__title">
-          <h2>Upcoming events</h2>
-          <input type="search" class="section__search" placeholder="Search events">
-        </div>
-        <div class="section__border"></div>
-      </section>
-
-      <section class="events-grid container" v-if="eventList.length > 0">
-        <event-card-new v-for="event in eventList" :key="'event-'+event.slug" :event="event"/>
-      </section>
-
-      <section class="section container">
+      <!-- <section class="section container">
         <div class="section__title">
           <h2>Daily News</h2>
           <input type="search" class="section__search" placeholder="Search news">
@@ -181,7 +168,39 @@ export default {
             v-for="article in news"
             :key="article.slug"
             :article="article"/>
+      </section> -->
+
+      <!--  DAILY NEWS SECTION   -->
+      <section class="news-section" v-if="news.length > 0">
+        <bottom-bordered-title-with-search
+            :title="'<b>Daily News</b>'"
+            :with-search="true"
+            :search-expandable="true"
+            hover-effect
+            hover-color="#FFE300"
+            search-text="Search News..."
+        ></bottom-bordered-title-with-search>
+        <news-gallery
+            :news="news"
+            with-slider
+            :prev-button-left="-80"
+            :next-button-right="-80"
+        ></news-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: 'news' }"
+          >
+            More News
+          </router-link>
+        </VButton>
       </section>
+
     </div>
 
     <subscribe-form/>
@@ -331,6 +350,7 @@ export default {
           this.newsList = res.data.featured_news;
           this.eventList = res.data.latest_events;
           this.interviewList = res.data.latest_interviews;
+          this.projects = res.data.latest_network;
 
           this.banners.news = res.data.page_sections.smiley_news[0];
           // this.banners.network = res.data.page_sections.smiley_network[0];
@@ -356,7 +376,8 @@ export default {
     axios
         .get("/projects")
         .then((res) => {
-          this.projects = res.data.projects;
+          // this.projects = res.data.projects;
+          console.log(res.data.projects);
         })
         .catch((error) => console.error(error));
   }
