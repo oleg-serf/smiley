@@ -31,6 +31,7 @@ Document
 
 */
 
+
 *,
 *::before,
 *::after {
@@ -135,7 +136,7 @@ h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: .5rem;
 }
 
 /*
@@ -181,7 +182,7 @@ ol,
 ul,
 dl {
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 1rem;
 }
 
 ol ol,
@@ -196,7 +197,7 @@ dt {
 }
 
 dd {
-  margin-bottom: 0.5rem;
+  margin-bottom: .5rem;
   margin-left: 0;
   /* Undo browser default */
 }
@@ -230,11 +231,11 @@ sup {
 }
 
 sub {
-  bottom: -0.25em;
+  bottom: -.25em;
 }
 
 sup {
-  top: -0.5em;
+  top: -.5em;
 }
 
 /*
@@ -322,6 +323,7 @@ Images and content
 
 */
 
+
 img {
   vertical-align: middle;
   border-style: none;
@@ -351,7 +353,7 @@ a,
 area,
 button,
 [role="button"],
-input:not([type="range"]),
+input:not([type=range]),
 label,
 select,
 summary,
@@ -389,6 +391,12 @@ th {
 Forms
 
 */
+
+label {
+  /* Allow labels to use `margin` for spacing. */
+  display: inline-block;
+  margin-bottom: .5rem;
+}
 
 /*
 Remove the default `border-radius` that macOS Chrome adds.
@@ -507,7 +515,7 @@ legend {
   max-width: 100%;
   /* 1 */
   padding: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: .5rem;
   font-size: 1.5rem;
   line-height: inherit;
   color: inherit;

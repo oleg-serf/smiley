@@ -51,8 +51,7 @@
     text-transform: uppercase;
     margin: 0px;
     text-align: center;
-    @include font-size(2rem);
-    margin-bottom: 1rem;
+    @include font-size(3rem);
   }
 
   .hero__subtitle {
@@ -62,7 +61,7 @@
     text-transform: lowercase;
     margin: 0px;
     text-align: center;
-    @include font-size(1.4rem);
+    @include font-size(2rem);
 
     &:first-letter {
       text-transform: uppercase;
