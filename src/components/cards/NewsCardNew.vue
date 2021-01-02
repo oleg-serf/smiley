@@ -24,8 +24,8 @@
         <router-link :to="{name: 'news-item', params: {slug: article.slug}}"> more...</router-link>
       </div>
       <ul class="news-article__infos">
-        <li class="news-article__infos-item">Interview</li>
-        <li class="news-article__infos-item">Highlights</li>
+        <li class="news-article__infos-item">News</li>
+        <li class="news-article__infos-item">{{ article.author }}</li>
         <li class="news-article__infos-item">{{ dateAgo(article.published_at) }}</li>
       </ul>
     </div>

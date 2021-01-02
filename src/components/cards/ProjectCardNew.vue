@@ -5,13 +5,21 @@
         @mouseenter="showDescription = true"
         @mouseleave="showDescription = false"
     >
-      <MediaImage
+      <!-- <MediaImage
           :src="project.cover_image"
           :alt="project.name"
           :title="project.name"
           size="m"
           type="projects"
-      />
+      /> -->
+        <img
+          :src="$settings.images_path.projects +'m_'+project.cover_image"
+          v-if="project.cover_image != null"
+          alt
+        />
+        <template v-else>
+          <img :src="staticImageBySlug(project.slug)">
+        </template>
       <div class="projects-article-category">
         <span class="projects-article-category__name" v-if="manualGoal == null">
           {{
@@ -44,7 +52,7 @@
           v-html="cutText(project.description, 60, 'description')"
       ></div>
       <div class="projects-article__content-metadata">
-        <span>Project</span> | ipsum | {{ dateAgo('2020-12-14 13:30:00') }}
+        <span>{{ project.name }}</span> | {{ dateAgo('2020-12-14 13:30:00') }}
       </div>
     </div>
 
@@ -104,6 +112,38 @@ export default {
   methods: {
     openPage() {
       router.push({ name: "projects-item", params: { slug: this.project.slug } });
+    },
+    staticImageBySlug(slug) {
+      let result = null;
+
+      switch (slug) {
+        case 'extraordinary-links': {
+          result = '/images/remove-smiling-clubs.jpg';
+          break;
+        }
+        case 'pair-your-devices-tshirt-undyed-natural-fiber-designer-fundraiser-4bees': {
+          result = '/images/remove-mobile-laughter-booth.jpg';
+          break;
+        }
+        case 'routerater': {
+          result = '/images/remove-accelerating-community-driven-leaders.jpg';
+          break;
+        }
+        case 'foodcycle-south-west': {
+          result = '/images/remove-affordable-and-social-housing.jpeg';
+          break;
+        }
+        case 'journey-of-hope': {
+          result = '/images/remove-journey-of-hope.jpg';
+          break;
+        }
+        case 'aimeverhigh-bereavement-support-for-young-people': {
+          result = '/images/remove-aimeverhigh-bereavement-support-for-young-people.jpg';
+          break;
+        }
+      }
+
+      return result;
     },
     dateAgo(date) {
       const currentStamp = Date.now();
