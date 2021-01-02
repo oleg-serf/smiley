@@ -59,10 +59,20 @@ const routes = [{
     ]
   },
 
+  // {
+  //   path: '/member/account-settings',
+  //   name: 'account-settings',
+  //   component: () => import( /* webpackChunkName: "user" */ '../views/user/Edit.vue'),
+  //   meta: {
+  //     title: 'Edit account settings',
+  //     requiresAuth: true,
+  //   }
+  // },
+  //  Testing new "Edit Account"
   {
-    path: '/member/account-settings',
+    path: '/member/settings',
     name: 'account-settings',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/Edit.vue'),
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/Settings.vue'),
     meta: {
       title: 'Edit account settings',
       requiresAuth: true,
