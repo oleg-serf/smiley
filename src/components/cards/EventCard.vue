@@ -1,5 +1,5 @@
 <template>
-  <div class="event">
+  <div class="event" :class="[forMobile ? 'for-mobile' : '']">
     <div
         class="event__image"
         @mouseenter="showDescription = true"
@@ -38,9 +38,9 @@
 
     <div class="event__content">
       <h3 class="event__content-title">
-        {{ cutText(event.title, 40) }}
+        {{ cutText(event.title, 60) }}
       </h3>
-      <div class="event__content-description" v-html="cutText(event.short_description, 50, 'description')">
+      <div class="event__content-description" v-html="cutText(event.short_description, 60, 'description')">
       </div>
       <div class="event__content-metadata">
         <span>{{ event.location }}</span> |
@@ -75,6 +75,10 @@ import { VButton } from "@/components/app";
 export default {
   name: "EventCard",
   props: {
+    forMobile: {
+      type: Boolean,
+      default: false
+    },
     event: {
       type: Object,
     },
@@ -202,6 +206,21 @@ export default {
   min-height: 540px;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
+  &.for-mobile {
+    box-shadow: none;
+    text-align: left;
+    .event__content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .event__content-description {
+      margin-top: 0 !important;
+      height: 4rem !important;
+    }
+    .event__content-metadata {
+      height: 2rem !important;
+    }
+  }
 
   .event__image {
     position: relative;

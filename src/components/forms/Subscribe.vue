@@ -1,76 +1,113 @@
 <template>
-  <section class="subscribe">
-    <div class="container">
-      <h3 class="subscribe__title">Subscribe to our Newsletter for the latest news!</h3>
-      <form action="" class="subscribe__form" @submit="subscribe">
-        <input
-            class="subscribe__input"
-            type="text"
-            required
-            placeholder="Your Name..."
-            minlength="2"
-            v-model.trim="name">
-        <input
-            class="subscribe__input"
-            type="email"
-            required
-            placeholder="Your Email..."
-            v-model.trim="email">
-        <button class="subscribe__button">Subscribe</button>
-      </form>
-    </div>
+  <section class="subscribe container" :class="[forMobile ? 'for-mobile' : '']">
+    <h3 class="subscribe__title" v-if="forMobile">Sign up to our newsletter</h3>
+    <h3 class="subscribe__title" v-else>
+      Subscribe to our Newsletter for the latest news!
+    </h3>
+    <form action="" class="subscribe__form" @submit="subscribe">
+      <input
+        v-if="!forMobile"
+        class="subscribe__input"
+        type="text"
+        required
+        placeholder="Your Name..."
+        minlength="2"
+        v-model.trim="name"
+      />
+      <input
+        :class="[forMobile ? 'for-mobile' : '']"
+        class="subscribe__input"
+        type="email"
+        required
+        placeholder="Your Email..."
+        v-model.trim="email"
+      />
+      <button
+        class="subscribe__button"
+        :class="[forMobile ? 'for-mobile' : '']"
+      >
+        Subscribe
+      </button>
+    </form>
   </section>
 </template>
 
 <script>
 export default {
   name: "Footer",
+  props: {
+    forMobile: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      name: '',
-      email: '',
-    }
+      name: "",
+      email: "",
+    };
   },
   methods: {
     subscribe() {
       if (this.name && this.email) {
-
       } else {
-        this.$swal('Fill in data');
+        this.$swal("Fill in data");
       }
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .subscribe {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-
-    &__title {
-      @include font-size(1.5rem);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-weight: bold;
-      &:hover {
-        color: #FFE300;
-      }
+.subscribe {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  &.for-mobile {
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-top: 0;
+    padding-top: 2rem;
+    border-top: 2px solid #ffe300;
+    .subscribe__title {
+      font-size: 1.9rem;
+      font-family: "Gotham Bold", sans-serif !important;
+      text-align: left;
     }
+    .subscribe__input {
+      border-radius: 0.8rem;
+      padding: 2.3rem 0.9rem;
+    }
+    .subscribe__button {
+      border-radius: 3.5rem;
+      padding: 2.2rem 1rem;
+    }
+  }
 
-    &__form {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 1.5rem;
-      max-width: 1410px;
-      width: 100%;
-      margin: 0 auto;
+  &__title {
+    @include font-size(1.5rem);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+    &:hover {
+      color: #ffe300;
+    }
+  }
 
-      @include mdMax {
-        display: flex;
-        flex-direction: column;
-      }
-      /*@include mdMax {
+  &__form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1.5rem;
+    max-width: 1410px;
+    width: 100%;
+    margin: 0 auto;
+
+    @include mdMax {
+      display: flex;
+      flex-direction: column;
+    }
+    /*@include mdMax {
         grid-template-columns: repeat(2, 1fr);
         max-width: 540px;
       }
@@ -78,37 +115,37 @@ export default {
         grid-template-columns: 1fr;
         max-width: 420px;
       }*/
+  }
+
+  &__input {
+    text-align: center;
+    border-radius: 1rem;
+    border: 1px solid #707070;
+    font-size: 1rem;
+    @include smMax {
+      padding: 0.67rem 0.5rem;
     }
-
-    &__input {
-      text-align: center;
-      border-radius: 1rem;
-      border: 1px solid #707070;
-      font-size: 1rem;
-      @include smMax {
-        padding: 0.67rem .5rem;
-      }
-      @include mdMax {
-        padding: 0.67rem .5rem;
-      }
-    }
-
-    &__button {
-      background-color: #FFE300;
-      box-shadow: 0px 1px 6px #000000;
-      border: none;
-      border-radius: 44px;
-      font-size: 1.5rem;
-      line-height: 1;
-      padding: 1.2rem 1rem;
-
-      @include mdMax {
-        grid-column: 1 / span 2;
-        padding: .8rem 1rem;
-      }
-      @include smMax {
-        grid-column: 1;
-      }
+    @include mdMax {
+      padding: 0.67rem 0.5rem;
     }
   }
+
+  &__button {
+    background-color: #ffe300;
+    box-shadow: 0px 1px 6px #000000;
+    border: none;
+    border-radius: 44px;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 1.2rem 1rem;
+
+    @include mdMax {
+      grid-column: 1 / span 2;
+      padding: 0.8rem 1rem;
+    }
+    @include smMax {
+      grid-column: 1;
+    }
+  }
+}
 </style>

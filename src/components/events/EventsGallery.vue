@@ -1,29 +1,42 @@
 <template>
-  <div style="position:relative;">
+  <div style="position: relative" :class="[forMobile ? 'for-mobile' : '']">
     <template v-if="withSlider">
       <ButtonArrow
-          :id="'news-gallery-button-prev-' + id"
-          :style="{left: prevButtonLeft}"
-          class="news-gallery-button news-gallery-button-prev"
+        v-if="!forMobile"
+        :id="'news-gallery-button-prev-' + id"
+        :style="{ left: prevButtonLeft }"
+        class="news-gallery-button news-gallery-button-prev"
       />
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="article in events" :key="article.slug">
-          <EventCard class="news-gallery__card" :event="article" />
+          <EventCard
+            class="news-gallery__card"
+            :event="article"
+            :for-mobile="forMobile"
+          />
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
-          :id="'news-gallery-button-next-' + id"
-          :style="{right: nextButtonRight}"
-          class="news-gallery-button news-gallery-button-next"
+        v-if="!forMobile"
+        :id="'news-gallery-button-next-' + id"
+        :style="{ right: nextButtonRight }"
+        class="news-gallery-button news-gallery-button-next"
       />
     </template>
-    <section class="section" v-else id="section-news">
+    <section
+      class="section"
+      v-else
+      id="section-news"
+      :class="[forMobile ? 'for-mobile' : '']"
+    >
       <div class="grid grid--news">
         <EventCard
-            class="news-gallery__card"
-            v-for="article in events"
-            :key="'article-'+article.slug"
-            :event="article"/>
+          :for-mobile="forMobile"
+          class="news-gallery__card"
+          v-for="article in events"
+          :key="'article-' + article.slug"
+          :event="article"
+        />
       </div>
     </section>
   </div>
@@ -31,31 +44,35 @@
 
 <script>
 import { ButtonArrow } from "@/components/buttons";
-import EventCard from "@/components/events/Event-Card";
+import EventCard from "@/components/cards/EventCard";
 
 export default {
   name: "EventsGallery",
   props: {
+    forMobile: {
+      type: Boolean,
+      default: false,
+    },
     events: {
       type: Array,
       required: true,
     },
     withSlider: {
       type: Boolean,
-      default: false
+      default: false,
     },
     prevButtonLeft: {
       type: Number,
-      default: 0
+      default: 0,
     },
     nextButtonRight: {
       type: Number,
-      default: 0
+      default: 0,
     },
     slidesPerView: {
       type: Number,
-      default: 3
-    }
+      default: 3,
+    },
   },
   components: {
     EventCard,
@@ -100,6 +117,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.section {
+  &.for-mobile {
+    margin-top: 0;
+    margin-bottom: 0;
+    .news-gallery {
+      padding: 0;
+    }
+  }
+}
 .grid {
   &--news {
     display: grid;
@@ -113,6 +139,11 @@ export default {
     @include mdMax {
       grid-template-columns: repeat(1, 1fr);
     }
+  }
+}
+.for-mobile {
+  .news-gallery {
+    padding: 0;
   }
 }
 .news-gallery {
