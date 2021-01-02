@@ -104,9 +104,11 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
           </svg>
           <div class="date-and-time-info">
             <div
+              v-if="event.date"
               class="date-info"
             >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}}</div>
             <div
+              v-if="event.time_start"
               class="time-info"
             >{{event.time_start | formatTime}} - {{event.time_end | formatTime}}</div>
           </div>
@@ -134,7 +136,7 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       <!-- Show attendees only if user is attended to event -->
       <!-- TODO: Rework attendees -->
 
-      <div class="attending-info" v-if="event.attendees_random.length !== 0">
+      <div class="attending-info" v-if="event.attendees_random && event.attendees_random.length !== 0">
         <span>Attending:</span>
         <div class="attending-wrap">
           <div

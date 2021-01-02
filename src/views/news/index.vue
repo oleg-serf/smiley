@@ -1,28 +1,34 @@
 <template>
-  <div>
+  <div class="news_container">
     <Breadcrumbs/>
     <router-view key="$route.fullPath"></router-view>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
 <script>
-    import Breadcrumbs from "@/components/Breadcrumbs";
-    import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import Footer from "@/components/Footer";
 
-    export default {
-        components: {
-            Footer,
-            Breadcrumbs
-        },
-        mounted() {
-            const metaPayload = {
-                title: 'Smiley News',
-                meta: {
-                    description: 'Daily positive news about charities, organisations and everyday heroes making the world a better place.'
-                }
-            }
-            this.$store.dispatch('meta/setMeta', metaPayload);
-        }
-    }
+export default {
+  components: {
+    Footer,
+    Breadcrumbs,
+  },
+  mounted() {
+    const metaPayload = {
+      title: "Smiley News",
+      meta: {
+        description:
+          "Daily positive news about charities, organisations and everyday heroes making the world a better place.",
+      },
+    };
+    this.$store.dispatch("meta/setMeta", metaPayload);
+  },
+};
 </script>
+<style lang="scss" scoped>
+.news_container {
+  padding: 0 150px;
+}
+</style>
