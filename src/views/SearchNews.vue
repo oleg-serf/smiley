@@ -104,7 +104,7 @@ export default {
       axios
         // .get("/search?news-page=" + pageNum)
         .get(
-          "/news?news-page=" +
+          "/api/news?news-page=" +
             pageNum +
             "&keyword=" +
             this.$route.params.keyword
@@ -134,7 +134,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/news?keyword=" + this.$route.params.keyword)
+      .get("/api/news?keyword=" + this.$route.params.keyword)
       .then(res => {
         console.log("Search results loaded", res);
 
