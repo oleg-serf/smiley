@@ -1,6 +1,7 @@
 <template>
   <section id="app">
-    <Header />
+    <HeaderMobile v-if="isMobile" />
+    <Header v-else />
     <router-view :key="$route.fullPath" />
     <tooltip />
   </section>
@@ -8,12 +9,19 @@
 
 <script>
 // @ is an alias to /src
+import HeaderMobile from "@/components/HeaderMobile.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
   name: "home",
+  data() {
+    return {
+      isMobile: false,
+    };
+  },
   components: {
+    HeaderMobile,
     Header,
     Footer,
   },
@@ -32,9 +40,19 @@ export default {
       this.$store.dispatch("meta/clearMeta");
     },
   },
-  methods: {},
-  created() {},
-  metaInfo: function() {
+  methods: {
+    handleResize() {
+      this.isMobile = window.outerWidth >= 450 ? false : true;
+    },
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  metaInfo: function () {
     // TODO: Refactor
     let metaArray = [];
     if (this.appMeta != null) {
@@ -103,8 +121,8 @@ export default {
   list-style-type: none;
 
   li {
-    margin-left: .5rem;
-    margin-right: .5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 
     &:first-child {
       margin-left: 0px;

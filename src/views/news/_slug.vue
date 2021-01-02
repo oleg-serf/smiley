@@ -64,7 +64,6 @@
         </div>
       </div>
 
-      <!-- BAKHTIYOR ADDED THIS COMMENTS_SECTION COMPONENT 14.02.2020 -->
       <!--   COMMENTS SECTION   -->
       <div class="comments-section">
         <CommentsSection></CommentsSection>

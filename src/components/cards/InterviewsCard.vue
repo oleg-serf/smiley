@@ -1,5 +1,5 @@
 <template>
-  <article class="news-article">
+  <article class="news-article" :class="[forMobile ? 'for-mobile' : '']">
     <div
         class="news-article__image"
         @mouseenter="showDescription = true"
@@ -46,11 +46,11 @@
 
     <div class="news-article__content">
       <h3 class="news-article__content-title">
-        {{ cutText(interview.title, 40) }}
+        {{ cutText(interview.title, 60) }}
       </h3>
       <div
           class="news-article__content-description"
-          v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 50, 'description')"
+          v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 60, 'description')"
       ></div>
       <div class="news-article__content-metadata">
         <span>Interview</span> | {{ interview.author }} | {{ dateAgo(interview.published_at) }}
@@ -82,6 +82,10 @@ export default {
     VButton,
   },
   props: {
+    forMobile: {
+      type: Boolean,
+      default: false
+    },
     type: {
       type: String,
       default: 'news'
@@ -166,6 +170,21 @@ export default {
   min-height: 540px;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
+  &.for-mobile {
+    box-shadow: none;
+    text-align: left;
+    .news-article__content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .news-article__content-description {
+      margin-top: 0 !important;
+      height: 4rem !important;
+    }
+    .news-article__content-metadata {
+      height: 2rem !important;
+    }
+  }
 
   .news-article__image {
     position: relative;

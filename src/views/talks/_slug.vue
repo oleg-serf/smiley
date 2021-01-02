@@ -14,14 +14,6 @@
           />
           <Swiper class="news-gallery" :key="key" :options="options">
             <SwiperSlide v-for="n in 4" :key="`testEvent-${n}`">
-<!--              <iframe
-                  class="event-title__video"
-                  style="display: block;"
-                  width="100%"
-                  height="700"
-                  src="https://www.youtube.com/embed/4b33NTAuF5E"
-              >
-              </iframe>-->
               <iframe
                   class="event-title__video"
                   width="100%"
@@ -41,7 +33,10 @@
         </template>
       </div>
       <p class="event-title__video-description">
-        Partners/ Speakers | Tuesday 12pm (BST), Dec 8<sup>th</sup>,2020 | 3 Comments
+        <!-- Partners/ Speakers | Tuesday 12pm (BST), Dec 8<sup>th</sup>,2020 | 3 Comments -->
+        {{post.past ? "PAST EVENT":"UPCOMING EVENT"}} | 
+        {{post.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}} | 
+        3 Comments
       </p>
       <div class="event-title__link-actions">
         <div class="event-title__link-actions__un-goals">
@@ -97,7 +92,8 @@
           >
             <router-link
                 class="event__button-link"
-                :to="'#'"><i class="fa fa-twitter"></i></router-link>
+                :to="'#'"><i class="fa fa-twitter"></i>
+            </router-link>
           </VButton>
           <VButton
               class="event-title__link-actions__icon-btn"
@@ -107,7 +103,8 @@
           >
             <router-link
                 class="event__button-link"
-                :to="'#'"><i class="fa fa-youtube"></i></router-link>
+                :to="'#'"><i class="fa fa-youtube"></i>
+            </router-link>
           </VButton>
           <p>{{ shareText }}</p>
         </div>
@@ -144,20 +141,15 @@
       </div>
       <div class="event-title__paragraph-section">
         <p class="event-title__paragraph-section__paragraph">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore
-          reiciendis in aliquid temporibus culpa harum? Officia.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus beatae atque mollitia corrupti aliquam
-          veniam architecto rerum, sed iure eaque voluptate ea dolorem iusto perferendis blanditiis eum magni
-          consequuntur asperiores.
+          {{ description }}
         </p>
-        <p class="event-title__paragraph-section__paragraph">
+        <!-- <p class="event-title__paragraph-section__paragraph">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore
           reiciendis in aliquid temporibus culpa harum? Officia.
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, laudantium excepturi porro, sunt sequi impedit
           cupiditate dolorem dicta beatae ut, veniam molestias animi possimus! Fugit corrupti error nulla esse beatae?
-        </p>
+        </p> -->
       </div>
       <div class="speakers-grid">
         <div v-for="(user, index) in post.speakers" :key="index">
@@ -188,11 +180,15 @@
         :title="'<b>Speaker Interviews</b>'"
         :with-search="false"
     ></BottomBorderedTitleWithSearch>
-    <InterviewsGallery :interviews="past" image-type="events" button-text="Speaker Bio"></InterviewsGallery>
+    <InterviewsGallery 
+        :interviews="past"
+        image-type="events"
+        button-text="Speaker Bio"
+    ></InterviewsGallery>
     <!-- Comments Section -->
-    <div class="comments-section">
+    <!-- <div class="comments-section">
       <CommentsSection></CommentsSection>
-    </div>
+    </div> -->
 
     <!--   EVENTS   -->
     <section class="content-block">
@@ -247,6 +243,7 @@ export default {
         title: "",
         content: "",
       },
+      description: "",
       id: 0,
       key: 0,
       options: {
@@ -404,6 +401,7 @@ export default {
           console.log("events item loaded", res);
 
           this.post = res.data.event;
+          this.description = res.data.meta.description;
           // this.related_posts = res.data.related;
 
           const metaPayload = {
@@ -639,10 +637,7 @@ export default {
   padding: 16px 0;
   border-bottom: 2px solid #ffe300;
   display: flex;
-  /*
-  BAKHTIYOR CHANGED THIS FROM 150PX TO 70PX 14.02.2020
-  FOR SEPARATING COMMENTS SECTION AND IT'S STYLES AS WELL
-  */
+
   margin: 70px 0;
   /* --------------- ------------------ */
   .event-category__title {

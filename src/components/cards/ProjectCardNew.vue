@@ -1,5 +1,5 @@
 <template>
-  <article class="projects-project">
+  <article class="projects-article" :class="[forMobile ? 'for-mobile' : '']">
     <div
         class="projects-article__image"
         @mouseenter="showDescription = true"
@@ -12,17 +12,17 @@
           size="m"
           type="projects"
       />
-      <div class="projects-project-category">
-        <span class="projects-project-category__name" v-if="manualGoal == null">
+      <div class="projects-article-category">
+        <span class="projects-article-category__name" v-if="manualGoal == null">
           {{
             project.goals != null && project.goals.length > 0
                 ? project.goals[0].name
                 : ""
           }}
         </span>
-        <span class="projects-project-category__name" v-else>{{ manualGoal }}</span>
+        <span class="projects-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="projects-project-category__description"
+          <span v-if="showDescription" class="projects-article-category__description"
           >UN Goal 0{{
               project.goals != null && project.goals.length > 0
                   ? project.goals[0].prefix
@@ -37,11 +37,11 @@
 
     <div class="projects-article__content">
       <h3 class="projects-article__content-title">
-        {{ cutText(project.name ? project.name : project.title, 40) }}
+        {{ cutText(project.name ? project.name : project.title, 60) }}
       </h3>
       <div
           class="projects-article__content-description"
-          v-html="cutText(project.description, 50, 'description')"
+          v-html="cutText(project.description, 60, 'description')"
       ></div>
       <div class="projects-article__content-metadata">
         <span>Project</span> | ipsum | {{ dateAgo('2020-12-14 13:30:00') }}
@@ -73,6 +73,10 @@ export default {
     VButton,
   },
   props: {
+    forMobile: {
+      type: Boolean,
+      default: false
+    },
     project: {
       type: Object,
     },
@@ -147,13 +151,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.projects-project {
+.projects-article {
   background-color: white;
   position: relative;
   min-height: 540px;
   height: 100%;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
+  &.for-mobile {
+    box-shadow: none;
+    text-align: left;
+    .projects-article__content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .projects-article__content-description {
+      margin-top: 0 !important;
+      height: 4rem !important;
+    }
+    .projects-article__content-metadata {
+      height: 2rem !important;
+    }
+  }
 
   .projects-article__image {
     position: relative;
@@ -168,7 +187,7 @@ export default {
       object-position: center;
     }
 
-    .projects-project-category {
+    .projects-article-category {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -178,10 +197,10 @@ export default {
       font-family: "Gotham Bold";
       padding: 8px 16px;
 
-      .projects-project-category__name {
+      .projects-article-category__name {
         color: white;
       }
-      .projects-project-category__description {
+      .projects-article-category__description {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";

@@ -11,7 +11,7 @@ const routes = [{
    */
   path: '/',
   name: 'home',
-  component: () => import( /* webpackChunkName: "web" */ '../views/index.vue'),
+  component: () => import( /* webpackChunkName: "web" */ '../views/Home.vue'),
   meta: {
     title: 'Home',
   }

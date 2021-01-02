@@ -1,25 +1,28 @@
 <template>
-  <div class="projects-gallery__container">
+  <div class="projects-gallery__container" :class="[forMobile ? 'for-mobile' : '']">
     <template v-if="withSlider || isMobile">
       <ButtonArrow
+      v-if="!forMobile"
           :id="'news-gallery-button-prev-' + id"
           class="news-gallery-button news-gallery-button-prev"
       />
       <Swiper class="news-gallery" :key="key" :options="options">
-        <SwiperSlide v-for="project in projects" :key="project.slug">
-          <DiscussionCard class="news-gallery__card" :project="project"/>
+        <SwiperSlide v-for="project in discussions" :key="project.slug">
+          <DiscussionCard class="news-gallery__card" :project="project" :for-mobile="forMobile" :button-text="buttonText"/>
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
+      v-if="!forMobile"
           :id="'news-gallery-button-next-' + id"
           class="news-gallery-button news-gallery-button-next"
       />
     </template>
-    <section v-else class="section" id="section-news">
+    <section v-else class="section" id="section-news" :class="[forMobile ? 'for-mobile' : '']">
       <div class="grid grid--news">
         <DiscussionCard
+         :for-mobile="forMobile"
             class="news-gallery__card"
-            v-for="project in projects"
+            v-for="project in discussions"
             :key="'project-'+project.slug"
             :button-text="buttonText"
             :project="project"/>
@@ -35,7 +38,11 @@ import DiscussionCard from "@/components/cards/DiscussionCard";
 export default {
   name: "DiscussionsGallery",
   props: {
-    projects: {
+    forMobile: {
+      type: Boolean,
+      default: false,
+    },
+    discussions: {
       type: Array,
       required: true,
     },
@@ -45,7 +52,7 @@ export default {
     },
     buttonText: {
       type: String,
-      default: 'View Project'
+      default: 'Join'
     }
   },
   components: {
@@ -106,6 +113,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.section {
+  &.for-mobile {
+    margin-top: 0;
+    margin-bottom: 0;
+    .news-gallery {
+      padding: 0;
+    }
+  }
+}
 .projects-gallery__container {
   position: relative;
 }
@@ -125,7 +141,11 @@ export default {
     }
   }
 }
-
+.for-mobile {
+  .news-gallery {
+    padding: 0;
+  }
+}
 .news-gallery {
   padding: 10px;
 }

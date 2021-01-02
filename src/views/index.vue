@@ -176,9 +176,9 @@ export default {
         <div class="section__border"></div>
       </section>
 
-      <section class="news-grid container" v-if="newsList.length > 0">
+      <section class="news-grid container" v-if="news.length > 0">
         <news-card-new
-            v-for="article in newsList"
+            v-for="article in news"
             :key="article.slug"
             :article="article"/>
       </section>
@@ -327,8 +327,9 @@ export default {
         .get("/pages/1")
         .then(res => {
           console.log(res, "homepage");
-          this.eventList = res.data.future_events;
-          this.newsList = res.data.latest_news;
+          this.news = res.data.latest_news;
+          this.newsList = res.data.featured_news;
+          this.eventList = res.data.latest_events;
           this.interviewList = res.data.latest_interviews;
 
           this.banners.news = res.data.page_sections.smiley_news[0];

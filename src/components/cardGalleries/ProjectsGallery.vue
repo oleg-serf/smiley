@@ -1,7 +1,8 @@
 <template>
-  <div class="projects-gallery__container">
+  <div class="projects-gallery__container" :class="[forMobile ? 'for-mobile' : '']">
     <template v-if="withSlider">
       <ButtonArrow
+      v-if="!forMobile"
           :id="'news-gallery-button-prev-' + id"
           :style="[prevButtonLeft ? {left: prevButtonLeft} : '']"
           class="news-gallery-button news-gallery-button-prev"
@@ -9,20 +10,23 @@
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="project in projects" :key="project.slug">
           <ProjectCardNew
+          :for-mobile="forMobile"
               class="news-gallery__card"
               :button-text="buttonText"
               :project="project"/>
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
+      v-if="!forMobile"
           :id="'news-gallery-button-next-' + id"
           :style="[nextButtonRight !== 0 ? {right: nextButtonRight} : '']"
           class="news-gallery-button news-gallery-button-next"
       />
     </template>
-    <section v-else class="section" id="section-news">
+    <section v-else class="section" id="section-news" :class="[forMobile ? 'for-mobile' : '']">
       <div class="grid grid--news">
         <ProjectCardNew
+        :for-mobile="forMobile"
             class="news-gallery__card"
             v-for="project in projects"
             :key="'project-'+project.slug"
@@ -40,6 +44,10 @@ import ProjectCardNew from "@/components/cards/ProjectCardNew";
 export default {
   name: "ProjectsGallery",
   props: {
+    forMobile: {
+      type: Boolean,
+      default: false,
+    },
     projects: {
       type: Array,
       required: true,
@@ -72,7 +80,7 @@ export default {
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,
-        spaceBetween: 25,
+        spaceBetween: 10,
         loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
@@ -87,6 +95,7 @@ export default {
           1200: {
             slidesPerView: 3,
             slidesPerGroup: 3,
+            spaceBetween: 25
           },
         },
       },
@@ -103,6 +112,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.section {
+  &.for-mobile {
+    margin-top: 0;
+    margin-bottom: 0;
+    .news-gallery {
+      padding: 0;
+    }
+  }
+}
 .projects-gallery__container {
   position: relative;
 }
@@ -121,7 +139,11 @@ export default {
     }
   }
 }
-
+.for-mobile {
+  .news-gallery {
+    padding: 0;
+  }
+}
 .news-gallery {
   padding: 10px;
   .swiper-slide {
