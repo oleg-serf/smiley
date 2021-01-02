@@ -1,66 +1,60 @@
 <template>
-  <div class="event" :class="[forMobile ? 'for-mobile' : '']">
-    <div
-        class="event__image"
-        @mouseenter="showDescription = true"
-        @mouseleave="showDescription = false"
-    >
-      <MediaImage
+  <div class="event-item">
+    <div class="event-item__image">
+      <media-image
         :src="event.cover_image"
         :alt="event.title"
         :title="event.title"
         size="m"
         type="events"
       />
-      <div
-        class="event-category"
-      >
-        <span class="event-category__name" v-if="manualGoal == null">
-          {{
-            event.goals != null && event.goals.length > 0
-              ? event.goals[0].name
-              : ""
-          }}
-        </span>
-        <span class="event-category__name" v-else>{{ manualGoal }}</span>
-        <transition name="fade">
-          <span v-if="showDescription" class="event-category__description"
-            >UN Goal 0{{
-              event.goals != null && event.goals.length > 0
-                  ? event.goals[0].prefix
-                  : ""
-            }} | <br>
-            Quality Education</span
-          >
-        </transition>
-      </div>
     </div>
-
-    <div class="event__content">
-      <h3 class="event__content-title">
-        {{ cutText(event.title, 60) }}
-      </h3>
-      <div class="event__content-description" v-html="cutText(event.short_description, 60, 'description')">
+    <div class="event-item__content">
+      <div class="event-item__category">
+        <div class="event-item__header">
+          <div class="event-item__category-badge">
+            <div>{{ format(event.date, 'MMM')}}</div>
+            <div>{{ format(event.date, 'D') }}</div>
+          </div>
+          <div
+            class="event-item__category-name"
+            v-if="event.goals.length > 0"
+          >{{event.goals[0].name}}</div>
+          <div
+            class="event-item__category-postponed"
+            v-if="event.postponed === 'true'"
+          >Postponed</div>
+          <!-- <div class="event-item__category-circle">
+            <span>+15</span>
+          </div>-->
+        </div>
       </div>
-      <div class="event__content-metadata">
-        <span>{{ event.location }}</span> |
-        {{ dateAgo(event.published_at) }}
-      </div>
-    </div>
+      <div class="event-item__spacer"></div>
+      <div class="event-item__inner">
+        <div
+          class="event-item__hours"
+        >{{ event.time_start | formatTime }} - {{ event.time_end | formatTime}}</div>
+        <h3 class="event-item__title">
+          <router-link :to="{name: 'event', params: {slug: event.slug}}">{{event.title}}</router-link>
+        </h3>
+        <!-- <div class="event-item__description">{{ description | trimDescription }}</div> -->
+        <div class="event-item__location">{{ event.location }}</div>
+        <div class="event-item__button">
+          <router-link :to="{name: 'event', params: {slug: event.slug}}">talk details</router-link>
+          <template v-if="!event.past && isAuthenticated">
+            <button
+                class="register"
+                v-if="event.attending == true"
+                @click.prevent="unattend"
+            >Unattend</button>
+            <button class="register" v-else @click.prevent="attend">register</button>
 
-    <div class="event__readmore">
-      <VButton
-        class="event__button"
-        size="height_45"
-        @click.native.prevent="openPage"
-        shape="round"
-      >
-        <router-link
-          class="event__button-link"
-          :to="{ name: 'event', params: { slug: event.slug } }"
-          >{{ buttonName }}</router-link
-        >
-      </VButton>
+          </template>
+          <template v-else>
+            <button class="register" v-if="active" @click.prevent="attendNotAuthed">register</button>
+          </template>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,45 +64,18 @@ import axios from "@/axios-auth";
 import router from "@/router";
 
 import MediaImage from "@/components/Image.vue";
-import { VButton } from "@/components/app";
 
 export default {
   name: "EventCard",
-  props: {
-    forMobile: {
-      type: Boolean,
-      default: false
-    },
-    event: {
-      type: Object,
-    },
-    active: {
-      type: Boolean,
-      default: true,
-    },
-    buttonName: {
-      type: String,
-      default: "Read More",
-    },
-    manualGoal: {
-      default: null,
-    },
-  },
-  data() {
-    return {
-      showDescription: false,
-    };
-  },
   components: {
-    MediaImage,
-    VButton,
+    MediaImage
   },
   filters: {
     trimDescription(description) {
       return description.length > 120
         ? description.substring(0, 120) + "..."
         : description;
-    },
+    }
   },
   computed: {
     isAuthenticated() {
@@ -116,49 +83,27 @@ export default {
     },
   },
   methods: {
-    dateAgo(date) {
-      const currentStamp = Date.now();
-      const realDate = this.$dayjs(date);
-      const postStamp = this.$dayjs(date).unix() * 1000;
-      const dateDiff = currentStamp - postStamp;
-      const days = dateDiff / (1000 * 3600 * 24);
-
-      const result = Math.floor(days);
-
-      const append = result == 1 ? "day" : "days";
-
-      let time = "";
-
-      if (result == 0) {
-        time = "Today";
-      } else if (result < 28) {
-        time = result + " " + append + " ago";
-      } else {
-        const month = realDate.date();
-        const day = realDate.month() + 1;
-        const year = realDate.year();
-        time = day + "-" + month + "-" + year;
-      }
-
-      return time;
+    format(date, format) {
+      const result = this.$dayjs(date).format(format);
+      return result;
     },
     attend() {
       axios
         .post("/events/" + this.event.slug + "/attend")
-        .then((res) => {
-          this.$swal("You are now attending this event");
-          this.$emit("reload_events");
+        .then(res => {
+          this.$swal('You are now attending this event');
+          this.$emit('reload_events');
         })
-        .catch((error) => console.error(error));
+        .catch(error => console.error(error));
     },
     unattend() {
       axios
         .post("/events/" + this.event.slug + "/attend/cancel")
-        .then((res) => {
-          this.$swal("You are now not attending this event");
-          this.$emit("reload_events");
+        .then(res => {
+          this.$swal('You are now not attending this event');
+          this.$emit('reload_events');
         })
-        .catch((error) => console.error(error));
+        .catch(error => console.error(error));
     },
     attendNotAuthed() {
       let swal = {
@@ -167,9 +112,9 @@ export default {
           "To register for an event you will need to login or create an account",
         showCancelButton: true,
         confirmButtonText: "Create Account",
-        cancelButtonText: "Login",
+        cancelButtonText: "Login"
       };
-      this.$swal(swal).then((result) => {
+      this.$swal(swal).then(result => {
         if (result.value) {
           router.push({ name: "register" });
         } else if (
@@ -179,145 +124,256 @@ export default {
           router.push({ name: "login" });
         }
       });
-    },
-    cutText(text, limit, stringName) {
-      if (text.length > limit) {
-        // CHECK IF CHARACTER IS <SPACE> OR END OF STRING
-        for (let i = 0; i < text.length - limit; i++) {
-          if (text[limit].trim() !== '' && limit !== text.length) {
-            limit++
-          } else {
-            break;
-          }
-        }
-        return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
-      }
-
-      return text;
-    },
+    }
   },
+  props: {
+    event: {
+      type: Object
+    },
+    active: {
+      type: Boolean,
+      default: true
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.event {
-  background-color: white;
+// TODO: Move styles to separate file
+.event-item {
+  background-color: #000;
   position: relative;
-  min-height: 540px;
+  padding: 30px;
+  min-height: 350px;
+  transition: padding-bottom 0.4s;
   color: #fff;
-  box-shadow: 0 3px 6px rgba(#000, 0.16);
-  &.for-mobile {
-    box-shadow: none;
-    text-align: left;
-    .event__content {
-      padding-left: 0;
-      padding-right: 0;
-    }
-    .event__content-description {
-      margin-top: 0 !important;
-      height: 4rem !important;
-    }
-    .event__content-metadata {
-      height: 2rem !important;
+  display: flex;
+  flex-direction: column;
+
+  @include mdMax {
+    min-height: 400px;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-color: #000;
+    opacity: 0.5;
+    z-index: 2;
+  }
+
+  &:hover {
+    .event-item__image {
+      img {
+        transform: scale(1.1);
+      }
     }
   }
 
-  .event__image {
-    position: relative;
-    height: 230px;
+  .event-item__image {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    overflow: hidden;
+    height: 100%;
     width: 100%;
 
     img {
       width: 100%;
       height: 100%;
-      opacity: 0.9;
       object-fit: cover;
       object-position: center;
-    }
-
-    .event-category {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      color: white;
-      background: rgba(#888785, 0.6);
-      font-size: 24px;
-      font-family: "Gotham Bold";
-      padding: 8px 16px;
-
-      .event-category__name {
-        color: white;
-      }
-
-      .event-category__description {
-        display: block;
-        line-height: 20px;
-        font-family: "Gotham Medium";
-      }
+      transition: transform 0.4s;
     }
   }
 
-  .event__content {
-    min-height: 230px;
-    padding: {
-      top: 26px;
-      left: 16px;
-      right: 16px;
-      bottom: 20px;
-    }
-
-    .event__content-title {
-      height: 4rem;
-      color: black;
-      font-family: "Gotham Bold", sans-serif;
-      font-size: 20px;
-      line-height: 30px;
-    }
-
-    .event__content-description {
-      height: 6rem;
-      color: black;
-      font-family: "Gotham Book", sans-serif;
-      font-size: 18px;
-      line-height: 28px;
-      margin-top: 30px;
-    }
-
-    .event__content-metadata {
-      height: 3.5rem;
-      color: black;
-      font-family: "Gotham Medium";
-      font-size: 16px;
-      margin-top: 14px;
-
-      span {
-        font-family: "Gotham Bold";
-      }
-    }
+  .event-item__inner {
+    transition: transform 0.4s;
   }
 
-  .event__readmore {
+  .event-item__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    transition: transform 0.4s;
+  }
+
+  .event-item__header {
+    display: flex;
+    align-items: center;
+  }
+
+  .event-item__category {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .event-item__category-badge {
+    position: absolute;
+    background-image: url("/img/date-badge-bg.png");
+    height: 70px;
+    width: 60px;
+    background-repeat: no-repeat;
+    background-position: center 1px;
+    top: -31px;
+    left: 3px;
+    z-index: 3;
     display: flex;
     justify-content: center;
-    margin: 0 auto;
-    padding-bottom: 26px;
-    button {
-      font-size: 18px !important;
+    align-items: center;
+    flex-direction: column;
+
+    div {
+      font-family: "Montserrat SemiBold", sans-serif;
+      color: #393939;
+      text-align: center;
     }
   }
 
-  .event__button {
-    .event__button-link {
-      display: block;
-      color: black;
-      width: 100%;
-      height: 100%;
-      line-height: 48px;
+  .event-item__category-name {
+    background-color: rgba(125, 132, 148, 0.6);
+    color: #fff;
+    padding: 6px 14px;
+    text-transform: uppercase;
+    display: inline-block;
+    font-family: "Montserrat SemiBold";
+    transition: background-color 0.4s;
+
+    @include font-size(0.6rem);
+  }
+
+  .event-item__category-postponed {
+    background-color: rgb(208 73 73 / 88%);
+    color: #fff;
+    padding: 6px 14px;
+    text-transform: uppercase;
+    display: block;
+    font-family: "Montserrat SemiBold";
+    transition: background-color 0.4s;
+
+    @include font-size(0.6rem);
+  }
+
+  .event-item__category-circle {
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-size: 0px;
+    position: relative;
+    padding: 16px;
+    margin-left: 16px;
+
+    span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -49%);
+      @include font-size(0.8rem);
+      font-family: "Inter Regular";
+    }
+  }
+
+  .event-item__timestamp {
+    color: #fff;
+    font-family: "Montserrat Regular", sans-serif;
+    opacity: 0.7;
+  }
+
+  .event-item__spacer {
+    flex: 1;
+    min-height: 50px;
+  }
+
+  .event-item__hours {
+    @include font-size(1.1rem);
+    line-height: 1.45;
+    color: #fff;
+    font-family: "Montserrat Bold", sans-serif;
+  }
+
+  .event-item__title {
+    @include font-size(1.1rem);
+    line-height: 1.45;
+    color: #fff;
+    font-family: "Montserrat SemiBold", sans-serif;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
 
       &:hover {
-        text-decoration: none;
+        border-color: #fff;
       }
     }
+  }
+
+  .event-item__description {
+    font-family: "Inter Regular";
+    margin-bottom: 24px;
+  }
+
+  .event-item__location {
+    @include font-size(1rem);
+    font-family: "Inter Regular";
+    margin-bottom: 24px;
+    padding-left: 24px;
+    position: relative;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 18px;
+      background-image: url("/img/icons/location-icon-white.png");
+      background-position: top left;
+      background-size: 14px;
+      background-repeat: no-repeat;
+      position: absolute;
+      left: 0px;
+      top: 5px;
+    }
+  }
+
+  .event-item__button {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .event-item__button {
+    a,
+    button {
+      text-decoration: none;
+      background-color: rgba(125, 132, 148, 1);
+      color: #fff;
+      padding: 6px 14px;
+      text-transform: uppercase;
+      display: inline-block;
+      font-family: "Montserrat SemiBold", sans-serif;
+      transition: background-color 0.4s;
+      min-width: 108;
+      text-align: center;
+
+      @include font-size(0.8rem);
+
+      &:hover {
+        background-color: rgba(125, 132, 148, 0.8);
+      }
+    }
+  }
+  .event-item__button .register {
+    background-color: #f4ed3b !important;
+    border-width: 0px;
+    color: #393939;
+    cursor: pointer;
   }
 }
 </style>

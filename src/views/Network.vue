@@ -1,289 +1,92 @@
 <template>
-  <div class="network-page">
-    <div class="header">
-      <!--      <iframe
-                class="header-video"
-                width="100%"
-                height="775"
-                src="https://www.youtube.com/embed/4b33NTAuF5E"
-            >
-            </iframe>-->
-      <img
-          src="/img/network_main.png"
-          alt="goalsImg"
-          title="Goals"
-      />
+  <div>
+  <Breadcrumbs/>
+
+    <div class="textual-banner textual-banner--contained">
+      <div class="container">
+        <p>We connect people, projects & resources to help good causes go further, faster.</p>
+      </div>
     </div>
-    <a class="cta cta--solid-yellow" href="/login">Sign up / Log in</a>
-    <div class="network-page__content-wrapper">
+    <div class="container">
+      <banner color="#4696D2">
+        <template v-slot:name>Network</template>
+        <template v-slot:title>MATCHMAKER FOR GOOD &trade;</template>
+        <template v-slot:content>Connect with changemakers and get inspired to take positive action</template>
+      </banner>
 
-      <!--   PROJECTS   -->
-      <section class="network-page__projects">
-        <BottomBorderedTitleWithSearch
-            :title="'<b>Projects & Campaigns | </b>News'"
-            :with-search="true"
-            search-expandable
-        ></BottomBorderedTitleWithSearch>
-        <ProjectsGallery :projects="projects" :with-slider="true" button-text="View Project"></ProjectsGallery>
-        <div
-            style="display: inline-block"
-            class="event__button"
-            @mouseenter="projectsBtnHovered = true"
-            @mouseleave="projectsBtnHovered = false"
-        >
-          <VButton
-              size="height_45"
-              @click.native.prevent="openPage('projects', 'slug')"
-              shape="round"
-              color="black"
-          >
-            <router-link
-                class="event__button-link"
-                :to="{ name: 'projects', params: { slug: 'slug' } }"
-            >
-              {{ projectsBtnHovered ? 'More News' : 'See all' }}
-            </router-link
-            >
-          </VButton>
-        </div>
-      </section>
-
-      <!--   DISCUSSIONS   -->
-      <section class="network-page__discussions">
-        <BottomBorderedTitleWithSearch
-            :title="'<b>Smiley Forum | </b>Discussions'"
-            :with-search="true"
-            search-expandable
-        ></BottomBorderedTitleWithSearch>
-        <DiscussionsGallery :projects="projects.slice(3)" button-text="View Project"></DiscussionsGallery>
-        <VButton
-            class="event__button"
-            size="height_45"
-            @click.native.prevent="openPage('discussions', 'slug')"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'discussions', params: { slug: 'slug' } }"
-          >
-            More Events
-          </router-link
-          >
-        </VButton>
-      </section>
-
-      <!--   ORGANISATIONS   -->
-      <section class="network-page__organisations">
-        <BottomBorderedTitleWithSearch
-            :title="'<b>Organisations | </b>Latest'"
-            :with-search="true"
-            search-expandable
-        ></BottomBorderedTitleWithSearch>
-        <MembersAndOrganizationsGallery
-            type="organisation"
-            :with-slider="true"
-            :data-array="projects.slice(3)"
-            button-text="View Project"
-        ></MembersAndOrganizationsGallery>
-        <VButton
-            class="event__button"
-            size="height_45"
-            @click.native.prevent="openPage('discussions', 'slug')"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'discussions', params: { slug: 'slug' } }"
-          >
-            All Organisations
-          </router-link
-          >
-        </VButton>
-      </section>
-
-      <!--   MEMBERS   -->
-      <section class="network-page__members">
-        <BottomBorderedTitleWithSearch
-            :title="'<b>Members | </b>Making up the Smiley Community'"
-            :with-search="true"
-            search-expandable
-        ></BottomBorderedTitleWithSearch>
-        <MembersAndOrganizationsGallery
-            :with-slider="true"
-            :data-array="projects.slice(3)"
-            button-text="View Project"
-        ></MembersAndOrganizationsGallery>
-        <VButton
-            class="event__button"
-            size="height_45"
-            @click.native.prevent="openPage('discussions', 'slug')"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'discussions', params: { slug: 'slug' } }"
-          >
-            All Members
-          </router-link
-          >
-        </VButton>
-      </section>
-
-      <!--   SUBSCRIBE   -->
-      <Subscribe/>
-
-      <!--   FOOTER   -->
-      <Footer/>
+      <div class="network-diagram">
+        <img src="/img/network-image.png" alt="Workplace"/>
+        <router-link :to="{name: 'organisations'}" class="diagram-link diagram-link--organisations"></router-link>
+        <router-link :to="{name: 'users'}" class="diagram-link diagram-link--users"></router-link>
+        <router-link :to="{name: 'partners'}" class="diagram-link diagram-link--partners"></router-link>
+        <router-link :to="{name: 'projects'}" class="diagram-link diagram-link--projects"></router-link>
+      </div>
     </div>
+
+    <Footer/>
   </div>
 </template>
 
 <script>
-import MembersAndOrganizationsGallery from "@/components/cardGalleries/MembersAndOrganizationsGallery";
-import DiscussionsGallery from "@/components/cardGalleries/DiscussionsGallery";
-import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
-import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
-import axios from "@/axios-auth";
-import VButton from "@/components/app/VButton";
-import router from "@/router";
-import Footer from "@/components/Footer";
-import Subscribe from "@/components/forms/Subscribe";
+    import Breadcrumbs from "@/components/Breadcrumbs";
+    import Banner from "@/components/homepage/Banner";
+    import Footer from "@/components/Footer";
 
-export default {
-  name: "Network",
-  components: {
-    Subscribe,
-    Footer,
-    MembersAndOrganizationsGallery,
-    DiscussionsGallery,
-    VButton,
-    ProjectsGallery,
-    BottomBorderedTitleWithSearch
-  },
-  /*
-  * DATA */
-  data() {
-    return {
-      projectsBtnHovered: false,
-      projects: []
-    }
-  },
-  methods: {
-    openPage(name, slug) {
-      router.push({name: name, params: {slug: slug}});
-    },
-  },
-  computed: {
-    isProjectBtnHovered() {
-      return this.projectsBtnHovered
-    }
-  },
-  mounted() {
-    const metaPayload = {
-      title: 'Smiley Network',
-      meta: {
-        description: ''
-      }
-    }
+    export default {
+        components: {
+            Breadcrumbs,
+            Banner,
+            Footer
+        },
+        mounted() {
+            const metaPayload = {
+                title: 'Smiley Network',
+                meta: {
+                    description: ''
+                }
+            }
 
-    this.$store.dispatch('meta/setMeta', metaPayload);
-    axios
-        .get("/projects")
-        .then((res) => {
-          console.log("projects", res);
-          this.projects = res.data.projects;
-        })
-        .catch((error) => console.error(error));
-  }
-};
+            this.$store.dispatch('meta/setMeta', metaPayload);
+        }
+    };
 </script>
 
 <style lang="scss" scoped>
-.cta {
-  margin: 0 auto;
-  width: 14rem;
-  min-width: 100px;
-  color: #fff;
-  display: block;
-  padding: 0 12px;
-  text-decoration: none;
-  font-size: 14px;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
-  outline: none;
-  clear: both;
-  height: 46px;
-  line-height: 46px;
-  position: relative;
-  overflow: hidden;
-  -webkit-transition: all .4s ease;
-  transition: all .4s ease;
-  letter-spacing: 2px;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: 800;
-
-  &:hover {
-    background-color: #f6f162;
-    box-shadow: 0 2px 28px -13px rgba(0, 0, 0, .4);
-    color: #000;
-    transition: all .2s ease;
-  }
-
-  &.cta--solid-yellow {
-    border: none;
-    background-color: #f4ed3b;
-    color: #000;
-  }
-}
-
-.network-page {
-  .header {
-    margin-bottom: 4rem;
+  .network-diagram {
+    width: 100%;
+    height: auto;
+    position: relative;
 
     img {
-      width: 100%;
-      max-height: 700px;
+      max-width: 100%;
+    }
+
+    .diagram-link {
+      width: 20%;
+      height: 18%;
+      // background-color: red;
+      display: block;
+      position: absolute;
+
+      &--organisations {
+        top: 38%;
+        left: 2%;
+      }
+
+      &--users {
+        top: 55%;
+        left: 27.5%;
+      }
+
+      &--partners {
+        top: 55%;
+        right: 27.5%;
+      }
+
+      &--projects {
+        top: 38%;
+        right: 2%;
+      }
     }
   }
-
-  &__content-wrapper {
-    padding: 0 150px;
-    text-align: center;
-    @include mdMax {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-
-  &__projects,
-  &__organisations,
-  &__members,
-  &__discussions,
-  {
-    margin-bottom: 4rem;
-  }
-}
-
-.event__button {
-  margin-top: 2rem;
-
-  .event__button-link {
-    display: block;
-    color: black;
-    width: 100%;
-    height: 100%;
-    line-height: 48px;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-}
 </style>
