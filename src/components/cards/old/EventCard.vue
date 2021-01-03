@@ -250,7 +250,7 @@ export default {
   }
 
   .event-item__category-postponed {
-    background-color: rgba(208,73,73,.88);
+    background-color: #D04949;
     color: #fff;
     padding: 6px 14px;
     text-transform: uppercase;
