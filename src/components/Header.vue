@@ -23,7 +23,11 @@
                   <template v-if="loggedIn">
                     <router-link :to="{name: 'feed'}" class="user-avatar">
                       <template v-if="user.avatar">
-                        <img :src="$settings.images_path.users + 's_' + user.avatar" class="user__avatar"/>
+                        <img 
+                            :src="$settings.images_path.users + 's_' + user.avatar"
+                            class="user__avatar"
+                            style="width:100%!important; height:100%!important"
+                        />
                       </template>
                       <template v-else>
                         <img src="/images/main/icon-profile.svg" class="user-avatar"/>
@@ -62,9 +66,9 @@
                     <li class="mobile-menu__item">
                       <router-link :to="{name: 'interviews'}" class="mobile-menu__link">Interviews</router-link>
                     </li>
-                    <li class="mobile-menu__item">
+                    <!-- <li class="mobile-menu__item">
                       <router-link :to="{name: 'chat'}" class="mobile-menu__link">Chatrooms</router-link>
-                    </li>
+                    </li> -->
                     <li class="mobile-menu__item">
                       <router-link :to="{name: 'network'}" class="mobile-menu__link">Network</router-link>
                     </li>

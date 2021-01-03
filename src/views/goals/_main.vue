@@ -34,12 +34,12 @@
           placeholder="Search Topics...">
     </div>
 
-    <section class="goals-grid" v-for="category in categories" :key="category.id">
+    <section class="goals-grid">
       <div class="goals-grid__grid">
         <div class="goals-grid__item">
           <img src="/img/un-goals.png" alt="icon"/>
         </div>
-        <div class="goals-grid__item" v-for="goal in category.goals" :key="goal.name+goal.id">
+        <div class="goals-grid__item" v-for="goal in goals" :key="goal.name+goal.id">
           <router-link :to="'/goals/' + goal.slug">
             <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
           </router-link>
@@ -77,15 +77,14 @@ export default {
   },
   data() {
     return {
-      categories: []
+      goals: []
     };
   },
   mounted() {
     axios
         .get("/goals")
         .then(res => {
-          console.log("/goals", res.data);
-          this.categories = res.data.goal_categories;
+          this.goals = res.data.goals;
         })
         .catch(error => console.error(error));
   }

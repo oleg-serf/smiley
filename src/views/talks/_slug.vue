@@ -95,7 +95,7 @@
                 :to="'#'"><i class="fa fa-twitter"></i>
             </router-link>
           </VButton>
-          <VButton
+          <!-- <VButton
               class="event-title__link-actions__icon-btn"
               shape="round"
               size="small"
@@ -105,9 +105,10 @@
                 class="event__button-link"
                 :to="'#'"><i class="fa fa-youtube"></i>
             </router-link>
-          </VButton>
+          </VButton> -->
           <p>{{ shareText }}</p>
         </div>
+        <!--
         <VButton
             class="event-title__link-actions__register-button mr-2"
             shape="round"
@@ -138,17 +139,13 @@
               :to="'#'">Volunteer
           </router-link>
         </VButton>
+        -->
       </div>
       <div class="event-title__paragraph-section">
         <p class="event-title__paragraph-section__paragraph">
           {{ description }}
         </p>
         <!-- <p class="event-title__paragraph-section__paragraph">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Vel ipsum dolor perferendis similique, provident error animi dolorem fugit nostrum, odit unde esse inventore
-          reiciendis in aliquid temporibus culpa harum? Officia.
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, laudantium excepturi porro, sunt sequi impedit
-          cupiditate dolorem dicta beatae ut, veniam molestias animi possimus! Fugit corrupti error nulla esse beatae?
         </p> -->
       </div>
       <div class="speakers-grid">

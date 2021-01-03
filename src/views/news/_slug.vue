@@ -41,11 +41,11 @@
                     <img src="/img/social/fb.svg" alt="facebook"
                     /></a>
                 </li>
-                <li>
+                <!-- <li>
                   <a :href="shareLink('youtube')" target="_blank">
                     <img src="/img/social/youtube.svg" alt="youtube"
                     /></a>
-                </li>
+                </li> -->
               </ul>
               <span>&#60;share</span>
             </div>
@@ -65,9 +65,9 @@
       </div>
 
       <!--   COMMENTS SECTION   -->
-      <div class="comments-section">
+      <!-- <div class="comments-section">
         <CommentsSection></CommentsSection>
-      </div>
+      </div> -->
 
       <div class="articles-related">
         <section class="news-section container">

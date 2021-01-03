@@ -6,18 +6,14 @@
           :background="$settings.images_path.goals + 's_' + goal.image"
           :name-length="goal.name ? goal.name.length : 20"
       >
-<!--        <template v-slot:logo>
+        <!-- <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 107px"/>
         </template>-->
 
-        <template
-            v-slot:prefix
-        >
+        <!-- <template v-slot:prefix>
             {{ goal.prefix }}
-        </template>
-        <template
-              v-slot:name
-        >
+        </template> -->
+        <template v-slot:name >
             {{ goal.name }}
         </template>
       </goals-banner>
@@ -26,37 +22,17 @@
     <div class="container">
       <section class="goal-description">
         <section class="goal-description__content">
-          <!--          <div class="goal-description__content-block goal-description__content-text-holder" v-html="goal.description">
-
-                    </div>
-                    <div class="goal-description__content-block goal-description__content-flex-holder">
-                      <div class="goal-description__content-block__inner" :style="{border: '3px solid ' + goal.colour}"
-                           v-html="goal.list"></div>
-                    </div>-->
+          <!-- <div class="goal-description__content-block goal-description__content-text-holder" v-html="goal.description">
+            </div>
+            <div class="goal-description__content-block goal-description__content-flex-holder">
+              <div class="goal-description__content-block__inner" :style="{border: '3px solid ' + goal.colour}"
+                    v-html="goal.list"></div>
+            </div>-->
           <div class="goal-description__content-title">
-            <p class="text-bold">Goal 1: End poverty in all its forms everywhere</p>
+            <p class="text-bold">Goal {{goal.prefix}}: {{ goal.name }}</p>
           </div>
 
-          <div class="goal-description__content-description">
-            <p>Globally, the number of people living in extreme poverty declined from 36 per cent in 1990 to 10 per cent
-              in 2015. But the pace of
-              change is decelerating and the COVID-19 crisis risks reversing decades of progress in the fight against
-              poverty. New research
-              published by the UNU World Institute for Development Economics Research warns that the economic fallout
-              from the global
-              pandemic could increase global poverty by as much as half a billion people, or 8% of the total human
-              pepulation, This would be the
-              first time that poverty has increased globally in thirty years, since 19
-            </p>
-            <p>
-              More than 700 million people, or 10 per cent of the world population, still live in extreme poverty today,
-              struggling to fulfil the
-              most basic needs like health, education, and access to water and sanitation, to name a few. The majority
-              of people living on less
-              than $1.90 a day live in sub-Saharan Africa. Worldwide, the poverty rate in rural areas |s 17.2 per
-              cent—more than three times
-              higher than in urban areas,
-            </p>
+          <div class="goal-description__content-description" v-html="goal.description">
           </div>
 
           <div class="goal-description__content__actions">
@@ -69,10 +45,11 @@
                 shape="round"
                 size="small"
             >
-              <router-link
+              <a
                   class="event__button-link"
-                  :to="'#'">Learn More
-              </router-link>
+                  href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"
+              >Learn More
+              </a>
             </VButton>
             <VButton
                 class="colored-button"
@@ -107,13 +84,6 @@
               </div>
             </div>
           </section>
-          <!--          <div class="grid grid&#45;&#45;organisations" v-else>
-                      <organisation-card
-                          v-for="organisation in organisations"
-                          :key="'organisation-'+organisation.slug"
-                          :organisation="organisation"
-                      />
-                    </div>-->
           <div class="smiley-pagination" v-if="organisationsPagination > 1 && false">
             <paginate
                 :page-count="organisationsPagination"
@@ -140,7 +110,7 @@
         ></BottomBorderedTitleWithSearch>
       </section>
       <section class="section" v-if="posts.length > 0" id="section-news">
-        <!--        <h2 class="section__title">News</h2>-->
+        <!-- <h2 class="section__title">News</h2>-->
         <swiper
             ref="newsSwiper"
             :options="swiperOptions"
@@ -183,7 +153,7 @@
         ></BottomBorderedTitleWithSearch>
       </section>
       <section class="section" v-if="events.length > 0" id="section-events">
-        <!--        <h2 class="section__title">Events</h2>-->
+        <!-- <h2 class="section__title">Events</h2>-->
         <swiper
             ref="eventsSwiper"
             :options="swiperOptions"
@@ -609,9 +579,9 @@ export default {
         })
         .catch(error => console.log(error));
 
-    axios.get("/goals").then(res => {
-      this.goals = res.data.goal_categories[0].goals;
-    });
+    // axios.get("/goals").then(res => {
+    //   this.goals = res.data.goals;
+    // });
   },
   created() {
     window.addEventListener("resize", this.handleResize);
