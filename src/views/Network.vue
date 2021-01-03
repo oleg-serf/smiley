@@ -1,13 +1,6 @@
 <template>
   <div class="network-page">
     <div class="header">
-      <!--      <iframe
-                class="header-video"
-                width="100%"
-                height="775"
-                src="https://www.youtube.com/embed/4b33NTAuF5E"
-            >
-            </iframe>-->
       <img
           src="/img/network_main.png"
           alt="goalsImg"
@@ -49,7 +42,7 @@
       </section>
 
       <!--   DISCUSSIONS   -->
-      <section class="network-page__discussions">
+      <!-- <section class="network-page__discussions">
         <BottomBorderedTitleWithSearch
             :title="'<b>Smiley Forum | </b>Discussions'"
             :with-search="true"
@@ -71,7 +64,7 @@
           </router-link
           >
         </VButton>
-      </section>
+      </section> -->
 
       <!--   ORGANISATIONS   -->
       <section class="network-page__organisations">
@@ -265,7 +258,7 @@ export default {
   &__projects,
   &__organisations,
   &__members,
-  &__discussions,
+  &__discussions
   {
     margin-bottom: 4rem;
   }

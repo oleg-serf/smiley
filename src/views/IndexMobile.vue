@@ -1,5 +1,16 @@
 <template>
   <div class="home">
+    <hero video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
+          :link="'/our-story'" type="iframe">
+      <template v-slot:title>
+        <span style="color: #FFE300">Positive</span> Impact Journalism
+      </template>
+      <template v-slot:subtitle>
+        Join our movement to create a happier,
+        <br/>more equal and sustainable world
+      </template>
+    </hero>
+
     <div class="cards-sections-wrapper">
       <!--  NEWS SECTION   -->
       <section class="news-section" v-if="newsList.length > 0">
@@ -256,6 +267,7 @@ export default {
   text-align: center;
 
   .news-section {
+    margin-top: 1rem;
     section {
       margin-top: 0;
     }

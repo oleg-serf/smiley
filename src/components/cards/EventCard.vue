@@ -37,10 +37,10 @@
     </div>
 
     <div class="event__content">
-      <h3 class="event__content-title">
+      <h3 class="event__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
         {{ cutText(event.title, 60) }}
       </h3>
-      <div class="event__content-description" v-html="cutText(event.short_description, 60, 'description')">
+      <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, 60, 'description')">
       </div>
       <div class="event__content-metadata">
         <span>{{ event.location }}</span> |
@@ -267,7 +267,7 @@ export default {
     }
 
     .event__content-title {
-      height: 4rem;
+      min-height: 6rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -280,7 +280,7 @@ export default {
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
       line-height: 28px;
-      margin-top: 30px;
+      margin-top: 1rem;
     }
 
     .event__content-metadata {
