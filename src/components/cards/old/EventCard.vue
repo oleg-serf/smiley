@@ -48,9 +48,8 @@
                 @click.prevent="unattend"
             >Unattend</button>
             <button class="register" v-else @click.prevent="attend">register</button>
-
           </template>
-          <template v-else>
+          <template v-else-if="!event.past">
             <button class="register" v-if="active" @click.prevent="attendNotAuthed">register</button>
           </template>
         </div>

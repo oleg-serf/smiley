@@ -1,26 +1,61 @@
 <template>
-  <section>
-    <form class="profile" @submit.prevent="onSubmit">
+  <form>
+    <input
+        type="file"
+        class="file-input"
+        ref="avatar"
+        id="avatar-input"
+        @input.prevent="addImage('avatar');"
+        accept=".png, .jpg, .jpeg"
+        style="display: none;"
+    />
+    <input
+        type="file"
+        class="file-input"
+        ref="cover_image"
+        id="cover-input"
+        @input.prevent="addImage('cover_image');"
+        accept=".png, .jpg, .jpeg"
+        style="display: none;"
+    />
+    <div class="profile" @submit.prevent="onSubmit">
       <div class="profile__background">
-        <img src="/images/remove-profile_background.jpg">
+        <img :src="user.cover_image"
+             v-if="user.cover_image != null && isBase64(user.cover_image)"/>
+        <img :src="$settings.images_path.users + 'm_'+ user.cover_image" v-else-if="user.cover_image != null"/>
+        <img src="/images/remove-profile_background.jpg" v-else>
+        <button type="button" class="button" style="position: absolute; bottom: 1.5rem; right: 1.5rem;" @click.prevent="editBackground">
+          <i class="fa fa-edit"></i>
+          Edit Background
+        </button>
       </div>
       <div class="profile__info container">
         <div class="profile__avatar">
-          <img v-if="user.avatar != null" :src="$settings.images_path.users + 'm_'+ user.avatar"/>
-          <span v-else class="profile__avatar-initials">{{ user.display_name }}</span>
+          <template v-if="user.avatar !== null && isBase64(user.avatar)">
+            <img :src="user.avatar"/>
+          </template>
+          <template v-else-if="user.avatar != null">
+            <img :src="$settings.images_path.users + 'm_'+ user.avatar"/>
+          </template>
+          <template v-else>
+            <span class="profile__avatar-initials">{{ user.display_name | getInitials }}</span>
+          </template>
+          <button type="button" class="button"  @click.prevent="editAvatar">
+            <i class="fa fa-edit"></i>
+          </button>
         </div>
         <div class="profile__description">
           <h1 class="profile__name">{{ user.display_name }}</h1>
           <template v-if="user.company_organization && user.job_title">
-            <div class="profile__job-title">{{user.company_organization}} - {{ user.job_title }}</div>
+            <div class="profile__job-title">{{ user.company_organization }} - {{ user.job_title }}</div>
           </template>
           <template v-else-if="user.company_organization">
-            <div class="profile__job-title">{{user.company_organization}}</div>
+            <div class="profile__job-title">{{ user.company_organization }}</div>
           </template>
           <template v-else>
-            <div class="profile__job-title">{{user.job_title}}</div>
+            <div class="profile__job-title">{{ user.job_title }}</div>
           </template>
-          <div class="profile__location">{{ user.city + ', ' }} {{ user.country}}</div>
+          <div class="profile__location">{{ user.city + ', ' }} {{ user.country }}</div>
           <div class="profile__slogan">{{ user.slogan }}</div>
         </div>
         <div class="profile__holder-actions">
@@ -34,30 +69,25 @@
           </div>
         </div>
       </div>
-    </form>
+    </div>
     <div class="tabs container">
       <div class="tabs__navigation">
-        <button class="tabs__navigation-item"
+        <button type="button" class="tabs__navigation-item"
                 @click="tab = 'about'"
                 :class="activeTab('about')"
         >About
         </button>
-        <button class="tabs__navigation-item"
-                @click="tab = 'images'"
-                :class="activeTab('images')"
-        >Images
-        </button>
-        <button class="tabs__navigation-item"
+        <button type="button" class="tabs__navigation-item"
                 @click="tab = 'support'"
                 :class="activeTab('support')"
         >Support
         </button>
-        <button class="tabs__navigation-item"
+        <button type="button" class="tabs__navigation-item"
                 @click="tab = 'interests'"
                 :class="activeTab('interests')"
         >Interests
         </button>
-        <button class="tabs__navigation-item"
+        <button type="button" class="tabs__navigation-item"
                 @click="tab = 'security'"
                 :class="activeTab('security')"
         >Security
@@ -65,6 +95,12 @@
       </div>
       <div class="tabs__content">
         <!--            About tab [+]-->
+        <button class="tabs__content-button"
+                type="button"
+                @click="tab = 'about'"
+                :class="activeTab('about')"
+        >About
+        </button>
         <div class="tabs__content-item" v-show="tab === 'about'">
           <div class="icon-block icon-block--50">
             <span>Real name:</span>
@@ -90,12 +126,11 @@
           <div class="icon-block icon-block--50">
             <span>Charity Number:</span>
             <div class="edit edit--prepend">
-              <i class="fa fa-user edit__icon edit__icon--primary"></i>
+              <i class="fa fa-hashtag edit__icon edit__icon--primary"></i>
               <input type="text" v-model="user.charity_number" placeholder="Charity Number">
             </div>
           </div>
           <div class="icon-block icon-block--50 link">
-            <i class="fa fa-link icon-block__icon"></i>
             <span>Date of Birth:</span>
             <div class="edit edit--prepend">
               <i class="fa fa-calendar edit__icon edit__icon--primary"></i>
@@ -103,7 +138,6 @@
             </div>
           </div>
           <div class="icon-block icon-block--50">
-            <i class="fa fa-link icon-block__icon"></i>
             <span>Company name:</span>
             <div class="edit edit--prepend">
               <i class="fa fa-bank edit__icon edit__icon--primary"></i>
@@ -121,7 +155,7 @@
             <div class="edit">
               <i class="fa fa-location-arrow edit__icon edit__icon--primary"></i>
               <select v-model="user.country">
-                <option :value="item.code" v-for="item in countries" :key="item.code">{{item.name}}</option>
+                <option :value="item.code" v-for="item in countries" :key="item.code">{{ item.name }}</option>
               </select>
             </div>
           </div>
@@ -133,7 +167,6 @@
             </div>
           </div>
           <div class="icon-block icon-block--50 link">
-            <i class="fa fa-link icon-block__icon"></i>
             <span>Your website link:</span>
             <div class="edit edit--prepend">
               <i class="fa fa-external-link-square edit__icon edit__icon--primary"></i>
@@ -144,15 +177,15 @@
             <span>How did you hear about us?</span>
             <div class="edit">
               <i class="fa fa-question-circle edit__icon edit__icon--primary"></i>
-            <select v-model="user.survey">
-              <option value="1">Social Media</option>
-              <option value="2">Google (Bing, etc) search</option>
-              <option value="3">I attended a Smiley Movement event</option>
-              <option value="4">From a friend</option>
-              <option value="5">I received an email from Smiley Movement</option>
-              <option value="6">I received a call from Smiley Movement</option>
-              <option value="7">Other (Please specify)</option>
-            </select>
+              <select v-model="user.survey">
+                <option value="1">Social Media</option>
+                <option value="2">Google (Bing, etc) search</option>
+                <option value="3">I attended a Smiley Movement event</option>
+                <option value="4">From a friend</option>
+                <option value="5">I received an email from Smiley Movement</option>
+                <option value="6">I received a call from Smiley Movement</option>
+                <option value="7">Other (Please specify)</option>
+              </select>
             </div>
             <div class="edit" v-if="user.survey == 7" style="margin-top: 1.5rem;">
               <input
@@ -163,12 +196,10 @@
             </div>
           </div>
           <div class="icon-block icon-block--50 about">
-            <i class="fa fa-info-circle icon-block__icon"></i>
             <span>Bio:</span>
             <ckeditor :editor="editor" :config="editorConfig" v-model="user.bio"></ckeditor>
           </div>
           <div class="icon-block icon-block--50 share">
-            <i class="fa fa-share-alt icon-block__icon"></i>
             <span>Your Social Media:</span>
             <ul class="">
               <li class="social-share__item">
@@ -205,27 +236,30 @@
           </div>
         </div>
         <!--            About tab [-]-->
-        <!--            Images tab [+]-->
-        <div class="tabs__content-item" v-show="tab === 'images'"></div>
-        <!--            Images tab [-]-->
         <!--            Support tab [+]-->
+        <button class="tabs__content-button"
+                type="button"
+                @click="tab = 'support'"
+                :class="activeTab('support')"
+        >Support
+        </button>
         <div class="tabs__content-item" v-show="tab === 'support'">
           <div class="icon-block support">
             <i class="fa fa-hand-o-right icon-block__icon"></i>
             Support offered:<br>
             <ul class="support__block">
               <li class="support_block-li" v-for="(item, index) in supportOffer">
-<!--                <div class="support__control">-->
+                <!--                <div class="support__control">-->
                 <div class="edit edit--append">
                   <select v-model="supportOffer[index].parent">
                     <option value="-1" selected disabled>Select category</option>
                     <option :value="category.id" v-for="category in supports">{{ category.title }}</option>
                   </select>
-                  <button class="edit__icon edit__icon--primary" @click.prevent="removeCategory('offered', index)">
+                  <button type="button" class="edit__icon edit__icon--danger" @click.prevent="removeCategory('offered', index)">
                     <i class="fa fa-remove"></i>
                   </button>
                 </div>
-<!--                </div>-->
+                <!--                </div>-->
                 <ul class="support__block-sub">
                   <li v-for="(option, counter) in supportOffer[index].child">
                     <div class="edit edit--append">
@@ -236,18 +270,19 @@
                           {{ category.title }}
                         </option>
                       </select>
-                      <button class="edit__icon edit__icon--primary" @click.prevent="removeItem('offered', index, counter)">
+                      <button type="button" class="edit__icon edit__icon--danger"
+                              @click.prevent="removeItem('offered', index, counter)">
                         <i class="fa fa-remove"></i>
                       </button>
                     </div>
                   </li>
                 </ul>
-                <button class="support__item-add" @click.prevent="addItem('offered', index)">
+                <button type="button" class="support__item-add" @click.prevent="addItem('offered', index)">
                   <i class="fa fa-plus-circle"></i> Add item
                 </button>
               </li>
               <li>
-                <button class="add_support" @click.prevent="addCategory('offered')">
+                <button type="button" class="add_support" @click.prevent="addCategory('offered')">
                   <i class="fa fa-plus-circle"></i>
                   <span>Add need Category</span>
                 </button>
@@ -264,7 +299,7 @@
                     <option selected disabled>Select category</option>
                     <option :value="category.id" v-for="category in supports">{{ category.title }}</option>
                   </select>
-                  <button class="edit__icon edit__icon--primary" @click.prevent="removeCategory('needed', index)">
+                  <button type="button" class="edit__icon edit__icon--danger" @click.prevent="removeCategory('needed', index)">
                     <i class="fa fa-remove"></i>
                   </button>
                 </div>
@@ -278,18 +313,19 @@
                           {{ category.title }}
                         </option>
                       </select>
-                      <button class="edit__icon edit__icon--primary" @click.prevent="removeItem('needed', index, counter)">
+                      <button type="button" class="edit__icon edit__icon--danger"
+                              @click.prevent="removeItem('needed', index, counter)">
                         <i class="fa fa-remove"></i>
                       </button>
                     </div>
                   </li>
                 </ul>
-                <button class="support__item-add" @click.prevent="addItem('needed', index)">
+                <button type="button" class="support__item-add" @click.prevent="addItem('needed', index)">
                   <i class="fa fa-plus-circle"></i> Add item
                 </button>
               </li>
               <li>
-                <button class="add_support" @click.prevent="addCategory('needed')">
+                <button type="button" class="add_support" @click.prevent="addCategory('needed')">
                   <i class="fa fa-plus-circle"></i>
                   <span>Add support Category</span>
                 </button>
@@ -299,6 +335,12 @@
         </div>
         <!--            Support tab [-]-->
         <!--            Interests tab [+]-->
+        <button class="tabs__content-button"
+                type="button"
+                @click="tab = 'interests'"
+                :class="activeTab('interests')"
+        >Interests
+        </button>
         <div class="tabs__content-item" v-show="tab === 'interests'">
           <div class="icon-block goals">
             <i class="fa fa-connectdevelop icon-block__icon"></i>
@@ -319,40 +361,43 @@
         </div>
         <!--            Interests tab [-]-->
         <!--            Security tab [+]-->
+        <button class="tabs__content-button"
+                type="button"
+                @click="tab = 'security'"
+                :class="activeTab('security')"
+        >Security
+        </button>
         <div class="tabs__content-item" v-show="tab === 'security'">
           <div class="icon-block link">
-            <i class="fa fa-link icon-block__icon"></i>
             <span>Email:</span>
             <div class="edit edit--prepend">
-              <i class="fa fa-external-link-square edit__icon edit__icon--primary"></i>
-              <input type="url" v-model="user.email" placeholder="johndoe@gmail.co">
+              <i class="fa fa-envelope-o edit__icon edit__icon--primary"></i>
+              <input type="url" v-model="user.email" placeholder="johndoe@gmail.com">
             </div>
           </div>
           <div></div>
           <div class="icon-block icon-block--50">
-            <i class="fa fa-link icon-block__icon"></i>
             <span>Old Password:</span>
             <div class="edit edit--prepend">
-              <i class="fa fa-external-link-square edit__icon edit__icon--primary"></i>
-              <input :type="passwordDisplay" v-model="user.old_password" placeholder="https://...">
-              <button @click.prevent="switchVisibility()">
+              <i class="fa fa-user-secret  edit__icon edit__icon--primary"></i>
+              <input :type="passwordDisplay" v-model="user.old_password">
+              <button type="button" @click.prevent="switchVisibility()">
                 <i class="fa fa-eye"></i>
               </button>
             </div>
           </div>
           <div class="icon-block icon-block--50">
-            <i class="fa fa-link icon-block__icon"></i>
-            <span>News Password:</span>
+            <span>New Password:</span>
             <div class="edit edit--prepend">
-              <i class="fa fa-external-link-square edit__icon edit__icon--primary"></i>
-              <input :type="passwordDisplay" v-model="user.website" placeholder="https://...">
+              <i class="fa fa-user-secret  edit__icon edit__icon--primary"></i>
+              <input :type="passwordDisplay" v-model="user.password">
             </div>
           </div>
         </div>
         <!--            Security tab [-]-->
       </div>
     </div>
-  </section>
+  </form>
 </template>
 
 <script>
@@ -367,10 +412,12 @@ export default {
   },
   data() {
     return {
-      user: {},
+      user: {
+        cover_image_new: null,
+      },
       goals: [],
       supports: [],
-      passwordDisplay: false,
+      passwordDisplay: 'password',
       //
       supportNeeded: [
         {
@@ -397,253 +444,271 @@ export default {
         ]
       },
       countries: [
-        { name: "Afghanistan", code: "AF" },
-        { name: "Åland Islands", code: "AX" },
-        { name: "Albania", code: "AL" },
-        { name: "Algeria", code: "DZ" },
-        { name: "American Samoa", code: "AS" },
-        { name: "AndorrA", code: "AD" },
-        { name: "Angola", code: "AO" },
-        { name: "Anguilla", code: "AI" },
-        { name: "Antarctica", code: "AQ" },
-        { name: "Antigua and Barbuda", code: "AG" },
-        { name: "Argentina", code: "AR" },
-        { name: "Armenia", code: "AM" },
-        { name: "Aruba", code: "AW" },
-        { name: "Australia", code: "AU" },
-        { name: "Austria", code: "AT" },
-        { name: "Azerbaijan", code: "AZ" },
-        { name: "Bahamas", code: "BS" },
-        { name: "Bahrain", code: "BH" },
-        { name: "Bangladesh", code: "BD" },
-        { name: "Barbados", code: "BB" },
-        { name: "Belarus", code: "BY" },
-        { name: "Belgium", code: "BE" },
-        { name: "Belize", code: "BZ" },
-        { name: "Benin", code: "BJ" },
-        { name: "Bermuda", code: "BM" },
-        { name: "Bhutan", code: "BT" },
-        { name: "Bolivia", code: "BO" },
-        { name: "Bosnia and Herzegovina", code: "BA" },
-        { name: "Botswana", code: "BW" },
-        { name: "Bouvet Island", code: "BV" },
-        { name: "Brazil", code: "BR" },
-        { name: "British Indian Ocean Territory", code: "IO" },
-        { name: "Brunei Darussalam", code: "BN" },
-        { name: "Bulgaria", code: "BG" },
-        { name: "Burkina Faso", code: "BF" },
-        { name: "Burundi", code: "BI" },
-        { name: "Cambodia", code: "KH" },
-        { name: "Cameroon", code: "CM" },
-        { name: "Canada", code: "CA" },
-        { name: "Cape Verde", code: "CV" },
-        { name: "Cayman Islands", code: "KY" },
-        { name: "Central African Republic", code: "CF" },
-        { name: "Chad", code: "TD" },
-        { name: "Chile", code: "CL" },
-        { name: "China", code: "CN" },
-        { name: "Christmas Island", code: "CX" },
-        { name: "Cocos (Keeling) Islands", code: "CC" },
-        { name: "Colombia", code: "CO" },
-        { name: "Comoros", code: "KM" },
-        { name: "Congo", code: "CG" },
-        { name: "Congo, The Democratic Republic of the", code: "CD" },
-        { name: "Cook Islands", code: "CK" },
-        { name: "Costa Rica", code: "CR" },
-        { name: "Cote D'Ivoire", code: "CI" },
-        { name: "Croatia", code: "HR" },
-        { name: "Cuba", code: "CU" },
-        { name: "Cyprus", code: "CY" },
-        { name: "Czech Republic", code: "CZ" },
-        { name: "Denmark", code: "DK" },
-        { name: "Djibouti", code: "DJ" },
-        { name: "Dominica", code: "DM" },
-        { name: "Dominican Republic", code: "DO" },
-        { name: "Ecuador", code: "EC" },
-        { name: "Egypt", code: "EG" },
-        { name: "El Salvador", code: "SV" },
-        { name: "Equatorial Guinea", code: "GQ" },
-        { name: "Eritrea", code: "ER" },
-        { name: "Estonia", code: "EE" },
-        { name: "Ethiopia", code: "ET" },
-        { name: "Falkland Islands (Malvinas)", code: "FK" },
-        { name: "Faroe Islands", code: "FO" },
-        { name: "Fiji", code: "FJ" },
-        { name: "Finland", code: "FI" },
-        { name: "France", code: "FR" },
-        { name: "French Guiana", code: "GF" },
-        { name: "French Polynesia", code: "PF" },
-        { name: "French Southern Territories", code: "TF" },
-        { name: "Gabon", code: "GA" },
-        { name: "Gambia", code: "GM" },
-        { name: "Georgia", code: "GE" },
-        { name: "Germany", code: "DE" },
-        { name: "Ghana", code: "GH" },
-        { name: "Gibraltar", code: "GI" },
-        { name: "Greece", code: "GR" },
-        { name: "Greenland", code: "GL" },
-        { name: "Grenada", code: "GD" },
-        { name: "Guadeloupe", code: "GP" },
-        { name: "Guam", code: "GU" },
-        { name: "Guatemala", code: "GT" },
-        { name: "Guernsey", code: "GG" },
-        { name: "Guinea", code: "GN" },
-        { name: "Guinea-Bissau", code: "GW" },
-        { name: "Guyana", code: "GY" },
-        { name: "Haiti", code: "HT" },
-        { name: "Heard Island and Mcdonald Islands", code: "HM" },
-        { name: "Holy See (Vatican City State)", code: "VA" },
-        { name: "Honduras", code: "HN" },
-        { name: "Hong Kong", code: "HK" },
-        { name: "Hungary", code: "HU" },
-        { name: "Iceland", code: "IS" },
-        { name: "India", code: "IN" },
-        { name: "Indonesia", code: "ID" },
-        { name: "Iran, Islamic Republic Of", code: "IR" },
-        { name: "Iraq", code: "IQ" },
-        { name: "Ireland", code: "IE" },
-        { name: "Isle of Man", code: "IM" },
-        { name: "Israel", code: "IL" },
-        { name: "Italy", code: "IT" },
-        { name: "Jamaica", code: "JM" },
-        { name: "Japan", code: "JP" },
-        { name: "Jersey", code: "JE" },
-        { name: "Jordan", code: "JO" },
-        { name: "Kazakhstan", code: "KZ" },
-        { name: "Kenya", code: "KE" },
-        { name: "Kiribati", code: "KI" },
-        { name: "Korea, Democratic People'S Republic of", code: "KP" },
-        { name: "Korea, Republic of", code: "KR" },
-        { name: "Kuwait", code: "KW" },
-        { name: "Kyrgyzstan", code: "KG" },
-        { name: "Lao People'S Democratic Republic", code: "LA" },
-        { name: "Latvia", code: "LV" },
-        { name: "Lebanon", code: "LB" },
-        { name: "Lesotho", code: "LS" },
-        { name: "Liberia", code: "LR" },
-        { name: "Libyan Arab Jamahiriya", code: "LY" },
-        { name: "Liechtenstein", code: "LI" },
-        { name: "Lithuania", code: "LT" },
-        { name: "Luxembourg", code: "LU" },
-        { name: "Macao", code: "MO" },
-        { name: "Macedonia, The Former Yugoslav Republic of", code: "MK" },
-        { name: "Madagascar", code: "MG" },
-        { name: "Malawi", code: "MW" },
-        { name: "Malaysia", code: "MY" },
-        { name: "Maldives", code: "MV" },
-        { name: "Mali", code: "ML" },
-        { name: "Malta", code: "MT" },
-        { name: "Marshall Islands", code: "MH" },
-        { name: "Martinique", code: "MQ" },
-        { name: "Mauritania", code: "MR" },
-        { name: "Mauritius", code: "MU" },
-        { name: "Mayotte", code: "YT" },
-        { name: "Mexico", code: "MX" },
-        { name: "Micronesia, Federated States of", code: "FM" },
-        { name: "Moldova, Republic of", code: "MD" },
-        { name: "Monaco", code: "MC" },
-        { name: "Mongolia", code: "MN" },
-        { name: "Montserrat", code: "MS" },
-        { name: "Morocco", code: "MA" },
-        { name: "Mozambique", code: "MZ" },
-        { name: "Myanmar", code: "MM" },
-        { name: "Namibia", code: "NA" },
-        { name: "Nauru", code: "NR" },
-        { name: "Nepal", code: "NP" },
-        { name: "Netherlands", code: "NL" },
-        { name: "Netherlands Antilles", code: "AN" },
-        { name: "New Caledonia", code: "NC" },
-        { name: "New Zealand", code: "NZ" },
-        { name: "Nicaragua", code: "NI" },
-        { name: "Niger", code: "NE" },
-        { name: "Nigeria", code: "NG" },
-        { name: "Niue", code: "NU" },
-        { name: "Norfolk Island", code: "NF" },
-        { name: "Northern Mariana Islands", code: "MP" },
-        { name: "Norway", code: "NO" },
-        { name: "Oman", code: "OM" },
-        { name: "Pakistan", code: "PK" },
-        { name: "Palau", code: "PW" },
-        { name: "Palestinian Territory, Occupied", code: "PS" },
-        { name: "Panama", code: "PA" },
-        { name: "Papua New Guinea", code: "PG" },
-        { name: "Paraguay", code: "PY" },
-        { name: "Peru", code: "PE" },
-        { name: "Philippines", code: "PH" },
-        { name: "Pitcairn", code: "PN" },
-        { name: "Poland", code: "PL" },
-        { name: "Portugal", code: "PT" },
-        { name: "Puerto Rico", code: "PR" },
-        { name: "Qatar", code: "QA" },
-        { name: "Reunion", code: "RE" },
-        { name: "Romania", code: "RO" },
-        { name: "Russian Federation", code: "RU" },
-        { name: "RWANDA", code: "RW" },
-        { name: "Saint Helena", code: "SH" },
-        { name: "Saint Kitts and Nevis", code: "KN" },
-        { name: "Saint Lucia", code: "LC" },
-        { name: "Saint Pierre and Miquelon", code: "PM" },
-        { name: "Saint Vincent and the Grenadines", code: "VC" },
-        { name: "Samoa", code: "WS" },
-        { name: "San Marino", code: "SM" },
-        { name: "Sao Tome and Principe", code: "ST" },
-        { name: "Saudi Arabia", code: "SA" },
-        { name: "Senegal", code: "SN" },
-        { name: "Serbia and Montenegro", code: "CS" },
-        { name: "Seychelles", code: "SC" },
-        { name: "Sierra Leone", code: "SL" },
-        { name: "Singapore", code: "SG" },
-        { name: "Slovakia", code: "SK" },
-        { name: "Slovenia", code: "SI" },
-        { name: "Solomon Islands", code: "SB" },
-        { name: "Somalia", code: "SO" },
-        { name: "South Africa", code: "ZA" },
-        { name: "South Georgia and the South Sandwich Islands", code: "GS" },
-        { name: "Spain", code: "ES" },
-        { name: "Sri Lanka", code: "LK" },
-        { name: "Sudan", code: "SD" },
-        { name: "Suriname", code: "SR" },
-        { name: "Svalbard and Jan Mayen", code: "SJ" },
-        { name: "Swaziland", code: "SZ" },
-        { name: "Sweden", code: "SE" },
-        { name: "Switzerland", code: "CH" },
-        { name: "Syrian Arab Republic", code: "SY" },
-        { name: "Taiwan, Province of China", code: "TW" },
-        { name: "Tajikistan", code: "TJ" },
-        { name: "Tanzania, United Republic of", code: "TZ" },
-        { name: "Thailand", code: "TH" },
-        { name: "Timor-Leste", code: "TL" },
-        { name: "Togo", code: "TG" },
-        { name: "Tokelau", code: "TK" },
-        { name: "Tonga", code: "TO" },
-        { name: "Trinidad and Tobago", code: "TT" },
-        { name: "Tunisia", code: "TN" },
-        { name: "Turkey", code: "TR" },
-        { name: "Turkmenistan", code: "TM" },
-        { name: "Turks and Caicos Islands", code: "TC" },
-        { name: "Tuvalu", code: "TV" },
-        { name: "Uganda", code: "UG" },
-        { name: "Ukraine", code: "UA" },
-        { name: "United Arab Emirates", code: "AE" },
-        { name: "United Kingdom", code: "GB" },
-        { name: "United States", code: "US" },
-        { name: "United States Minor Outlying Islands", code: "UM" },
-        { name: "Uruguay", code: "UY" },
-        { name: "Uzbekistan", code: "UZ" },
-        { name: "Vanuatu", code: "VU" },
-        { name: "Venezuela", code: "VE" },
-        { name: "Viet Nam", code: "VN" },
-        { name: "Virgin Islands, British", code: "VG" },
-        { name: "Virgin Islands, U.S.", code: "VI" },
-        { name: "Wallis and Futuna", code: "WF" },
-        { name: "Western Sahara", code: "EH" },
-        { name: "Yemen", code: "YE" },
-        { name: "Zambia", code: "ZM" },
-        { name: "Zimbabwe", code: "ZW" }
+        {name: "Afghanistan", code: "AF"},
+        {name: "Åland Islands", code: "AX"},
+        {name: "Albania", code: "AL"},
+        {name: "Algeria", code: "DZ"},
+        {name: "American Samoa", code: "AS"},
+        {name: "AndorrA", code: "AD"},
+        {name: "Angola", code: "AO"},
+        {name: "Anguilla", code: "AI"},
+        {name: "Antarctica", code: "AQ"},
+        {name: "Antigua and Barbuda", code: "AG"},
+        {name: "Argentina", code: "AR"},
+        {name: "Armenia", code: "AM"},
+        {name: "Aruba", code: "AW"},
+        {name: "Australia", code: "AU"},
+        {name: "Austria", code: "AT"},
+        {name: "Azerbaijan", code: "AZ"},
+        {name: "Bahamas", code: "BS"},
+        {name: "Bahrain", code: "BH"},
+        {name: "Bangladesh", code: "BD"},
+        {name: "Barbados", code: "BB"},
+        {name: "Belarus", code: "BY"},
+        {name: "Belgium", code: "BE"},
+        {name: "Belize", code: "BZ"},
+        {name: "Benin", code: "BJ"},
+        {name: "Bermuda", code: "BM"},
+        {name: "Bhutan", code: "BT"},
+        {name: "Bolivia", code: "BO"},
+        {name: "Bosnia and Herzegovina", code: "BA"},
+        {name: "Botswana", code: "BW"},
+        {name: "Bouvet Island", code: "BV"},
+        {name: "Brazil", code: "BR"},
+        {name: "British Indian Ocean Territory", code: "IO"},
+        {name: "Brunei Darussalam", code: "BN"},
+        {name: "Bulgaria", code: "BG"},
+        {name: "Burkina Faso", code: "BF"},
+        {name: "Burundi", code: "BI"},
+        {name: "Cambodia", code: "KH"},
+        {name: "Cameroon", code: "CM"},
+        {name: "Canada", code: "CA"},
+        {name: "Cape Verde", code: "CV"},
+        {name: "Cayman Islands", code: "KY"},
+        {name: "Central African Republic", code: "CF"},
+        {name: "Chad", code: "TD"},
+        {name: "Chile", code: "CL"},
+        {name: "China", code: "CN"},
+        {name: "Christmas Island", code: "CX"},
+        {name: "Cocos (Keeling) Islands", code: "CC"},
+        {name: "Colombia", code: "CO"},
+        {name: "Comoros", code: "KM"},
+        {name: "Congo", code: "CG"},
+        {name: "Congo, The Democratic Republic of the", code: "CD"},
+        {name: "Cook Islands", code: "CK"},
+        {name: "Costa Rica", code: "CR"},
+        {name: "Cote D'Ivoire", code: "CI"},
+        {name: "Croatia", code: "HR"},
+        {name: "Cuba", code: "CU"},
+        {name: "Cyprus", code: "CY"},
+        {name: "Czech Republic", code: "CZ"},
+        {name: "Denmark", code: "DK"},
+        {name: "Djibouti", code: "DJ"},
+        {name: "Dominica", code: "DM"},
+        {name: "Dominican Republic", code: "DO"},
+        {name: "Ecuador", code: "EC"},
+        {name: "Egypt", code: "EG"},
+        {name: "El Salvador", code: "SV"},
+        {name: "Equatorial Guinea", code: "GQ"},
+        {name: "Eritrea", code: "ER"},
+        {name: "Estonia", code: "EE"},
+        {name: "Ethiopia", code: "ET"},
+        {name: "Falkland Islands (Malvinas)", code: "FK"},
+        {name: "Faroe Islands", code: "FO"},
+        {name: "Fiji", code: "FJ"},
+        {name: "Finland", code: "FI"},
+        {name: "France", code: "FR"},
+        {name: "French Guiana", code: "GF"},
+        {name: "French Polynesia", code: "PF"},
+        {name: "French Southern Territories", code: "TF"},
+        {name: "Gabon", code: "GA"},
+        {name: "Gambia", code: "GM"},
+        {name: "Georgia", code: "GE"},
+        {name: "Germany", code: "DE"},
+        {name: "Ghana", code: "GH"},
+        {name: "Gibraltar", code: "GI"},
+        {name: "Greece", code: "GR"},
+        {name: "Greenland", code: "GL"},
+        {name: "Grenada", code: "GD"},
+        {name: "Guadeloupe", code: "GP"},
+        {name: "Guam", code: "GU"},
+        {name: "Guatemala", code: "GT"},
+        {name: "Guernsey", code: "GG"},
+        {name: "Guinea", code: "GN"},
+        {name: "Guinea-Bissau", code: "GW"},
+        {name: "Guyana", code: "GY"},
+        {name: "Haiti", code: "HT"},
+        {name: "Heard Island and Mcdonald Islands", code: "HM"},
+        {name: "Holy See (Vatican City State)", code: "VA"},
+        {name: "Honduras", code: "HN"},
+        {name: "Hong Kong", code: "HK"},
+        {name: "Hungary", code: "HU"},
+        {name: "Iceland", code: "IS"},
+        {name: "India", code: "IN"},
+        {name: "Indonesia", code: "ID"},
+        {name: "Iran, Islamic Republic Of", code: "IR"},
+        {name: "Iraq", code: "IQ"},
+        {name: "Ireland", code: "IE"},
+        {name: "Isle of Man", code: "IM"},
+        {name: "Israel", code: "IL"},
+        {name: "Italy", code: "IT"},
+        {name: "Jamaica", code: "JM"},
+        {name: "Japan", code: "JP"},
+        {name: "Jersey", code: "JE"},
+        {name: "Jordan", code: "JO"},
+        {name: "Kazakhstan", code: "KZ"},
+        {name: "Kenya", code: "KE"},
+        {name: "Kiribati", code: "KI"},
+        {name: "Korea, Democratic People'S Republic of", code: "KP"},
+        {name: "Korea, Republic of", code: "KR"},
+        {name: "Kuwait", code: "KW"},
+        {name: "Kyrgyzstan", code: "KG"},
+        {name: "Lao People'S Democratic Republic", code: "LA"},
+        {name: "Latvia", code: "LV"},
+        {name: "Lebanon", code: "LB"},
+        {name: "Lesotho", code: "LS"},
+        {name: "Liberia", code: "LR"},
+        {name: "Libyan Arab Jamahiriya", code: "LY"},
+        {name: "Liechtenstein", code: "LI"},
+        {name: "Lithuania", code: "LT"},
+        {name: "Luxembourg", code: "LU"},
+        {name: "Macao", code: "MO"},
+        {name: "Macedonia, The Former Yugoslav Republic of", code: "MK"},
+        {name: "Madagascar", code: "MG"},
+        {name: "Malawi", code: "MW"},
+        {name: "Malaysia", code: "MY"},
+        {name: "Maldives", code: "MV"},
+        {name: "Mali", code: "ML"},
+        {name: "Malta", code: "MT"},
+        {name: "Marshall Islands", code: "MH"},
+        {name: "Martinique", code: "MQ"},
+        {name: "Mauritania", code: "MR"},
+        {name: "Mauritius", code: "MU"},
+        {name: "Mayotte", code: "YT"},
+        {name: "Mexico", code: "MX"},
+        {name: "Micronesia, Federated States of", code: "FM"},
+        {name: "Moldova, Republic of", code: "MD"},
+        {name: "Monaco", code: "MC"},
+        {name: "Mongolia", code: "MN"},
+        {name: "Montserrat", code: "MS"},
+        {name: "Morocco", code: "MA"},
+        {name: "Mozambique", code: "MZ"},
+        {name: "Myanmar", code: "MM"},
+        {name: "Namibia", code: "NA"},
+        {name: "Nauru", code: "NR"},
+        {name: "Nepal", code: "NP"},
+        {name: "Netherlands", code: "NL"},
+        {name: "Netherlands Antilles", code: "AN"},
+        {name: "New Caledonia", code: "NC"},
+        {name: "New Zealand", code: "NZ"},
+        {name: "Nicaragua", code: "NI"},
+        {name: "Niger", code: "NE"},
+        {name: "Nigeria", code: "NG"},
+        {name: "Niue", code: "NU"},
+        {name: "Norfolk Island", code: "NF"},
+        {name: "Northern Mariana Islands", code: "MP"},
+        {name: "Norway", code: "NO"},
+        {name: "Oman", code: "OM"},
+        {name: "Pakistan", code: "PK"},
+        {name: "Palau", code: "PW"},
+        {name: "Palestinian Territory, Occupied", code: "PS"},
+        {name: "Panama", code: "PA"},
+        {name: "Papua New Guinea", code: "PG"},
+        {name: "Paraguay", code: "PY"},
+        {name: "Peru", code: "PE"},
+        {name: "Philippines", code: "PH"},
+        {name: "Pitcairn", code: "PN"},
+        {name: "Poland", code: "PL"},
+        {name: "Portugal", code: "PT"},
+        {name: "Puerto Rico", code: "PR"},
+        {name: "Qatar", code: "QA"},
+        {name: "Reunion", code: "RE"},
+        {name: "Romania", code: "RO"},
+        {name: "Russian Federation", code: "RU"},
+        {name: "RWANDA", code: "RW"},
+        {name: "Saint Helena", code: "SH"},
+        {name: "Saint Kitts and Nevis", code: "KN"},
+        {name: "Saint Lucia", code: "LC"},
+        {name: "Saint Pierre and Miquelon", code: "PM"},
+        {name: "Saint Vincent and the Grenadines", code: "VC"},
+        {name: "Samoa", code: "WS"},
+        {name: "San Marino", code: "SM"},
+        {name: "Sao Tome and Principe", code: "ST"},
+        {name: "Saudi Arabia", code: "SA"},
+        {name: "Senegal", code: "SN"},
+        {name: "Serbia and Montenegro", code: "CS"},
+        {name: "Seychelles", code: "SC"},
+        {name: "Sierra Leone", code: "SL"},
+        {name: "Singapore", code: "SG"},
+        {name: "Slovakia", code: "SK"},
+        {name: "Slovenia", code: "SI"},
+        {name: "Solomon Islands", code: "SB"},
+        {name: "Somalia", code: "SO"},
+        {name: "South Africa", code: "ZA"},
+        {name: "South Georgia and the South Sandwich Islands", code: "GS"},
+        {name: "Spain", code: "ES"},
+        {name: "Sri Lanka", code: "LK"},
+        {name: "Sudan", code: "SD"},
+        {name: "Suriname", code: "SR"},
+        {name: "Svalbard and Jan Mayen", code: "SJ"},
+        {name: "Swaziland", code: "SZ"},
+        {name: "Sweden", code: "SE"},
+        {name: "Switzerland", code: "CH"},
+        {name: "Syrian Arab Republic", code: "SY"},
+        {name: "Taiwan, Province of China", code: "TW"},
+        {name: "Tajikistan", code: "TJ"},
+        {name: "Tanzania, United Republic of", code: "TZ"},
+        {name: "Thailand", code: "TH"},
+        {name: "Timor-Leste", code: "TL"},
+        {name: "Togo", code: "TG"},
+        {name: "Tokelau", code: "TK"},
+        {name: "Tonga", code: "TO"},
+        {name: "Trinidad and Tobago", code: "TT"},
+        {name: "Tunisia", code: "TN"},
+        {name: "Turkey", code: "TR"},
+        {name: "Turkmenistan", code: "TM"},
+        {name: "Turks and Caicos Islands", code: "TC"},
+        {name: "Tuvalu", code: "TV"},
+        {name: "Uganda", code: "UG"},
+        {name: "Ukraine", code: "UA"},
+        {name: "United Arab Emirates", code: "AE"},
+        {name: "United Kingdom", code: "GB"},
+        {name: "United States", code: "US"},
+        {name: "United States Minor Outlying Islands", code: "UM"},
+        {name: "Uruguay", code: "UY"},
+        {name: "Uzbekistan", code: "UZ"},
+        {name: "Vanuatu", code: "VU"},
+        {name: "Venezuela", code: "VE"},
+        {name: "Viet Nam", code: "VN"},
+        {name: "Virgin Islands, British", code: "VG"},
+        {name: "Virgin Islands, U.S.", code: "VI"},
+        {name: "Wallis and Futuna", code: "WF"},
+        {name: "Western Sahara", code: "EH"},
+        {name: "Yemen", code: "YE"},
+        {name: "Zambia", code: "ZM"},
+        {name: "Zimbabwe", code: "ZW"}
       ]
     };
   },
+  filters: {
+    getInitials(text) {
+      let initials = '';
+      if (!text) return;
+
+      const words = text.split(' ');
+      words.forEach(item =>
+          initials.push(words.charAt(0))
+      );
+      return initials.join();
+    },
+  },
   methods: {
+    editAvatar() {
+      this.$refs.avatar.click();
+    },
+    editBackground() {
+      this.$refs.cover_image.click();
+    },
     activeTab(tab) {
       return tab === this.tab ? 'tabs__navigation-item--active' : '';
     },
@@ -670,17 +735,49 @@ export default {
       } else {
         items = this.supportNeeded;
       }
-      // items[category].child.push(0);
       items.push({
         parent: 1,
         child: [-1]
       });
     },
+    addImage(type) {
+      const input = this.$refs[type];
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.user[type] = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
+    },
+    isBase64(image) {
+      if (!image) return false;
+      return image.includes(';base64,');
+    },
     onSubmit() {
+      const request = {
+        need: [],
+        offer: [],
+        user: {}
+      };
+      this.supportNeeded.forEach(parent => {
+        parent.child.forEach(child => {
+          request.need.push(child);
+        })
+      });
+      this.supportOffer.forEach(parent => {
+        parent.child.forEach(child => {
+          request.offer.push(child);
+        })
+      });
+      request.user = this.user;
+
       axios
-          .post("/users/settings", this.user)
+          .post("/users/settings", request)
           .then(response => {
-            this.$swal({ text: "Profile Updated", icon: "success" }).then(() => {
+            this.$swal({text: "Profile Updated", icon: "success"}).then(() => {
               router.push({
                 name: "profile"
               });
@@ -690,15 +787,11 @@ export default {
           .catch(error => {
             let content = JSON.parse(error.request.response);
             let finalMessage = content.errors.join("<br>");
-            this.$swal({ text: finalMessage, icon: "error" });
+            this.$swal({text: finalMessage, icon: "error"});
           });
     },
   },
   mounted() {
-    //  Move api calls to vuex
-
-    // axios
-    //     .get("/users/" + this.$route.params.slug)
     axios
         .get("/users/settings")
         .then(response => {
@@ -707,6 +800,18 @@ export default {
           this.goals = response.data.all_goals;
           this.supports = response.data.all_supports;
 
+          this.user.goals = this.user.goals.map(item => item.id);
+
+          // response.data.need_support.forEach(item => {
+          //   // item.id
+          // });
+          const tempArray = [];
+          this.supports.forEach(category => {
+            const categoryArray = [];
+            category.supports.forEach(element => {
+
+            });
+          });
         })
         .catch(error => console.error(error));
   }
@@ -847,6 +952,12 @@ export default {
     justify-content: center;
     box-shadow: inset 0px 0px 6px rgba(0, 0, 0, .15);
     background-color: #FFE300;
+    position: relative;
+
+    button {
+      position: absolute;
+      bottom: -2px;
+    }
 
     img {
       width: 100%;
@@ -1030,6 +1141,17 @@ export default {
     width: calc(50% - 4rem);
   }
 
+  @include mdMax {
+    width: 100% !important;
+  }
+
+  @include smMax {
+    margin-left: .5rem;
+    margin-right: .5rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+
   i.icon-block__icon {
     position: absolute;
     left: 0px;
@@ -1062,6 +1184,10 @@ export default {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1rem;
 
+    @include mdMax {
+      grid-template-columns: 1fr;
+    }
+
     &-item {
       font-size: 14px;
       font-weight: bold;
@@ -1091,6 +1217,10 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 50%);
     grid-gap: 1rem;
+
+    @include mdMax {
+      grid-template-columns: 1fr;
+    }
 
     &-sub {
       margin-top: 1rem;
@@ -1170,6 +1300,10 @@ export default {
     width: 1%;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   &__icon {
     width: 2rem;
     color: #fff;
@@ -1180,10 +1314,16 @@ export default {
     border-radius: 0px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, .8);
     flex: 0 0 auto;
+    border: none;
 
     &--primary {
       background-color: #FFE300;
       color: #000;
+    }
+
+    &--danger {
+      background-color: #B02541;
+      color: #fff;
     }
 
     &--facebook {
@@ -1250,6 +1390,15 @@ export default {
   i {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+  }
+
+  &--xl {
+    font-size: 1rem;
+    font-weight: bold;
+
+    i {
+      font-size: 2rem;
+    }
   }
 }
 </style>
