@@ -63,7 +63,7 @@
       </section>
 
       <!-- DISCUSSION SECTION -->
-      <section class="news-section" v-if="discussionList && discussionList.length > 0">
+      <!-- <section class="news-section" v-if="discussionList && discussionList.length > 0">
         <bottom-bordered-title-with-search
           :title="'<b>Discussions |</b> Smiley Forum'"
           :with-search="false"
@@ -75,7 +75,7 @@
           for-mobile 
           with-slider
         ></discussions-gallery>
-      </section>
+      </section> -->
     </div>
 
     <subscribe-form for-mobile />

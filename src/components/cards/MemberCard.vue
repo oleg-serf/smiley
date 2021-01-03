@@ -3,12 +3,13 @@
     <div class="member-item__logo">
       <router-link :to="linkedComponent">
         <img
-            src="/img/members/anika.jpg"
+            v-if="member.avatar != null"
+            :src="$settings.images_path.users + 'm_' + member.avatar"
             alt
             title
             class="member-item__image"
         />
-        <!--        <div v-else>{{ member.initials }}</div>-->
+        <div v-else>{{ member.initials }}</div>
       </router-link>
     </div>
     <div class="member-item__info">
@@ -16,10 +17,10 @@
         {{ member.name }}
       </h2>
       <p class="member-item__info__location">
-        London
+        {{ member.city }}
       </p>
       <p class="member-item__info__skill">
-        <b>Skills | </b>Web development
+        {{ member.job_title }}
       </p>
       <p class="member-item__info__work">
         Self employed
@@ -29,18 +30,17 @@
       <VButton
           class="member-item__actions__button"
           size="height_45"
-          @click.native.prevent="openPage"
           shape="round"
+          @click.native.prevent="connectFriend"
       >
         Connect
       </VButton>
       <VButton
           class="member-item__actions__button"
           size="height_45"
-          @click.native.prevent="openPage"
           shape="round"
       >
-        Profile
+        <router-link :to="{name: 'member', params: {slug: member.slug}}"> Profile </router-link>
       </VButton>
     </div>
   </div>
@@ -107,7 +107,21 @@ export default {
           .catch(err => {
             // TODO: add error
           });
-    }
+    },
+    connectFriend() {
+      axios
+        .post("/users/friends/request", {slug: this.member.slug})
+        .then(res => {
+          if (res.data?.success == true) {
+            this.$emit('reload_lists');
+            this.$swal({text: 'Request Sent'});
+          } else {
+            this.$swal({text: res.data.messages});
+            this.$emit('reload_lists');
+          }
+        })
+        .catch(error => console.error(error));
+    },
   }
 };
 </script>
@@ -159,6 +173,10 @@ export default {
     display: flex;
     justify-content: space-around;
     width: 100%;
+
+    a {
+      color: black;
+    }
   }
 
   .member-item__logo {

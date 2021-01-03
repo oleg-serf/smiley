@@ -345,7 +345,6 @@ export default {
     axios
         .get("/pages/1")
         .then(res => {
-          console.log(res, "homepage");
           this.news = res.data.latest_news;
           this.newsList = res.data.featured;
           this.eventList = res.data.latest_events;

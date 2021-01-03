@@ -13,7 +13,7 @@
       <!--   PROJECTS   -->
       <section class="network-page__projects">
         <BottomBorderedTitleWithSearch
-            :title="'<b>Projects & Campaigns | </b>News'"
+            :title="'<b>Projects & Campaigns |</b> News'"
             :with-search="true"
             search-expandable
         ></BottomBorderedTitleWithSearch>
@@ -76,19 +76,18 @@
         <MembersAndOrganizationsGallery
             type="organisation"
             :with-slider="true"
-            :data-array="projects.slice(3)"
+            :data-array="organisations"
             button-text="View Project"
         ></MembersAndOrganizationsGallery>
         <VButton
             class="event__button"
             size="height_45"
-            @click.native.prevent="openPage('discussions', 'slug')"
             shape="round"
             color="black"
         >
           <router-link
               class="event__button-link"
-              :to="{ name: 'discussions', params: { slug: 'slug' } }"
+              :to="{ name: 'organisations' }"
           >
             All Organisations
           </router-link
@@ -105,19 +104,18 @@
         ></BottomBorderedTitleWithSearch>
         <MembersAndOrganizationsGallery
             :with-slider="true"
-            :data-array="projects.slice(3)"
+            :data-array="users"
             button-text="View Project"
         ></MembersAndOrganizationsGallery>
         <VButton
             class="event__button"
             size="height_45"
-            @click.native.prevent="openPage('discussions', 'slug')"
             shape="round"
             color="black"
         >
           <router-link
               class="event__button-link"
-              :to="{ name: 'discussions', params: { slug: 'slug' } }"
+              :to="{ name: 'members' }"
           >
             All Members
           </router-link
@@ -161,7 +159,9 @@ export default {
   data() {
     return {
       projectsBtnHovered: false,
-      projects: []
+      projects: [],
+      organisations: [],
+      users: []
     }
   },
   methods: {
@@ -184,10 +184,12 @@ export default {
 
     this.$store.dispatch('meta/setMeta', metaPayload);
     axios
-        .get("/projects")
+        .get("/pages/2")
         .then((res) => {
-          console.log("projects", res);
-          this.projects = res.data.projects;
+          console.log("networks", res);
+          this.projects = res.data.latest_projects;
+          this.organisations = res.data.latest_organisations;
+          this.users = res.data.latest_users;
         })
         .catch((error) => console.error(error));
   }
