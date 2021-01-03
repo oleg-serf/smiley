@@ -10,7 +10,7 @@
           class="event__button-link"
           :to="'#'"><i class="fa fa-facebook"></i></router-link>
     </VButton>
-    <VButton
+    <!-- <VButton
         class="link-actions__icon-btn"
         shape="round"
         size="small"
@@ -19,7 +19,7 @@
       <router-link
           class="event__button-link"
           :to="'#'"><i class="fa fa-instagram"></i></router-link>
-    </VButton>
+    </VButton> -->
     <VButton
         class="link-actions__icon-btn"
         shape="round"
@@ -30,7 +30,7 @@
           class="event__button-link"
           :to="'#'"><i class="fa fa-twitter"></i></router-link>
     </VButton>
-    <VButton
+    <!-- <VButton
         class="link-actions__icon-btn"
         shape="round"
         size="small"
@@ -39,7 +39,7 @@
       <router-link
           class="event__button-link"
           :to="'#'"><i class="fa fa-youtube"></i></router-link>
-    </VButton>
+    </VButton> -->
     <p>{{ shareText }}</p>
   </div>
 </template>

@@ -36,11 +36,12 @@
     </div>
 
     <div class="projects-article__content">
-      <h3 class="projects-article__content-title">
+      <h3 class="projects-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
         {{ cutText(project.name, 60) }}
       </h3>
       <div
           class="projects-article__content-description"
+          :style="[forMobile ? {'height': 'auto'} : {}]"
           v-html="cutText(project.description, 60, 'description')"
       ></div>
       <div class="projects-article__content-metadata">
@@ -217,7 +218,7 @@ export default {
     }
 
     .projects-article__content-title {
-      height: 4rem;
+      min-height: 6rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -230,7 +231,7 @@ export default {
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
       line-height: 28px;
-      margin-top: 30px;
+      margin-top: 1rem;
     }
 
     .projects-article__content-metadata {

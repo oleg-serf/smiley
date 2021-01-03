@@ -347,7 +347,7 @@ export default {
         .then(res => {
           console.log(res, "homepage");
           this.news = res.data.latest_news;
-          this.newsList = res.data.featured_news;
+          this.newsList = res.data.featured;
           this.eventList = res.data.latest_events;
           this.interviewList = res.data.latest_interviews;
           this.projects = res.data.latest_network;
@@ -390,6 +390,12 @@ export default {
   text-align: center;
 
   .news-section {
+    .more__button {
+      margin: 2rem auto;
+    }
+  }
+
+  .events-section {
     .more__button {
       margin: 2rem auto;
     }

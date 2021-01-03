@@ -21,15 +21,9 @@
               <div class="paging-buttons">
                 <div class="paging-buttons__buttons">
                   <div class="paging-buttons__buttons-prev">
-                    <!-- <div
-                      class="paging-buttons__buttons__triangle paging-buttons__buttons__triangle-left"
-                    ></div> -->
                     <i class="leftArrow"></i>
                   </div>
                   <div class="paging-buttons__buttons-next">
-                    <!-- <div
-                      class="paging-buttons__buttons__triangle paging-buttons__buttons__triangle-right"
-                    ></div> -->
                     <i class="rightArrow"></i>
                   </div>
                 </div>
@@ -38,7 +32,7 @@
                 <i class="fa fa-search"></i>
               </button>
               <button
-                @click="sidebar = true"
+                @click="openNav"
                 class="sidebar-btn"
                 style="
                   font-size: 100%;
@@ -50,7 +44,155 @@
               >
                 <i class="fa fa-bars"></i>
               </button>
-              <div class="sidebar" :class="{ active: sidebar }">
+              <!--     HEADER BAR MENU       -->
+              <div id="sidebarWrapper">
+                <div id="mySidenav" class="sidenav">
+                  <span class="closebtn" @click="closeNav">&times;</span>
+                  <div class="social-share-and-search">
+                    <button
+                      class="search-trigger"
+                    >
+                      <i class="fa fa-search"></i>
+                    </button>
+                    <ul class="social-share">
+                      <li class="social-share__item" v-if="social.facebook">
+                        <a
+                          :href="social.facebook"
+                          class="social-share__link social-share__link--facebook"
+                          target="_blank"
+                        >
+                          <i class="fa fa-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="social-share__item" v-if="social.instagram">
+                        <a
+                          :href="social.instagram"
+                          class="social-share__link social-share__link--instagram"
+                          target="_blank"
+                        >
+                          <i class="fa fa-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="social-share__item" v-if="social.linkedin">
+                        <a
+                          :href="social.linkedin"
+                          class="social-share__link social-share__link--linkedin"
+                          target="_blank"
+                        >
+                          <i class="fa fa-linkedin"></i>
+                        </a>
+                      </li>
+                      <li class="social-share__item" v-if="social.twitter">
+                        <a
+                          :href="social.twitter"
+                          class="social-share__link social-share__link--twitter"
+                          target="_blank"
+                        >
+                          <i class="fa fa-twitter"></i>
+                        </a>
+                      </li>
+                      <li class="social-share__item" v-if="social.youtube">
+                        <a
+                          :href="social.youtube"
+                          class="social-share__link social-share__link--youtube"
+                          target="_blank"
+                        >
+                          <i class="fa fa-youtube-play"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <router-link
+                    class="sideNavLink"
+                    :to="{ name: 'news' }"
+                    style="margin-top: 1rem"
+                    >News</router-link
+                  >
+                  <router-link class="sideNavLink" :to="{ name: 'talks' }"
+                    >Events</router-link
+                  >
+                  <router-link class="sideNavLink yellow-bottom" :to="{ name: 'interviews' }"
+                    >Interviews</router-link
+                  >
+                  <!-- <router-link
+                    class="sideNavLink yellow-bottom"
+                    :to="{ name: 'chat' }"
+                    >Chatrooms</router-link
+                  > -->
+                  <!--YELLOW LINE-->
+                  <router-link
+                    class="sideNavLink after-yellow-bottom"
+                    :to="{
+                      name: 'news-category-item',
+                      params: { slug: 'sustainable-cities-and-communities' },
+                    }"
+                    >Sustainability
+                  </router-link>
+                  <router-link
+                    class="sideNavLink"
+                    :to="{
+                      name: 'news-category-item',
+                      params: { slug: 'peace-justice-and-strong-institutions' },
+                    }"
+                    >Social Justice
+                  </router-link>
+                  <router-link
+                    class="sideNavLink"
+                    :to="{
+                      name: 'news-category-item',
+                      params: { slug: 'quality-education' },
+                    }"
+                    >Education
+                  </router-link>
+                  <router-link
+                    class="sideNavLink"
+                    :to="{
+                      name: 'news-category-item',
+                      params: { slug: 'good-health-and-well-being' },
+                    }"
+                    >Mental Health
+                  </router-link>
+                  <router-link
+                    class="sideNavLink"
+                    :to="{
+                      name: 'news-category-item',
+                      params: { slug: 'climate-action' },
+                    }"
+                    >Climate
+                  </router-link>
+                  <router-link
+                    class="sideNavLink yellow-bottom"
+                    :to="{
+                      name: 'news-category-item',
+                      params: { slug: 'decent-work-and-economic-growth' },
+                    }"
+                    >Economic Growth
+                  </router-link>
+                  <router-link
+                    class="sideNavLink after-yellow-bottom"
+                    :to="{ name: 'network' }"
+                    >Network</router-link
+                  >
+                  <router-link
+                    class="sideNavLink"
+                    :to="{ name: 'organisations' }"
+                    >Organisations</router-link
+                  >
+                  <router-link class="sideNavLink" :to="{ name: 'members' }"
+                    >People</router-link
+                  >
+                  <router-link class="sideNavLink" :to="{ name: 'story' }"
+                    >About us</router-link
+                  >
+                  <router-link class="sideNavLink" :to="{ name: 'goals' }"
+                    >UN Goals</router-link
+                  >
+                  <router-link class="sideNavLink" :to="{ name: 'contact' }"
+                    >Contact us</router-link
+                  >
+                </div>
+              </div>
+              <!-- <div class="sidebar" :class="{ active: sidebar }">
                 <div class="sidebar__item sidebar__item--close">
                   <button @click="sidebar = false">
                     <i class="fa fa-arrow-right"></i>
@@ -221,7 +363,7 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -532,6 +674,22 @@ export default {
     },
   },
   methods: {
+    openNav() {
+      document.getElementById("mySidenav").style.width = "19rem";
+      let sideNavLinks = document.getElementsByClassName("sideNavLink");
+      setTimeout(() => {
+        for (let i = 0; i < sideNavLinks.length; i++) {
+          sideNavLinks[i].style["display"] = "block";
+        }
+      }, 300);
+    },
+    closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      let sideNavLinks = document.getElementsByClassName("sideNavLink");
+      for (let i = 0; i < sideNavLinks.length; i++) {
+        sideNavLinks[i].style["display"] = "none";
+      }
+    },
     authentification() {
       this.$swal({
         title: "Register or Login",
@@ -602,6 +760,7 @@ export default {
     "$route.path": {
       handler() {
         this.sidebar = false;
+        this.closeNav();
       },
     },
   },
@@ -616,117 +775,275 @@ header {
   z-index: 10;
   background: #fff;
 
-  .sidebar {
+  // .sidebar {
+  //   position: fixed;
+  //   overflow-x: hidden;
+  //   padding: 1.5rem 2rem;
+  //   width: 100%;
+  //   max-width: 260px;
+  //   height: 100%;
+  //   background-color: #fff;
+  //   z-index: 20;
+  //   right: -100%;
+  //   top: 0px;
+  //   transition: right 0.2s;
+  //   box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+
+  //   &.active {
+  //     right: 0px;
+  //   }
+
+  //   &__item {
+  //     &:not(:last-child) {
+  //       margin-bottom: 1.5rem;
+  //     }
+
+  //     &--close {
+  //       button {
+  //         border: none;
+  //         background: transparent;
+  //         font-size: 0.8rem;
+  //         padding: 0px;
+
+  //         i {
+  //           margin-right: 1rem;
+  //         }
+  //       }
+  //     }
+
+  //     &--logged-in {
+  //       display: flex;
+  //       align-items: center;
+  //     }
+
+  //     &--actions {
+  //       .user-avatar {
+  //         width: 3rem;
+  //         height: 3rem;
+  //         border-radius: 50%;
+  //         box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+
+  //         img {
+  //           width: 100%;
+  //           height: 100%;
+  //           object-fit: cover;
+  //         }
+  //       }
+
+  //       .user-initials {
+  //         @include font-size(1.25rem);
+  //         color: #000;
+  //         text-decoration: none !important;
+  //       }
+  //     }
+
+  //     &--share {
+  //       h3 {
+  //         margin-bottom: 1rem;
+  //       }
+
+  //       .social-share {
+  //         margin-bottom: 0px;
+  //         display: flex;
+  //         margin-left: -0.3rem;
+  //         margin-right: -0.3rem;
+
+  //         li {
+  //           width: 2rem;
+  //           height: 2rem;
+  //           border-radius: 50%;
+  //           background-color: #000;
+  //           display: flex;
+  //           align-items: center;
+  //           justify-content: center;
+  //           margin-left: 0.3rem;
+  //           margin-right: 0.3rem;
+  //           cursor: pointer;
+  //           transition: background-color 0.2s, transform 0.2s, color 0.2s;
+
+  //           &:hover,
+  //           &:active {
+  //             background-color: #fff;
+  //           }
+
+  //           &:active {
+  //             transform: translate(1px, 1px);
+  //           }
+  //         }
+
+  //         a {
+  //           color: #fff;
+  //           @include font-size(1.2rem);
+  //           transition: color 0.2s;
+
+  //           &:hover,
+  //           &:active {
+  //             color: #000;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  .sidenav {
+    font-family: "Gotham Bold", sans-serif;
+    min-height: 26rem;
+    width: 0;
     position: fixed;
+    z-index: 6;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.96);
     overflow-x: hidden;
-    padding: 1.5rem 2rem;
-    width: 100%;
-    max-width: 260px;
-    height: 100%;
-    background-color: #fff;
-    z-index: 20;
-    right: -100%;
-    top: 0px;
-    transition: left 0.2s;
-    box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+    padding-top: 1rem;
+    .social-share-and-search {
+      display: flex;
+      margin-top: 1.5rem;
+      margin-left: 1.5rem;
 
-    &.active {
-      right: 0px;
-    }
-
-    &__item {
-      &:not(:last-child) {
-        margin-bottom: 1.5rem;
+      .search-trigger {
+        width: 1.6rem;
+        height: 1.6rem;
+        font-size: 1.5rem;
       }
 
-      &--close {
-        button {
-          border: none;
-          background: transparent;
-          font-size: 0.8rem;
-          padding: 0px;
-
-          i {
-            margin-right: 1rem;
-          }
-        }
-      }
-
-      &--logged-in {
+      .social-share {
+        margin-bottom: 0px;
         display: flex;
-        align-items: center;
-      }
+        margin-left: -0.3rem;
+        margin-right: -0.3rem;
 
-      &--actions {
-        .user-avatar {
-          width: 3rem;
-          height: 3rem;
+        li {
+          width: 1.6rem;
+          height: 1.6rem;
           border-radius: 50%;
-          box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+          background-color: #000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 0.3rem;
+          margin-right: 0.3rem;
+          cursor: pointer;
+          transition: background-color 0.2s, transform 0.2s, color 0.2s;
 
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+          &:hover,
+          &:active {
+            background-color: #fff;
+          }
+
+          &:active {
+            transform: translate(1px, 1px);
           }
         }
 
-        .user-initials {
-          @include font-size(1.25rem);
-          color: #000;
-          text-decoration: none !important;
+        a {
+          color: #fff;
+          @include font-size(1.1rem);
+          transition: color 0.2s;
+          margin-top: 0.2rem;
+
+          &:hover,
+          &:active {
+            color: #000;
+          }
         }
       }
+    }
+    a {
+      // &::before {
+      //   display: inline-block;
+      //   visibility: hidden;
+      //   opacity: 0;
+      //   transition: visibility 0s, opacity 0.3s, left 0.4s ease-in-out;
+      //   content: "";
+      //   position: absolute;
+      //   top: 20%;
+      //   left: 0;
+      //   width: 17px;
+      //   height: 17px;
+      //   -moz-border-radius: 7.5px;
+      //   -webkit-border-radius: 7.5px;
+      //   border-radius: 7.5px;
+      //   background-color: yellow;
+      // }
 
-      &--share {
-        h3 {
-          margin-bottom: 1rem;
+      padding: 2px 0;
+      margin: 0 2rem;
+      &.sideNavLink {
+        &:first-child {
+          margin-top: 1rem !important;
         }
+      }
+      text-decoration: none;
+      font-size: 1.2rem;
+      color: #000000;
+      display: block;
+      transition: 0.3s;
+      position: relative;
 
-        .social-share {
-          margin-bottom: 0px;
-          display: flex;
-          margin-left: -0.3rem;
-          margin-right: -0.3rem;
+      &.yellow-bottom {
+        border-bottom: 3px solid yellow;
+        padding-bottom: 8px;
+      }
 
-          li {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 0.3rem;
-            margin-right: 0.3rem;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.2s, color 0.2s;
+      &.after-yellow-bottom {
+        padding-top: 8px;
+      }
+    }
+    .closebtn {
+      cursor: pointer;
+      position: absolute;
+      top: -10px;
+      right: 25px;
+      font-size: 3rem;
+      font-weight: bold;
+      margin-left: 50px;
+      color: yellow;
 
-            &:hover,
-            &:active {
-              background-color: #fff;
-            }
-
-            &:active {
-              transform: translate(1px, 1px);
-            }
-          }
-
-          a {
-            color: #fff;
-            @include font-size(1.2rem);
-            transition: color 0.2s;
-
-            &:hover,
-            &:active {
-              color: #000;
-            }
-          }
-        }
+      &:hover {
+        color: yellow;
       }
     }
   }
 
+  // .sidenav a:hover {
+  //   &::before {
+  //     visibility: visible;
+  //     opacity: 1;
+  //     content: "";
+  //     position: absolute;
+  //     top: 22%;
+  //     left: -8%;
+  //     width: 17px;
+  //     height: 17px;
+  //     -moz-border-radius: 7.5px;
+  //     -webkit-border-radius: 7.5px;
+  //     border-radius: 7.5px;
+  //     background-color: yellow;
+  //   }
+
+  //   &.yellow-bottom {
+  //     &::before {
+  //       top: 20%;
+  //     }
+  //   }
+
+  //   &.after-yellow-bottom {
+  //     &::before {
+  //       top: 34%;
+  //     }
+  //   }
+  // }
+
+  // @media screen and (max-height: 450px) {
+  //   .sidenav {
+  //     padding-top: 15px;
+  //   }
+  //   .sidenav a {
+  //     font-size: 1.2rem;
+  //   }
+  // }
   .mobile-menu {
     display: inline-flex;
     flex-direction: column;
@@ -756,110 +1073,6 @@ header {
     &__link {
       color: #000;
       text-decoration: none !important;
-    }
-  }
-
-  .sidenav {
-    font-family: "Gotham Bold", sans-serif;
-    min-height: 26rem;
-    width: 0;
-    position: fixed;
-    z-index: 6;
-    top: 0;
-    left: 0;
-    background-color: rgba(255, 255, 255, 0.96);
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 2.5rem;
-  }
-
-  .sidenav a {
-    &::before {
-      display: inline-block;
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0s, opacity 0.3s, left 0.4s ease-in-out;
-      content: "";
-      position: absolute;
-      top: 20%;
-      left: 0;
-      width: 17px;
-      height: 17px;
-      -moz-border-radius: 7.5px;
-      -webkit-border-radius: 7.5px;
-      border-radius: 7.5px;
-      background-color: yellow;
-    }
-
-    padding: 2px 8px;
-    margin: 0 3rem;
-    text-decoration: none;
-    font-size: 22px;
-    color: #000000;
-    display: block;
-    transition: 0.3s;
-    position: relative;
-
-    &.yellow-bottom {
-      border-bottom: 3px solid yellow;
-      padding-bottom: 8px;
-    }
-
-    &.after-yellow-bottom {
-      padding-top: 8px;
-    }
-  }
-
-  .sidenav a:hover {
-    &::before {
-      visibility: visible;
-      opacity: 1;
-      content: "";
-      position: absolute;
-      top: 22%;
-      left: -8%;
-      width: 17px;
-      height: 17px;
-      -moz-border-radius: 7.5px;
-      -webkit-border-radius: 7.5px;
-      border-radius: 7.5px;
-      background-color: yellow;
-    }
-
-    &.yellow-bottom {
-      &::before {
-        top: 20%;
-      }
-    }
-
-    &.after-yellow-bottom {
-      &::before {
-        top: 34%;
-      }
-    }
-  }
-
-  .sidenav .closebtn {
-    cursor: pointer;
-    position: absolute;
-    top: -10px;
-    right: 25px;
-    font-size: 3rem;
-    font-weight: bold;
-    margin-left: 50px;
-    color: yellow;
-
-    &:hover {
-      color: yellow;
-    }
-  }
-
-  @media screen and (max-height: 450px) {
-    .sidenav {
-      padding-top: 15px;
-    }
-    .sidenav a {
-      font-size: 18px;
     }
   }
 }
@@ -929,9 +1142,7 @@ header {
       }
       .search-trigger {
         margin-right: 1rem;
-        i {
-          font-size: 2rem;
-        }
+        font-size: 2rem;
       }
       .text-link {
         @include lgMax {
@@ -1004,7 +1215,7 @@ header {
       display: flex;
       align-items: center;
       justify-content: center;
-      @include font-size(1.2rem);
+      @include font-size(2rem);
       border-radius: 50%;
       border: none;
       background: transparent;
