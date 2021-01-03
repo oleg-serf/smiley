@@ -95,7 +95,7 @@ export default {
     background: none;
     border: none;
     padding: 16px;
-    webkit-appearance: none;
+    -webkit-appearance: none;
     appearance: none;
     cursor: pointer;
 
