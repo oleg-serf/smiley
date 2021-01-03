@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="profile">
+    <form class="profile" @submit.prevent="onSubmit">
       <div class="profile__background">
         <img src="/images/remove-profile_background.jpg">
       </div>
@@ -11,22 +11,30 @@
         </div>
         <div class="profile__description">
           <h1 class="profile__name">{{ user.display_name }}</h1>
-          <div class="profile__job-title">{{user.job_title}}</div>
-          <div class="profile__location">London, United Kingdom</div>
-          <div class="profile__slogan">{{user.slogan}}</div>
+          <template v-if="user.company_organization && user.job_title">
+            <div class="profile__job-title">{{user.company_organization}} - {{ user.job_title }}</div>
+          </template>
+          <template v-else-if="user.company_organization">
+            <div class="profile__job-title">{{user.company_organization}}</div>
+          </template>
+          <template v-else>
+            <div class="profile__job-title">{{user.job_title}}</div>
+          </template>
+          <div class="profile__location">{{ user.city + ', ' }} {{ user.country}}</div>
+          <div class="profile__slogan">{{ user.slogan }}</div>
         </div>
         <div class="profile__holder-actions">
           <div class="profile__actions">
             <div class="profile__actions-item">
-              <span class="tag">Matches: <strong class="append">50+</strong></span>
-            </div>
-            <div class="profile__actions-item">
-              <span class="tag">Communities: <strong class="append">5</strong></span>
+              <button class="button" type="submit">
+                <i class="fa fa-save fa-i-prepend"></i>
+                Save
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
     <div class="tabs container">
       <div class="tabs__navigation">
         <button class="tabs__navigation-item"
@@ -50,78 +58,150 @@
         >Interests
         </button>
         <button class="tabs__navigation-item"
-                @click="tab = 'settings'"
-                :class="activeTab('settings')"
-        >Interests
+                @click="tab = 'security'"
+                :class="activeTab('security')"
+        >Security
         </button>
       </div>
       <div class="tabs__content">
         <!--            About tab [+]-->
         <div class="tabs__content-item" v-show="tab === 'about'">
-          <div class="tab--about">
-            <div class="icon-block">
-              <span>Real name:</span>
-              <div class="edit edit--prepend">
-                <i class="fa fa-user-circle-o edit__icon edit__icon--primary"></i>
-                <input type="text" v-model="user.full_name" placeholder="https://...">
-              </div>
+          <div class="icon-block icon-block--50">
+            <span>Real name:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-user edit__icon edit__icon--primary"></i>
+              <input type="text" v-model="user.full_name" placeholder="Full Name">
             </div>
-            <div class="icon-block">
-              <span>Display name:</span>
-              <div class="edit edit--prepend">
-                <i class="fa fa-user-circle edit__icon edit__icon--primary"></i>
-                <input type="text" v-model="user.display_name" placeholder="https://...">
-              </div>
+          </div>
+          <div class="icon-block icon-block--50">
+            <span>Display name:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-address-card-o edit__icon edit__icon--primary"></i>
+              <input type="text" v-model="user.display_name" placeholder="Display Name">
             </div>
-            <div class="icon-block about">
-              <i class="fa fa-info-circle icon-block__icon"></i>
-              <span>Bio:</span>
-              <ckeditor :editor="editor" :config="editorConfig" v-model="user.bio"></ckeditor>
+          </div>
+          <div class="icon-block icon-block--50">
+            <span>Slogan:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-user edit__icon edit__icon--primary"></i>
+              <input type="text" v-model="user.slogan" placeholder="Slogan">
             </div>
-            <div class="icon-block share">
-              <i class="fa fa-share-alt icon-block__icon"></i>
-              Your Social Media:
-              <ul class="social-share">
-                <li class="social-share__item">
-                  <div class="edit edit--prepend">
-                    <i class="fa fa-facebook edit__icon edit__icon--facebook"></i>
-                    <input type="url" v-model="user.website" placeholder="facebook">
-                  </div>
-                </li>
-                <li class="social-share__item">
-                  <div class="edit edit--prepend">
-                    <i class="fa fa-instagram edit__icon edit__icon--instagram"></i>
-                    <input type="url" v-model="user.instagram" placeholder="instagram">
-                  </div>
-                </li>
-                <li class="social-share__item">
-                  <div class="edit edit--prepend">
-                    <i class="fa fa-linkedin edit__icon edit__icon--linkedin"></i>
-                    <input type="url" v-model="user.linkedin" placeholder="linkedin">
-                  </div>
-                </li>
-                <li class="social-share__item">
-                  <div class="edit edit--prepend">
-                    <i class="fa fa-twitter edit__icon edit__icon--twitter"></i>
-                    <input type="url" v-model="user.twitter" placeholder="twitter">
-                  </div>
-                </li>
-                <li class="social-share__item">
-                  <div class="edit edit--prepend">
-                    <i class="fa fa-youtube-play edit__icon edit__icon--youtube"></i>
-                    <input type="url" v-model="user.youtube" placeholder="youtube">
-                  </div>
-                </li>
-              </ul>
+          </div>
+          <div class="icon-block icon-block--50">
+            <span>Charity Number:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-user edit__icon edit__icon--primary"></i>
+              <input type="text" v-model="user.charity_number" placeholder="Charity Number">
             </div>
-            <div class="icon-block link">
-              <i class="fa fa-link icon-block__icon"></i>
-              <span>Your website link:</span>
-              <div class="edit edit--prepend">
-                <i class="fa fa-external-link-square edit__icon edit__icon--primary"></i>
-                <input type="url" v-model="user.website" placeholder="https://...">
-              </div>
+          </div>
+          <div class="icon-block icon-block--50 link">
+            <i class="fa fa-link icon-block__icon"></i>
+            <span>Date of Birth:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-calendar edit__icon edit__icon--primary"></i>
+              <input type="date" v-model="user.dob">
             </div>
+          </div>
+          <div class="icon-block icon-block--50">
+            <i class="fa fa-link icon-block__icon"></i>
+            <span>Company name:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-bank edit__icon edit__icon--primary"></i>
+              <input type="text" v-model="user.company_organization">
+            </div>
+            <br>
+            <span>Job title:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-bank edit__icon edit__icon--primary"></i>
+              <input type="text" v-model="user.job_tite">
+            </div>
+          </div>
+          <div class="icon-block icon-block--50">
+            <span>Country</span>
+            <div class="edit">
+              <i class="fa fa-location-arrow edit__icon edit__icon--primary"></i>
+              <select v-model="user.country">
+                <option :value="item.code" v-for="item in countries" :key="item.code">{{item.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="icon-block icon-block--50">
+            <span>City</span>
+            <div class="edit">
+              <i class="fa fa-map-pin edit__icon edit__icon--primary"></i>
+              <input type="text" v-model="user.city" placeholder="City">
+            </div>
+          </div>
+          <div class="icon-block icon-block--50 link">
+            <i class="fa fa-link icon-block__icon"></i>
+            <span>Your website link:</span>
+            <div class="edit edit--prepend">
+              <i class="fa fa-external-link-square edit__icon edit__icon--primary"></i>
+              <input type="url" v-model="user.website" placeholder="https://...">
+            </div>
+          </div>
+          <div class="icon-block icon-block--50">
+            <span>How did you hear about us?</span>
+            <div class="edit">
+              <i class="fa fa-question-circle edit__icon edit__icon--primary"></i>
+            <select v-model="user.survey">
+              <option value="1">Social Media</option>
+              <option value="2">Google (Bing, etc) search</option>
+              <option value="3">I attended a Smiley Movement event</option>
+              <option value="4">From a friend</option>
+              <option value="5">I received an email from Smiley Movement</option>
+              <option value="6">I received a call from Smiley Movement</option>
+              <option value="7">Other (Please specify)</option>
+            </select>
+            </div>
+            <div class="edit" v-if="user.survey == 7" style="margin-top: 1.5rem;">
+              <input
+                  type="text"
+                  v-model="user.survey_other"
+                  placeholder="Specify here"
+              />
+            </div>
+          </div>
+          <div class="icon-block icon-block--50 about">
+            <i class="fa fa-info-circle icon-block__icon"></i>
+            <span>Bio:</span>
+            <ckeditor :editor="editor" :config="editorConfig" v-model="user.bio"></ckeditor>
+          </div>
+          <div class="icon-block icon-block--50 share">
+            <i class="fa fa-share-alt icon-block__icon"></i>
+            <span>Your Social Media:</span>
+            <ul class="">
+              <li class="social-share__item">
+                <div class="edit edit--prepend">
+                  <i class="fa fa-facebook edit__icon edit__icon--facebook"></i>
+                  <input type="url" v-model="user.facebook" placeholder="facebook">
+                </div>
+              </li>
+              <li class="social-share__item">
+                <div class="edit edit--prepend">
+                  <i class="fa fa-instagram edit__icon edit__icon--instagram"></i>
+                  <input type="url" v-model="user.instagram" placeholder="instagram">
+                </div>
+              </li>
+              <li class="social-share__item">
+                <div class="edit edit--prepend">
+                  <i class="fa fa-linkedin edit__icon edit__icon--linkedin"></i>
+                  <input type="url" v-model="user.linkedin" placeholder="linkedin">
+                </div>
+              </li>
+              <li class="social-share__item">
+                <div class="edit edit--prepend">
+                  <i class="fa fa-twitter edit__icon edit__icon--twitter"></i>
+                  <input type="url" v-model="user.twitter" placeholder="twitter">
+                </div>
+              </li>
+              <li class="social-share__item">
+                <div class="edit edit--prepend">
+                  <i class="fa fa-youtube-play edit__icon edit__icon--youtube"></i>
+                  <input type="url" v-model="user.youtube" placeholder="youtube">
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
         <!--            About tab [-]-->
@@ -135,18 +215,20 @@
             Support offered:<br>
             <ul class="support__block">
               <li class="support_block-li" v-for="(item, index) in supportOffer">
-                <div class="support__control">
+<!--                <div class="support__control">-->
+                <div class="edit edit--append">
                   <select v-model="supportOffer[index].parent">
                     <option value="-1" selected disabled>Select category</option>
                     <option :value="category.id" v-for="category in supports">{{ category.title }}</option>
                   </select>
-                  <button class="support__item-remove" @click.prevent="removeCategory('offered', index)">
+                  <button class="edit__icon edit__icon--primary" @click.prevent="removeCategory('offered', index)">
                     <i class="fa fa-remove"></i>
                   </button>
                 </div>
+<!--                </div>-->
                 <ul class="support__block-sub">
                   <li v-for="(option, counter) in supportOffer[index].child">
-                    <div class="support__control">
+                    <div class="edit edit--append">
                       <select v-model="supportOffer[index].child[counter]">
                         <option value="-1" selected disabled>Select option</option>
                         <option :value="category.id"
@@ -154,7 +236,7 @@
                           {{ category.title }}
                         </option>
                       </select>
-                      <button class="support__item-remove" @click.prevent="removeItem('offered', index, counter)">
+                      <button class="edit__icon edit__icon--primary" @click.prevent="removeItem('offered', index, counter)">
                         <i class="fa fa-remove"></i>
                       </button>
                     </div>
@@ -177,18 +259,18 @@
             Support needed:<br>
             <ul class="support__block">
               <li class="support_block-li" v-for="(item, index) in supportNeeded">
-                <div class="support__control">
+                <div class="edit edit--append">
                   <select v-model="supportNeeded[index].parent">
                     <option selected disabled>Select category</option>
                     <option :value="category.id" v-for="category in supports">{{ category.title }}</option>
                   </select>
-                  <button class="support__item-remove" @click.prevent="removeCategory('needed', index)">
+                  <button class="edit__icon edit__icon--primary" @click.prevent="removeCategory('needed', index)">
                     <i class="fa fa-remove"></i>
                   </button>
                 </div>
                 <ul class="support__block-sub">
                   <li v-for="(option, counter) in supportNeeded[index].child">
-                    <div class="support__control">
+                    <div class="edit edit--append">
                       <select v-model="supportNeeded[index].child[counter]">
                         <option selected disabled>Select option</option>
                         <option :value="category.id"
@@ -196,7 +278,7 @@
                           {{ category.title }}
                         </option>
                       </select>
-                      <button class="support__item-remove" @click.prevent="removeItem('needed', index, counter)">
+                      <button class="edit__icon edit__icon--primary" @click.prevent="removeItem('needed', index, counter)">
                         <i class="fa fa-remove"></i>
                       </button>
                     </div>
@@ -236,8 +318,8 @@
           </div>
         </div>
         <!--            Interests tab [-]-->
-        <!--            Settings tab [+]-->
-        <div class="tabs__content-item" v-show="tab === 'settings'">
+        <!--            Security tab [+]-->
+        <div class="tabs__content-item" v-show="tab === 'security'">
           <div class="icon-block link">
             <i class="fa fa-link icon-block__icon"></i>
             <span>Email:</span>
@@ -247,7 +329,7 @@
             </div>
           </div>
           <div></div>
-          <div class="icon-block link">
+          <div class="icon-block icon-block--50">
             <i class="fa fa-link icon-block__icon"></i>
             <span>Old Password:</span>
             <div class="edit edit--prepend">
@@ -258,7 +340,7 @@
               </button>
             </div>
           </div>
-          <div class="icon-block link">
+          <div class="icon-block icon-block--50">
             <i class="fa fa-link icon-block__icon"></i>
             <span>News Password:</span>
             <div class="edit edit--prepend">
@@ -267,7 +349,7 @@
             </div>
           </div>
         </div>
-        <!--            Settings tab [-]-->
+        <!--            Security tab [-]-->
       </div>
     </div>
   </section>
@@ -276,6 +358,7 @@
 <script>
 import axios from "@/axios-auth";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import router from "@/router";
 
 export default {
   name: "UserProfile",
@@ -313,6 +396,251 @@ export default {
           "ImageUpload"
         ]
       },
+      countries: [
+        { name: "Afghanistan", code: "AF" },
+        { name: "Åland Islands", code: "AX" },
+        { name: "Albania", code: "AL" },
+        { name: "Algeria", code: "DZ" },
+        { name: "American Samoa", code: "AS" },
+        { name: "AndorrA", code: "AD" },
+        { name: "Angola", code: "AO" },
+        { name: "Anguilla", code: "AI" },
+        { name: "Antarctica", code: "AQ" },
+        { name: "Antigua and Barbuda", code: "AG" },
+        { name: "Argentina", code: "AR" },
+        { name: "Armenia", code: "AM" },
+        { name: "Aruba", code: "AW" },
+        { name: "Australia", code: "AU" },
+        { name: "Austria", code: "AT" },
+        { name: "Azerbaijan", code: "AZ" },
+        { name: "Bahamas", code: "BS" },
+        { name: "Bahrain", code: "BH" },
+        { name: "Bangladesh", code: "BD" },
+        { name: "Barbados", code: "BB" },
+        { name: "Belarus", code: "BY" },
+        { name: "Belgium", code: "BE" },
+        { name: "Belize", code: "BZ" },
+        { name: "Benin", code: "BJ" },
+        { name: "Bermuda", code: "BM" },
+        { name: "Bhutan", code: "BT" },
+        { name: "Bolivia", code: "BO" },
+        { name: "Bosnia and Herzegovina", code: "BA" },
+        { name: "Botswana", code: "BW" },
+        { name: "Bouvet Island", code: "BV" },
+        { name: "Brazil", code: "BR" },
+        { name: "British Indian Ocean Territory", code: "IO" },
+        { name: "Brunei Darussalam", code: "BN" },
+        { name: "Bulgaria", code: "BG" },
+        { name: "Burkina Faso", code: "BF" },
+        { name: "Burundi", code: "BI" },
+        { name: "Cambodia", code: "KH" },
+        { name: "Cameroon", code: "CM" },
+        { name: "Canada", code: "CA" },
+        { name: "Cape Verde", code: "CV" },
+        { name: "Cayman Islands", code: "KY" },
+        { name: "Central African Republic", code: "CF" },
+        { name: "Chad", code: "TD" },
+        { name: "Chile", code: "CL" },
+        { name: "China", code: "CN" },
+        { name: "Christmas Island", code: "CX" },
+        { name: "Cocos (Keeling) Islands", code: "CC" },
+        { name: "Colombia", code: "CO" },
+        { name: "Comoros", code: "KM" },
+        { name: "Congo", code: "CG" },
+        { name: "Congo, The Democratic Republic of the", code: "CD" },
+        { name: "Cook Islands", code: "CK" },
+        { name: "Costa Rica", code: "CR" },
+        { name: "Cote D'Ivoire", code: "CI" },
+        { name: "Croatia", code: "HR" },
+        { name: "Cuba", code: "CU" },
+        { name: "Cyprus", code: "CY" },
+        { name: "Czech Republic", code: "CZ" },
+        { name: "Denmark", code: "DK" },
+        { name: "Djibouti", code: "DJ" },
+        { name: "Dominica", code: "DM" },
+        { name: "Dominican Republic", code: "DO" },
+        { name: "Ecuador", code: "EC" },
+        { name: "Egypt", code: "EG" },
+        { name: "El Salvador", code: "SV" },
+        { name: "Equatorial Guinea", code: "GQ" },
+        { name: "Eritrea", code: "ER" },
+        { name: "Estonia", code: "EE" },
+        { name: "Ethiopia", code: "ET" },
+        { name: "Falkland Islands (Malvinas)", code: "FK" },
+        { name: "Faroe Islands", code: "FO" },
+        { name: "Fiji", code: "FJ" },
+        { name: "Finland", code: "FI" },
+        { name: "France", code: "FR" },
+        { name: "French Guiana", code: "GF" },
+        { name: "French Polynesia", code: "PF" },
+        { name: "French Southern Territories", code: "TF" },
+        { name: "Gabon", code: "GA" },
+        { name: "Gambia", code: "GM" },
+        { name: "Georgia", code: "GE" },
+        { name: "Germany", code: "DE" },
+        { name: "Ghana", code: "GH" },
+        { name: "Gibraltar", code: "GI" },
+        { name: "Greece", code: "GR" },
+        { name: "Greenland", code: "GL" },
+        { name: "Grenada", code: "GD" },
+        { name: "Guadeloupe", code: "GP" },
+        { name: "Guam", code: "GU" },
+        { name: "Guatemala", code: "GT" },
+        { name: "Guernsey", code: "GG" },
+        { name: "Guinea", code: "GN" },
+        { name: "Guinea-Bissau", code: "GW" },
+        { name: "Guyana", code: "GY" },
+        { name: "Haiti", code: "HT" },
+        { name: "Heard Island and Mcdonald Islands", code: "HM" },
+        { name: "Holy See (Vatican City State)", code: "VA" },
+        { name: "Honduras", code: "HN" },
+        { name: "Hong Kong", code: "HK" },
+        { name: "Hungary", code: "HU" },
+        { name: "Iceland", code: "IS" },
+        { name: "India", code: "IN" },
+        { name: "Indonesia", code: "ID" },
+        { name: "Iran, Islamic Republic Of", code: "IR" },
+        { name: "Iraq", code: "IQ" },
+        { name: "Ireland", code: "IE" },
+        { name: "Isle of Man", code: "IM" },
+        { name: "Israel", code: "IL" },
+        { name: "Italy", code: "IT" },
+        { name: "Jamaica", code: "JM" },
+        { name: "Japan", code: "JP" },
+        { name: "Jersey", code: "JE" },
+        { name: "Jordan", code: "JO" },
+        { name: "Kazakhstan", code: "KZ" },
+        { name: "Kenya", code: "KE" },
+        { name: "Kiribati", code: "KI" },
+        { name: "Korea, Democratic People'S Republic of", code: "KP" },
+        { name: "Korea, Republic of", code: "KR" },
+        { name: "Kuwait", code: "KW" },
+        { name: "Kyrgyzstan", code: "KG" },
+        { name: "Lao People'S Democratic Republic", code: "LA" },
+        { name: "Latvia", code: "LV" },
+        { name: "Lebanon", code: "LB" },
+        { name: "Lesotho", code: "LS" },
+        { name: "Liberia", code: "LR" },
+        { name: "Libyan Arab Jamahiriya", code: "LY" },
+        { name: "Liechtenstein", code: "LI" },
+        { name: "Lithuania", code: "LT" },
+        { name: "Luxembourg", code: "LU" },
+        { name: "Macao", code: "MO" },
+        { name: "Macedonia, The Former Yugoslav Republic of", code: "MK" },
+        { name: "Madagascar", code: "MG" },
+        { name: "Malawi", code: "MW" },
+        { name: "Malaysia", code: "MY" },
+        { name: "Maldives", code: "MV" },
+        { name: "Mali", code: "ML" },
+        { name: "Malta", code: "MT" },
+        { name: "Marshall Islands", code: "MH" },
+        { name: "Martinique", code: "MQ" },
+        { name: "Mauritania", code: "MR" },
+        { name: "Mauritius", code: "MU" },
+        { name: "Mayotte", code: "YT" },
+        { name: "Mexico", code: "MX" },
+        { name: "Micronesia, Federated States of", code: "FM" },
+        { name: "Moldova, Republic of", code: "MD" },
+        { name: "Monaco", code: "MC" },
+        { name: "Mongolia", code: "MN" },
+        { name: "Montserrat", code: "MS" },
+        { name: "Morocco", code: "MA" },
+        { name: "Mozambique", code: "MZ" },
+        { name: "Myanmar", code: "MM" },
+        { name: "Namibia", code: "NA" },
+        { name: "Nauru", code: "NR" },
+        { name: "Nepal", code: "NP" },
+        { name: "Netherlands", code: "NL" },
+        { name: "Netherlands Antilles", code: "AN" },
+        { name: "New Caledonia", code: "NC" },
+        { name: "New Zealand", code: "NZ" },
+        { name: "Nicaragua", code: "NI" },
+        { name: "Niger", code: "NE" },
+        { name: "Nigeria", code: "NG" },
+        { name: "Niue", code: "NU" },
+        { name: "Norfolk Island", code: "NF" },
+        { name: "Northern Mariana Islands", code: "MP" },
+        { name: "Norway", code: "NO" },
+        { name: "Oman", code: "OM" },
+        { name: "Pakistan", code: "PK" },
+        { name: "Palau", code: "PW" },
+        { name: "Palestinian Territory, Occupied", code: "PS" },
+        { name: "Panama", code: "PA" },
+        { name: "Papua New Guinea", code: "PG" },
+        { name: "Paraguay", code: "PY" },
+        { name: "Peru", code: "PE" },
+        { name: "Philippines", code: "PH" },
+        { name: "Pitcairn", code: "PN" },
+        { name: "Poland", code: "PL" },
+        { name: "Portugal", code: "PT" },
+        { name: "Puerto Rico", code: "PR" },
+        { name: "Qatar", code: "QA" },
+        { name: "Reunion", code: "RE" },
+        { name: "Romania", code: "RO" },
+        { name: "Russian Federation", code: "RU" },
+        { name: "RWANDA", code: "RW" },
+        { name: "Saint Helena", code: "SH" },
+        { name: "Saint Kitts and Nevis", code: "KN" },
+        { name: "Saint Lucia", code: "LC" },
+        { name: "Saint Pierre and Miquelon", code: "PM" },
+        { name: "Saint Vincent and the Grenadines", code: "VC" },
+        { name: "Samoa", code: "WS" },
+        { name: "San Marino", code: "SM" },
+        { name: "Sao Tome and Principe", code: "ST" },
+        { name: "Saudi Arabia", code: "SA" },
+        { name: "Senegal", code: "SN" },
+        { name: "Serbia and Montenegro", code: "CS" },
+        { name: "Seychelles", code: "SC" },
+        { name: "Sierra Leone", code: "SL" },
+        { name: "Singapore", code: "SG" },
+        { name: "Slovakia", code: "SK" },
+        { name: "Slovenia", code: "SI" },
+        { name: "Solomon Islands", code: "SB" },
+        { name: "Somalia", code: "SO" },
+        { name: "South Africa", code: "ZA" },
+        { name: "South Georgia and the South Sandwich Islands", code: "GS" },
+        { name: "Spain", code: "ES" },
+        { name: "Sri Lanka", code: "LK" },
+        { name: "Sudan", code: "SD" },
+        { name: "Suriname", code: "SR" },
+        { name: "Svalbard and Jan Mayen", code: "SJ" },
+        { name: "Swaziland", code: "SZ" },
+        { name: "Sweden", code: "SE" },
+        { name: "Switzerland", code: "CH" },
+        { name: "Syrian Arab Republic", code: "SY" },
+        { name: "Taiwan, Province of China", code: "TW" },
+        { name: "Tajikistan", code: "TJ" },
+        { name: "Tanzania, United Republic of", code: "TZ" },
+        { name: "Thailand", code: "TH" },
+        { name: "Timor-Leste", code: "TL" },
+        { name: "Togo", code: "TG" },
+        { name: "Tokelau", code: "TK" },
+        { name: "Tonga", code: "TO" },
+        { name: "Trinidad and Tobago", code: "TT" },
+        { name: "Tunisia", code: "TN" },
+        { name: "Turkey", code: "TR" },
+        { name: "Turkmenistan", code: "TM" },
+        { name: "Turks and Caicos Islands", code: "TC" },
+        { name: "Tuvalu", code: "TV" },
+        { name: "Uganda", code: "UG" },
+        { name: "Ukraine", code: "UA" },
+        { name: "United Arab Emirates", code: "AE" },
+        { name: "United Kingdom", code: "GB" },
+        { name: "United States", code: "US" },
+        { name: "United States Minor Outlying Islands", code: "UM" },
+        { name: "Uruguay", code: "UY" },
+        { name: "Uzbekistan", code: "UZ" },
+        { name: "Vanuatu", code: "VU" },
+        { name: "Venezuela", code: "VE" },
+        { name: "Viet Nam", code: "VN" },
+        { name: "Virgin Islands, British", code: "VG" },
+        { name: "Virgin Islands, U.S.", code: "VI" },
+        { name: "Wallis and Futuna", code: "WF" },
+        { name: "Western Sahara", code: "EH" },
+        { name: "Yemen", code: "YE" },
+        { name: "Zambia", code: "ZM" },
+        { name: "Zimbabwe", code: "ZW" }
+      ]
     };
   },
   methods: {
@@ -347,6 +675,23 @@ export default {
         parent: 1,
         child: [-1]
       });
+    },
+    onSubmit() {
+      axios
+          .post("/users/settings", this.user)
+          .then(response => {
+            this.$swal({ text: "Profile Updated", icon: "success" }).then(() => {
+              router.push({
+                name: "profile"
+              });
+            });
+            this.$store.commit("user/SET_USERDATA", response.data);
+          })
+          .catch(error => {
+            let content = JSON.parse(error.request.response);
+            let finalMessage = content.errors.join("<br>");
+            this.$swal({ text: finalMessage, icon: "error" });
+          });
     },
   },
   mounted() {
@@ -626,8 +971,8 @@ export default {
     z-index: 2;
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
-    padding: 1rem;
     background-color: #fff;
+    padding-top: 1.5rem;
 
     @include smMax {
       border-radius: .5rem;
@@ -636,11 +981,13 @@ export default {
     }
 
     &-item {
-      @include smMax {
-        padding-left: 1rem;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
-      }
+      display: flex;
+      flex-wrap: wrap;
+      //@include smMax {
+      //  padding-left: 1rem;
+      //  padding-right: 1rem;
+      //  padding-bottom: 1rem;
+      //}
     }
 
     &-button {
@@ -671,9 +1018,17 @@ export default {
 
 .icon-block {
   padding-left: 2rem;
+  padding-right: 2rem;
   position: relative;
+  margin: .5rem 2rem 1rem 2rem;
   margin-bottom: 1.5rem;
   box-sizing: border-box;
+  width: calc(100% - 4rem);
+
+
+  &--50 {
+    width: calc(50% - 4rem);
+  }
 
   i.icon-block__icon {
     position: absolute;
@@ -696,10 +1051,6 @@ export default {
       margin-bottom: .5rem;
     }
   }
-}
-
-.tab--about {
-  display: grid; grid-template-columns: repeat(2, 50%); grid-gap: 2rem
 }
 
 .goals {
@@ -740,6 +1091,16 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 50%);
     grid-gap: 1rem;
+
+    &-sub {
+      margin-top: 1rem;
+      padding-left: 1.5rem;
+      list-style: disc;
+
+      li {
+        margin-top: .5rem;
+      }
+    }
   }
 
   &__control {
@@ -797,12 +1158,16 @@ export default {
   input[type="text"],
   input[type="url"],
   input[type="password"],
+  input[type="date"],
+  select,
   span {
     font-size: 16px;
     border: 1px solid #e8e8e8;
-    padding-left: .5rem;
-    padding-right: .5rem;
+    padding: .25rem .5rem;
+    line-height: 1.5;
     box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.15);
+    flex: 1 1 auto;
+    width: 1%;
   }
 
   &__icon {
@@ -849,10 +1214,14 @@ export default {
     input[type="text"],
     input[type="password"],
     input[type="url"],
+    input[type="date"],
+    select,
     span {
       border-top-right-radius: .25rem;
       border-bottom-right-radius: .25rem;
       border-left: 0px;
+      flex: 1 1 auto;
+      width: 1%;
     }
   }
 }
@@ -887,7 +1256,7 @@ export default {
 
 <style>
 .ck-editor__editable_inline {
-  height: 150px;
+  height: 160px;
 }
 
 .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
