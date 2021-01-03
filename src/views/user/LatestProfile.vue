@@ -27,16 +27,9 @@
         <div class="profile__holder-actions">
           <div class="profile__actions">
             <div class="profile__actions-item">
-              <button class="button">
-                <i class="fa fa-plus fa-i-prepend"></i>
-                Follow
-              </button>
-            </div>
-            <div class="profile__actions-item">
-              <button class="button">
-                <i class="fa fa-envelope-o fa-i-prepend"></i>
-                Message
-              </button>
+              <router-link :to="{name: 'account-settings'}" class="button">
+                <i class="fa fa-pencil"></i>edit profile
+              </router-link>
             </div>
             <div class="profile__actions-item">
               <span class="tag">Matches: <strong class="append">50+</strong></span>
@@ -74,57 +67,85 @@
         </button>
         <div class="tabs__content-item"
              v-show="tab === 'about'">
-          <div class="icon-block about" v-if="user.bio">
-            <i class="fa fa-info-circle icon-block__icon"></i>
-            <div class="about__text" v-html="user.bio"></div>
-          </div>
-          <div class="icon-block link" v-if="user.website">
-            <i class="fa fa-link icon-block__icon"></i>
-            <a :href="user.website" target="_blank" style="word-break: break-all">{{ user.website }}</a>
-          </div>
-          <div class="icon-block goals">
-            <i class="fa fa-connectdevelop icon-block__icon"></i>
-            <span>Interests | UN Goals:</span>
-            <goals-list :goals="user.goals.map(item => item.prefix)"/>
-          </div>
-          <div v-if="user.facebook || user.instagram || user.linkedin || user.twitter || user.youtube"
-               class="icon-block share">
-            <i class="fa fa-share-alt icon-block__icon"></i>
-            Social Media:
-            <ul class="social-share">
-              <li class="social-share__item" v-if="user.facebook">
-                <a :href="user.facebook"
-                   class="social-share__link social-share__link--facebook"
-                   target="_blank">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.instagram">
-                <a :href="user.instagram"
-                   class="social-share__link social-share__link--instagram" target="_blank">
-                  <i class="fa fa-instagram"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.linkedin">
-                <a :href="user.linkedin"
-                   class="social-share__link social-share__link--linkedin" target="_blank">
-                  <i class="fa fa-linkedin"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.twitter">
-                <a :href="user.twitter"
-                   class="social-share__link social-share__link--twitter" target="_blank">
-                  <i class="fa fa-twitter"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.youtube">
-                <a :href="user.youtube"
-                   class="social-share__link social-share__link--youtube" target="_blank">
-                  <i class="fa fa-youtube-play"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
+              <h2>About</h2>
+              <div class="icon-block about" v-if="user.bio">
+                <i class="fa fa-info-circle icon-block__icon"></i>
+                <div class="about__text" v-html="user.bio"></div>
+              </div>
+              <div class="icon-block link" v-if="user.website">
+                <i class="fa fa-link icon-block__icon"></i>
+                <a :href="user.website" target="_blank" style="word-break: break-all">{{user.website}}</a>
+              </div>
+              <div class="icon-block goals">
+                <i class="fa fa-connectdevelop icon-block__icon"></i>
+                <span>Interests | UN Goals:</span>
+                <goals-list :goals="user.goals.map(item => item.prefix)"/>
+              </div>
+              <div v-if="user.facebook || user.instagram || user.linkedin || user.twitter || user.youtube"
+                   class="icon-block share">
+                <i class="fa fa-share-alt icon-block__icon"></i>
+                Social Media:
+                <ul class="social-share">
+                  <li class="social-share__item" v-if="user.facebook">
+                    <a :href="user.facebook"
+                       class="social-share__link social-share__link--facebook"
+                       target="_blank">
+                      <i class="fa fa-facebook"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item" v-if="user.instagram">
+                    <a :href="user.instagram"
+                       class="social-share__link social-share__link--instagram" target="_blank">
+                      <i class="fa fa-instagram"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item" v-if="user.linkedin">
+                    <a :href="user.linkedin"
+                       class="social-share__link social-share__link--linkedin" target="_blank">
+                      <i class="fa fa-linkedin"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item" v-if="user.twitter">
+                    <a :href="user.twitter"
+                       class="social-share__link social-share__link--twitter" target="_blank">
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="social-share__item" v-if="user.youtube">
+                    <a :href="user.youtube"
+                       class="social-share__link social-share__link--youtube" target="_blank">
+                      <i class="fa fa-youtube-play"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="icon-block support" v-if="user.supports_offer && user.supports_offer.length > 0">
+                <i class="fa fa-hand-o-right icon-block__icon"></i>
+                Support offered:<br>
+                <ul>
+                  <li v-for="item in user.supports_offer">{{ item }}</li>
+                </ul>
+              </div>
+              <div class="icon-block support">
+                <i class="fa fa-hand-o-right icon-block__icon"></i>
+                Support offered:<br>
+                <ul>
+                  <li><strong>Support cat name</strong>
+                    <ul>
+                      <li>support item</li>
+                      <li>support item</li>
+                      <li>support item</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="icon-block support" v-if="user.supports_need && user.supports_need.length > 0">
+                <i class="fa fa-hand-o-right icon-block__icon"></i>
+                Support needed:<br>
+                <ul>
+                  <li v-for="item in user.supports_need">{{ item }}</li>
+                </ul>
+              </div>
         </div>
         <button class="tabs__content-button"
                 @click="tab = 'projects'"
@@ -211,7 +232,7 @@ export default {
   mounted() {
     //  Move api calls to vuex
     axios
-        .get("/users/" + this.$route.params.slug)
+        .get("/users/settings" )
         .then(response => {
           // TODO: remove consol logs on production
           console.log("User profile", response.data);
