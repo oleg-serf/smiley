@@ -32,12 +32,12 @@
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
           <span v-if="showDescription" class="news-article-category__description">
-            UN Goal 0{{
+            UN Goal {{
               article.goals != null && article.goals.length > 0
-                  ? article.goals[0].prefix
+                  ? article.goals[0].prefix.length > 1 ? article.goals[0].prefix : "0"+article.goals[0].prefix
                   : ""
             }} | <br>
-            Quality Education
+            {{ article.goal_category }}
           </span>
         </transition>
       </div>
@@ -94,6 +94,7 @@ export default {
     },
   },
   data() {
+    console.log(this.article, "News");
     return {
       sharing: false,
       showDescription: false

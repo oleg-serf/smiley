@@ -1,65 +1,67 @@
 <template>
-  <article class="projects-article" :class="[forMobile ? 'for-mobile' : '']">
+  <article class="news-article" :class="[forMobile ? 'for-mobile' : '']">
     <div
-        class="projects-article__image"
+        class="news-article__image"
         @mouseenter="showDescription = true"
         @mouseleave="showDescription = false"
     >
-      <!-- <MediaImage
-          :src="project.cover_image"
-          :alt="project.name"
-          :title="project.name"
-          size="m"
-          type="projects"
-      /> -->
-        <img
-          :src="$settings.images_path.projects +'m_'+project.cover_image"
-          v-if="project.cover_image != null"
-          alt
-        />
-        <template v-else>
-          <img :src="staticImageBySlug(project.slug)">
-        </template>
-      <div class="projects-article-category">
-        <span class="projects-article-category__name" v-if="manualGoal == null">
-          {{
-            project.goals != null && project.goals.length > 0
-                ? project.goals[0].name
-                : ""
-          }}
+      <template>
+        <iframe
+            :src="interview.video"
+            frameborder="0"
+            style="width: 100%; height: 300px; position: absolute; left: 0px; top: 0px; object-fit: cover;"
+        ></iframe>
+      </template>
+
+      <div class="news-article-category">
+        <span class="news-article-category__name" v-if="manualGoal == null">
+          <template v-if="interview.goal != null && interview.goal.name">
+            {{
+              interview.goal != null && interview.goal.name
+                  ? interview.goal.name
+                  : ""
+            }}
+          </template>
+          <template v-else>
+            {{
+              interview.goals != null && interview.goals.length > 0
+                  ? interview.goals[0].name
+                  : ""
+            }}
+          </template>
         </span>
-        <span class="projects-article-category__name" v-else>{{ manualGoal }}</span>
+        <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="projects-article-category__description"
+          <span v-if="showDescription" class="news-article-category__description"
           >UN Goal {{
-              project.goals != null && project.goals.length > 0
-                  ? project.goals[0].prefix.length > 1 ? project.goals[0].prefix : "0"+project.goals[0].prefix
+              interview.goals != null && interview.goals.length > 0
+                  ? interview.goals[0].prefix.length > 1 ? interview.goals[0].prefix : "0"+interview.goals[0].prefix
                   : ""
             }} | <br>
-            {{ project.goal_category }}
+            {{ interview.goal_category }}
           </span
           >
         </transition>
       </div>
     </div>
 
-    <div class="projects-article__content">
-      <h3 class="projects-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
-        {{ cutText(project.name ? project.name : project.title, 60) }}
+    <div class="news-article__content">
+      <h3 class="news-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
+        {{ cutText(interview.title, 60) }}
       </h3>
       <div
-          class="projects-article__content-description"
+          class="news-article__content-description"
           :style="[forMobile ? {'height': 'auto'} : {}]"
-          v-html="cutText(project.description, 60, 'description')"
+          v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 60, 'description')"
       ></div>
-      <div class="projects-article__content-metadata">
-        <span>{{ project.name }}</span> | {{ dateAgo('2020-12-14 13:30:00') }}
+      <div class="news-article__content-metadata">
+        <span>Interview</span> | {{ interview.author }} | {{ dateAgo(interview.published_at) }}
       </div>
     </div>
 
-    <div class="projects-article__readmore">
+    <div class="news-article__readmore">
       <VButton
-          class="projects-article__button"
+          class="news-article__button"
           size="height_45"
           @click.native.prevent="openPage"
           shape="round"
@@ -76,7 +78,7 @@ import MediaImage from "@/components/Image.vue";
 import { VButton } from "@/components/app";
 
 export default {
-  name: "ProjectCardNew",
+  name: "TempInterviewsCard",
   components: {
     MediaImage,
     VButton,
@@ -86,7 +88,11 @@ export default {
       type: Boolean,
       default: false
     },
-    project: {
+    type: {
+      type: String,
+      default: 'news'
+    },
+    interview: {
       type: Object,
     },
     manualGoal: {
@@ -94,7 +100,7 @@ export default {
     },
     buttonText: {
       type: String,
-      default: 'View Project'
+      default: 'Read More'
     }
   },
   data() {
@@ -112,39 +118,7 @@ export default {
   },
   methods: {
     openPage() {
-      router.push({ name: "projects-item", params: { slug: this.project.slug } });
-    },
-    staticImageBySlug(slug) {
-      let result = null;
-
-      switch (slug) {
-        case 'extraordinary-links': {
-          result = '/images/remove-smiling-clubs.jpg';
-          break;
-        }
-        case 'pair-your-devices-tshirt-undyed-natural-fiber-designer-fundraiser-4bees': {
-          result = '/images/remove-mobile-laughter-booth.jpg';
-          break;
-        }
-        case 'routerater': {
-          result = '/images/remove-accelerating-community-driven-leaders.jpg';
-          break;
-        }
-        case 'foodcycle-south-west': {
-          result = '/images/remove-affordable-and-social-housing.jpeg';
-          break;
-        }
-        case 'journey-of-hope': {
-          result = '/images/remove-journey-of-hope.jpg';
-          break;
-        }
-        case 'aimeverhigh-bereavement-support-for-young-people': {
-          result = '/images/remove-aimeverhigh-bereavement-support-for-young-people.jpg';
-          break;
-        }
-      }
-
-      return result;
+      router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
     },
     dateAgo(date) {
       const currentStamp = Date.now();
@@ -192,32 +166,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.projects-article {
+.news-article {
   background-color: white;
   position: relative;
   min-height: 540px;
-  height: 100%;
   color: #fff;
   box-shadow: 0 3px 6px rgba(#000, 0.16);
   &.for-mobile {
     box-shadow: none;
     text-align: left;
-    .projects-article__content {
+    .news-article__content {
       padding-left: 0;
       padding-right: 0;
     }
-    .projects-article__content-description {
+    .news-article__content-description {
       margin-top: 0 !important;
       height: 4rem !important;
     }
-    .projects-article__content-metadata {
+    .news-article__content-metadata {
       height: 2rem !important;
     }
   }
 
-  .projects-article__image {
+  .news-article__image {
     position: relative;
-    height: 230px;
+    height: 300px;
     width: 100%;
 
     img {
@@ -228,7 +201,7 @@ export default {
       object-position: center;
     }
 
-    .projects-article-category {
+    .news-article-category {
       position: absolute;
       bottom: 0;
       right: 0;
@@ -238,10 +211,10 @@ export default {
       font-family: "Gotham Bold";
       padding: 8px 16px;
 
-      .projects-article-category__name {
+      .news-article-category__name {
         color: white;
       }
-      .projects-article-category__description {
+      .news-article-category__description {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
@@ -249,7 +222,7 @@ export default {
     }
   }
 
-  .projects-article__content {
+  .news-article__content {
     min-height: 230px;
     padding: {
       top: 26px;
@@ -258,7 +231,7 @@ export default {
       bottom: 20px;
     }
 
-    .projects-article__content-title {
+    .news-article__content-title {
       min-height: 6rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
@@ -266,7 +239,7 @@ export default {
       line-height: 30px;
     }
 
-    .projects-article__content-description {
+    .news-article__content-description {
       height: 6rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
@@ -275,7 +248,7 @@ export default {
       margin-top: 1rem;
     }
 
-    .projects-article__content-metadata {
+    .news-article__content-metadata {
       height: 3.5rem;
       color: black;
       font-family: "Gotham Medium";
@@ -288,7 +261,7 @@ export default {
     }
   }
 
-  .projects-article__readmore {
+  .news-article__readmore {
     display: flex;
     justify-content: center;
     margin: 0 auto;

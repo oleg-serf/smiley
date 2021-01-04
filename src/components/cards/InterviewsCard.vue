@@ -32,12 +32,12 @@
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
           <span v-if="showDescription" class="news-article-category__description"
-          >UN Goal 0{{
-              interview.goal != null && interview.goal
-                  ? interview.goal.prefix
+          >UN Goal {{
+              interview.goals != null && interview.goals.length > 0
+                  ? interview.goals[0].prefix.length > 1 ? interview.goals[0].prefix : "0"+interview.goals[0].prefix
                   : ""
             }} | <br>
-            Quality Education
+            {{ interview.goal_category }}
           </span
           >
         </transition>
