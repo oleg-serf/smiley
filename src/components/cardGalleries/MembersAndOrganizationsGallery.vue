@@ -85,7 +85,7 @@ export default {
         slidesPerView: 1,
         slidesPerGroup: 1,
         spaceBetween: 25,
-        loop: true,
+        // loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
           nextEl: "",
