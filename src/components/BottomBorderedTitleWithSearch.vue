@@ -1,7 +1,7 @@
 <template>
   <div 
-  class="title-with-search"
-  :class="[borderTop ? 'borderTop' : '']"
+    class="title-with-search"
+    :class="[borderTop ? 'borderTop' : '']"
   >
     <h3
       :style="styleObject"

@@ -3,16 +3,16 @@
     <div class="container">
       <goals-banner
           :color="goal.colour"
-          :background="$settings.images_path.goals + 's_' + goal.image"
+          :background="getImage()"
           :name-length="goal.name ? goal.name.length : 20"
       >
         <!-- <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 107px"/>
         </template>-->
 
-        <!-- <template v-slot:prefix>
+        <template v-slot:prefix>
             {{ goal.prefix }}
-        </template> -->
+        </template>
         <template v-slot:name >
             {{ goal.name }}
         </template>
@@ -201,21 +201,6 @@
         ></BottomBorderedTitleWithSearch>
       </section>
       <section class="section" v-if="events.length > 0" id="section-interviews">
-        <!--        <h2 class="section__title">Events</h2>-->
-        <!--        <swiper
-                    ref="eventsSwiper"
-                    :options="swiperOptions"
-                    :auto-update="true"
-                    :auto-destroy="true"
-                    :delete-instance-on-destroy="true"
-                    :cleanup-styles-on-destroy="true"
-                    v-if="is_mobile"
-                >
-                  <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
-                    <event-card :event="event"/>
-                  </swiper-slide>
-                  <div class="swiper-pagination" slot="pagination"></div>
-                </swiper>-->
         <div class="grid grid--events">
           <template>
             <interviews-card
@@ -226,19 +211,6 @@
             />
           </template>
         </div>
-        <!--        <div class="smiley-pagination" v-if="eventsPagination > 1">
-                  <paginate
-                      :page-count="eventsPagination"
-                      :click-handler="paginateEvents"
-                      :prev-text="'Prev'"
-                      :next-text="'Next'"
-                      :prev-class="'smiley-pagination-back'"
-                      :next-class="'smiley-pagination-next'"
-                      :container-class="'app-pagination'"
-                  >
-                    <span slot="breakViewContent">...</span>
-                  </paginate>
-                </div>-->
       </section>
 
       <!--   PROJECTS   -->
@@ -251,7 +223,6 @@
         ></BottomBorderedTitleWithSearch>
       </section>
       <section class="section" v-if="events.length > 0" id="section-projects">
-        <!--        <h2 class="section__title">Events</h2>-->
         <swiper
             ref="projectsSwiper"
             :options="swiperOptions"
@@ -287,44 +258,6 @@
           </paginate>
         </div>
       </section>
-      <!--      <section class="section" v-if="projects.length > 0" id="section-projects">
-              <h2 class="section__title">Projects</h2>
-              <swiper
-                  ref="projectsSwiper"
-                  :options="swiperOptions"
-                  :auto-update="true"
-                  :auto-destroy="true"
-                  :delete-instance-on-destroy="true"
-                  :cleanup-styles-on-destroy="true"
-                  v-if="is_mobile"
-              >
-                <swiper-slide v-for="project in projects" :key="'project-swiper-'+project.slug">
-                  <project-card :project="project"/>
-                </swiper-slide>
-                <div class="swiper-pagination" slot="pagination"></div>
-              </swiper>
-              <div class="grid grid&#45;&#45;projects" v-else>
-                <project-card
-                    v-for="project in projects"
-                    :key="'project-'+project.slug"
-                    :project="project"
-                />
-              </div>
-
-              <div class="smiley-pagination" v-if="projectsPagination > 1">
-                <paginate
-                    :page-count="projectsPagination"
-                    :click-handler="paginateProjects"
-                    :prev-text="'Prev'"
-                    :next-text="'Next'"
-                    :prev-class="'smiley-pagination-back'"
-                    :next-class="'smiley-pagination-next'"
-                    :container-class="'app-pagination'"
-                >
-                  <span slot="breakViewContent">...</span>
-                </paginate>
-              </div>
-            </section>-->
     </div>
     <Subscribe/>
   </div>
@@ -426,6 +359,10 @@ export default {
     };
   },
   methods: {
+    getImage() {
+      const prefix = this.goal.prefix.length > 1 ? this.goal.prefix : '0' + this.goal.prefix;
+      return `/img/goals/UN_${prefix}.svg`
+    },
     goalOrganisationLink(organisation) {
       return {
         name: organisation.admin_created ? 'organisation-by-smiley' : 'organisation',

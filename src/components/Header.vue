@@ -146,17 +146,24 @@
           <div class="header__column header__column--logo">
             <router-link
                 v-if="$route.path === '/smiley-network'"
-                :to="{name: 'network'}"
+                :to="{name: 'home'}"
                 class="home-link"
             >
-              <img src="/images/main/smiley-network-logo392@2x.png" alt="Smiley Movement"/>
+              <img src="/images/main/network-desktop-logo.svg" alt="Smiley Movement"/>
+            </router-link>
+            <router-link
+                v-else-if="$route.path.search('/smiley-talks/') > -1"
+                :to="{name: 'talks'}"
+                class="home-link"
+            >
+              <img src="/images/main/talks-desktop-logo.svg" alt="Smiley Movement"/>
             </router-link>
             <router-link
                 v-else
                 :to="{name: 'home'}"
                 class="home-link"
             >
-              <img src="/images/main/smiley-news-logo.svg" alt="Smiley Movement"/>
+              <img src="/images/main/news-desktop-logo.svg" alt="Smiley Movement"/>
             </router-link>
           </div>
           <div class="header__column header__column--socials">

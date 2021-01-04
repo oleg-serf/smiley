@@ -4,10 +4,11 @@ import NewsGallery from "@/components/news/NewsGallery";
 import VButton from "@/components/app/VButton";
 import EventsGallery from "@/components/events/EventsGallery";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+import VideoInterviewsGallery from "@/components/interviews/VideoInterviewsGallery";
 import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 
 export default {
-  components: {ProjectsGallery, InterviewsGallery, EventsGallery, VButton, NewsGallery, BottomBorderedTitleWithSearch}
+  components: {ProjectsGallery, InterviewsGallery, VideoInterviewsGallery, EventsGallery, VButton, NewsGallery, BottomBorderedTitleWithSearch}
 }
 </script>
 <template>
@@ -27,7 +28,7 @@ export default {
       <!--  FEATURED NEWS SECTION  -->
       <section class="news-section" v-if="newsList.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Featured News</b> | Editors pick'"
+            :title="'<b>Featured News</b> | Editors Picks'"
             :with-search="true"
             :search-expandable="true"
             hover-effect
@@ -90,7 +91,7 @@ export default {
       </section>
 
       <!--  INTERVIEWS SECTION  -->
-      <section class="news-section" v-if="interviewList.length > 0">
+      <!-- <section class="news-section" v-if="interviewList.length > 0">
         <bottom-bordered-title-with-search
             :title="'<b>Featured Interviews</b>'"
             :with-search="true"
@@ -120,12 +121,41 @@ export default {
           </router-link
           >
         </VButton>
+      </section> -->
+
+      <!--  TEMPORARY INTERVIEWS SECTION  -->
+      <section class="news-section" v-if="interviewList.length > 0">
+        <bottom-bordered-title-with-search
+            :title="'<b>Featured Interviews</b>'"
+            :with-search="false"
+            hover-effect
+            hover-color="#FFE300"
+        ></bottom-bordered-title-with-search>
+        <video-interviews-gallery
+            :interviews="interviewList"
+            :prev-button-left="-80"
+            :next-button-right="-80"
+            button-text="More"
+        ></video-interviews-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: '#' }"
+          >
+            More Interviews
+          </router-link>
+        </VButton>
       </section>
 
       <!--  NETWORK SECTION  -->
       <section class="news-section" v-if="projects.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Smiley Movement Network |</b> Latest Projects & Campaigns'"
+            :title="'<b>Smiley Network |</b> Matchmaker for Good'"
             :with-search="true"
             :search-expandable="true"
             hover-effect
@@ -219,6 +249,7 @@ import Footer from "@/components/Footer.vue";
 // Page components
 import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+import VideoInterviewsGallery from "@/components/interviews/VideoInterviewsGallery";
 import EventsGallery from "@/components/events/EventsGallery";
 import NewsGallery from "@/components/news/NewsGallery";
 import Hero from "@/components/homepage/Hero.vue";
@@ -236,6 +267,7 @@ export default {
   components: {
     ProjectsGallery,
     InterviewsGallery,
+    VideoInterviewsGallery,
     EventsGallery,
     VButton,
     NewsGallery,
@@ -348,8 +380,34 @@ export default {
           this.news = res.data.latest_news;
           this.newsList = res.data.featured;
           this.eventList = res.data.latest_events;
-          this.interviewList = res.data.latest_interviews;
+          // this.interviewList = res.data.latest_interviews;
           this.projects = res.data.latest_network;
+
+          // for temporary start
+          this.interviewList = [
+            {
+              name: "Claire Linacre",
+              video: "https://player.vimeo.com/video/481275029?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+              title: "Donor & Data Manager | Akt | LGBT Event | November 2020",
+              description: "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
+              slug: "Beyond Pride"
+            },
+            {
+              name: "Josh Littlejohn",
+              video: "https://player.vimeo.com/video/484519685?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+              title: "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
+              description: "Surely we can do better than this",
+              slug: "Ending Homelessness & Building resilient Communities"
+            },
+            {
+              name: "Georgia Dodsworth",
+              video: "https://player.vimeo.com/video/370887819?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+              title: "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
+              description: "We are not alone",
+              slug: "LTAMH"
+            },
+          ];
+          // for temporary end
 
           this.banners.news = res.data.page_sections.smiley_news[0];
           // this.banners.network = res.data.page_sections.smiley_network[0];

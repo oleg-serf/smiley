@@ -4,7 +4,7 @@
       <p class="footer__trademark">Powered by Smiley Movement. A philanthropic venture sponsored by Smiley.</p>
       <div class="footer__logos-holder">
         <router-link :to="{name: 'home'}" class="footer__link">
-          <img src="/images/main/logo-smiley-1.svg"/>
+          <img src="/images/main/footer-logo.svg"/>
         </router-link>
         <router-link :to="{name: 'home'}" class="footer__link">
           <img src="/images/main/logo-smiley-2.svg"/>

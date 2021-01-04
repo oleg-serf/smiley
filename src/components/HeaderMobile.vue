@@ -6,13 +6,20 @@
           <div class="header__column header__column--logo">
             <router-link
               v-if="$route.path === '/smiley-network'"
-              :to="{ name: 'network' }"
+              :to="{ name: 'home' }"
               class="home-link"
             >
-              <img src="/img/our-story/news485@3x.png" alt="Smiley Movement" />
+              <img src="/images/main/network-mobile-logo.svg" alt="Smiley Movement"/>
+            </router-link>
+            <router-link
+                v-else-if="$route.path.search('/smiley-talks/') > -1"
+                :to="{name: 'talks'}"
+                class="home-link"
+            >
+              <img src="/images/main/talks-mobile-logo.svg" alt="Smiley Movement"/>
             </router-link>
             <router-link v-else :to="{ name: 'home' }" class="home-link">
-              <img src="/img/our-story/news485@3x.png" alt="Smiley Movement" />
+              <img src="/images/main/news-mobile-logo.svg" alt="Smiley Movement"/>
             </router-link>
           </div>
 

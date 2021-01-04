@@ -28,7 +28,7 @@
                   ? project.goals[0].prefix
                   : ""
             }} | <br>
-            Quality Education
+            {{ project.goal_category }}
           </span
           >
         </transition>

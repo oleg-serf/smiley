@@ -25,12 +25,12 @@
         <span class="event-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
           <span v-if="showDescription" class="event-category__description"
-            >UN Goal 0{{
+            >UN Goal {{
               event.goals != null && event.goals.length > 0
-                  ? event.goals[0].prefix
+                  ? event.goals[0].prefix.length > 1 ? event.goals[0].prefix : "0"+event.goals[0].prefix
                   : ""
             }} | <br>
-            Quality Education</span
+            {{ event.goal_category }}</span
           >
         </transition>
       </div>
@@ -40,7 +40,7 @@
       <h3 class="event__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
         {{ cutText(event.title, 60) }}
       </h3>
-      <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, 60, 'description')">
+      <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, 100, 'description')">
       </div>
       <div class="event__content-metadata">
         <span>{{ event.location }}</span> |
