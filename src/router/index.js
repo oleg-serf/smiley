@@ -79,8 +79,9 @@ const routes = [{
   },
   {
     path: '/member/profile',
+    // path: '/member/profile',
     name: 'profile',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/index.vue'),
+    component: () => import( /* webpackChunkName: "user" */ '../views/user/LatestProfile.vue'),
     meta: {
       title: 'My Profile',
       requiresAuth: true,

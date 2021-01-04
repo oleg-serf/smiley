@@ -14,7 +14,7 @@
               class="article-header__image"
           />
           <div class="article-header__metadata">
-            News | {{ post.published_at }} | {{ comments.length }} Comments
+            Interview | {{ post.published_at }} | {{ comments.length }} Comments
           </div>
           <div class="article-header__sharing">
             <div class="article-header__sharing-goals">
@@ -92,16 +92,12 @@ import router from "@/router";
 import NewsGallery from "@/components/news/NewsGallery.vue";
 import {VSearch} from "@/components/app";
 import CommentsSection from "@/components/CommentsSection";
-// import CommentCard from "@/components/cards/CommentCard";
-// import CommentForm from "@/components/forms/CommentForm";
 
 export default {
   components: {
     CommentsSection,
     NewsGallery,
-    VSearch,
-    // CommentCard,
-    // CommentForm,
+    VSearch
   },
   data() {
     return {
@@ -158,13 +154,12 @@ export default {
   },
   mounted() {
     axios
-        .get("/news/" + this.$route.params.slug)
+        .get("/interviews/" + this.$route.params.slug)
         .then((res) => {
-          console.log("News item loaded", res);
-
           this.post = res.data.post;
           this.related_posts = res.data.related;
-
+          this.comments = res.data.comments;
+          
           const metaPayload = {
             meta: res.data.meta,
             title: res.data.post.title,
@@ -173,13 +168,13 @@ export default {
           this.$router.currentRoute.meta.title = this.post.title;
         })
         .catch((error) => console.log(error));
-    axios
-        .get("/news/" + this.$route.params.slug + "/comments")
-        .then((res) => {
-          console.log("Comments loaded", res);
-          this.comments = res.data.comments;
-        })
-        .catch((error) => console.log(error));
+    // axios
+    //     .get("/interviews/" + this.$route.params.slug + "/comments")
+    //     .then((res) => {
+    //       console.log("Comments loaded", res);
+    //       this.comments = res.data.comments;
+    //     })
+    //     .catch((error) => console.log(error));
 
     axios
         .get("/goals")
@@ -197,7 +192,7 @@ export default {
   margin-bottom: 8rem;
 }
 .article {
-  margin-top: 24px;
+  margin-top: 100px;
 }
 
 .article-header {
@@ -236,7 +231,6 @@ export default {
 
     .article-header__sharing-goals {
       display: flex;
-      align-items: flex-end;
 
       font: {
         family: "Gotham Medium";
@@ -265,7 +259,6 @@ export default {
 
       display: flex;
       margin-left: 50px;
-      align-items: flex-end;
 
       ul {
         display: flex;
