@@ -1,0 +1,103 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('fontello.eot?93841074');
+  src: url('fontello.eot?93841074#iefix') format('embedded-opentype'),
+       url('fontello.woff2?93841074') format('woff2'),
+       url('fontello.woff?93841074') format('woff'),
+       url('fontello.ttf?93841074') format('truetype'),
+       url('fontello.svg?93841074#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?93841074#fontello') format('svg');
+  }
+}
+*/
+
+ [class^="icon-fo-"]:before, [class*=" icon-fo-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: never;
+  font-size: 1rem;
+
+  text-decoration: inherit;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-fo-un_1:before { content: '\e800'; } /* '' */
+.icon-fo-un_2:before { content: '\e801'; } /* '' */
+.icon-fo-un_3:before { content: '\e802'; } /* '' */
+.icon-fo-un_4:before { content: '\e803'; } /* '' */
+.icon-fo-un_5:before { content: '\e804'; } /* '' */
+.icon-fo-un_7:before { content: '\e805'; } /* '' */
+.icon-fo-un_6:before { content: '\e806'; } /* '' */
+.icon-fo-un_8:before { content: '\e807'; } /* '' */
+.icon-fo-un_9:before { content: '\e808'; } /* '' */
+.icon-fo-un_10:before { content: '\e809'; } /* '' */
+.icon-fo-un_11:before { content: '\e80a'; } /* '' */
+.icon-fo-un_12:before { content: '\e80b'; } /* '' */
+.icon-fo-un_13:before { content: '\e80c'; } /* '' */
+.icon-fo-un_14:before { content: '\e80d'; } /* '' */
+.icon-fo-un_15:before { content: '\e80e'; } /* '' */
+.icon-fo-un_16:before { content: '\e80f'; } /* '' */
+.icon-fo-un_17:before { content: '\e810'; } /* '' */
+
+.icon-goal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+}
+
+/* Fixed font sizes */
+.icon-fo-un_1:before {font-size: .65rem}
+.icon-fo-un_12:before {font-size: .8rem}
+.icon-fo-un_13:before {font-size: .8rem}
+
+/* Background colors */
+
+.icon-fo-un_1 {background-color: #E5233B}
+.icon-fo-un_2 {background-color: #DDA83A}
+.icon-fo-un_3 {background-color: #4C9E38}
+.icon-fo-un_4 {background-color: #C51A2D}
+.icon-fo-un_5 {background-color: #FF3A20}
+.icon-fo-un_6 {background-color: #25BDE2}
+.icon-fo-un_7 {background-color: #FBC30C}
+.icon-fo-un_8 {background-color: #A21A43}
+.icon-fo-un_9 {background-color: #FD6824}
+.icon-fo-un_10 {background-color: #DD1367}
+.icon-fo-un_11 {background-color: #FD9D24}
+.icon-fo-un_12 {background-color: #C08B2F}
+.icon-fo-un_13 {background-color: #448649}
+.icon-fo-un_14 {background-color: #0A97D9}
+.icon-fo-un_15 {background-color: #56C02A}
+.icon-fo-un_16 {background-color: #00689E}
+.icon-fo-un_17 {background-color: #1A486A}
