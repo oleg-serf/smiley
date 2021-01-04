@@ -21,7 +21,7 @@
                   frameborder="0"
                   allow="fullscreen"
                   allowfullscreen
-                  src="https://player.vimeo.com/video/494083042"
+                  src="https://player.vimeo.com/video/489591052"
               >
               </iframe>
             </SwiperSlide>
@@ -517,7 +517,7 @@ export default {
   position: absolute;
   cursor: pointer;
   z-index: 5;
-  top: 400px;
+  top: 200px;
 }
 
 .news-gallery-button-prev {

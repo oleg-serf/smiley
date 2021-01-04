@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Network banner -->
-    <div class="container">
+    <!-- <div class="container">
       <banner color="#4696D2" link="/create/project">
         <template v-slot:name>Network</template>
         <template v-slot:subname>projects</template>
@@ -11,7 +11,7 @@
           v-slot:content
         >Our objective is to facilitate connections, mobilise funds, resources and ideas to help your projects go further, faster.</template>
       </banner>
-    </div>
+    </div> -->
 
     <div class="textual-banner textual-banner--contained">
       <div class="container">

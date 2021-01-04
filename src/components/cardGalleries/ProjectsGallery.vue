@@ -2,7 +2,7 @@
   <div class="projects-gallery__container" :class="[forMobile ? 'for-mobile' : '']">
     <template v-if="withSlider">
       <ButtonArrow
-      v-if="!forMobile"
+          v-if="!forMobile"
           :id="'news-gallery-button-prev-' + id"
           :style="[prevButtonLeft ? {left: prevButtonLeft} : '']"
           class="news-gallery-button news-gallery-button-prev"
@@ -10,14 +10,14 @@
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="project in projects" :key="project.slug">
           <ProjectCardNew
-          :for-mobile="forMobile"
+              :for-mobile="forMobile"
               class="news-gallery__card"
               :button-text="buttonText"
               :project="project"/>
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
-      v-if="!forMobile"
+          v-if="!forMobile"
           :id="'news-gallery-button-next-' + id"
           :style="[nextButtonRight !== 0 ? {right: nextButtonRight} : '']"
           class="news-gallery-button news-gallery-button-next"
@@ -26,7 +26,7 @@
     <section v-else class="section" id="section-news" :class="[forMobile ? 'for-mobile' : '']">
       <div class="grid grid--news">
         <ProjectCardNew
-        :for-mobile="forMobile"
+            :for-mobile="forMobile"
             class="news-gallery__card"
             v-for="project in projects"
             :key="'project-'+project.slug"
@@ -81,7 +81,6 @@ export default {
         slidesPerView: 1,
         slidesPerGroup: 1,
         spaceBetween: 10,
-        loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
           nextEl: "",
