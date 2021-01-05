@@ -37,7 +37,7 @@ export default {
       <!--  FEATURED NEWS SECTION  -->
       <section class="news-section" v-if="newsList.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Featured News</b> | Editors Picks'"
+            :title="'<b>Editors Picks</b>'"
             :with-search="true"
             :search-expandable="true"
             hover-effect

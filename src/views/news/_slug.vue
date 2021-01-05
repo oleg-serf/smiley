@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="news-section">
     <article class="article container">
       <div class="article-content">
         <div class="article-header">
@@ -33,13 +33,13 @@
                 </li>
                 <li>
                   <a :href="shareLink('instagram')" target="_blank">
-                    <img src="/img/social/insta.svg" alt="instagram"
-                    /></a>
+                    <img src="/img/social/insta.svg" alt="instagram"/>
+                  </a>
                 </li>
                 <li>
                   <a :href="shareLink('facebook')" target="_blank">
-                    <img src="/img/social/fb.svg" alt="facebook"
-                    /></a>
+                    <img src="/img/social/fb.svg" alt="facebook"/>
+                  </a>
                 </li>
                 <!-- <li>
                   <a :href="shareLink('youtube')" target="_blank">
@@ -292,6 +292,7 @@ export default {
     size: 25px;
   }
   line-height: 27px;
+  margin-top: 30px;
 }
 
 .article-author {
