@@ -6,13 +6,21 @@
           <div class="article-header__title">
             <h1>{{ post.title }}</h1>
           </div>
-          <img
-              :src="$settings.images_path.news + 'l_' + post.cover_image"
-              :alt="post.title"
-              :title="post.title"
-              v-if="post.cover_image != null"
-              class="article-header__image"
-          />
+          <template>
+            <iframe
+                v-if="post.type === 'video'"
+                style = "width: 100%; height: 75vh"
+                frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+                :src="'https://player.vimeo.com/video/'+post.video_id+'?title=0&amp;byline=0&amp;portrait=0&sidedock=0'"
+            ></iframe>
+            <img
+                v-else-if="post.cover_image != null"
+                :src="$settings.images_path.news + 'l_' + post.cover_image"
+                :alt="post.title"
+                :title="post.title"
+                class="article-header__image"
+            />
+          </template>
           <div class="article-header__metadata">
             News | {{ post.published_at }} | {{ comments.length }} Comments
           </div>
@@ -163,6 +171,15 @@ export default {
           console.log("News item loaded", res);
 
           this.post = res.data.post;
+          
+          if(this.$route.params.slug === "the-need-for-good-news"){
+            this.post.type = "video";
+            this.post.video_id = "493570803";
+          }
+          else {
+            this.post.type = "image";
+          }
+
           this.related_posts = res.data.related;
 
           const metaPayload = {
