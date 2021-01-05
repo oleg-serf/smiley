@@ -13,21 +13,8 @@
         type="news"
       />
       <div class="news-article-category">
-        <span class="news-article-category__name" v-if="manualGoal == null">
-          <template v-if="article.goal != null && article.goal.name">
-            {{
-              article.goal != null && article.goal.name
-                  ? article.goal.name
-                  : ""
-            }}
-          </template>
-          <template v-else>
-            {{
-              article.goals != null && article.goals.length > 0
-                  ? article.goals[0].name
-                  : ""
-            }}
-          </template>
+        <span class="news-article-category__name" v-if="manualGoal == null">          
+          {{ article.goal_category }}
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
@@ -37,7 +24,20 @@
                   ? article.goals[0].prefix.length > 1 ? article.goals[0].prefix : "0"+article.goals[0].prefix
                   : ""
             }} | <br>
-            {{ article.goal_category }}
+            <template v-if="article.goal != null && article.goal.name">
+              {{
+                article.goal != null && article.goal.name
+                    ? article.goal.name
+                    : ""
+              }}
+            </template>
+            <template v-else>
+              {{
+                article.goals != null && article.goals.length > 0
+                    ? article.goals[0].name
+                    : ""
+              }}
+            </template>
           </span>
         </transition>
       </div>
@@ -215,6 +215,7 @@ export default {
 
   .news-article__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;

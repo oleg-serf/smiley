@@ -16,11 +16,7 @@
         class="event-category"
       >
         <span class="event-category__name" v-if="manualGoal == null">
-          {{
-            event.goals != null && event.goals.length > 0
-              ? event.goals[0].name
-              : ""
-          }}
+          {{ event.goal_category }}
         </span>
         <span class="event-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
@@ -29,9 +25,13 @@
               event.goals != null && event.goals.length > 0
                   ? event.goals[0].prefix.length > 1 ? event.goals[0].prefix : "0"+event.goals[0].prefix
                   : ""
-            }} | <br>
-            {{ event.goal_category }}</span
-          >
+            }} | <br>            
+            {{
+              event.goals != null && event.goals.length > 0
+                ? event.goals[0].name
+                : ""
+            }}
+          </span>
         </transition>
       </div>
     </div>
@@ -259,6 +259,7 @@ export default {
 
   .event__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;

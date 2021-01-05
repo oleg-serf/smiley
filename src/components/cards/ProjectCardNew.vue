@@ -22,23 +22,22 @@
         </template>
       <div class="projects-article-category">
         <span class="projects-article-category__name" v-if="manualGoal == null">
-          {{
-            project.goals != null && project.goals.length > 0
-                ? project.goals[0].name
-                : ""
-          }}
+          {{ project.goal_category }}
         </span>
         <span class="projects-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="projects-article-category__description"
-          >UN Goal {{
+          <span v-if="showDescription" class="projects-article-category__description">
+            UN Goal {{
               project.goals != null && project.goals.length > 0
                   ? project.goals[0].prefix.length > 1 ? project.goals[0].prefix : "0"+project.goals[0].prefix
                   : ""
-            }} | <br>
-            {{ project.goal_category }}
-          </span
-          >
+            }} | <br>            
+            {{
+              project.goals != null && project.goals.length > 0
+                  ? project.goals[0].name
+                  : ""
+            }}
+          </span>
         </transition>
       </div>
     </div>
@@ -251,6 +250,7 @@ export default {
 
   .projects-article__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;

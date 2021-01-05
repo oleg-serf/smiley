@@ -224,6 +224,7 @@ export default {
 
   .news-article__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;

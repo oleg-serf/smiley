@@ -95,12 +95,12 @@ export default {
           900: {
             slidesPerView: 2,
             slidesPerGroup: 2,
-            spaceBetween: 10,
+            spaceBetween: 20,
           },
           1300: {
             slidesPerView: this.slidesPerView,
             slidesPerGroup: this.slidesPerView,
-            spaceBetween: 25,
+            spaceBetween: 40,
           },
         },
       },

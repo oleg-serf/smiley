@@ -14,32 +14,31 @@
       />
       <div class="news-article-category">
         <span class="news-article-category__name" v-if="manualGoal == null">
-          <template v-if="interview.goal != null && interview.goal.name">
-            {{
-              interview.goal != null && interview.goal.name
-                  ? interview.goal.name
-                  : ""
-            }}
-          </template>
-          <template v-else>
-            {{
-              interview.goals != null && interview.goals.length > 0
-                  ? interview.goals[0].name
-                  : ""
-            }}
-          </template>
+            {{ interview.goal_category }}
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
-          <span v-if="showDescription" class="news-article-category__description"
-          >UN Goal {{
+          <span v-if="showDescription" class="news-article-category__description">
+            UN Goal {{
               interview.goals != null && interview.goals.length > 0
                   ? interview.goals[0].prefix.length > 1 ? interview.goals[0].prefix : "0"+interview.goals[0].prefix
                   : ""
             }} | <br>
-            {{ interview.goal_category }}
-          </span
-          >
+            <template v-if="interview.goal != null && interview.goal.name">
+              {{
+                interview.goal != null && interview.goal.name
+                    ? interview.goal.name
+                    : ""
+              }}
+            </template>
+            <template v-else>
+              {{
+                interview.goals != null && interview.goals.length > 0
+                    ? interview.goals[0].name
+                    : ""
+              }}
+            </template>
+          </span>
         </transition>
       </div>
     </div>
@@ -223,6 +222,7 @@ export default {
 
   .news-article__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;

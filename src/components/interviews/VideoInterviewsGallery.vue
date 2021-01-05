@@ -105,12 +105,12 @@ export default {
           900: {
             slidesPerView: 2,
             slidesPerGroup: 2,
-            spaceBetween: 10,
+            spaceBetween: 20,
           },
           1300: {
             slidesPerView: 3,
             slidesPerGroup: 3,
-            spaceBetween: 25,
+            spaceBetween: 40,
           },
         },
       },
@@ -139,15 +139,17 @@ export default {
 .grid {
   &--interview {
     display: grid;
-    grid-gap: 1.5rem;
+    grid-gap: 40px;
     grid-template-columns: repeat(3, 1fr);
 
     @include lgMax {
       grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
     }
 
     @include mdMax {
       grid-template-columns: repeat(1, 1fr);
+      grid-gap: 1.5rem;
     }
   }
 }
