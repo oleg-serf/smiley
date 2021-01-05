@@ -51,11 +51,14 @@ export default {
   },
   methods: {
     subscribe() {
+      const name_array = name.split(' ');
+      const user_data = {
+        first_name: name_array.shift(),
+        last_name: name_array.join(' '),
+        email: this.email,
+      };
       axios
-          .post("/subscribe/", {
-            email: this.email,
-            first_name: this.name
-          })
+          .post("/subscribe/", user_data)
           .then(response => {
             console.log("Subscribed", response.data);
           //  Upon success
