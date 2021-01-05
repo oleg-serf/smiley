@@ -805,6 +805,7 @@ header {
       button {
         @include font-size(1.5rem);
         margin-right: 1rem;
+        margin-left: 0.5rem;
       }
 
       .text-link {

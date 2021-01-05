@@ -55,7 +55,7 @@
           v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 60, 'description')"
       ></div>
       <div class="news-article__content-metadata">
-        <span>Interview</span> | {{ interview.author }} | {{ dateAgo(interview.published_at) }}
+        <span>Interview</span> | {{ dateAgo(interview.published_at) }}
       </div>
     </div>
 
@@ -224,6 +224,7 @@ export default {
 
   .news-article__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;
@@ -232,7 +233,7 @@ export default {
     }
 
     .news-article__content-title {
-      min-height: 6rem;
+      min-height: 5rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -240,7 +241,7 @@ export default {
     }
 
     .news-article__content-description {
-      height: 6rem;
+      height: 5rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -249,7 +250,7 @@ export default {
     }
 
     .news-article__content-metadata {
-      height: 3.5rem;
+      height: 3rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

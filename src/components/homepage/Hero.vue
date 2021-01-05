@@ -78,9 +78,9 @@ export default {
   position: relative;
 }
 
-.hero__vimeo {
+// .hero__vimeo {
 
-}
+// }
 
 iframe.hero__overlay--vimeo {
   width: 100vw;

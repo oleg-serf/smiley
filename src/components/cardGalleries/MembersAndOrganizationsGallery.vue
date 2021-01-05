@@ -95,10 +95,12 @@ export default {
           900: {
             slidesPerView: 2,
             slidesPerGroup: 2,
+            spaceBetween: 20,
           },
           1200: {
             slidesPerView: 3,
             slidesPerGroup: 3,
+            spaceBetween: 40,
           },
         },
       },

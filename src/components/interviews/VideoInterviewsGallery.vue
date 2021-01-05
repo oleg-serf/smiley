@@ -3,15 +3,15 @@
     <template v-if="withSlider">
       <ButtonArrow
         v-if="!forMobile"
-        :id="'news-gallery-button-prev-' + id"
+        :id="'interview-gallery-button-prev-' + id"
         :style="{ left: prevButtonLeft }"
-        class="news-gallery-button news-gallery-button-prev"
+        class="interview-gallery-button interview-gallery-button-prev"
       />
-      <Swiper class="news-gallery" :key="key" :options="options">
+      <Swiper class="interview-gallery" :key="key" :options="options">
         <SwiperSlide v-for="article in interviews" :key="article.slug">
           <TempInterviewsCard
             :for-mobile="forMobile"
-            class="news-gallery__card"
+            class="interview-gallery__card"
             :type="imageType"
             :button-text="buttonText"
             :interview="article"
@@ -20,21 +20,21 @@
       </Swiper>
       <ButtonArrow
         v-if="!forMobile"
-        :id="'news-gallery-button-next-' + id"
+        :id="'interview-gallery-button-next-' + id"
         :style="{ right: nextButtonRight }"
-        class="news-gallery-button news-gallery-button-next"
+        class="interview-gallery-button interview-gallery-button-next"
       />
     </template>
     <section
       class="section"
       v-else
-      id="section-news"
+      id="section-interview"
       :class="[forMobile ? 'for-mobile' : '']"
     >
-      <div class="grid grid--news">
+      <div class="grid grid--interview">
         <TempInterviewsCard
           :for-mobile="forMobile"
-          class="news-gallery__card"
+          class="interview-gallery__card"
           v-for="interview in interviews"
           :key="'interview-' + interview.slug"
           :type="imageType"
@@ -68,7 +68,7 @@ export default {
     },
     imageType: {
       type: String,
-      default: "news",
+      default: "interview",
     },
     interviews: {
       type: Array,
@@ -105,12 +105,12 @@ export default {
           900: {
             slidesPerView: 2,
             slidesPerGroup: 2,
-            spaceBetween: 10,
+            spaceBetween: 20,
           },
           1300: {
             slidesPerView: 3,
             slidesPerGroup: 3,
-            spaceBetween: 25,
+            spaceBetween: 40,
           },
         },
       },
@@ -119,8 +119,8 @@ export default {
   created() {
     this.id = this._uid;
     this.options.navigation = {
-      nextEl: `#news-gallery-button-next-${this.id}`,
-      prevEl: `#news-gallery-button-prev-${this.id}`,
+      nextEl: `#interview-gallery-button-next-${this.id}`,
+      prevEl: `#interview-gallery-button-prev-${this.id}`,
     };
   },
 };
@@ -131,36 +131,38 @@ export default {
   &.for-mobile {
     margin-top: 0;
     margin-bottom: 0;
-    .news-gallery {
+    .interview-gallery {
       padding: 0;
     }
   }
 }
 .grid {
-  &--news {
+  &--interview {
     display: grid;
-    grid-gap: 1.5rem;
+    grid-gap: 40px;
     grid-template-columns: repeat(3, 1fr);
 
     @include lgMax {
       grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
     }
 
     @include mdMax {
       grid-template-columns: repeat(1, 1fr);
+      grid-gap: 1.5rem;
     }
   }
 }
 .for-mobile {
-  .news-gallery {
+  .interview-gallery {
     padding: 0;
   }
 }
-.news-gallery {
+.interview-gallery {
   padding: 10px;
 }
 
-.news-gallery-button {
+.interview-gallery-button {
   position: absolute;
   cursor: pointer;
   z-index: 5;
@@ -168,7 +170,7 @@ export default {
   transform: translate(0, -49%);
 }
 
-.news-gallery-button-prev {
+.interview-gallery-button-prev {
   @include custom-max-width(1600px) {
     left: 0;
     top: 50%;
@@ -178,7 +180,7 @@ export default {
   left: -80px;
 }
 
-.news-gallery-button-next {
+.interview-gallery-button-next {
   @include custom-max-width(1600px) {
     right: 0;
     top: 50%;
@@ -186,6 +188,6 @@ export default {
   }
   transform: translate(0, -53%) rotate(180deg);
   right: -80px;
-  //transform: rotate(180deg);
+  // transform: rotate(180deg);
 }
 </style>

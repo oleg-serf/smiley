@@ -16,11 +16,7 @@
         class="event-category"
       >
         <span class="event-category__name" v-if="manualGoal == null">
-          {{
-            event.goals != null && event.goals.length > 0
-              ? event.goals[0].name
-              : ""
-          }}
+          {{ event.goal_category }}
         </span>
         <span class="event-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
@@ -29,9 +25,13 @@
               event.goals != null && event.goals.length > 0
                   ? event.goals[0].prefix.length > 1 ? event.goals[0].prefix : "0"+event.goals[0].prefix
                   : ""
-            }} | <br>
-            {{ event.goal_category }}</span
-          >
+            }} | <br>            
+            {{
+              event.goals != null && event.goals.length > 0
+                ? event.goals[0].name
+                : ""
+            }}
+          </span>
         </transition>
       </div>
     </div>
@@ -224,7 +224,7 @@ export default {
 
   .event__image {
     position: relative;
-    height: 230px;
+    height: 400px;
     width: 100%;
 
     img {
@@ -259,6 +259,7 @@ export default {
 
   .event__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;
@@ -267,7 +268,7 @@ export default {
     }
 
     .event__content-title {
-      min-height: 6rem;
+      min-height: 5rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -284,7 +285,7 @@ export default {
     }
 
     .event__content-metadata {
-      height: 3.5rem;
+      height: 3rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

@@ -13,21 +13,8 @@
         type="news"
       />
       <div class="news-article-category">
-        <span class="news-article-category__name" v-if="manualGoal == null">
-          <template v-if="article.goal != null && article.goal.name">
-            {{
-              article.goal != null && article.goal.name
-                  ? article.goal.name
-                  : ""
-            }}
-          </template>
-          <template v-else>
-            {{
-              article.goals != null && article.goals.length > 0
-                  ? article.goals[0].name
-                  : ""
-            }}
-          </template>
+        <span class="news-article-category__name" v-if="manualGoal == null">          
+          {{ article.goal_category }}
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition name="fade">
@@ -37,7 +24,20 @@
                   ? article.goals[0].prefix.length > 1 ? article.goals[0].prefix : "0"+article.goals[0].prefix
                   : ""
             }} | <br>
-            {{ article.goal_category }}
+            <template v-if="article.goal != null && article.goal.name">
+              {{
+                article.goal != null && article.goal.name
+                    ? article.goal.name
+                    : ""
+              }}
+            </template>
+            <template v-else>
+              {{
+                article.goals != null && article.goals.length > 0
+                    ? article.goals[0].name
+                    : ""
+              }}
+            </template>
           </span>
         </transition>
       </div>
@@ -181,7 +181,7 @@ export default {
   }
   .news-article__image {
     position: relative;
-    height: 230px;
+    height: 300px;
     width: 100%;
 
     img {
@@ -197,7 +197,7 @@ export default {
       bottom: 0;
       right: 0;
       color: white;
-      background: rgba(#888785, 0.6);
+      background: rgba(#888785, 0.8);
       font-size: 24px;
       font-family: "Gotham Bold";
       padding: 8px 16px;
@@ -215,6 +215,7 @@ export default {
 
   .news-article__content {
     min-height: 230px;
+    text-align: left;
     padding: {
       top: 26px;
       left: 16px;
@@ -223,7 +224,7 @@ export default {
     }
 
     .news-article__content-title {
-      min-height: 6rem;
+      min-height: 5rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -231,7 +232,7 @@ export default {
     }
 
     .news-article__content-description {
-      height: 6rem;
+      height: 5rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -240,7 +241,7 @@ export default {
     }
 
     .news-article__content-metadata {
-      height: 3.5rem;
+      height: 3rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

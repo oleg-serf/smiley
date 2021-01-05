@@ -8,13 +8,22 @@ import VideoInterviewsGallery from "@/components/interviews/VideoInterviewsGalle
 import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 
 export default {
-  components: {ProjectsGallery, InterviewsGallery, VideoInterviewsGallery, EventsGallery, VButton, NewsGallery, BottomBorderedTitleWithSearch}
+  components: {
+    ProjectsGallery,
+    InterviewsGallery,
+    VideoInterviewsGallery,
+    EventsGallery,
+    NewsGallery,
+    VButton,
+    BottomBorderedTitleWithSearch
+  }
 }
 </script>
 <template>
   <div class="home">
     <hero video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
-          :link="'/our-story'" type="iframe">
+          :link="'/our-story'" type="iframe"
+    >
       <template v-slot:title>
         <span style="color: #FFE300">Positive</span> Impact Journalism
       </template>
@@ -230,7 +239,6 @@ export default {
           </router-link>
         </VButton>
       </section>
-
     </div>
 
     <subscribe-form/>
@@ -445,6 +453,8 @@ export default {
 .cards-sections-wrapper {
   padding: 0 100px;
   text-align: center;
+  max-width: 1500px;
+  margin: 0 auto;
 
   .news-section {
     .more__button {
