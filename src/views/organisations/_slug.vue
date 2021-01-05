@@ -674,8 +674,8 @@ export default {
       align-items: center;
     }
 
-    .button {
-    }
+    // .button {
+    // }
   }
 }
 

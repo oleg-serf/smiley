@@ -2,7 +2,7 @@
   <div>
     <!--    <Breadcrumbs :custom="true" :items="breadcrumbsItems"/>-->
     <div class="org-banner-img">
-      <img src="/img/organization/org-header-img.jpg" alt="org-profile-img">
+      <img src="/img/organization/org-header.jpg" alt="org-profile-img">
     </div>
     <div class="main-bg">
       <div class="organisation-main-info">
@@ -1459,8 +1459,8 @@ export default {
     // border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-right: 1px solid rgba(255, 255, 255, 0.5);
 
-    &.grid-item--full-width {
-    }
+    // &.grid-item--full-width {
+    // }
 
     &.grid-item--top-panel {
       grid-column: 1 / span 3;
@@ -1558,8 +1558,8 @@ export default {
       align-items: center;
     }
 
-    .button {
-    }
+    // .button {
+    // }
   }
 }
 
@@ -1659,8 +1659,8 @@ export default {
       text-align: center;
     }
 
-    a {
-    }
+    // a {
+    // }
   }
 }
 
