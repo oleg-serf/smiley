@@ -4,7 +4,7 @@
     <h3 class="subscribe__title" v-else>
       Subscribe to our Newsletter for the latest news!
     </h3>
-    <form action="" class="subscribe__form" @submit="subscribe">
+    <form action="" class="subscribe__form" @submit.prevent="subscribe">
       <input
         v-if="!forMobile"
         class="subscribe__input"
@@ -33,8 +33,10 @@
 </template>
 
 <script>
+import axios from "@/axios-auth";
+
 export default {
-  name: "Footer",
+  name: "SubscribeForm",
   props: {
     forMobile: {
       type: Boolean,
@@ -49,10 +51,20 @@ export default {
   },
   methods: {
     subscribe() {
-      if (this.name && this.email) {
-      } else {
-        this.$swal("Fill in data");
-      }
+      axios
+          .post("/subscribe/", {
+            email: this.email,
+            first_name: this.name
+          })
+          .then(response => {
+            console.log("Subscribed", response.data);
+          //  Upon success
+            /*
+              this.name = '';
+              this.email = '';
+             */
+          })
+          .catch(error => console.error(error));
     },
   },
 };
@@ -91,7 +103,7 @@ export default {
     text-align: center;
     font-weight: bold;
     &:hover {
-      color: #ffe300;
+      //color: #ffe300;
     }
   }
 
