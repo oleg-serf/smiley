@@ -17,7 +17,7 @@
             {{ interview.goal_category }}
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
-        <transition name="fade">
+        <transition>
           <span v-if="showDescription" class="news-article-category__description">
             UN Goal {{
               interview.goals != null && interview.goals.length > 0

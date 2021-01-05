@@ -54,7 +54,7 @@
         <span class="news-article__actions-text">Share</span>
       </button>
     </div>
-    <transition name="fade">
+    <transition>
       <div class="news-article__share" v-show="sharing">
         <div class="news-article__share-title">Share this article:</div>
         <ul class="news-article__share-links">
