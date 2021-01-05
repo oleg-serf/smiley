@@ -91,7 +91,7 @@ export default {
             slidesPerView: 2,
             slidesPerGroup: 2,
           },
-          1200: {
+          1300: {
             slidesPerView: 3,
             slidesPerGroup: 3,
             spaceBetween: 25

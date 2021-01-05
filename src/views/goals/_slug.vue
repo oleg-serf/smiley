@@ -103,7 +103,7 @@
       <!--   NEWS   -->
       <section class="content-block">
         <BottomBorderedTitleWithSearch
-            title="<b>No Poverty</b> | News"
+            :title="getTitle('News')"
             :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
@@ -146,7 +146,7 @@
       <!--   EVENTS   -->
       <section class="content-block">
         <BottomBorderedTitleWithSearch
-            title="<b>No Poverty</b> | Events"
+            :title="getTitle('Events')"
             :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
@@ -194,7 +194,7 @@
       <!--   INTERVIEWS   -->
       <section class="content-block">
         <BottomBorderedTitleWithSearch
-            title="<b>No Poverty</b> | Interviews"
+            :title="getTitle('Interviews')"
             :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
@@ -216,7 +216,7 @@
       <!--   PROJECTS   -->
       <section class="content-block">
         <BottomBorderedTitleWithSearch
-            title="<b>No Poverty</b> | Projects"
+            :title="getTitle('Projects')"
             :with-search="true"
             :hover-effect="true"
             :hover-color="'yellow'"
@@ -362,6 +362,9 @@ export default {
     getImage() {
       const prefix = this.goal.prefix.length > 1 ? this.goal.prefix : '0' + this.goal.prefix;
       return `/img/goals/UN_${prefix}.svg`
+    },
+    getTitle(title) {
+      return `<b> ${this.goal.name} </b> | ${title}`;
     },
     goalOrganisationLink(organisation) {
       return {
@@ -598,14 +601,14 @@ export default {
 .goals-grid {
   margin-top: 5px;
   margin-bottom: 5px;
-  height: 6.8rem;
+  height: 10rem;
 
   .goals-grid__grid {
     height: 100%;
-    grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(8, 1fr);
 
     @include xxlMax {
-      grid-template-columns: repeat(9, 1fr);
+      grid-template-columns: repeat(8, 1fr);
     }
     @include lgMax {
       grid-template-columns: repeat(6, 1fr);

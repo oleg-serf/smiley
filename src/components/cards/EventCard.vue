@@ -224,7 +224,7 @@ export default {
 
   .event__image {
     position: relative;
-    height: 230px;
+    height: 400px;
     width: 100%;
 
     img {
@@ -267,7 +267,7 @@ export default {
     }
 
     .event__content-title {
-      min-height: 6rem;
+      min-height: 5rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -284,7 +284,7 @@ export default {
     }
 
     .event__content-metadata {
-      height: 3.5rem;
+      height: 3rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

@@ -1,13 +1,16 @@
 <template>
   <div>
     <section class="our-story">
-      <video controls style="width: 100%; height: auto;">
-        <source
-            src="https://old-admin.smileymovement.org/app/uploads/2019/07/Smiley-Movement-V03.mp4"
-            type="video/mp4"
-        />
-        Your browser does not support the video tag
-      </video>
+      <template>
+        <iframe
+            v-if="!isMobile"
+            style = "width: 100%; height: 75vh"
+            frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+            src="https://player.vimeo.com/video/496959654?title=0&amp;byline=0&amp;portrait=0&sidedock=0"
+        ></iframe>
+        <img :src="image" v-else class="hero__overlay"/>
+      </template>
+      
       <div class="container">
         <div class="our-story__head">
           <div class="content-w">

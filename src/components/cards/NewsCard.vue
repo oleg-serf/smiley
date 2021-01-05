@@ -181,7 +181,7 @@ export default {
   }
   .news-article__image {
     position: relative;
-    height: 230px;
+    height: 300px;
     width: 100%;
 
     img {
@@ -197,7 +197,7 @@ export default {
       bottom: 0;
       right: 0;
       color: white;
-      background: rgba(#888785, 0.6);
+      background: rgba(#888785, 0.8);
       font-size: 24px;
       font-family: "Gotham Bold";
       padding: 8px 16px;
@@ -223,7 +223,7 @@ export default {
     }
 
     .news-article__content-title {
-      min-height: 6rem;
+      min-height: 5rem;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
@@ -231,7 +231,7 @@ export default {
     }
 
     .news-article__content-description {
-      height: 6rem;
+      height: 5rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -240,7 +240,7 @@ export default {
     }
 
     .news-article__content-metadata {
-      height: 3.5rem;
+      height: 3rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

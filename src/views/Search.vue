@@ -415,7 +415,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/search", { keyword: this.$route.params.keyword })
+      .get("/search", { params : {keyword: this.$route.params.keyword} })
       .then(res => {
         console.log("Search results loaded", res);
 
