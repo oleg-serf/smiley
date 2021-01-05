@@ -30,5 +30,7 @@ export default {
 <style lang="scss" scoped>
 .news_container {
   padding: 0 150px;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 </style>

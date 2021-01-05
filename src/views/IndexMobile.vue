@@ -15,7 +15,7 @@
       <!--  NEWS SECTION   -->
       <section class="news-section" v-if="newsList.length > 0">
         <bottom-bordered-title-with-search
-          :title="'<b>Featured News</b>| Editors pick'"
+          :title="'<b>Editors Picks</b>'"
           :with-search="false"
           border-top
         ></bottom-bordered-title-with-search>

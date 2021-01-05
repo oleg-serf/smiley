@@ -103,41 +103,23 @@
         </div>
       </form>
     </div>
-    <div class="container" style="margin-bottom: 150px;" v-if="events.length">
-      <div class="event-category">
-        <h2 class="event-category__title"><b>Upcoming</b> | Events</h2>
-      </div>
-      <div class="event-grid">
-        <EventCard
-            v-for="(event, key) in events"
-            :key="'event-card-' + key"
-            :event="event"
-            button-name="Register"
-        ></EventCard>
-      </div>
-    </div>
 
-    <div class="container">
-      <!--      <div class="event-category">
-              <h2 class="event-category__title"><b>Past</b> | Events</h2>
-            </div>-->
+    <div class="container events_container">
       <BottomBorderedTitleWithSearch
-          :title="'<b>Past | </b>Events'"
+          :title="'<h3><b>Related</b> | Events</h3>'"
           :with-search="true"
-          :with-dropdown="true"
-          :dropdown-options="goals"
           search-expandable
       ></BottomBorderedTitleWithSearch>
       <div class="event-grid">
         <EventCard
             class="event-card"
-            v-for="(event, key) in past"
+            v-for="(event, key) in events"
             :key="'event-card-' + key"
             :event="event"
-            button-name="Watch Now"
+            button-name="Read More"
         ></EventCard>
       </div>
-      <div style="text-align: center">
+      <!-- <div style="text-align: center">
         <VButton
             class="event__button"
             size="height_45"
@@ -150,12 +132,11 @@
               :to="{ name: 'discussions', params: { slug: 'slug' } }"
           >
             More Events
-          </router-link
-          >
+          </router-link>
         </VButton>
-      </div>
-      <Subscribe></Subscribe>
+      </div> -->
     </div>
+    <Subscribe></Subscribe>
   </div>
 </template>
 
@@ -185,7 +166,6 @@ export default {
     return {
       goals: [],
       events: [],
-      past: [],
       // events_pages: 0,
       // past_pages: 0,
       // is_mobile: false,
@@ -299,14 +279,6 @@ export default {
           this.events_pages = res.data.pages_count;
         })
         .catch((error) => console.error(error));
-    axios
-        .get("/events/past")
-        .then((res) => {
-          console.log("Past events", res);
-          this.past = res.data.events;
-          this.past_pages = res.data.pages_count;
-        })
-        .catch((error) => console.error(error));
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -326,6 +298,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.events_container {
+  margin-bottom: 100px;
+}
+
 .header {
   .header-video {
     border: none;
@@ -516,7 +492,7 @@ export default {
   .filter-toggle__button {
     @include font-size(1.5rem);
     // -webkit-appearance: none;
-    -webkit-border-radius: 0px;
+    // -webkit-border-radius: 0px;
     background-color: #fff;
     border: 1px solid rgba(57, 57, 57, 0.5);
     padding: 1px 10px;
@@ -543,9 +519,16 @@ export default {
   margin-top: 16px;
   display: grid;
   //grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
-  grid-gap: 1.5rem;
+  grid-gap: 2.5rem;
   grid-template-columns: repeat(3, 1fr);
-  //grid-gap: 100px 50px;
+  
+  @include xlMax {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include lgMax {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .event__button {

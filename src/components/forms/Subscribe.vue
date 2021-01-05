@@ -2,7 +2,7 @@
   <section class="subscribe container" :class="[forMobile ? 'for-mobile' : '']">
     <h3 class="subscribe__title" v-if="forMobile">Sign up to our newsletter</h3>
     <h3 class="subscribe__title" v-else>
-      Subscribe to our Newsletter for the latest news!
+      Stay in touch - Sign up to our newsletter for updates on news and events
     </h3>
     <form action="" class="subscribe__form" @submit.prevent="subscribe">
       <input

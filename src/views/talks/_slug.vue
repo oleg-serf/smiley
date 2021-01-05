@@ -1,9 +1,8 @@
 <template>
-  <div class="container">
-
+  <div class="event-section">
     <div class="event-title">
       <BottomBorderedTitleWithSearch
-          :title="`<b>${post.title}</b>`"
+          :title="`<b style='font-size:40px'>${post.title}</b>`"
           :with-search="false"
       ></BottomBorderedTitleWithSearch>
       <div style="position: relative;">
@@ -106,7 +105,7 @@
                 :to="'#'"><i class="fa fa-youtube"></i>
             </router-link>
           </VButton> -->
-          <p>{{ shareText }}</p>
+          <p><b>{{ shareText }}</b></p>
         </div>
         <!--
         <VButton
@@ -541,6 +540,11 @@ export default {
   transform: rotate(180deg);
 }
 
+.event-section {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
 .event-title {
   display: flex;
   flex-direction: column;
@@ -554,6 +558,8 @@ export default {
     color: red;
     font-weight: 700;
     margin-top: 20px;
+    font-size: 24px;
+    font-family: 'Gotham Light', sans-serif;
   }
 
   &__link-actions {
@@ -561,6 +567,8 @@ export default {
     flex-direction: row;
     align-content: center;
     align-items: center;
+    font-family: 'Gotham Light', sans-serif;
+    font-size: 24px;
 
     a {
       text-decoration: none;
@@ -617,8 +625,8 @@ export default {
 
   &__paragraph-section {
     &__paragraph {
-      font-size: 14px;
-      font-weight: 600;
+      font-family: 'Gotham Book', sans-serif;
+      font-size: 22px;
     }
   }
 
