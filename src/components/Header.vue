@@ -21,7 +21,7 @@
                     <h3>Join Us</h3>
                   </template>
                   <template v-if="loggedIn">
-                    <router-link :to="{name: 'feed'}" class="user-avatar">
+                    <router-link :to="{name: 'profile'}" class="user-avatar">
                       <template v-if="user.avatar">
                         <img
                             :src="$settings.images_path.users + 's_' + user.avatar"
@@ -35,7 +35,7 @@
                     </router-link>
                   </template>
                   <template v-if="loggedIn">
-                    <router-link :to="{name: 'feed'}" class="user-initials">{{ user.initials }}</router-link>
+                    <router-link :to="{name: 'profile'}" class="user-initials">{{ user.initials }}</router-link>
                   </template>
                   <template v-else>
                     <ul class="mobile-menu">
@@ -140,7 +140,7 @@
                 </div>
               </div>
               <template v-if="loggedIn">
-                <router-link :to="{name: 'feed'}" class="home-link">
+                <router-link :to="{name: 'profile'}" class="home-link">
                   <template v-if="user.avatar">
                     <img :src="$settings.images_path.users + 's_' + user.avatar" class="user__avatar"/>
                   </template>
@@ -155,7 +155,7 @@
                 </router-link>
               </template>
               <template v-if="loggedIn">
-                <router-link :to="{name: 'feed'}" class="text-link">{{ user.initials }}</router-link>
+                <router-link :to="{name: 'profile'}" class="text-link">{{ user.initials }}</router-link>
               </template>
               <template v-else>
                 <button @click="authentification" class="text-link">Register / Login</button>
