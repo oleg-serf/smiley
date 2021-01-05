@@ -58,14 +58,20 @@ export default {
         email: this.email,
       };
       axios
-          .post("/subscribe/", user_data)
+          .post("/subscribe", user_data)
           .then(response => {
-            console.log("Subscribed", response.data);
-          //  Upon success
-            /*
-              this.name = '';
-              this.email = '';
-             */
+            if (response.status) {
+              this.$swal({
+                title: "Subscribed",
+                text: "Thank you for subscribing",
+              });
+            } else {
+              this.$swal({
+                title: "Error",
+                type: 'error',
+                text: response.message,
+              });
+            }
           })
           .catch(error => console.error(error));
     },
