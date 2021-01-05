@@ -21,9 +21,9 @@
                     <h3>Join Us</h3>
                   </template>
                   <template v-if="loggedIn">
-                    <router-link :to="{name: 'feed'}" class="user-avatar">
+                    <router-link :to="{name: 'profile'}" class="user-avatar">
                       <template v-if="user.avatar">
-                        <img 
+                        <img
                             :src="$settings.images_path.users + 's_' + user.avatar"
                             class="user__avatar"
                             style="width:100%!important; height:100%!important"
@@ -35,7 +35,7 @@
                     </router-link>
                   </template>
                   <template v-if="loggedIn">
-                    <router-link :to="{name: 'feed'}" class="user-initials">{{ user.initials }}</router-link>
+                    <router-link :to="{name: 'profile'}" class="user-initials">{{ user.initials }}</router-link>
                   </template>
                   <template v-else>
                     <ul class="mobile-menu">
@@ -54,6 +54,25 @@
                     </ul>
                   </template>
                 </div>
+                <template v-if="loggedIn">
+                  <div class="sidebar__item sidebar__item--menu">
+                    <ul class="mobile-menu">
+                      <li class="mobile-menu__item">
+                        <router-link :to="{ name: 'profile' }" class="mobile-menu__link">
+                          <i class="fa fa-user"></i>
+                          &nbsp;
+                          Profile
+                        </router-link>
+                      </li>
+                      <li class="mobile-menu__item">
+                        <button class="mobile-menu__link" @click.prevent="logout()">
+                          <i class="fa fa-sign-out"></i>
+                          Log Out
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </template>
                 <div class="sidebar__item sidebar__item--menu">
                   <h3>Navigation:</h3>
                   <ul class="mobile-menu">
@@ -121,7 +140,7 @@
                 </div>
               </div>
               <template v-if="loggedIn">
-                <router-link :to="{name: 'feed'}" class="home-link">
+                <router-link :to="{name: 'profile'}" class="home-link">
                   <template v-if="user.avatar">
                     <img :src="$settings.images_path.users + 's_' + user.avatar" class="user__avatar"/>
                   </template>
@@ -136,7 +155,7 @@
                 </router-link>
               </template>
               <template v-if="loggedIn">
-                <router-link :to="{name: 'feed'}" class="text-link">{{ user.initials }}</router-link>
+                <router-link :to="{name: 'profile'}" class="text-link">{{ user.initials }}</router-link>
               </template>
               <template v-else>
                 <button @click="authentification" class="text-link">Register / Login</button>
@@ -489,6 +508,11 @@ export default {
       });
       this.search.trigger = false;
     },
+    logout() {
+      this.$store
+          .dispatch("user/logout");
+      this.sidebar = false;
+    },
   },
   watch: {
     '$route.path': {
@@ -648,6 +672,11 @@ header {
     &__link {
       color: #000;
       text-decoration: none !important;
+      font-size: 1rem !important;
+      padding: 0px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
     }
   }
 
