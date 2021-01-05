@@ -21,7 +21,7 @@
           }}
         </span>
         <span class="projects-article-category__name" v-else>{{ manualGoal }}</span>
-        <transition name="fade">
+        <transition>
           <span v-if="showDescription" class="projects-article-category__description"
           >UN Goal 0{{
               project.goals != null && project.goals.length > 0

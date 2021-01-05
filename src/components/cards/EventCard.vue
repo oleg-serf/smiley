@@ -19,7 +19,7 @@
           {{ event.goal_category }}
         </span>
         <span class="event-category__name" v-else>{{ manualGoal }}</span>
-        <transition name="fade">
+        <transition>
           <span v-if="showDescription" class="event-category__description"
             >UN Goal {{
               event.goals != null && event.goals.length > 0

@@ -51,7 +51,9 @@
 
 @font-face {
   font-family: "Gotham Bold";
-  src: url("/fonts/Gotham/GothamBold.ttf") format('truetype'),
+  src: url('/fonts/Gotham/Gotham-Bold.woff') format('woff'),
+      url('/fonts/Gotham/Gotham-Bold.woff2') format('woff2'), 
+      url("/fonts/Gotham/GothamBold.ttf") format('truetype'),
       url("/fonts/Gotham/Gotham-Bold.otf") format('opentype');
 }
 
