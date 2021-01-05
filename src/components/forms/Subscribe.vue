@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     subscribe() {
-      const name_array = name.split(' ');
+      const name_array = this.name.split(' ');
       const user_data = {
         first_name: name_array.shift(),
         last_name: name_array.join(' '),

@@ -209,6 +209,9 @@ const mutations = {
     },
     REMOVE_USERDATA(state) {
         // TODO: Clear all stuff
+        axios.post('/auth/reset', {
+            token: state.token
+        })
         state.token = null;
         state.attendingEvents = null;
         state.organisation.admin = null;
