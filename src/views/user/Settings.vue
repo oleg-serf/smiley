@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="onSubmit">
     <input
         type="file"
         class="file-input"
@@ -18,7 +18,7 @@
         accept=".png, .jpg, .jpeg"
         style="display: none;"
     />
-    <div class="profile" @submit.prevent="onSubmit">
+    <div class="profile">
       <div class="profile__background">
         <img :src="user.cover_image"
              v-if="user.cover_image != null && isBase64(user.cover_image)"/>
@@ -372,7 +372,7 @@
             <span>Email:</span>
             <div class="edit edit--prepend">
               <i class="fa fa-envelope-o edit__icon edit__icon--primary"></i>
-              <input type="url" v-model="user.email" placeholder="johndoe@gmail.com">
+              <input type="email" v-model="user.email" placeholder="johndoe@gmail.com">
             </div>
           </div>
           <div></div>

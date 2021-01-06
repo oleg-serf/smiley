@@ -1,6 +1,6 @@
 <template>
   <div>
-    <hero video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
+    <hero video="https://player.vimeo.com/video/494083042?background=1&byline=0&title=0"
           :link="'/our-story'" type="iframe">
       <template v-slot:title>
         Creating <span style="color: #FFE300">positive</span> impact
@@ -521,7 +521,7 @@ export default {
   //grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
   grid-gap: 2.5rem;
   grid-template-columns: repeat(3, 1fr);
-  
+
   @include xlMax {
     grid-template-columns: repeat(2, 1fr);
   }
