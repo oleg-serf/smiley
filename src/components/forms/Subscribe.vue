@@ -92,7 +92,7 @@ export default {
     padding-top: 2rem;
     border-top: 2px solid #ffe300;
     .subscribe__title {
-      font-size: 1.9rem;
+      font-size: 1.6rem;
       font-family: "Gotham Bold", sans-serif !important;
       text-align: left;
     }
@@ -111,9 +111,9 @@ export default {
     margin-bottom: 1.5rem;
     text-align: center;
     font-weight: bold;
-    &:hover {
+    // &:hover {
       //color: #ffe300;
-    }
+    // }
   }
 
   &__form {

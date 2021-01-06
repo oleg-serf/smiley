@@ -32,5 +32,14 @@ export default {
   padding: 0 150px;
   max-width: 1500px;
   margin: 0 auto;
+  @include lgMax {
+    padding: 0 100px;
+  }
+  @include mdMax {
+    padding: 0 50px;
+  }
+  @include smMax {
+    padding: 0;
+  }
 }
 </style>

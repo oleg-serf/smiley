@@ -107,7 +107,7 @@
           </VButton> -->
           <p><b>{{ shareText }}</b></p>
         </div>
-        <!--
+        
         <VButton
             class="event-title__link-actions__register-button mr-2"
             shape="round"
@@ -118,6 +118,7 @@
               :to="'#'">Register
           </router-link>
         </VButton>
+        <!--
         <VButton
             class="event-title__link-actions__register-button mr-2"
             shape="round"
@@ -172,35 +173,33 @@
       </section>
     </div>
 <!--  SPEAKER INTERVIEWS  -->
-    <BottomBorderedTitleWithSearch
-        :title="'<b>Speaker Interviews</b>'"
-        :with-search="false"
-    ></BottomBorderedTitleWithSearch>
-    <InterviewsGallery 
-        :interviews="past"
-        image-type="events"
-        button-text="Speaker Bio"
-    ></InterviewsGallery>
+    <section v-if="interviews.length>0">
+      <BottomBorderedTitleWithSearch
+          :title="'<b>Speaker Interviews</b>'"
+          :with-search="false"
+      ></BottomBorderedTitleWithSearch>
+      <InterviewsGallery 
+          :interviews="past"
+          image-type="events"
+          button-text="Speaker Bio"
+      ></InterviewsGallery>
+    </section>
+
     <!-- Comments Section -->
     <!-- <div class="comments-section">
       <CommentsSection></CommentsSection>
     </div> -->
 
     <!--   EVENTS   -->
-    <section class="content-block">
+    <section v-if="events.length>0">
       <BottomBorderedTitleWithSearch
-          title="<b>Related</b> | Events"
+          :title="'<b>Related</b> | Events'"
           :with-search="true"
       ></BottomBorderedTitleWithSearch>
-    </section>
-    <section class="section" id="section-events">
-      <div class="grid grid--events">
-        <event-card
-            v-for="event in past"
-            :key="'event-'+event.slug"
-            :event="event"
-        />
-      </div>
+      <EventsGallery 
+          :events="events"
+          button-text="Read More"
+      ></EventsGallery>
     </section>
 
     <Subscribe/>
@@ -217,11 +216,13 @@ import CommentsSection from "@/components/CommentsSection";
 import ButtonArrow from "@/components/buttons/ButtonArrow";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+import EventsGallery from "@/components/events/EventsGallery";
 
 export default {
   name: "Talks",
   components: {
     InterviewsGallery,
+    EventsGallery,
     BottomBorderedTitleWithSearch,
     ButtonArrow,
     VSearchLocation,
@@ -264,7 +265,7 @@ export default {
         },
       },
       events: [],
-      past: [],
+      interviews: [],
       peoples: [
         {
           profilePicture: 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png',
@@ -394,8 +395,6 @@ export default {
     axios
         .get("/events/" + this.$route.params.slug)
         .then((res) => {
-          console.log("events item loaded", res);
-
           this.post = res.data.event;
           this.description = res.data.meta.description;
           // this.related_posts = res.data.related;
@@ -411,17 +410,8 @@ export default {
     axios
         .get("/events")
         .then((res) => {
-          console.log("Future events", res);
           this.events = res.data.events;
-          this.events_pages = res.data.pages_count;
-        })
-        .catch((error) => console.error(error));
-    axios
-        .get("/events/past")
-        .then((res) => {
-          console.log("Past events", res);
-          this.past = res.data.events;
-          this.past_pages = res.data.pages_count;
+          // this.events_pages = res.data.pages_count;
         })
         .catch((error) => console.error(error));
   },

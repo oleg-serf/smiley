@@ -129,7 +129,7 @@ export default {
 .grid {
   &--news {
     display: grid;
-    grid-gap: 1.5rem;
+    grid-gap: 2.5rem;
     grid-template-columns: repeat(3, 1fr);
 
     @include lgMax {

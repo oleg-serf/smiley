@@ -16,9 +16,9 @@
 
   &.textual-banner--contained {
     max-width: 1530px;
-
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
+    // margin-left: auto;
+    // margin-right: auto;
   }
 
   &__title {

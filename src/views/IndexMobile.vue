@@ -12,14 +12,14 @@
     </hero>
 
     <div class="cards-sections-wrapper">
-      <!--  NEWS SECTION   -->
-      <section class="news-section" v-if="newsList.length > 0">
+      <!--  FEATURED SECTION   -->
+      <section class="news-section" v-if="featuredList.length > 0">
         <bottom-bordered-title-with-search
           :title="'<b>Editors Picks</b>'"
           :with-search="false"
           border-top
         ></bottom-bordered-title-with-search>
-        <news-gallery :news="newsList" for-mobile with-slider></news-gallery>
+        <featured-gallery :features="featuredList" for-mobile with-slider></featured-gallery>
       </section>
 
       <!-- EVENTS SECTION -->
@@ -33,7 +33,7 @@
       </section>
 
       <!--  INTERVIEWS SECTION  -->
-      <section class="news-section" v-if="interviewList && interviewList.length > 0">
+      <!-- <section class="news-section" v-if="interviewList && interviewList.length > 0">
         <bottom-bordered-title-with-search
           :title="'<b>Featured Interviews</b>'"
           :with-search="false"
@@ -45,6 +45,34 @@
           for-mobile 
           with-slider
         ></interviews-gallery>
+      </section> -->
+
+      <!--  TEMPORARY INTERVIEWS SECTION  -->
+      <section class="news-section" v-if="interviewList.length > 0">
+        <bottom-bordered-title-with-search
+          :title="'<b>Featured Interviews</b>'"
+          :with-search="false"
+          border-top
+        ></bottom-bordered-title-with-search>
+        <video-interviews-gallery
+            :interviews="interviewList"
+            button-text="More"
+            for-mobile 
+            with-slider
+        ></video-interviews-gallery>
+        <VButton
+            class="more__button"
+            size="height_45"
+            shape="round"
+            color="black"
+        >
+          <router-link
+              class="event__button-link"
+              :to="{ name: '#' }"
+          >
+            More Interviews
+          </router-link>
+        </VButton>
       </section>
 
       <!--  NETWORK SECTION  -->
@@ -92,39 +120,28 @@ import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithS
 import SubscribeForm from "@/components/forms/Subscribe.vue";
 import Footer from "@/components/Footer.vue";
 // Page components
+import FeaturedGallery from "@/components/cardGalleries/FeaturedGallery";
 import DiscussionsGallery from '@/components/cardGalleries/DiscussionsGallery.vue';
 import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery";
+import VideoInterviewsGallery from "@/components/interviews/VideoInterviewsGallery";
 import EventsGallery from "@/components/events/EventsGallery";
 import NewsGallery from "@/components/news/NewsGallery";
 import Hero from "@/components/homepage/Hero.vue";
-import Banner from "@/components/homepage/Banner.vue";
-import NewsCard from "@/components/cards/NewsCard.vue";
-import NewsCardNew from "@/components/cards/NewsCardNew.vue";
-import EventCard from "@/components/cards/EventCard.vue";
-import EventCardNew from "@/components/cards/EventCardNew.vue";
-
-import ArticleItemBlock from "@/components/news/ArticleBlock.vue";
-import VimeoVideo from "@/components/homepage/VimeoVideo.vue";
 
 export default {
   name: "HomeMobile",
   components: {
+    FeaturedGallery,
     DiscussionsGallery,
     ProjectsGallery,
     InterviewsGallery,
+    VideoInterviewsGallery,
     EventsGallery,
-    VButton,
     NewsGallery,
+    VButton,
     BottomBorderedTitleWithSearch,
     Hero,
-    NewsCardNew,
-    NewsCard,
-    EventCardNew,
-    EventCard,
-    ArticleItemBlock,
-    Banner,
-    VimeoVideo,
     SubscribeForm,
     Footer,
   },
@@ -133,7 +150,7 @@ export default {
       vimeoVideoHeight: 700,
       news: [],
       events: [],
-      eventList: [],
+      featuredList: [],
       discussionList: [],
       newsList: [],
       interviewList: [],
@@ -222,12 +239,38 @@ export default {
   mounted() {
     axios
       .get("/pages/1")
-      .then((res) => {
-        console.log(res, "homepage");
-        this.eventList = res.data.future_events ? res.data.future_events : [];
-        this.discussionList = res.data.discussions ? res.data.discussions : [];
-        this.newsList = res.data.latest_news;
-        this.interviewList = res.data.latest_interviews;
+      .then(res => {
+        this.news = res.data.latest_news;
+        this.featuredList = res.data.featured;
+        this.eventList = res.data.latest_events;
+        // this.interviewList = res.data.latest_interviews;
+        this.projects = res.data.latest_network;
+
+        // for temporary start
+        this.interviewList = [
+          {
+            name: "Claire Linacre",
+            video: "https://player.vimeo.com/video/481275029?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            title: "Donor & Data Manager | Akt | LGBT Event | November 2020",
+            description: "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
+            slug: "Beyond Pride"
+          },
+          {
+            name: "Josh Littlejohn",
+            video: "https://player.vimeo.com/video/484519685?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            title: "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
+            description: "Surely we can do better than this",
+            slug: "Ending Homelessness & Building resilient Communities"
+          },
+          {
+            name: "Georgia Dodsworth",
+            video: "https://player.vimeo.com/video/370887819?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            title: "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
+            description: "We are not alone",
+            slug: "LTAMH"
+          },
+        ];
+        // for temporary end
 
         this.banners.news = res.data.page_sections.smiley_news[0];
         // this.banners.network = res.data.page_sections.smiley_network[0];
@@ -237,26 +280,19 @@ export default {
         this.videos = res.data.page_sections.bottom_videos;
         this.hero = res.data.page_sections.top_video[0];
         this.hero.url_source =
-          this.$settings.images_path.pages + "l_" + this.hero.url_source;
+            this.$settings.images_path.pages + "l_" + this.hero.url_source;
 
         this.quote = res.data.page_sections.bottom_quote[0];
 
         const metaPayload = {
           meta: res.data?.meta || {},
-          title: "Smiley Talks",
-        };
+          title: 'Smiley Talks',
+        }
 
-        metaPayload.meta.description =
-          "A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals";
-        this.$store.dispatch("meta/setMeta", metaPayload);
+        metaPayload.meta.description = 'A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals';
+        this.$store.dispatch('meta/setMeta', metaPayload);
       })
-      .catch((error) => console.log(error));
-    axios
-      .get("/projects")
-      .then((res) => {
-        this.projects = res.data.projects;
-      })
-      .catch((error) => console.error(error));
+      .catch(error => console.log(error));
   },
 };
 </script>

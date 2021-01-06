@@ -61,8 +61,7 @@
               :to="{ name: 'discussions', params: { slug: 'slug' } }"
           >
             More Events
-          </router-link
-          >
+          </router-link>
         </VButton>
       </section> -->
 
@@ -90,8 +89,7 @@
               :to="{ name: 'organisations' }"
           >
             All Organisations
-          </router-link
-          >
+          </router-link>
         </VButton>
       </section>
 
@@ -118,8 +116,7 @@
               :to="{ name: 'members' }"
           >
             All Members
-          </router-link
-          >
+          </router-link>
         </VButton>
       </section>
 
@@ -251,6 +248,8 @@ export default {
   &__content-wrapper {
     padding: 0 150px;
     text-align: center;
+    max-width: 1500px;
+    margin: 0 auto;
     @include mdMax {
       padding-left: 0;
       padding-right: 0;
