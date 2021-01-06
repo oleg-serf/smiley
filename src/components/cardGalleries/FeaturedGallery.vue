@@ -3,44 +3,69 @@
     <template v-if="withSlider">
       <ButtonArrow
         v-if="!forMobile"
-        :id="'interview-gallery-button-prev-' + id"
+        :id="'news-gallery-button-prev-' + id"
         :style="{ left: prevButtonLeft }"
-        class="interview-gallery-button interview-gallery-button-prev"
+        class="news-gallery-button news-gallery-button-prev"
       />
-      <Swiper class="interview-gallery" :key="key" :options="options">
-        <SwiperSlide v-for="article in interviews" :key="article.slug">
+      <Swiper class="news-gallery" :key="key" :options="options">
+        <SwiperSlide v-for="article in features" :key="article.slug">
+          <NewsCard
+            v-if="article.type==='News'"
+            class="news-gallery__card"
+            :article="article"
+            :for-mobile="forMobile"
+          />
+          <EventCard
+            v-if="article.type==='Event'"
+            class="news-gallery__card"
+            :event="article"
+            :for-mobile="forMobile"
+          />
           <TempInterviewsCard
+            v-if="article.type==='Interview'"
             :for-mobile="forMobile"
             class="interview-gallery__card"
-            :type="imageType"
-            :button-text="buttonText"
             :interview="article"
           />
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
         v-if="!forMobile"
-        :id="'interview-gallery-button-next-' + id"
+        :id="'news-gallery-button-next-' + id"
         :style="{ right: nextButtonRight }"
-        class="interview-gallery-button interview-gallery-button-next"
+        class="news-gallery-button news-gallery-button-next"
       />
     </template>
     <section
       class="section"
-      v-else
-      id="section-interview"
       :class="[forMobile ? 'for-mobile' : '']"
+      v-else
+      id="section-news"
     >
-      <div class="grid grid--interview">
-        <TempInterviewsCard
-          :for-mobile="forMobile"
-          class="interview-gallery__card"
-          v-for="interview in interviews"
-          :key="'interview-' + interview.slug"
-          :type="imageType"
-          :button-text="buttonText"
-          :interview="interview"
-        />
+      <div class="grid grid--news">
+        <div 
+          v-for="article in features"
+          :key="'article-' + article.slug"
+        >
+          <NewsCard
+            v-if="article.type==='News'"
+            :for-mobile="forMobile"
+            class="news-gallery__card"
+            :article="article"
+          />
+          <EventCard
+            v-if="article.type==='Event'"
+            :for-mobile="forMobile"
+            class="news-gallery__card"
+            :event="article"
+          />
+          <TempInterviewsCard
+            v-if="article.type==='Interview'"
+            :for-mobile="forMobile"
+            class="interview-gallery__card"
+            :interview="article"
+          />
+        </div>
       </div>
     </section>
   </div>
@@ -48,30 +73,24 @@
 
 <script>
 import { ButtonArrow } from "@/components/buttons";
-import TempInterviewsCard from "@/components/cards/TempInterviewsCard";
+import NewsCard from "@/components/cards/NewsCard.vue";
+import EventCard from "@/components/cards/EventCard.vue";
+import TempInterviewsCard from "@/components/cards/TempInterviewsCard.vue";
 
 export default {
-  name: "VideoInterviewsGallery",
+  name: "FeaturedGallery",
   props: {
     forMobile: {
       type: Boolean,
       default: false,
     },
+    features: {
+      type: Array,
+      required: true,
+    },
     withSlider: {
       type: Boolean,
       default: false,
-    },
-    buttonText: {
-      type: String,
-      default: "Read More",
-    },
-    imageType: {
-      type: String,
-      default: "interview",
-    },
-    interviews: {
-      type: Array,
-      required: true,
     },
     prevButtonLeft: {
       type: Number,
@@ -83,6 +102,8 @@ export default {
     },
   },
   components: {
+    NewsCard,
+    EventCard,
     TempInterviewsCard,
     ButtonArrow,
   },
@@ -117,8 +138,8 @@ export default {
   created() {
     this.id = this._uid;
     this.options.navigation = {
-      nextEl: `#interview-gallery-button-next-${this.id}`,
-      prevEl: `#interview-gallery-button-prev-${this.id}`,
+      nextEl: `#news-gallery-button-next-${this.id}`,
+      prevEl: `#news-gallery-button-prev-${this.id}`,
     };
   },
 };
@@ -129,38 +150,36 @@ export default {
   &.for-mobile {
     margin-top: 0;
     margin-bottom: 0;
-    .interview-gallery {
+    .news-gallery {
       padding: 0;
     }
   }
 }
 .grid {
-  &--interview {
+  &--news {
     display: grid;
-    grid-gap: 40px;
+    grid-gap: 1.5rem;
     grid-template-columns: repeat(3, 1fr);
 
     @include lgMax {
       grid-template-columns: repeat(2, 1fr);
-      grid-gap: 20px;
     }
 
     @include mdMax {
       grid-template-columns: repeat(1, 1fr);
-      grid-gap: 1.5rem;
     }
   }
 }
 .for-mobile {
-  .interview-gallery {
+  .news-gallery {
     padding: 0;
   }
 }
-.interview-gallery {
+.news-gallery {
   padding: 10px;
 }
 
-.interview-gallery-button {
+.news-gallery-button {
   position: absolute;
   cursor: pointer;
   z-index: 5;
@@ -168,7 +187,7 @@ export default {
   transform: translate(0, -49%);
 }
 
-.interview-gallery-button-prev {
+.news-gallery-button-prev {
   @include custom-max-width(1600px) {
     left: 0;
     top: 50%;
@@ -178,7 +197,7 @@ export default {
   left: -80px;
 }
 
-.interview-gallery-button-next {
+.news-gallery-button-next {
   @include custom-max-width(1600px) {
     right: 0;
     top: 50%;
@@ -186,6 +205,6 @@ export default {
   }
   transform: translate(0, -53%) rotate(180deg);
   right: -80px;
-  // transform: rotate(180deg);
+  //transform: rotate(180deg);
 }
 </style>

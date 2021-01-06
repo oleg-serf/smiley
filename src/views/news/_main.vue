@@ -7,14 +7,15 @@
       :item="item"
     >
       <BottomBorderedTitleWithSearch
-          :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | News'"
-          :with-search="true"
-          :search-expandable="true"
-          @search="find(item, $event)"
+        :border-top="isMobile"
+        :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | News'"
+        :with-search="!isMobile"
+        :search-expandable="true"
+        @search="find(item, $event)"
       ></BottomBorderedTitleWithSearch>
-      <NewsGallery :news="item.latest_news"></NewsGallery>
+      <NewsGallery :news="item.latest_news" :for-mobile="isMobile" :with-slider="isMobile"></NewsGallery>
     </section>
-    <Subscribe />
+    <Subscribe :for-mobile="isMobile"/>
   </div>
 </template>
 
@@ -36,6 +37,7 @@ export default {
   },
   data() {
     return {
+      isMobile: false,
       latest: [],
       news: [],
       search: "",
@@ -48,14 +50,18 @@ export default {
         params: { keyword: keyword },
       });*/
       axios
-          .get(`/news?keyword=${keyword}&goal=${item.slug}`)
-          .then((res) => {
-            console.log('searched for news')
-            console.log(res)
-          })
-          .catch((error) => console.error(error));
+        .get(`/news?keyword=${keyword}&goal=${item.slug}`)
+        .then((res) => {
+          console.log("searched for news");
+          console.log(res);
+        })
+        .catch((error) => console.error(error));
+    },
+    handleResize() {
+      this.isMobile = window.outerWidth >= 450 ? false : true;
     },
   },
+
   created() {
     console.log("news triggered");
     axios
@@ -67,6 +73,13 @@ export default {
         this.news = res.data.featured_goals;
       })
       .catch((error) => console.error(error));
+
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
@@ -79,6 +92,9 @@ export default {
 .news-section {
   margin-bottom: 100px;
   position: relative;
+  @include smMax {
+    margin-bottom: 0;
+  }
 }
 
 .news-category {

@@ -12,9 +12,7 @@
         size="m"
         type="events"
       />
-      <div
-        class="event-category"
-      >
+      <div class="event-category">
         <span class="event-category__name" v-if="manualGoal == null">
           {{ event.goal_category }}
         </span>
@@ -40,7 +38,7 @@
       <h3 class="event__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
         {{ cutText(event.title, 60) }}
       </h3>
-      <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, 100, 'description')">
+      <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, forMobile?50:100, 'description')">
       </div>
       <div class="event__content-metadata">
         <span>{{ event.location }}</span> |
@@ -253,6 +251,7 @@ export default {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
+        font-size: 20px;
       }
     }
   }
@@ -279,7 +278,7 @@ export default {
       height: 6rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 28px;
       margin-top: 1rem;
     }

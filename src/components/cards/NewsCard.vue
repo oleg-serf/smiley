@@ -1,9 +1,9 @@
 <template>
   <article class="news-article" :class="[forMobile ? 'for-mobile' : '']">
     <div
-        class="news-article__image"
-        @mouseenter="showDescription = true"
-        @mouseleave="showDescription = false"
+      class="news-article__image"
+      @mouseenter="showDescription = true"
+      @mouseleave="showDescription = false"
     >
       <MediaImage
         :src="article.cover_image"
@@ -173,10 +173,10 @@ export default {
     }
     .news-article__content-description {
       margin-top: 0 !important;
-      height: 4rem !important;
+      min-height: 4rem !important;
     }
     .news-article__content-metadata {
-      height: 2rem !important;
+      min-height: 2rem !important;
     }
   }
   .news-article__image {
@@ -209,6 +209,7 @@ export default {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
+        font-size: 20px;
       }
     }
   }
@@ -232,7 +233,7 @@ export default {
     }
 
     .news-article__content-description {
-      height: 5rem;
+      min-height: 5rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -241,7 +242,7 @@ export default {
     }
 
     .news-article__content-metadata {
-      height: 3rem;
+      min-height: 3rem;
       color: black;
       font-family: "Gotham Medium";
       font-size: 16px;

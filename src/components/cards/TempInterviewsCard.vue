@@ -218,6 +218,7 @@ export default {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
+        font-size: 20px;
       }
     }
   }

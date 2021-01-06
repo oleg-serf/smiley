@@ -48,7 +48,6 @@
 
 <script>
 import { ButtonArrow } from "@/components/buttons";
-import NewsCard from "@/components/cards/NewsCard.vue";
 import InterviewsCard from "@/components/cards/InterviewsCard";
 
 export default {
@@ -85,7 +84,6 @@ export default {
   },
   components: {
     InterviewsCard,
-    NewsCard,
     ButtonArrow,
   },
   data() {
