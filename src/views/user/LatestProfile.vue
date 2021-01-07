@@ -28,7 +28,7 @@
           <div class="profile__actions">
             <div class="profile__actions-item">
               <router-link :to="{name: 'account-settings'}" class="button">
-                <i class="fa fa-pencil"></i>edit profile
+                <i class="fa fa-pencil fa-i-prepend"></i>edit profile
               </router-link>
             </div>
             <div class="profile__actions-item">
@@ -280,6 +280,8 @@ export default {
   justify-content: center;
   cursor: pointer;
   transition: color .2s, transform .2s, box-shadow .2s;
+  text-decoration: none !important;
+  color: #000;
 
   &:hover {
     background-color: #000;
