@@ -1102,8 +1102,8 @@ header {
   }
 
   &__submit {
-    background-color: #eeb400;
-    color: #fff;
+    background-color: #ffe300;
+    color: #000;
     height: 2.625rem;
     border: none;
     padding: 0px 1rem;
