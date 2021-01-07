@@ -1,18 +1,29 @@
 <template>
   <div class="interviews">
-    <section
+    <!-- <section
       class="interviews-section container"
-      v-for="item in interviews"
-      :key="'interviews-item-' + item.slug"
-      :item="item"
     >
       <BottomBorderedTitleWithSearch
-          :title="'<b>' + item.prefix + ' ' + item.name + '</b>' + ' | Interviews'"
+          :title="'<b> Past </b>' + ' | Interviews'"
+          :with-search="false"          
+          hover-color="#FFE300"
+      ></BottomBorderedTitleWithSearch>
+      <VideoInterviewsGallery :interviews="pastInterviews"></VideoInterviewsGallery>
+    </section> -->
+
+    <section
+      class="interviews-section container"
+      v-for="goal in featured_goals"
+      :key="'interviews-item-' + goal.slug"
+      :item="goal"
+    >
+      <BottomBorderedTitleWithSearch
+          :title="'<b>' + goal.prefix + ' ' + goal.name + '</b>' + ' | Interviews'"
           :with-search="true"
           :hover-effect="true"
           hover-color="#FFE300"
       ></BottomBorderedTitleWithSearch>
-      <InterviewsGallery :interviews="item.latest_news"></InterviewsGallery>
+      <VideoInterviewsGallery :interviews="goal.interviews"></VideoInterviewsGallery>
     </section>
     <Subscribe />
   </div>
@@ -22,6 +33,7 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery.vue";
+import VideoInterviewsGallery from "@/components/interviews/VideoInterviewsGallery.vue";
 import { VSearch } from "@/components/app";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import Subscribe from "@/components/forms/Subscribe";
@@ -32,12 +44,13 @@ export default {
     Subscribe,
     BottomBorderedTitleWithSearch,
     InterviewsGallery,
+    VideoInterviewsGallery,
     VSearch,
   },
   data() {
     return {
       latest: [],
-      interviews: [],
+      featured_goals: [],
       search: "",
     };
   },
@@ -57,7 +70,34 @@ export default {
         console.log("interviews", res);
 
         // this.latest = res.data.latest_interviews;
-        this.interviews = res.data.featured_goals;
+        this.featured_goals = res.data.featured_goals;
+
+        const temp_interviews = [
+          {
+            prefix: "1",
+            name: "Claire Linacre",
+            video: "https://player.vimeo.com/video/481275029?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            title: "Donor & Data Manager | Akt | LGBT Event | November 2020",
+            description: "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
+            slug: "Beyond Pride"
+          },
+          {
+            name: "Josh Littlejohn",
+            video: "https://player.vimeo.com/video/484519685?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            title: "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
+            description: "Surely we can do better than this",
+            slug: "Ending Homelessness & Building resilient Communities"
+          },
+          {
+            name: "Georgia Dodsworth",
+            video: "https://player.vimeo.com/video/370887819?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            title: "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
+            description: "We are not alone",
+            slug: "LTAMH"
+          },
+        ];
+        this.featured_goals[0].interviews = temp_interviews;
+
       })
       .catch((error) => console.error(error));
   },

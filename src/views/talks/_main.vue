@@ -28,9 +28,10 @@
           class="container"
           v-show="is_shown"
           @submit.prevent="sendFilterData"
+          @reset.prevent="resetFilterData"
       >
         <div class="filters-container">
-          <div class="filter-column filter filter--location">
+          <!-- <div class="filter-column filter filter--location">
             <label class="filter__label" for="inputLocation">
               <div class="filter__title">Location</div>
             </label>
@@ -50,7 +51,7 @@
                 :options="filter.radius"
                 v-model="filterQuery.radius"
             ></VDropdown>
-          </div>
+          </div> -->
           <div class="filter-column filter filter--timing">
             <div class="filter__label">
               <div class="filter__title">Timing</div>
@@ -60,7 +61,8 @@
                 name="timing"
                 left="Upcoming"
                 right="Past"
-                v-model="filterQuery.timing"
+                v-model="timing"
+                @input="onChangeTiming"
             >
             </VSwitch>
           </div>
@@ -77,6 +79,7 @@
                   id="inputDate"
                   class="filter__input-date"
                   color="red"
+                  @input="onDateChange()"
               />
             </div>
           </div>
@@ -116,7 +119,7 @@
             v-for="(event, key) in events"
             :key="'event-card-' + key"
             :event="event"
-            button-name="Read More"
+            button-name="REGISTER"
         ></EventCard>
       </div>
       <!-- <div style="text-align: center">
@@ -210,12 +213,12 @@ export default {
         latitude: null,
         longitude: null,
         radius: 0,
-        timing: "Upcoming",
         date: {
           end: new Date(),
           start: new Date(),
         },
       },
+      timing: "Upcoming",
     };
   },
   methods: {
@@ -243,32 +246,49 @@ export default {
       this.filterQuery.latitude = data.geometry.location.lat();
       this.filterQuery.longitude = data.geometry.location.lng();
     },
+    onChangeTiming() {
+      if(this.timing == "Upcoming"){
+        this.filterQuery.date = {
+          end: new Date(),
+          start: new Date()
+        };
+      } else {
+        this.filterQuery.date = {
+          start: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
+          end: new Date()
+        };
+      }
+    },
+    onDateChange() {
+      this.timing = "";
+    },
     sendFilterData() {
-      // let filter = this.filterQuery;
-      // // console.log(this.filterQuery);
-      // filter.date.start = Math.floor(
-      //   new Date(filter.date.start).getTime() / 1000
-      // );
-      // filter.date.end = Math.floor(new Date(filter.date.end).getTime() / 1000);
-      // console.log(filter);
-      this.$swal({text: "This feature will work soon"});
-    },
-    loadEvents(page) {
+      const start = Math.floor(new Date(this.filterQuery.date.start).getTime() / 1000);
+      const end = Math.floor(new Date(this.filterQuery.date.end).getTime() / 1000);
+
       axios
-          .get("/events?page=" + page)
-          .then((res) => {
-            this.events = res.data.events;
-          })
-          .catch((error) => console.error(error));
+        .get("/events?date_start="+start+"&date_end="+end)
+        .then((res) => {
+          console.log("Filtered events", res);
+          this.events = res.data.events;
+          this.events_pages = res.data.pages_count;
+        })
+        .catch((error) => console.error(error));
     },
-    loadPastEvents(page) {
-      axios
-          .get("/events/past?page=" + page)
-          .then((res) => {
-            this.past = res.data.events;
-          })
-          .catch((error) => console.error(error));
-    },
+    resetFilterData() {
+      this.filterQuery = {
+        city: null,
+        country: null,
+        latitude: null,
+        longitude: null,
+        radius: 0,
+        date: {
+          end: new Date(),
+          start: new Date(),
+        },
+      }
+      this.timing = "Upcoming";
+    }
   },
   mounted() {
     axios
@@ -283,13 +303,13 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    axios
-        .get("/goals")
-        .then(res => {
-          console.log("/goals", res.data);
-          this.goals = res.data.goal_categories[0].goals;
-        })
-        .catch(error => console.error(error));
+    // axios
+    //     .get("/goals")
+    //     .then(res => {
+    //       console.log("/goals", res.data);
+    //       this.goals = res.data.goal_categories[0].goals;
+    //     })
+    //     .catch(error => console.error(error));
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);

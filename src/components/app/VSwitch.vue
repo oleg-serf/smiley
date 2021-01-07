@@ -8,7 +8,7 @@
         :name="name"
         :value="left"
         @change="$emit('input', left)"
-        checked
+        :checked="value == left"
       />
       <div class="toggle__backdrop"></div>
     </label>
@@ -20,6 +20,7 @@
         :name="name"
         :value="right"
         @change="$emit('input', right)"
+        :checked="value == right"
       />
       <div class="toggle__backdrop"></div>
     </label>
@@ -31,6 +32,10 @@ export default {
   name: "VSwitch",
   props: {
     name: {
+      type: String,
+      required: false,
+    },
+    value: {
       type: String,
       required: false,
     },
