@@ -172,7 +172,7 @@
             </router-link>
             <router-link
                 v-else-if="$route.path.search('/smiley-talks/') > -1"
-                :to="{name: 'talks'}"
+                :to="{name: $route.path == '/smiley-talks/' ? 'home':'talks'}"
                 class="home-link"
             >
               <img src="/images/main/talks-desktop-logo.svg" alt="Smiley Movement"/>
@@ -1016,14 +1016,14 @@ header {
       font-family: "Gotham Book", sans-serif;
 
       &:hover {
-        color: #000;
+        color: yellow;
         text-decoration: none;
         font-weight: bold;
         font-family: "Gotham Bold", sans-serif;
       }
 
       &.router-link-exact-active {
-        color: #000;
+        color:yellow;
         font-weight: bold;
         font-family: "Gotham Bold", sans-serif;
       }

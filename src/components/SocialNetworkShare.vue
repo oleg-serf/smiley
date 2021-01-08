@@ -6,9 +6,11 @@
         size="small"
         color="blue"
     >
-      <router-link
+      <a
           class="event__button-link"
-          :to="'#'"><i class="fa fa-facebook"></i></router-link>
+          :href="shareLink('facebook')"
+          target="_blank"
+      ><i class="fa fa-facebook"></i></a>
     </VButton>
     <!-- <VButton
         class="link-actions__icon-btn"
@@ -26,9 +28,11 @@
         size="small"
         color="light-blue"
     >
-      <router-link
+      <a
           class="event__button-link"
-          :to="'#'"><i class="fa fa-twitter"></i></router-link>
+          :href="shareLink('twitter')"
+          target="_blank"
+      ><i class="fa fa-twitter"></i></a>
     </VButton>
     <!-- <VButton
         class="link-actions__icon-btn"
@@ -54,13 +58,35 @@ name: "SocialNetworkShare",
   components: {
     VButton
   },
-
+  props: {
+    title: String
+  },
   /*
   * DATA */
   data () {
     return {
       shareText: '< share'
     }
+  },
+  methods: {
+    shareLink(type) {
+      let result = "";
+      const title = encodeURI(this.title);
+      const url = process.env.VUE_APP_DOMAIN + encodeURI(this.$route.path);
+      switch (type) {
+        case "facebook":
+          result = `https://www.facebook.com/sharer.php?u=${url}&t=${title}`;
+          break;
+        case "twitter":
+          result = `http://twitter.com/share?text=${title}&url=${url}`;
+          break;
+        case "linkedin":
+          result = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`;
+          break;
+      }
+
+      return result;
+    },
   }
 }
 </script>

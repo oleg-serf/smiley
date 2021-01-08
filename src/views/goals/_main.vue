@@ -23,7 +23,7 @@
     </div>
     <div>
       <!--   SOCIAL_NETWORK_SHARE COMPONENT   -->
-      <SocialNetworkShare></SocialNetworkShare>
+      <SocialNetworkShare :title="''"></SocialNetworkShare>
     </div>
 
     <div class="event-category">

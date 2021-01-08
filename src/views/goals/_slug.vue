@@ -38,7 +38,7 @@
           <div class="goal-description__content__actions">
             <div class="social-share">
               <!--   SOCIAL_NETWORK_SHARE COMPONENT   -->
-              <SocialNetworkShare></SocialNetworkShare>
+              <SocialNetworkShare :title="goal.name"></SocialNetworkShare>
             </div>
             <VButton
                 class="colored-button"

@@ -312,7 +312,7 @@ export default {
       color: black;
       width: 100%;
       height: 100%;
-      line-height: 48px;
+      line-height: 45px;
 
       &:hover {
         text-decoration: none;
