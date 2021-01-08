@@ -757,11 +757,7 @@ export default {
       return image.includes(';base64,');
     },
     onSubmit() {
-      const request = {
-        need: [],
-        offer: [],
-        user: {}
-      };
+      const request = {...this.user, need: [], offer: []};
       this.supportNeeded.forEach(parent => {
         parent.child.forEach(child => {
           request.need.push(child);
@@ -772,7 +768,6 @@ export default {
           request.offer.push(child);
         })
       });
-      request.user = this.user;
 
       axios
           .post("/users/settings", request)
