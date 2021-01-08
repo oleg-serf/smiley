@@ -21,11 +21,12 @@ export default {
 </script>
 <template>
   <div class="home">
-    <hero video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
-          :link="'/our-story'" type="iframe"
+    <hero 
+      video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
+      :link="'/our-story'" type="iframe"
     >
       <template v-slot:title>
-        <span style="color: #FFE300">Positive</span> Impact Journalism
+        <span style="color: #FFE300">Inspiring</span> Positive Change
       </template>
       <template v-slot:subtitle>
         Join our movement to create a happier,

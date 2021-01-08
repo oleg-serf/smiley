@@ -156,10 +156,11 @@ export default {
             break;
           }
         }
-        return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
+        const slice_text = text.slice(0, limit).trim();
+        return (stringName === 'description' ? `"${slice_text}...<b>More</b>> "` : `${slice_text}...`);
       }
 
-      return text;
+      return (stringName === 'description' ? `"${text}"` : text);
     },
   },
 };
