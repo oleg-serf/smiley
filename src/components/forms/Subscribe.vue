@@ -149,6 +149,10 @@ export default {
     @include mdMax {
       padding: 0.67rem 0.5rem;
     }
+
+    &:focus:required {
+      border-color: #FFEC00 !important;
+    }
   }
 
   &__button {
