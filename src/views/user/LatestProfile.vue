@@ -2,7 +2,7 @@
   <section>
     <div class="profile">
       <div class="profile__background">
-        <img :src="$settings.images_path.users + 'm_'+ user.cover_image" v-if="user.cover_image != null"/>
+        <img :src="$settings.images_path.users + 'covers/m_'+ user.cover_image" v-if="user.cover_image != null"/>
         <img src="/images/default-cover_image.jpg" v-else>
       </div>
       <div class="profile__info container">

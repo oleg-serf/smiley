@@ -22,7 +22,7 @@
       <div class="profile__background">
         <img :src="user.cover_image"
              v-if="user.cover_image != null && isBase64(user.cover_image)"/>
-        <img :src="$settings.images_path.users + 'm_'+ user.cover_image" v-else-if="user.cover_image != null"/>
+        <img :src="$settings.images_path.users + 'covers/m_'+ user.cover_image" v-else-if="user.cover_image != null"/>
         <img src="/images/default-cover_image.jpg" v-else>
         <button type="button" class="button" style="position: absolute; bottom: 1.5rem; right: 1.5rem;" @click.prevent="editBackground">
           <i class="fa fa-edit"></i>
