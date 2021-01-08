@@ -163,6 +163,12 @@ export default {
     font-size: 1.5rem;
     line-height: 1;
     padding: 1.2rem 1rem;
+    transition: background-color .2s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken(#ffe300, 10%);
+    }
 
     @include mdMax {
       grid-column: 1 / span 2;
