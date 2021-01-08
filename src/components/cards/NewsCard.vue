@@ -52,7 +52,10 @@
         :style="[forMobile ? {'height': 'auto'} : {}]"
         v-html="cutText(article.description, 60, 'description')"
       ></div>
-      <div class="news-article__content-metadata">
+      <div
+        class="news-article__content-metadata"
+        :style="[forMobile ? {'margin-top': '30px'} : {}]"
+      >
         <span>News</span> | {{ article.author }} | {{ dateAgo(article.published_at) }}
       </div>
     </div>
