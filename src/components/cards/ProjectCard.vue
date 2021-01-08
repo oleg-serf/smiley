@@ -48,11 +48,11 @@ export default {
 
       switch (slug) {
         case 'smiling-clubs': {
-          result = '/images/remove-smiling-clubs.jpg';
+          result = '/images/remove-mobile-laughter-booth.jpg';
           break;
         }
         case 'mobile-laughter-booth': {
-          result = '/images/remove-mobile-laughter-booth.jpg';
+          result = '/images/remove-smiling-clubs.jpg';
           break;
         }
         case 'accelerating-community-driven-leaders': {

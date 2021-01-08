@@ -149,16 +149,27 @@ export default {
     @include mdMax {
       padding: 0.67rem 0.5rem;
     }
+
+    &:focus:required {
+      border-color: #FFEC00 !important;
+    }
   }
 
   &__button {
     background-color: #ffe300;
-    box-shadow: 0px 1px 6px #000000;
+    box-shadow: 0px 1px 3px #000000;
     border: none;
     border-radius: 44px;
     font-size: 1.5rem;
     line-height: 1;
     padding: 1.2rem 1rem;
+    transition: background-color .2s, box-shadow .2s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken(#ffe300, 2%);
+      box-shadow: 0px 3px 6px rgba(0,0,0,.3);
+    }
 
     @include mdMax {
       grid-column: 1 / span 2;

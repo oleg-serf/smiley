@@ -1,165 +1,170 @@
 <template>
   <div>
     <header class="header">
+      <div class="sidebar" :class="{'active' : sidebar}">
+        <div class="sidebar__item sidebar__item--close">
+          <button @click="sidebar = false">
+            <i class="fa fa-arrow-left"></i>
+            Close menu
+          </button>
+        </div>
+        <div class="sidebar__item sidebar__item--actions" :class="{'sidebar__item--logged-in' : loggedIn}">
+          <template v-if="!loggedIn">
+            <h3>Join Us</h3>
+          </template>
+          <template v-if="loggedIn">
+            <router-link :to="{name: 'profile'}" class="user__avatar-holder" style="margin-right: .5rem">
+              <template v-if="user.avatar">
+                <img
+                    :src="$settings.images_path.users + 's_' + user.avatar"
+                    class="user__avatar"
+                    style="width:100%!important; height:100%!important"
+                />
+              </template>
+              <template v-else>
+                <img src="/images/main/icon-profile.svg" class="user-avatar"/>
+              </template>
+            </router-link>
+          </template>
+          <template v-if="loggedIn">
+            <router-link :to="{name: 'profile'}" class="user__initials">{{ user.initials }}</router-link>
+          </template>
+          <template v-else>
+            <ul class="mobile-menu">
+              <li class="mobile-menu__item">
+                <router-link :to="{name: 'register'}" class="mobile-menu__link">
+                  <i class="fa fa-address-book-o"></i>
+                  Register
+                </router-link>
+              </li>
+              <li class="mobile-menu__item">
+                <router-link :to="{name: 'login'}" class="mobile-menu__link">
+                  <i class="fa fa-user-circle-o"></i>
+                  Login
+                </router-link>
+              </li>
+            </ul>
+          </template>
+        </div>
+        <template v-if="loggedIn">
+          <div class="sidebar__item sidebar__item--menu">
+            <ul class="mobile-menu">
+              <li class="mobile-menu__item">
+                <router-link :to="{ name: 'profile' }" class="mobile-menu__link">
+                  <i class="fa fa-user"></i>
+                  &nbsp;
+                  Profile
+                </router-link>
+              </li>
+              <li class="mobile-menu__item">
+                <button class="mobile-menu__link" @click.prevent="logout()">
+                  <i class="fa fa-sign-out"></i>
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+        </template>
+        <div class="sidebar__item sidebar__item--menu">
+          <h3>Navigation:</h3>
+          <ul class="mobile-menu">
+            <li class="mobile-menu__item">
+              <router-link :to="{name: 'news'}" class="mobile-menu__link">News</router-link>
+            </li>
+            <li class="mobile-menu__item">
+              <router-link :to="{name: 'talks'}" class="mobile-menu__link">Events</router-link>
+            </li>
+            <li class="mobile-menu__item">
+              <router-link :to="{name: 'interviews'}" class="mobile-menu__link">Interviews</router-link>
+            </li>
+            <!-- <li class="mobile-menu__item">
+              <router-link :to="{name: 'chat'}" class="mobile-menu__link">Chatrooms</router-link>
+            </li> -->
+            <li class="mobile-menu__item">
+              <router-link :to="{name: 'network'}" class="mobile-menu__link">Network</router-link>
+            </li>
+            <li class="mobile-menu__item">
+              <router-link :to="{name: 'story'}" class="mobile-menu__link">About us</router-link>
+            </li>
+            <li class="mobile-menu__item">
+              <router-link :to="{name: 'goals'}" class="mobile-menu__link">UN Goals</router-link>
+            </li>
+            <li class="mobile-menu__item">
+              <router-link :to="{name: 'contact'}" class="mobile-menu__link">Contact us</router-link>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar__item sidebar__item--share">
+          <h3>Our social networks:</h3>
+          <ul class="social-share">
+            <li class="social-share__item" v-if="social.facebook">
+              <a :href="social.facebook"
+                 class="social-share__link social-share__link--facebook"
+                 target="_blank">
+                <i class="fa fa-facebook"></i>
+              </a>
+            </li>
+            <li class="social-share__item" v-if="social.instagram">
+              <a :href="social.instagram"
+                 class="social-share__link social-share__link--instagram" target="_blank">
+                <i class="fa fa-instagram"></i>
+              </a>
+            </li>
+            <li class="social-share__item" v-if="social.linkedin">
+              <a :href="social.linkedin"
+                 class="social-share__link social-share__link--linkedin" target="_blank">
+                <i class="fa fa-linkedin"></i>
+              </a>
+            </li>
+            <li class="social-share__item" v-if="social.twitter">
+              <a :href="social.twitter"
+                 class="social-share__link social-share__link--twitter" target="_blank">
+                <i class="fa fa-twitter"></i>
+              </a>
+            </li>
+            <li class="social-share__item" v-if="social.youtube">
+              <a :href="social.youtube"
+                 class="social-share__link social-share__link--youtube" target="_blank">
+                <i class="fa fa-youtube-play"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div class="container">
         <div class="header__grid-top">
           <div class="header__column header__column--actions">
             <div class="actions">
-              <button @click="sidebar = true"
-                      style="font-size: 100%; font-family: inherit; border: 0; padding: 0; background-color: #ffffff;">
-                <i class="fa fa-bars"></i>
-              </button>
-              <div class="sidebar" :class="{'active' : sidebar}">
-                <div class="sidebar__item sidebar__item--close">
-                  <button @click="sidebar = false">
-                    <i class="fa fa-arrow-left"></i>
-                    Close menu
-                  </button>
-                </div>
-                <div class="sidebar__item sidebar__item--actions" :class="{'sidebar__item--logged-in' : loggedIn}">
-                  <template v-if="!loggedIn">
-                    <h3>Join Us</h3>
-                  </template>
-                  <template v-if="loggedIn">
-                    <router-link :to="{name: 'profile'}" class="user-avatar">
-                      <template v-if="user.avatar">
-                        <img
-                            :src="$settings.images_path.users + 's_' + user.avatar"
-                            class="user__avatar"
-                            style="width:100%!important; height:100%!important"
-                        />
-                      </template>
-                      <template v-else>
-                        <img src="/images/main/icon-profile.svg" class="user-avatar"/>
-                      </template>
-                    </router-link>
-                  </template>
-                  <template v-if="loggedIn">
-                    <router-link :to="{name: 'profile'}" class="user-initials">{{ user.initials }}</router-link>
-                  </template>
-                  <template v-else>
-                    <ul class="mobile-menu">
-                      <li class="mobile-menu__item">
-                        <router-link :to="{name: 'register'}" class="mobile-menu__link">
-                          <i class="fa fa-address-book-o"></i>
-                          Register
-                        </router-link>
-                      </li>
-                      <li class="mobile-menu__item">
-                        <router-link :to="{name: 'login'}" class="mobile-menu__link">
-                          <i class="fa fa-user-circle-o"></i>
-                          Login
-                        </router-link>
-                      </li>
-                    </ul>
-                  </template>
-                </div>
-                <template v-if="loggedIn">
-                  <div class="sidebar__item sidebar__item--menu">
-                    <ul class="mobile-menu">
-                      <li class="mobile-menu__item">
-                        <router-link :to="{ name: 'profile' }" class="mobile-menu__link">
-                          <i class="fa fa-user"></i>
-                          &nbsp;
-                          Profile
-                        </router-link>
-                      </li>
-                      <li class="mobile-menu__item">
-                        <button class="mobile-menu__link" @click.prevent="logout()">
-                          <i class="fa fa-sign-out"></i>
-                          Log Out
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </template>
-                <div class="sidebar__item sidebar__item--menu">
-                  <h3>Navigation:</h3>
-                  <ul class="mobile-menu">
-                    <li class="mobile-menu__item">
-                      <router-link :to="{name: 'news'}" class="mobile-menu__link">News</router-link>
-                    </li>
-                    <li class="mobile-menu__item">
-                      <router-link :to="{name: 'talks'}" class="mobile-menu__link">Events</router-link>
-                    </li>
-                    <li class="mobile-menu__item">
-                      <router-link :to="{name: 'interviews'}" class="mobile-menu__link">Interviews</router-link>
-                    </li>
-                    <!-- <li class="mobile-menu__item">
-                      <router-link :to="{name: 'chat'}" class="mobile-menu__link">Chatrooms</router-link>
-                    </li> -->
-                    <li class="mobile-menu__item">
-                      <router-link :to="{name: 'network'}" class="mobile-menu__link">Network</router-link>
-                    </li>
-                    <li class="mobile-menu__item">
-                      <router-link :to="{name: 'story'}" class="mobile-menu__link">About us</router-link>
-                    </li>
-                    <li class="mobile-menu__item">
-                      <router-link :to="{name: 'goals'}" class="mobile-menu__link">UN Goals</router-link>
-                    </li>
-                    <li class="mobile-menu__item">
-                      <router-link :to="{name: 'contact'}" class="mobile-menu__link">Contact us</router-link>
-                    </li>
-                  </ul>
-                </div>
-                <div class="sidebar__item sidebar__item--share">
-                  <h3>Our social networks:</h3>
-                  <ul class="social-share">
-                    <li class="social-share__item" v-if="social.facebook">
-                      <a :href="social.facebook"
-                         class="social-share__link social-share__link--facebook"
-                         target="_blank">
-                        <i class="fa fa-facebook"></i>
-                      </a>
-                    </li>
-                    <li class="social-share__item" v-if="social.instagram">
-                      <a :href="social.instagram"
-                         class="social-share__link social-share__link--instagram" target="_blank">
-                        <i class="fa fa-instagram"></i>
-                      </a>
-                    </li>
-                    <li class="social-share__item" v-if="social.linkedin">
-                      <a :href="social.linkedin"
-                         class="social-share__link social-share__link--linkedin" target="_blank">
-                        <i class="fa fa-linkedin"></i>
-                      </a>
-                    </li>
-                    <li class="social-share__item" v-if="social.twitter">
-                      <a :href="social.twitter"
-                         class="social-share__link social-share__link--twitter" target="_blank">
-                        <i class="fa fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li class="social-share__item" v-if="social.youtube">
-                      <a :href="social.youtube"
-                         class="social-share__link social-share__link--youtube" target="_blank">
-                        <i class="fa fa-youtube-play"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+              <div class="actions__item actions__item-open-nav">
+                <button @click="sidebar = true">
+                  <i class="fa fa-bars"></i>
+                </button>
               </div>
-              <template v-if="loggedIn">
-                <router-link :to="{name: 'profile'}" class="home-link">
-                  <template v-if="user.avatar">
-                    <img :src="$settings.images_path.users + 's_' + user.avatar" class="user__avatar"/>
-                  </template>
-                  <template v-else>
+              <div class="actions__item">
+                <template v-if="loggedIn">
+                  <router-link :to="{name: 'profile'}" class="user__avatar-holder">
+                    <template v-if="user.avatar">
+                      <img :src="$settings.images_path.users + 's_' + user.avatar" class="user__avatar"/>
+                    </template>
+                    <template v-else>
+                      <img src="/images/main/icon-profile.svg" class="user__avatar"/>
+                    </template>
+                  </router-link>
+                </template>
+                <template v-else>
+                  <router-link :to="{name: 'login'}" class="user__avatar-holder">
                     <img src="/images/main/icon-profile.svg" class="user__avatar"/>
-                  </template>
-                </router-link>
-              </template>
-              <template v-else>
-                <router-link :to="{name: 'login'}" class="home-link">
-                  <img src="/images/main/icon-profile.svg" class="user__avatar"/>
-                </router-link>
-              </template>
-              <template v-if="loggedIn">
-                <router-link :to="{name: 'profile'}" class="text-link">{{ user.initials }}</router-link>
-              </template>
-              <template v-else>
-                <button @click="authentification" class="text-link">Register / Login</button>
-              </template>
+                  </router-link>
+                </template>
+              </div>
+              <div class="actions__item">
+                <template v-if="loggedIn">
+                  <router-link :to="{name: 'profile'}" class="user__initials">{{ user.initials }}</router-link>
+                </template>
+                <template v-else>
+                  <button @click="authentification" class="user__initials">Register / Login</button>
+                </template>
+              </div>
             </div>
           </div>
           <div class="header__column header__column--logo">
@@ -389,7 +394,7 @@
           </li>
         </ul>
       </div>
-      <div class="search-form" :class="{'active' : search.trigger}">
+      <div class="search-form" :class="{'active' : search.trigger}" v-click-outside="hideSearchForm">
         <div class="search-form__title">What do you want to find?</div>
         <form class="container" @submit.prevent="find">
           <button type="reset" class="search-form__reset" @click="search.trigger = false;">
@@ -415,6 +420,7 @@
 <script>
 import router from "@/router";
 import axios from "@/axios-auth";
+import ClickOutside from 'vue-click-outside';
 
 export default {
   name: "Header",
@@ -513,6 +519,9 @@ export default {
           .dispatch("user/logout");
       this.sidebar = false;
     },
+    hideSearchForm() {
+      this.search.trigger = false;
+    },
   },
   watch: {
     '$route.path': {
@@ -521,6 +530,12 @@ export default {
       }
     }
   },
+  mounted() {
+    this.popupItem = this.$el
+  },
+  directives: {
+    ClickOutside
+  }
 };
 </script>
 
@@ -722,7 +737,7 @@ header {
     position: relative;
 
     &.yellow-bottom {
-      border-bottom: 3px solid yellow;
+      border-bottom: 3px solid #FFEC00;
       padding-bottom: 8px;
     }
 
@@ -794,26 +809,6 @@ header {
   &__column {
     display: flex;
     align-items: flex-end;
-
-    &--actions {
-      & > div {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-
-      button {
-        @include font-size(1.5rem);
-        margin-right: 1rem;
-        margin-left: 0.5rem;
-      }
-
-      .text-link {
-        @include lgMax {
-          display: none;
-        }
-      }
-    }
 
     &--socials {
       justify-content: flex-end;
@@ -910,41 +905,15 @@ header {
 }
 
 
-.user {
-  &__avatar {
-    height: 2.1rem !important;
-    width: 2.1rem !important;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 1rem;
-  }
-}
-
-.home-link {
-  margin-right: 1.5rem;
-
-  img {
-    max-width: 320px;
-    height: auto;
-    margin: 0px;
-  }
-}
-
-.text-link {
-  font-size: 1.4rem;
-  color: #000;
-  transition: border-color .2s;
-  margin: 0px;
-  border: none;
-  border-bottom: 1px solid transparent;
-  background: transparent;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: none;
-    border-color: #000;
-  }
-}
+//.home-link {
+//  margin-right: 1.5rem;
+//
+//  img {
+//    max-width: 320px;
+//    height: auto;
+//    margin: 0px;
+//  }
+//}
 
 .main-menu {
   margin: 2.5rem 0px 0px 0px;
@@ -1123,4 +1092,72 @@ header {
   }
 }
 
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &__item {
+    margin-right: .3rem;
+    margin-left: .3rem;
+
+    &:first-child {
+      margin-left: 0px;
+    }
+
+    &-open-nav {
+      button {
+        padding: 0px;
+        margin: 0px;
+        border: none;
+        background: none;
+        font-size: 1.4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.user {
+  &__avatar-holder {
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #FFEE01;
+  }
+
+  &__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+
+  &__initials {
+    font-size: 1.2rem;
+    color: #000;
+    transition: border-color .2s;
+    margin: 0px;
+    border: none;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+      border-color: #000;
+    }
+  }
+}
 </style>
