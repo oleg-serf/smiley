@@ -13,7 +13,7 @@
             </router-link>
             <router-link
                 v-else-if="$route.path.search('/smiley-talks/') > -1"
-                :to="{name: 'talks'}"
+                :to="{name: $route.path == '/smiley-talks/' ? 'home':'talks'}"
                 class="home-link"
             >
               <img src="/images/main/talks-mobile-logo.svg" alt="Smiley Movement"/>
@@ -54,7 +54,7 @@
               <!--     HEADER BAR MENU       -->
               <div id="sidebarWrapper">
                 <div id="mySidenav" class="sidenav">
-                  <span class="closebtn" @click="closeNav">&times;</span>
+                  <span class="closebtn" @click="closeNav"><i class="fa fa-angle-left"></i></span>
                   <div class="social-share-and-search">
                     <button
                       class="search-trigger"
