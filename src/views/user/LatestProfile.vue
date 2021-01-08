@@ -2,8 +2,8 @@
   <section>
     <div class="profile">
       <div class="profile__background">
-        <img :src="$settings.images_path.users + 'm_'+ user.cover_image" v-if="user.cover_image != null"/>
-        <img src="/images/remove-profile_background.jpg" v-else>
+        <img :src="$settings.images_path.users + 'covers/m_'+ user.cover_image" v-if="user.cover_image != null"/>
+        <img src="/images/default-cover_image.jpg" v-else>
       </div>
       <div class="profile__info container">
         <div class="profile__avatar">
@@ -28,7 +28,7 @@
           <div class="profile__actions">
             <div class="profile__actions-item">
               <router-link :to="{name: 'account-settings'}" class="button">
-                <i class="fa fa-pencil"></i>edit profile
+                <i class="fa fa-pencil fa-i-prepend"></i>edit profile
               </router-link>
             </div>
             <div class="profile__actions-item">
@@ -280,6 +280,8 @@ export default {
   justify-content: center;
   cursor: pointer;
   transition: color .2s, transform .2s, box-shadow .2s;
+  text-decoration: none !important;
+  color: #000;
 
   &:hover {
     background-color: #000;

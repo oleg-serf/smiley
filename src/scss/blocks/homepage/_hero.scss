@@ -73,9 +73,10 @@
   .hero__button {
     width: 210px;
     border-radius: 40px;
-    // background-color: #eeb400;
+    // background-color: #ffe300;
     background-color: black;
     border: none;
+    // color: #000;
     color: #fff;
     font-size: 1rem;
     padding-top: 15px;
@@ -91,7 +92,7 @@
     @include margin-top(2.5rem);
 
     &:hover {
-      background-color: #c09205;
+      background-color: darken(#ffe300, 5%);
     }
   }
 }
