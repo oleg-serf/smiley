@@ -416,12 +416,14 @@ export default {
   .news-section {
     .more__button {
       margin: 2rem auto;
+      line-height: 45px;
     }
   }
 
   .events-section {
     .more__button {
       margin: 2rem auto;
+      line-height: 45px;
     }
   }
 }

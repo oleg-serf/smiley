@@ -379,8 +379,9 @@
               />
             </div>
           </div>
+
           <div id="people" class="tabcontent tabContentCommon">
-            <div class="people-grid">
+            <!-- <div class="people-grid">
               <div
                   v-for="n in 14"
                   :key="`each-person-${n}`"
@@ -409,8 +410,9 @@
               <TriangleNextPrevButtons
                   text="See more"
               />
-            </div>
+            </div> -->
           </div>
+
           <div id="events" class="tabcontent tabContentCommon">
             <div class="about-img">
               <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
@@ -472,6 +474,7 @@
               />
             </div>
           </div>
+
           <div id="videos" class="tabcontent tabContentCommon">
             <div class="tab-video">
               <iframe
@@ -491,6 +494,7 @@
               />
             </div>
           </div>
+
           <div id="photos" class="tabcontent tabContentCommon">
             <div class="about-img">
               <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
@@ -510,6 +514,7 @@
               />
             </div>
           </div>
+
           <div id="reports" class="tabcontent tabContentCommon">
             <div class="reports-grid">
               <div
