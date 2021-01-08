@@ -43,15 +43,18 @@
     </div>
 
     <div class="projects-article__content">
-      <h3 class="projects-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
+      <h3 class="projects-article__content-title" :style="[forMobile ? {'height': 'auto !important'} : {}]">
         {{ cutText(project.name ? project.name : project.title, 60) }}
       </h3>
       <div
           class="projects-article__content-description"
-          :style="[forMobile ? {'height': 'auto'} : {}]"
+          :style="[forMobile ? {'height': 'auto !important'} : {}]"
           v-html="cutText(project.description, 60, 'description')"
       ></div>
-      <div class="projects-article__content-metadata">
+      <div
+        class="projects-article__content-metadata"
+        :style="[forMobile ? {'margin-top': '30px', 'height': 'auto !important'} : {}]"
+      >
         <span>{{ project.name }}</span> | {{ dateAgo('2020-12-14 13:30:00') }}
       </div>
     </div>
