@@ -7,38 +7,32 @@
     >
       <template>
         <iframe
-            :src="interview.video"
+            :src="`https://player.vimeo.com/video/${interview.video}?title=0&amp;byline=0&amp;portrait=0&sidedock=0`"
             frameborder="0"
             style="width: 100%; height: 300px; position: absolute; left: 0px; top: 0px; object-fit: cover;"
         ></iframe>
       </template>
+      <!-- <div class="video">
+        <a class="video__link" href="https://youtu.be/neHA4MJwpnY">
+          <picture>
+            <source srcset="https://i.ytimg.com/vi_webp/neHA4MJwpnY/maxresdefault.webp" type="image/webp">
+            <img class="video__media" src="https://i.ytimg.com/vi/neHA4MJwpnY/maxresdefault.jpg" alt="1. Пилот, разборы, ответы и лайвы">
+          </picture>
+        </a>
+        <button class="video__button" aria-label="Запустить видео">
+          <svg width="68" height="48" viewBox="0 0 68 48"><path class="video__button-shape" d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z"></path><path class="video__button-icon" d="M 45,24 27,14 27,34"></path></svg>
+        </button>
+      </div> -->
 
       <div class="news-article-category">
-        <span class="news-article-category__name" v-if="manualGoal == null">
-          <template v-if="interview.goal != null && interview.goal.name">
-            {{
-              interview.goal != null && interview.goal.name
-                  ? interview.goal.name
-                  : ""
-            }}
-          </template>
-          <template v-else>
-            {{
-              interview.goals != null && interview.goals.length > 0
-                  ? interview.goals[0].name
-                  : ""
-            }}
-          </template>
+        <span class="news-article-category__name" v-if="manualGoal == null">          
+          {{ interview.goal_category }}          
         </span>
         <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
         <transition>
           <span v-if="showDescription" class="news-article-category__description"
-          >UN Goal {{
-              interview.goals != null && interview.goals.length > 0
-                  ? interview.goals[0].prefix.length > 1 ? interview.goals[0].prefix : "0"+interview.goals[0].prefix
-                  : ""
-            }} | <br>
-            {{ interview.goal_category }}
+          >UN Goal {{ interview.prefix }} | <br>
+            {{ interview.name }}
           </span
           >
         </transition>
@@ -118,7 +112,8 @@ export default {
   },
   methods: {
     openPage() {
-      router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
+      // router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
+      window.open(`https://vimeo.com/${this.interview.video}`, "_blank");
     },
     dateAgo(date) {
       const currentStamp = Date.now();
