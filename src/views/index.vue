@@ -359,24 +359,33 @@ export default {
         this.interviewList = [
           {
             name: "Claire Linacre",
-            video: "https://player.vimeo.com/video/481275029?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            video: "481275029",
             title: "Donor & Data Manager | Akt | LGBT Event | November 2020",
             description: "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
-            slug: "Beyond Pride"
+            slug: "Beyond Pride",
+            prefix: "1",
+            goal_category: "Quality Education",
+            published_at:"2020-11-19"
           },
           {
             name: "Josh Littlejohn",
-            video: "https://player.vimeo.com/video/484519685?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            video: "484519685",
             title: "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
             description: "Surely we can do better than this",
-            slug: "Ending Homelessness & Building resilient Communities"
+            slug: "Ending Homelessness & Building resilient Communities",
+            prefix: "1",
+            goal_category: "Quality Education",
+            published_at:"2020-11-27"            
           },
           {
             name: "Georgia Dodsworth",
-            video: "https://player.vimeo.com/video/370887819?title=0&amp;byline=0&amp;portrait=0&sidedock=0",
+            video: "370887819",
             title: "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
             description: "We are not alone",
-            slug: "LTAMH"
+            slug: "LTAMH",
+            prefix: "1",
+            goal_category: "Quality Education",
+            published_at:"2019-11-4"            
           },
         ];
         // for temporary end
