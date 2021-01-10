@@ -13,7 +13,11 @@
         :search-expandable="true"
         @search="find(item, $event)"
       ></BottomBorderedTitleWithSearch>
-      <NewsGallery :news="item.latest_news" :for-mobile="isMobile" :with-slider="isMobile"></NewsGallery>
+      <NewsGallery 
+        :news="item.latest_news"
+        :for-mobile="isMobile"
+        :with-slider="isMobile"
+      ></NewsGallery>
     </section>
     <Subscribe :for-mobile="isMobile"/>
   </div>

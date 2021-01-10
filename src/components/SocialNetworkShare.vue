@@ -4,13 +4,13 @@
         class="link-actions__icon-btn"
         shape="round"
         size="small"
-        color="blue"
+        color="white"
     >
       <a
           class="event__button-link"
           :href="shareLink('facebook')"
           target="_blank"
-      ><i class="fa fa-facebook"></i></a>
+      ><img src="/img/social/fb.svg" alt="facebook"/></a>
     </VButton>
     <!-- <VButton
         class="link-actions__icon-btn"
@@ -20,19 +20,19 @@
     >
       <router-link
           class="event__button-link"
-          :to="'#'"><i class="fa fa-instagram"></i></router-link>
+          :to="'#'"><img src="/img/social/insta.svg" alt="instagram"/></router-link>
     </VButton> -->
     <VButton
         class="link-actions__icon-btn"
         shape="round"
         size="small"
-        color="light-blue"
+        color="white"
     >
       <a
           class="event__button-link"
           :href="shareLink('twitter')"
           target="_blank"
-      ><i class="fa fa-twitter"></i></a>
+      ><img src="/img/social/twitter.svg" alt="twitter"/></a>
     </VButton>
     <!-- <VButton
         class="link-actions__icon-btn"
@@ -42,7 +42,7 @@
     >
       <router-link
           class="event__button-link"
-          :to="'#'"><i class="fa fa-youtube"></i></router-link>
+          :to="'#'"><img src="/img/social/youtube.svg" alt="youtube"/></router-link>
     </VButton> -->
     <p>{{ shareText }}</p>
   </div>
@@ -102,8 +102,14 @@ name: "SocialNetworkShare",
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-right: 30px;
     p {
-      margin-top: 5px;
+      text-align: center;
+      margin: 0;
+      font: {
+        family: "Gotham Book";
+        size: 25px;
+      }
     }
     /*.event__button-link {
       display: block;
@@ -123,7 +129,7 @@ name: "SocialNetworkShare",
     align-items: center;
     font-size: 14px;
     font-weight: 700;
-    margin: 20px 10px 30px 0;
+    margin: auto 10px;
     width: 25px;
     height: 23px;
     padding: 0;

@@ -83,10 +83,12 @@ export default {
       } else if (result < 28) {
         time = result + " " + append + " ago";
       } else {
-        const month = realDate.date();
-        const day = realDate.month() + 1;
-        const year = realDate.year();
-        time = day + "-" + month + "-" + year;
+        // const month = realDate.date();
+        // const day = realDate.month() + 1;
+        // const year = realDate.year();
+        // time = day + "-" + month + "-" + year;
+        const d = new Date(date);
+        time = d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
       }
 
       return time;

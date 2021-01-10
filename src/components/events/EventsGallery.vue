@@ -13,6 +13,7 @@
             class="news-gallery__card"
             :event="article"
             :for-mobile="forMobile"
+            :slides-per-view="slidesPerView"
           />
         </SwiperSlide>
       </Swiper>
@@ -36,6 +37,7 @@
           v-for="article in events"
           :key="'article-' + article.slug"
           :event="article"
+          :slides-per-view="slidesPerView"
         />
       </div>
     </section>
