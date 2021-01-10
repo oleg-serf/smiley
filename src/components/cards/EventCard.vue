@@ -36,13 +36,15 @@
 
     <div class="event__content">
       <h3 class="event__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
-        {{ cutText(event.title, 60) }}
+        <router-link
+          :to="{ name: 'event', params: { slug: event.slug } }"
+        >{{ cutText(event.title, 60) }}</router-link>
       </h3>
-      <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, forMobile?50:100, 'description')">
+      <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, forMobile?50:100*3/slidesPerView, 'description')">0
       </div>
       <div class="event__content-metadata">
         <span>{{ event.location }}</span> |
-        {{ dateAgo(event.published_at) }}
+        {{ dateAgo(event.date) }}
       </div>
     </div>
 
@@ -56,8 +58,7 @@
         <router-link
           class="event__button-link"
           :to="{ name: 'event', params: { slug: event.slug } }"
-          >{{ buttonName }}</router-link
-        >
+        >{{ buttonName }}</router-link>
       </VButton>
     </div>
   </div>
@@ -86,11 +87,15 @@ export default {
     },
     buttonName: {
       type: String,
-      default: "Read More",
+      default: "Register",
     },
     manualGoal: {
       default: null,
     },
+    slidesPerView: {
+      type: Number,
+      default: 3,
+    }
   },
   data() {
     return {
@@ -127,15 +132,13 @@ export default {
 
       let time = "";
 
-      if (result == 0) {
-        time = "Today";
-      } else if (result < 28) {
-        time = result + " " + append + " ago";
+      if (postStamp > currentStamp || result > 28){
+        const d = new Date(date);
+        return d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
+      } else if (result == 0) {
+        time = "Today"; 
       } else {
-        const month = realDate.date();
-        const day = realDate.month() + 1;
-        const year = realDate.year();
-        time = day + "-" + month + "-" + year;
+        time = result + " " + append + " ago";
       }
 
       return time;
@@ -242,6 +245,7 @@ export default {
       font-size: 24px;
       font-family: "Gotham Bold";
       padding: 8px 16px;
+      text-align: left;
 
       .event-category__name {
         color: white;
@@ -272,6 +276,15 @@ export default {
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
       line-height: 30px;
+      
+      a {
+        color: black;
+
+        &:hover {
+          text-decoration: none;
+          color: yellow;
+        }
+      }
     }
 
     .event__content-description {

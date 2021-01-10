@@ -41,7 +41,9 @@
 
     <div class="news-article__content">
       <h3 class="news-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
-        {{ cutText(interview.title, 60) }}
+        <router-link
+          :to="{ name: 'interviews-item', params: { slug: this.interview.slug } }"
+        > {{ cutText(interview.title, 60) }} </router-link>
       </h3>
       <div
           class="news-article__content-description"
@@ -133,10 +135,8 @@ export default {
       } else if (result < 28) {
         time = result + " " + append + " ago";
       } else {
-        const month = realDate.date();
-        const day = realDate.month() + 1;
-        const year = realDate.year();
-        time = day + "-" + month + "-" + year;
+        const d = new Date(date);
+        time = d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
       }
 
       return time;
@@ -206,6 +206,7 @@ export default {
       font-size: 24px;
       font-family: "Gotham Bold";
       padding: 8px 16px;
+      text-align: left;
 
       .news-article-category__name {
         color: white;
@@ -235,6 +236,14 @@ export default {
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
       line-height: 30px;
+
+      a {
+        color: black;
+        &:hover {
+          text-decoration: none;
+          color: yellow;
+        }
+      }
     }
 
     .news-article__content-description {

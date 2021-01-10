@@ -152,7 +152,7 @@ export default {
         >
           <router-link
               class="event__button-link"
-              :to="{ name: '#' }"
+              :to="{ name: 'interviews' }"
           >
             More Interviews
           </router-link>

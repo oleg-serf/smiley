@@ -47,7 +47,8 @@
           >
             <router-link
                 class="event__button-link"
-                :to="'#'"><i class="fa fa-facebook"></i></router-link>
+                :to="'#'"
+            ><img src="/img/goals/goals-1.svg" alt="goal"/></router-link>
           </VButton>
           <VButton
               class="event-title__link-actions__icon-btn"
@@ -57,56 +58,13 @@
           >
             <router-link
                 class="event__button-link"
-                :to="'#'"><i class="fa fa-facebook"></i></router-link>
+                :to="'#'"
+            ><img src="/img/goals/goals-2.svg" alt="goal"/></router-link>
           </VButton>
           <p><b>{{ unGoalsText }}</b></p>
         </div>
-
-        <div class="event-title__link-actions__social-networks">
-          <VButton
-              class="event-title__link-actions__icon-btn"
-              shape="round"
-              size="small"
-              color="blue"
-          >
-            <router-link
-                class="event__button-link"
-                :to="'#'"><i class="fa fa-facebook"></i></router-link>
-          </VButton>
-          <VButton
-              class="event-title__link-actions__icon-btn"
-              shape="round"
-              size="small"
-              color="purple"
-          >
-            <router-link
-                class="event__button-link"
-                :to="'#'"><i class="fa fa-instagram"></i></router-link>
-          </VButton>
-          <VButton
-              class="event-title__link-actions__icon-btn"
-              shape="round"
-              size="small"
-              color="light-blue"
-          >
-            <router-link
-                class="event__button-link"
-                :to="'#'"><i class="fa fa-twitter"></i>
-            </router-link>
-          </VButton>
-          <!-- <VButton
-              class="event-title__link-actions__icon-btn"
-              shape="round"
-              size="small"
-              color="red"
-          >
-            <router-link
-                class="event__button-link"
-                :to="'#'"><i class="fa fa-youtube"></i>
-            </router-link>
-          </VButton> -->
-          <p><b>{{ shareText }}</b></p>
-        </div>
+        
+        <SocialNetworkShare :title="post.slug"></SocialNetworkShare>
         
         <VButton
             class="event-title__link-actions__register-button mr-2"
@@ -191,13 +149,13 @@
     </div> -->
 
     <!--   EVENTS   -->
-    <section v-if="events.length>0">
+    <section v-if="related_events.length>0">
       <BottomBorderedTitleWithSearch
           :title="'<b>Related</b> | Events'"
           :with-search="true"
       ></BottomBorderedTitleWithSearch>
       <EventsGallery 
-          :events="events"
+          :events="related_events"
           button-text="Read More"
       ></EventsGallery>
     </section>
@@ -210,6 +168,7 @@
 import axios from "@/axios-auth";
 import EventCard from "@/components/cards/EventCard.vue";
 import {VSearchLocation, VDropdown, VSwitch, VButton} from "@/components/app";
+import SocialNetworkShare from "@/components/SocialNetworkShare";
 import PeopleSection from "@/components/People.vue";
 import Subscribe from '@/components/forms/Subscribe.vue';
 import CommentsSection from "@/components/CommentsSection";
@@ -226,6 +185,7 @@ export default {
     BottomBorderedTitleWithSearch,
     ButtonArrow,
     VSearchLocation,
+    SocialNetworkShare,
     VDropdown,
     VSwitch,
     VButton,
@@ -264,7 +224,7 @@ export default {
           },
         },
       },
-      events: [],
+      related_events: [],
       interviews: [],
       peoples: [
         {
@@ -397,7 +357,7 @@ export default {
         .then((res) => {
           this.post = res.data.event;
           this.description = res.data.meta.description;
-          // this.related_posts = res.data.related;
+          this.related_events = res.data.related_events;
 
           const metaPayload = {
             meta: res.data.meta,
@@ -407,13 +367,6 @@ export default {
           this.$router.currentRoute.meta.title = this.post.title;
         })
         .catch((error) => console.log(error));
-    axios
-        .get("/events")
-        .then((res) => {
-          this.events = res.data.events;
-          // this.events_pages = res.data.pages_count;
-        })
-        .catch((error) => console.error(error));
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -559,6 +512,7 @@ export default {
     align-items: center;
     font-family: 'Gotham Light', sans-serif;
     font-size: 24px;
+    margin: 20px 0;
 
     a {
       text-decoration: none;
@@ -569,21 +523,10 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
+      margin-right: 10px;
 
       p {
-        margin-top: 5px;
-      }
-    }
-
-    &__social-networks {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-left: 30px;
-      margin-right: 30px;
-
-      p {
-        margin-top: 5px;
+        margin: 0;
       }
     }
 
@@ -593,7 +536,6 @@ export default {
       align-items: center;
       font-size: 14px;
       font-weight: 700;
-      margin: 20px 15px 30px 0;
 
       a {
         color: black;
@@ -606,7 +548,7 @@ export default {
       align-items: center;
       font-size: 14px;
       font-weight: 700;
-      margin: 20px 10px 30px 0;
+      margin: auto 0.5rem;
       width: 25px;
       height: 23px;
       padding: 0;

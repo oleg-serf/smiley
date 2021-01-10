@@ -44,7 +44,9 @@
 
     <div class="projects-article__content">
       <h3 class="projects-article__content-title" :style="[forMobile ? {'height': 'auto !important'} : {}]">
-        {{ cutText(project.name ? project.name : project.title, 60) }}
+        <router-link
+          :to="{ name: 'project', params: { slug: project.slug } }"
+        > {{ cutText(project.name ? project.name : project.title, 60) }} </router-link>        
       </h3>
       <div
           class="projects-article__content-description"
@@ -114,7 +116,7 @@ export default {
   },
   methods: {
     openPage() {
-      router.push({ name: "projects-item", params: { slug: this.project.slug } });
+      router.push({ name: "project", params: { slug: this.project.slug } });
     },
     staticImageBySlug(slug) {
       let result = null;
@@ -166,10 +168,12 @@ export default {
       } else if (result < 28) {
         time = result + " " + append + " ago";
       } else {
-        const month = realDate.date();
-        const day = realDate.month() + 1;
-        const year = realDate.year();
-        time = day + "-" + month + "-" + year;
+        // const month = realDate.date();
+        // const day = realDate.month() + 1;
+        // const year = realDate.year();
+        // time = day + "-" + month + "-" + year;
+        const d = new Date(date);
+        time = d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
       }
 
       return time;
@@ -239,6 +243,7 @@ export default {
       font-size: 24px;
       font-family: "Gotham Bold";
       padding: 8px 16px;
+      text-align: left;
 
       .projects-article-category__name {
         color: white;
@@ -268,6 +273,14 @@ export default {
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
       line-height: 30px;
+
+      a {
+        color: black;
+        &:hover {
+          text-decoration: none;
+          color: yellow;
+        }
+      }
     }
 
     .projects-article__content-description {

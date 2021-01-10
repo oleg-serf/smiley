@@ -22,7 +22,9 @@
             />
           </template>
           <div class="article-header__metadata">
-            News | {{ post.published_at }} | {{ comments.length }} Comments
+            News |
+            {{post.published_at | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}} | 
+            {{ comments.length }} Comments
           </div>
           <div class="article-header__sharing">
             <div class="article-header__sharing-goals">
@@ -32,30 +34,41 @@
               </ul>
               <span>| UN Goals</span>
             </div>
-            <div class="article-header__sharing-social">
-              <ul>
-                <li>
-                  <a :href="shareLink('twitter')" target="_blank">
-                    <img src="/img/social/twitter.svg" alt="twitter"/>
-                  </a>
-                </li>
-                <li>
-                  <a :href="shareLink('instagram')" target="_blank">
-                    <img src="/img/social/insta.svg" alt="instagram"/>
-                  </a>
-                </li>
-                <li>
-                  <a :href="shareLink('facebook')" target="_blank">
-                    <img src="/img/social/fb.svg" alt="facebook"/>
-                  </a>
-                </li>
-                <!-- <li>
-                  <a :href="shareLink('youtube')" target="_blank">
-                    <img src="/img/social/youtube.svg" alt="youtube"
-                    /></a>
-                </li> -->
-              </ul>
-              <span>&#60;share</span>
+            
+            <SocialNetworkShare :title="post.slug"></SocialNetworkShare>
+
+            <div class="article-header__link-actions">
+              <VButton
+                v-if="post.donate_link"
+                class="article-header__register-button mr-2"
+                shape="round"
+                size="small"
+              >
+                <a
+                  class="event__button-link"
+                  :href="post.donate_link"
+                > Donate </a>
+              </VButton>
+              <VButton
+                class="article-header__register-button mr-2"
+                shape="round"
+                size="small"
+              >
+                <a
+                  class="event__button-link"
+                  :to="post.fundraise_link"
+                > Fundraise </a>
+              </VButton>
+              <VButton
+                class="article-header__register-button mr-2"
+                shape="round"
+                size="small"
+              >
+                <a
+                  class="event__button-link"
+                  :to="post.volunteer_link"
+                > Volunteer </a>
+              </VButton>
             </div>
           </div>
         </div>
@@ -98,7 +111,8 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 import NewsGallery from "@/components/news/NewsGallery.vue";
-import {VSearch} from "@/components/app";
+import {VSearch, VButton} from "@/components/app";
+import SocialNetworkShare from "@/components/SocialNetworkShare";
 import CommentsSection from "@/components/CommentsSection";
 // import CommentCard from "@/components/cards/CommentCard";
 // import CommentForm from "@/components/forms/CommentForm";
@@ -107,7 +121,9 @@ export default {
   components: {
     CommentsSection,
     NewsGallery,
+    SocialNetworkShare,
     VSearch,
+    VButton,
     // CommentCard,
     // CommentForm,
   },
@@ -253,7 +269,8 @@ export default {
 
     .article-header__sharing-goals {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
+      margin-right: 10px;
 
       font: {
         family: "Gotham Medium";
@@ -273,31 +290,26 @@ export default {
         }
       }
     }
+  }
+  
+  .article-header__link-actions {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    font-family: Gotham Light,sans-serif;
+    font-size: 24px;
 
-    .article-header__sharing-social {
-      @include smMax {
-        margin-left: 0px;
-        margin-top: 20px;
-      }
-
+    .article-header__register-button {
       display: flex;
-      margin-left: 50px;
-      align-items: flex-end;
-
-      ul {
-        display: flex;
-
-        li {
-          margin-right: 10px;
-        }
-      }
-
-      span {
-        font: {
-          family: "Gotham Book";
-          size: 25px;
-        }
-        line-height: 30px;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      margin-left: 20px;
+  
+      a {
+        color: black;
       }
     }
   }

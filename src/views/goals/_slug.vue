@@ -36,10 +36,8 @@
           </div>
 
           <div class="goal-description__content__actions">
-            <div class="social-share">
-              <!--   SOCIAL_NETWORK_SHARE COMPONENT   -->
-              <SocialNetworkShare :title="goal.name"></SocialNetworkShare>
-            </div>
+            <!--   SOCIAL_NETWORK_SHARE COMPONENT   -->
+            <SocialNetworkShare :title="goal.name"></SocialNetworkShare>
             <VButton
                 class="colored-button"
                 shape="round"
@@ -48,8 +46,7 @@
               <a
                   class="event__button-link"
                   href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"
-              >Learn More
-              </a>
+              >Learn More</a>
             </VButton>
             <VButton
                 class="colored-button"
@@ -58,8 +55,8 @@
             >
               <router-link
                   class="event__button-link"
-                  :to="'#'">How to help
-              </router-link>
+                  :to="'#'"
+              >How to help</router-link>
             </VButton>
           </div>
         </section>
@@ -192,7 +189,7 @@
       </section>
 
       <!--   INTERVIEWS   -->
-      <section class="content-block">
+      <!-- <section class="content-block">
         <BottomBorderedTitleWithSearch
             :title="getTitle('Interviews')"
             :with-search="true"
@@ -211,7 +208,7 @@
             />
           </template>
         </div>
-      </section>
+      </section> -->
 
       <!--   PROJECTS   -->
       <section class="content-block">
@@ -572,14 +569,11 @@ export default {
       flex-direction: row;
       align-content: center;
       align-items: center;
+      margin-top: 20px;
 
       a {
         text-decoration: none;
         color: white
-      }
-
-      .social-share {
-        margin-right: 3rem;
       }
 
       .colored-button {
@@ -588,7 +582,7 @@ export default {
         align-items: center;
         font-size: 14px;
         font-weight: 700;
-        margin: 20px 15px 30px 0;
+        margin: auto 10px;
 
         a {
           color: black;
