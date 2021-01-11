@@ -109,6 +109,30 @@
                       </li>
                     </ul>
                   </div>
+                  <template v-if="loggedIn">
+                    <router-link
+                        class="sideNavLink"
+                        :to="{ name: 'profile' }"
+                        style="margin-top: 1rem"
+                    >Profile</router-link
+                    >
+                    <a href="#" class="sideNavLink yellow-bottom" @click.prevent="logout()">
+                      Log Out
+                    </a>
+                  </template>
+                  <template v-else>
+                    <router-link
+                        class="sideNavLink"
+                        :to="{ name: 'register' }"
+                        style="margin-top: 1rem"
+                    >Register</router-link
+                    >
+                    <router-link
+                        class="sideNavLink"
+                        :to="{ name: 'login' }"
+                    >Log In</router-link
+                    >
+                  </template>
                   <router-link
                     class="sideNavLink"
                     :to="{ name: 'news' }"
