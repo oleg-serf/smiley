@@ -9,7 +9,7 @@
         :src="article.cover_image"
         :alt="article.title"
         :title="article.title"
-        size="m"
+        size="l"
         type="news"
       />
       <div class="news-article-category">
@@ -47,7 +47,7 @@
       <h3 class="news-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
         <router-link
           :to="{ name: 'news-item', params: { slug: article.slug } }"
-        >{{ cutText(article.title, 50) }}</router-link>
+        >{{ article.title }}</router-link>
       </h3>
       <div
         class="news-article__content-description"
@@ -58,7 +58,17 @@
         class="news-article__content-metadata"
         :style="[forMobile ? {'margin-top': '30px'} : {}]"
       >
-        <span>News</span> | {{ article.author }} | {{ dateAgo(article.published_at) }}
+        <router-link
+          :to="{ name: 'news'}"
+        ><span>News</span></router-link> | 
+        <router-link
+          v-if="article.author_link"
+          :to="{ name: 'member', params: { slug: article.author_link } }"
+        >{{ article.author }}</router-link>
+        <template v-else>
+          {{ article.author }}
+        </template> | 
+        {{ dateAgo(article.published_at) }}
       </div>
     </div>
 
@@ -76,6 +86,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import router from "@/router";
 import MediaImage from "@/components/Image.vue";
 import { VButton } from "@/components/app";
@@ -153,7 +164,7 @@ export default {
             break;
           }
         }
-        let moreLink = `<router-link :to="{ name: 'news-item', params: { slug: ${this.article.slug} }}"><b>More</b>></router-link>`;
+        let moreLink = `<a href="/smiley-news/${this.article.slug}" style="color: black;"><b>More</b>></a>`;
         return text.slice(0, limit).trim() + "..." + (stringName === 'description' ? moreLink : "");
       }
 
@@ -266,6 +277,10 @@ export default {
 
       span {
         font-family: "Gotham Bold";
+      }
+      a {
+        color: black;
+        text-decoration: none;
       }
     }
   }

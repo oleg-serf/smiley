@@ -60,19 +60,6 @@
             for-mobile 
             with-slider
         ></video-interviews-gallery>
-        <VButton
-            class="more__button"
-            size="height_45"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: '#' }"
-          >
-            More Interviews
-          </router-link>
-        </VButton>
       </section>
 
       <!--  NETWORK SECTION  -->
@@ -149,7 +136,7 @@ export default {
     return {
       vimeoVideoHeight: 700,
       news: [],
-      events: [],
+      eventList: [],
       featuredList: [],
       discussionList: [],
       newsList: [],

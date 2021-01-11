@@ -51,19 +51,11 @@ export default {
           :prev-button-left="-80"
           :next-button-right="-80"
         ></featured-gallery>
-        <VButton
-            class="more__button"
-            size="height_45"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'news' }"
-          >
+        <div class="more__button">
+          <router-link :to="{ name: 'news' }">
             More News
           </router-link>
-        </VButton>
+        </div>
       </section>
 
       <!--  EVENTS SECTION  -->
@@ -83,19 +75,11 @@ export default {
             :next-button-right="-80"
             :slides-per-view="2"
         ></events-gallery>
-        <VButton
-            class="more__button"
-            size="height_45"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'talks' }"
-          >
+        <div class="more__button">
+          <router-link :to="{ name: 'talks' }">
             More Events
           </router-link>
-        </VButton>
+        </div>
       </section>
 
       <!--  INTERVIEWS SECTION  -->
@@ -144,19 +128,11 @@ export default {
             :next-button-right="-80"
             button-text="More"
         ></video-interviews-gallery>
-        <VButton
-            class="more__button"
-            size="height_45"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'interviews' }"
-          >
+        <div class="more__button">
+          <router-link :to="{ name: 'interviews' }">
             More Interviews
           </router-link>
-        </VButton>
+        </div>
       </section>
 
       <!--  NETWORK SECTION  -->
@@ -176,17 +152,9 @@ export default {
             :next-button-right="-80"
             button-text="More"
         ></projects-gallery>
-        <VButton
-            class="more__button"
-            size="height_45"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'network' }"
-          > Join Network </router-link>
-        </VButton>
+        <div class="more__button">
+          <router-link :to="{ name: 'network' }"> Join Network </router-link>
+        </div>
       </section>
 
       <!--  DAILY NEWS SECTION   -->
@@ -205,19 +173,11 @@ export default {
             :prev-button-left="-80"
             :next-button-right="-80"
         ></news-gallery>
-        <VButton
-            class="more__button"
-            size="height_45"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'news' }"
-          >
+        <div class="more__button">
+          <router-link :to="{ name: 'news' }">
             More News
           </router-link>
-        </VButton>
+        </div>
       </section>
     </div>
 
@@ -422,17 +382,38 @@ export default {
   max-width: 1500px;
   margin: 0 auto;
 
-  .news-section {
-    .more__button {
-      margin: 2rem auto;
-      line-height: 45px;
-    }
-  }
+  .more__button {
+    margin: 0 auto;
+    a {
+      text-decoration: none;
+      color: black;
+      font-size: 1.5rem;
+      position: relative;
 
-  .events-section {
-    .more__button {
-      margin: 2rem auto;
-      line-height: 45px;
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: solid white;
+        border-width: 0 4px 4px 0;
+        transform: rotate(-45deg);
+        position: absolute;
+        left: calc(100% + 10px);
+        top: 10px;
+        z-index: 1000;
+      }
+      &::after {
+        content: "";
+        display: inline-block;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: #000000;
+        position: absolute;
+        margin: 9px 5px;
+      }
     }
   }
 }

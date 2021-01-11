@@ -1,12 +1,10 @@
 <template>
-  <div class="banner-block" :class="{'banner-block--reversed': reversed}">
-    <div class="banner-block__left-column"
-         :style="styleObject"
-    >
+  <div class="banner-block">
+    <div class="banner-block__left-column" :style="styleObject">
       <div class="banner-block__prefix">
         <slot name="prefix"></slot>
       </div>
-      <div class="banner-block__name" v-if="isNotEmptySlot('name')">
+      <div class="banner-block__name" v-if="isNotEmptySlot('name')" :style="fontStyle">
         <slot name="name"></slot>
       </div>
     </div>
@@ -46,6 +44,10 @@ export default {
     reversed: {
       type: Boolean,
       default: false
+    },
+    is_mobile : {
+      type: Boolean,
+      default: false
     }
   },
   /*
@@ -55,28 +57,25 @@ export default {
       let style = [{
         backgroundColor: this.color
       }]
-      if (this.nameLength) {
-        if (15 < this.nameLength && this.nameLength < 25) {
-          style.push(
-              {
-                maxWidth: '400px'
-              }
-          )
-        } else if (35 > this.nameLength && this.nameLength > 25) {
-          style.push(
-              {
-                maxWidth: '610px'
-              }
-          )
-        } else if (this.nameLength > 35) {
-          style.push(
-              {
-                maxWidth: '800px'
-              }
-          )
-        }
+
+      let maxWidth;
+      if( this.nameLength < 15){
+        maxWidth = this.is_mobile ? '150px': '300px';
+      } else if (15 <= this.nameLength && this.nameLength < 25) {
+        maxWidth = this.is_mobile ? '200px': '415px';
+      } else if (25 <= this.nameLength && this.nameLength < 35) {
+        maxWidth = this.is_mobile ? '300px': '610px';
+      } else if (this.nameLength >= 35) {
+        maxWidth = this.is_mobile ? '400px': '800px';
       }
+      style.push({maxWidth: maxWidth});
+
       return style
+    },
+    fontStyle() {
+      let style = [];
+      if(this.is_mobile) style.push({fontSize: this.nameLength < 35 ? '20px': '14px'})
+      return style;
     }
   },
   methods: {

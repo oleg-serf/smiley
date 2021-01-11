@@ -3,11 +3,11 @@
     <div class="member-item__logo">
       <router-link :to="linkedComponent">
         <img
-            v-if="member.avatar != null"
-            :src="$settings.images_path.users + 'm_' + member.avatar"
-            alt
-            title
-            class="member-item__image"
+          v-if="member.avatar != null"
+          :src="$settings.images_path.users + 'l_' + member.avatar"
+          alt
+          title
+          class="member-item__image"
         />
         <div v-else>{{ member.initials }}</div>
       </router-link>
@@ -16,9 +16,10 @@
       <h2 class="member-item__info__title">
         {{ member.name }}
       </h2>
-      <p class="member-item__info__location">
-        {{ member.city }}
-      </p>
+      <div class="member-item__info__location">
+        <img src="/img/icons/location-icon.svg" alt="city"/>
+        <p>{{ member.city }}</p>
+      </div>
       <p class="member-item__info__skill">
         {{ member.job_title }}
       </p>
@@ -28,17 +29,17 @@
     </div>
     <div class="member-item__actions">
       <VButton
-          class="member-item__actions__button"
-          size="height_45"
-          shape="round"
-          @click.native.prevent="connectFriend"
+        class="member-item__actions__button"
+        size="height_45"
+        shape="round"
+        @click.native.prevent="connectFriend"
       >
         Connect
       </VButton>
       <VButton
-          class="member-item__actions__button"
-          size="height_45"
-          shape="round"
+        class="member-item__actions__button"
+        size="height_45"
+        shape="round"
       >
         <router-link :to="{name: 'member', params: {slug: member.slug}}"> Profile </router-link>
       </VButton>
@@ -149,33 +150,43 @@ export default {
     width: 100%;
 
     &__title {
-      height: 3rem;
       color: #393939;
       font-family: "Gotham Bold", sans-serif;
       font-size: 16px;
       line-height: 18px;
     }
     &__skill {
-      height: 3rem;
+      height: 1rem;
+      margin-top: 1rem;
     }
     &__work {
       height: 3rem;
     }
     &__location {
-      height: 2rem;
+      display: flex;
+      height: 1.5rem;
       color: #DC3E2B;
       font-family: "Gotham Bold", sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       line-height: 16px;
+      
+      img {
+        height: 1.5rem;
+      }
+      p { margin: 0; padding: 6px 0 0 5px }
     }
   }
   &__actions {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    &__button {
+      display: flex;
+      font-size: 18px;
+    }
 
     a {
-      color: black;
+      color: black;      
     }
   }
 

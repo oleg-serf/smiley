@@ -16,9 +16,9 @@
     }
   }
 
-  @include lgMax {
-    flex-wrap: wrap;
-  }
+  // @include lgMax {
+  //   flex-wrap: wrap;
+  // }
 
   .banner-block__left-column {
     width: 100%;
@@ -27,22 +27,23 @@
     text-align: left;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 15px 15px 10px 50px;
     font-family: "Gotham Book", sans-serif;
 
-    @include xlMax {
-      max-width: 320px;
+    @include smMax {
+      padding-left: 10px;
+      padding-right: 10px;
     }
-
     @include lgMax {
       max-width: 100%;
       flex-direction: row;
       justify-content: space-between;
     }
 
-    @include smMax {
-      flex-direction: column;
-    }
+    // @include smMax {
+    //   flex-direction: column;
+    // }
   }
 
   .banner-block__right-column {
@@ -54,13 +55,16 @@
     align-items: center;
     justify-content: flex-end;
 
-    @include xlMax {
-      flex-direction: column;
+    @include smMax {
+      padding: 20px 10px;
     }
+    // @include xlMax {
+    //   flex-direction: column;
+    // }
 
-    @include lgMax {
-      width: 100%;
-    }
+    // @include lgMax {
+    //   width: 100%;
+    // }
   }
 
   .banner-block__background {
@@ -195,9 +199,7 @@
       @include font-size(1rem);
       color: #fff;
       font-weight: 600;
-      font-family: "Montserrat SemiBold",
-        sans-serif;
-
+      font-family: "Montserrat SemiBold", sans-serif;
       background-color: transparent;
       text-transform: uppercase;
       border: 2px solid #fff;
