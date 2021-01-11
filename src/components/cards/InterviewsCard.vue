@@ -45,7 +45,7 @@
 
     <div class="news-article__content">
       <h3 class="news-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
-        {{ cutText(interview.title, 60) }}
+        {{ interview.title }}
       </h3>
       <div
           class="news-article__content-description"

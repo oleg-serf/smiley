@@ -9,7 +9,7 @@
         :src="event.cover_image"
         :alt="event.title"
         :title="event.title"
-        size="m"
+        size="l"
         type="events"
       />
       <div class="event-category">
@@ -38,7 +38,7 @@
       <h3 class="event__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
         <router-link
           :to="{ name: 'event', params: { slug: event.slug } }"
-        >{{ cutText(event.title, 60) }}</router-link>
+        >{{ event.title }}</router-link>
       </h3>
       <div class="event__content-description" :style="[forMobile ? {'height': 'auto'} : {}]" v-html="cutText(event.short_description, forMobile?50:100*3/slidesPerView, 'description')">0
       </div>
@@ -191,7 +191,9 @@ export default {
             break;
           }
         }
-        return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
+
+        let moreLink = `...<a href="/smiley-talks/${this.event.slug}" style="color: black;"><b>More</b>></a>`;
+        return text.slice(0, limit).trim() + (stringName === 'description' ? moreLink : "...");
       }
 
       return text;

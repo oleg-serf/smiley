@@ -43,7 +43,7 @@
       <h3 class="news-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
         <router-link
           :to="{ name: 'interviews-item', params: { slug: this.interview.slug } }"
-        > {{ cutText(interview.title, 60) }} </router-link>
+        > {{ interview.title }} </router-link>
       </h3>
       <div
           class="news-article__content-description"
@@ -51,7 +51,10 @@
           v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 60, 'description')"
       ></div>
       <div class="news-article__content-metadata">
-        <span>Interview</span> | {{ dateAgo(interview.published_at) }}
+        <router-link
+          :to="{ name: 'interviews'}"
+        ><span>Interview</span></router-link> | 
+        {{ dateAgo(interview.published_at) }}
       </div>
     </div>
 
@@ -151,8 +154,8 @@ export default {
             break;
           }
         }
-        const slice_text = text.slice(0, limit).trim();
-        return (stringName === 'description' ? `"${slice_text}...<b>More</b>> "` : `${slice_text}...`);
+        let moreLink = `...<a href="https://vimeo.com/${this.interview.video}" target="_blank" style="color: black;"><b>More</b>></a>`;
+        return text.slice(0, limit).trim() + (stringName === 'description' ? moreLink : "...");
       }
 
       return (stringName === 'description' ? `"${text}"` : text);
@@ -261,6 +264,11 @@ export default {
       font-family: "Gotham Medium";
       font-size: 16px;
       margin-top: 14px;
+
+      a {
+        color: black;
+        text-decoration: none;
+      }
 
       span {
         font-family: "Gotham Bold";

@@ -13,7 +13,7 @@
           type="projects"
       /> -->
         <img
-          :src="$settings.images_path.projects +'m_'+project.cover_image"
+          :src="$settings.images_path.projects +'l_'+project.cover_image"
           v-if="project.cover_image != null"
           alt
         />
@@ -46,7 +46,7 @@
       <h3 class="projects-article__content-title" :style="[forMobile ? {'height': 'auto !important'} : {}]">
         <router-link
           :to="{ name: 'project', params: { slug: project.slug } }"
-        > {{ cutText(project.name ? project.name : project.title, 60) }} </router-link>        
+        > {{ project.name ? project.name : project.title }} </router-link>        
       </h3>
       <div
           class="projects-article__content-description"
@@ -188,7 +188,8 @@ export default {
             break;
           }
         }
-        return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
+        let moreLink = `...<a href="/projects/${this.project.slug}" style="color: black;"><b>More</b>></a>`;
+        return text.slice(0, limit).trim() + (stringName === 'description' ? moreLink : "...");
       }
 
       return text;

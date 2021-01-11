@@ -5,6 +5,7 @@
           :color="goal.colour"
           :background="getImage()"
           :name-length="goal.name ? goal.name.length : 20"
+          :is_mobile="is_mobile"
       >
         <!-- <template v-slot:logo>
           <img src="/img/un-goals-white.png" style="width: 107px"/>
@@ -75,7 +76,7 @@
                    :key="'organisation-'+organisation.slug">
                 <router-link :to="goalOrganisationLink(organisation)">
                   <div v-if="organisation.logo != null"
-                       :style="{background: `url(${$settings.images_path.organisations + 's_' + organisation.logo})` + 'no-repeat center', 'background-size': 'cover'}"
+                       :style="{background: `url(${$settings.images_path.organisations + 's_' + organisation.logo})` + 'no-repeat center', 'background-size': 'contain'}"
                   ></div>
                 </router-link>
               </div>
