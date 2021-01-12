@@ -51,7 +51,6 @@
         <br />
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
