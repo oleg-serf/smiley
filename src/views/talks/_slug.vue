@@ -160,7 +160,7 @@
     <!--   EVENTS   -->
     <section v-if="related_events.length>0">
       <BottomBorderedTitleWithSearch
-          :title="'<b>Related</b> | Events'"
+          :title="'<b>Past | Related</b> Events'"
           :with-search="true"
       ></BottomBorderedTitleWithSearch>
       <EventsGallery 
