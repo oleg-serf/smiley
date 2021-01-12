@@ -133,8 +133,8 @@ export default {
       let time = "";
 
       if (postStamp > currentStamp || result > 28){
-        const d = new Date(date);
-        return d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
+        const d = new Date(date.replace(/-/g, "/"));
+        time = d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
       } else if (result == 0) {
         time = "Today"; 
       } else {
@@ -273,11 +273,13 @@ export default {
     }
 
     .event__content-title {
-      min-height: 5rem;
+      min-height: 3.5rem;
+      height: auto;
       color: black;
       font-family: "Gotham Bold", sans-serif;
       font-size: 20px;
       line-height: 30px;
+      margin-bottom: 0;
       
       a {
         color: black;
@@ -295,7 +297,7 @@ export default {
       font-family: "Gotham Book", sans-serif;
       font-size: 16px;
       line-height: 28px;
-      margin-top: 1rem;
+      margin-top: 0;
     }
 
     .event__content-metadata {

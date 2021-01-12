@@ -139,17 +139,13 @@ export default {
 
       let time = "";
 
-      if (result == 0) {
-        time = "Today";
-      } else if (result < 28) {
-        time = result + " " + append + " ago";
-      } else {
-        // const month = realDate.date();
-        // const day = realDate.month() + 1;
-        // const year = realDate.year();
-        // time = day + "-" + month + "-" + year;
-        const d = new Date(date);
+      if (postStamp > currentStamp || result > 28){
+        const d = new Date(date.replace(/-/g, "/"));
         time = d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
+      } else if (result == 0) {
+        time = "Today"; 
+      } else {
+        time = result + " " + append + " ago";
       }
 
       return time;

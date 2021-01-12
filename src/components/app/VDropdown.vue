@@ -11,7 +11,7 @@
       <option
           v-for="(option, key) in options"
           :key="'dropdown-option-' + key"
-          :value="forGoals ? option.id : option.value"
+          :value="forGoals ? option.slug : option.value"
       >
         {{ forGoals ? (option.prefix < 10 ? '0' : '') + option.prefix + ': ' + option.name : option.text }}
       </option
