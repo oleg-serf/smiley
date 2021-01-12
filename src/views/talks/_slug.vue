@@ -2,37 +2,48 @@
   <div class="event-section">
     <div class="event-title">
       <BottomBorderedTitleWithSearch
-          :title="`<b style='font-size:40px'>${post.title}</b>`"
-          :with-search="false"
+        :title="`<b style='font-size:40px'>${post.title}</b>`"
+        :with-search="false"
       ></BottomBorderedTitleWithSearch>
       <div style="position: relative;">
         <template>
           <ButtonArrow
-              :id="'news-gallery-button-prev-' + id"
-              class="news-gallery-button news-gallery-button-prev"
+            :id="'news-gallery-button-prev-' + id"
+            class="news-gallery-button news-gallery-button-prev"
           />
           <Swiper class="news-gallery" :key="key" :options="options">
-            <SwiperSlide v-for="n in 4" :key="`testEvent-${n}`">
+            <SwiperSlide
+              :v-if="post.videos.length>0"
+              v-for="video in post.videos"
+              :key="`testEvent-${video.video_id}`"
+            >
               <iframe
-                  class="event-title__video"
-                  width="100%"
-                  height="570"
-                  frameborder="0"
-                  allow="fullscreen"
-                  allowfullscreen
-                  src="https://player.vimeo.com/video/489591052"
+                class="event-title__video"
+                width="100%"
+                height="570"
+                frameborder="0"
+                allow="fullscreen"
+                allowfullscreen
+                :src="`https://player.vimeo.com/video/${video.video_id}`"
               >
               </iframe>
             </SwiperSlide>
+            <SwiperSlide key="cover_image">
+              <img
+                :src="$settings.images_path.events + 'l_' + post.cover_image"
+                :alt="post.title"
+                :title="post.title"
+                class="event-title__video"
+              />
+            </SwiperSlide>
           </Swiper>
           <ButtonArrow
-              :id="'news-gallery-button-next-' + id"
-              class="news-gallery-button news-gallery-button-next"
+            :id="'news-gallery-button-next-' + id"
+            class="news-gallery-button news-gallery-button-next"
           />
         </template>
       </div>
       <p class="event-title__video-description">
-        <!-- Partners/ Speakers | Tuesday 12pm (BST), Dec 8<sup>th</sup>,2020 | 3 Comments -->
         {{post.past ? "PAST EVENT":"UPCOMING EVENT"}} | 
         {{post.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}} | 
         3 Comments
@@ -109,10 +120,10 @@
       <div class="speakers-grid">
         <div v-for="(user, index) in post.speakers" :key="index">
           <PeopleSection
-              :profilePicture="$settings.images_path.speakers + 's_' + user.image"
-              :userName="user.full_name"
-              :partnership="user.biography"
-              :role="user.role"
+            :profilePicture="$settings.images_path.speakers + 's_' + user.image"
+            :userName="user.full_name"
+            :partnership="user.biography"
+            :role="user.role"
           />
         </div>
       </div>
@@ -122,9 +133,7 @@
         <div class="goals-grid__grid">
           <div class="goals-grid__item" v-for="(partner, i) in post.partners" :key="partner.name+i">
             <a :href="partner.website" target="_blank">
-              <div
-                  :style="{background: `url(${$settings.images_path.partners + 's_' + partner.image})` + 'no-repeat center', 'background-size': 'cover'}"
-              ></div>
+              <div :style="{background: `url(${$settings.images_path.partners + 's_' + partner.image})` + 'no-repeat center', 'background-size': 'cover'}"></div>
             </a>
           </div>
         </div>
@@ -207,7 +216,6 @@ export default {
         slidesPerView: 1,
         slidesPerGroup: 1,
         spaceBetween: 25,
-        loop: true,
         loopFillGroupWithBlank: true,
         navigation: {
           nextEl: "",
@@ -371,6 +379,11 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.id = this._uid;
+    this.options.navigation = {
+      nextEl: `#news-gallery-button-next-${this.id}`,
+      prevEl: `#news-gallery-button-prev-${this.id}`,
+    };
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
@@ -495,6 +508,9 @@ export default {
 
   &__video {
     border: none;
+    width: 100%;
+    height: 570px;
+    object-fit: contain;
   }
 
   &__video-description {

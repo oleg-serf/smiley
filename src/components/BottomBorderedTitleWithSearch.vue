@@ -29,6 +29,7 @@
           @mouseenter="hovered = true"
           @mouseleave="hovered = false"
           v-model="dropdownValue"
+          @input="$emit('goalChange', dropdownValue)"
         ></VDropdown>
       </div>
     </div>

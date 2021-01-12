@@ -6,21 +6,55 @@
           <div class="article-header__title">
             <h1>{{ post.title }}</h1>
           </div>
-          <template>
+          <div
+            class="news-article__image"
+            @mouseenter="showDescription = true"
+            @mouseleave="showDescription = false"
+          >
             <iframe
-                v-if="post.type === 'video'"
-                style = "width: 100%; height: 75vh"
-                frameborder="0" allow="autoplay; fullscreen" allowfullscreen
-                :src="'https://player.vimeo.com/video/'+post.video_id+'?title=0&amp;byline=0&amp;portrait=0&sidedock=0'"
+              v-if="post.type === 'video'"
+              style = "width: 100%; height: 75vh"
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+              :src="'https://player.vimeo.com/video/'+post.video_id+'?title=0&amp;byline=0&amp;portrait=0&sidedock=0'"
             ></iframe>
             <img
-                v-else-if="post.cover_image != null"
-                :src="$settings.images_path.news + 'l_' + post.cover_image"
-                :alt="post.title"
-                :title="post.title"
-                class="article-header__image"
+              v-else-if="post.cover_image != null"
+              :src="$settings.images_path.news + 'l_' + post.cover_image"
+              :alt="post.title"
+              :title="post.title"
+              class="article-header__image"
             />
-          </template>
+
+            <div class="news-article-category">
+              <span class="news-article-category__name">          
+                {{ post.goal_category }}
+              </span>
+              <transition>
+                <span v-if="showDescription" class="news-article-category__description">
+                  UN Goal {{
+                    post.goals != null && post.goals.length > 0
+                        ? post.goals[0].prefix.length > 1 ? post.goals[0].prefix : "0"+post.goals[0].prefix
+                        : ""
+                  }} | <br>
+                  <template v-if="post.goal != null && post.goal.name">
+                    {{
+                      post.goal != null && post.goal.name
+                          ? post.goal.name
+                          : ""
+                    }}
+                  </template>
+                  <template v-else>
+                    {{
+                      post.goals != null && post.goals.length > 0
+                          ? post.goals[0].name
+                          : ""
+                    }}
+                  </template>
+                </span>
+              </transition>
+            </div>
+          </div>
+
           <div class="article-header__metadata">
             News |
             {{post.published_at | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}} | 
@@ -137,6 +171,7 @@ export default {
       related_posts: [],
       goals: [],
       comments: [],
+      showDescription: false,
     };
   },
 
@@ -311,6 +346,32 @@ export default {
       a {
         color: black;
       }
+    }
+  }
+}
+
+.news-article__image{
+  position: relative;
+
+  .news-article-category {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+    background: rgba(#888785, 0.8);
+    font-size: 24px;
+    font-family: "Gotham Bold";
+    padding: 8px 16px;
+    text-align: left;
+
+    .news-article-category__name {
+      color: white;
+    }
+    .news-article-category__description {
+      display: block;
+      line-height: 20px;
+      font-family: "Gotham Medium";
+      font-size: 20px;
     }
   }
 }

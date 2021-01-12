@@ -1,24 +1,3 @@
-<script>
-import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
-import NewsGallery from "@/components/news/NewsGallery";
-import VButton from "@/components/app/VButton";
-import EventsGallery from "@/components/events/EventsGallery";
-import InterviewsGallery from "@/components/interviews/InterviewsGallery";
-import VideoInterviewsGallery from "@/components/interviews/VideoInterviewsGallery";
-import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
-
-export default {
-  components: {
-    ProjectsGallery,
-    InterviewsGallery,
-    VideoInterviewsGallery,
-    EventsGallery,
-    NewsGallery,
-    VButton,
-    BottomBorderedTitleWithSearch
-  }
-}
-</script>
 <template>
   <div class="home">
     <hero 
@@ -38,12 +17,15 @@ export default {
       <!--  FEATURED SECTION  -->
       <section class="news-section" v-if="featuredList.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Editors Picks</b>'"
-            :with-search="true"
-            :search-expandable="true"
-            hover-effect
-            hover-color="#FFE300"
-            search-text="Search News..."
+          :title="'<b>Editors Picks</b>'"
+          :with-search="true"
+          :search-expandable="true"
+          hover-effect
+          hover-color="#FFE300"
+          search-text="Search News..."
+          withDropdown
+          :dropdownOptions="goals"
+          @goalChange="onSelectGoal"
         ></bottom-bordered-title-with-search>
         <featured-gallery
           :features="featuredList"
@@ -61,19 +43,19 @@ export default {
       <!--  EVENTS SECTION  -->
       <section class="events-section" v-if="eventList.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Upcoming Events</b>'"
-            :with-search="true"
-            :search-expandable="true"
-            hover-effect
-            hover-color="#FFE300"
-            search-text="Search events..."
+          :title="'<b>Upcoming Events</b>'"
+          :with-search="true"
+          :search-expandable="true"
+          hover-effect
+          hover-color="#FFE300"
+          search-text="Search events..."
         ></bottom-bordered-title-with-search>
         <events-gallery
-            :events="eventList"
-            with-slider
-            :prev-button-left="-80"
-            :next-button-right="-80"
-            :slides-per-view="2"
+          :events="eventList"
+          with-slider
+          :prev-button-left="-80"
+          :next-button-right="-80"
+          :slides-per-view="2"
         ></events-gallery>
         <div class="more__button">
           <router-link :to="{ name: 'talks' }">
@@ -117,16 +99,16 @@ export default {
       <!--  TEMPORARY INTERVIEWS SECTION  -->
       <section class="news-section" v-if="interviewList.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Featured Interviews</b>'"
-            :with-search="false"
-            hover-effect
-            hover-color="#FFE300"
+          :title="'<b>Featured Interviews</b>'"
+          :with-search="false"
+          hover-effect
+          hover-color="#FFE300"
         ></bottom-bordered-title-with-search>
         <video-interviews-gallery
-            :interviews="interviewList"
-            :prev-button-left="-80"
-            :next-button-right="-80"
-            button-text="More"
+          :interviews="interviewList"
+          :prev-button-left="-80"
+          :next-button-right="-80"
+          button-text="More"
         ></video-interviews-gallery>
         <div class="more__button">
           <router-link :to="{ name: 'interviews' }">
@@ -138,19 +120,19 @@ export default {
       <!--  NETWORK SECTION  -->
       <section class="news-section" v-if="projects.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Smiley Network |</b> Matchmaker for Good'"
-            :with-search="true"
-            :search-expandable="true"
-            hover-effect
-            hover-color="#FFE300"
-            search-text="Search projects..."
+          :title="'<b>Smiley Network |</b> Matchmaker for Good'"
+          :with-search="true"
+          :search-expandable="true"
+          hover-effect
+          hover-color="#FFE300"
+          search-text="Search projects..."
         ></bottom-bordered-title-with-search>
         <projects-gallery
-            :projects="projects"
-            with-slider
-            :prev-button-left="-80"
-            :next-button-right="-80"
-            button-text="More"
+          :projects="projects"
+          with-slider
+          :prev-button-left="-80"
+          :next-button-right="-80"
+          button-text="More"
         ></projects-gallery>
         <div class="more__button">
           <router-link :to="{ name: 'network' }"> Join Network </router-link>
@@ -160,18 +142,18 @@ export default {
       <!--  DAILY NEWS SECTION   -->
       <section class="news-section" v-if="news.length > 0">
         <bottom-bordered-title-with-search
-            :title="'<b>Daily News</b>'"
-            :with-search="true"
-            :search-expandable="true"
-            hover-effect
-            hover-color="#FFE300"
-            search-text="Search News..."
+          :title="'<b>Daily News</b>'"
+          :with-search="true"
+          :search-expandable="true"
+          hover-effect
+          hover-color="#FFE300"
+          search-text="Search News..."
         ></bottom-bordered-title-with-search>
         <news-gallery
-            :news="news"
-            with-slider
-            :prev-button-left="-80"
-            :next-button-right="-80"
+          :news="news"
+          with-slider
+          :prev-button-left="-80"
+          :next-button-right="-80"
         ></news-gallery>
         <div class="more__button">
           <router-link :to="{ name: 'news' }">
@@ -189,8 +171,9 @@ export default {
 <script>
 // Tools
 import axios from "@/axios-auth";
+import router from "@/router";
 // Global components
-import {VButton} from "@/components/app";
+import {VButton, VDropdown} from "@/components/app";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import SubscribeForm from "@/components/forms/Subscribe.vue";
 import Footer from "@/components/Footer.vue";
@@ -213,6 +196,7 @@ export default {
     EventsGallery,
     NewsGallery,
     VButton,
+    VDropdown,
     BottomBorderedTitleWithSearch,
     Hero,
     SubscribeForm,
@@ -228,6 +212,7 @@ export default {
       interviewList: [],
       projects: [],
       goals: [],
+      selectedGoal: null,
       homepagevideo: null,
       // New reworked items
       videos: [],
@@ -297,6 +282,9 @@ export default {
         this.vimeoVideoHeight = 500
       }
     },
+    onSelectGoal(e) {
+      router.push({ name: 'news-category-item', params: {slug: e} });
+    }
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -349,6 +337,7 @@ export default {
           },
         ];
         // for temporary end
+        this.goals = res.data.goals;
 
         this.banners.news = res.data.page_sections.smiley_news[0];
         // this.banners.network = res.data.page_sections.smiley_network[0];
