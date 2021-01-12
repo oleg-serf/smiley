@@ -401,7 +401,7 @@ export default {
         border-radius: 50%;
         background-color: #000000;
         position: absolute;
-        margin: 9px 5px;
+        margin: 7px 5px;
       }
     }
   }
