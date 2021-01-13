@@ -329,6 +329,13 @@
               <li class="sub-menu__item">
                 <router-link
                     class="sub-menu__link"
+                    :to="{name: 'news-category-item', params: {slug: 'reduced-inequalities'}}">
+                  Reduced Inequalities
+                </router-link>
+              </li>
+              <li class="sub-menu__item">
+                <router-link
+                    class="sub-menu__link"
                     :to="{name: 'news-category-item', params: {slug: 'no-poverty'}}">
                   No Poverty
                 </router-link>
