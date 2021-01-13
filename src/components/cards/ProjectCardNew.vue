@@ -57,7 +57,17 @@
         class="projects-article__content-metadata"
         :style="[forMobile ? {'margin-top': '30px', 'height': 'auto !important'} : {}]"
       >
-        <span>{{ project.name }}</span> | {{ dateAgo('2020-12-14 13:30:00') }}
+        <router-link
+          :to="{ name: 'network'}"
+        ><span>Networks</span></router-link> | 
+        <router-link
+          v-if="project.owner"
+          :to="{ name: 'member', params: { slug: project.owner.slug } }"
+        >{{ project.owner.name }}</router-link>
+        <template v-else>
+          No Name
+        </template> | 
+        {{ dateAgo(project.created_at) }}
       </div>
     </div>
 
@@ -295,6 +305,11 @@ export default {
       font-family: "Gotham Medium";
       font-size: 16px;
       margin-top: 14px;
+
+      a {
+        color: black;
+        text-decoration: none;
+      }
 
       span {
         font-family: "Gotham Bold";
