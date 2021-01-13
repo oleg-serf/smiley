@@ -112,7 +112,7 @@
         <div class="article-author">
           <img
               class="article-author__pic"
-              src="/img/organization/avatar-1.jpg"
+              src="/images/profile_placeholder.jpg"
               alt="author"
           />
           <span class="article-author__name">| {{ post.author }}</span>
