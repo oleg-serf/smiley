@@ -11,7 +11,7 @@
           <span v-else class="profile__avatar-initials">{{ user.initials }}</span>
         </div>
         <div class="profile__description">
-          <h1 class="profile__name">{{ user.display_name }}</h1>
+          <h1 class="profile__name">{{ user.name }}</h1>
           <template v-if="user.company_organization && user.job_title">
             <div class="profile__job-title">{{ user.company_organization }} - {{ user.job_title }}</div>
           </template>
@@ -21,8 +21,11 @@
           <template v-else>
             <div class="profile__job-title">{{ user.job_title }}</div>
           </template>
-          <div class="profile__location">{{ user.city + ', ' }} {{ user.country }}</div>
-          <div class="profile__slogan">{{ user.slogan }}</div>
+          <div class="profile__location" v-if="user.city && user.country">{{ user.city + ', ' }} {{
+              user.country
+            }}
+          </div>
+          <div class="profile__slogan" v-if="user.slogan">{{ user.slogan }}</div>
         </div>
         <div class="profile__holder-actions">
           <div class="profile__actions">
@@ -39,9 +42,9 @@
               </button>
             </div>
             <div class="profile__actions-item">
-              <span class="tag">Matches: <strong class="append">50+</strong></span>
+              <span class="tag">Matches: <strong class="append">{{ matches }}</strong></span>
             </div>
-            <div class="profile__actions-item">
+            <div class="profile__actions-item" style="display: none;">
               <span class="tag">Communities: <strong class="append">5</strong></span>
             </div>
           </div>
@@ -72,58 +75,94 @@
                 :class="activeTab('about')"
         >About
         </button>
-        <div class="tabs__content-item"
+        <div class="tabs__content-item tabs__content-item--about"
              v-show="tab === 'about'">
-          <div class="icon-block about" v-if="user.bio">
-            <i class="fa fa-info-circle icon-block__icon"></i>
-            <div class="about__text" v-html="user.bio"></div>
+          <div class="tabs__content-item--column">
+            <img :src="$settings.images_path.users + 'about/m_'+ user.about_image"
+                 v-if="user.about_image != null"/>
+            <img src="/images/profile_about-placeholder.png" v-else>
           </div>
-          <div class="icon-block link" v-if="user.website">
-            <i class="fa fa-link icon-block__icon"></i>
-            <a :href="user.website" target="_blank" style="word-break: break-all">{{ user.website }}</a>
-          </div>
-          <div class="icon-block goals">
-            <i class="fa fa-connectdevelop icon-block__icon"></i>
-            <span>Interests | UN Goals:</span>
-            <goals-list :goals="user.goals.map(item => item.prefix)"/>
-          </div>
-          <div v-if="user.facebook || user.instagram || user.linkedin || user.twitter || user.youtube"
-               class="icon-block share">
-            <i class="fa fa-share-alt icon-block__icon"></i>
-            Social Media:
-            <ul class="social-share">
-              <li class="social-share__item" v-if="user.facebook">
-                <a :href="user.facebook"
-                   class="social-share__link social-share__link--facebook"
-                   target="_blank">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.instagram">
-                <a :href="user.instagram"
-                   class="social-share__link social-share__link--instagram" target="_blank">
-                  <i class="fa fa-instagram"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.linkedin">
-                <a :href="user.linkedin"
-                   class="social-share__link social-share__link--linkedin" target="_blank">
-                  <i class="fa fa-linkedin"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.twitter">
-                <a :href="user.twitter"
-                   class="social-share__link social-share__link--twitter" target="_blank">
-                  <i class="fa fa-twitter"></i>
-                </a>
-              </li>
-              <li class="social-share__item" v-if="user.youtube">
-                <a :href="user.youtube"
-                   class="social-share__link social-share__link--youtube" target="_blank">
-                  <i class="fa fa-youtube-play"></i>
-                </a>
-              </li>
-            </ul>
+          <div class="tabs__content-item--column">
+            <h2>About</h2>
+            <div class="icon-block about" v-if="user.bio">
+              <i class="fa fa-info-circle icon-block__icon"></i>
+              <div class="about__text" v-html="user.bio"></div>
+            </div>
+            <div class="icon-block link" v-if="user.website">
+              <i class="fa fa-link icon-block__icon"></i>
+              <a :href="user.website" target="_blank" style="word-break: break-all">{{ user.website }}</a>
+            </div>
+            <div class="icon-block goals">
+              <i class="fa fa-connectdevelop icon-block__icon"></i>
+              <span>Interests | UN Goals:</span>
+              <goals-list :goals="user.goals.map(item => item.prefix)"/>
+            </div>
+            <div v-if="user.facebook || user.instagram || user.linkedin || user.twitter || user.youtube"
+                 class="icon-block share">
+              <i class="fa fa-share-alt icon-block__icon"></i>
+              Social Media:
+              <ul class="social-share">
+                <li class="social-share__item" v-if="user.facebook">
+                  <a :href="user.facebook"
+                     class="social-share__link social-share__link--facebook"
+                     target="_blank">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="social-share__item" v-if="user.instagram">
+                  <a :href="user.instagram"
+                     class="social-share__link social-share__link--instagram" target="_blank">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                </li>
+                <li class="social-share__item" v-if="user.linkedin">
+                  <a :href="user.linkedin"
+                     class="social-share__link social-share__link--linkedin" target="_blank">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </li>
+                <li class="social-share__item" v-if="user.twitter">
+                  <a :href="user.twitter"
+                     class="social-share__link social-share__link--twitter" target="_blank">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="social-share__item" v-if="user.youtube">
+                  <a :href="user.youtube"
+                     class="social-share__link social-share__link--youtube" target="_blank">
+                    <i class="fa fa-youtube-play"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="icon-block support" v-if="supports.offered.length > 0">
+              <i class="fa fa-smile-o icon-block__icon"></i>
+              <div>
+                Support offered:<br>
+              </div>
+              <ul>
+                <li v-for="item in supports.offered">
+                  <strong>{{ item.title }}</strong>
+                  <ul v-if="item.supports.length > 0">
+                    <li v-for="element in item.supports">{{ element.title }}</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="icon-block support" v-if="supports.needed.length > 0">
+              <i class="fa fa-hand-o-right icon-block__icon"></i>
+              <div>
+                Support needed:<br>
+              </div>
+              <ul>
+                <li v-for="item in supports.needed">
+                  <strong>{{ item.title }}</strong>
+                  <ul v-if="item.supports.length > 0">
+                    <li v-for="element in item.supports">{{ element.title }}</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <button class="tabs__content-button"
@@ -190,16 +229,10 @@ export default {
     return {
       user: {},
       tab: 'about',
-      temp: {
-        gallery: [
-          {url: 'https://images.pexels.com/photos/6102477/pexels-photo-6102477.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
-          {url: 'https://images.pexels.com/photos/5913949/pexels-photo-5913949.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
-          {url: 'https://images.pexels.com/photos/4969882/pexels-photo-4969882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
-          {url: 'https://images.pexels.com/photos/3394293/pexels-photo-3394293.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
-          {url: 'https://images.pexels.com/photos/6070129/pexels-photo-6070129.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
-          {url: 'https://images.pexels.com/photos/6030096/pexels-photo-6030096.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
-        ],
-        galleryIndex: null,
+      matches: 0,
+      supports: {
+        offered: [],
+        needed: [],
       },
     };
   },
@@ -216,6 +249,7 @@ export default {
           // TODO: remove consol logs on production
           console.log("User profile", response.data);
           this.user = response.data.user;
+          this.matches = response.data.match_users_counter > 50 ? '50+' : response.data.match_users_counter;
         })
         .catch(error => console.error(error));
   }
@@ -259,6 +293,8 @@ export default {
   justify-content: center;
   cursor: pointer;
   transition: color .2s, transform .2s, box-shadow .2s;
+  text-decoration: none !important;
+  color: #000;
 
   &:hover {
     background-color: #000;
@@ -490,6 +526,55 @@ export default {
     }
 
     &-item {
+
+      &--about {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+      }
+
+      &--column {
+        width: calc(50% - 1rem);
+
+        @include lgMax {
+          width: 100%;
+
+          &:first-child {
+            margin-bottom: 2rem;
+          }
+        }
+      }
+
+      .support {
+        display: flex;
+        flex-wrap: wrap;
+
+        & > div {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        strong {
+          font-weight: bold;
+        }
+
+        & > ul {
+          margin-right: 1rem;
+          display: flex;
+          flex-wrap: wrap;
+
+          & > li {
+            margin-right: 3rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+
       @include smMax {
         padding-left: 1rem;
         padding-right: 1rem;

@@ -12,6 +12,15 @@
     <input
         type="file"
         class="file-input"
+        ref="about_image"
+        id="about-input"
+        @input.prevent="addImage('about_image');"
+        accept=".png, .jpg, .jpeg"
+        style="display: none;"
+    />
+    <input
+        type="file"
+        class="file-input"
         ref="cover_image"
         id="cover-input"
         @input.prevent="addImage('cover_image');"
@@ -24,7 +33,8 @@
              v-if="user.cover_image != null && isBase64(user.cover_image)"/>
         <img :src="$settings.images_path.users + 'covers/m_'+ user.cover_image" v-else-if="user.cover_image != null"/>
         <img src="/images/default-cover_image.jpg" v-else>
-        <button type="button" class="button" style="position: absolute; bottom: 1.5rem; right: 1.5rem;" @click.prevent="editBackground">
+        <button type="button" class="button" style="position: absolute; bottom: 1.5rem; right: 1.5rem;"
+                @click.prevent="editBackground">
           <i class="fa fa-edit"></i>
           Edit Background
         </button>
@@ -40,7 +50,7 @@
           <template v-else>
             <span class="profile__avatar-initials">{{ user.display_name | getInitials }}</span>
           </template>
-          <button type="button" class="button"  @click.prevent="editAvatar">
+          <button type="button" class="button" @click.prevent="editAvatar">
             <i class="fa fa-edit"></i>
           </button>
         </div>
@@ -134,7 +144,13 @@
             <span>Date of Birth:</span>
             <div class="edit edit--prepend">
               <i class="fa fa-calendar edit__icon edit__icon--primary"></i>
-              <input type="date" v-model="user.dob">
+<!--              <input type="date" v-model="user.dob">-->
+
+              <DatePicker
+                  v-model="user.dob"
+                  format="MM.DD.YYYY"
+                  value-type="YYYY-MM-DD"
+              />
             </div>
           </div>
           <div class="icon-block icon-block--50">
@@ -147,7 +163,7 @@
             <span>Job title:</span>
             <div class="edit edit--prepend">
               <i class="fa fa-bank edit__icon edit__icon--primary"></i>
-              <input type="text" v-model="user.job_tite">
+              <input type="text" v-model="user.job_title">
             </div>
           </div>
           <div class="icon-block icon-block--50">
@@ -234,6 +250,19 @@
               </li>
             </ul>
           </div>
+          <div class="icon-block icon-block--50 personal-image">
+            <img :src="user.about_image"
+                 v-if="user.about_image != null && isBase64(user.about_image)"/>
+            <img :src="$settings.images_path.users + 'about/m_'+ user.about_image"
+                 v-else-if="user.about_image != null"/>
+            <img src="/images/profile_about-placeholder.png" v-else>
+          </div>
+          <div class="icon-block icon-block--50">
+            <button type="button" class="add_support" @click.prevent="editAbout()">
+              <i class="fa fa-edit"></i>
+              <span>Change Personal Image</span>
+            </button>
+          </div>
         </div>
         <!--            About tab [-]-->
         <!--            Support tab [+]-->
@@ -255,7 +284,8 @@
                     <option value="-1" selected disabled>Select category</option>
                     <option :value="category.id" v-for="category in supports">{{ category.title }}</option>
                   </select>
-                  <button type="button" class="edit__icon edit__icon--danger" @click.prevent="removeCategory('offered', index)">
+                  <button type="button" class="edit__icon edit__icon--danger"
+                          @click.prevent="removeCategory('offered', index)">
                     <i class="fa fa-remove"></i>
                   </button>
                 </div>
@@ -299,7 +329,8 @@
                     <option selected disabled>Select category</option>
                     <option :value="category.id" v-for="category in supports">{{ category.title }}</option>
                   </select>
-                  <button type="button" class="edit__icon edit__icon--danger" @click.prevent="removeCategory('needed', index)">
+                  <button type="button" class="edit__icon edit__icon--danger"
+                          @click.prevent="removeCategory('needed', index)">
                     <i class="fa fa-remove"></i>
                   </button>
                 </div>
@@ -401,6 +432,9 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+
 import axios from "@/axios-auth";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import router from "@/router";
@@ -408,7 +442,8 @@ import router from "@/router";
 export default {
   name: "UserProfile",
   components: {
-    ClassicEditor
+    ClassicEditor,
+    DatePicker,
   },
   data() {
     return {
@@ -419,18 +454,8 @@ export default {
       supports: [],
       passwordDisplay: 'password',
       //
-      supportNeeded: [
-        {
-          parent: 1,
-          child: []
-        }
-      ],
-      supportOffer: [
-        {
-          parent: 1,
-          child: []
-        }
-      ],
+      supportNeeded: [],
+      supportOffer: [],
       tab: 'about',
       editor: ClassicEditor,
       editorConfig: {
@@ -709,6 +734,9 @@ export default {
     editBackground() {
       this.$refs.cover_image.click();
     },
+    editAbout() {
+      this.$refs.about_image.click();
+    },
     activeTab(tab) {
       return tab === this.tab ? 'tabs__navigation-item--active' : '';
     },
@@ -790,16 +818,37 @@ export default {
     axios
         .get("/users/settings")
         .then(response => {
-          console.log("User profile", response.data);
+          console.log("GET User profile settings", response.data);
           this.user = response.data.user;
           this.goals = response.data.all_goals;
           this.supports = response.data.all_supports;
 
           this.user.goals = this.user.goals.map(item => item.id);
 
-          // response.data.need_support.forEach(item => {
-          //   // item.id
-          // });
+          const tempNeeds = [];
+          const tempOffers = [];
+          const emptyItem = {
+            parent: 1,
+            child: []
+          };
+          response.data.need_support.forEach(parent => {
+            const children = parent.supports.map(item => item.id);
+            tempNeeds.push({
+              parent: parent.id,
+              child: children,
+            });
+          });
+          response.data.offer_support.forEach(parent => {
+            const children = parent.supports.map(item => item.id);
+            tempOffers.push({
+              parent: parent.id,
+              child: children,
+            });
+          });
+          this.supportNeeded = tempNeeds ? tempNeeds : [emptyItem];
+          this.supportOffer = tempOffers ? tempOffers : [emptyItem];
+
+
           const tempArray = [];
           this.supports.forEach(category => {
             const categoryArray = [];
@@ -1394,6 +1443,29 @@ export default {
     i {
       font-size: 2rem;
     }
+  }
+}
+
+.mx-datepicker {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  border-left: 0px;
+  flex: 1 1 auto;
+  width: 1%;
+
+  ::v-deep .mx-input {
+    font-size: 16px;
+    border: 1px solid #e8e8e8;
+    padding: 0.25rem 0.5rem;
+    line-height: 1.5;
+    box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.personal-image {
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 </style>
