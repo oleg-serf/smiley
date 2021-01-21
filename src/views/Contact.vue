@@ -1,7 +1,7 @@
 <template>
   <div>
-    <section class="contact">
-      <div class="contacts-subtitle"></div>
+    <section class="contact pa-0">
+      <div class="contacts-subtitle mt-2"></div>
 
       <div class="contacts__form">
         <div class="content-w">
@@ -71,7 +71,7 @@
       </div>
     </section>
 
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 

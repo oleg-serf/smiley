@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ga from 'vue-ga'
 
-
 Vue.use(VueRouter)
 
 const routes = [{

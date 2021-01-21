@@ -1,6 +1,6 @@
 <template>
   <div class="network-page">
-    <div class="header">
+    <div class="header" style="margin-top: 10px;">
       <img
           src="/img/network_main.png"
           alt="goalsImg"
@@ -121,10 +121,10 @@
       </section>
 
       <!--   SUBSCRIBE   -->
-      <Subscribe/>
+      <!-- <Subscribe/> -->
 
       <!--   FOOTER   -->
-      <Footer/>
+      <!-- <Footer/> -->
     </div>
   </div>
 </template>

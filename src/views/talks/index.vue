@@ -1,8 +1,8 @@
 <template>
-  <div class="talks_container">
+  <div>
     <Breadcrumbs/>
     <router-view key="$route.fullPath"></router-view>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 

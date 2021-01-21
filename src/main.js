@@ -14,6 +14,8 @@ import PerfectScrollbar from "vue2-perfect-scrollbar";
 import * as VueGoogleMaps from "vue2-google-maps";
 import Paginate from "vuejs-paginate";
 import VueAwesomeSwiper from "vue-awesome-swiper";
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
 import vueVimeoPlayer from "vue-vimeo-player";
 import CKEditor from "@ckeditor/ckeditor5-vue";
 import Dayjs from "vue-dayjs";
@@ -34,6 +36,7 @@ Vue.use(CKEditor);
 Vue.use(vueVimeoPlayer);
 Vue.use(VueSweetalert2);
 Vue.use(PerfectScrollbar);
+Vue.use(Vuetify)
 Vue.use(Popover, {
   tooltip: true,
 });
@@ -51,6 +54,8 @@ Vue.use(VueGoogleMaps, {
 });
 
 axios.defaults.headers.get["Accepts"] = "application/json";
+
+export default new Vuetify({ })
 
 // TODO: Make more readable and compact
 Vue.prototype.$settings = {
@@ -119,5 +124,6 @@ Vue.filter("formatDate", function(date, locale, format) {
 new Vue({
   router,
   store,
+  vuetify: new Vuetify(),
   render: (h) => h(App),
 }).$mount("#app");

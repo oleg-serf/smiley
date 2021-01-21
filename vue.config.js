@@ -3,6 +3,7 @@ module.exports = {
   devServer: {
     // https: true
   },
+  transpileDependencies: ["vuetify"],
   css: {
     loaderOptions: {
       css: {
