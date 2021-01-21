@@ -139,7 +139,7 @@
         </VButton>
       </div> -->
     </div>
-    <Subscribe></Subscribe>
+    <!-- <Subscribe></Subscribe> -->
   </div>
 </template>
 

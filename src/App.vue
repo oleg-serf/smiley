@@ -1,17 +1,22 @@
 <template>
-  <section id="app">
-    <HeaderMobile v-if="isMobile" />
-    <Header v-else />
-    <router-view :key="$route.fullPath" />
-    <tooltip />
-  </section>
+  <v-app>
+    <header-mobile v-if="$vuetify.breakpoint.smAndDown"/>
+    <v-container class="mt-2" :fluid="false">
+      <header-web v-if="$vuetify.breakpoint.mdAndUp"/>
+      <v-main>
+        <router-view :key="$route.fullPath" />
+      </v-main>
+      <custom-footer/>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
+// import Header from './components/Header.vue';
 // @ is an alias to /src
-import HeaderMobile from "@/components/HeaderMobile.vue";
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+// import HeaderMobile from "@/components/HeaderMobile.vue";
+// import Header from "@/components/Header.vue";
+// import Footer from "@/components/Footer.vue";
 
 export default {
   name: "home",
@@ -21,9 +26,12 @@ export default {
     };
   },
   components: {
-    HeaderMobile,
-    Header,
-    Footer,
+    // HeaderMobile,
+    // Header,
+    // Footer,
+    headerWeb: () => import("../src/components/Base/Header/WebHeader-new"),
+    headerMobile: () => import("../src/components/Base/Header/MobileHeader-new"),
+    customFooter: () => import("../src/components/Base/Footer/Footer-new.vue")
   },
   computed: {
     appMeta() {
@@ -112,6 +120,13 @@ export default {
 </script>
 
 <style lang="scss">
+ .rounded-button {
+    border-radius: 20px;
+    outline: none !important;
+  }
+  .v-text-field__slot > input {
+    border: none;
+  }
 /* Utils */
 .social {
   display: flex;
@@ -139,8 +154,8 @@ export default {
     display: block;
   }
 }
-#app {
-}
+// #app {
+// }
 
 #nav {
   padding: 30px;
@@ -253,15 +268,9 @@ strong {
   }
 }
 
-.container {
-  max-width: 1630px;
-  margin: 0 auto;
-  // padding: 0 15px;
-  padding-left: 15px;
-  padding-right: 15px;
-
-  @media (max-width: 1600px) {
-    // padding: 0 20px;
+@media (min-width: 1904px) {
+  .container {
+    max-width: 1650px!important;
   }
 }
 </style>

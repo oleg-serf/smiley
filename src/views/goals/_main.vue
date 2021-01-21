@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container pa-0">
     <div>
       <div class="header">
         <img
@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <Subscribe/>
+    <!-- <Subscribe/> -->
   </div>
 </template>
 

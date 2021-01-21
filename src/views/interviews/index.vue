@@ -1,18 +1,18 @@
 <template>
-  <div class="interviews_container">
+  <div>
     <Breadcrumbs/>
     <router-view key="$route.fullPath"></router-view>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 
 export default {
   components: {
-    Footer,
+    // Footer,
     Breadcrumbs,
   },
   mounted() {

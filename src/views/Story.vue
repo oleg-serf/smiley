@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="our-story">
+    <section class="our-story mt-3">
       <template>
         <iframe
             v-if="!isMobile"
@@ -11,7 +11,7 @@
         <img :src="image" v-else class="hero__overlay"/>
       </template>
       
-      <div class="container">
+      <div class="pa-3">
         <div class="our-story__head">
           <div class="content-w">
             <bottom-bordered-title-with-search
@@ -250,10 +250,10 @@
       </div>
     </section>
 
-    <div class="our-story__subscribe-wrapper">
+    <!-- <div class="our-story__subscribe-wrapper">
       <Subscribe/>
     </div>
-    <Footer/>
+    <Footer/> -->
   </div>
 </template>
 

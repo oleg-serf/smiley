@@ -2,7 +2,7 @@
   <div class="goals_container">
     <Breadcrumbs/>
     <router-view key="$route.fullPath"></router-view>
-    <Footer/>
+    <!-- <Footer/> -->
   </div>
 </template>
 
