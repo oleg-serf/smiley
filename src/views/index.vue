@@ -299,6 +299,7 @@ export default {
       .then(res => {
         this.news = res.data.latest_news;
         this.featuredList = res.data.featured;
+        this.featuredList[0].video="qRudLyeT0Io";
         this.eventList = res.data.latest_events;
         // this.interviewList = res.data.latest_interviews;
         this.projects = res.data.latest_network;
@@ -327,7 +328,7 @@ export default {
           },
           {
             name: "Georgia Dodsworth",
-            video: "370887819",
+            video: "UcreprtCr2k",
             title: "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
             description: "We are not alone",
             slug: "LTAMH",

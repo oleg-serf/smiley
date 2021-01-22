@@ -120,7 +120,7 @@ export default {
   methods: {
     openPage() {
       // router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
-      window.open(`https://vimeo.com/${this.interview.video}`, "_blank");
+      window.open(`https://www.youtube.com/watch?v=/${this.interview.video}`, "_blank");
     },
     dateAgo(date) {
       const currentStamp = Date.now();
