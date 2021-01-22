@@ -13,7 +13,7 @@
       </div>
       <!-- RIGHT SIDE -->
       <div class="d-flex flex-column pr-3 justify-space-between align-center">
-        <v-btn elevation="1" color="#ffe61f" class="rounded-button pl-11 pr-11">Sign In</v-btn>
+        <v-btn elevation="1" color="#ffe61f" class="rounded-button pl-11 pr-11" @click="$router.push({ path: '/login' })">Sign In</v-btn>
         <div class="d-flex align-center">
           <img 
             height="21px" 
