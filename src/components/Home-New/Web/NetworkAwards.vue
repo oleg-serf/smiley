@@ -1,6 +1,6 @@
 <template>
   <v-col class="pr-3" :cols="networkCols[0]">
-    <h3>Network | Awards</h3>
+    <h3 style="margin-bottom: -10px">Network | Awards</h3>
     <content-box :category="'networkAwards'">
       <template #content>
         <v-card flat class="d-flex flex-column mt-2 rounded-0">

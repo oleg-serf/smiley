@@ -1,17 +1,38 @@
 <template>
   <v-col :cols="networkCols[1]">
-    <h3>Network | Popular</h3>
-    <content-box :category="'networkPopular'">
-      <template #content>
-        <div class="d-flex flex-column">
-          <div v-for="(item, index) in popular" :key="index" class="mt-2">
-            <img width="100%" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')"/>
-            <h4>Discussion: What's the future of education? | 17 Comm</h4>
-            <small>Milton Road Primary School | 01/11/2020</small>
-          </div>
-        </div>
-      </template>
-    </content-box>
+    <div class="d-flex justify-space-between mr-1" style="margin-bottom: -17.5px">
+      <h3>Network | Popular</h3>
+      <div class="d-flex">
+        <span><v-icon id="prev" medium color="black">fa fa-chevron-circle-left</v-icon></span>
+        <span class="ml-3"><v-icon id="next" medium color="black">fa fa-chevron-circle-right</v-icon></span>
+      </div>
+    </div>
+    <v-container class="pr-1 pl-0 pt-0">
+      <content-box :category="'networkPopular'">
+        <template #content>
+          <swiper ref="mySwiper" :options="swiperOption">
+            <swiper-slide>
+              <div class="d-flex flex-column">
+                <div v-for="(item, index) in popular" :key="index" class="mt-2">
+                  <img width="100%" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')"/>
+                  <h4>Discussion: What's the future of education? | 17 Comm</h4>
+                  <small>Milton Road Primary School | 01/11/2020</small>
+                </div>
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="d-flex flex-column">
+                <div v-for="(item, index) in popular" :key="index" class="mt-2">
+                  <img width="100%" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')"/>
+                  <h4>Discussion: What's the future of education? | 17 Comm</h4>
+                  <small>Milton Road Primary School | 01/11/2020</small>
+                </div>
+              </div>
+            </swiper-slide>
+          </swiper>
+        </template>
+      </content-box>
+    </v-container>
   </v-col>
 </template>
 
@@ -21,7 +42,13 @@ export default {
     contentBox: () => import('../ContentBox'),
   },
   data: () =>({
-    popular: 2
+    popular: 2,
+    swiperOption: {
+      navigation: {
+        nextEl: '#next',
+        prevEl: '#prev'
+      },
+    }
   }),
   computed: {
     iframeHeight() {

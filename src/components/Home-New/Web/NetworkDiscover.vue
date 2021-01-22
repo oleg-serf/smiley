@@ -1,18 +1,40 @@
 <template>
   <v-row class="mt-16 pa-3">
-    <h3>Network | Discover</h3>
-    <content-box :category="'otherNews'">
-      <template #content>
-        <v-row class="d-flex mt-1">
-          <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
-            <div class="discoverBox">
-              <h4 class="mb-14">Project: Save the trees inner city</h4>
-              <small class="mb-8">Milton Road Primary School | 01/11/2020</small>
-            </div>
-          </v-col>
-        </v-row>
-      </template>
-    </content-box>
+    <div class="d-flex justify-space-between mr-1" style="margin-bottom: -16px; width: 100%;">
+      <h3>Network | Discover</h3>
+      <div class="d-flex">
+        <span><v-icon id="prevone" medium color="black">fa fa-chevron-circle-left</v-icon></span>
+        <span class="ml-3"><v-icon id="nextone" medium color="black">fa fa-chevron-circle-right</v-icon></span>
+      </div>
+    </div>
+    <v-container class="pr-1 pl-0 pt-0">
+      <content-box :category="'otherNews'">
+        <template #content>
+          <swiper style="max-width:1345px" ref="mySwiper" :options="swiperOption">
+            <swiper-slide>
+              <v-row class="d-flex mt-1">
+                <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
+                  <div class="discoverBox">
+                    <h4 class="mb-14">Project: Save the trees inner city</h4>
+                    <small class="mb-8">Milton Road Primary School | 01/11/2020</small>
+                  </div>
+                </v-col>
+              </v-row>
+            </swiper-slide>
+            <swiper-slide>
+              <v-row class="d-flex mt-1">
+                <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
+                  <div class="discoverBox">
+                    <h4 class="mb-14">Project: Save the trees inner city</h4>
+                    <small class="mb-8">Milton Road Primary School | 01/11/2020</small>
+                  </div>
+                </v-col>
+              </v-row>
+            </swiper-slide>
+          </swiper>
+        </template>
+      </content-box>
+    </v-container>
   </v-row>
 </template>
 
@@ -22,7 +44,13 @@ export default {
     contentBox: () => import('../ContentBox'),
   },
   data: () =>({
-    other: 9
+    other: 9,
+    swiperOption: {
+      navigation: {
+        nextEl: '#nextone',
+        prevEl: '#prevone'
+      },
+    }
   }),
   computed: {
     iframeHeight() {
