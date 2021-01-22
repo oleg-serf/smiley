@@ -1,13 +1,15 @@
 <template>
   <v-app>
     <header-mobile v-if="$vuetify.breakpoint.smAndDown"/>
-    <v-container class="mt-2" :fluid="false">
-      <header-web v-if="$vuetify.breakpoint.mdAndUp"/>
-      <v-main>
-        <router-view :key="$route.fullPath" />
-      </v-main>
-      <custom-footer/>
-    </v-container>
+    <div :style="largeScreenContainer">
+      <v-container class="mt-2" :fluid="false">
+        <header-web v-if="$vuetify.breakpoint.mdAndUp"/>
+        <v-main>
+          <router-view :key="$route.fullPath" />
+        </v-main>
+        <custom-footer/>
+      </v-container>
+    </div>
   </v-app>
 </template>
 
@@ -34,6 +36,13 @@ export default {
     customFooter: () => import("../src/components/Base/Footer/Footer-new.vue")
   },
   computed: {
+    largeScreenContainer() {
+      if (this.$vuetify.breakpoint.width > 1900) {
+        return 'margin-left: 260px;  margin-right: 260px';
+      } else {
+        return '';
+      }
+    },
     appMeta() {
       return this.$store.getters["meta/getMeta"];
     },
@@ -268,9 +277,15 @@ strong {
   }
 }
 
-@media (min-width: 1904px) {
-  .container {
-    max-width: 1650px!important;
+.container {
+  max-width: 1630px;
+  margin: 0 auto;
+  // padding: 0 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  @media (max-width: 1600px) {
+    // padding: 0 20px;
   }
 }
 </style>

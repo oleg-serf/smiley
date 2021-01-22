@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div class="bg mt-4">
     <section class="registration container">
       <h2 class="registration-title">Ready to make real change?</h2>
       <p

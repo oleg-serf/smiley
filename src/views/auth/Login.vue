@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div class="bg mt-4">
     <section class="login container">
       <h2 class="login-title">Login</h2>
       <p

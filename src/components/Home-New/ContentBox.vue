@@ -13,10 +13,6 @@ export default {
       type: String,
       required: true
     },
-    flow: {
-      type: String,
-      required: true
-    },
   },
   computed: {
     marginValue() {
@@ -31,18 +27,11 @@ export default {
         case 'dailyNews':
           return 'mr-0'
           break;
+        case 'otherNews':
+          return 'mr-0'
+          break;
       }
     },
-    decideFlow() {
-      switch(this.flow) {
-        case 'column':
-          return 'flex-column'
-          break;
-        case 'row':
-          return 'flex-row'
-          break;
-      }
-    }
   }
 }
 </script>
