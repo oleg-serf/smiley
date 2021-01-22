@@ -307,7 +307,7 @@ export default {
         this.interviewList = [
           {
             name: "Claire Linacre",
-            video: "481275029",
+            video: "qRudLyeT0Io",
             title: "Donor & Data Manager | Akt | LGBT Event | November 2020",
             description: "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
             slug: "Beyond Pride",
@@ -317,7 +317,7 @@ export default {
           },
           {
             name: "Josh Littlejohn",
-            video: "484519685",
+            video: "UcreprtCr2k",
             title: "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
             description: "Surely we can do better than this",
             slug: "Ending Homelessness & Building resilient Communities",

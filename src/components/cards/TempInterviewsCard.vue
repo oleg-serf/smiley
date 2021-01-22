@@ -7,9 +7,11 @@
     >
       <template>
         <iframe
-            :src="`https://player.vimeo.com/video/${interview.video}?title=0&amp;byline=0&amp;portrait=0&sidedock=0`"
+            :src="`https://www.youtube-nocookie.com/embed/${interview.video}`"
             frameborder="0"
             style="width: 100%; height: 300px; position: absolute; left: 0px; top: 0px; object-fit: cover;"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
         ></iframe>
       </template>
       <!-- <div class="video">
