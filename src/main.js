@@ -27,7 +27,9 @@ import { Plugin } from "vue-fragment";
 import "sweetalert2/dist/sweetalert2.min.css";
 import "swiper/css/swiper.css";
 import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
-
+import lineClamp from 'vue-line-clamp';
+ 
+Vue.use(lineClamp);
 Vue.use(Plugin);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VueMeta);

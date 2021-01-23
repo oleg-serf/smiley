@@ -11,7 +11,7 @@
             <div>
               <v-chip small class="pa-2 mt-4 mr-1 rounded-0" label>Politics</v-chip>
             </div>
-            <small class="mt-4">"Change is possible with a little help from everyone"...</small>
+            <small class="mt-4"  v-line-clamp:20="2">"Change is possible with a little help from everyone"</small>
             <small class="mt-4 gray--text"> ABC | 1 week</small>
           </div>
         </v-card>

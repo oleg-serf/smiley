@@ -21,7 +21,7 @@
                 <iframe :height="iframeHeight" width="100%" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="d-flex flex-column">
                   <h3 class="mt-2">Live Event: Ending Homelessness & Building Resilient Communities</h3>
-                  <p class="mt-5">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
+                  <p class="mt-5"  v-line-clamp:20="2">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
                   <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
                   <div class="d-flex mt-8 justify-center">
                     <v-btn elevation="" color="#ffe61f" class="rounded-button pl-12 pr-12">Register</v-btn>

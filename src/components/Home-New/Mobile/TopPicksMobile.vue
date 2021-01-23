@@ -21,7 +21,7 @@
                 <iframe :height="iframeHeight" width="100%" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="d-flex flex-column">
                   <h3 class="mt-2">Live Event: Ending Homelessness & Building Resilient Communities</h3>
-                  <p class="mt-5">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
+                  <p class="mt-5"  v-line-clamp:20="2">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
                   <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
                   <div class="d-flex mt-8 justify-center">
                     <v-btn elevation="" color="#ffe61f" class="rounded-button pl-12 pr-12">Register</v-btn>
@@ -29,10 +29,10 @@
                 </div>
               </v-card>
               <v-card v-else flat class="d-flex flex-column mt-2 pb-2 rounded-0">
-                <img :width="$vuetify.breakpoint.width" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" />
+                <img width="100%" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" />
                 <div class="pl-1">
                   <h3 class="mt-6">Live Event: Ending Homelessness & Building Resilient Communities</h3>
-                  <p class="mt-10">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
+                  <p class="mt-10"  v-line-clamp:10="2">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
                   <small class="mt-6">Virtual stream | 30 Jan 2021 | 1pm BST</small>
                 </div>
               </v-card>
