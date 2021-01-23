@@ -12,7 +12,7 @@
                 <div class="d-flex mt-2">
                   <v-btn elevation="1" color="#ffe61f" class="rounded-button pl-12 pr-12">Register</v-btn>
                 </div>
-                <p class="mt-5">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
+                <p class="mt-5" v-line-clamp:20="2">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness and it is some extra text that is truncated at the end with a</p>
                 <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
               </div>
             </v-card>
