@@ -28,7 +28,7 @@
 
       <!-- OTHER NEWS PART -->
       <other-news v-if="$vuetify.breakpoint.mdAndUp"/>
-      <other-news-mobile v-if="$vuetify.breakpoint.width < 800"/>
+      <other-news-mobile v-if="$vuetify.breakpoint.width < 769"/>
       <!-- OTHER NEWS PART -->
 
       <!-- NETWORKKK PART -->
@@ -36,12 +36,12 @@
       <network-awards-mobile v-if="$vuetify.breakpoint.xs"/>
 
       <network-popular v-if="$vuetify.breakpoint.mdAndUp"/>
-      <network-popular-mobile v-if="$vuetify.breakpoint.width < 800"/>
+      <network-popular-mobile v-if="$vuetify.breakpoint.width < 769"/>
       <!-- NETWORK PARTT -->
 
       <!-- NETWORKK DISCOVERRR -->
       <network-discovery v-if="$vuetify.breakpoint.mdAndUp"/>
-      <network-discovery-mobile v-if="$vuetify.breakpoint.width < 800"/>
+      <network-discovery-mobile v-if="$vuetify.breakpoint.width < 769"/>
       <!-- NETWORK DISCOVERRR -->
     </v-row>
   </div>

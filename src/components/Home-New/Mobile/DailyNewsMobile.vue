@@ -15,9 +15,9 @@
           
           <!-- SLIDER -->
           <swiper ref="mySwiper" :options="swiperOption">
-            <swiper-slide v-for="(slide, index) in i" :key="index">
+            <swiper-slide v-for="(slide, index) in j" :key="index">
               <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
-                <img :width="$vuetify.breakpoint.width - 40" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" />
+                <img width="100%" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" />
                 <!-- <iframe :height="iframeHeight" :width="$vuetify.breakpoint.width - 40" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
                 <div class="d-flex flex-column">
                   <h3 class="mt-2">Interview : Rachel Snape National</h3>
@@ -39,7 +39,7 @@ export default {
     contentBox: () => import('../ContentBox'),
   },
   data: () =>({
-    i: 4,
+    j: 4,
     swiperOption: {
       slidesPerView: 1,
       navigation: {
