@@ -1,22 +1,35 @@
 <template>
-  <v-col class="mt-8" :cols="colValue[1]">
-    <h4>Daily | News</h4>
-    <content-box v-for="(item, index) in i" :key="index" :category="'dailyNews'">
+  <v-col :cols="'12'">
+    <content-box :category="'topPicks'">
       <template #content>
-        <v-card flat :class="{'d-flex mt-2 rounded-0': true, 'flex-column': $vuetify.breakpoint.xs}">
-          <img :width="widthTwo" :src="require('../../../assets/lauren-richmond-9w-tg-gmrbi-unsplash-1@1x.png')"/>
-          <div :class="{'d-flex flex-column': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-3': $vuetify.breakpoint.smAndUp}">
-            <h3>Interview: </h3>
-            <h5>Rachel Snape</h5>
-            <div>
-              <v-chip small class="pa-2 mt-4 mr-1 rounded-0" label>Politics</v-chip>
+        <v-container class="pl-0 pr-0 pt-0">
+          <!-- TOP BAR -->
+          <div class="d-flex justify-space-between mt-1 mr-1" style="width: 100%;">
+            <h3>Daily | News</h3>
+            <div class="d-flex justify-end">
+              <span><v-icon id="d-prev" medium color="black">fa fa-chevron-circle-left</v-icon></span>
+              <span class="ml-3"><v-icon id="d-next" medium color="black">fa fa-chevron-circle-right</v-icon></span>
             </div>
-            <small class="mt-4">"Change is possible with a little help from everyone"...</small>
-            <small class="mt-4 gray--text"> ABC | 1 week</small>
           </div>
-        </v-card>
+          <!-- TOP BAR -->
+          
+          <!-- SLIDER -->
+          <swiper ref="mySwiper" :options="swiperOption">
+            <swiper-slide v-for="(slide, index) in i" :key="index">
+              <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
+                <img :width="$vuetify.breakpoint.width - 40" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" />
+                <!-- <iframe :height="iframeHeight" :width="$vuetify.breakpoint.width - 40" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <div class="d-flex flex-column">
+                  <h3 class="mt-2">Interview : Rachel Snape National</h3>
+                  <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
+                </div>
+              </v-card>
+            </swiper-slide>
+          </swiper>
+          <!-- SLIDER -->
+        </v-container>
       </template>
-    </content-box>
+    </content-box>  
   </v-col>
 </template>
 
@@ -26,7 +39,14 @@ export default {
     contentBox: () => import('../ContentBox'),
   },
   data: () =>({
-    i: 4
+    i: 4,
+    swiperOption: {
+      slidesPerView: 1,
+      navigation: {
+        nextEl: '#d-next',
+        prevEl: '#d-prev'
+      },
+    }
   }),
   computed: {
     iframeHeight() {

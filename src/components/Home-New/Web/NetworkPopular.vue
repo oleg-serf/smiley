@@ -1,5 +1,5 @@
 <template>
-  <v-col :cols="networkCols[1]">
+  <v-col class="mt-6" :cols="networkCols[1]">
     <div class="d-flex justify-space-between mr-1" style="margin-bottom: -17.5px">
       <h3>Network | Popular</h3>
       <div class="d-flex">
