@@ -18,7 +18,7 @@
             <swiper-slide v-for="(slide, index) in data" :key="index">
               <v-card v-if="slide.type === 'video'" flat class="d-flex flex-column align-center mt-2 pb-2 rounded-0">
                 <!-- <img width="400px" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" /> -->
-                <iframe :height="iframeHeight" :width="$vuetify.breakpoint.width" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe :height="iframeHeight" width="100%" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="d-flex flex-column">
                   <h3 class="mt-2">Live Event: Ending Homelessness & Building Resilient Communities</h3>
                   <p class="mt-5">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>

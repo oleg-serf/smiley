@@ -17,8 +17,8 @@
           <swiper ref="mySwiper" :options="swiperOption">
             <swiper-slide v-for="(slide, index) in j" :key="index">
               <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
-                <img :width="$vuetify.breakpoint.width - 40" :src="require('../../../assets/lauren-richmond-9w-tg-gmrbi-unsplash-1@1x.png')" />
-                <!-- <iframe :height="iframeHeight" :width="$vuetify.breakpoint.width - 40" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <img width="100%" :src="require('../../../assets/lauren-richmond-9w-tg-gmrbi-unsplash-1@1x.png')" />
+                <!-- <iframe :height="iframeHeight" width="100%" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
                 <div class="d-flex flex-column">
                   <h3 class="mt-2">Interview : Rachel Snape National</h3>
                   <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
