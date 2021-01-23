@@ -35,8 +35,8 @@
 export default {
   data: () => ({
     inputs: [
-      { label: 'Your Name', value: ''},
-      { label: 'Your Email', value: '' }
+      { name: 'name', label: 'Your Name', value: '', showOnMobile: false },
+      { name: 'email', label: 'Your Email', value: '', showOnMobile: true }
     ]
   }),
   methods: {

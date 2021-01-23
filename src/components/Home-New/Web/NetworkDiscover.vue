@@ -1,16 +1,16 @@
 <template>
-  <v-row class="mt-16 pa-3">
-    <div class="d-flex justify-space-between mr-1" style="margin-bottom: -16px; width: 100%;">
+  <v-row class="mt-6 pa-3">
+    <div class="d-flex justify-space-between pr-6" style="margin-bottom: -16px; width: 100%;">
       <h3>Network | Discover</h3>
       <div class="d-flex">
         <span><v-icon id="prevone" medium color="black">fa fa-chevron-circle-left</v-icon></span>
         <span class="ml-3"><v-icon id="nextone" medium color="black">fa fa-chevron-circle-right</v-icon></span>
       </div>
     </div>
-    <v-container class="pr-1 pl-0 pt-0">
+    <v-container class="pr-6 pl-0 pt-0">
       <content-box :category="'otherNews'">
         <template #content>
-          <swiper style="max-width:1345px" ref="mySwiper" :options="swiperOption">
+          <swiper style="max-width:1350px" ref="mySwiper" :options="swiperOption">
             <swiper-slide>
               <v-row class="d-flex mt-1">
                 <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
@@ -61,7 +61,7 @@ export default {
     otherCols() {
       if (this.$vuetify.breakpoint.xs) {
         return '12';
-      } return '4'
+      } return '4';
     },
     iframeHeightTwo() {
       switch (this.$vuetify.breakpoint.name) {

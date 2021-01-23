@@ -1,5 +1,5 @@
 <template>
-  <v-col class="pr-3" :cols="networkCols[0]">
+  <v-col class="pr-3 mt-6" :cols="networkCols[0]">
     <h3 style="margin-bottom: -10px">Network | Awards</h3>
     <content-box :category="'networkAwards'">
       <template #content>

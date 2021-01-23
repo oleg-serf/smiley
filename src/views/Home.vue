@@ -17,43 +17,31 @@
 
     <v-row no-gutters>
       <!-- LEFT SIDE OF HOMEPAGE -->
-      <top-picks />
+      <top-picks v-if="$vuetify.breakpoint.smAndUp" />
+      <top-picks-mobile v-if="$vuetify.breakpoint.xs" />
       <!-- LEFT SIDE ENDS  -->
 
       <!-- RIGHT SIDE OF HOMEPAGE -->
-      <daily-news/>
+      <daily-news v-if="$vuetify.breakpoint.smAndUp"/>
+      <daily-news-mobile v-if="$vuetify.breakpoint.xs"/>
       <!-- RIGHT SIDE OF HOMEPAGE ENDS -->
 
       <!-- OTHER NEWS PART -->
-      <v-row no-gutters>
-        <other-news />
-      </v-row>
+      <other-news v-if="$vuetify.breakpoint.mdAndUp"/>
+      <other-news-mobile v-if="$vuetify.breakpoint.width < 800"/>
       <!-- OTHER NEWS PART -->
 
       <!-- NETWORKKK PART -->
-      <v-row class="mt-16" no-gutters>
-        <network-awards />
-        <network-popular />
-      </v-row>
+      <network-awards v-if="$vuetify.breakpoint.smAndUp"/>
+      <network-awards-mobile v-if="$vuetify.breakpoint.xs"/>
+
+      <network-popular v-if="$vuetify.breakpoint.mdAndUp"/>
+      <network-popular-mobile v-if="$vuetify.breakpoint.width < 800"/>
       <!-- NETWORK PARTT -->
 
       <!-- NETWORKK DISCOVERRR -->
-      <!-- <v-row class="mt-16 pa-3">
-        <h3>Network | Discover</h3>
-        <content-box :category="'otherNews'">
-          <template #content>
-            <v-row class="d-flex mt-1">
-              <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
-                <div class="discoverBox">
-                  <h4 class="mb-14">Project: Save the trees inner city</h4>
-                  <small class="mb-8">Milton Road Primary School | 01/11/2020</small>
-                </div>
-              </v-col>
-            </v-row>
-          </template>
-        </content-box>
-      </v-row> -->
-      <network-discovery />
+      <network-discovery v-if="$vuetify.breakpoint.mdAndUp"/>
+      <network-discovery-mobile v-if="$vuetify.breakpoint.width < 800"/>
       <!-- NETWORK DISCOVERRR -->
     </v-row>
   </div>
@@ -68,11 +56,17 @@ export default {
     // Index,
     // IndexMobile,
     networkDiscovery: () => import('../components/Home-New/Web/NetworkDiscover'),
+    networkDiscoveryMobile: () => import('../components/Home-New/Mobile/NetworkDiscoveryMobile'),
     networkPopular: () => import('../components/Home-New/Web/NetworkPopular'),
+    networkPopularMobile: () => import('../components/Home-New/Mobile/NetworkPopularMobile'),
     networkAwards: () => import('../components/Home-New/Web/NetworkAwards'),
+    networkAwardsMobile: () => import('../components/Home-New/Mobile/NetworkAwardsMobile'),
     topPicks: () => import('../components/Home-New/Web/TopPicks'),
+    topPicksMobile: () => import('../components/Home-New/Mobile/TopPicksMobile'),
     dailyNews: () => import('../components/Home-New/Web/DailyNews'),
+    dailyNewsMobile: () => import('../components/Home-New/Mobile/DailyNewsMobile'),
     otherNews: () => import('../components/Home-New/Web/OtherNews'),
+    otherNewsMobile: () => import('../components/Home-New/Mobile/OtherNewsMobile'),
     webHeader: () => import('../components/Base/Header/WebHeader-new'),
     mobileHeader: () => import('../components/Base/Header/MobileHeader-new'),
     contentBox: () => import('../components/Home-New/ContentBox')
@@ -88,6 +82,7 @@ export default {
         return '12';
       } return '4'
     },
+
     iframeHeightTwo() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return '300px'
