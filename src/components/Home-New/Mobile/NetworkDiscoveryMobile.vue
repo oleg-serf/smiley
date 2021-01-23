@@ -35,7 +35,7 @@ export default {
     contentBox: () => import('../ContentBox'),
   },
   data: () =>({
-    j: 3,
+    j: 18,
     swiperOption: {
       slidesPerView: 1,
       navigation: {

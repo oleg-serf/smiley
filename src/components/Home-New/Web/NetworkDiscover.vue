@@ -1,17 +1,18 @@
 <template>
-  <v-row class="mt-6 pa-3">
-    <div class="d-flex justify-space-between pr-6" style="margin-bottom: -16px; width: 100%;">
+  <v-row class="mt-6">
+    <div class="d-flex justify-space-between pr-4 pl-4" style="margin-bottom: -16px; width: 100%;">
       <h3>Network | Discover</h3>
       <div class="d-flex">
         <span><v-icon id="prevone" medium color="black">fa fa-chevron-circle-left</v-icon></span>
         <span class="ml-3"><v-icon id="nextone" medium color="black">fa fa-chevron-circle-right</v-icon></span>
       </div>
     </div>
-    <v-container class="pr-6 pl-0 pt-0">
+    <v-container class="pl-4 pt-0">
       <content-box :category="'otherNews'">
         <template #content>
-          <swiper style="max-width:1350px" ref="mySwiper" :options="swiperOption">
-            <swiper-slide>
+          <swiper style="max-width:1345px; display: flex;" ref="mySwiper" :options="swiperOption">
+            <swiper-slide  v-for="(item, index) in main" :key="index">
+              <!-- <v-container class="pb-0 pt-0 pl-0 pr-0"> -->
               <v-row class="d-flex mt-1">
                 <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
                   <div class="discoverBox">
@@ -20,16 +21,7 @@
                   </div>
                 </v-col>
               </v-row>
-            </swiper-slide>
-            <swiper-slide>
-              <v-row class="d-flex mt-1">
-                <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
-                  <div class="discoverBox">
-                    <h4 class="mb-14">Project: Save the trees inner city</h4>
-                    <small class="mb-8">Milton Road Primary School | 01/11/2020</small>
-                  </div>
-                </v-col>
-              </v-row>
+              <!-- </v-container> -->
             </swiper-slide>
           </swiper>
         </template>
@@ -44,8 +36,10 @@ export default {
     contentBox: () => import('../ContentBox'),
   },
   data: () =>({
+    main: 2,
     other: 9,
     swiperOption: {
+      slidesPerView: 1,
       navigation: {
         nextEl: '#nextone',
         prevEl: '#prevone'

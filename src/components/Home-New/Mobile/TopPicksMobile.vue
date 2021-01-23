@@ -15,10 +15,10 @@
           
           <!-- SLIDER -->
           <swiper ref="mySwiper" :options="swiperOption">
-            <swiper-slide v-for="(slide, index) in j" :key="index">
-              <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
+            <swiper-slide v-for="(slide, index) in data" :key="index">
+              <v-card v-if="slide.type === 'video'" flat class="d-flex flex-column align-center mt-2 pb-2 rounded-0">
                 <!-- <img width="400px" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" /> -->
-                <iframe :height="iframeHeight" :width="$vuetify.breakpoint.width - 40" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe :height="iframeHeight" :width="$vuetify.breakpoint.width" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="d-flex flex-column">
                   <h3 class="mt-2">Live Event: Ending Homelessness & Building Resilient Communities</h3>
                   <p class="mt-5">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
@@ -26,6 +26,14 @@
                   <div class="d-flex mt-8 justify-center">
                     <v-btn elevation="" color="#ffe61f" class="rounded-button pl-12 pr-12">Register</v-btn>
                   </div>
+                </div>
+              </v-card>
+              <v-card v-else flat class="d-flex flex-column mt-2 pb-2 rounded-0">
+                <img :width="$vuetify.breakpoint.width" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" />
+                <div class="pl-1">
+                  <h3 class="mt-6">Live Event: Ending Homelessness & Building Resilient Communities</h3>
+                  <p class="mt-10">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
+                  <small class="mt-6">Virtual stream | 30 Jan 2021 | 1pm BST</small>
                 </div>
               </v-card>
             </swiper-slide>
@@ -43,7 +51,11 @@ export default {
     contentBox: () => import('../ContentBox'),
   },
   data: () =>({
-    j: 3,
+    data: [
+      { type: 'video' },
+      { type: 'post' },
+      { type: 'post' },
+    ],
     swiperOption: {
       slidesPerView: 1,
       navigation: {
