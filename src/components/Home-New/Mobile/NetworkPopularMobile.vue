@@ -15,13 +15,20 @@
           
           <!-- SLIDER -->
           <swiper ref="mySwiper" :options="swiperOption">
-            <swiper-slide v-for="(slide, index) in j" :key="index">
+            <swiper-slide v-for="(item, index) in networks" :key="index">
               <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
-                <img width="100%" :src="require('../../../assets/full-advent@1x.png')" />
-                <!-- <iframe :height="iframeHeight" width="100%" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <media-image
+                  :alt="item.name"
+                  :title="item.name"
+                  :sort="item.video ? 'video' : 'image'"
+                  :src="item.video ? item.video : item.cover_image"
+                  type="projects"
+                  :height="iframeHeight"
+                  size="l"
+                />
                 <div class="d-flex flex-column">
-                  <h3 class="mt-2">Interview : Rachel Snape National</h3>
-                  <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
+                  <h3 class="mt-2">Discussion: {{item.name}}</h3>
+                  <small class="mt-4">{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
                 </div>
               </v-card>
             </swiper-slide>
@@ -34,12 +41,17 @@
 </template>
 
 <script>
+import MediaImage from "@/components/MediaImage.vue";
+
 export default {
   components: {
     contentBox: () => import('../ContentBox'),
+    MediaImage,
+  },
+  props: {
+    networks: [],
   },
   data: () =>({
-    j: 2,
     swiperOption: {
       slidesPerView: 1,
       navigation: {
@@ -50,9 +62,13 @@ export default {
   }),
   computed: {
     iframeHeight() {
-      if (this.$vuetify.breakpoint.width > 1900) {
-        return '515px'
-      } else return '300px'
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return '300px'
+        case 'sm': return '300px'
+        case 'md': return '240px'
+        case 'lg': return '360px'
+        case 'xl': return '385px'
+      }
     },
     otherCols() {
       if (this.$vuetify.breakpoint.xs) {

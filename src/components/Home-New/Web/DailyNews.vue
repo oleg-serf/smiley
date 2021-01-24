@@ -1,18 +1,27 @@
 <template>
   <v-col class="mt-8" :cols="colValue[1]">
     <h4>Daily | News</h4>
-    <content-box v-for="(item, index) in i" :key="index" :category="'dailyNews'">
+    <content-box v-for="(item, index) in news" :key="index" :category="'dailyNews'">
       <template #content>
-        <v-card flat :class="{'d-flex mt-2 rounded-0': true, 'flex-column': $vuetify.breakpoint.xs}">
-          <img :width="widthTwo" :src="require('../../../assets/lauren-richmond-9w-tg-gmrbi-unsplash-1@1x.png')"/>
+        <v-card flat :class="{'d-flex mt-2 rounded-0': true, 'flex-column': $vuetify.breakpoint.xs}" max-height='310px'>
+          <media-image
+            :alt="item.title"
+            :title="item.title"
+            :sort="item.video ? 'video' : 'image'"
+            :src="item.video ? item.video : item.cover_image"
+            :width="widthTwo"            
+            :height="item.video ? iframeHeight : 'auto'"
+            type="news"
+            size="l"
+          />
           <div :class="{'d-flex flex-column': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-3': $vuetify.breakpoint.smAndUp}">
-            <h3>Interview: </h3>
-            <h5>Rachel Snape</h5>
+            <h3>{{ item.type }}: </h3>
+            <h5>{{ item.title }}</h5>
             <div>
               <v-chip small class="pa-2 mt-4 mr-1 rounded-0" label>Politics</v-chip>
             </div>
-            <small class="mt-4"  v-line-clamp:20="2">"Change is possible with a little help from everyone"</small>
-            <small class="mt-4 gray--text"> ABC | 1 week</small>
+            <small class="mt-4" v-line-clamp:20="3">{{ item.description }}</small>
+            <small class="mt-4 gray--text"> {{ item.author }} | {{ dateAgo(item.published_at) }}</small>
           </div>
         </v-card>
       </template>
@@ -21,44 +30,21 @@
 </template>
 
 <script>
+import MediaImage from "@/components/MediaImage.vue";
+
 export default {
   components: {
     contentBox: () => import('../ContentBox'),
+    MediaImage,
   },
-  data: () =>({
-    i: 4
-  }),
+  props: {
+    news: [],
+  },
   computed: {
     iframeHeight() {
       if (this.$vuetify.breakpoint.width > 1900) {
         return '515px'
       } else return '300px'
-    },
-    otherCols() {
-      if (this.$vuetify.breakpoint.xs) {
-        return '12';
-      } return '4'
-    },
-    iframeHeightTwo() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '300px'
-        case 'sm': return '300px'
-        case 'md': return '240px'
-        case 'lg': return '360px'
-        case 'xl': return '385px'
-      }
-    },
-    widthOne() {
-      if (this.$vuetify.breakpoint.width > 2000) {
-        return '58%'
-      }
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '100%'
-        case 'sm': return '50%'
-        case 'md': return '57%'
-        case 'lg': return '52%'
-        case 'xl': return '52%'
-      }
     },
     widthTwo() {
       switch (this.$vuetify.breakpoint.name) {
@@ -67,15 +53,6 @@ export default {
         case 'md': return '70%'
         case 'lg': return '71%'
         case 'xl': return '80%'
-      }
-    },
-    imageWidth() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '100%'
-        case 'sm': return '55%'
-        case 'md': return '55%'
-        case 'lg': return '55%'
-        case 'xl': return '55%'
       }
     },
     colValue () {
@@ -87,16 +64,7 @@ export default {
         case 'xl': return [7, 5]
       }
     },
-    networkCols() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return [12, 12]
-        case 'sm': return [12, 12]
-        case 'md': return [8, 4]
-        case 'lg': return [8, 4]
-        case 'xl': return [8, 4]
-      }
-    }
-},
+  },
 }
 </script>
 

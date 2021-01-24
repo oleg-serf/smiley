@@ -11,21 +11,20 @@
       <content-box :category="'networkPopular'">
         <template #content>
           <swiper ref="mySwiper" :options="swiperOption">
-            <swiper-slide>
+            <swiper-slide v-for="index in popular" :key="index">
               <div class="d-flex flex-column">
-                <div v-for="(item, index) in popular" :key="index" class="mt-2">
-                  <img width="100%" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')"/>
-                  <h4>Discussion: What's the future of education? | 17 Comm</h4>
-                  <small>Milton Road Primary School | 01/11/2020</small>
-                </div>
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <div class="d-flex flex-column">
-                <div v-for="(item, index) in popular" :key="index" class="mt-2">
-                  <img width="100%" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')"/>
-                  <h4>Discussion: What's the future of education? | 17 Comm</h4>
-                  <small>Milton Road Primary School | 01/11/2020</small>
+                <div v-for="(item, i) in networks.slice((index-1)*2, index*2)" :key="`${index}_${i}`" class="mt-2">
+                  <media-image
+                    :alt="item.name"
+                    :title="item.name"
+                    :sort="item.video ? 'video' : 'image'"
+                    :src="item.video ? item.video : item.cover_image"
+                    type="projects"
+                    :height="iframeHeight"
+                    size="l"
+                  />
+                  <h4>Discussion: {{item.name}}</h4>
+                  <small>{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
                 </div>
               </div>
             </swiper-slide>
@@ -37,24 +36,36 @@
 </template>
 
 <script>
+import MediaImage from "@/components/MediaImage.vue";
+
 export default {
   components: {
     contentBox: () => import('../ContentBox'),
+    MediaImage,
   },
-  data: () =>({
-    popular: 2,
-    swiperOption: {
-      navigation: {
-        nextEl: '#next',
-        prevEl: '#prev'
-      },
+  props: {
+    networks: [],
+  },
+  data: function() {
+    return {
+      popular: Math.ceil(this.networks.length/2),
+      swiperOption: {
+        navigation: {
+          nextEl: '#next',
+          prevEl: '#prev'
+        },
+      }
     }
-  }),
+  },
   computed: {
     iframeHeight() {
-      if (this.$vuetify.breakpoint.width > 1900) {
-        return '515px'
-      } else return '300px'
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return '160px'
+        case 'sm': return '180px'
+        case 'md': return '200px'
+        case 'lg': return '220px'
+        case 'xl': return '240px'
+      }
     },
     otherCols() {
       if (this.$vuetify.breakpoint.xs) {
@@ -118,7 +129,7 @@ export default {
         case 'xl': return [8, 4]
       }
     }
-},
+  },
 }
 </script>
 

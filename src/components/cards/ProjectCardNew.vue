@@ -160,30 +160,6 @@ export default {
 
       return result;
     },
-    dateAgo(date) {
-      const currentStamp = Date.now();
-      const realDate = this.$dayjs(date);
-      const postStamp = this.$dayjs(date).unix() * 1000;
-      const dateDiff = currentStamp - postStamp;
-      const days = dateDiff / (1000 * 3600 * 24);
-
-      const result = Math.floor(days);
-
-      const append = result == 1 ? "day" : "days";
-
-      let time = "";
-
-      if (postStamp > currentStamp || result > 28){
-        const d = new Date(date.replace(/-/g, "/"));
-        time = d.toLocaleDateString("en-US", {day: 'numeric', month: 'long', year: 'numeric'});
-      } else if (result == 0) {
-        time = "Today"; 
-      } else {
-        time = result + " " + append + " ago";
-      }
-
-      return time;
-    },
     cutText(text, limit, stringName) {
       if (text.length > limit) {
         // CHECK IF CHARACTER IS <SPACE> OR END OF STRING

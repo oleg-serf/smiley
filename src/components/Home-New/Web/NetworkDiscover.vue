@@ -11,13 +11,13 @@
       <content-box :category="'otherNews'">
         <template #content>
           <swiper style="max-width:1345px; display: flex;" ref="mySwiper" :options="swiperOption">
-            <swiper-slide  v-for="(item, index) in main" :key="index">
+            <swiper-slide  v-for="index in Math.ceil(networks.length/9)" :key="index">
               <!-- <v-container class="pb-0 pt-0 pl-0 pr-0"> -->
               <v-row class="d-flex mt-1">
-                <v-col class="d-flex flex-column" v-for="(item, index) in other" :key="index" :cols="otherCols">
+                <v-col class="d-flex flex-column" v-for="(item, i) in networks.slice((index-1)*9, index*9)" :key="i" :cols="otherCols">
                   <div class="discoverBox">
-                    <h4 class="mb-14">Project: Save the trees inner city</h4>
-                    <small class="mb-8">Milton Road Primary School | 01/11/2020</small>
+                    <h4 class="mb-14">{{item.type}}: {{item.title}}</h4>
+                    <small class="mb-8">{{item.author || "No name"}} | {{dateAgo(item.published_at)}}</small>
                   </div>
                 </v-col>
               </v-row>
@@ -31,13 +31,17 @@
 </template>
 
 <script>
+import MediaImage from "@/components/MediaImage.vue";
+
 export default {
   components: {
     contentBox: () => import('../ContentBox'),
+    MediaImage,
+  },
+  props: {
+    networks: [],
   },
   data: () =>({
-    main: 2,
-    other: 9,
     swiperOption: {
       slidesPerView: 1,
       navigation: {
@@ -114,7 +118,7 @@ export default {
         case 'xl': return [8, 4]
       }
     }
-},
+  },
 }
 </script>
 

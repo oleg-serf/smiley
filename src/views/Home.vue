@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-row no-gutters>
-      <!-- COLUMN 1 -->
       <v-col cols="12">
         <v-sheet>
           <div class="d-flex justify-end">
@@ -17,44 +16,44 @@
 
     <v-row no-gutters>
       <!-- LEFT SIDE OF HOMEPAGE -->
-      <top-picks v-if="$vuetify.breakpoint.smAndUp" />
-      <top-picks-mobile v-if="$vuetify.breakpoint.xs" />
+      <top-picks v-if="$vuetify.breakpoint.smAndUp && features.length" :features="features"/>
+      <top-picks-mobile v-if="$vuetify.breakpoint.xs && features.length" :features="features" />
       <!-- LEFT SIDE ENDS  -->
 
       <!-- RIGHT SIDE OF HOMEPAGE -->
-      <daily-news v-if="$vuetify.breakpoint.smAndUp"/>
-      <daily-news-mobile v-if="$vuetify.breakpoint.xs"/>
+      <daily-news v-if="$vuetify.breakpoint.smAndUp && dailyNews.length" :news="dailyNews.slice(0,4)"/>
+      <daily-news-mobile v-if="$vuetify.breakpoint.xs && dailyNews.length" :news="dailyNews"/>
       <!-- RIGHT SIDE OF HOMEPAGE ENDS -->
 
       <!-- OTHER NEWS PART -->
-      <other-news v-if="$vuetify.breakpoint.mdAndUp"/>
-      <other-news-mobile v-if="$vuetify.breakpoint.width < 769"/>
+      <other-news v-if="$vuetify.breakpoint.mdAndUp && latestNews.length" :news="latestNews" />
+      <other-news-mobile v-if="$vuetify.breakpoint.width < 769" :news="latestNews" />
       <!-- OTHER NEWS PART -->
 
       <!-- NETWORKKK PART -->
       <network-awards v-if="$vuetify.breakpoint.smAndUp"/>
       <network-awards-mobile v-if="$vuetify.breakpoint.xs"/>
 
-      <network-popular v-if="$vuetify.breakpoint.mdAndUp"/>
-      <network-popular-mobile v-if="$vuetify.breakpoint.width < 769"/>
+      <network-popular v-if="$vuetify.breakpoint.mdAndUp && networkPopular.length" :networks="networkPopular"/>
+      <network-popular-mobile v-if="$vuetify.breakpoint.width < 769 && networkPopular.length" :networks="networkPopular"/>
       <!-- NETWORK PARTT -->
 
       <!-- NETWORKK DISCOVERRR -->
-      <network-discovery v-if="$vuetify.breakpoint.mdAndUp"/>
-      <network-discovery-mobile v-if="$vuetify.breakpoint.width < 769"/>
+      <network-discovery v-if="$vuetify.breakpoint.mdAndUp && networkDiscover.length" :networks="networkDiscover"/>
+      <network-discovery-mobile v-if="$vuetify.breakpoint.width < 769 && networkDiscover.length" :networks="networkDiscover"/>
       <!-- NETWORK DISCOVERRR -->
     </v-row>
   </div>
 </template>
 
 <script>
-// import Index from "@/views/index.vue";
-// import IndexMobile from "@/views/IndexMobile";
+// Tools
+import axios from "@/axios-auth";
+import router from "@/router";
+
 export default {
   name: "Home",
   components: {
-    // Index,
-    // IndexMobile,
     networkDiscovery: () => import('../components/Home-New/Web/NetworkDiscover'),
     networkDiscoveryMobile: () => import('../components/Home-New/Mobile/NetworkDiscoveryMobile'),
     networkPopular: () => import('../components/Home-New/Web/NetworkPopular'),
@@ -71,6 +70,13 @@ export default {
     mobileHeader: () => import('../components/Base/Header/MobileHeader-new'),
     contentBox: () => import('../components/Home-New/ContentBox')
   },
+  data: () => ({
+    features: [],
+    dailyNews: [],
+    latestNews: [],
+    networkPopular: [],
+    networkDiscover: []
+  }),
   computed: {
     iframeHeight() {
       if (this.$vuetify.breakpoint.width > 1900) {
@@ -140,15 +146,42 @@ export default {
         case 'xl': return [8, 4]
       }
     }
-},
-  data: () => ({
-    i: 4,
-    j: 2,
-    other: 9,
-    popular: 2
-   }),
+  },
   methods: { },
-  };
+  mounted() {
+    axios
+      .get("/pages/1")
+      .then(res => {
+        this.features = res.data.featured;
+        this.dailyNews = [...res.data.latest_news, ...res.data.latest_news];
+        this.latestNews = [
+          ...res.data.latest_news,
+          ...res.data.latest_news,
+          ...res.data.latest_news,
+          ...res.data.latest_news,
+          ...res.data.latest_news,
+          res.data.latest_news[0],
+        ];
+        this.networkPopular = res.data.latest_network;
+        this.networkDiscover = [
+          ...res.data.featured,
+          ...res.data.featured,
+          ...res.data.featured,
+          ...res.data.featured,
+          ...res.data.featured
+        ];
+
+        const metaPayload = {
+          meta: res.data?.meta || {},
+          title: 'Smiley Talks',
+        }
+
+        metaPayload.meta.description = 'A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals';
+        this.$store.dispatch('meta/setMeta', metaPayload);
+      })
+      .catch(error => console.log(error));
+  }
+};
 </script>
 
 <style lang="scss" scoped>

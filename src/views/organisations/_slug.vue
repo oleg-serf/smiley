@@ -441,32 +441,6 @@ export default {
           }
         });
     },
-    dateAgo(date) {
-      const currentStamp = Date.now();
-      const realDate = this.$dayjs(date);
-      const postStamp = this.$dayjs(date).unix() * 1000;
-      const dateDiff = currentStamp - postStamp;
-      const days = dateDiff / (1000 * 3600 * 24);
-
-      const result = Math.floor(days);
-
-      const append = result == 1 ? "day" : "days";
-
-      let time = "";
-
-      if (result == 0) {
-        time = "Today";
-      } else if (result < 28) {
-        time = result + " " + append + " ago";
-      } else {
-        const month = realDate.date();
-        const day = realDate.month() + 1;
-        const year = realDate.year();
-        time = day + "-" + month + "-" + year;
-      }
-
-      return time;
-    },
     shareLink(type) {
       let result = "";
       const title = encodeURI(this.organisation.title);

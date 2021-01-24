@@ -15,10 +15,10 @@
           
           <!-- SLIDER -->
           <swiper ref="mySwiper" :options="swiperOption">
-            <swiper-slide v-for="(slide, index) in j" :key="index">
+            <swiper-slide v-for="(item, index) in networks" :key="index">
               <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
-                <h3>Project: Save The Trees</h3>
-                <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
+                <h2 class="mt-4 mb-7 text-3" v-line-clamp:20="3">{{item.type}}: {{item.title}}</h2>
+                <small class="discover-date">{{item.author || "No name"}} | {{dateAgo(item.published_at)}}</small>
               </v-card>
             </swiper-slide>
           </swiper>
@@ -30,12 +30,17 @@
 </template>
 
 <script>
+import MediaImage from "@/components/MediaImage.vue";
+
 export default {
   components: {
     contentBox: () => import('../ContentBox'),
+    MediaImage,
+  },
+  props: {
+    networks: [],
   },
   data: () =>({
-    j: 18,
     swiperOption: {
       slidesPerView: 1,
       navigation: {
@@ -45,17 +50,7 @@ export default {
     }
   }),
   computed: {
-    iframeHeight() {
-      if (this.$vuetify.breakpoint.width > 1900) {
-        return '515px'
-      } else return '300px'
-    },
-    otherCols() {
-      if (this.$vuetify.breakpoint.xs) {
-        return '12';
-      } return '4'
-    },
-    iframeHeightTwo() {
+    dateTop() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return '300px'
         case 'sm': return '300px'
@@ -112,24 +107,13 @@ export default {
         case 'xl': return [8, 4]
       }
     }
-},
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-  .rounded-button {
-    border-radius: 20px;
-    outline: none !important;
-  }
-  .main-column {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    div {
-      flex: 1;
-    }
-  }
-  .discoverBox {
-    border-bottom: 4px dashed lightgray;
-  }
+.discover-date {
+  position: absolute;
+  top: 140px;
+}
 </style>

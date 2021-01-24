@@ -123,6 +123,35 @@ Vue.filter("formatDate", function(date, locale, format) {
   return result;
 });
 
+Vue.mixin({
+  methods: {
+    dateAgo(date) {
+      const currentStamp = Date.now();
+      // const realDate = this.$dayjs(date);
+      const postStamp = this.$dayjs(date).unix() * 1000;
+      const dateDiff = currentStamp - postStamp;
+      const days = dateDiff / (1000 * 3600 * 24);
+
+      const result = Math.floor(days);
+
+      const append = result == 1 ? "day" : "days";
+
+      let time = "";
+
+      if (result == 0) {
+        time = "Today";
+      } else if (result < 28) {
+        time = result + " " + append + " ago";
+      } else {
+        const d = new Date(date);
+        time = d.toLocaleDateString("en-GB", {day: 'numeric', month: 'short', year: 'numeric'});
+      }
+
+      return time;
+    }
+  }
+});
+
 new Vue({
   router,
   store,

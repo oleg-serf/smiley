@@ -6,30 +6,36 @@
           <!-- TOP BAR -->
           <div class="d-flex justify-space-between mt-1 mr-1" style="width: 100%;">
             <h3>Network | Awards</h3>
-            <div class="d-flex justify-end">
+            <!-- <div class="d-flex justify-end">
               <span><v-icon id="n-prev" medium color="black">fa fa-chevron-circle-left</v-icon></span>
               <span class="ml-3"><v-icon id="n-next" medium color="black">fa fa-chevron-circle-right</v-icon></span>
-            </div>
+            </div> -->
           </div>
           <!-- TOP BAR -->
           
           <!-- SLIDER -->
-          <swiper ref="mySwiper" :options="swiperOption">
-            <swiper-slide v-for="(slide, index) in j" :key="index">
+          <!-- <swiper ref="mySwiper" :options="swiperOption">
+            <swiper-slide v-for="(slide, index) in j" :key="index"> -->
               <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
-                <!-- <img width="400px" :src="require('../../../assets/l-geaorlbm6150647851@1x.png')" /> -->
-                <iframe :height="iframeHeight" width="100%" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <media-image
+                  :alt="network.title"
+                  :title="network.title"
+                  :height="iframeHeight"
+                  :sort="network.video ? 'video' : 'image'"
+                  :src="network.video ? network.video : network.cover_image"
+                  :type="network.type"
+                />
                 <div class="d-flex flex-column">
-                  <h3 class="mt-2">Live Event: Ending Homelessness & Building Resilient Communities</h3>
-                  <p class="mt-5"  v-line-clamp:20="2">This special SmileyTalk supports the Sustainable Development Goals number 1 No Poverty and 2 Zero Hunger and aims to breakdown the stigma around homelessness...</p>
-                  <small class="mt-4">Virtual stream | 30 Jan 2021 | 1pm BST</small>
+                  <h3 class="mt-2">{{network.type}}: {{network.title}}</h3>
+                  <p class="mt-5"  v-line-clamp:20="2">{{network.description}}</p>
+                  <small class="mt-4">{{network.author}} | {{dateAgo(network.published_at)}}</small>
                   <div class="d-flex mt-8 justify-center">
                     <v-btn elevation="" color="#ffe61f" class="rounded-button pl-12 pr-12">Register</v-btn>
                   </div>
                 </div>
               </v-card>
-            </swiper-slide>
-          </swiper>
+            <!-- </swiper-slide>
+          </swiper> -->
           <!-- SLIDER -->
         </v-container>
       </template>
@@ -38,12 +44,27 @@
 </template>
 
 <script>
+import MediaImage from "@/components/MediaImage.vue";
+
 export default {
   components: {
     contentBox: () => import('../ContentBox'),
+    MediaImage,
+  },
+  props: {
+    network: {
+      type: Object,
+      default: {
+        type: "Awards",
+        title: "Smiley Charity film awards | VOTING NOW OPEN!",
+        description: "400 charities entered the awards, More than 110,000 members of the public voted and 127 charities made the shortlist in the world's biggest cause-based film event",
+        author:"Virtual stream",
+        published_at: "2020-1-30",
+        video: "https://www.youtube.com/embed/O-3fzNmsQfQ"
+      }
+    },
   },
   data: () =>({
-    j: 3,
     swiperOption: {
       slidesPerView: 1,
       navigation: {
@@ -58,69 +79,7 @@ export default {
         return '515px'
       } else return '300px'
     },
-    otherCols() {
-      if (this.$vuetify.breakpoint.xs) {
-        return '12';
-      } return '4'
-    },
-    iframeHeightTwo() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '300px'
-        case 'sm': return '300px'
-        case 'md': return '240px'
-        case 'lg': return '360px'
-        case 'xl': return '385px'
-      }
-    },
-    widthOne() {
-      if (this.$vuetify.breakpoint.width > 2000) {
-        return '58%'
-      }
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '100%'
-        case 'sm': return '50%'
-        case 'md': return '57%'
-        case 'lg': return '52%'
-        case 'xl': return '52%'
-      }
-    },
-    widthTwo() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '100%'
-        case 'sm': return '50%'
-        case 'md': return '70%'
-        case 'lg': return '71%'
-        case 'xl': return '80%'
-      }
-    },
-    imageWidth() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '100%'
-        case 'sm': return '55%'
-        case 'md': return '55%'
-        case 'lg': return '55%'
-        case 'xl': return '55%'
-      }
-    },
-    colValue () {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return [12, 12]
-        case 'sm': return [12, 12]
-        case 'md': return [7, 5]
-        case 'lg': return [7, 5]
-        case 'xl': return [7, 5]
-      }
-    },
-    networkCols() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return [12, 12]
-        case 'sm': return [12, 12]
-        case 'md': return [8, 4]
-        case 'lg': return [8, 4]
-        case 'xl': return [8, 4]
-      }
-    }
-},
+  },
 }
 </script>
 
