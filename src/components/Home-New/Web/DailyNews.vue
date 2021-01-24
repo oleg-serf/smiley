@@ -10,7 +10,7 @@
             :sort="item.video ? 'video' : 'image'"
             :src="item.video ? item.video : item.cover_image"
             :width="widthTwo"            
-            :height="item.video ? iframeHeight : 'auto'"
+            :height="iframeHeight"
             type="news"
             size="l"
           />
@@ -42,9 +42,18 @@ export default {
   },
   computed: {
     iframeHeight() {
-      if (this.$vuetify.breakpoint.width > 1900) {
-        return '515px'
-      } else return '300px'
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return "180px";
+        case "sm":
+          return "180px";
+        case "md":
+          return "210px";
+        case "lg":
+          return "230px";
+        case "xl":
+          return "250px";
+      }
     },
     widthTwo() {
       switch (this.$vuetify.breakpoint.name) {
