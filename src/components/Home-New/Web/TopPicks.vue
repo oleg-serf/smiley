@@ -56,7 +56,7 @@ export default {
     iframeHeight() {
       if (this.$vuetify.breakpoint.width > 1900) {
         return '515px'
-      } else return '300px'
+      } else return '250px'
     },
     otherCols() {
       if (this.$vuetify.breakpoint.xs) {

@@ -2,7 +2,7 @@
   <v-app>
     <header-mobile v-if="$vuetify.breakpoint.smAndDown"/>
     <div :style="largeScreenContainer">
-      <v-container class="mt-2" :fluid="false">
+      <v-container class="mt-2">
         <header-web v-if="$vuetify.breakpoint.mdAndUp"/>
         <v-main>
           <router-view :key="$route.fullPath" />
