@@ -2,6 +2,7 @@
   <div class="projects-gallery__container">
     <template v-if="withSlider">
       <ButtonArrow
+          v-if="$vuetify.breakpoint.smAndUp"
           :id="'news-gallery-button-prev-' + id"
           class="news-gallery-button news-gallery-button-prev"
       />
@@ -22,6 +23,7 @@
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
+          v-if="$vuetify.breakpoint.smAndUp"
           :id="'news-gallery-button-next-' + id"
           class="news-gallery-button news-gallery-button-next"
       />

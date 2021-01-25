@@ -2,7 +2,7 @@
   <div class="projects-gallery__container" :class="[forMobile ? 'for-mobile' : '']">
     <template v-if="withSlider">
       <ButtonArrow
-          v-if="!forMobile"
+          v-if="$vuetify.breakpoint.smAndUp"
           :id="'news-gallery-button-prev-' + id"
           :style="[prevButtonLeft ? {left: prevButtonLeft} : '']"
           class="news-gallery-button news-gallery-button-prev"
@@ -17,7 +17,7 @@
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
-          v-if="!forMobile"
+          v-if="$vuetify.breakpoint.smAndUp"
           :id="'news-gallery-button-next-' + id"
           :style="[nextButtonRight !== 0 ? {right: nextButtonRight} : '']"
           class="news-gallery-button news-gallery-button-next"
