@@ -1,5 +1,5 @@
 <template>
-  <v-menu max-height="600" min-width="300px" left full-width allow-overflow v-model="dropdown">
+  <v-menu max-height="900" min-width="300" left allow-overflow v-model="dropdown">
     <template v-slot:activator="{ on, attrs }">
       <v-btn v-bind="attrs" v-on="on" icon style="border: none; outline: none;">
         <v-icon color="black" medium>fa fa-bars</v-icon>
@@ -10,28 +10,28 @@
         <span @click="menu = false"><v-icon style="cursor: pointer" color="#ffe61f" large>fa fa-times</v-icon></span>
       </div>
       <!-- SECTION 1 -->
-      <div style="border-bottom: 4px solid #ffe61f;" class="mr-10">
-        <v-list-item class="pr-0 custom-list-item mb-0 pb-0" v-for="(item, index) in dropdownMenuItems.firstSection" :key="index">
-          <v-list-item-title class="custom-list-item">{{ item.name }}</v-list-item-title>
-        </v-list-item>
+      <div style="border-bottom: 2px solid #ffe61f;" class="mr-10 ">
+        <div class="pr-0 pb-1 custom-list-item pb-0"  v-for="(item, index) in dropdownMenuItems.firstSection" :key="index">
+          <div class="custom-list-item pa-0 ma-0" style="cursor: pointer;">{{ item.name }}</div>
+        </div>
       </div>
       <!-- SECTION 2 -->
-      <div style="border-bottom: 4px solid #ffe61f;" class="mr-10">
-        <v-list-item class="pr-0 custom-list-item" v-for="(item, index) in dropdownMenuItems.secondSection" :key="index">
-          <v-list-item-title class="custom-list-item">{{ item.name }}</v-list-item-title>
-        </v-list-item>
+      <div style="border-bottom: 2px solid #ffe61f;" class="mr-10">
+        <div class="pr-0 pb-1 custom-list-item" v-for="(item, index) in dropdownMenuItems.secondSection" :key="index">
+          <div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div>
+        </div>
       </div>
       <!-- SECTION 3 -->
-      <div style="border-bottom: 4px solid #ffe61f;" class="mr-10">
-        <v-list-item class="pr-0 custom-list-item" v-for="(item, index) in dropdownMenuItems.thirdSection" :key="index">
-          <v-list-item-title class="custom-list-item">{{ item.name }}</v-list-item-title>
-        </v-list-item>
+      <div style="border-bottom: 2px solid #ffe61f;" class="mr-10">
+        <div class="pr-0 pb-1 custom-list-item" v-for="(item, index) in dropdownMenuItems.thirdSection" :key="index">
+          <div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div>
+        </div>
       </div>
       <!-- SECTION 4 -->
       <div class="mr-10">
-        <v-list-item class="pr-0 custom-list-item" v-for="(item, index) in dropdownMenuItems.lastSection" :key="index">
-          <v-list-item-title class="custom-list-item">{{ item.name }}</v-list-item-title>
-        </v-list-item>
+        <div class="pr-0 pb-1 custom-list-item" v-for="(item, index) in dropdownMenuItems.lastSection" :key="index">
+          <div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div>
+        </div>
       </div>
     </v-list>
   </v-menu>
@@ -76,6 +76,7 @@ export default {
 .custom-list-item {
     text-align: right;
     font-weight: bold;
+    font-size: 18px;
     :hover {
       color: #ffe61f;
     }
