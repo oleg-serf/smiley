@@ -49,10 +49,6 @@ import NewsCard from "@/components/cards/NewsCard.vue";
 export default {
   name: "NewsGallery",
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false,
-    },
     news: {
       type: Array,
       required: true,
@@ -78,6 +74,7 @@ export default {
     return {
       id: 0,
       key: 0,
+      forMobile: this.$vuetify.breakpoint.xs,
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,

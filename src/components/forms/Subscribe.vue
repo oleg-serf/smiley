@@ -37,16 +37,11 @@ import axios from "@/axios-auth";
 
 export default {
   name: "SubscribeForm",
-  props: {
-    forMobile: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       name: "",
       email: "",
+      forMobile: this.$vuetify.breakpoint.xs
     };
   },
   methods: {

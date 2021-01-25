@@ -1,5 +1,5 @@
 <template>
-  <v-sheet>
+  <div>
     <v-navigation-drawer v-model="drawer" app>
       <router-link :to="{path: '/smiley-network'}">Link</router-link>
     </v-navigation-drawer>
@@ -18,7 +18,7 @@
       {{ icon.icon }}
       </v-icon>
     </v-app-bar>
-  </v-sheet>
+  </div>
 </template>
 
 <script>

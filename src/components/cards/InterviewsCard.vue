@@ -82,10 +82,6 @@ export default {
     VButton,
   },
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false
-    },
     type: {
       type: String,
       default: 'news'
@@ -104,7 +100,8 @@ export default {
   data() {
     return {
       sharing: false,
-      showDescription: false
+      showDescription: false,
+      forMobile: this.$vuetify.breakpoint.xs
     };
   },
   filters: {

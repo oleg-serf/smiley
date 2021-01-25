@@ -1,26 +1,26 @@
 <template>
-  <div class="projects-gallery__container" :class="[forMobile ? 'for-mobile' : '']">
+  <div class="projects-gallery__container" :class="[isMobile ? 'for-mobile' : '']">
     <template v-if="withSlider || isMobile">
       <ButtonArrow
-          v-if="!forMobile"
+          v-if="!isMobile"
           :id="'news-gallery-button-prev-' + id"
           class="news-gallery-button news-gallery-button-prev"
       />
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="project in discussions" :key="project.slug">
-          <DiscussionCard class="news-gallery__card" :project="project" :for-mobile="forMobile" :button-text="buttonText"/>
+          <DiscussionCard class="news-gallery__card" :project="project" :for-mobile="isMobile" :button-text="buttonText"/>
         </SwiperSlide>
       </Swiper>
       <ButtonArrow
-          v-if="!forMobile"
+          v-if="!isMobile"
           :id="'news-gallery-button-next-' + id"
           class="news-gallery-button news-gallery-button-next"
       />
     </template>
-    <section v-else class="section" id="section-news" :class="[forMobile ? 'for-mobile' : '']">
+    <section v-else class="section" id="section-news" :class="[isMobile ? 'for-mobile' : '']">
       <div class="grid grid--news">
         <DiscussionCard
-            :for-mobile="forMobile"
+            :for-mobile="isMobile"
             class="news-gallery__card"
             v-for="project in discussions"
             :key="'project-'+project.slug"
@@ -38,10 +38,6 @@ import DiscussionCard from "@/components/cards/DiscussionCard";
 export default {
   name: "DiscussionsGallery",
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false,
-    },
     discussions: {
       type: Array,
       required: true,
@@ -93,7 +89,7 @@ export default {
   * METHODS */
   methods: {
     handleResize() {
-      this.isMobile = window.innerWidth >= 900 ? false : true;
+      this.isMobile = this.$vuetify.breakpoint.xs;
     },
   },
 

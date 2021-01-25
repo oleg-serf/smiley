@@ -53,10 +53,6 @@ import TempInterviewsCard from "@/components/cards/TempInterviewsCard";
 export default {
   name: "VideoInterviewsGallery",
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false,
-    },
     withSlider: {
       type: Boolean,
       default: false,
@@ -90,6 +86,7 @@ export default {
     return {
       id: 0,
       key: 0,
+      forMobile: this.$vuetify.breakpoint.xs,
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,

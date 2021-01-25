@@ -7,7 +7,9 @@
     </template>
     <v-list style="opacity: 0.97;" class="pl-4 pr-2">
       <div class="d-flex justify-end mr-2">
-        <span @click="menu = false"><v-icon style="cursor: pointer" color="#ffe61f" large>fa fa-times</v-icon></span>
+        <span @click="menu = false" style="cursor: pointer">
+          <v-icon large color="#ffe61f">close</v-icon>
+        </span>
       </div>
       <!-- SECTION 1 -->
       <div style="border-bottom: 2px solid #ffe61f;" class="mr-10 ">

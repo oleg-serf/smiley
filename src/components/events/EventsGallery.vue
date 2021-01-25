@@ -51,10 +51,6 @@ import EventCard from "@/components/cards/EventCard";
 export default {
   name: "EventsGallery",
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false,
-    },
     events: {
       type: Array,
       required: true,
@@ -84,6 +80,7 @@ export default {
     return {
       id: 0,
       key: 0,
+      forMobile: this.$vuetify.breakpoint.xs,
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,

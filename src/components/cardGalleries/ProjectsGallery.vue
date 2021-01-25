@@ -44,10 +44,6 @@ import ProjectCardNew from "@/components/cards/ProjectCardNew";
 export default {
   name: "ProjectsGallery",
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false,
-    },
     projects: {
       type: Array,
       required: true,
@@ -77,6 +73,7 @@ export default {
     return {
       id: 0,
       key: 0,
+      forMobile: this.$vuetify.breakpoint.xs,
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,

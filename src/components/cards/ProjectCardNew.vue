@@ -96,10 +96,6 @@ export default {
     VButton,
   },
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false
-    },
     project: {
       type: Object,
     },
@@ -114,7 +110,8 @@ export default {
   data() {
     return {
       sharing: false,
-      showDescription: false
+      showDescription: false,
+      forMobile: this.$vuetify.breakpoint.xs
     };
   },
   filters: {

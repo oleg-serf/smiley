@@ -4,6 +4,7 @@
       <ButtonArrow
           :id="'news-gallery-button-prev-' + id"
           class="news-gallery-button news-gallery-button-prev"
+          v-if="!forMobile"
       />
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="el in dataArray" :key="el.slug">
@@ -12,8 +13,8 @@
               class="news-gallery__card"
               :key="'member-'+el.slug"
               :button-text="buttonText"
-              :member="el"/>
-
+              :member="el"
+          />
           <organisation-card
               v-else
               class="news-gallery__card"
@@ -24,6 +25,7 @@
       <ButtonArrow
           :id="'news-gallery-button-next-' + id"
           class="news-gallery-button news-gallery-button-next"
+          v-if="!forMobile"
       />
     </template>
     <section v-else class="section" id="section-news">
@@ -41,7 +43,8 @@
             class="news-gallery__card"
             v-for="(organisation,index) in dataArray"
             :key="organisation.slug+index+'-org-archive'"
-            :organisation="organisation"/>
+            :organisation="organisation"
+        />
       </div>
     </section>
   </div>
@@ -81,6 +84,7 @@ export default {
     return {
       id: 0,
       key: 0,
+      forMobile: this.$vuetify.breakpoint.xs,
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,

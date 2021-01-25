@@ -74,10 +74,6 @@ import { VButton } from "@/components/app";
 export default {
   name: "EventCard",
   props: {
-    forMobile: {
-      type: Boolean,
-      default: false
-    },
     event: {
       type: Object,
     },
@@ -100,6 +96,7 @@ export default {
   data() {
     return {
       showDescription: false,
+      forMobile: this.$vuetify.breakpoint.xs
     };
   },
   components: {
