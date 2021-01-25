@@ -1,11 +1,13 @@
 <template>
   <div class="main-header d-flex flex-column pb-4">
-    <div class="mb-2 day-date">Thursday, January 2021</div>
+    <div class="mb-2 day-date">
+      {{new Date().toLocaleDateString("en-GB", {day: 'numeric', weekday: 'long', month: 'long', year: 'numeric'})}}
+    </div>
     <!-- LEFT SIDE -->
     <div class="d-flex justify-space-between">
       <div class="d-flex">
         <router-link :to="{path: '/'}">
-          <img height="70px" width="200px" :src="require('../../../assets/HEADER_LOGO@2x.png')"/>
+          <img height="70px" width="200px" src="../../../assets/HEADER_LOGO@2x.png"/>
         </router-link>
         <link-box :links="linksOne"/>
         <link-box :links="linksTwo"/>
@@ -63,9 +65,7 @@ export default {
     ]
   }),
   methods: {
-    hello() {
-      console.log('asd');
-    }
+    
   }
 }
 </script>
