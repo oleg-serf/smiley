@@ -24,7 +24,8 @@
             :key="index" 
             :src="require(`../../../assets/${icon.src}.png`)" 
           />
-          <v-icon style="cursor: pointer;" class="ml-4" color="black" medium>fa fa-bars</v-icon>
+          <!-- <v-icon style="cursor: pointer;" class="ml-4" color="black" medium>fa fa-bars</v-icon> -->
+          <drop-down-menu/>
         </div>
       </div>
     </div>
@@ -36,6 +37,7 @@
 export default {
   components: {
     linkBox: () => import('../../Base/Header/LinkBox'),
+    dropDownMenu: () => import('./DropdownMenu'),
   },
   data: () => ({
     socialButtons: [
