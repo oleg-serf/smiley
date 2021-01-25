@@ -52,7 +52,7 @@ export default {
         case "lg":
           return "230px";
         case "xl":
-          return "250px";
+          return "300px";
       }
     },
     widthTwo() {

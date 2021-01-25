@@ -11,26 +11,26 @@
       </div>
       <!-- SECTION 1 -->
       <div style="border-bottom: 2px solid #ffe61f;" class="mr-10 ">
-        <div class="pr-0 pb-1 custom-list-item pb-0"  v-for="(item, index) in dropdownMenuItems.firstSection" :key="index">
-          <div class="custom-list-item pa-0 ma-0" style="cursor: pointer;">{{ item.name }}</div>
+        <div class="pr-0 pb-1 custom-list-item pb-0" v-for="(item, index) in dropdownMenuItems.firstSection" :key="index">
+          <router-link :to="item.path"><div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div></router-link>
         </div>
       </div>
       <!-- SECTION 2 -->
       <div style="border-bottom: 2px solid #ffe61f;" class="mr-10">
         <div class="pr-0 pb-1 custom-list-item" v-for="(item, index) in dropdownMenuItems.secondSection" :key="index">
-          <div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div>
+          <router-link :to="item.path"><div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div></router-link>
         </div>
       </div>
       <!-- SECTION 3 -->
       <div style="border-bottom: 2px solid #ffe61f;" class="mr-10">
         <div class="pr-0 pb-1 custom-list-item" v-for="(item, index) in dropdownMenuItems.thirdSection" :key="index">
-          <div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div>
+          <router-link :to="item.path"><div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div></router-link>
         </div>
       </div>
       <!-- SECTION 4 -->
       <div class="mr-10">
         <div class="pr-0 pb-1 custom-list-item" v-for="(item, index) in dropdownMenuItems.lastSection" :key="index">
-          <div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div>
+          <router-link :to="item.path"><div class="custom-list-item" style="cursor: pointer;">{{ item.name }}</div></router-link>
         </div>
       </div>
     </v-list>
@@ -43,29 +43,29 @@ export default {
     dropdown: false,
     dropdownMenuItems: {
       firstSection : [
-        { name: 'News', path: '' },
-        { name: 'Events', path: '' },
-        { name: 'Videos', path: '' },
-        { name: 'Interviews', path: '' },
-        { name: 'Discussions', path: '' },
+        { name: 'News', path: { name: 'news' } },
+        { name: 'Events', path: { name: 'talks' } },
+        // { name: 'Videos', path: { name: 'interviews' } },
+        { name: 'Interviews', path: { name: 'interviews' } },
+        { name: 'Discussions', path: { name: 'contact' } },
       ],
       secondSection: [
-        { name: 'Network', path: '' },
-        { name: 'Organisations', path: '' },
-        { name: 'Members', path: '' },
+        { name: 'Network', path: { name: 'network' } },
+        { name: 'Organisations', path: { name: 'organisations' } },
+        { name: 'Members', path: { name: 'members' } },
       ],
       thirdSection: [
-        { name: 'UN Goals', path: '' },
-        { name: 'Awards', path: '' },
-        { name: 'About us', path: '' },
+        { name: 'UN Goals', path: { name: 'goals' } },
+        { name: 'Awards', path: { name: '' } },
+        { name: 'About us', path: { name: 'story' } },
       ],
       lastSection: [
-        { name: 'Sustainability', path: '' },
-        { name: 'Social Justice', path: '' },
-        { name: 'Health', path: '' },
-        { name: 'Education', path: '' },
-        { name: 'Climate', path: '' },
-        { name: 'Economic Growth', path: '' },
+        { name: 'Sustainability', path: {name: 'news-category-item', params: { slug: 'sustainable-cities-and-communities' }} },
+        { name: 'Social Justice', path: {name: 'news-category-item', params: { slug: 'peace-justice-and-strong-institutions' }} },
+        { name: 'Health', path: {name: 'news-category-item', params: { slug: 'good-health-and-well-being' }} },
+        { name: 'Education', path: {name: 'news-category-item', params: { slug: 'quality-education' }} },
+        { name: 'Climate', path: {name: 'news-category-item', params: { slug: 'climate-action' }} },
+        { name: 'Economic Growth', path: {name: 'news-category-item', params: { slug: 'decent-work-and-economic-growth' }} },
       ]
     },
   })
@@ -74,11 +74,16 @@ export default {
 
 <style lang="scss" scoped>
 .custom-list-item {
-    text-align: right;
-    font-weight: bold;
-    font-size: 18px;
-    :hover {
-      color: #ffe61f;
-    }
+  text-align: right;
+  font-weight: bold;
+  font-size: 18px;
+  :hover {
+    color: #ffe61f;
   }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
 </style>
