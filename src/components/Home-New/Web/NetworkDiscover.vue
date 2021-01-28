@@ -16,8 +16,8 @@
               <v-row class="d-flex mt-1">
                 <v-col class="d-flex flex-column" v-for="(item, i) in networks.slice((index-1)*9, index*9)" :key="i" :cols="otherCols">
                   <div class="discoverBox">
-                    <h4 class="mb-14" v-line-clamp:20="2">{{item.type}}: {{item.title}}</h4>
-                    <small class="mb-8">{{item.author || "No name"}} | {{dateAgo(item.published_at)}}</small>
+                    <h4 class="mb-14" v-line-clamp:20="2">{{item.type || "Network"}}: {{item.name}}</h4>
+                    <small class="mb-8">{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
                   </div>
                 </v-col>
               </v-row>
@@ -137,5 +137,8 @@ export default {
   }
   .discoverBox {
     border-bottom: 4px dashed lightgray;
+    h4 {
+      min-height: 50px;
+    }
   }
 </style>

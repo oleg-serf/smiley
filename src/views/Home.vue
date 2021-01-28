@@ -75,7 +75,8 @@ export default {
     dailyNews: [],
     latestNews: [],
     networkPopular: [],
-    networkDiscover: []
+    networkDiscover: [],
+    networkAwards: null
   }),
   computed: {
     iframeHeight() {
@@ -152,24 +153,19 @@ export default {
     axios
       .get("/pages/1")
       .then(res => {
-        this.features = res.data.featured;
-        this.dailyNews = [...res.data.latest_news, ...res.data.latest_news];
-        this.latestNews = [
-          ...res.data.latest_news,
-          ...res.data.latest_news,
-          ...res.data.latest_news,
-          ...res.data.latest_news,
-          ...res.data.latest_news,
-          res.data.latest_news[0],
-        ];
-        this.networkPopular = res.data.latest_network;
+        this.features = res.data.top_picks;
+        this.dailyNews = res.data.daily_news;
+        this.latestNews = res.data.other_news;
+        this.networkPopular = res.data.network_popular;
+        // this.networkDiscover = res.data.network_discover;
         this.networkDiscover = [
-          ...res.data.featured,
-          ...res.data.featured,
-          ...res.data.featured,
-          ...res.data.featured,
-          ...res.data.featured
+          ...res.data.network_discover,
+          ...res.data.network_discover,
+          ...res.data.network_discover,
+          ...res.data.network_discover,
+          ...res.data.network_discover
         ];
+        this.networkAwards = res.data.network_awards;
 
         const metaPayload = {
           meta: res.data?.meta || {},

@@ -4,7 +4,7 @@
     <content-box :category="'networkAwards'">
       <template #content>
         <v-card flat class="d-flex flex-column mt-2 rounded-0">
-          <iframe :height="iframeHeight" src="https://www.youtube.com/embed/O-3fzNmsQfQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe :height="iframeHeight" src="https://www.youtube.com/embed/qRudLyeT0Io" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           <div class="d-flex flex-column">
             <h3 class="mt-2">Awards: Smiley Charity film awards | VOTING NOW OPEN!</h3>
             <div class="d-flex mt-2">
