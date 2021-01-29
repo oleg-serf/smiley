@@ -61,27 +61,29 @@
               </template>
               <!-- template v-else>No networks connected</template> -->
               <div class="organisation-network">
-                <VButton
-                    class="projects-article__button message-btn"
-                    size="height_45"
-                    @click.native.prevent="openPage"
-                    shape="round"
+                <!-- <VButton
+                  class="projects-article__button message-btn"
+                  size="height_45"
+                  @click.native.prevent="openPage"
+                  shape="round"
                 >
                   <i class="fa fa-envelope-o"></i> Message
-                </VButton>
+                </VButton> -->
                 <VButton
-                    class="projects-article__button"
-                    size="height_45"
-                    @click.native.prevent="openPage"
-                    shape="round"
+                  v-if="organisation.donation_link"
+                  class="projects-article__button"
+                  size="height_45"
+                  @click.native.prevent="openPage(organisation.donation_link)"
+                  shape="round"
                 >
                   Donate
                 </VButton>
                 <VButton
-                    class="projects-article__button"
-                    size="height_45"
-                    @click.native.prevent="openPage"
-                    shape="round"
+                  v-if="organisation.volunteer_link"
+                  class="projects-article__button"
+                  size="height_45"
+                  @click.native.prevent="openPage(organisation.volunteer_link)"
+                  shape="round"
                 >
                   Volunteer
                 </VButton>
@@ -780,32 +782,6 @@ export default {
             }
           });
     },
-    dateAgo(date) {
-      const currentStamp = Date.now();
-      const realDate = this.$dayjs(date);
-      const postStamp = this.$dayjs(date).unix() * 1000;
-      const dateDiff = currentStamp - postStamp;
-      const days = dateDiff / (1000 * 3600 * 24);
-
-      const result = Math.floor(days);
-
-      const append = result == 1 ? "day" : "days";
-
-      let time = "";
-
-      if (result == 0) {
-        time = "Today";
-      } else if (result < 28) {
-        time = result + " " + append + " ago";
-      } else {
-        const month = realDate.date();
-        const day = realDate.month() + 1;
-        const year = realDate.year();
-        time = day + "-" + month + "-" + year;
-      }
-
-      return time;
-    },
     shareLink(type) {
       let result = "";
       const title = encodeURI(this.organisation.title);
@@ -829,6 +805,9 @@ export default {
       if (window.innerWidth >= 768) {
         this.is_shown = true;
       }
+    },
+    openPage(link) {
+      window.open(link, "_blank");
     }
   },
   mounted() {
@@ -1622,7 +1601,7 @@ export default {
   margin: 25px -25px 0px;
   padding: 25px 25px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   @include mdMax {
     display: block;
   }
