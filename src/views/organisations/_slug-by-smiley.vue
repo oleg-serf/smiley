@@ -113,12 +113,7 @@
               </div>
               <div class="about-additional-info">
                 <i class="fa fa-info-circle"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nunc condimentum dolor quis arcu gravida, sed
-                  placerat sem euismod. Quisque at pretium odio. Donec
-                  vestibulum, nisi in malesuada convallis, eros nulla
-                  egestas lectus, sed maximus sem elit ullamcorper elit.
-                  Donec aliquam tortor sit amet.</p>
+                <div v-html="organisation.description" />
               </div>
               <div class="about-additional-info">
                 <i class="fa fa-thumbs-up"></i>
@@ -129,7 +124,7 @@
               <div class="about-additional-info">
                 <i class="fa fa-info-circle"></i>
                 <p>
-                  2,455,234 people follow this
+                  {{organisation.followers.length}} people follow this
                 </p>
               </div>
               <div class="about-additional-info">
