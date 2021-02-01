@@ -92,13 +92,13 @@
           </div>
           <div class="tab">
             <button class="tablinks about-org active" @click="openTab('about-org')"><span>About</span></button>
-            <button class="tablinks news" @click="openTab('news')"><span>News</span></button>
-            <button class="tablinks projects" @click="openTab('projects')"><span>Projects</span></button>
-            <button class="tablinks people" @click="openTab('people')"><span>People</span></button>
-            <button class="tablinks events" @click="openTab('events')"><span>Events</span></button>
-            <button class="tablinks videos" @click="openTab('videos')"><span>Videos</span></button>
-            <button class="tablinks photos" @click="openTab('photos')"><span>Photos</span></button>
-            <button class="tablinks reports" @click="openTab('reports')"><span>Reports</span></button>
+            <button class="tablinks news" v-if="news.length>0" @click="openTab('news')"><span>News</span></button>
+            <button class="tablinks projects" v-if="organisation.projects && organisation.projects.length>0" @click="openTab('projects')"><span>Projects</span></button>
+            <button class="tablinks people" v-if="organisation.people" @click="openTab('people')"><span>People</span></button>
+            <button class="tablinks events" v-if="organisation.events" @click="openTab('events')"><span>Events</span></button>
+            <button class="tablinks videos" v-if="organisation.video" @click="openTab('videos')"><span>Videos</span></button>
+            <button class="tablinks photos" v-if="organisation.photos" @click="openTab('photos')"><span>Photos</span></button>
+            <button class="tablinks reports" v-if="organisation.reports" @click="openTab('reports')"><span>Reports</span></button>
           </div>
 
           <div id="about-org" class="tabcontent tabContentCommon active">
@@ -124,15 +124,15 @@
               <div class="about-additional-info">
                 <i class="fa fa-info-circle"></i>
                 <p>
-                  {{organisation.followers.length}} people follow this
+                  {{ organisation.followers.length }} people follow this
                 </p>
               </div>
               <div class="about-additional-info">
                 <i class="fa fa-globe" aria-hidden="true"></i>
                 <p>
-                  <a :href="organisation.website" target="_blank" style="color: #000000;">{{
-                      organisation.website
-                    }}</a>
+                  <a :href="organisation.website" target="_blank" style="color: #000000;">
+                    {{ organisation.website }}
+                  </a>
                 </p>
               </div>
               <div class="article-header__sharing">
@@ -227,36 +227,19 @@
             </div>
           </div>
 
-          <div id="news" class="tabcontent tabContentCommon">
+          <div id="news" class="tabcontent tabContentCommon" v-if="news.length>0">
             <div class="about-img">
-              <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
-                   v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
+              <img :src="$settings.images_path.news + 'm_'+ news[0].cover_image"/>
             </div>
             <div class="about-text">
               <div class="about-title" style="display: flex; justify-content: space-between">
-                <h3 style="font-family: 'Montserrat Bold', sans-serif; font-size: 22px">Big Issue Invest Report Shows
-                  £41.7m Investment Into Charities</h3>
-                <a href="#" style="color: #000000; width: 24%;">Read More</a>
+                <h3 style="font-family: 'Montserrat Bold', sans-serif; font-size: 22px">
+                  {{ news[0].title }}
+                </h3>
+                <a :href="`/news/${news[0].slug}`" style="color: #000000; width: 24%;">Read More</a>
               </div>
               <div class="about-additional-info f-direction-column">
-                <p>Big Issue Invest has launched its Impact Report revealing
-                  that between April 2019 and March 2020, the social
-                  investor supported 160 investees with a total of
-                  £41.7million.</p>
-                <p>
-                  In turn, collectively, the social enterprises were able to
-                  provide services to over 1million customers in the UK that
-                  are often marginalised from mainstream support and
-                  opportunities or live in the most deprived areas.
-                </p>
-                <p>
-                  St Helena’s Hospice (SHH) is just one of the social
-                  enterprises supported by Big Issue Invest. The hospice
-                  helps local people facing incurable illness and
-                  bereavement, supporting them and their families, friends
-                  and carers to bring comfort and relief to tens of thousands
-                  of people.
-                </p>
+                <p>{{ news[0].description }}</p>
               </div>
               <div class="article-header__sharing">
                 <div class="article-header__sharing-goals">
@@ -269,19 +252,17 @@
                     <li><img src="/img/goals/goals-2.svg" alt="goal"/></li>
                   </ul>
                   <div class="news-article__content-metadata">
-                    <span>News</span> | 8 Days ago | 12 Comment
+                    <span>News</span> | {{ news[0].published_at }} | 12 Comment
                   </div>
                 </div>
               </div>
             </div>
             <div class="tab_actions">
-              <TriangleNextPrevButtons
-                  text="Next article"
-              />
+              <TriangleNextPrevButtons text="Next article"/>
             </div>
           </div>
 
-          <div id="projects" class="tabcontent tabContentCommon">
+          <div id="projects" class="tabcontent tabContentCommon" v-if="organisation.projects && organisation.projects.length>0">
             <div class="about-img">
               <img :src="$settings.images_path.organisations + 'images/m_'+ organisation.organisation_images[0]"
                    v-if="organisation.organisation_images != null && organisation.organisation_images.length > 0"/>
@@ -377,7 +358,7 @@
             </div>
           </div>
 
-          <div id="people" class="tabcontent tabContentCommon">
+          <div id="people" class="tabcontent tabContentCommon" >
             <!-- <div class="people-grid">
               <div
                   v-for="n in 14"
@@ -627,6 +608,7 @@ export default {
       is_mobile: false,
 
       following: false,
+      news: [],
       posts: [],
       events: [],
       Toast: () => {
@@ -822,12 +804,8 @@ export default {
     axios
         .get("/organisations/" + this.$route.params.slug + "/admin-created")
         .then(response => {
-          console.log(
-              `Organisation Loaded: ${this.$route.params.slug}`,
-              response
-          );
-
           this.organisation = response.data.organisation;
+          this.news = response.data.news;
           this.feed.news = response.data.organisation_posts;
           this.is_owner = response.data.is_owner;
 
