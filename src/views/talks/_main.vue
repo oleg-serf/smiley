@@ -249,7 +249,7 @@ export default {
     onChangeTiming() {
       if(this.timing == "Upcoming"){
         this.filterQuery.date = {
-          end: new Date(),
+          end: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
           start: new Date()
         };
       } else {
