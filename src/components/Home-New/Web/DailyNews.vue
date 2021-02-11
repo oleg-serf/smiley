@@ -14,7 +14,10 @@
             type="news"
             size="l"
           />
-          <div :class="{'d-flex flex-column': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-3': $vuetify.breakpoint.smAndUp}">
+          <div
+            :class="{'d-flex flex-column': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-3': $vuetify.breakpoint.smAndUp}"
+            style="width: 30%"
+          >
             <h3>{{ item.type }}: </h3>
             <h5>{{ item.title }}</h5>
             <div>
@@ -60,7 +63,7 @@ export default {
         case 'xs': return '100%'
         case 'sm': return '50%'
         case 'md': return '70%'
-        case 'lg': return '345px'
+        case 'lg': return '70%'
         case 'xl': return '80%'
       }
     },
