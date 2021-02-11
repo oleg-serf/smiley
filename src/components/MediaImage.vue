@@ -2,21 +2,24 @@
   <iframe
     v-if="sort=='video'"
     :src="src"
-    :height="height"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen
     :width="width"
-  ></iframe>
-  <img
-    v-else
-    :src="getImageUrl()"
-    :alt="alt"
-    :title="title"
-    :width="width"
     :height="height"
-    :class="(classes.length > 0) ? classes.join(' ') : ''"
-  />
+  ></iframe>
+  <div
+    v-else
+    :style="`width: ${width}; height: ${height}`"
+  ><img
+      :src="getImageUrl()"
+      :alt="alt"
+      :title="title"
+      :class="(classes.length > 0) ? classes.join(' ') : ''"
+      width="100%"
+      height="100%"
+    />
+  </div>
 </template>
 
 <script>

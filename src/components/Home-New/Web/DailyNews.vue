@@ -60,7 +60,7 @@ export default {
         case 'xs': return '100%'
         case 'sm': return '50%'
         case 'md': return '70%'
-        case 'lg': return '71%'
+        case 'lg': return '345px'
         case 'xl': return '80%'
       }
     },

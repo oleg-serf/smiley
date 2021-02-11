@@ -28,9 +28,6 @@ export default {
     };
   },
   components: {
-    // HeaderMobile,
-    // Header,
-    // Footer,
     headerWeb: () => import("../src/components/Base/Header/WebHeader-new"),
     headerMobile: () => import("../src/components/Base/Header/MobileHeader-new"),
     customFooter: () => import("../src/components/Base/Footer/Footer-new.vue")
@@ -163,8 +160,6 @@ export default {
     display: block;
   }
 }
-// #app {
-// }
 
 #nav {
   padding: 30px;
@@ -182,10 +177,6 @@ export default {
 ::placeholder {
   color: #666;
 }
-
-//::selection {
-//  color: #fff;
-//}
 
 a:hover {
   text-decoration: none;
