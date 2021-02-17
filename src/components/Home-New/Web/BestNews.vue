@@ -1,8 +1,8 @@
 <template>
   <!-- OTHER NEWS PART -->
-  <v-row class="mt-10 d-flex flex-column other-news-section" no-gutters>
+  <v-row class="mt-10 d-flex flex-column best-news-section" no-gutters>
     <div class="d-flex justify-space-between mr-6" style="margin-bottom: -16px">
-      <h3>Other | News</h3>
+      <h3>Best of the Web | News</h3>
       <div class="d-flex align-center mb-4">
         <Dropdown :items="items" label="UN Goals" class="mr-4"/>
         <span><v-icon id="left" medium color="black">fa fa-chevron-circle-left</v-icon></span>
@@ -16,7 +16,7 @@
           <swiper style="max-width:1345px" ref="mySwiper" :options="swiperOption">
             <swiper-slide v-for="(n, index) in numberSwiper" :key="index" class="mr-2">
               <v-row class="d-flex mt-1">
-                <v-col class="d-flex flex-column other-new-item" v-for="(item, i) in news.slice(index*9, (index+1)*9)" :key="`${index}_${i}`" :cols="otherCols">
+                <v-col class="d-flex flex-column other-new-item" v-for="(item, i) in news.slice(index*3, (index+1)*3)" :key="`${index}_${i}`" :cols="otherCols">
                   <div class="outer-wrapper">
                     <media-image
                       :alt="item.title"
@@ -27,9 +27,7 @@
                       :height="iframeHeight"
                     />
                     <div>
-                      <h4 class="mt-2">
-                        <strong class="mt-1">{{ item.type }}: </strong><span>{{ item.title.slice(0, 80) }} {{item.title.length > 80 ? '...' : null}}</span>
-                      </h4>
+                      <strong class="mt-1">{{ item.type }}: </strong><span>{{ item.title.slice(0, 80) }} {{item.title.length > 80 ? '...' : null}}</span>
                     </div>
                     <div class="d-flex align-center justify-space-between">
                       <small class="mt-4">{{item.author}} | {{dateAgo(item.published_at)}}</small>
@@ -62,7 +60,7 @@ export default {
   data: function() {
     return {
       items: ['Responsible Consumption and Production ', 'Bar', 'Fizz', 'Buzz'],
-      numberSwiper: Math.ceil(this.news.length/9),
+      numberSwiper: Math.ceil(this.news.length/3),
       swiperOption: {
         navigation: {
           nextEl: '#right',
@@ -91,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.other-news-section {
+.best-news-section {
   .other-new-item {
     border-left: 1px solid #ececec;
     padding: 5px 12px;
@@ -105,6 +103,9 @@ export default {
       }
     }
   }
+    .other-new-item:first-child {
+      border-left: none;
+    }
     .other-new-item:nth-child(3n) {
       padding-right: 0;
   }

@@ -14,11 +14,10 @@
 </template>
 
 <script>
-// import Header from './components/Header.vue';
 // @ is an alias to /src
-// import HeaderMobile from "@/components/HeaderMobile.vue";
-// import Header from "@/components/Header.vue";
-// import Footer from "@/components/Footer.vue";
+import headerWeb from "@/components/Base/Header/WebHeader-new.vue";
+import headerMobile from "@/components/Base/Header/MobileHeader-new.vue";
+import customFooter from "@/components/Base/Footer/Footer-new.vue";
 
 export default {
   name: "home",
@@ -28,9 +27,9 @@ export default {
     };
   },
   components: {
-    headerWeb: () => import("../src/components/Base/Header/WebHeader-new"),
-    headerMobile: () => import("../src/components/Base/Header/MobileHeader-new"),
-    customFooter: () => import("../src/components/Base/Footer/Footer-new.vue")
+    headerWeb,
+    headerMobile,
+    customFooter
   },
   computed: {
     largeScreenContainer() {

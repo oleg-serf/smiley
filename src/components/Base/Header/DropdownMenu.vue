@@ -1,7 +1,7 @@
 <template>
   <v-menu max-height="900" min-width="300" left allow-overflow v-model="dropdown">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" icon style="border: none; outline: none;">
+    <template v-slot:activator="{ on, attrs }" class="mr-2">
+      <v-btn v-bind="attrs" v-on="on" icon style="border: none; outline: none;" class="ml-3">
         <v-icon color="black" medium>fa fa-bars</v-icon>
       </v-btn>
     </template>

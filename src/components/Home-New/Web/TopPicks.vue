@@ -1,11 +1,11 @@
 <template>
   <v-col :cols="colValue[0]">
-    <div class="main-column">
-      <div>
-        <h4>Top Picks</h4>
+    <div class="main-column top-picks d-flex flex-coumn justify-space-between">
+      <div class="mt-8">
+        <h2>Top Picks</h2>
         <content-box :category="'topPicks'">
           <template #content>
-            <v-card flat class="d-flex flex-column mt-2 rounded-0">
+            <v-card flat class="d-flex flex-column mt-2 rounded-0 top-picks-item">
               <media-image
                 :alt="features[0].title"
                 :title="features[0].title"
@@ -15,25 +15,28 @@
                 :type="features[0].type"
               />
               <div class="d-flex flex-column">
-                <h3 class="mt-2">{{ features[0].type }}: {{ features[0].title }}</h3>
-                <div class="d-flex mt-2">
-                  <v-btn elevation="1" color="#ffe61f" class="rounded-button pl-12 pr-12">Register</v-btn>
+                <h3 class="mt-2"><span>{{ features[0].type }}:</span> {{ features[0].title }}</h3>
+                <p class="mt-2" v-line-clamp:20="2">{{ features[0].description }}</p>
+                <div class="article-tag" style="margin-top:0px;">Education</div>
+                <small class="mt-2">{{ features[0].author }} | {{ dateAgo(features[0].published_at) }}</small>
+                <div class="top-picks-play">
+                  <i class="fa fa-play"></i>
                 </div>
-                <p class="mt-5" v-line-clamp:20="2">{{ features[0].description }}</p>
-                <small class="mt-4">{{ features[0].author }} | {{ dateAgo(features[0].published_at) }}</small>
               </div>
             </v-card>
           </template>
         </content-box>
       </div>
-      <div>
-        <div v-for="(item, index) in features.slice(1,3)" :key="index" style="height: 50%"> 
-          <content-box :category="'topPicks'">
+      <div class="sub-top-picks">
+        <div v-for="(item, index) in features.slice(1,3)" :key="index"> 
+          <content-box :category="'subTopPicks'">
             <template #content>
               <v-card flat :class="{
                 'd-flex mt-2 rounded-0': true,
                 'd-flex flex-column': $vuetify.breakpoint.xs
               }">
+              <v-row>
+                <v-col xl="7">
                 <media-image
                   :alt="item.title"
                   :title="item.title"
@@ -41,15 +44,19 @@
                   :src="item.video ? item.video : item.cover_image"
                   :type="item.type"
                   :width="widthOne"
-                  :height="item.video ? iframeHeight : 'auto'"
+                  :height="newItemHeight"
                 />
+                </v-col>
+                <v-col xl="5">
                 <div :class="{'d-flex flex-column justify-content-center': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-4': $vuetify.breakpoint.smAndUp}">
-                  <h3>{{ item.type }}: {{ item.title }}</h3>
+                  <h3><span>{{ item.type }}:</span> {{ item.title }}</h3>
                   <span>
                     <v-chip small class="pa-2 mt-4 mr-1 rounded-0">Politics</v-chip>
                   </span>
-                  <small class="mt-8">{{ item.author }} | {{ dateAgo(item.published_at) }}</small>
+                  <small class="mt-2">{{ item.author }} | {{ dateAgo(item.published_at) }}</small>
                 </div>
+                </v-col>
+              </v-row>
               </v-card>
             </template>
           </content-box>
@@ -71,21 +78,17 @@ export default {
     features: [],
   },
   computed: {
+    newItemHeight() {
+      return '230px'
+    },
     iframeHeight() {
       if (this.$vuetify.breakpoint.width > 1900) {
-        return '515px'
-      } else return '350px'
+        return '480px'
+      } else return '480px'
     },
     widthOne() {
       if (this.$vuetify.breakpoint.width > 2000) {
         return '58%'
-      }
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '100%'
-        case 'sm': return '50%'
-        case 'md': return '57%'
-        case 'lg': return '52%'
-        case 'xl': return '52%'
       }
     },
     colValue () {
@@ -109,14 +112,66 @@ export default {
     outline: none !important;
   }
   .main-column {
+    font-family: "Montserrat Regular";
     height: 100%;
     display: flex;
     flex-direction: column;
-    div {
-      flex: 1;
-    }
+    // div {
+    //   flex: 1;
+    // }
+      h3 {
+        font-weight: 600;
+        font-family: "Montserrat SemiBold";
+        span {
+          font-family: "Montserrat Bold";
+
+        }
+      }
+      .sub-top-picks {
+        .v-sheet {
+           border-top: 1px solid #ececec;
+           .v-card {
+             border: none;
+           }
+        }
+      }
   }
   .discoverBox {
     border-bottom: 4px dashed lightgray;
+  }
+  .top-picks {
+    padding-right: 18px;
+
+    &-item {
+      position: relative;
+    }
+
+    &-play {
+      background-color: red;
+      position: absolute;
+      left: 50%;
+      top: 30%;
+      transform: translate(-50%, -50%);
+      height: 100px;
+      width: 180px;
+      background-color: #fff;
+      border-radius: 40px;
+      opacity: .8;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 60px;
+      transition: all .2s;
+
+      &:hover {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.537);
+        transform: translate(-50%, -53%);
+        opacity: 1;
+      }
+      &:active {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        transform: translate(-50%, -50%);
+      }
+    }
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-sheet :class="[marginValue, 'mt-3']">
-    <div :class="['top-pick-box']">
+    <div :class="[category==='topPicks'?'top-pick-box':'daily-news-box']">
       <slot name="content">fallback image or video</slot>
     </div>
   </v-sheet>
@@ -18,6 +18,7 @@ export default {
     marginValue() {
       switch(this.category) {
         case 'topPicks':
+        case 'subTopPicks':
           if (this.$vuetify.breakpoint.xs) {
             return 'mr-0'
           } else {
@@ -37,7 +38,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
   .top-pick-box {
-    border-top: 4px solid #ffe61f;
+    border-top: 2.5px solid #ffe61f;
   }
+  // .daily-news-box {
+  //   border-top: 1px solid #ececec;
+  // }
 </style>

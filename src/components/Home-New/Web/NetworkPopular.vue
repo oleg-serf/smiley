@@ -7,13 +7,14 @@
         <span class="ml-3"><v-icon id="next" medium color="black">fa fa-chevron-circle-right</v-icon></span>
       </div>
     </div>
+      <hr class="seperator my-5" />
     <v-container class="pr-1 pl-0 pt-0">
       <content-box :category="'networkPopular'">
         <template #content>
           <swiper ref="mySwiper" :options="swiperOption">
             <swiper-slide v-for="index in popular" :key="index">
-              <div class="d-flex flex-column">
-                <div v-for="(item, i) in networks.slice((index-1)*2, index*2)" :key="`${index}_${i}`" class="mt-2">
+              <div class="d-flex flex-column popular-items">
+                <div v-for="(item, i) in networks.slice((index-1)*2, index*2)" :key="`${index}_${i}`" class="mt-2 popular-item">
                   <media-image
                     :alt="item.name"
                     :title="item.name"
@@ -23,8 +24,11 @@
                     :height="iframeHeight"
                     size="l"
                   />
-                  <h4>Discussion: {{item.name}}</h4>
-                  <small>{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
+                  <h4 class="mt-3"><strong>Discussion:</strong> {{item.name}}</h4>
+                  <div class="d-flex align-center justify-space-between">
+                    <small>{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
+                    <v-chip small class="pa-2 mt-0 mr-1 rounded-0">Poverty</v-chip>
+                  </div>
                 </div>
               </div>
             </swiper-slide>
@@ -134,6 +138,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.popular-items {
+  .popular-item:first-child {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .popular-item {
+    padding-top: 15px;
+    border-top: 1px solid #ececec;
+    h4 {
+      font-size: 20px;
+    }
+  }
+}
   .rounded-button {
     border-radius: 20px;
     outline: none !important;

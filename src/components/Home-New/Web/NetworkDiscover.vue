@@ -8,16 +8,20 @@
       </div>
     </div>
     <v-container class="pl-4 pt-0">
+      <hr class="seperator mt-5">
       <content-box :category="'otherNews'">
         <template #content>
           <swiper style="max-width:1345px; display: flex;" ref="mySwiper" :options="swiperOption">
             <swiper-slide  v-for="index in Math.ceil(networks.length/9)" :key="index">
               <!-- <v-container class="pb-0 pt-0 pl-0 pr-0"> -->
               <v-row class="d-flex mt-1">
-                <v-col class="d-flex flex-column" v-for="(item, i) in networks.slice((index-1)*9, index*9)" :key="i" :cols="otherCols">
-                  <div class="discoverBox">
-                    <h4 class="mb-14" v-line-clamp:20="2">{{item.type || "Network"}}: {{item.name}}</h4>
-                    <small class="mb-8">{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
+                <v-col class="d-flex flex-column discover-outer-box" v-for="(item, i) in networks.slice((index-1)*9, index*9)" :key="i" :cols="otherCols">
+                  <div class="d-flex flex-column justify-space-between discoverBox pb-5 mt-10">
+                    <h4 class="mb-8" v-line-clamp:20="2">{{item.type || "Network"}}: {{item.name}}</h4>
+                    <div class="d-flex align-center justify-space-between">
+                      <small>{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
+                      <v-chip small class="pa-2 mr-1 rounded-0">Poverty</v-chip>
+                    </div>
                   </div>
                 </v-col>
               </v-row>
@@ -135,10 +139,19 @@ export default {
       flex: 1;
     }
   }
+  .discover-outer-box:first-child {
+    border: none;
+  }
+  .discover-outer-box {
+    border-left: 1px solid #ececec;
+  }
   .discoverBox {
-    border-bottom: 4px dashed lightgray;
+    border-bottom: 1px solid #ececec;
+    height: 150px;
     h4 {
       min-height: 50px;
+      font-size: 24px;
+      color: #000;
     }
   }
 </style>

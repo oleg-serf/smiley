@@ -1,27 +1,13 @@
 <template>
   <div>
     <v-row no-gutters>
-      <v-col cols="12">
-        <v-sheet>
-          <div class="d-flex justify-end">
-            <!-- SEARCH BAR -->
-            <div v-if="$vuetify.breakpoint.mdAndUp" style="width: 25%" class="mt-3 mb-2">
-              <v-text-field hide-details dense color="black" outlined rounded label="Search" append-icon="fa fa-search"></v-text-field>
-            </div>
-            <!-- SEARCH BAR -->
-          </div>
-        </v-sheet>
-      </v-col>
-    </v-row>
-
-    <v-row no-gutters>
       <!-- LEFT SIDE OF HOMEPAGE -->
       <top-picks v-if="$vuetify.breakpoint.smAndUp && features.length" :features="features"/>
       <top-picks-mobile v-if="$vuetify.breakpoint.xs && features.length" :features="features" />
       <!-- LEFT SIDE ENDS  -->
 
       <!-- RIGHT SIDE OF HOMEPAGE -->
-      <daily-news v-if="$vuetify.breakpoint.smAndUp && dailyNews.length" :news="dailyNews.slice(0,4)"/>
+      <daily-news v-if="$vuetify.breakpoint.smAndUp && dailyNews.length" :news="dailyNews.slice(0,5)"/>
       <daily-news-mobile v-if="$vuetify.breakpoint.xs && dailyNews.length" :news="dailyNews"/>
       <!-- RIGHT SIDE OF HOMEPAGE ENDS -->
 
@@ -29,6 +15,9 @@
       <other-news v-if="$vuetify.breakpoint.mdAndUp && latestNews.length" :news="latestNews" />
       <other-news-mobile v-if="$vuetify.breakpoint.width < 769" :news="latestNews" />
       <!-- OTHER NEWS PART -->
+
+      <!-- NETWORKKK PART -->
+      <best-news v-if="$vuetify.breakpoint.mdAndUp && latestNews.length" :news="latestNews" />
 
       <!-- NETWORKKK PART -->
       <network-awards v-if="$vuetify.breakpoint.smAndUp"/>
@@ -49,7 +38,6 @@
 <script>
 // Tools
 import axios from "@/axios-auth";
-import router from "@/router";
 
 export default {
   name: "Home",
@@ -59,6 +47,7 @@ export default {
     networkPopular: () => import('../components/Home-New/Web/NetworkPopular'),
     networkPopularMobile: () => import('../components/Home-New/Mobile/NetworkPopularMobile'),
     networkAwards: () => import('../components/Home-New/Web/NetworkAwards'),
+    bestNews: () => import('../components/Home-New/Web/BestNews'),
     networkAwardsMobile: () => import('../components/Home-New/Mobile/NetworkAwardsMobile'),
     topPicks: () => import('../components/Home-New/Web/TopPicks'),
     topPicksMobile: () => import('../components/Home-New/Mobile/TopPicksMobile'),
@@ -154,7 +143,7 @@ export default {
       .get("/pages/1")
       .then(res => {
         this.features = res.data.top_picks;
-        this.dailyNews = res.data.daily_news;
+        this.dailyNews = [...res.data.daily_news, ...res.data.daily_news];
         this.latestNews = res.data.other_news;
         this.networkPopular = res.data.network_popular;
         // this.networkDiscover = res.data.network_discover;

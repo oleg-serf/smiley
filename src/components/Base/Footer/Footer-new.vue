@@ -1,9 +1,9 @@
 <template>
   <v-footer class="mt-6" padless :style="footerStyles">
     <v-col class="text-center white" cols="12">
-      <h3 class="mb-10">{{ footerText}}</h3>
+      <h2 class="mb-8 mt-4">{{ footerText}}</h2>
       <subscribe-form />
-      <div class="text-center mt-10">
+      <div class="text-center mt-16">
         <img v-if="$vuetify.breakpoint.smAndUp" width="65%" :src="require('../../../assets/footer-logos@1x.png')" />
         <img v-else width="45%" :src="require('../../../assets/HEADER_LOGO@2x.png')" />
       </div>
@@ -13,10 +13,11 @@
 </template>
 
 <script>
+import subscribeForm from './Subscription-form.vue';
 
 export default {
   components: {
-    subscribeForm: () => import('./Subscription-form.vue')
+    subscribeForm
   },
   computed: {
     footerText() {
@@ -26,10 +27,16 @@ export default {
     },
     footerStyles() {
       return `
-        border-top: 4px solid #ffe61f;
+        border-top: 3px solid #ffe61f;
       `;
     }
   },
 }
 </script>
-
+<style lang="scss" scoped>
+.v-footer {
+  h2 {
+    font-family: "Montserrat Bold";
+  }
+}
+</style>

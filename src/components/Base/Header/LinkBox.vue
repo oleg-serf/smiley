@@ -17,9 +17,13 @@ export default {
 <style lang="scss" scoped>
 .link-box {
   border-top: 4px solid #ffe61f;
+  padding-top: 8px;
   .customLink {
     color: black;
     text-decoration: none;
+    font-weight: bold;
+    line-height: 20px;
+    font-size: 18px;
   }
   .customLink:hover {
     color:#ffe61f;

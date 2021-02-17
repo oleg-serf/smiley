@@ -18,6 +18,7 @@
 html,
 body {
   height: 100%;
+  font-family: "Montserrat Regular";
 }
 
 html {
@@ -295,4 +296,18 @@ div[data-popover] {
 
 .popover-icon {
   margin-left: 12px;
+}
+
+.article-tag {
+  background-color: #C4C4C4;
+  border-radius: 1px;
+  padding: 2px 8px;
+  font-size: 13px;
+  color: #fff;
+  font-weight: bold;
+  width: min-content;
+  cursor: pointer;
+}
+.seperator {
+  border: 1px solid rgb(255, 230, 31)
 }
