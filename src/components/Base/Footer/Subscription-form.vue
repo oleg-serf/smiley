@@ -21,8 +21,7 @@
     </div>
     <div class="btn-outer-box">
       <v-btn 
-      depressed
-      rounded
+        depressed
         color="#ffe61f" 
         class="pl-14 pr-14 text-capitalize"
         style="height: 55px;"
@@ -83,6 +82,7 @@ export default {
   .btn-outer-box {
     width: 100%;
     button {
+      border-radius: 40px;
       width: 100%;
       font-size: 18px !important;
       font-weight: 600;
