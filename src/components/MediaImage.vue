@@ -1,6 +1,6 @@
-<template>  
+<template>
   <iframe
-    v-if="sort=='video'"
+    v-if="sort == 'video'"
     :src="src"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -8,14 +8,12 @@
     :width="width"
     :height="height"
   ></iframe>
-  <div
-    v-else
-    :style="`width: ${width}; height: ${height}`"
-  ><img
+  <div v-else :style="`width: ${width}; height: ${height}`">
+    <img
       :src="getImageUrl()"
       :alt="alt"
       :title="title"
-      :class="(classes.length > 0) ? classes.join(' ') : ''"
+      :class="classes.length > 0 ? classes.join(' ') : ''"
       width="100%"
       height="100%"
     />
@@ -27,8 +25,10 @@ export default {
   name: "MediaImage",
   methods: {
     getImageUrl(src, size) {
-      const type = this.type == "Interview" ? "news" : this.type.toLowerCase()
-      return this.src ? this.$settings.images_path[type] + this.size + "_" + this.src : "/images/no_image.jpg"; 
+      const type = this.type == "Interview" ? "news" : this.type.toLowerCase();
+      return this.src
+        ? this.$settings.images_path[type] + this.size + "_" + this.src
+        : "/images/no_image.jpg";
     },
     getSrcSet() {
       // const sizes = [
@@ -45,41 +45,41 @@ export default {
       // let result = sizes.join(", ");
       // let result = "test";
       // return result;
-    }
+    },
   },
   props: {
     sort: {
       type: String,
-      default: "image"
+      default: "image",
     },
     src: {
-      type: String
+      type: String,
     },
     classes: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     alt: {
-      type: String
+      type: String,
     },
     title: {
-      type: String
+      type: String,
     },
     type: {
-      type: String
+      type: String,
     },
     size: {
       type: String,
-      default: "m"
+      default: "m",
     },
     width: {
       type: String,
-      default: "100%"
+      default: "100%",
     },
     height: {
       type: String,
-      default: "auto"
+      default: "auto",
     },
-  }
+  },
 };
 </script>

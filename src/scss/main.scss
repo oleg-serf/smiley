@@ -301,7 +301,6 @@ div[data-popover] {
 .article-tag {
   background-color: #C4C4C4;
   border-radius: 1px;
-  letter-spacing: 1.5px;
   padding: 2px 8px;
   font-size: 13px;
   color: #fff;
@@ -311,12 +310,4 @@ div[data-popover] {
 }
 .seperator {
   border: 1px solid rgb(255, 230, 31)
-}
-
-.v-card, .discover-outer-box, .popular-item {
-  .v-chip {
-    color: #fff;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-  }
 }

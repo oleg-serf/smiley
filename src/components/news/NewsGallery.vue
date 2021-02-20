@@ -29,15 +29,23 @@
       v-else
       id="section-news"
     >
-      <div class="grid grid--news">
-        <NewsCard
-          :for-mobile="forMobile"
-          class="news-gallery__card"
+      <!-- <div class="grid grid--news"> -->
+      <v-row class="news-gallery__row">
+        <v-col
+          sm="12"
+          md="4"
+          class="news-gallery__col py-0"
           v-for="article in news"
           :key="'article-' + article.slug"
-          :article="article"
-        />
-      </div>
+        >
+          <NewsCard
+            :for-mobile="forMobile"
+            class="news-gallery__card"
+            :article="article"
+          />
+        </v-col>
+      </v-row>
+      <!-- </div> -->
     </section>
   </div>
 </template>
@@ -119,6 +127,12 @@ export default {
     }
   }
 }
+.news-gallery__row {
+  .news-gallery__col:nth-child(2) {
+    border-left: 1px solid #d8d8d8;
+    border-right: 1px solid #d8d8d8;
+  }
+}
 .grid {
   &--news {
     display: grid;
@@ -132,6 +146,11 @@ export default {
     @include mdMax {
       grid-template-columns: repeat(1, 1fr);
     }
+  }
+  &--news {
+    // article:nth-child(2) {
+    //   padding: 0 20px;
+    // }
   }
 }
 .for-mobile {

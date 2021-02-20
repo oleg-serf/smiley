@@ -1,5 +1,9 @@
 <template>
-  <article class="news-article" :class="[forMobile ? 'for-mobile' : '']">
+  <article
+    @click="handleCardClick(article)"
+    class="news-article"
+    :class="[forMobile ? 'for-mobile' : '']"
+  >
     <div
       class="news-article__image"
       @mouseenter="showDescription = true"
@@ -11,82 +15,54 @@
         :title="article.title"
         size="l"
         type="news"
+        height="269px"
       />
-      <div class="news-article-category">
-        <span class="news-article-category__name" v-if="manualGoal == null">          
-          {{ article.goal_category }}
-        </span>
-        <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
-        <transition>
-          <span v-if="showDescription" class="news-article-category__description">
-            UN Goal {{
-              article.goals != null && article.goals.length > 0
-                  ? article.goals[0].prefix.length > 1 ? article.goals[0].prefix : "0"+article.goals[0].prefix
-                  : ""
-            }} | <br>
-            <template v-if="article.goal != null && article.goal.name">
-              {{
-                article.goal != null && article.goal.name
-                    ? article.goal.name
-                    : ""
-              }}
-            </template>
-            <template v-else>
-              {{
-                article.goals != null && article.goals.length > 0
-                    ? article.goals[0].name
-                    : ""
-              }}
-            </template>
-          </span>
-        </transition>
-      </div>
     </div>
 
     <div class="news-article__content">
-      <h3 class="news-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
+      <h3
+        class="news-article__content-title"
+        :style="[forMobile ? { height: 'auto' } : {}]"
+      >
+        <router-link :to="{ name: 'news' }"
+          ><span class="news-article__category">News</span></router-link
+        >:
         <router-link
           :to="{ name: 'news-item', params: { slug: article.slug } }"
-        >{{ article.title }}</router-link>
+          >{{ article.title }}</router-link
+        >
       </h3>
-      <div
-        class="news-article__content-description"
-        :style="[forMobile ? {'height': 'auto'} : {}]"
-        v-html="cutText(article.description, 60, 'description')"
-      ></div>
-      <div
-        class="news-article__content-metadata"
-        :style="[forMobile ? {'margin-top': '30px'} : {}]"
-      >
-        <router-link
-          :to="{ name: 'news'}"
-        ><span>News</span></router-link> | 
-        <router-link
-          v-if="article.author_link"
-          :to="{ name: 'member', params: { slug: article.author_link } }"
-        >{{ article.author }}</router-link>
-        <template v-else>
-          {{ article.author }}
-        </template> | 
-        {{ dateAgo(article.published_at) }}
+      <div class="news-article__content-details">
+        <div
+          class="news-article__content-metadata"
+          :style="[forMobile ? { 'margin-top': '30px' } : {}]"
+        >
+          <router-link
+            v-if="article.author_link"
+            :to="{ name: 'member', params: { slug: article.author_link } }"
+            >{{ article.author }}</router-link
+          >
+          <template v-else>
+            {{ article.author }}
+          </template>
+          |
+          {{ dateAgo(article.published_at) }}
+        </div>
+        <div class="news-article-category__outer">
+          <span class="news-article-category__name" v-if="manualGoal == null">
+            {{ article.goal_category }}
+          </span>
+          <span class="news-article-category__name" v-else>{{
+            manualGoal
+          }}</span>
+        </div>
       </div>
-    </div>
-
-    <div class="news-article__readmore">
-      <VButton
-        class="news-article__button"
-        size="height_45"
-        @click.native.prevent="openPage"
-        shape="round"
-      >
-        Read More
-      </VButton>
     </div>
   </article>
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from "vue";
 import router from "@/router";
 import MediaImage from "@/components/Image.vue";
 import { VButton } from "@/components/app";
@@ -109,7 +85,7 @@ export default {
     return {
       sharing: false,
       showDescription: false,
-      forMobile: this.$vuetify.breakpoint.xs
+      forMobile: this.$vuetify.breakpoint.xs,
     };
   },
   filters: {
@@ -127,18 +103,29 @@ export default {
       if (text.length > limit) {
         // CHECK IF CHARACTER IS <SPACE> OR END OF STRING
         for (let i = 0; i < text.length - limit; i++) {
-          if (text[limit].trim() !== '' && limit !== text.length) {
-            limit++
+          if (text[limit].trim() !== "" && limit !== text.length) {
+            limit++;
           } else {
             break;
           }
         }
         let moreLink = `<a href="/smiley-news/${this.article.slug}" style="color: black;"><b>More</b>></a>`;
-        return text.slice(0, limit).trim() + "..." + (stringName === 'description' ? moreLink : "");
+        return (
+          text.slice(0, limit).trim() +
+          "..." +
+          (stringName === "description" ? moreLink : "")
+        );
       }
 
       return text;
     },
+    handleCardClick(article) {
+      console.log("hi");
+      this.$router.push({ name: "news-item", params: { slug: article.slug } });
+    },
+  },
+  mounted() {
+    // console.log(this.article);
   },
 };
 </script>
@@ -147,9 +134,8 @@ export default {
 .news-article {
   background-color: white;
   position: relative;
-  min-height: 540px;
+  cursor: pointer;
   color: #fff;
-  box-shadow: 0 3px 6px rgba(#000, 0.16);
   &.for-mobile {
     box-shadow: none;
     text-align: left;
@@ -162,17 +148,14 @@ export default {
       min-height: 4rem !important;
     }
     .news-article__content-metadata {
-      min-height: 2rem !important;
+      min-height: 1rem !important;
     }
   }
   .news-article__image {
     position: relative;
-    height: 300px;
     width: 100%;
 
     img {
-      width: 100%;
-      height: 100%;
       opacity: 0.9;
       object-fit: cover;
       object-position: center;
@@ -202,21 +185,27 @@ export default {
   }
 
   .news-article__content {
-    min-height: 230px;
+    // min-height: 230px;
     text-align: left;
     padding: {
       top: 26px;
-      left: 16px;
-      right: 16px;
-      bottom: 20px;
+      bottom: 0px;
     }
 
     .news-article__content-title {
       min-height: 5rem;
-      color: black;
-      font-family: "Gotham Bold", sans-serif;
-      font-size: 20px;
-      line-height: 30px;
+      color: #000000;
+      font-family: "Gotham Book", sans-serif;
+      font-size: 30px;
+      line-height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      span.news-article__category {
+        font-family: "Gotham Medium", sans-serif;
+      }
 
       a {
         color: black;
@@ -238,10 +227,10 @@ export default {
     }
 
     .news-article__content-metadata {
-      min-height: 3rem;
-      color: black;
+      min-height: 1rem;
+      color: #848484;
       font-family: "Gotham Medium";
-      font-size: 16px;
+      font-size: 15px;
       margin-top: 14px;
 
       span {
@@ -250,6 +239,19 @@ export default {
       a {
         color: black;
         text-decoration: none;
+      }
+    }
+  }
+  .news-article__content-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    .news-article-category__outer {
+      background: #9a9a9a;
+      span {
+        padding: 5px 5px;
+        font-family: "Gotham Medium";
       }
     }
   }

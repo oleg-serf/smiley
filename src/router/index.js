@@ -1,61 +1,65 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import ga from 'vue-ga'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import ga from "vue-ga";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const routes = [{
-  /**
-   * Main and service routes
-   */
-  path: '/',
-  name: 'home',
-  component: () => import( /* webpackChunkName: "web" */ '../views/Home.vue'),
-  meta: {
-    title: 'Home',
-  }
-},
+const routes = [
   {
-    path: '/404',
-    name: '404',
-    component: () => import( /* webpackChunkName: "web" */ '../views/404.vue'),
+    /**
+     * Main and service routes
+     */
+    path: "/",
+    name: "home",
+    component: () => import(/* webpackChunkName: "web" */ "../views/Home.vue"),
     meta: {
-      title: '404 Page not found',
-    }
+      title: "Home",
+    },
   },
   {
-    path: '*',
-    redirect: '/404'
+    path: "/404",
+    name: "404",
+    component: () => import(/* webpackChunkName: "web" */ "../views/404.vue"),
+    meta: {
+      title: "404 Page not found",
+    },
+  },
+  {
+    path: "*",
+    redirect: "/404",
   },
   /**
    * User pages
    */
   {
-    path: '/members',
-    component: () => import( /* webpackChunkName: "user" */ '../views/users/index.vue'),
+    path: "/members",
+    component: () =>
+      import(/* webpackChunkName: "user" */ "../views/users/index.vue"),
     meta: {
-      title: 'Users',
+      title: "Users",
       requiresAuth: true,
     },
     children: [
       {
-        path: '',
-        name: 'members',
-        component: () => import( /* webpackChunkName: "user" */ '../views/users/_main.vue'),
+        path: "",
+        name: "members",
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/users/_main.vue"),
         meta: {
           requiresAuth: true,
-        }
+        },
       },
       {
-        path: ':slug',
-        name: 'member',
-        component: () => import( /* webpackChunkName: "user" */ '../views/users/_slug.vue'),
+        path: ":slug",
+        name: "member",
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/users/_slug.vue"),
         meta: {
           requiresAuth: true,
-          title: ''
-        }
+          title: "",
+        },
       },
-    ]
+    ],
   },
 
   // {
@@ -69,443 +73,532 @@ const routes = [{
   // },
   //  Testing new "Edit Account"
   {
-    path: '/member/settings',
-    name: 'account-settings',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/Settings.vue'),
+    path: "/member/settings",
+    name: "account-settings",
+    component: () =>
+      import(/* webpackChunkName: "user" */ "../views/user/Settings.vue"),
     meta: {
-      title: 'Edit account settings',
+      title: "Edit account settings",
       requiresAuth: true,
-    }
+    },
   },
   {
-    path: '/member/feed',
-    name: 'feed',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/Feed.vue'),
+    path: "/member/feed",
+    name: "feed",
+    component: () =>
+      import(/* webpackChunkName: "user" */ "../views/user/Feed.vue"),
     meta: {
-      title: 'My Feed',
+      title: "My Feed",
       requiresAuth: true,
-    }
+    },
   },
   {
-    path: '/member/profile',
+    path: "/member/profile",
     // path: '/member/profile',
-    name: 'profile',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/LatestProfile.vue'),
+    name: "profile",
+    component: () =>
+      import(/* webpackChunkName: "user" */ "../views/user/LatestProfile.vue"),
     meta: {
-      title: 'My Profile',
+      title: "My Profile",
       requiresAuth: true,
-    }
+    },
   },
   {
-    path: '/member/profile-new',
-    name: 'newProfile',
-    component: () => import( /* webpackChunkName: "user" */ '../views/user/newProfile.vue'),
+    path: "/member/profile-new",
+    name: "newProfile",
+    component: () =>
+      import(/* webpackChunkName: "user" */ "../views/user/newProfile.vue"),
     meta: {
-      title: 'My Profile',
+      title: "My Profile",
       requiresAuth: true,
-    }
+    },
   },
   /**
    * Authorization routes
    */
   {
-    path: '/login',
-    name: 'login',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Login.vue'),
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "auth" */ "../views/auth/Login.vue"),
     meta: {
-      title: 'Login',
-    }
-  }, {
-    path: '/register',
-    name: 'register',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register.vue'),
+      title: "Login",
+    },
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () =>
+      import(/* webpackChunkName: "auth" */ "../views/auth/Register.vue"),
     meta: {
-      title: 'Register',
-    }
-  }, {
-    path: '/register/step-2',
-    name: 'register-2',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register-Step-2.vue'),
+      title: "Register",
+    },
+  },
+  {
+    path: "/register/step-2",
+    name: "register-2",
+    component: () =>
+      import(
+        /* webpackChunkName: "auth" */ "../views/auth/Register-Step-2.vue"
+      ),
     meta: {
-      title: 'Register | Step 2',
-    }
-  }, {
-    path: '/register/step-3',
-    name: 'register-3',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register-Step-3.vue'),
+      title: "Register | Step 2",
+    },
+  },
+  {
+    path: "/register/step-3",
+    name: "register-3",
+    component: () =>
+      import(
+        /* webpackChunkName: "auth" */ "../views/auth/Register-Step-3.vue"
+      ),
     meta: {
-      title: 'Register | Step 3',
-    }
-  }, {
-    path: '/register/step-4',
-    name: 'register-4',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Register-Step-4.vue'),
+      title: "Register | Step 3",
+    },
+  },
+  {
+    path: "/register/step-4",
+    name: "register-4",
+    component: () =>
+      import(
+        /* webpackChunkName: "auth" */ "../views/auth/Register-Step-4.vue"
+      ),
     meta: {
-      title: 'Register | Step 4',
-    }
-  }, {
-    path: '/forgot',
-    name: 'forgot',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Forgot.vue'),
+      title: "Register | Step 4",
+    },
+  },
+  {
+    path: "/forgot",
+    name: "forgot",
+    component: () =>
+      import(/* webpackChunkName: "auth" */ "../views/auth/Forgot.vue"),
     meta: {
-      title: 'Forgot password',
-    }
-  }, {
-    path: '/reset',
-    name: 'reset',
-    component: () => import( /* webpackChunkName: "auth" */ '../views/auth/Reset.vue'),
+      title: "Forgot password",
+    },
+  },
+  {
+    path: "/reset",
+    name: "reset",
+    component: () =>
+      import(/* webpackChunkName: "auth" */ "../views/auth/Reset.vue"),
     meta: {
-      title: 'Reset password',
-    }
+      title: "Reset password",
+    },
   },
   /**
    * Search
    */
   {
-    path: '/search/:keyword',
-    name: 'search',
-    component: () => import( /* webpackChunkName: "news" */ '../views/Search.vue'),
+    path: "/search/:keyword",
+    name: "search",
+    component: () =>
+      import(/* webpackChunkName: "news" */ "../views/Search.vue"),
     meta: {
-      title: 'Search results',
-    }
+      title: "Search results",
+    },
   },
   {
-    path: '/news-search/:keyword',
-    name: 'news-search',
-    component: () => import( /* webpackChunkName: "news" */ '../views/SearchNews.vue'),
+    path: "/news-search/:keyword",
+    name: "news-search",
+    component: () =>
+      import(/* webpackChunkName: "news" */ "../views/SearchNews.vue"),
     meta: {
-      title: 'Search results',
-    }
+      title: "Search results",
+    },
   },
   /**
    * Network
    */
   {
-    path: '/smiley-network',
-    name: 'network',
-    component: () => import( /* webpackChunkName: "news" */ '../views/Network.vue'),
+    path: "/smiley-network",
+    name: "network",
+    component: () =>
+      import(/* webpackChunkName: "news" */ "../views/Network.vue"),
     meta: {
-      title: 'Network',
-    }
+      title: "Network",
+    },
   },
   /**
    * Projects
    */
   {
-    path: '/projects/',
-    component: () => import( /* webpackChunkName: "projects" */ '../views/projects/index.vue'),
+    path: "/projects/",
+    component: () =>
+      import(/* webpackChunkName: "projects" */ "../views/projects/index.vue"),
     meta: {
-      title: 'Projects'
+      title: "Projects",
     },
     children: [
       {
-        path: '',
-        name: 'projects',
-        component: () => import( /* webpackChunkName: "projects" */ '../views/projects/_main.vue'),
-      }, {
-        path: ':slug',
-        name: 'project',
-        component: () => import( /* webpackChunkName: "projects" */ '../views/projects/_slug.vue'),
-        meta: {
-          title: ''
-        }
+        path: "",
+        name: "projects",
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ "../views/projects/_main.vue"
+          ),
       },
-    ]
+      {
+        path: ":slug",
+        name: "project",
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ "../views/projects/_slug.vue"
+          ),
+        meta: {
+          title: "",
+        },
+      },
+    ],
   },
   {
-    path: '/create/project',
-    name: 'create-project',
-    component: () => import( /* webpackChunkName: "goals" */ '../views/create/project.vue'),
+    path: "/create/project",
+    name: "create-project",
+    component: () =>
+      import(/* webpackChunkName: "goals" */ "../views/create/project.vue"),
     meta: {
-      title: 'Create project',
+      title: "Create project",
       requiresAuth: true,
-    }
+    },
   },
   {
-    path: '/edit/project/:slug',
-    name: 'edit-project',
-    component: () => import( /* webpackChunkName: "goals" */ '../views/edit/project.vue'),
+    path: "/edit/project/:slug",
+    name: "edit-project",
+    component: () =>
+      import(/* webpackChunkName: "goals" */ "../views/edit/project.vue"),
     meta: {
-      title: 'Edit project',
+      title: "Edit project",
       requiresAuth: true,
-    }
+    },
   },
   /**
    * News
    */
   {
-    path: '/smiley-news',
-    component: () => import( /* webpackChunkName: "news" */ '../views/news/index.vue'),
+    path: "/smiley-news",
+    component: () =>
+      import(/* webpackChunkName: "news" */ "../views/news/index.vue"),
     meta: {
-      title: 'Smiley News'
+      title: "News",
     },
     children: [
       {
-        path: '',
-        name: 'news',
-        component: () => import( /* webpackChunkName: "news" */ '../views/news/_main.vue'),
-      }, {
-        path: ':slug',
-        name: 'news-item',
-        component: () => import( /* webpackChunkName: "news" */ '../views/news/_slug.vue'),
-        meta: {
-          title: ''
-        }
+        path: "",
+        name: "news",
+        component: () =>
+          import(/* webpackChunkName: "news" */ "../views/news/_main.vue"),
       },
-    ]
+      {
+        path: ":slug",
+        name: "news-item",
+        component: () =>
+          import(/* webpackChunkName: "news" */ "../views/news/_slug.vue"),
+        meta: {
+          title: "",
+        },
+      },
+    ],
   },
   {
-    path: '/smiley-news-latest',
-    name: 'news-latest',
-    component: () => import( /* webpackChunkName: "news" */ '../views/news/_latest.vue'),
+    path: "/smiley-news-latest",
+    name: "news-latest",
+    component: () =>
+      import(/* webpackChunkName: "news" */ "../views/news/_latest.vue"),
     meta: {
-      title: 'Latest News',
-    }
+      title: "Latest News",
+    },
   },
   /**
    * Interviews
    */
   {
-    path: '/smiley-interviews',
-    component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/index.vue'),
+    path: "/smiley-interviews",
+    component: () =>
+      import(
+        /* webpackChunkName: "interviews" */ "../views/interviews/index.vue"
+      ),
     meta: {
-      title: 'Smiley Interviews'
+      title: "Smiley Interviews",
     },
     children: [
       {
-        path: '',
-        name: 'interviews',
-        component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_main.vue'),
-      }, {
-        path: ':slug',
-        name: 'interviews-item',
-        component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_slug.vue'),
-        meta: {
-          title: ''
-        }
+        path: "",
+        name: "interviews",
+        component: () =>
+          import(
+            /* webpackChunkName: "interviews" */ "../views/interviews/_main.vue"
+          ),
       },
-    ]
+      {
+        path: ":slug",
+        name: "interviews-item",
+        component: () =>
+          import(
+            /* webpackChunkName: "interviews" */ "../views/interviews/_slug.vue"
+          ),
+        meta: {
+          title: "",
+        },
+      },
+    ],
   },
   {
-    path: '/smiley-interviews-latest',
-    name: 'interviews-latest',
-    component: () => import( /* webpackChunkName: "interviews" */ '../views/interviews/_latest.vue'),
+    path: "/smiley-interviews-latest",
+    name: "interviews-latest",
+    component: () =>
+      import(
+        /* webpackChunkName: "interviews" */ "../views/interviews/_latest.vue"
+      ),
     meta: {
-      title: 'Latest Interviews',
-    }
+      title: "Latest Interviews",
+    },
   },
   /**
    * Goals
    */
   {
-    path: '/goals/',
-    component: () => import( /* webpackChunkName: "goals" */ '../views/goals/index.vue'),
+    path: "/goals/",
+    component: () =>
+      import(/* webpackChunkName: "goals" */ "../views/goals/index.vue"),
     meta: {
-      title: 'UN Goals',
+      title: "UN Goals",
     },
     children: [
       {
-        path: '',
-        name: 'goals',
-        component: () => import( /* webpackChunkName: "goals" */ '../views/goals/_main.vue'),
-      }, {
-        path: ':slug',
-        name: 'news-category-item',
-        component: () => import( /* webpackChunkName: "goals" */ '../views/goals/_slug.vue'),
+        path: "",
+        name: "goals",
+        component: () =>
+          import(/* webpackChunkName: "goals" */ "../views/goals/_main.vue"),
+      },
+      {
+        path: ":slug",
+        name: "news-category-item",
+        component: () =>
+          import(/* webpackChunkName: "goals" */ "../views/goals/_slug.vue"),
         meta: {
-          title: ''
-        }
-      }
-    ]
+          title: "",
+        },
+      },
+    ],
   },
   /**
    * Talks
    */
   {
-    path: '/smiley-talks',
-    component: () => import( /* webpackChunkName: "talks" */ '../views/talks/index.vue'),
+    path: "/smiley-talks",
+    component: () =>
+      import(/* webpackChunkName: "talks" */ "../views/talks/index.vue"),
     meta: {
-      title: 'Smiley Talks'
+      title: "Smiley Talks",
     },
     children: [
       {
-        path: '',
-        name: 'talks',
-        component: () => import( /* webpackChunkName: "talks" */ '../views/talks/_main.vue'),
-      }, {
-        path: ':slug',
-        name: 'event',
-        component: () => import( /* webpackChunkName: "talks" */ '../views/talks/_slug.vue'),
+        path: "",
+        name: "talks",
+        component: () =>
+          import(/* webpackChunkName: "talks" */ "../views/talks/_main.vue"),
+      },
+      {
+        path: ":slug",
+        name: "event",
+        component: () =>
+          import(/* webpackChunkName: "talks" */ "../views/talks/_slug.vue"),
         meta: {
-          title: ''
-        }
-      }
-    ]
+          title: "",
+        },
+      },
+    ],
   },
   /**
    * Organisation routes
    */
   {
-    path: '/create/organisation',
-    name: 'create-organisation',
-    component: () => import( /* webpackChunkName: "goals" */ '../views/create/organisation.vue'),
+    path: "/create/organisation",
+    name: "create-organisation",
+    component: () =>
+      import(
+        /* webpackChunkName: "goals" */ "../views/create/organisation.vue"
+      ),
     meta: {
-      title: 'Create Organisation',
+      title: "Create Organisation",
       requiresAuth: true,
-    }
+    },
   },
   {
-    path: '/edit/organisation',
-    name: 'edit-organisation',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/edit/organisation.vue'),
+    path: "/edit/organisation",
+    name: "edit-organisation",
+    component: () =>
+      import(
+        /* webpackChunkName: "organisation" */ "../views/edit/organisation.vue"
+      ),
     meta: {
-      title: 'Edit Organisation',
+      title: "Edit Organisation",
       requiresAuth: true,
-    }
+    },
   },
   {
-    path: '/organisations',
-    component: () => import( /* webpackChunkName: "organisations" */ '../views/organisations/index.vue'),
+    path: "/organisations",
+    component: () =>
+      import(
+        /* webpackChunkName: "organisations" */ "../views/organisations/index.vue"
+      ),
     meta: {
-      title: 'Organisations'
+      title: "Organisations",
     },
     children: [
       {
-        path: '',
-        name: 'organisations',
-        component: () => import( /* webpackChunkName: "organisations" */ '../views/organisations/_main.vue'),
-      }, {
-        path: ':slug',
-        name: 'organisation',
-        component: () => import( /* webpackChunkName: "organisations" */ '../views/organisations/_slug.vue'),
+        path: "",
+        name: "organisations",
+        component: () =>
+          import(
+            /* webpackChunkName: "organisations" */ "../views/organisations/_main.vue"
+          ),
+      },
+      {
+        path: ":slug",
+        name: "organisation",
+        component: () =>
+          import(
+            /* webpackChunkName: "organisations" */ "../views/organisations/_slug.vue"
+          ),
         meta: {
-          title: ''
-        }
-      }
-    ]
+          title: "",
+        },
+      },
+    ],
   },
   {
-    path: '/organisation/:slug',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/_slug.vue'),
+    path: "/organisation/:slug",
+    component: () =>
+      import(
+        /* webpackChunkName: "organisation" */ "../views/organisations/_slug.vue"
+      ),
     redirect: {
-      name: 'organisation',
-    }
+      name: "organisation",
+    },
   },
   {
-    path: '/organisation-by-smiley/:slug',
-    name: 'organisation-by-smiley',
-    component: () => import( /* webpackChunkName: "organisation" */ '../views/organisations/_slug-by-smiley.vue'),
+    path: "/organisation-by-smiley/:slug",
+    name: "organisation-by-smiley",
+    component: () =>
+      import(
+        /* webpackChunkName: "organisation" */ "../views/organisations/_slug-by-smiley.vue"
+      ),
     meta: {
-      title: ''
-    }
+      title: "",
+    },
   },
   /**
    * Content pages
    */
   {
-    path: '/our-story',
-    name: 'story',
-    component: () => import( /* webpackChunkName: "page" */ '../views/Story.vue'),
+    path: "/our-story",
+    name: "story",
+    component: () =>
+      import(/* webpackChunkName: "page" */ "../views/Story.vue"),
     meta: {
-      title: 'Our story'
-    }
+      title: "Our story",
+    },
   },
   {
-    path: '/partners',
-    name: 'partners',
-    component: () => import( /* webpackChunkName: "page" */ '../views/Partners.vue'),
+    path: "/partners",
+    name: "partners",
+    component: () =>
+      import(/* webpackChunkName: "page" */ "../views/Partners.vue"),
     meta: {
-      title: 'Partners',
-    }
+      title: "Partners",
+    },
   },
   {
-    path: '/terms-and-conditions',
-    name: 'terms',
-    component: () => import( /* webpackChunkName: "page" */ '../views/Terms.vue'),
+    path: "/terms-and-conditions",
+    name: "terms",
+    component: () =>
+      import(/* webpackChunkName: "page" */ "../views/Terms.vue"),
     meta: {
-      title: 'Terms and Conditions',
-    }
+      title: "Terms and Conditions",
+    },
   },
   {
-    path: '/contact',
-    name: 'contact',
-    component: () => import( /* webpackChunkName: "page" */ '../views/Contact.vue'),
+    path: "/contact",
+    name: "contact",
+    component: () =>
+      import(/* webpackChunkName: "page" */ "../views/Contact.vue"),
     meta: {
-      title: 'Contact',
-    }
+      title: "Contact",
+    },
   },
   /**
    * Miscellenous
    */
   {
-    path: '/chatroom',
-    name: 'chat',
-    component: () => import( /* webpackChunkName: "chat" */ '../views/chatroom/index.vue'),
+    path: "/chatroom",
+    name: "chat",
+    component: () =>
+      import(/* webpackChunkName: "chat" */ "../views/chatroom/index.vue"),
     meta: {
-      title: 'Chat',
+      title: "Chat",
       requiresAuth: true,
-    }
+    },
   },
   {
-    path: '/form-kit',
-    name: 'uikit',
-    component: () => import( /* webpackChunkName: "chat" */ '../views/FormKit.vue'),
-    meta: {}
+    path: "/form-kit",
+    name: "uikit",
+    component: () =>
+      import(/* webpackChunkName: "chat" */ "../views/FormKit.vue"),
+    meta: {},
   },
   // Redirects
   {
-    path: '/ckdb',
+    path: "/ckdb",
     redirect: {
-      name: 'news-item',
+      name: "news-item",
       params: {
-        slug: 'ckdb'
-      }
-    }
+        slug: "ckdb",
+      },
+    },
   },
   {
-    path: '/news/:slug',
+    path: "/news/:slug",
     redirect: {
-      name: 'news-item',
-    }
+      name: "news-item",
+    },
   },
   {
-    path: '/test-meta',
-    name: 'metatest',
-    component: () => import(/* webpackChunkName: "metatest" */ '../views/test-meta'),
+    path: "/test-meta",
+    name: "metatest",
+    component: () =>
+      import(/* webpackChunkName: "metatest" */ "../views/test-meta"),
   },
   {
-    path: '/test-youtube',
-    name: 'youtube_streem',
-    component: () => import(/* webpackChunkName: "metatest" */ '../views/test-youtube'),
+    path: "/test-youtube",
+    name: "youtube_streem",
+    component: () =>
+      import(/* webpackChunkName: "metatest" */ "../views/test-youtube"),
   },
 ];
 
-
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.environment === 'development' ? '/' : '/',
-  routes
+  mode: "history",
+  base: process.env.environment === "development" ? "/" : "/",
+  routes,
 });
 
-router.beforeEach(function (to, from, next) {
+router.beforeEach(function(to, from, next) {
   // TODO: Scroll top after pagination also
-  window.scrollTo(0, 0)
+  window.scrollTo(0, 0);
   document.body.classList.remove("mobile-menu--opened");
-  const isLogged = !!(localStorage.getItem('token'));
+  const isLogged = !!localStorage.getItem("token");
 
   if (to.meta.requiresAuth) {
-
     if (!isLogged) {
       next({
-        name: 'login'
+        name: "login",
       });
     } else {
-
       if (!isLogged) {
         next({
-          name: 'login'
+          name: "login",
         });
-        return
+        return;
       }
       next();
     }
@@ -514,6 +607,6 @@ router.beforeEach(function (to, from, next) {
   }
 });
 
-ga(router, 'UA-149279942-1');
+ga(router, "UA-149279942-1");
 
-export default router
+export default router;

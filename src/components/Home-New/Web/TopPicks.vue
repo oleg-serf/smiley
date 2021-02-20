@@ -1,6 +1,6 @@
 <template>
   <v-col :cols="colValue[0]">
-    <div class="main-column top-picks d-flex flex-coumn justify-space-between">
+    <div class="main-column top-picks">
       <div class="mt-8">
         <h2>Top Picks</h2>
         <content-box :category="'topPicks'">
@@ -17,7 +17,7 @@
               <div class="d-flex flex-column">
                 <h3 class="mt-2"><span>{{ features[0].type }}:</span> {{ features[0].title }}</h3>
                 <p class="mt-2" v-line-clamp:20="2">{{ features[0].description }}</p>
-                <div class="article-tag" style="margin-top:0px;">Education</div>
+                <div class="article-tag" style="margin-top:74px;">Education</div>
                 <small class="mt-2">{{ features[0].author }} | {{ dateAgo(features[0].published_at) }}</small>
                 <div class="top-picks-play">
                   <i class="fa fa-play"></i>
@@ -35,8 +35,6 @@
                 'd-flex mt-2 rounded-0': true,
                 'd-flex flex-column': $vuetify.breakpoint.xs
               }">
-              <v-row>
-                <v-col xl="7">
                 <media-image
                   :alt="item.title"
                   :title="item.title"
@@ -46,8 +44,6 @@
                   :width="widthOne"
                   :height="newItemHeight"
                 />
-                </v-col>
-                <v-col xl="5">
                 <div :class="{'d-flex flex-column justify-content-center': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-4': $vuetify.breakpoint.smAndUp}">
                   <h3><span>{{ item.type }}:</span> {{ item.title }}</h3>
                   <span>
@@ -55,8 +51,6 @@
                   </span>
                   <small class="mt-2">{{ item.author }} | {{ dateAgo(item.published_at) }}</small>
                 </div>
-                </v-col>
-              </v-row>
               </v-card>
             </template>
           </content-box>
@@ -90,6 +84,13 @@ export default {
       if (this.$vuetify.breakpoint.width > 2000) {
         return '58%'
       }
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return '100%'
+        case 'sm': return '50%'
+        case 'md': return '57%'
+        case 'lg': return '52%'
+        case 'xl': return '52%'
+      }
     },
     colValue () {
       switch (this.$vuetify.breakpoint.name) {
@@ -116,9 +117,9 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
-    // div {
-    //   flex: 1;
-    // }
+    div {
+      flex: 1;
+    }
       h3 {
         font-weight: 600;
         font-family: "Montserrat SemiBold";

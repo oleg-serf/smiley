@@ -1,13 +1,16 @@
 <template>
   <div class="home">
-    <hero video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
-          :link="'/our-story'" type="iframe">
+    <hero
+      video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
+      :link="'/our-story'"
+      type="iframe"
+    >
       <template v-slot:title>
         <span style="color: #FFE300">Inspiring</span> Positive Change
       </template>
       <template v-slot:subtitle>
         Join our movement to create a happier,
-        <br/>more equal and sustainable world
+        <br />more equal and sustainable world
       </template>
     </hero>
 
@@ -19,7 +22,11 @@
           :with-search="false"
           border-top
         ></bottom-bordered-title-with-search>
-        <featured-gallery :features="featuredList" for-mobile with-slider></featured-gallery>
+        <featured-gallery
+          :features="featuredList"
+          for-mobile
+          with-slider
+        ></featured-gallery>
       </section>
 
       <!-- EVENTS SECTION -->
@@ -29,7 +36,11 @@
           :with-search="false"
           border-top
         ></bottom-bordered-title-with-search>
-        <events-gallery :events="eventList" for-mobile with-slider></events-gallery>
+        <events-gallery
+          :events="eventList"
+          for-mobile
+          with-slider
+        ></events-gallery>
       </section>
 
       <!--  INTERVIEWS SECTION  -->
@@ -55,10 +66,10 @@
           border-top
         ></bottom-bordered-title-with-search>
         <video-interviews-gallery
-            :interviews="interviewList"
-            button-text="More"
-            for-mobile 
-            with-slider
+          :interviews="interviewList"
+          button-text="More"
+          for-mobile
+          with-slider
         ></video-interviews-gallery>
       </section>
 
@@ -72,7 +83,7 @@
         <projects-gallery
           :projects="projects"
           button-text="More"
-          for-mobile 
+          for-mobile
           with-slider
         ></projects-gallery>
       </section>
@@ -108,7 +119,7 @@ import SubscribeForm from "@/components/forms/Subscribe.vue";
 import Footer from "@/components/Footer.vue";
 // Page components
 import FeaturedGallery from "@/components/cardGalleries/FeaturedGallery";
-import DiscussionsGallery from '@/components/cardGalleries/DiscussionsGallery.vue';
+import DiscussionsGallery from "@/components/cardGalleries/DiscussionsGallery.vue";
 import ProjectsGallery from "@/components/cardGalleries/ProjectsGallery";
 import InterviewsGallery from "@/components/interviews/InterviewsGallery";
 import VideoInterviewsGallery from "@/components/interviews/VideoInterviewsGallery";
@@ -226,7 +237,7 @@ export default {
   mounted() {
     axios
       .get("/pages/1")
-      .then(res => {
+      .then((res) => {
         this.news = res.data.latest_news;
         this.featuredList = res.data.featured;
         this.eventList = res.data.latest_events;
@@ -239,31 +250,34 @@ export default {
             name: "Claire Linacre",
             video: "481275029",
             title: "Donor & Data Manager | Akt | LGBT Event | November 2020",
-            description: "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
+            description:
+              "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
             slug: "Beyond Pride",
             prefix: "1",
             goal_category: "Quality Education",
-            published_at:"2020-11-19"
+            published_at: "2020-11-19",
           },
           {
             name: "Josh Littlejohn",
             video: "484519685",
-            title: "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
+            title:
+              "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
             description: "Surely we can do better than this",
             slug: "Ending Homelessness & Building resilient Communities",
             prefix: "1",
             goal_category: "Quality Education",
-            published_at:"2020-11-27"            
+            published_at: "2020-11-27",
           },
           {
             name: "Georgia Dodsworth",
             video: "370887819",
-            title: "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
+            title:
+              "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
             description: "We are not alone",
             slug: "LTAMH",
             prefix: "1",
             goal_category: "Quality Education",
-            published_at:"2019-11-4"            
+            published_at: "2019-11-4",
           },
         ];
         // for temporary end
@@ -276,19 +290,20 @@ export default {
         this.videos = res.data.page_sections.bottom_videos;
         this.hero = res.data.page_sections.top_video[0];
         this.hero.url_source =
-            this.$settings.images_path.pages + "l_" + this.hero.url_source;
+          this.$settings.images_path.pages + "l_" + this.hero.url_source;
 
         this.quote = res.data.page_sections.bottom_quote[0];
 
         const metaPayload = {
           meta: res.data?.meta || {},
-          title: 'Smiley Talks',
-        }
+          title: "Smiley Talks",
+        };
 
-        metaPayload.meta.description = 'A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals';
-        this.$store.dispatch('meta/setMeta', metaPayload);
+        metaPayload.meta.description =
+          "A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals";
+        this.$store.dispatch("meta/setMeta", metaPayload);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   },
 };
 </script>

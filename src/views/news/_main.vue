@@ -13,13 +13,13 @@
         :search-expandable="true"
         @search="find(item, $event)"
       ></BottomBorderedTitleWithSearch>
-      <NewsGallery 
+      <NewsGallery
         :news="item.latest_news"
         :for-mobile="isMobile"
         :with-slider="isMobile"
       ></NewsGallery>
     </section>
-    <Subscribe :for-mobile="isMobile"/>
+    <!-- <Subscribe :for-mobile="isMobile" /> -->
   </div>
 </template>
 
@@ -94,7 +94,7 @@ export default {
 }
 
 .news-section {
-  margin-bottom: 100px;
+  // margin-bottom: 100px;
   position: relative;
   @include smMax {
     margin-bottom: 0;

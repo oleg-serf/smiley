@@ -3,7 +3,9 @@
     :src="getImageUrl()"
     :alt="alt"
     :title="title"
-    :class="(classes.length > 0) ? classes.join(' ') : ''"
+    :class="classes.length > 0 ? classes.join(' ') : ''"
+    :height="height"
+    :width="width"
   />
 </template>
 
@@ -32,31 +34,39 @@ export default {
       // let result = sizes.join(", ");
       // let result = "test";
       // return result;
-    }
+    },
   },
   mounted() {
     this.getSrcSet();
   },
   props: {
     src: {
-      type: String
+      type: String,
+    },
+    width: {
+      type: String,
+      default: "100%",
+    },
+    height: {
+      type: String,
+      default: "100%",
     },
     classes: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     alt: {
-      type: String
+      type: String,
     },
     title: {
-      type: String
+      type: String,
     },
     type: {
-      type: String
+      type: String,
     },
     size: {
-      type: String
-    }
-  }
+      type: String,
+    },
+  },
 };
 </script>

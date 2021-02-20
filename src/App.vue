@@ -2,12 +2,12 @@
   <v-app>
     <div :style="largeScreenContainer">
       <v-container class="mt-2">
-        <header-mobile v-if="$vuetify.breakpoint.smAndDown"/>
-        <header-web v-if="$vuetify.breakpoint.mdAndUp"/>
+        <header-mobile v-if="$vuetify.breakpoint.smAndDown" />
+        <header-web v-if="$vuetify.breakpoint.mdAndUp" />
         <v-main>
           <router-view :key="$route.fullPath" />
         </v-main>
-        <custom-footer/>
+        <custom-footer />
       </v-container>
     </div>
   </v-app>
@@ -29,14 +29,14 @@ export default {
   components: {
     headerWeb,
     headerMobile,
-    customFooter
+    customFooter,
   },
   computed: {
     largeScreenContainer() {
       if (this.$vuetify.breakpoint.width > 1900) {
-        return 'margin-left: 260px;  margin-right: 260px';
+        return "margin-left: 260px;  margin-right: 260px";
       } else {
-        return '';
+        return "";
       }
     },
     appMeta() {
@@ -65,7 +65,7 @@ export default {
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
   },
-  metaInfo: function () {
+  metaInfo: function() {
     // TODO: Refactor
     let metaArray = [];
     if (this.appMeta != null) {
@@ -125,13 +125,13 @@ export default {
 </script>
 
 <style lang="scss">
- .rounded-button {
-    border-radius: 20px;
-    outline: none !important;
-  }
-  .v-text-field__slot > input {
-    border: none;
-  }
+.rounded-button {
+  border-radius: 20px;
+  outline: none !important;
+}
+.v-text-field__slot > input {
+  border: none;
+}
 /* Utils */
 .social {
   display: flex;

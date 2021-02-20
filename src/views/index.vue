@@ -1,15 +1,16 @@
 <template>
   <div class="home">
-    <hero 
+    <hero
       video="https://player.vimeo.com/video/493954791?background=1&byline=0&title=0"
-      :link="'/our-story'" type="iframe"
+      :link="'/our-story'"
+      type="iframe"
     >
       <template v-slot:title>
         <span style="color: #FFE300">Inspiring</span> Positive Change
       </template>
       <template v-slot:subtitle>
         Join our movement to create a happier,
-        <br/>more equal and sustainable world
+        <br />more equal and sustainable world
       </template>
     </hero>
 
@@ -163,8 +164,8 @@
       </section>
     </div>
 
-    <subscribe-form/>
-    <Footer/>
+    <subscribe-form />
+    <Footer />
   </div>
 </template>
 
@@ -173,7 +174,7 @@
 import axios from "@/axios-auth";
 import router from "@/router";
 // Global components
-import {VButton, VDropdown} from "@/components/app";
+import { VButton, VDropdown } from "@/components/app";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
 import SubscribeForm from "@/components/forms/Subscribe.vue";
 import Footer from "@/components/Footer.vue";
@@ -217,18 +218,18 @@ export default {
       // New reworked items
       videos: [],
       hero: {
-        url_source: null
+        url_source: null,
       },
       banners: {
         news: {},
         network: {
           button_text: "Learn More",
           description:
-              "Connect with changemakers and get inspired to take positive action",
-          title: "MATCHMAKER FOR GOOD ™"
+            "Connect with changemakers and get inspired to take positive action",
+          title: "MATCHMAKER FOR GOOD ™",
         },
         talks: [],
-        goals: {}
+        goals: {},
       },
       sections: [
         {
@@ -236,55 +237,55 @@ export default {
           link: "/organisations",
           disabled: false,
           description:
-              "Connect with groups working towards solving societal issues and find ways to get involved.",
-          image: "/img/homepage/homepage-organisations.jpg"
+            "Connect with groups working towards solving societal issues and find ways to get involved.",
+          image: "/img/homepage/homepage-organisations.jpg",
         },
         {
           title: "Projects",
           link: "/projects",
           disabled: false,
           description:
-              "Explore initiatives about causes you care about and kickstart your own purpose-driven projects",
-          image: "/img/homepage/homepage-chatroom.jpg"
+            "Explore initiatives about causes you care about and kickstart your own purpose-driven projects",
+          image: "/img/homepage/homepage-chatroom.jpg",
         },
         {
           title: "Chatroom",
           link: "/chatroom",
           disabled: true,
           description:
-              "Take part in community discussions and share ideas with other members",
-          image: "/img/homepage/homepage-projects.jpg"
-        }
+            "Take part in community discussions and share ideas with other members",
+          image: "/img/homepage/homepage-projects.jpg",
+        },
       ],
       quote: {
         text: null,
-        sub_text: null
-      }
+        sub_text: null,
+      },
     };
   },
   computed: {
     mainVideoHeight() {
-      return this.vimeoVideoHeight
+      return this.vimeoVideoHeight;
     },
     auth() {
       return this.$store.getters["user/isAuthenticated"];
-    }
+    },
   },
   methods: {
     handleResize() {
       if (window.innerWidth > 1400) {
-        this.vimeoVideoHeight = 900
+        this.vimeoVideoHeight = 900;
       } else if (window.innerWidth > 1200) {
-        this.vimeoVideoHeight = 780
+        this.vimeoVideoHeight = 780;
       } else if (window.innerWidth > 900) {
-        this.vimeoVideoHeight = 640
+        this.vimeoVideoHeight = 640;
       } else if (window.innerWidth < 900) {
-        this.vimeoVideoHeight = 500
+        this.vimeoVideoHeight = 500;
       }
     },
     onSelectGoal(e) {
-      router.push({ name: 'news-category-item', params: {slug: e} });
-    }
+      router.push({ name: "news-category-item", params: { slug: e } });
+    },
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -296,7 +297,7 @@ export default {
   mounted() {
     axios
       .get("/pages/1")
-      .then(res => {
+      .then((res) => {
         this.news = res.data.latest_news;
         this.featuredList = res.data.featured;
         this.eventList = res.data.latest_events;
@@ -309,31 +310,34 @@ export default {
             name: "Claire Linacre",
             video: "481275029",
             title: "Donor & Data Manager | Akt | LGBT Event | November 2020",
-            description: "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
+            description:
+              "You'd think homophobia in this country isn't at such a point that there are so many young people who don't have a safe home",
             slug: "Beyond Pride",
             prefix: "1",
             goal_category: "Quality Education",
-            published_at:"2020-11-19"
+            published_at: "2020-11-19",
           },
           {
             name: "Josh Littlejohn",
             video: "484519685",
-            title: "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
+            title:
+              "Co-Founder of Social Bite | Event : Ending Homelessness | December 2020",
             description: "Surely we can do better than this",
             slug: "Ending Homelessness & Building resilient Communities",
             prefix: "1",
             goal_category: "Quality Education",
-            published_at:"2020-11-27"            
+            published_at: "2020-11-27",
           },
           {
             name: "Georgia Dodsworth",
             video: "370887819",
-            title: "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
+            title:
+              "Founder of World of Self Care | Event: Let’s Talk About Mental Health",
             description: "We are not alone",
             slug: "LTAMH",
             prefix: "1",
             goal_category: "Quality Education",
-            published_at:"2019-11-4"            
+            published_at: "2019-11-4",
           },
         ];
         // for temporary end
@@ -347,20 +351,21 @@ export default {
         this.videos = res.data.page_sections.bottom_videos;
         this.hero = res.data.page_sections.top_video[0];
         this.hero.url_source =
-            this.$settings.images_path.pages + "l_" + this.hero.url_source;
+          this.$settings.images_path.pages + "l_" + this.hero.url_source;
 
         this.quote = res.data.page_sections.bottom_quote[0];
 
         const metaPayload = {
           meta: res.data?.meta || {},
-          title: 'Smiley Talks',
-        }
+          title: "Smiley Talks",
+        };
 
-        metaPayload.meta.description = 'A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals';
-        this.$store.dispatch('meta/setMeta', metaPayload);
+        metaPayload.meta.description =
+          "A global community of change-makers. We provide daily positive news and free live-events guided by the Sustainable Development Goals";
+        this.$store.dispatch("meta/setMeta", metaPayload);
       })
-      .catch(error => console.log(error));
-  }
+      .catch((error) => console.log(error));
+  },
 };
 </script>
 
@@ -421,11 +426,11 @@ export default {
 
   &__search {
     border-radius: 1.2rem;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
   }
 
   &__border {
-    border-bottom: 2px solid #FFE300;
+    border-bottom: 2px solid #ffe300;
     width: 100%;
     margin-top: 1.5rem;
   }

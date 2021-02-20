@@ -1,8 +1,5 @@
 <template>
-  <div 
-    class="title-with-search"
-    :class="[borderTop ? 'borderTop' : '']"
-  >
+  <div class="title-with-search" :class="[borderTop ? 'borderTop' : '']">
     <h3
       :style="styleObject"
       class="title-with-search__title"
@@ -31,6 +28,18 @@
           v-model="dropdownValue"
           @input="$emit('goalChange', dropdownValue)"
         ></VDropdown>
+      </div>
+      <div class="d-flex ml-4">
+        <span
+          ><v-icon id="prevone" medium color="black"
+            >fa fa-chevron-circle-left</v-icon
+          ></span
+        >
+        <span class="ml-3"
+          ><v-icon id="nextone" medium color="black"
+            >fa fa-chevron-circle-right</v-icon
+          ></span
+        >
       </div>
     </div>
   </div>
@@ -118,8 +127,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title-with-search__title {
+  margin-bottom: 0;
+}
 .title-with-search {
-  padding: 16px 0;
+  padding: 10px 0;
   border-bottom: 2px solid #ffe300;
   &.borderTop {
     padding: 0;
