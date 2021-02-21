@@ -1,29 +1,27 @@
 <template>
   <div style="position: relative" :class="[forMobile ? 'for-mobile' : '']">
+     <div class="d-flex ml-4 slide__btns" v-if="!withSlider">
+      <span>
+        <v-icon :id="'interview-gallery-button-prev-' + id" medium color="black">
+          fa fa-chevron-circle-left
+        </v-icon>
+      </span>
+      <span class="ml-3">
+        <v-icon :id="'interview-gallery-button-next-' + id" medium color="black">
+          fa fa-chevron-circle-right
+        </v-icon>
+      </span>
+    </div>
     <template v-if="withSlider">
-      <ButtonArrow
-        v-if="!forMobile"
-        :id="'interview-gallery-button-prev-' + id"
-        :style="{ left: prevButtonLeft }"
-        class="interview-gallery-button interview-gallery-button-prev"
-      />
       <Swiper class="interview-gallery" :key="key" :options="options">
-        <SwiperSlide v-for="article in interviews" :key="article.slug">
-          <TempInterviewsCard
-            :for-mobile="forMobile"
+        <SwiperSlide v-for="interview in interviews" :key="interview.slug">
+          <InterviewsCard
             class="interview-gallery__card"
-            :type="imageType"
-            :button-text="buttonText"
-            :interview="article"
+            :interview="interview"
+            :for-mobile="forMobile"
           />
         </SwiperSlide>
       </Swiper>
-      <ButtonArrow
-        v-if="!forMobile"
-        :id="'interview-gallery-button-next-' + id"
-        :style="{ right: nextButtonRight }"
-        class="interview-gallery-button interview-gallery-button-next"
-      />
     </template>
     <section
       class="section"
@@ -31,24 +29,26 @@
       id="section-interview"
       :class="[forMobile ? 'for-mobile' : '']"
     >
-      <div class="grid grid--interview">
-        <TempInterviewsCard
-          :for-mobile="forMobile"
-          class="interview-gallery__card"
-          v-for="interview in interviews"
-          :key="'interview-' + interview.slug"
-          :type="imageType"
-          :button-text="buttonText"
-          :interview="interview"
-        />
-      </div>
+      <v-row class="interview-gallery__row">
+        <Swiper class="interview-gallery" :key="key" :options="options">
+          <SwiperSlide v-for="interview in interviews" :key="interview.slug">
+            <v-col sm="12" md="12" class="py-0 interview-gallery__col">
+              <InterviewsCard
+                class="interview-gallery__card"
+                :interview="interview"
+                :for-mobile="forMobile"
+              />
+            </v-col>
+          </SwiperSlide>
+        </Swiper>
+      </v-row>
     </section>
   </div>
 </template>
 
 <script>
 import { ButtonArrow } from "@/components/buttons";
-import TempInterviewsCard from "@/components/cards/TempInterviewsCard";
+import InterviewsCard from "@/components/cards/InterviewsCard";
 
 export default {
   name: "VideoInterviewsGallery",
@@ -77,24 +77,27 @@ export default {
       type: Number,
       default: 0,
     },
+    forMobile: {
+      type: Boolean,
+      default: false,
+    }
   },
   components: {
-    TempInterviewsCard,
+    InterviewsCard,
     ButtonArrow,
   },
   data() {
     return {
       id: 0,
       key: 0,
-      forMobile: this.$vuetify.breakpoint.xs,
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,
         spaceBetween: 10,
         loopFillGroupWithBlank: true,
         navigation: {
-          nextEl: "",
-          prevEl: "",
+          nextEl: "#nextone",
+          prevEl: "#prevone",
         },
         breakpoints: {
           900: {
@@ -104,8 +107,8 @@ export default {
           },
           1300: {
             slidesPerView: 3,
-            slidesPerGroup: 3,
-            spaceBetween: 40,
+            slidesPerGroup: 3,            
+            spaceBetween: 20,
           },
         },
       },
@@ -131,23 +134,22 @@ export default {
     }
   }
 }
-.grid {
-  &--interview {
-    display: grid;
-    grid-gap: 40px;
-    grid-template-columns: repeat(3, 1fr);
-
-    @include lgMax {
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 20px;
-    }
-
-    @include mdMax {
-      grid-template-columns: repeat(1, 1fr);
-      grid-gap: 1.5rem;
+.interview-gallery__row {
+  display: flex;
+  justify-content: space-between;
+  .swiper-slide {
+    margin-right: 0px;
+    @media (min-width: 900px) {
+      margin-right: 1px !important;
+      width: 448.333px !important;
     }
   }
+  .swiper-slide:nth-child(2) {
+    border-left: 1px solid #d8d8d8;
+    border-right: 1px solid #d8d8d8;
+  }
 }
+
 .for-mobile {
   .interview-gallery {
     padding: 0;
@@ -184,5 +186,15 @@ export default {
   transform: translate(0, -53%) rotate(180deg);
   right: -80px;
   // transform: rotate(180deg);
+}
+.slide__btns {
+  position: absolute;
+  right: 0;
+  top: -58px;
+  span {
+    i {
+      cursor: pointer;
+    }
+  }
 }
 </style>

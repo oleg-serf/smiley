@@ -1,71 +1,60 @@
 <template>
-  <article class="news-article" :class="[forMobile ? 'for-mobile' : '']">
+  <article
+    @click="handleCardClick(interview)"
+    class="interviews-article"
+    :class="[forMobile ? 'for-mobile' : '']"
+  >
     <div
-        class="news-article__image"
+        class="interviews-article__image"
         @mouseenter="showDescription = true"
         @mouseleave="showDescription = false"
     >
       <MediaImage
-          :src="interview.cover_image"
-          :alt="interview.title"
-          :title="interview.title"
-          size="m"
-          :type="type"
+        :src="interview.cover_image"
+        :alt="interview.title"
+        :title="interview.title"
+        size="l"
+        type="news"
+        height="269px"
       />
-      <div class="news-article-category">
-        <span class="news-article-category__name" v-if="manualGoal == null">
-            {{ interview.goal_category }}
-        </span>
-        <span class="news-article-category__name" v-else>{{ manualGoal }}</span>
-        <transition>
-          <span v-if="showDescription" class="news-article-category__description">
-            UN Goal {{
-              interview.goals != null && interview.goals.length > 0
-                  ? interview.goals[0].prefix.length > 1 ? interview.goals[0].prefix : "0"+interview.goals[0].prefix
-                  : ""
-            }} | <br>
-            <template v-if="interview.goal != null && interview.goal.name">
-              {{
-                interview.goal != null && interview.goal.name
-                    ? interview.goal.name
-                    : ""
-              }}
-            </template>
-            <template v-else>
-              {{
-                interview.goals != null && interview.goals.length > 0
-                    ? interview.goals[0].name
-                    : ""
-              }}
-            </template>
-          </span>
-        </transition>
-      </div>
     </div>
 
-    <div class="news-article__content">
-      <h3 class="news-article__content-title" :style="[forMobile ? {'height': 'auto'} : {}]">
-        {{ interview.title }}
-      </h3>
-      <div
-          class="news-article__content-description"
-          :style="[forMobile ? {'height': 'auto'} : {}]"
-          v-html="cutText(interview.description ? interview.description : (interview.short_description ? interview.short_description : ''), 60, 'description')"
-      ></div>
-      <div class="news-article__content-metadata">
-        <span>Interview</span> | {{ interview.author }} | {{ dateAgo(interview.published_at) }}
-      </div>
-    </div>
-
-    <div class="news-article__readmore">
-      <VButton
-          class="news-article__button"
-          size="height_45"
-          @click.native.prevent="openPage"
-          shape="round"
+    <div class="interviews-article__content">
+      <h3
+        class="interviews-article__content-title"
+        :style="[forMobile ? {'height': 'auto'} : {}]"
       >
-        {{ buttonText }}
-      </VButton>
+        <router-link :to="{ name: 'interviews' }">
+          <span class="interviews-article__category">Interviews</span>
+        </router-link>:
+        <router-link
+          :to="{ name: 'interview-item', params: { slug: interview.slug } }"
+        >{{ interview.title }}</router-link>
+      </h3>
+      <div class="interviews-article__content-details">
+        <div
+          class="interviews-article__content-metadata"
+          :style="[forMobile ? { 'margin-top': '30px' } : {}]"
+        >
+          <router-link
+            v-if="interview.author_link"
+            :to="{ name: 'member', params: { slug: interview.author_link } }"
+          >{{ interview.author }}</router-link>
+          <template v-else>
+            {{ interview.author }}
+          </template>
+          |
+          {{ dateAgo(interview.published_at) }}
+        </div>
+        <div class="interviews-article-category__outer">
+          <span class="interviews-article-category__name" v-if="manualGoal == null">
+            {{ interview.goal_category }}
+          </span>
+          <span class="interviews-article-category__name" v-else>
+            {{manualGoal}}
+          </span>
+        </div>
+      </div>
     </div>
   </article>
 </template>
@@ -84,7 +73,7 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'news'
+      default: 'interviews'
     },
     interview: {
       type: Object,
@@ -92,10 +81,6 @@ export default {
     manualGoal: {
       default: null,
     },
-    buttonText: {
-      type: String,
-      default: 'Read More'
-    }
   },
   data() {
     return {
@@ -104,86 +89,61 @@ export default {
       forMobile: this.$vuetify.breakpoint.xs
     };
   },
-  filters: {
-    trimDescription(description) {
-      return description.length > 120
-          ? description.substring(0, 120) + "..."
-          : description;
-    },
-  },
   methods: {
-    openPage() {
-      router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
-    },
-    cutText(text, limit, stringName) {
-      if (text.length > limit) {
-        // CHECK IF CHARACTER IS <SPACE> OR END OF STRING
-        for (let i = 0; i < text.length - limit; i++) {
-          if (text[limit].trim() !== '' && limit !== text.length) {
-            limit++
-          } else {
-            break;
-          }
-        }
-        return text.slice(0, limit).trim() + (stringName === 'description' ? "...<b>More</b>>" : "...");
-      }
-
-      return text;
+    handleCardClick(interview) {
+      this.$router.push({ name: "interviews-item", params: { slug: this.interview.slug } });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.news-article {
+.interviews-article {
   background-color: white;
   position: relative;
-  min-height: 540px;
+  cursor: pointer;
   color: #fff;
-  box-shadow: 0 3px 6px rgba(#000, 0.16);
+
   &.for-mobile {
     box-shadow: none;
     text-align: left;
-    .news-article__content {
+    .interviews-article__content {
       padding-left: 0;
       padding-right: 0;
     }
-    .news-article__content-description {
+    .interviews-article__content-description {
       margin-top: 0 !important;
-      height: 4rem !important;
+      min-height: 4rem !important;
     }
-    .news-article__content-metadata {
-      height: 2rem !important;
+    .interviews-article__content-metadata {
+      min-height: 1rem !important;
     }
   }
-
-  .news-article__image {
+  .interviews-article__image {
     position: relative;
-    height: 300px;
     width: 100%;
 
     img {
-      width: 100%;
-      height: 100%;
       opacity: 0.9;
       object-fit: cover;
       object-position: center;
     }
 
-    .news-article-category {
+    .interviews-article-category {
       position: absolute;
       bottom: 0;
       right: 0;
       color: white;
-      background: rgba(#888785, 0.6);
+      background: rgba(#888785, 0.8);
       font-size: 24px;
       font-family: "Gotham Bold";
       padding: 8px 16px;
+      text-align: left;
 
-      .news-article-category__name {
+      .interviews-article-category__name {
         color: white;
       }
-      .news-article-category__description {
+      .interviews-article-category__description {
         display: block;
         line-height: 20px;
         font-family: "Gotham Medium";
@@ -192,26 +152,42 @@ export default {
     }
   }
 
-  .news-article__content {
-    min-height: 230px;
+  .interviews-article__content {
+    // min-height: 230px;
     text-align: left;
     padding: {
       top: 26px;
-      left: 16px;
-      right: 16px;
-      bottom: 20px;
+      bottom: 0px;
     }
 
-    .news-article__content-title {
+    .interviews-article__content-title {
       min-height: 5rem;
-      color: black;
-      font-family: "Gotham Bold", sans-serif;
-      font-size: 20px;
-      line-height: 30px;
+      color: #000000;
+      font-family: "Gotham Book", sans-serif;
+      font-size: 30px;
+      line-height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+
+      span.interviews-article__category {
+        font-family: "Gotham Medium", sans-serif;
+      }
+
+      a {
+        color: black;
+
+        &:hover {
+          text-decoration: none;
+          color: yellow;
+        }
+      }
     }
 
-    .news-article__content-description {
-      height: 5rem;
+    .interviews-article__content-description {
+      min-height: 5rem;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 18px;
@@ -219,26 +195,37 @@ export default {
       margin-top: 1rem;
     }
 
-    .news-article__content-metadata {
-      height: 3rem;
-      color: black;
+    .interviews-article__content-metadata {
+      min-height: 1rem;
+      color: #848484;
       font-family: "Gotham Medium";
-      font-size: 16px;
+      font-size: 15px;
       margin-top: 14px;
+      padding-right: 5px;
 
       span {
         font-family: "Gotham Bold";
       }
+      a {
+        color: black;
+        text-decoration: none;
+      }
     }
   }
 
-  .news-article__readmore {
+  .interviews-article__content-details {
     display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    padding-bottom: 26px;
-    button {
-      font-size: 18px !important;
+    justify-content: space-between;
+    align-items: flex-end;
+    
+    .interviews-article-category__outer {
+      background: #9a9a9a;
+      span {
+        padding: 5px 5px;
+        font-family: "Gotham Medium";
+        min-width: max-content;
+        white-space: pre;
+      }
     }
   }
 }

@@ -29,18 +29,7 @@
           @input="$emit('goalChange', dropdownValue)"
         ></VDropdown>
       </div>
-      <div class="d-flex ml-4">
-        <span
-          ><v-icon id="prevone" medium color="black"
-            >fa fa-chevron-circle-left</v-icon
-          ></span
-        >
-        <span class="ml-3"
-          ><v-icon id="nextone" medium color="black"
-            >fa fa-chevron-circle-right</v-icon
-          ></span
-        >
-      </div>
+      <div v-if="slides" class="slides-box"></div>
     </div>
   </div>
 </template>
@@ -55,6 +44,10 @@ export default {
   },
   props: {
     borderTop: {
+      type: Boolean,
+      default: false,
+    },
+    slides: {
       type: Boolean,
       default: false,
     },
@@ -215,6 +208,9 @@ export default {
     .dropdown__select {
       padding: 10px;
     }
+  }
+  .slides-box {
+    width: 75px;
   }
 }
 </style>

@@ -12,11 +12,12 @@
         :with-search="!isMobile"
         :search-expandable="true"
         @search="find(item, $event)"
+        :slides="true"
       ></BottomBorderedTitleWithSearch>
       <NewsGallery
         :news="item.latest_news"
         :for-mobile="isMobile"
-        :with-slider="isMobile"
+        :with-slider="!isMobile"
       ></NewsGallery>
     </section>
     <!-- <Subscribe :for-mobile="isMobile" /> -->
@@ -25,16 +26,13 @@
 
 <script>
 import axios from "@/axios-auth";
-import router from "@/router";
 import { VSearch } from "@/components/app";
 import NewsGallery from "@/components/news/NewsGallery.vue";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
-import Subscribe from "@/components/forms/Subscribe";
 
 export default {
   name: "News",
   components: {
-    Subscribe,
     BottomBorderedTitleWithSearch,
     NewsGallery,
     VSearch,
@@ -61,30 +59,18 @@ export default {
         })
         .catch((error) => console.error(error));
     },
-    handleResize() {
-      this.isMobile = window.outerWidth >= 450 ? false : true;
-    },
   },
 
   created() {
-    console.log("news triggered");
     axios
       .get("/news/latest")
       .then((res) => {
-        console.log("news", res);
-
-        // this.latest = res.data.latest_news;
         this.news = res.data.featured_goals;
       })
       .catch((error) => console.error(error));
 
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
-  },
-
-  destroyed() {
-    window.removeEventListener("resize", this.handleResize);
-  },
+    this.isMobile = this.$vuetify.breakpoint.xs;
+  }
 };
 </script>
 

@@ -24,13 +24,12 @@
         class="news-article__content-title"
         :style="[forMobile ? { height: 'auto' } : {}]"
       >
-        <router-link :to="{ name: 'news' }"
-          ><span class="news-article__category">News</span></router-link
-        >:
+        <router-link :to="{ name: 'news' }">
+          <span class="news-article__category">News</span>
+        </router-link>:
         <router-link
           :to="{ name: 'news-item', params: { slug: article.slug } }"
-          >{{ article.title }}</router-link
-        >
+        >{{ article.title }}</router-link>
       </h3>
       <div class="news-article__content-details">
         <div
@@ -40,8 +39,7 @@
           <router-link
             v-if="article.author_link"
             :to="{ name: 'member', params: { slug: article.author_link } }"
-            >{{ article.author }}</router-link
-          >
+          >{{ article.author }}</router-link>
           <template v-else>
             {{ article.author }}
           </template>
@@ -52,9 +50,9 @@
           <span class="news-article-category__name" v-if="manualGoal == null">
             {{ article.goal_category }}
           </span>
-          <span class="news-article-category__name" v-else>{{
-            manualGoal
-          }}</span>
+          <span class="news-article-category__name" v-else>
+            {{manualGoal}}
+          </span>
         </div>
       </div>
     </div>
@@ -62,7 +60,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import router from "@/router";
 import MediaImage from "@/components/Image.vue";
 import { VButton } from "@/components/app";
@@ -88,39 +85,8 @@ export default {
       forMobile: this.$vuetify.breakpoint.xs,
     };
   },
-  filters: {
-    trimDescription(description) {
-      return description.length > 120
-        ? description.substring(0, 120) + "..."
-        : description;
-    },
-  },
   methods: {
-    openPage() {
-      router.push({ name: "news-item", params: { slug: this.article.slug } });
-    },
-    cutText(text, limit, stringName) {
-      if (text.length > limit) {
-        // CHECK IF CHARACTER IS <SPACE> OR END OF STRING
-        for (let i = 0; i < text.length - limit; i++) {
-          if (text[limit].trim() !== "" && limit !== text.length) {
-            limit++;
-          } else {
-            break;
-          }
-        }
-        let moreLink = `<a href="/smiley-news/${this.article.slug}" style="color: black;"><b>More</b>></a>`;
-        return (
-          text.slice(0, limit).trim() +
-          "..." +
-          (stringName === "description" ? moreLink : "")
-        );
-      }
-
-      return text;
-    },
     handleCardClick(article) {
-      console.log("hi");
       this.$router.push({ name: "news-item", params: { slug: article.slug } });
     },
   },
@@ -136,6 +102,7 @@ export default {
   position: relative;
   cursor: pointer;
   color: #fff;
+
   &.for-mobile {
     box-shadow: none;
     text-align: left;
@@ -203,6 +170,7 @@ export default {
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+
       span.news-article__category {
         font-family: "Gotham Medium", sans-serif;
       }
@@ -232,6 +200,7 @@ export default {
       font-family: "Gotham Medium";
       font-size: 15px;
       margin-top: 14px;
+      padding-right: 5px;
 
       span {
         font-family: "Gotham Bold";
@@ -242,27 +211,20 @@ export default {
       }
     }
   }
+
   .news-article__content-details {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
+    align-items: flex-end;
+    
     .news-article-category__outer {
       background: #9a9a9a;
       span {
         padding: 5px 5px;
         font-family: "Gotham Medium";
+        min-width: max-content;
+        white-space: pre;
       }
-    }
-  }
-
-  .news-article__readmore {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    padding-bottom: 26px;
-    button {
-      font-size: 18px !important;
     }
   }
 }

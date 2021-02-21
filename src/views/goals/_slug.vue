@@ -5,17 +5,13 @@
           :color="goal.colour"
           :background="getImage()"
           :name-length="goal.name ? goal.name.length : 20"
-          :is_mobile="is_mobile"
+          :is_mobile="isMobile"
       >
-        <!-- <template v-slot:logo>
-          <img src="/img/un-goals-white.png" style="width: 107px"/>
-        </template>-->
-
         <template v-slot:prefix>
-            {{ goal.prefix }}
+          {{ goal.prefix }}
         </template>
         <template v-slot:name >
-            {{ goal.name }}
+          {{ goal.name }}
         </template>
       </goals-banner>
     </div>
@@ -23,12 +19,6 @@
     <div class="container">
       <section class="goal-description">
         <section class="goal-description__content">
-          <!-- <div class="goal-description__content-block goal-description__content-text-holder" v-html="goal.description">
-            </div>
-            <div class="goal-description__content-block goal-description__content-flex-holder">
-              <div class="goal-description__content-block__inner" :style="{border: '3px solid ' + goal.colour}"
-                    v-html="goal.list"></div>
-            </div>-->
           <div class="goal-description__content-title">
             <p class="text-bold">Goal {{goal.prefix}}: {{ goal.name }}</p>
           </div>
@@ -99,165 +89,69 @@
       </section>
 
       <!--   NEWS   -->
-      <section class="content-block">
+      <section class="section container">
         <BottomBorderedTitleWithSearch
-            :title="getTitle('News')"
-            :with-search="true"
-            :hover-effect="true"
-            :hover-color="'yellow'"
+          :title="getTitle('News')"
+          :with-search="true"
+          :search-expandable="true"
+          @search="find(goal, $event)"
+          :slides="true"
         ></BottomBorderedTitleWithSearch>
-      </section>
-      <section class="section" v-if="posts.length > 0" id="section-news">
-        <!-- <h2 class="section__title">News</h2>-->
-        <swiper
-            ref="newsSwiper"
-            :options="swiperOptions"
-            :auto-update="true"
-            :auto-destroy="true"
-            :delete-instance-on-destroy="true"
-            :cleanup-styles-on-destroy="true"
-            v-if="is_mobile"
-        >
-          <swiper-slide v-for="post in posts" :key="'post-swiper-'+post.slug">
-            <news-card :article="post"/>
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
-        <div class="grid grid--news" v-else>
-          <news-card v-for="post in posts" :key="'post-'+post.slug" :article="post"/>
-        </div>
-        <div class="smiley-pagination" v-if="postsPagination > 1">
-          <paginate
-              :page-count="postsPagination"
-              :click-handler="paginateNews"
-              :prev-text="'Prev'"
-              :next-text="'Next'"
-              :prev-class="'smiley-pagination-back'"
-              :next-class="'smiley-pagination-next'"
-              :container-class="'app-pagination'"
-          >
-            <span slot="breakViewContent">...</span>
-          </paginate>
-        </div>
+        <NewsGallery
+          :news="posts"
+          :for-mobile="isMobile"
+          :with-slider="!isMobile"
+        ></NewsGallery>
       </section>
 
       <!--   EVENTS   -->
-      <section class="content-block">
+      <section class="section container" v-if="events.length > 0">
         <BottomBorderedTitleWithSearch
-            :title="getTitle('Events')"
-            :with-search="true"
-            :hover-effect="true"
-            :hover-color="'yellow'"
+          :title="getTitle('Events')"
+          :with-search="true"
+          :search-expandable="true"
+          @search="find(goal, $event)"
+          :slides="true"
         ></BottomBorderedTitleWithSearch>
-      </section>
-      <section class="section" v-if="events.length > 0" id="section-events">
-        <!-- <h2 class="section__title">Events</h2>-->
-        <swiper
-            ref="eventsSwiper"
-            :options="swiperOptions"
-            :auto-update="true"
-            :auto-destroy="true"
-            :delete-instance-on-destroy="true"
-            :cleanup-styles-on-destroy="true"
-            v-if="is_mobile"
-        >
-          <swiper-slide v-for="event in events" :key="'event-swiper-'+event.slug">
-            <event-card :event="event"/>
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
-        <div class="grid grid--events" v-else>
-          <event-card
-              v-for="event in events"
-              :key="'event-'+event.slug"
-              :event="event"
-              :past="event.past"
-          />
-        </div>
-        <div class="smiley-pagination" v-if="eventsPagination > 1">
-          <paginate
-              :page-count="eventsPagination"
-              :click-handler="paginateEvents"
-              :prev-text="'Prev'"
-              :next-text="'Next'"
-              :prev-class="'smiley-pagination-back'"
-              :next-class="'smiley-pagination-next'"
-              :container-class="'app-pagination'"
-          >
-            <span slot="breakViewContent">...</span>
-          </paginate>
-        </div>
+        <NewsGallery
+          :news="posts"
+          :for-mobile="isMobile"
+          :with-slider="!isMobile"
+        ></NewsGallery>
       </section>
 
       <!--   INTERVIEWS   -->
-      <!-- <section class="content-block">
+      <section class="section container" v-if="events.length > 0">
         <BottomBorderedTitleWithSearch
-            :title="getTitle('Interviews')"
-            :with-search="true"
-            :hover-effect="true"
-            :hover-color="'yellow'"
+          :title="getTitle('Interviews')"
+          :with-search="true"
+          :search-expandable="true"
+          @search="find(goal, $event)"
+          :slides="true"
         ></BottomBorderedTitleWithSearch>
+        <NewsGallery
+          :news="posts"
+          :for-mobile="isMobile"
+          :with-slider="!isMobile"
+        ></NewsGallery>
       </section>
-      <section class="section" v-if="events.length > 0" id="section-interviews">
-        <div class="grid grid--events">
-          <template>
-            <interviews-card
-                v-for="interview in posts"
-                :key="'event-'+interview.slug"
-                :interview="interview"
-                :past="interview.past"
-            />
-          </template>
-        </div>
-      </section> -->
 
       <!--   PROJECTS   -->
-      <section class="content-block">
+      <section class="section container" v-if="events.length > 0">
         <BottomBorderedTitleWithSearch
-            :title="getTitle('Projects')"
-            :with-search="true"
-            :hover-effect="true"
-            :hover-color="'yellow'"
+          :title="getTitle('Projects')"
+          :with-search="true"
+          :search-expandable="true"
+          @search="find(goal, $event)"
+          :slides="true"
         ></BottomBorderedTitleWithSearch>
+        <NewsGallery
+          :news="posts"
+          :for-mobile="isMobile"
+          :with-slider="!isMobile"
+        ></NewsGallery>
       </section>
-      <section class="section" v-if="events.length > 0" id="section-projects">
-        <swiper
-            ref="projectsSwiper"
-            :options="swiperOptions"
-            :auto-update="true"
-            :auto-destroy="true"
-            :delete-instance-on-destroy="true"
-            :cleanup-styles-on-destroy="true"
-            v-if="is_mobile"
-        >
-          <swiper-slide v-for="project in projects" :key="'project-swiper-'+project.slug">
-            <project-card :project="project"/>
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
-        <div class="grid grid--events" v-else>
-          <project-card-new
-              v-for="project in projects"
-              :key="'project-'+project.slug"
-              :project="project"
-          />
-        </div>
-        <div class="smiley-pagination" v-if="projectsPagination > 1">
-          <paginate
-              :page-count="projectsPagination"
-              :click-handler="paginateProjects"
-              :prev-text="'Prev'"
-              :next-text="'Next'"
-              :prev-class="'smiley-pagination-back'"
-              :next-class="'smiley-pagination-next'"
-              :container-class="'app-pagination'"
-          >
-            <span slot="breakViewContent">...</span>
-          </paginate>
-        </div>
-      </section>
-    </div>
-    <Subscribe/>
+    </div>    
   </div>
 </template>
 
@@ -268,30 +162,18 @@ import router from "@/router";
 import GoalsBanner from "@/components/GoalsBanner";
 import SocialNetworkShare from "@/components/SocialNetworkShare";
 import VButton from "@/components/app/VButton";
-
-import NewsCard from "@/components/cards/NewsCard";
-import EventCard from "@/components/cards/EventCard";
-import ProjectCard from "@/components/cards/ProjectCard";
-import OrganisationCard from "@/components/cards/OrganisationCard";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
-import ProjectCardNew from "@/components/cards/ProjectCardNew";
-import Subscribe from '@/components/forms/Subscribe.vue';
-import InterviewsCard from "@/components/cards/InterviewsCard";
+
+import NewsGallery from "@/components/news/NewsGallery";
 
 export default {
   name: "GoalSinglePage",
   components: {
-    InterviewsCard,
-    Subscribe,
-    ProjectCardNew,
+    NewsGallery,
     BottomBorderedTitleWithSearch,
     VButton,
     SocialNetworkShare,
     GoalsBanner,
-    NewsCard,
-    EventCard,
-    ProjectCard,
-    OrganisationCard,
   },
   data() {
     return {
@@ -301,7 +183,7 @@ export default {
 
       title: "",
 
-      is_mobile: false,
+      isMobile: false,
 
       posts: [],
       postsPagination: 0,
@@ -476,57 +358,48 @@ export default {
             console.error("error", err);
           });
       console.log(pageNum);
-    },
-    handleResize() {
-      this.is_mobile = window.innerWidth >= 768 ? false : true;
-      if (window.innerWidth >= 768) {
-        this.is_shown = true;
-      }
     }
   },
   mounted() {
     let slug = this.$route.params.slug;
 
     axios
-        .get("/goals/" + slug)
-        .then(res => {
-          console.log("Goal page", res);
+      .get("/goals/" + slug)
+      .then(res => {
+        console.log("Goal page", res);
 
-          this.goal = res.data.goal;
+        this.goal = res.data.goal;
 
-          const metaPayload = {
-            meta: res.data.meta,
-            title: res.data.goal.name
-          }
-          this.$store.dispatch('meta/setMeta', metaPayload);
+        const metaPayload = {
+          meta: res.data.meta,
+          title: res.data.goal.name
+        }
+        this.$store.dispatch('meta/setMeta', metaPayload);
 
-          this.posts = res.data.news;
-          this.postsPagination = res.data.posts_pages_count;
+        this.posts = res.data.news;
+        this.postsPagination = res.data.posts_pages_count;
 
-          this.events = res.data.events;
-          this.eventsPagination = res.data.events_pages_count;
+        this.events = res.data.events;
+        this.eventsPagination = res.data.events_pages_count;
 
-          this.projects = res.data.projects;
-          this.projectsPagination = res.data.projects_pages_count;
+        this.projects = res.data.projects;
+        this.projectsPagination = res.data.projects_pages_count;
 
-          this.organisations = res.data.organisations;
-          this.organisationsPagination = res.data.organisations_pages_count;
+        this.organisations = res.data.organisations;
+        this.organisationsPagination = res.data.organisations_pages_count;
 
-          this.$router.currentRoute.meta.title = this.goal.name;
+        this.$router.currentRoute.meta.title = this.goal.name;
 
-        })
-        .catch(error => console.log(error));
+      })
+      .catch(error => console.log(error));
 
-    // axios.get("/goals").then(res => {
-    //   this.goals = res.data.goals;
-    // });
+    this.isMobile = this.$vuetify.breakpoint.xs;
   },
   created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
+    
   },
   destroyed() {
-    window.removeEventListener("resize", this.handleResize);
+    
   }
 };
 </script>

@@ -1,12 +1,18 @@
 <template>
   <div style="position: relative" :class="[forMobile ? 'for-mobile' : '']">
+    <div class="d-flex ml-4 slide__btns" v-if="withSlider">
+      <span>
+        <v-icon :id="'news-gallery-button-prev-' + id" medium color="black">
+          fa fa-chevron-circle-left
+        </v-icon>
+      </span>
+      <span class="ml-3">
+        <v-icon :id="'news-gallery-button-next-' + id" medium color="black">
+          fa fa-chevron-circle-right
+        </v-icon>
+      </span>
+    </div>
     <template v-if="withSlider">
-      <ButtonArrow
-        v-if="!forMobile"
-        :id="'news-gallery-button-prev-' + id"
-        :style="{ left: prevButtonLeft }"
-        class="news-gallery-button news-gallery-button-prev"
-      />
       <Swiper class="news-gallery" :key="key" :options="options">
         <SwiperSlide v-for="article in news" :key="article.slug">
           <NewsCard
@@ -16,12 +22,6 @@
           />
         </SwiperSlide>
       </Swiper>
-      <ButtonArrow
-        v-if="!forMobile"
-        :id="'news-gallery-button-next-' + id"
-        :style="{ right: nextButtonRight }"
-        class="news-gallery-button news-gallery-button-next"
-      />
     </template>
     <section
       class="section"
@@ -29,23 +29,19 @@
       v-else
       id="section-news"
     >
-      <!-- <div class="grid grid--news"> -->
       <v-row class="news-gallery__row">
-        <v-col
-          sm="12"
-          md="4"
-          class="news-gallery__col py-0"
-          v-for="article in news"
-          :key="'article-' + article.slug"
-        >
-          <NewsCard
-            :for-mobile="forMobile"
-            class="news-gallery__card"
-            :article="article"
-          />
-        </v-col>
+        <Swiper class="news-gallery" :key="key" :options="options">
+          <SwiperSlide v-for="article in news" :key="article.slug">
+            <v-col sm="12" md="12" class="py-0 news-gallery__col">
+              <NewsCard
+                class="news-gallery__card"
+                :article="article"
+                :for-mobile="forMobile"
+              />
+            </v-col>
+          </SwiperSlide>
+        </Swiper>
       </v-row>
-      <!-- </div> -->
     </section>
   </div>
 </template>
@@ -73,6 +69,10 @@ export default {
       type: Number,
       default: 0,
     },
+    forMobile: {
+      type: Boolean,
+      default: false,
+    }
   },
   components: {
     NewsCard,
@@ -82,15 +82,14 @@ export default {
     return {
       id: 0,
       key: 0,
-      forMobile: this.$vuetify.breakpoint.xs,
       options: {
         slidesPerView: 1,
         slidesPerGroup: 1,
         spaceBetween: 10,
         loopFillGroupWithBlank: true,
         navigation: {
-          nextEl: "",
-          prevEl: "",
+          nextEl: "#nextone",
+          prevEl: "#prevone",
         },
         breakpoints: {
           900: {
@@ -101,7 +100,7 @@ export default {
           1300: {
             slidesPerView: 3,
             slidesPerGroup: 3,
-            spaceBetween: 40,
+            spaceBetween: 20,
           },
         },
       },
@@ -127,32 +126,23 @@ export default {
     }
   }
 }
+
 .news-gallery__row {
-  .news-gallery__col:nth-child(2) {
+  display: flex;
+  justify-content: space-between;
+  .swiper-slide {
+    margin-right: 0px;
+    @media (min-width: 900px) {
+      margin-right: 1px !important;
+      width: 448.333px !important;
+    }
+  }
+  .swiper-slide:nth-child(2) {
     border-left: 1px solid #d8d8d8;
     border-right: 1px solid #d8d8d8;
   }
 }
-.grid {
-  &--news {
-    display: grid;
-    grid-gap: 1.5rem;
-    grid-template-columns: repeat(3, 1fr);
 
-    @include lgMax {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include mdMax {
-      grid-template-columns: repeat(1, 1fr);
-    }
-  }
-  &--news {
-    // article:nth-child(2) {
-    //   padding: 0 20px;
-    // }
-  }
-}
 .for-mobile {
   .news-gallery {
     padding: 0;
@@ -189,5 +179,15 @@ export default {
   transform: translate(0, -53%) rotate(180deg);
   right: -80px;
   //transform: rotate(180deg);
+}
+.slide__btns {
+  position: absolute;
+  right: 0;
+  top: -58px;
+  span {
+    i {
+      cursor: pointer;
+    }
+  }
 }
 </style>
