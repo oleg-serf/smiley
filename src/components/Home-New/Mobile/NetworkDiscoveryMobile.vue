@@ -17,8 +17,8 @@
           <swiper ref="mySwiper" :options="swiperOption">
             <swiper-slide v-for="(item, index) in networks" :key="index">
               <v-card flat class="d-flex flex-column mt-2 pb-2 rounded-0">
-                <h2 class="mt-4 mb-7 text-3" v-line-clamp:20="3">{{item.type}}: {{item.title}}</h2>
-                <small class="discover-date">{{item.author || "No name"}} | {{dateAgo(item.published_at)}}</small>
+                <h2 class="mt-4 mb-7 text-3" v-line-clamp:20="3">{{item.type || "Network"}}: {{item.name}}</h2>
+                <small class="discover-date">{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
               </v-card>
             </swiper-slide>
           </swiper>

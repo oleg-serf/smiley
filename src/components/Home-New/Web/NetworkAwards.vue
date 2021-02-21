@@ -31,10 +31,10 @@ export default {
     iframeHeight() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return '300px'
-        case 'sm': return '300px'
-        case 'md': return '240px'
-        case 'lg': return '360px'
-        case 'xl': return '385px'
+        case 'sm': return '400px'
+        case 'md': return '430px'
+        case 'lg': return '450px'
+        case 'xl': return '500px'
       }
     },
     networkCols() {
