@@ -17,7 +17,7 @@
               <div class="d-flex flex-column">
                 <h3 class="mt-2"><span>{{ features[0].type }}:</span> {{ features[0].title }}</h3>
                 <p class="mt-2" v-line-clamp:20="2">{{ features[0].description }}</p>
-                <div class="article-tag" style="margin-top:74px;">Education</div>
+                <div class="article-tag" >Education</div>
                 <small class="mt-2">{{ features[0].author }} | {{ dateAgo(features[0].published_at) }}</small>
                 <div class="top-picks-play">
                   <i class="fa fa-play"></i>
@@ -35,6 +35,8 @@
                 'd-flex mt-2 rounded-0': true,
                 'd-flex flex-column': $vuetify.breakpoint.xs
               }">
+              <v-row>
+                <v-col cols="12" xl="7" lg="7">
                 <media-image
                   :alt="item.title"
                   :title="item.title"
@@ -44,13 +46,17 @@
                   :width="widthOne"
                   :height="newItemHeight"
                 />
-                <div :class="{'d-flex flex-column justify-content-center': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-4': $vuetify.breakpoint.smAndUp}">
-                  <h3><span>{{ item.type }}:</span> {{ item.title }}</h3>
-                  <span>
-                    <v-chip small class="pa-2 mt-4 mr-1 rounded-0">Politics</v-chip>
-                  </span>
-                  <small class="mt-2">{{ item.author }} | {{ dateAgo(item.published_at) }}</small>
-                </div>
+                </v-col>
+                <v-col cols="12" xl="5" lg="5">
+                  <div :class="{'d-flex flex-column justify-content-center': true, 'pl-0': $vuetify.breakpoint.xs, 'pl-4': $vuetify.breakpoint.smAndUp}">
+                    <h3><span>{{ item.type }}:</span> {{ item.title }}</h3>
+                    <span>
+                      <v-chip small class="pa-2 mt-4 mr-1 rounded-0">Politics</v-chip>
+                    </span>
+                    <small class="mt-2">{{ item.author }} | {{ dateAgo(item.published_at) }}</small>
+                  </div>
+                </v-col>
+              </v-row>
               </v-card>
             </template>
           </content-box>
@@ -86,10 +92,10 @@ export default {
       }
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return '100%'
-        case 'sm': return '50%'
-        case 'md': return '57%'
-        case 'lg': return '52%'
-        case 'xl': return '52%'
+        case 'sm': return '100%'
+        case 'md': return '100%'
+        case 'lg': return '100%'
+        case 'xl': return '100%'
       }
     },
     colValue () {
@@ -117,9 +123,6 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
-    div {
-      flex: 1;
-    }
       h3 {
         font-weight: 600;
         font-family: "Montserrat SemiBold";
@@ -142,6 +145,8 @@ export default {
   }
   .top-picks {
     padding-right: 18px;
+    display: flex;
+    justify-content: space-between;
 
     &-item {
       position: relative;

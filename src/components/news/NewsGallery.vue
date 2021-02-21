@@ -137,12 +137,11 @@ export default {
       width: 448.333px !important;
     }
   }
-  .swiper-slide:nth-child(2) {
+  .swiper-slide:nth-child(even) {
     border-left: 1px solid #d8d8d8;
     border-right: 1px solid #d8d8d8;
   }
 }
-
 .for-mobile {
   .news-gallery {
     padding: 0;

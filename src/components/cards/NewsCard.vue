@@ -211,12 +211,10 @@ export default {
       }
     }
   }
-
   .news-article__content-details {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    
     .news-article-category__outer {
       background: #9a9a9a;
       span {
@@ -225,6 +223,16 @@ export default {
         min-width: max-content;
         white-space: pre;
       }
+    }
+  }
+
+  .news-article__readmore {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding-bottom: 26px;
+    button {
+      font-size: 18px !important;
     }
   }
 }

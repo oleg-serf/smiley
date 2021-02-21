@@ -14,9 +14,9 @@
           <swiper style="max-width:1345px; display: flex;" ref="mySwiper" :options="swiperOption">
             <swiper-slide  v-for="index in Math.ceil(networks.length/9)" :key="index">
               <!-- <v-container class="pb-0 pt-0 pl-0 pr-0"> -->
-              <v-row class="d-flex mt-1">
+              <v-row class="d-flex">
                 <v-col class="d-flex flex-column discover-outer-box" v-for="(item, i) in networks.slice((index-1)*9, index*9)" :key="i" :cols="otherCols">
-                  <div class="d-flex flex-column justify-space-between discoverBox pb-5 mt-10">
+                  <div class="d-flex flex-column justify-space-between discoverBox pb-5">
                     <h4 class="mb-8" v-line-clamp:20="2">{{item.type || "Network"}}: {{item.name}}</h4>
                     <div class="d-flex align-center justify-space-between">
                       <small>{{item.owner ? item.owner.name : "No name"}} | {{dateAgo(item.created_at)}}</small>
@@ -48,6 +48,7 @@ export default {
   data: () =>({
     swiperOption: {
       slidesPerView: 1,
+      spaceBetweeen: 30,
       navigation: {
         nextEl: '#nextone',
         prevEl: '#prevone'
@@ -135,12 +136,15 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
-    div {
-      flex: 1;
-    }
   }
-  .discover-outer-box:first-child {
+  .discover-outer-box:nth-child(3n+1) {
     border: none;
+  }
+  .discover-outer-box:nth-last-child(-n+3) {
+    .discoverBox {
+      border-bottom: none;
+    }
+
   }
   .discover-outer-box {
     border-left: 1px solid #ececec;

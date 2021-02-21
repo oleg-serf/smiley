@@ -21,8 +21,8 @@
     </div>
     <div class="btn-outer-box">
       <v-btn 
-      depressed
-      rounded
+        depressed
+        rounded
         color="#ffe61f" 
         class="pl-14 pr-14 text-capitalize"
         style="height: 55px;"

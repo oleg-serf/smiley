@@ -4,33 +4,17 @@
     <div class="d-flex justify-space-between mr-6" style="margin-bottom: -16px">
       <h3>Other | News</h3>
       <div class="d-flex align-center mb-4">
-        <Dropdown :items="items" label="UN Goals" class="mr-4" />
-        <span
-          ><v-icon id="left" medium color="black"
-            >fa fa-chevron-circle-left</v-icon
-          ></span
-        >
-        <span class="ml-3"
-          ><v-icon id="right" medium color="black"
-            >fa fa-chevron-circle-right</v-icon
-          ></span
-        >
+        <Dropdown :items="items" label="UN Goals" class="mr-4"/>
+        <span><v-icon id="left" medium color="black">fa fa-chevron-circle-left</v-icon></span>
+        <span class="ml-3"><v-icon id="right" medium color="black">fa fa-chevron-circle-right</v-icon></span>
       </div>
     </div>
     <v-container class="pr-6 pl-0 pt-0">
       <content-box :category="'otherNews'">
-        <template #content>
+        <template #content>    
           <hr class="seperator" />
-          <swiper
-            style="max-width:1345px"
-            ref="mySwiper"
-            :options="swiperOption"
-          >
-            <swiper-slide
-              v-for="(n, index) in numberSwiper"
-              :key="index"
-              class="mr-2"
-            >
+          <swiper style="max-width:1345px" ref="mySwiper" :options="swiperOption">
+            <swiper-slide v-for="(n, index) in numberSwiper" :key="index" class="mr-2">
               <v-row class="d-flex mt-1">
                 <v-col
                   class="d-flex flex-column other-new-item"
@@ -49,21 +33,12 @@
                     />
                     <div>
                       <h4 class="mt-2">
-                        <strong class="mt-1">{{ item.type }}: </strong
-                        ><span
-                          >{{ item.title.slice(0, 80) }}
-                          {{ item.title.length > 80 ? "..." : null }}</span
-                        >
+                        <strong class="mt-1">{{ item.type }}: </strong><span>{{ item.title.slice(0, 80) }} {{item.title.length > 80 ? '...' : null}}</span>
                       </h4>
                     </div>
                     <div class="d-flex align-center justify-space-between">
-                      <small class="mt-4"
-                        >{{ item.author }} |
-                        {{ dateAgo(item.published_at) }}</small
-                      >
-                      <v-chip small class="pa-2 mt-4 mr-1 rounded-0"
-                        >Poverty</v-chip
-                      >
+                      <small class="mt-4">{{item.author}} | {{dateAgo(item.published_at)}}</small>
+                      <v-chip small class="pa-2 mt-4 mr-1 rounded-0">Poverty</v-chip>
                     </div>
                   </div>
                 </v-col>
@@ -82,8 +57,8 @@ import MediaImage from "@/components/MediaImage.vue";
 
 export default {
   components: {
-    Dropdown: () => import("../../forms/Dropdown.vue"),
-    contentBox: () => import("../ContentBox"),
+    Dropdown: () => import('../../forms/Dropdown.vue'),
+    contentBox: () => import('../ContentBox'),
     MediaImage,
   },
   props: {
@@ -91,15 +66,15 @@ export default {
   },
   data: function() {
     return {
-      items: ["Responsible Consumption and Production ", "Bar", "Fizz", "Buzz"],
-      numberSwiper: Math.ceil(this.news.length / 9),
+      items: ['Responsible Consumption and Production ', 'Bar', 'Fizz', 'Buzz'],
+      numberSwiper: Math.ceil(this.news.length/9),
       swiperOption: {
         navigation: {
-          nextEl: "#right",
-          prevEl: "#left",
+          nextEl: '#right',
+          prevEl: '#left'
         },
-      },
-    };
+      }
+    }
   },
   computed: {
     iframeHeight() {
