@@ -1,143 +1,96 @@
 <template>
   <div>
-    <hero video="https://player.vimeo.com/video/494083042?background=1&byline=0&title=0"
-          :link="'/our-story'" type="iframe">
-      <template v-slot:title>
-        Creating <span style="color: #FFE300">positive</span> impact
-        <br>through journalism
-      </template>
-      <template v-slot:subtitle>
-        Join our movement to create a happier,
-        <br/>more equal and sustainable world
-      </template>
-    </hero>
-    <div class="filters">
-      <div class="container filter-toggle">
-        <div class="filter-toggle__title">Filter</div>
-        <div class="filter-toggle__button-holder">
-          <button
-              type="button"
-              class="filter-toggle__button"
-              @click.prevent="toggleFilterMenu"
-          >
-            <i class="fa fa-sliders"></i>
-          </button>
-        </div>
-      </div>
-      <form
-          class="container"
-          v-show="is_shown"
-          @submit.prevent="sendFilterData"
-          @reset.prevent="resetFilterData"
-      >
-        <div class="filters-container">
-          <!-- <div class="filter-column filter filter--location">
-            <label class="filter__label" for="inputLocation">
-              <div class="filter__title">Location</div>
-            </label>
-
-            <VSearchLocation
-                id="inputLocation"
-                @place_changed="getAddressData"
-            ></VSearchLocation>
-          </div>
-          <div class="filter-column filter filter--radius">
-            <label class="filter__label" for="inputRadius">
-              <div class="filter__title">Radius</div>
-            </label>
-
-            <VDropdown
-                id="inputRadius"
-                :options="filter.radius"
-                v-model="filterQuery.radius"
-            ></VDropdown>
-          </div> -->
-          <div class="filter-column filter filter--timing">
-            <div class="filter__label">
-              <div class="filter__title">Timing</div>
-            </div>
-
-            <VSwitch
-                name="timing"
-                left="Upcoming"
-                right="Past"
-                v-model="timing"
-                @input="onChangeTiming"
-            >
-            </VSwitch>
-          </div>
-          <div class="filter-column filter filter--date">
-            <div class="filter__label">
-              <div class="filter__title">Dates</div>
-            </div>
-
-            <div class="filter__input filter__input--icon">
-              <i class="fa fa-calendar" aria-hidden="true"></i>
-              <date-picker
-                  v-model="filterQuery.date"
-                  mode="range"
-                  id="inputDate"
-                  class="filter__input-date"
-                  color="red"
-                  @input="onDateChange()"
-              />
-            </div>
-          </div>
-          <div class="filter-column filter filter--submit">
-            <div class="filter__label">
-              <div class="filter__title">
-                <br/>
-              </div>
-            </div>
-            <button type="submit" class="filter__button filter__button-submit">
-              Apply
-            </button>
-          </div>
-          <div class="filter-column filter filter--reset">
-            <div class="filter__label">
-              <div class="filter__title">
-                <br/>
-              </div>
-            </div>
-            <button type="reset" class="filter__button filter__button-reset">
-              Reset
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-
     <div class="container events_container">
-      <BottomBorderedTitleWithSearch
-          :title="'<h3><b>Related</b> | Events</h3>'"
-          :with-search="true"
+      <div class="events__outer--layout">
+        <BottomBorderedTitleWithSearch
+          :title="'<h3><b>Upcoming</b> | Events</h3>'"
+          :with-search="false"
           search-expandable
-      ></BottomBorderedTitleWithSearch>
-      <div class="event-grid">
-        <EventCard
-            class="event-card"
-            v-for="(event, key) in events"
-            :key="'event-card-' + key"
-            :event="event"
-            button-name="REGISTER"
-        ></EventCard>
+        ></BottomBorderedTitleWithSearch>
+        <div class="d-flex ml-4 slide__btns">
+          <span>
+            <v-icon id="prevone1" medium color="black">
+              fa fa-chevron-circle-left
+            </v-icon>
+          </span>
+          <span class="ml-3">
+            <v-icon id="nextone1" medium color="black">
+              fa fa-chevron-circle-right
+            </v-icon>
+          </span>
+        </div>
+        <v-row class="mt-2">
+          <Swiper class="events-gallery" :options="options">
+            <SwiperSlide
+              class="events_slide"
+              v-for="event in upcommingEvents"
+              :key="event.slug"
+            >
+              <v-col sm="12" md="12" class="py-0 events-gallery__col">
+                <UpcomingEventCard
+                  class="event-card mb-4"
+                  :event="event"
+                  button-name="REGISTER"
+                ></UpcomingEventCard>
+              </v-col>
+            </SwiperSlide>
+          </Swiper>
+        </v-row>
       </div>
-      <!-- <div style="text-align: center">
-        <VButton
-            class="event__button"
-            size="height_45"
-            @click.native.prevent="openPage('smiley-events', '')"
-            shape="round"
-            color="black"
+      <hr v-if="pastEvents.length > 0" class="mt-5" />
+      <div class="events__outer--layout">
+        <BottomBorderedTitleWithSearch
+          :title="'<h3><b>Past</b> | Events</h3>'"
+          :with-search="false"
+          search-expandable
+          :slides="true"
+        ></BottomBorderedTitleWithSearch>
+        <div class="d-flex ml-4 slide__btns">
+          <span>
+            <v-icon id="prevone" medium color="black">
+              fa fa-chevron-circle-left
+            </v-icon>
+          </span>
+          <span class="ml-3">
+            <v-icon id="nextone" medium color="black">
+              fa fa-chevron-circle-right
+            </v-icon>
+          </span>
+        </div>
+        <swiper
+          style="max-width:1345px; display: flex;"
+          ref="mySwiper"
+          :options="swiperOption"
         >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'discussions', params: { slug: 'slug' } }"
+          <swiper-slide
+            v-for="index in Math.ceil(pastEvents.length / 9)"
+            :key="index"
           >
-            More Events
-          </router-link>
-        </VButton>
-      </div> -->
+            <v-row class="d-flex">
+              <v-col
+                class="d-flex flex-column event-outer-box"
+                v-for="(item, i) in pastEvents.slice(
+                  (index - 1) * 9,
+                  index * 9
+                )"
+                :key="i"
+                :cols="otherCols"
+              >
+                <div
+                  class="d-flex flex-column justify-space-between eventCoverBox"
+                >
+                  <EventCard
+                    class="event-card"
+                    :event="item"
+                    button-name="REGISTER"
+                  ></EventCard>
+                </div>
+              </v-col>
+              <hr />
+            </v-row>
+          </swiper-slide>
+        </swiper>
+      </div>
     </div>
     <!-- <Subscribe></Subscribe> -->
   </div>
@@ -145,174 +98,104 @@
 
 <script>
 import axios from "@/axios-auth";
-
-import EventCard from "@/components/cards/EventCard.vue";
-import Hero from "@/components/homepage/Hero.vue";
-import {VButton, VDropdown, VSearchLocation, VSwitch} from "@/components/app";
-import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
-import Subscribe from "@/components/forms/Subscribe";
 import router from "@/router";
+
+import { VButton, VDropdown, VSearchLocation, VSwitch } from "@/components/app";
+import EventCard from "@/components/cards/EventCard.vue";
+import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
+import UpcomingEventCard from "@/components/cards/UpcomingEventCard.vue";
 
 export default {
   name: "Talks",
   components: {
-    Hero,
-    Subscribe,
     VButton,
     BottomBorderedTitleWithSearch,
     VSearchLocation,
     VDropdown,
     VSwitch,
     EventCard,
+    UpcomingEventCard,
   },
   data() {
     return {
-      goals: [],
-      events: [],
-      // events_pages: 0,
-      // past_pages: 0,
-      // is_mobile: false,
-      // is_shown: false,
-      filter: {
-        city: null,
-        radius: [
-          {
-            value: 2,
-            text: "2 miles",
+      options: {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 10,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: "#nextone1",
+          prevEl: "#prevone1",
+        },
+        breakpoints: {
+          900: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            spaceBetween: 0,
           },
-          {
-            value: 5,
-            text: "5 miles",
+          1300: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            spaceBetween: 0,
           },
-          {
-            value: 10,
-            text: "10 miles",
-          },
-          {
-            value: 25,
-            text: "25 miles",
-          },
-          {
-            value: 50,
-            text: "50 miles",
-          },
-          {
-            value: 100,
-            text: "100 miles",
-          },
-          {
-            value: 0,
-            text: "Any distance",
-          },
-        ],
-        country: "London, GB",
-      },
-      filterQuery: {
-        city: null,
-        country: null,
-        latitude: null,
-        longitude: null,
-        radius: 0,
-        date: {
-          end: new Date(),
-          start: new Date(),
         },
       },
-      timing: "Upcoming",
+      swiperOption: {
+        slidesPerView: 1,
+        spaceBetweeen: 30,
+        navigation: {
+          nextEl: "#nextone",
+          prevEl: "#prevone",
+        },
+      },
+      goals: [],
+      upcomingEvents: [],
+      pastEvents: [],
     };
   },
-  methods: {
-    openPage(name, slug) {
-      router.push({name: name, params: {slug: slug}});
-    },
-    handleResize() {
-      this.is_mobile = window.innerWidth >= 768 ? false : true;
-      if (window.innerWidth >= 768) {
-        this.is_shown = true;
+  computed: {
+    otherCols() {
+      if (this.$vuetify.breakpoint.xs) {
+        return "12";
       }
+      return "4";
     },
-    toggleFilterMenu() {
-      this.is_shown = !this.is_shown;
-    },
-    getAddressData: function (data) {
-      data.address_components.forEach((prop) => {
-        if (prop.types.includes("locality")) {
-          this.filterQuery.city = prop.long_name;
-        }
-        if (prop.types.includes("country")) {
-          this.filterQuery.country = prop.long_name;
-        }
-      });
-      this.filterQuery.latitude = data.geometry.location.lat();
-      this.filterQuery.longitude = data.geometry.location.lng();
-    },
-    onChangeTiming() {
-      if(this.timing == "Upcoming"){
-        this.filterQuery.date = {
-          end: new Date(),
-          start: new Date()
-        };
-      } else {
-        this.filterQuery.date = {
-          start: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
-          end: new Date()
-        };
-      }
-    },
-    onDateChange() {
-      this.timing = "";
-    },
-    sendFilterData() {
-      const start = Math.floor(new Date(this.filterQuery.date.start).getTime() / 1000);
-      const end = Math.floor(new Date(this.filterQuery.date.end).getTime() / 1000);
-
-      axios
-        .get("/events?date_start="+start+"&date_end="+end)
-        .then((res) => {
-          console.log("Filtered events", res);
-          this.events = res.data.events;
-          this.events_pages = res.data.pages_count;
-        })
-        .catch((error) => console.error(error));
-    },
-    resetFilterData() {
-      this.filterQuery = {
-        city: null,
-        country: null,
-        latitude: null,
-        longitude: null,
-        radius: 0,
-        date: {
-          end: new Date(),
-          start: new Date(),
-        },
-      }
-      this.timing = "Upcoming";
-    }
   },
   mounted() {
+    let start = new Date();
+    let end = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+
     axios
-        .get("/events")
-        .then((res) => {
-          console.log("Future events", res);
-          this.events = res.data.events;
-          this.events_pages = res.data.pages_count;
-        })
-        .catch((error) => console.error(error));
-  },
-  created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
-    // axios
-    //     .get("/goals")
-    //     .then(res => {
-    //       console.log("/goals", res.data);
-    //       this.goals = res.data.goal_categories[0].goals;
-    //     })
-    //     .catch(error => console.error(error));
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.handleResize);
+      .get(
+        "/events?date_start=" +
+          Math.floor(start.getTime() / 1000) +
+          "&date_end=" +
+          Math.floor(end.getTime() / 1000)
+      )
+      .then((res) => {
+        console.log("Upcomming events", res);
+        this.upcommingEvents = [...res.data.events, ...res.data.events];
+      })
+      .catch((error) => console.error(error));
+
+    start = new Date(new Date().setFullYear(new Date().getFullYear() - 5));
+    end = new Date();
+
+    axios
+      .get(
+        "/events?date_start=" +
+          Math.floor(start.getTime() / 1000) +
+          "&date_end=" +
+          Math.floor(end.getTime() / 1000)
+      )
+      .then((res) => {
+        this.pastEvents = [
+          ...res.data.events,
+          ...res.data.events,
+          ...res.data.events,
+        ];
+      })
+      .catch((error) => console.error(error));
   },
 };
 </script>
@@ -328,11 +211,39 @@ export default {
   }
 }
 
+.upcoming__outer {
+  .outer__col_1 {
+    border-left: 1px solid #ececec;
+  }
+}
+
+.events__outer--layout {
+  position: relative;
+  .slide__btns {
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+}
+
+.events_slide:nth-child(even) {
+  .events-gallery__col {
+    border-left: 1px solid #ececec;
+  }
+}
+
 .filters {
   padding-top: 60px;
   padding-bottom: 50px;
 }
 
+.event-outer-box {
+  border-bottom: 1px solid #ececec;
+}
+.event-outer-box:nth-child(even) {
+  border-left: 1px solid #ececec;
+  border-right: 1px solid #ececec;
+}
 .filters-container {
   display: grid;
   grid-gap: 30px;
@@ -357,6 +268,11 @@ export default {
 .filter-column {
   display: flex;
   flex-wrap: wrap;
+}
+
+.event-gallery__col:nth-child(2) {
+  border-left: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
 }
 
 .filter {
@@ -565,5 +481,10 @@ export default {
       text-decoration: none;
     }
   }
+}
+hr {
+  border: none;
+  height: 1px;
+  background: #ececec;
 }
 </style>

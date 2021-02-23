@@ -4,14 +4,23 @@
       <div class="smiley-img-wrap">
         <div class="smiley-img">
           <img
-            :src="$settings.images_path.events +'m_'+event.cover_image"
+            :src="$settings.images_path.events + 'm_' + event.cover_image"
             :alt="event.title"
             sizes="(max-width: 1160px) 100vw, 1160px"
             :srcset="
-$settings.images_path.events + `s_`+event.cover_image+` 150w,` +
-$settings.images_path.events + `m_`+event.cover_image+` 360w,` +
-$settings.images_path.events + `l_`+event.cover_image+` 1160w`
-                     "
+              $settings.images_path.events +
+                `s_` +
+                event.cover_image +
+                ` 150w,` +
+                $settings.images_path.events +
+                `m_` +
+                event.cover_image +
+                ` 360w,` +
+                $settings.images_path.events +
+                `l_` +
+                event.cover_image +
+                ` 1160w`
+            "
           />
         </div>
       </div>
@@ -19,12 +28,20 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
 
     <!-- Register & UnRegister buttons  show only if user is registered-->
     <div class="btns-wrap" v-if="isAuthenticated">
-      <div class="attend" id="attending-overlay" :class="{'attend--active' : overlay}">
+      <div
+        class="attend"
+        id="attending-overlay"
+        :class="{ 'attend--active': overlay }"
+      >
         <div v-if="!attendedEvents.includes(event.id)">
-          <button @click.prevent="registerUser(event.id)">Register for event</button>
+          <button @click.prevent="registerUser(event.id)">
+            Register for event
+          </button>
         </div>
         <div v-if="attendedEvents.includes(event.id)">
-          <button @click.prevent="unregisterUser(event.id)" class="minus">CANCEL ATTENDENCE</button>
+          <button @click.prevent="unregisterUser(event.id)" class="minus">
+            CANCEL ATTENDENCE
+          </button>
         </div>
       </div>
     </div>
@@ -34,20 +51,23 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
       <button
         v-if="!attendedEvents.includes(event.id) && !past"
         class="talk-card-checkbox-dt"
-        :class="{'talk-card-checkbox-rotate': overlay }"
+        :class="{ 'talk-card-checkbox-rotate': overlay }"
         @click.prevent="showButtons"
         @mouseover="holderShown = true"
         @mouseleave="holderShown = false"
       ></button>
     </template>
     <template v-else>
-      <button class="talk-card-checkbox-dt" @click.prevent="signInModal"></button>
+      <button
+        class="talk-card-checkbox-dt"
+        @click.prevent="signInModal"
+      ></button>
     </template>
 
     <!-- Show this Upon Hover -->
     <div
       class="overlay"
-      :class="{'overlay--active' : holderShown && !overlay}"
+      :class="{ 'overlay--active': holderShown && !overlay }"
       v-if="isAuthenticated"
     >
       <span v-if="attendedEvents.includes(event.id)">Click to cancel</span>
@@ -82,8 +102,8 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
     <div class="info-wrap">
       <!-- Text description -->
       <div class="info-border">
-        <h2>{{event.title}}</h2>
-        <p class="info-full-height">{{event.short_description}}</p>
+        <h2>{{ event.title }}</h2>
+        <p class="info-full-height">{{ event.short_description }}</p>
 
         <div class="spacer"></div>
 
@@ -103,14 +123,22 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
             />
           </svg>
           <div class="date-and-time-info">
-            <div
-              v-if="event.date"
-              class="date-info"
-            >{{event.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}}</div>
-            <div
-              v-if="event.time_start"
-              class="time-info"
-            >{{event.time_start | formatTime}} - {{event.time_end | formatTime}}</div>
+            <div v-if="event.date" class="date-info">
+              {{
+                event.date
+                  | formatDate("en-US", {
+                    weekday: "short",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                  | stripComas
+              }}
+            </div>
+            <div v-if="event.time_start" class="time-info">
+              {{ event.time_start | formatTime }} -
+              {{ event.time_end | formatTime }}
+            </div>
           </div>
         </div>
 
@@ -129,21 +157,24 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
               fill="#d21217"
             />
           </svg>
-          <div>{{event.location}}</div>
+          <div>{{ event.location }}</div>
         </div>
       </div>
 
       <!-- Show attendees only if user is attended to event -->
       <!-- TODO: Rework attendees -->
 
-      <div class="attending-info" v-if="event.attendees_random && event.attendees_random.length !== 0">
+      <div
+        class="attending-info"
+        v-if="event.attendees_random && event.attendees_random.length !== 0"
+      >
         <span>Attending:</span>
         <div class="attending-wrap">
           <div
             class="attendees-avatar"
             v-for="(attendee, index) in event.attendees_random"
             :key="attendee.id + '-attendee'"
-            :class="{'next': index > 0}"
+            :class="{ next: index > 0 }"
           >
             <template v-if="attendee.avatar !== null">
               <img
@@ -157,13 +188,21 @@ $settings.images_path.events + `l_`+event.cover_image+` 1160w`
                 <span
                   class="attendees-avatar__letter"
                   :title="attendee.full_name"
-                >{{attendee.full_name || attendee.full_name | filterAvatar}}</span>
+                  >{{
+                    attendee.full_name || attendee.full_name | filterAvatar
+                  }}</span
+                >
               </div>
             </template>
           </div>
-          <div class="attendees-avatar next last" v-if="event.attendees_random.length !== 0">
+          <div
+            class="attendees-avatar next last"
+            v-if="event.attendees_random.length !== 0"
+          >
             <div class="attendees-avatar__letter-holder">
-              <span class="attendees-avatar__letter">{{event.attendees_count}}</span>
+              <span class="attendees-avatar__letter">{{
+                event.attendees_count
+              }}</span>
             </div>
           </div>
         </div>
@@ -180,7 +219,7 @@ export default {
   data() {
     return {
       overlay: false,
-      holderShown: false
+      holderShown: false,
     };
   },
   methods: {
@@ -194,9 +233,9 @@ export default {
           "To register for an event you will need to login or create an account",
         showCancelButton: true,
         confirmButtonText: "Create Account",
-        cancelButtonText: "Login"
+        cancelButtonText: "Login",
       };
-      this.$swal(swal).then(result => {
+      this.$swal(swal).then((result) => {
         if (result.value) {
           router.push({ path: "/register" });
         } else if (
@@ -213,26 +252,26 @@ export default {
     unregisterUser(id) {
       this.unregisterUserForEvent({ id: id, organisation: false });
     },
-    ...mapActions("events", ["registerUserForEvent", "unregisterUserForEvent"])
+    ...mapActions("events", ["registerUserForEvent", "unregisterUserForEvent"]),
   },
   mounted() {
     // console.log(event);
   },
   computed: {
     ...mapState("user", {
-      attendedEvents: state => state.attendingEvents
+      attendedEvents: (state) => state.attendingEvents,
     }),
     isAuthenticated() {
       return this.$store.getters["user/isAuthenticated"];
-    }
+    },
   },
   props: {
     event,
     past: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 };
 </script>
 

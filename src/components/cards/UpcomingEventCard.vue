@@ -24,9 +24,27 @@
         :style="[forMobile ? { height: 'auto' } : {}]"
       >
         <router-link :to="{ name: 'event', params: { slug: event.slug } }"
-          ><span class="__title">Event:</span> {{ event.title }}</router-link
+          ><span class="__title">Event: </span>{{ event.title }}</router-link
         >
       </h3>
+      <VButton
+        class="event__button"
+        size="height_0"
+        @click.native.prevent="openPage"
+        shape="round"
+      >
+        <router-link
+          class="event__button-link"
+          :to="{ name: 'event', params: { slug: event.slug } }"
+          >{{ buttonName }}</router-link
+        >
+      </VButton>
+      <div
+        class="event__content-description mt-4"
+        :style="[forMobile ? { height: 'auto' } : {}]"
+      >
+        {{ event.short_description.slice(0, 200) }}...
+      </div>
       <div class="event__content-metadata">
         {{ event.location }} |
         {{ dateAgo(event.date) }}
@@ -157,10 +175,11 @@ export default {
 
 <style lang="scss" scoped>
 .event {
-  cursor: pointer;
   background-color: white;
   position: relative;
+  min-height: 540px;
   color: #fff;
+  cursor: pointer;
   &.for-mobile {
     box-shadow: none;
     text-align: left;
@@ -170,16 +189,19 @@ export default {
     }
     .event__content-description {
       margin-top: 0 !important;
-      height: 4rem !important;
     }
     .event__content-metadata {
       height: 2rem !important;
     }
   }
 
+  .__title {
+    font-family: "Gotham Bold", sans-serif;
+  }
+
   .event__image {
     position: relative;
-    height: 269px;
+    height: 400px;
     width: 100%;
 
     img {
@@ -216,28 +238,18 @@ export default {
 
   .event__content {
     text-align: left;
-    padding-top: 26px;
-    min-height: 190px;
-    flex-direction: column;
-    display: flex;
-    justify-content: space-between;
+    padding: {
+      top: 10px;
+    }
 
     .event__content-title {
+      min-height: 5.5rem;
       height: auto;
-      min-height: 58px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
       color: black;
       font-family: "Gotham Book", sans-serif;
       font-size: 30px;
       line-height: 40px;
       margin-bottom: 0;
-      .__title {
-        font-family: "Gotham Bold", sans-serif;
-      }
 
       a {
         color: black;
@@ -250,10 +262,10 @@ export default {
     }
 
     .event__content-description {
-      height: 6rem;
+      max-width: 87%;
       color: black;
       font-family: "Gotham Book", sans-serif;
-      font-size: 16px;
+      font-size: 20px;
       line-height: 28px;
       margin-top: 0;
     }
@@ -264,7 +276,6 @@ export default {
       display: flex;
       justify-content: space-between;
       font-size: 15px;
-      align-items: flex-end;
       margin-top: 14px;
       .event__category {
         background: #9a9a9a;
@@ -291,13 +302,17 @@ export default {
   .event__button {
     .event__button-link {
       display: block;
-      color: black;
+      color: #fff;
       width: 100%;
       height: 100%;
-      line-height: 45px;
+      line-height: 20px;
+      padding: 6px 13px 2px 8px;
+      font-size: 16px;
+      text-transform: capitalize;
 
       &:hover {
         text-decoration: none;
+        color: #000;
       }
     }
   }

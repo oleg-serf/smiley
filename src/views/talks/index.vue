@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Breadcrumbs/>
+    <Breadcrumbs />
     <router-view key="$route.fullPath"></router-view>
     <!-- <Footer /> -->
   </div>
