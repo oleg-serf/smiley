@@ -2,23 +2,25 @@
   <div class="container pa-0">
     <div>
       <div class="header">
-        <img
-            src="/img/goals/goals_main.png"
-            alt="goalsImg"
-            title="Goals"
-        />
+        <img src="/img/goals/goals_main.png" alt="goalsImg" title="Goals" />
       </div>
     </div>
 
     <div class="textual-banner textual-banner--contained">
       <div>
         <div class="textual-banner__title">17 GOALS TO TRANSFORM OUR WORLD</div>
-        <p>The Sustainable Development Goals (SDG’s) are the blueprint for peace and prosperity for people and the
-          planet, now and into the future. Everything we do is guided by these goals, from the events we host, content
-          we produce to the way organisations and projects are presented to you.Click through each Goal below to uncover
-          the latest Smiley News, Events and Charitable Projects related to that goal and learn how you can get
-          involved.</p>
-        <p>Click on each <strong class="text-bold">Goal</strong> to learn more</p>
+        <p>
+          The Sustainable Development Goals (SDG’s) are the blueprint for peace
+          and prosperity for people and the planet, now and into the future.
+          Everything we do is guided by these goals, from the events we host,
+          content we produce to the way organisations and projects are presented
+          to you.Click through each Goal below to uncover the latest Smiley
+          News, Events and Charitable Projects related to that goal and learn
+          how you can get involved.
+        </p>
+        <p>
+          Click on each <strong class="text-bold">Goal</strong> to learn more
+        </p>
       </div>
     </div>
     <div>
@@ -29,19 +31,27 @@
     <div class="event-category">
       <h3 class="event-category__title"><b>UN Goals</b></h3>
       <input
-          class="un_goals_search_input"
-          type="text"
-          placeholder="Search Topics...">
+        class="un_goals_search_input"
+        type="text"
+        placeholder="Search Topics..."
+      />
     </div>
 
     <section class="goals-grid">
       <div class="goals-grid__grid">
         <div class="goals-grid__item">
-          <img src="/img/un-goals.png" alt="icon"/>
+          <img src="/img/un-goals.png" alt="icon" />
         </div>
-        <div class="goals-grid__item" v-for="goal in goals" :key="goal.name+goal.id">
+        <div
+          class="goals-grid__item"
+          v-for="goal in goals"
+          :key="goal.name + goal.id"
+        >
           <router-link :to="'/goals/' + goal.slug">
-            <img :src="$settings.images_path.goals + 's_' + goal.image" alt="icon"/>
+            <img
+              :src="$settings.images_path.goals + 's_' + goal.image"
+              alt="icon"
+            />
           </router-link>
         </div>
       </div>
@@ -50,8 +60,12 @@
     <div class="textual-banner textual-banner--contained margin-bottom-six-rem">
       <div>
         <p>
-          <a href="https://sustainabledevelopment.un.org/?menu=1300" class="text-bold">Click here</a> to visit the UN
-          Goals website
+          <a
+            href="https://sustainabledevelopment.un.org/?menu=1300"
+            class="text-bold"
+            >Click here</a
+          >
+          to visit the UN Goals website
         </p>
       </div>
     </div>
@@ -66,7 +80,7 @@ import axios from "@/axios-auth";
 // Components
 import Banner from "@/components/homepage/Banner.vue";
 import SocialNetworkShare from "@/components/SocialNetworkShare";
-import Subscribe from '@/components/forms/Subscribe.vue';
+import Subscribe from "@/components/forms/Subscribe.vue";
 
 export default {
   name: "Goals",
@@ -77,17 +91,17 @@ export default {
   },
   data() {
     return {
-      goals: []
+      goals: [],
     };
   },
   mounted() {
     axios
-        .get("/goals")
-        .then(res => {
-          this.goals = res.data.goals;
-        })
-        .catch(error => console.error(error));
-  }
+      .get("/goals")
+      .then((res) => {
+        this.goals = res.data.goals;
+      })
+      .catch((error) => console.error(error));
+  },
 };
 </script>
 
@@ -113,12 +127,12 @@ export default {
 
 .un_goals_search_input {
   width: 10rem;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   height: 1.9rem;
   border-radius: 2rem;
   font-size: 13px;
   color: #666666;
-  background-image: url('/images/main/icon-search.svg');
+  background-image: url("/images/main/icon-search.svg");
   background-repeat: no-repeat;
   background-position: 95% center;
   background-size: 1rem 1rem;

@@ -3,7 +3,7 @@
     <div :style="largeScreenContainer">
       <v-container class="mt-2">
         <header-mobile v-if="$vuetify.breakpoint.smAndDown" />
-        <header-web v-if="$vuetify.breakpoint.mdAndUp" />
+        <header-web :logo="logo" v-if="$vuetify.breakpoint.mdAndUp" />
         <v-main>
           <router-view :key="$route.fullPath" />
         </v-main>
@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       isMobile: false,
+      logo: require("@/assets/HEADER_LOGO@2x.png"),
     };
   },
   components: {
@@ -51,11 +52,24 @@ export default {
       document.title =
         to.meta.title + " | Smiley Movement" || "Smiley Movement";
       this.$store.dispatch("meta/clearMeta");
+      this.handleChangeLogo(to);
     },
   },
   methods: {
     handleResize() {
       this.isMobile = window.outerWidth >= 450 ? false : true;
+    },
+    handleChangeLogo(to) {
+      let currentRoute = to.name;
+      if (currentRoute === "news") {
+        this.logo = require("@/assets/HEADER_LOGO@2x.png");
+      } else if (currentRoute === "talks") {
+        this.logo = require("@/assets/HEADER_LOGO@2x.png");
+      } else if (currentRoute === "network") {
+        this.logo = require("@/assets/HEADER_LOGO@2x.png");
+      } else {
+        this.logo = require("@/assets/HEADER_LOGO@2x.png");
+      }
     },
   },
   created() {

@@ -1,66 +1,116 @@
 <template>
-  <div class="main-header">
-    <div class="day-date">
-      <span>{{
-        new Date().toLocaleDateString("en-GB", {
-          day: "numeric",
-          weekday: "long",
-          month: "long",
-          year: "numeric",
-        })
-      }}</span>
-      <span>Good News about people doing good</span>
-    </div>
-    <!-- LEFT SIDE -->
-    <div class="d-flex justify-space-between">
-      <div class="d-flex align-start">
-        <router-link :to="{ path: '/' }" class="mr-4">
-          <img
-            height="68px"
-            width="200px"
-            src="../../../assets/HEADER_LOGO@2x.png"
-          />
-        </router-link>
-        <link-box :links="linksOne" />
-        <link-box :links="linksTwo" />
-        <link-box :links="linksThree" />
+  <div class="main__header--outer">
+    <div class="main-header">
+      <div class="day-date">
+        <span>{{
+          new Date().toLocaleDateString("en-GB", {
+            day: "numeric",
+            weekday: "long",
+            month: "long",
+            year: "numeric",
+          })
+        }}</span>
+        <span>Good News about people doing good</span>
       </div>
-      <!-- RIGHT SIDE -->
-      <div class="main-header-right">
-        <div class="main-header-actions">
-          <v-btn
-            elevation="0"
-            color="#ffe61f"
-            class="rounded-button  mr-4 flex-1"
-            @click="$router.push({ path: '/login' })"
-            style="height: 28px;"
-            >Join now</v-btn
-          >
-          <v-btn
-            elevation="0"
-            color="#ffe61f"
-            class="rounded-button "
-            @click="$router.push({ path: '/login' })"
-            style="height: 28px;"
-            >Sign In</v-btn
-          >
+      <!-- LEFT SIDE -->
+      <div class="d-flex justify-space-between">
+        <div class="d-flex align-start">
+          <router-link :to="{ path: '/' }" class="mr-4">
+            <img height="68px" width="200px" :src="logo" />
+          </router-link>
+          <link-box :links="linksOne" />
+          <link-box :links="linksTwo" />
+          <link-box :links="linksThree" />
         </div>
-        <div class="d-flex align-center">
-          <div class="flex-1">
-            <SearchBar />
+        <!-- RIGHT SIDE -->
+        <div class="main-header-right">
+          <div class="main-header-actions">
+            <v-btn
+              elevation="0"
+              color="#ffe61f"
+              class="rounded-button  mr-4 flex-1"
+              @click="$router.push({ path: '/login' })"
+              style="height: 28px;"
+              >Join now</v-btn
+            >
+            <v-btn
+              elevation="0"
+              color="#ffe61f"
+              class="rounded-button "
+              @click="$router.push({ path: '/login' })"
+              style="height: 28px;"
+              >Sign In</v-btn
+            >
           </div>
-          <div class="flex">
-            <img
-              height="25px"
-              width="25px"
-              class="ml-2"
-              style="cursor: pointer;"
-              v-for="(icon, index) in socialButtons"
-              :key="index"
-              :src="require(`../../../assets/${icon.src}.png`)"
-            />
-            <!-- <v-icon style="cursor: pointer;" class="ml-4" color="black" medium>fa fa-bars</v-icon> -->
-            <drop-down-menu />
+          <div class="d-flex align-center">
+            <div class="flex-1">
+              <SearchBar />
+            </div>
+            <div class="flex">
+              <img
+                height="25px"
+                width="25px"
+                class="ml-2"
+                style="cursor: pointer;"
+                v-for="(icon, index) in socialButtons"
+                :key="index"
+                :src="require(`../../../assets/${icon.src}.png`)"
+              />
+              <!-- <v-icon style="cursor: pointer;" class="ml-4" color="black" medium>fa fa-bars</v-icon> -->
+              <drop-down-menu />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container nav__container">
+      <div id="sticky__main--header" class="sticky__main--header" v-if="sticky">
+        <div class="d-flex justify-space-between">
+          <div class="d-flex align-center">
+            <router-link :to="{ path: '/' }" class="mr-4">
+              <img height="68px" width="200px" :src="logo" />
+            </router-link>
+            <div class="d-flex ml-4 slide__btns">
+              <span>
+                <v-icon
+                  :id="'news-gallery-button-prev-' + id"
+                  medium
+                  color="black"
+                >
+                  fa fa-chevron-circle-left
+                </v-icon>
+              </span>
+              <span class="ml-3">
+                <v-icon
+                  :id="'news-gallery-button-next-' + id"
+                  medium
+                  color="black"
+                >
+                  fa fa-chevron-circle-right
+                </v-icon>
+              </span>
+              <span class="ml-3">Previous Page</span>
+            </div>
+          </div>
+          <div class="main-header-right">
+            <div class="d-flex align-center">
+              <div class="flex-1">
+                <SearchBar />
+              </div>
+              <div class="flex">
+                <img
+                  height="25px"
+                  width="25px"
+                  class="ml-2"
+                  style="cursor: pointer;"
+                  v-for="(icon, index) in socialButtons"
+                  :key="index"
+                  :src="require(`../../../assets/${icon.src}.png`)"
+                />
+                <!-- <v-icon style="cursor: pointer;" class="ml-4" color="black" medium>fa fa-bars</v-icon> -->
+                <drop-down-menu />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -70,12 +120,18 @@
 
 <script>
 export default {
+  props: {
+    logo: {
+      type: String,
+    },
+  },
   components: {
     linkBox: () => import("../../Base/Header/LinkBox"),
     dropDownMenu: () => import("./DropdownMenu"),
     SearchBar: () => import("./SearchBar"),
   },
   data: () => ({
+    sticky: false,
     socialButtons: [
       { name: "fb", src: "facebook-icon@1x" },
       { name: "insta", src: "instagram-icon@1x" },
@@ -99,6 +155,19 @@ export default {
     ],
   }),
   methods: {},
+  mounted() {
+    window.onscroll = function() {
+      myFunction();
+    };
+    const that = this;
+    function myFunction() {
+      if (window.pageYOffset >= 120) {
+        that.sticky = true;
+      } else {
+        that.sticky = false;
+      }
+    }
+  },
 };
 </script>
 
@@ -140,6 +209,24 @@ export default {
     justify-content: space-between;
     color: #676666;
     margin-bottom: 6px;
+  }
+}
+.nav__container {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  padding: 0;
+}
+.sticky__main--header {
+  position: relative;
+  /* height: 54px; */
+  background: #fff;
+  width: 100%;
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  .main-header-right {
+    align-self: center;
   }
 }
 </style>

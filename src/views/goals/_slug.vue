@@ -2,15 +2,15 @@
   <div>
     <div class="container">
       <goals-banner
-          :color="goal.colour"
-          :background="getImage()"
-          :name-length="goal.name ? goal.name.length : 20"
-          :is_mobile="isMobile"
+        :color="goal.colour"
+        :background="getImage()"
+        :name-length="goal.name ? goal.name.length : 20"
+        :is_mobile="isMobile"
       >
         <template v-slot:prefix>
           {{ goal.prefix }}
         </template>
-        <template v-slot:name >
+        <template v-slot:name>
           {{ goal.name }}
         </template>
       </goals-banner>
@@ -20,67 +20,112 @@
       <section class="goal-description">
         <section class="goal-description__content">
           <div class="goal-description__content-title">
-            <p class="text-bold">Goal {{goal.prefix}}: {{ goal.name }}</p>
+            <p class="text-bold">Goal {{ goal.prefix }}: {{ goal.name }}</p>
           </div>
 
-          <div class="goal-description__content-description" v-html="goal.description">
-          </div>
+          <div
+            class="goal-description__content-description"
+            v-html="goal.description"
+          ></div>
 
           <div class="goal-description__content__actions">
             <!--   SOCIAL_NETWORK_SHARE COMPONENT   -->
             <SocialNetworkShare :title="goal.name"></SocialNetworkShare>
-            <VButton
-                class="colored-button"
-                shape="round"
-                size="small"
-            >
+            <VButton class="colored-button" shape="round" size="small">
               <a
-                  class="event__button-link"
-                  href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"
-              >Learn More</a>
+                class="event__button-link"
+                href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"
+                >Learn More</a
+              >
             </VButton>
-            <VButton
-                class="colored-button"
-                shape="round"
-                size="small"
-            >
-              <router-link
-                  class="event__button-link"
-                  :to="'#'"
-              >How to help</router-link>
+            <VButton class="colored-button" shape="round" size="small">
+              <router-link class="event__button-link" :to="'#'"
+                >How to help</router-link
+              >
             </VButton>
           </div>
         </section>
         <section
-            class="section"
-            v-if="organisations.length > 0"
-            id="section-organisations"
+          class="section"
+          v-if="organisations.length > 0"
+          id="section-organisations"
         >
-          <BottomBorderedTitleWithSearch
-              title="<b>Organisations to support</b>"
-              :with-search="false"
+          <!-- <BottomBorderedTitleWithSearch
+            title="<b>Organisations to support</b>"
+            :with-search="false"
           ></BottomBorderedTitleWithSearch>
           <section class="goals-grid">
             <div class="goals-grid__grid">
-              <div class="goals-grid__item" v-for="organisation in organisations"
-                   :key="'organisation-'+organisation.slug">
+              <div
+                class="goals-grid__item"
+                v-for="organisation in organisations"
+                :key="'organisation-' + organisation.slug"
+              >
                 <router-link :to="goalOrganisationLink(organisation)">
-                  <div v-if="organisation.logo != null"
-                       :style="{background: `url(${$settings.images_path.organisations + 's_' + organisation.logo})` + 'no-repeat center', 'background-size': 'contain'}"
+                  <div
+                    v-if="organisation.logo != null"
+                    :style="{
+                      background:
+                        `url(${$settings.images_path.organisations +
+                          's_' +
+                          organisation.logo})` + 'no-repeat center',
+                      'background-size': 'contain',
+                    }"
                   ></div>
                 </router-link>
               </div>
             </div>
-          </section>
-          <div class="smiley-pagination" v-if="organisationsPagination > 1 && false">
+          </section> -->
+          <v-row>
+            <v-col cols="12">
+              <div class="related__orginations_outer">
+                <BottomBorderedTitleWithSearch
+                  title="<b>Related</b> | Organisations"
+                  :with-search="false"
+                ></BottomBorderedTitleWithSearch>
+                <div class="d-flex ml-4 slide__btns">
+                  <span>
+                    <v-icon id="prevone" medium color="black">
+                      fa fa-chevron-circle-left
+                    </v-icon>
+                  </span>
+                  <span class="ml-3">
+                    <v-icon id="nextone" medium color="black">
+                      fa fa-chevron-circle-right
+                    </v-icon>
+                  </span>
+                </div>
+              </div>
+            </v-col>
+            <Swiper :key="key" :options="OrgOptions">
+              <SwiperSlide
+                v-for="organisation in organisations"
+                :key="organisation.slug"
+                class="related__slide"
+              >
+                <v-col sm="12" md="12" class="py-0 related__col">
+                  <RelatedOrganisationCard
+                    :logo="organisation.logo"
+                    :title="organisation.name"
+                    para="Non-profit Organization Management"
+                    location="UK"
+                  />
+                </v-col>
+              </SwiperSlide>
+            </Swiper>
+          </v-row>
+          <div
+            class="smiley-pagination"
+            v-if="organisationsPagination > 1 && false"
+          >
             <paginate
-                :page-count="organisationsPagination"
-                :click-handler="paginateOrganisations"
-                :prev-text="'Prev'"
-                :next-text="'Next'"
-                :prev-class="'smiley-pagination-back'"
-                :next-class="'smiley-pagination-next'"
-                :container-class="'app-pagination'"
+              :page-count="organisationsPagination"
+              :click-handler="paginateOrganisations"
+              :prev-text="'Prev'"
+              :next-text="'Next'"
+              :prev-class="'smiley-pagination-back'"
+              :next-class="'smiley-pagination-next'"
+              :container-class="'app-pagination'"
             >
               <span slot="breakViewContent">...</span>
             </paginate>
@@ -151,7 +196,7 @@
           :with-slider="!isMobile"
         ></NewsGallery>
       </section>
-    </div>    
+    </div>
   </div>
 </template>
 
@@ -163,6 +208,7 @@ import GoalsBanner from "@/components/GoalsBanner";
 import SocialNetworkShare from "@/components/SocialNetworkShare";
 import VButton from "@/components/app/VButton";
 import BottomBorderedTitleWithSearch from "@/components/BottomBorderedTitleWithSearch";
+import RelatedOrganisationCard from "@/components/cards/RelatedOrganisationCard";
 
 import NewsGallery from "@/components/news/NewsGallery";
 
@@ -174,6 +220,7 @@ export default {
     VButton,
     SocialNetworkShare,
     GoalsBanner,
+    RelatedOrganisationCard,
   },
   data() {
     return {
@@ -197,10 +244,33 @@ export default {
       organisations: [],
       organisationsPagination: 0,
 
+      OrgOptions: {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 10,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: "#nextone",
+          prevEl: "#prevone",
+        },
+        breakpoints: {
+          900: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            spaceBetween: 0,
+          },
+          1300: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+            spaceBetween: 0,
+          },
+        },
+      },
+
       swiperOptions: {
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
+          clickable: true,
         },
         slidesPerView: 4,
         spaceBetween: 15,
@@ -208,20 +278,20 @@ export default {
         breakpoints: {
           320: {
             slidesPerView: 1,
-            centeredSlides: true
+            centeredSlides: true,
           },
           480: {
-            slidesPerView: 1.3
+            slidesPerView: 1.3,
           },
           640: {
-            slidesPerView: 1.5
-          }
-        }
+            slidesPerView: 1.5,
+          },
+        },
       },
       organisationsSwiperOptions: {
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
+          clickable: true,
         },
         slidesPerView: 4,
         spaceBetween: 15,
@@ -229,152 +299,159 @@ export default {
         breakpoints: {
           320: {
             slidesPerView: 1.15,
-            centeredSlides: true
+            centeredSlides: true,
           },
           480: {
-            slidesPerView: 2.15
-          }
-        }
-      }
+            slidesPerView: 2.15,
+          },
+        },
+      },
     };
   },
   methods: {
     getImage() {
-      const prefix = this.goal.prefix.length > 1 ? this.goal.prefix : '0' + this.goal.prefix;
-      return `/img/goals/UN_${prefix}.svg`
+      const prefix =
+        this.goal.prefix.length > 1 ? this.goal.prefix : "0" + this.goal.prefix;
+      return `/img/goals/UN_${prefix}.svg`;
     },
     getTitle(title) {
       return `<b> ${this.goal.name} </b> | ${title}`;
     },
     goalOrganisationLink(organisation) {
       return {
-        name: organisation.admin_created ? 'organisation-by-smiley' : 'organisation',
+        name: organisation.admin_created
+          ? "organisation-by-smiley"
+          : "organisation",
         params: {
-          slug: organisation.slug
-        }
-      }
+          slug: organisation.slug,
+        },
+      };
     },
     goToCategory(event) {
       router.push({
         name: "news-category-item",
-        params: {slug: event.target.value}
+        params: { slug: event.target.value },
       });
     },
     paginateNews(pageNum) {
       axios
-          .post("/goals/" + this.$route.params.slug + "?news-page=" + pageNum)
-          .then(res => {
-            this.posts = res.data.posts;
-            this.postsPagination = res.data.posts_pages_count;
+        .post("/goals/" + this.$route.params.slug + "?news-page=" + pageNum)
+        .then((res) => {
+          this.posts = res.data.posts;
+          this.postsPagination = res.data.posts_pages_count;
 
-            let sectionOffset = document.getElementById("section-news").offsetTop;
-            window.scrollTo({
-              top: sectionOffset - 12,
-              behavior: "smooth"
-            });
-          })
-          .catch(err => {
-            console.error("error", err);
+          let sectionOffset = document.getElementById("section-news").offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth",
           });
+        })
+        .catch((err) => {
+          console.error("error", err);
+        });
       // console.log(pageNum);
     },
     paginateEvents(pageNum) {
       axios
-          .post("/goals/" + this.$route.params.slug + "?events-page=" + pageNum)
-          .then(res => {
-            console.log("Events", res.data.events);
-            this.events = res.data.events;
-            this.eventsPagination = res.data.events_pages_count;
+        .post("/goals/" + this.$route.params.slug + "?events-page=" + pageNum)
+        .then((res) => {
+          console.log("Events", res.data.events);
+          this.events = res.data.events;
+          this.eventsPagination = res.data.events_pages_count;
 
-            let sectionOffset = document.getElementById("section-events")
-                .offsetTop;
-            window.scrollTo({
-              top: sectionOffset - 12,
-              behavior: "smooth"
-            });
-          })
-          .catch(err => {
-            console.error("error", err);
+          let sectionOffset = document.getElementById("section-events")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth",
           });
+        })
+        .catch((err) => {
+          console.error("error", err);
+        });
       console.log(pageNum);
     },
     paginateProjects(pageNum) {
       axios
-          .post("/goals/" + this.$route.params.slug + "?projects-page=" + pageNum)
-          .then(res => {
-            console.log("Projects", res.data.events);
-            this.events = res.data.events;
-            this.eventsPagination = res.data.events_pages_count;
+        .post("/goals/" + this.$route.params.slug + "?projects-page=" + pageNum)
+        .then((res) => {
+          console.log("Projects", res.data.events);
+          this.events = res.data.events;
+          this.eventsPagination = res.data.events_pages_count;
 
-            let sectionOffset = document.getElementById("section-projects")
-                .offsetTop;
-            window.scrollTo({
-              top: sectionOffset - 12,
-              behavior: "smooth"
-            });
-          })
-          .catch(err => {
-            console.error("error", err);
+          let sectionOffset = document.getElementById("section-projects")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth",
           });
+        })
+        .catch((err) => {
+          console.error("error", err);
+        });
       console.log(pageNum);
     },
     paginateOrganisations(pageNum) {
       axios
-          .post(
-              "/goals/" + this.$route.params.slug + "?organisations-page=" + pageNum + "/admin-created"
-          )
-          .then(res => {
-            this.organisations = res.data.organisations;
-            this.organisationsPagination = res.data.organisations_pages_count;
+        .post(
+          "/goals/" +
+            this.$route.params.slug +
+            "?organisations-page=" +
+            pageNum +
+            "/admin-created"
+        )
+        .then((res) => {
+          this.organisations = res.data.organisations;
+          this.organisationsPagination = res.data.organisations_pages_count;
 
-            let sectionOffset = document.getElementById("section-organisations")
-                .offsetTop;
-            window.scrollTo({
-              top: sectionOffset - 12,
-              behavior: "smooth"
-            });
-          })
-          .catch(err => {
-            console.error("error", err);
+          let sectionOffset = document.getElementById("section-organisations")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth",
           });
+        })
+        .catch((err) => {
+          console.error("error", err);
+        });
       console.log(pageNum);
     },
     paginateUsers(pageNum) {
       axios
-          .post("/goals/" + this.$route.params.slug + "?users-page=" + pageNum)
-          .then(res => {
-            console.log(res.data.users);
-            this.users = res.data.users;
-            this.usersPagination = res.data.users_pages_count;
+        .post("/goals/" + this.$route.params.slug + "?users-page=" + pageNum)
+        .then((res) => {
+          console.log(res.data.users);
+          this.users = res.data.users;
+          this.usersPagination = res.data.users_pages_count;
 
-            let sectionOffset = document.getElementById("section-users")
-                .offsetTop;
-            window.scrollTo({
-              top: sectionOffset - 12,
-              behavior: "smooth"
-            });
-          })
-          .catch(err => {
-            console.error("error", err);
+          let sectionOffset = document.getElementById("section-users")
+            .offsetTop;
+          window.scrollTo({
+            top: sectionOffset - 12,
+            behavior: "smooth",
           });
+        })
+        .catch((err) => {
+          console.error("error", err);
+        });
       console.log(pageNum);
-    }
+    },
   },
   mounted() {
     let slug = this.$route.params.slug;
 
     axios
       .get("/goals/" + slug)
-      .then(res => {
+      .then((res) => {
         console.log("Goal page", res);
 
         this.goal = res.data.goal;
 
         const metaPayload = {
           meta: res.data.meta,
-          title: res.data.goal.name
-        }
-        this.$store.dispatch('meta/setMeta', metaPayload);
+          title: res.data.goal.name,
+        };
+        this.$store.dispatch("meta/setMeta", metaPayload);
 
         this.posts = res.data.news;
         this.postsPagination = res.data.posts_pages_count;
@@ -389,18 +466,13 @@ export default {
         this.organisationsPagination = res.data.organisations_pages_count;
 
         this.$router.currentRoute.meta.title = this.goal.name;
-
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
 
     this.isMobile = this.$vuetify.breakpoint.xs;
   },
-  created() {
-    
-  },
-  destroyed() {
-    
-  }
+  created() {},
+  destroyed() {},
 };
 </script>
 
@@ -447,7 +519,7 @@ export default {
 
       a {
         text-decoration: none;
-        color: white
+        color: white;
       }
 
       .colored-button {
@@ -578,6 +650,26 @@ export default {
 
   @include mdMax {
     flex-direction: column;
+  }
+}
+.related__slide:nth-child(4n + 2),
+.related__slide:nth-child(4n + 3) {
+  .related__col {
+    border-left: 1px solid #ececec !important;
+    border-right: 1px solid #ececec !important;
+  }
+}
+.related__orginations_outer {
+  position: relative;
+  .slide__btns {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    span {
+      i {
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
