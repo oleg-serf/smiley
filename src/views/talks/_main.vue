@@ -106,39 +106,58 @@
         </div>
       </form>
     </div>
-
-    <div class="container events_container">
-      <BottomBorderedTitleWithSearch
-          :title="'<h3><b>Related</b> | Events</h3>'"
+    <template v-if="events == null">
+      <div class="container events_container">
+        <BottomBorderedTitleWithSearch
+          :title="'<h3><b>Upcomming</b> | Events</h3>'"
           :with-search="true"
           search-expandable
-      ></BottomBorderedTitleWithSearch>
-      <div class="event-grid">
-        <EventCard
+        ></BottomBorderedTitleWithSearch>
+        <div class="event-grid">
+          <EventCard
             class="event-card"
-            v-for="(event, key) in events"
+            v-for="(event, key) in upcomming_events"
             :key="'event-card-' + key"
             :event="event"
             button-name="REGISTER"
+          ></EventCard>
+        </div>
+      </div>
+      <div class="container events_container">
+        <BottomBorderedTitleWithSearch
+          :title="'<h3><b>Past</b> | Events</h3>'"
+          :with-search="true"
+          search-expandable
+        ></BottomBorderedTitleWithSearch>
+        <div class="event-grid">
+          <EventCard
+            class="event-card"
+            v-for="(event, key) in past_events"
+            :key="'event-card-' + key"
+            :event="event"
+            button-name="REGISTER"
+          ></EventCard>
+        </div>
+      </div>
+    </template>
+
+    <div v-else class="container events_container">
+      <BottomBorderedTitleWithSearch
+        :title="'<h3><b>Related</b> | Events</h3>'"
+        :with-search="true"
+        search-expandable
+      ></BottomBorderedTitleWithSearch>
+      <div class="event-grid">
+        <EventCard
+          class="event-card"
+          v-for="(event, key) in events"
+          :key="'event-card-' + key"
+          :event="event"
+          button-name="REGISTER"
         ></EventCard>
       </div>
-      <!-- <div style="text-align: center">
-        <VButton
-            class="event__button"
-            size="height_45"
-            @click.native.prevent="openPage('smiley-events', '')"
-            shape="round"
-            color="black"
-        >
-          <router-link
-              class="event__button-link"
-              :to="{ name: 'discussions', params: { slug: 'slug' } }"
-          >
-            More Events
-          </router-link>
-        </VButton>
-      </div> -->
     </div>
+
     <Subscribe></Subscribe>
   </div>
 </template>
@@ -169,6 +188,8 @@ export default {
     return {
       goals: [],
       events: [],
+      upcomming_events: [],
+      past_events: [],
       // events_pages: 0,
       // past_pages: 0,
       // is_mobile: false,
@@ -218,7 +239,7 @@ export default {
           start: new Date(),
         },
       },
-      timing: "Upcoming",
+      timing: "",
     };
   },
   methods: {
@@ -252,7 +273,7 @@ export default {
           end: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
           start: new Date()
         };
-      } else {
+      } else if(this.timing == "Past"){
         this.filterQuery.date = {
           start: new Date(new Date().setFullYear(new Date().getFullYear() - 5)),
           end: new Date()
@@ -269,7 +290,6 @@ export default {
       axios
         .get("/events?date_start="+start+"&date_end="+end)
         .then((res) => {
-          console.log("Filtered events", res);
           this.events = res.data.events;
           this.events_pages = res.data.pages_count;
         })
@@ -291,14 +311,27 @@ export default {
     }
   },
   mounted() {
+    this.events = null;
+
+    const start = Math.floor(new Date().getTime() / 1000);
+    const end = Math.floor(new Date(new Date().setFullYear(new Date().getFullYear() + 1)).getTime() / 1000);
+    
     axios
-        .get("/events")
-        .then((res) => {
-          console.log("Future events", res);
-          this.events = res.data.events;
-          this.events_pages = res.data.pages_count;
-        })
-        .catch((error) => console.error(error));
+      .get("/events?date_start="+start+"&date_end="+end)
+      .then((res) => {
+        this.upcomming_events = res.data.events;
+      })
+      .catch((error) => console.error(error));
+
+    const start_1 = Math.floor(new Date(new Date().setFullYear(new Date().getFullYear() - 5)).getTime() / 1000);
+    const end_1 = Math.floor(new Date().getTime() / 1000);
+    axios
+      .get("/events?date_start="+start_1+"&date_end="+end_1)
+      .then((res) => {
+        this.past_events = res.data.events;
+      })
+      .catch((error) => console.error(error));
+
   },
   created() {
     window.addEventListener("resize", this.handleResize);
