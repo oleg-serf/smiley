@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <div class="container nav__container">
+    <div class="container nav__container pa-0">
       <div id="sticky__main--header" class="sticky__main--header" v-if="sticky">
         <div class="d-flex justify-space-between">
           <div class="d-flex align-center">
@@ -214,8 +214,12 @@ export default {
 .nav__container {
   position: fixed;
   z-index: 1000;
+  width: calc(100% - 28.5%) !important;
   top: 0;
   padding: 0;
+  @media (max-width: 1680px) {
+    width: 96% !important;
+  }
 }
 .sticky__main--header {
   position: relative;
