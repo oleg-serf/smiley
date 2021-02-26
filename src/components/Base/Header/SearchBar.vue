@@ -10,9 +10,12 @@
   position: relative;
   margin-right: 10px;
   width: 180px;
-    &:hover {
-      width: 15rem;
+  &:hover {
+    width: 15rem;
+    @media (max-width: 1264px) {
+      width: 180px;
     }
+  }
   .v-input__slot {
     min-height: 28px !important;
     .v-input input {

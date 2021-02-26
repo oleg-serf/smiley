@@ -64,9 +64,9 @@ export default {
       if (currentRoute === "news") {
         this.logo = require("@/assets/HEADER_LOGO@2x.png");
       } else if (currentRoute === "talks") {
-        this.logo = require("@/assets/HEADER_LOGO@2x.png");
+        this.logo = require("@/assets/logos/HEADER_Talk@2x.png");
       } else if (currentRoute === "network") {
-        this.logo = require("@/assets/HEADER_LOGO@2x.png");
+        this.logo = require("@/assets/logos/HEADER_Network@2x.png");
       } else {
         this.logo = require("@/assets/HEADER_LOGO@2x.png");
       }

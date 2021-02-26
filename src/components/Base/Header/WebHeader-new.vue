@@ -42,7 +42,7 @@
               >Sign In</v-btn
             >
           </div>
-          <div class="d-flex align-center">
+          <div class="d-flex align-center search__bar--btns">
             <div class="flex-1">
               <SearchBar />
             </div>
@@ -56,8 +56,7 @@
                 :key="index"
                 :src="require(`../../../assets/${icon.src}.png`)"
               />
-              <!-- <v-icon style="cursor: pointer;" class="ml-4" color="black" medium>fa fa-bars</v-icon> -->
-              <drop-down-menu />
+              <drop-down-menu v-if="!sticky" />
             </div>
           </div>
         </div>
@@ -68,28 +67,26 @@
         <div class="d-flex justify-space-between">
           <div class="d-flex align-center">
             <router-link :to="{ path: '/' }" class="mr-4">
-              <img height="68px" width="200px" :src="logo" />
+              <img src="@/assets/logos/news@2x.png" />
             </router-link>
-            <div class="d-flex ml-4 slide__btns">
-              <span>
-                <v-icon
-                  :id="'news-gallery-button-prev-' + id"
-                  medium
-                  color="black"
-                >
+            <div class="d-flex ml-14 slide__btns">
+              <v-btn color="black" elevation="0" icon @click="$router.go(-1)">
+                <v-icon medium>
                   fa fa-chevron-circle-left
                 </v-icon>
-              </span>
-              <span class="ml-3">
-                <v-icon
-                  :id="'news-gallery-button-next-' + id"
-                  medium
-                  color="black"
-                >
+              </v-btn>
+              <v-btn
+                color="black"
+                class="ml-3"
+                elevation="0"
+                icon
+                @click="$router.go(-1)"
+              >
+                <v-icon medium>
                   fa fa-chevron-circle-right
                 </v-icon>
-              </span>
-              <span class="ml-3">Previous Page</span>
+              </v-btn>
+              <span class="ml-3 sticky__previous--para">Previous Page</span>
             </div>
           </div>
           <div class="main-header-right">
@@ -107,8 +104,7 @@
                   :key="index"
                   :src="require(`../../../assets/${icon.src}.png`)"
                 />
-                <!-- <v-icon style="cursor: pointer;" class="ml-4" color="black" medium>fa fa-bars</v-icon> -->
-                <drop-down-menu />
+                <drop-down-menu v-if="sticky" />
               </div>
             </div>
           </div>
@@ -132,6 +128,7 @@ export default {
   },
   data: () => ({
     sticky: false,
+    show: false,
     socialButtons: [
       { name: "fb", src: "facebook-icon@1x" },
       { name: "insta", src: "instagram-icon@1x" },
@@ -225,12 +222,38 @@ export default {
   position: relative;
   /* height: 54px; */
   background: #fff;
+  box-shadow: 0px 7px 6px -7px #8e8e8e;
   width: 100%;
   margin: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   .main-header-right {
     align-self: center;
+  }
+}
+.slide__btns {
+  button {
+    width: 25px !important;
+  }
+  align-items: baseline;
+  .v-icon {
+    font-size: 28px !important;
+  }
+  .sticky__previous--para {
+    font-size: 18px;
+  }
+}
+.main-header-actions {
+  width: 372px;
+}
+@media (max-width: 1264px) {
+  .main-header-actions {
+    margin-bottom: 10px;
+    width: 200px;
+  }
+  .search__bar--btns {
+    display: flex !important;
+    flex-direction: column;
   }
 }
 </style>
