@@ -26,6 +26,7 @@
           withDropdown
           :dropdownOptions="goals"
           @goalChange="onSelectGoal"
+          @search="onSearchPicks"
         ></bottom-bordered-title-with-search>
         <featured-gallery
           :features="featuredList"
@@ -44,11 +45,12 @@
       <section class="events-section" v-if="eventList.length > 0">
         <bottom-bordered-title-with-search
           :title="'<b>Upcoming Events</b>'"
-          :with-search="true"
+          :with-search="false"
           :search-expandable="true"
           hover-effect
           hover-color="#FFE300"
           search-text="Search events..."
+          @search="onSearchEvents"
         ></bottom-bordered-title-with-search>
         <events-gallery
           :events="eventList"
@@ -121,11 +123,12 @@
       <section class="news-section" v-if="projects.length > 0">
         <bottom-bordered-title-with-search
           :title="'<b>Smiley Network |</b> Matchmaker for Good'"
-          :with-search="true"
+          :with-search="false"
           :search-expandable="true"
           hover-effect
           hover-color="#FFE300"
           search-text="Search projects..."
+          @search="onSearchNetwork"
         ></bottom-bordered-title-with-search>
         <projects-gallery
           :projects="projects"
@@ -143,11 +146,12 @@
       <section class="news-section" v-if="news.length > 0">
         <bottom-bordered-title-with-search
           :title="'<b>Daily News</b>'"
-          :with-search="true"
+          :with-search="false"
           :search-expandable="true"
           hover-effect
           hover-color="#FFE300"
           search-text="Search News..."
+          @search="onSearchNews"
         ></bottom-bordered-title-with-search>
         <news-gallery
           :news="news"
@@ -284,7 +288,19 @@ export default {
     },
     onSelectGoal(e) {
       router.push({ name: 'news-category-item', params: {slug: e} });
-    }
+    },
+    onSearchPicks(text) {
+      router.push({ name: 'news-search', params: {keyword: text} });
+    },
+    // onSearchEvents(text) {
+    //   //router.push({ name: 'talks-search', params: {keyword: text} });
+    // },
+    // onSearchNetwork(text) {
+    //   //router.push({ name: 'news-search', params: {keyword: text} });
+    // },
+    // onSearchNews(text) {
+    //   //router.push({ name: 'news-search', params: {keyword: text} });
+    // },
   },
   created() {
     window.addEventListener("resize", this.handleResize);
