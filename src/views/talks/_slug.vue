@@ -45,8 +45,7 @@
       </div>
       <p class="event-title__video-description">
         {{post.past ? "PAST EVENT":"UPCOMING EVENT"}} | 
-        {{post.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}} | 
-        3 Comments
+        {{post.date | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}}
       </p>
       <div class="event-title__link-actions">
         <div class="event-title__link-actions__un-goals">

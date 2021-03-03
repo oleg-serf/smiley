@@ -57,8 +57,7 @@
 
           <div class="article-header__metadata">
             News |
-            {{post.published_at | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}} | 
-            {{ comments.length }} Comments
+            {{post.published_at | formatDate('en-US', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}) | stripComas}}
           </div>
           <div class="article-header__sharing">
             <div class="article-header__sharing-goals">
