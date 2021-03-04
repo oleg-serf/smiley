@@ -328,7 +328,7 @@ export default {
     axios
       .get("/events?date_start="+start_1+"&date_end="+end_1)
       .then((res) => {
-        this.past_events = res.data.events;
+        this.past_events = [...res.data.events, ...res.data.events];
       })
       .catch((error) => console.error(error));
 

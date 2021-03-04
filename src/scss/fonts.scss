@@ -67,10 +67,10 @@
 
 @font-face {
   font-family: "Gotham Light";
-  src: url("/fonts/Gotham/GothamLight.ttf") format('truetype')
-       url('/fonts/Gotham/Gotham-Light.woff') format('woff'),
-       url("/fonts/Gotham/Gotham-Light.eot") format('embeded-opentype'),
-       url("/fonts/Gotham/Gotham-Light.otf") format('opentype');
+  src: url('/fonts/Gotham/Gotham-Light.woff') format('woff'),
+       url("/fonts/Gotham/GothamLight.ttf") format('truetype'),  
+       url("/fonts/Gotham/Gotham-Light.otf") format('opentype'),
+       url("/fonts/Gotham/Gotham-Light.eot") format('embeded-opentype');
 }
 
 @import "/fonts/fontello/fontello.css";
