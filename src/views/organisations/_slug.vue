@@ -1,6 +1,6 @@
 <template>
   <div class="main-bg">
-    <div class="textual-banner textual-banner--contained">
+    <div class="textual-banner textual-banner--contained"  v-if="is_owner && loggedIn">
       <div class="container">
         <div class="textual-banner__title">Organisation page</div>
         <p>This is where we learn about your organisation, charitable vision and mission whether you're a registered non-profit, social enterprise, charitable foundation, Trust, educational institution, local authority or conscientious private business</p>
