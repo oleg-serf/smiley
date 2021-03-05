@@ -4,7 +4,7 @@
       <router-link :to="linkedComponent">
         <img
           v-if="member.avatar != null"
-          :src="$settings.images_path.users + 'l_' + member.avatar"
+          :src="$settings.images_path.users + 'm_' + member.avatar"
           alt
           title
           class="member-item__image"
